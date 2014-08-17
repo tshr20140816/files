@@ -1,5 +1,6 @@
 module CodeRay module Scanners
 
+  # http://www.redmine.org/boards/3/topics/29926
   # by Jared Bloomer
   class BASH < Scanner
 
