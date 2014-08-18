@@ -2,6 +2,9 @@ module CodeRay module Scanners
 
   # http://www.redmine.org/boards/3/topics/29926
   # by Jared Bloomer
+
+  # add rhc -- mv
+
   # cd ~/app-root/repo/vendor/bundle/ruby/1.9.1/gems/coderay-1.1.0/lib/coderay/scanners
   # bash.rb
   # cd ../helpers/
