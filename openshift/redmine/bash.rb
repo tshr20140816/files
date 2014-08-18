@@ -29,6 +29,7 @@ module CodeRay module Scanners
     )
 
     COMMANDS = %w(
+    rhc quota rake mysqldump cd cp cat mkdir touch pushd popd wget chmod rm ln awk mv
     arch basename bash cgclassify cgcreate cgdelete cgexec cgget cgset dash 
     dbus-cleanup-sockets dbus-daemon dbus-monitor dbus-send dmesg ed gettext 
     ipcalc kbd_mode keyctl link loadkeys login mktemp nano ping ping6 plymouth 
