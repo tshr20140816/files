@@ -1,34 +1,34 @@
-*** ical_parser.php.org    2014-07-29 05:53:30.836093037 +0900
---- ical_parser.php     2014-07-29 05:55:25.944094841 +0900
+*** ical_parser.php.org	2014-08-29 19:51:57.462241580 -0400
+--- ical_parser.php	2014-08-29 19:53:44.207713397 -0400
 ***************
 *** 105,113 ****
-                         * See: http://phpicalendar.net/forums/viewtopic.php?f=45&t=4140#p14451
-                         */
-                        $filename = tempnam(sys_get_temp_dir(), 'ICS');
-!                       if (copy($cal_httpPrefix, $filename) === FALSE) {
-!                               exit(error($lang['l_copy_error'], $cal_httpPrefix));
-!                       }
-                } else {
-                        $actual_mtime = filemtime($filename);
-                }
+  			 * See: http://phpicalendar.net/forums/viewtopic.php?f=45&t=4140#p14451
+  			 */
+  			$filename = tempnam(sys_get_temp_dir(), 'ICS');
+! 			if (copy($cal_httpPrefix, $filename) === FALSE) {
+! 				exit(error($lang['l_copy_error'], $cal_httpPrefix));
+! 			}
+  		} else {
+  			$actual_mtime = filemtime($filename);
+  		}
 --- 105,121 ----
-                         * See: http://phpicalendar.net/forums/viewtopic.php?f=45&t=4140#p14451
-                         */
-                        $filename = tempnam(sys_get_temp_dir(), 'ICS');
-!                       #if (copy($cal_httpPrefix, $filename) === FALSE) {
-!                       #       exit(error($lang['l_copy_error'], $cal_httpPrefix));
-!                       #}
-!                       $ch = curl_init($cal_httpPrefix);
-!                       curl_setopt($ch, CURLOPT_HEADER, 0);
-!                       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-!                       $output = curl_exec($ch);
-!                       curl_close($ch);
-!                       $fp = fopen($filename, "w+");
-!                       fwrite($fp, $output);
-!                       fclose($fp);
-                } else {
-                        $actual_mtime = filemtime($filename);
-                }
+  			 * See: http://phpicalendar.net/forums/viewtopic.php?f=45&t=4140#p14451
+  			 */
+  			$filename = tempnam(sys_get_temp_dir(), 'ICS');
+! 			#if (copy($cal_httpPrefix, $filename) === FALSE) {
+! 			#	exit(error($lang['l_copy_error'], $cal_httpPrefix));
+! 			#}
+! 			$ch = curl_init($cal_httpPrefix);
+! 			curl_setopt($ch, CURLOPT_HEADER, 0);
+! 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+! 			$output = curl_exec($ch);
+! 			curl_close($ch);
+! 			$fp = fopen($filename, "w+");
+! 			fwrite($fp, $output);
+! 			fclose($fp);
+  		} else {
+  			$actual_mtime = filemtime($filename);
+  		}
 ***************
 *** 559,562 ****
   //print_r($cal_filelist);
@@ -41,4 +41,3 @@
   //print_r($tz_array);
   #print '</pre>';
 ! ?>
-
