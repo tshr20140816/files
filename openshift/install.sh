@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -v
 
 apache_version='2.2.27'
 php_version='5.5.15'
@@ -25,14 +25,14 @@ else
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd wget >> $OPENSHIFT_LOG_DIR/install.log
 wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz httpd-${apache_version}.tar.gz
+tar xfz httpd-${apache_version}.tar.gz
 cd httpd-${apache_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd configure >> $OPENSHIFT_LOG_DIR/install.log
 CFLAGS="-O3 -Wall -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure --prefix=$OPENSHIFT_DATA_DIR/apache \
 --enable-mods-shared='all proxy' 2>&1 | tee $OPENSHIFT_LOG_DIR/httpd.configure.log
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd make >> $OPENSHIFT_LOG_DIR/install.log
-make -j2
+time make -j2
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd make install >> $OPENSHIFT_LOG_DIR/install.log
 make install
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd conf >> $OPENSHIFT_LOG_DIR/install.log
@@ -89,7 +89,7 @@ cd $OPENSHIFT_TMP_DIR
 echo `date +%Y/%m/%d" "%H:%M:%S` php wget >> $OPENSHIFT_LOG_DIR/install.log
 wget http://jp1.php.net/get/php-${php_version}.tar.gz/from/this/mirror -O php-${php_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` php tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz php-${php_version}.tar.gz
+tar xfz php-${php_version}.tar.gz
 cd php-${php_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` php configure >> $OPENSHIFT_LOG_DIR/install.log
 CFLAGS="-O3 -Wall -march=native" CXXFLAGS="-O3 -march=native" \
@@ -113,7 +113,7 @@ CFLAGS="-O3 -Wall -march=native" CXXFLAGS="-O3 -march=native" \
 --with-gettext=$OPENSHIFT_DATA_DIR/php 2>&1 | tee $OPENSHIFT_LOG_DIR/php.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` php make >> $OPENSHIFT_LOG_DIR/install.log
-make
+time make
 echo `date +%Y/%m/%d" "%H:%M:%S` php make install >> $OPENSHIFT_LOG_DIR/install.log
 make install
 echo `date +%Y/%m/%d" "%H:%M:%S` php make conf >> $OPENSHIFT_LOG_DIR/install.log
@@ -135,7 +135,7 @@ cd $OPENSHIFT_TMP_DIR
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget >> $OPENSHIFT_LOG_DIR/install.log
 wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz delegate${delegate_version}.tar.gz
+tar xfz delegate${delegate_version}.tar.gz
 cd delegate${delegate_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> $OPENSHIFT_LOG_DIR/install.log
 perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
@@ -175,12 +175,12 @@ cd $OPENSHIFT_TMP_DIR
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg wget >> $OPENSHIFT_LOG_DIR/install.log
 wget http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz mrtg-${mrtg_version}.tar.gz
+tar xfz mrtg-${mrtg_version}.tar.gz
 cd mrtg-${mrtg_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg configure >> $OPENSHIFT_LOG_DIR/install.log
 ./configure --prefix=$OPENSHIFT_DATA_DIR/mrtg 2>&1 | tee $OPENSHIFT_LOG_DIR/mrtg.configure.log
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make >> $OPENSHIFT_LOG_DIR/install.log
-make
+time make
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make install >> $OPENSHIFT_LOG_DIR/install.log
 make install
 mkdir $OPENSHIFT_DATA_DIR/mrtg/workdir
@@ -314,7 +314,7 @@ cd $OPENSHIFT_TMP_DIR
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer wget >> $OPENSHIFT_LOG_DIR/install.log
 wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tgz
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz webalizer-${webalizer_version}-src.tgz
+tar xfz webalizer-${webalizer_version}-src.tgz
 cd webalizer-${webalizer_version}
 mv lang/webalizer_lang.japanese lang/webalizer_lang.japanese_euc
 iconv -f euc-jp -t utf-8 lang/webalizer_lang.japanese_euc > lang/webalizer_lang.japanese
@@ -324,7 +324,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` webalizer configure >> $OPENSHIFT_LOG_DIR/insta
 --mandir=$OPENSHIFT_DATA_DIR/webalizer \
 --with-language=japanese --enable-dns 2>&1 | tee $OPENSHIFT_LOG_DIR/webalizer.configure.log
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make >> $OPENSHIFT_LOG_DIR/install.log
-make
+time make
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make install >> $OPENSHIFT_LOG_DIR/install.log
 make install
 
@@ -351,7 +351,7 @@ cd $OPENSHIFT_DATA_DIR/apache/htdocs/wordpress
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress wget >> $OPENSHIFT_LOG_DIR/install.log
 wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz wordpress-${wordpress_version}.tar.gz --strip-components=1
+tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
 
 # force ssl patch
 mkdir wp-content/mu-plugins
@@ -421,7 +421,7 @@ cd $OPENSHIFT_DATA_DIR/apache/htdocs/ttrss
 echo `date +%Y/%m/%d" "%H:%M:%S` ttrss wget >> $OPENSHIFT_LOG_DIR/install.log
 wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` ttrss tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz ${ttrss_version}.tar.gz --strip-components=1
+tar xfz ${ttrss_version}.tar.gz --strip-components=1
 
 # create database
 ttrssuser_password=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
@@ -562,11 +562,14 @@ export TZ=JST-9
 cd delegate
 ./delegated -r +=P50080
 
+wget --spider https://$OPENSHIFT_APP_DNS/
+sleep 5s
+
 cd $OPENSHIFT_REPO_DIR/.openshift/cron/hourly/
 ./webalizer.sh
 
-echo https://$OPENSHIFT_APP_DNS/wordpress/ admin/password
-echo https://$OPENSHIFT_APP_DNS/ttrss/install/ ttrssuser/$ttrssuser_password
+echo https://$OPENSHIFT_APP_DNS/wordpress/wp-admin/install.php
+echo https://$OPENSHIFT_APP_DNS/ttrss/install/ ttrssuser/$ttrssuser_password ttrss $OPENSHIFT_MYSQL_DB_HOST admin/password
 echo https://$OPENSHIFT_APP_DNS/cal/
 echo https://$OPENSHIFT_APP_DNS/mail/
 echo https://$OPENSHIFT_APP_DNS/usage/
