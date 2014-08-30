@@ -1,5 +1,13 @@
 #!/bin/bash
 
+apache_version='2.2.27'
+php_version='5.5.15'
+delegate_version='9.9.11'
+mrtg_version='2.17.4'
+webalizer_version='2.23-08'
+wordpress_version='3.9.2-ja'
+ttrss_version='1.13'
+
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Start >> $OPENSHIFT_LOG_DIR/install.log
 echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
@@ -8,10 +16,10 @@ echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $O
 
 cd $OPENSHIFT_TMP_DIR
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.27.tar.gz
+wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz httpd-2.2.27.tar.gz
-cd httpd-2.2.27
+tar xvfz httpd-${apache_version}.tar.gz
+cd httpd-${apache_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd configure >> $OPENSHIFT_LOG_DIR/install.log
 CFLAGS="-O3 -Wall -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure --prefix=$OPENSHIFT_DATA_DIR/apache --enable-mods-shared='all proxy' 2>&1 | tee $OPENSHIFT_LOG_DIR/httpd.configure.log
@@ -61,24 +69,23 @@ Disallow: /
 __HEREDOC__
 
 cd $OPENSHIFT_TMP_DIR
-rm httpd-2.2.27.tar.gz
-rm -rf httpd-2.2.27
+rm httpd-${apache_version}.tar.gz
+rm -rf httpd-${apache_version}
 
 # ***** php *****
 
 echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
 cd $OPENSHIFT_TMP_DIR
 echo `date +%Y/%m/%d" "%H:%M:%S` php wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://jp1.php.net/get/php-5.5.15.tar.gz/from/this/mirror -O php-5.5.15.tar.gz
+wget http://jp1.php.net/get/php-${php_version}.tar.gz/from/this/mirror -O php-${php_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` php tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz php-5.5.15.tar.gz
-cd php-5.5.15
+tar xvfz php-${php_version}.tar.gz
+cd php-${php_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` php configure >> $OPENSHIFT_LOG_DIR/install.log
 CFLAGS="-O3 -Wall -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
 --prefix=$OPENSHIFT_DATA_DIR/php \
 --with-apxs2=$OPENSHIFT_DATA_DIR/apache/bin/apxs \
---libdir=/usr/lib64 \
 --with-libdir=lib64 \
 --with-mysql \
 --with-pdo-mysql \
@@ -107,18 +114,18 @@ perl -pi -e 's/^short_open_tag .+$/short_open_tag = On/g' lib/php.ini
 perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/php.ini
 
 cd $OPENSHIFT_TMP_DIR
-rm php-5.5.15.tar.gz
-rm -rf php-5.5.15
+rm php-${php_version}.tar.gz
+rm -rf php-${php_version}
 
 # ***** delegate *****
 
 echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
 cd $OPENSHIFT_TMP_DIR
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://www.delegate.org/anonftp/DeleGate/delegate9.9.11.tar.gz
+wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz delegate9.9.11.tar.gz
-cd delegate9.9.11
+tar xvfz delegate${delegate_version}.tar.gz
+cd delegate${delegate_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> $OPENSHIFT_LOG_DIR/install.log
 perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
 make
@@ -147,18 +154,18 @@ __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt
 
 cd $OPENSHIFT_TMP_DIR
-rm delegate9.9.11.tar.gz
-rm -rf delegate9.9.11
+rm delegate${delegate_version}.tar.gz
+rm -rf delegate${delegate_version}
 
 # ***** mrtg *****
 
 echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
 cd $OPENSHIFT_TMP_DIR
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://oss.oetiker.ch/mrtg/pub/mrtg-2.17.4.tar.gz
+wget http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz mrtg-2.17.4.tar.gz
-cd mrtg-2.17.4
+tar xvfz mrtg-${mrtg_version}.tar.gz
+cd mrtg-${mrtg_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg configure >> $OPENSHIFT_LOG_DIR/install.log
 ./configure --prefix=$OPENSHIFT_DATA_DIR/mrtg 2>&1 | tee $OPENSHIFT_LOG_DIR/mrtg.configure.log
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make >> $OPENSHIFT_LOG_DIR/install.log
@@ -286,18 +293,18 @@ cd $OPENSHIFT_DATA_DIR/mrtg
 cp index.html ../apache/htdocs/mrtg/
 
 cd $OPENSHIFT_TMP_DIR
-rm mrtg-2.17.4.tar.gz
-rm -rf mrtg-2.17.4
+rm mrtg-${mrtg_version}.tar.gz
+rm -rf mrtg-${mrtg_version}
 
 # ***** webalizer *****
 
 echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
 cd $OPENSHIFT_TMP_DIR
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer wget >> $OPENSHIFT_LOG_DIR/install.log
-wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-2.23-08-src.tgz
+wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tgz
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz webalizer-2.23-08-src.tgz
-cd webalizer-2.23-08
+tar xvfz webalizer-${webalizer_version}-src.tgz
+cd webalizer-${webalizer_version}
 mv lang/webalizer_lang.japanese lang/webalizer_lang.japanese_euc
 iconv -f euc-jp -t utf-8 lang/webalizer_lang.japanese_euc > lang/webalizer_lang.japanese
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer configure >> $OPENSHIFT_LOG_DIR/install.log
@@ -322,8 +329,8 @@ echo HostName $OPENSHIFT_APP_DNS >> webalizer.conf
 echo UseHTTPS yes >> webalizer.conf
 
 cd $OPENSHIFT_TMP_DIR
-rm webalizer-2.23-08-src.tgz
-rm -rf webalizer-2.23-08
+rm webalizer-${webalizer_version}-src.tgz
+rm -rf webalizer-${webalizer_version}
 
 # ***** wordpress *****
 
@@ -331,9 +338,9 @@ echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $O
 mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/wordpress
 cd $OPENSHIFT_DATA_DIR/apache/htdocs/wordpress
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://ja.wordpress.org/wordpress-3.9.2-ja.tar.gz
+wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz wordpress-3.9.2-ja.tar.gz --strip-components=1
+tar xvfz wordpress-${wordpress_version}.tar.gz --strip-components=1
 
 # force ssl patch
 mkdir wp-content/mu-plugins
@@ -343,7 +350,7 @@ cd ../../wp-includes
 perl -pi -e 's/(^function is_ssl\(\) \{)$/$1\n\treturn is_maybe_ssl\(\);/g' functions.php
 
 # create database
-password20=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
+wpuser_password=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
 cd $OPENSHIFT_TMP_DIR
 cat << '__HEREDOC__' > create_database_wordpress.txt
 CREATE DATABASE wordpress CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -352,7 +359,7 @@ FLUSH PRIVILEGES;
 EXIT
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_wordpress.txt
-sed -i -e "s/__PASSWORD__/$password20/g" create_database_wordpress.txt
+sed -i -e "s/__PASSWORD__/$wpuser_password/g" create_database_wordpress.txt
 
 mysql -u "$OPENSHIFT_MYSQL_DB_USERNAME" \
 --password="$OPENSHIFT_MYSQL_DB_PASSWORD" \
@@ -370,7 +377,7 @@ define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', 'utf8_general_ci');
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' wp-config.php
-sed -i -e "s/__PASSWORD__/$password20/g" wp-config.php
+sed -i -e "s/__PASSWORD__/$wpuser_password/g" wp-config.php
 curl -o $OPENSHIFT_TMP_DIR/salt.txt https://api.wordpress.org/secret-key/1.1/salt/
 cat $OPENSHIFT_TMP_DIR/salt.txt >> wp-config.php
 rm $OPENSHIFT_TMP_DIR/salt.txt
@@ -390,10 +397,10 @@ require_once(ABSPATH . 'wp-settings.php');
 
 __HEREDOC__
 
-echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/$password20 >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/$wpuser_password >> $OPENSHIFT_LOG_DIR/install.log
 
 cd $OPENSHIFT_DATA_DIR/apache/htdocs/wordpress
-rm wordpress-3.9.2-ja.tar.gz
+rm wordpress-${wordpress_version}.tar.gz
 
 # ***** tiny tiny rss *****
 
@@ -401,12 +408,12 @@ echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $O
 mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/ttrss
 cd $OPENSHIFT_DATA_DIR/apache/htdocs/ttrss
 echo `date +%Y/%m/%d" "%H:%M:%S` ttrss wget >> $OPENSHIFT_LOG_DIR/install.log
-wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.13.tar.gz
+wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` ttrss tar >> $OPENSHIFT_LOG_DIR/install.log
-tar xvfz 1.13.tar.gz --strip-components=1
+tar xvfz ${ttrss_version}.tar.gz --strip-components=1
 
 # create database
-password20=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
+ttrssuser_password=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
 cd $OPENSHIFT_TMP_DIR
 cat << '__HEREDOC__' > create_database_ttrss.txt
 CREATE DATABASE ttrss CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -415,8 +422,8 @@ FLUSH PRIVILEGES;
 EXIT
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_ttrss.txt
-# perl -pi -e 's/__PASSWORD__/$password20/g' create_database_ttrss.txt
-sed -i -e "s/__PASSWORD__/$password20/g" create_database_ttrss.txt
+# perl -pi -e 's/__PASSWORD__/$ttrssuser_password/g' create_database_ttrss.txt
+sed -i -e "s/__PASSWORD__/$ttrssuser_password/g" create_database_ttrss.txt
 
 mysql -u "$OPENSHIFT_MYSQL_DB_USERNAME" \
 --password="$OPENSHIFT_MYSQL_DB_PASSWORD" \
@@ -428,10 +435,10 @@ mysql -u "$OPENSHIFT_MYSQL_DB_USERNAME" \
 -h "$OPENSHIFT_MYSQL_DB_HOST" \
 -P "$OPENSHIFT_MYSQL_DB_PORT" ttrss < $OPENSHIFT_DATA_DIR/apache/htdocs/ttrss/schema/ttrss_schema_mysql.sql
 
-echo `date +%Y/%m/%d" "%H:%M:%S` ttrss mysql ttrssuser/$password20 >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` ttrss mysql ttrssuser/$ttrssuser_password >> $OPENSHIFT_LOG_DIR/install.log
 
 cd $OPENSHIFT_DATA_DIR/apache/htdocs/ttrss
-rm 1.13.tar.gz
+rm ${ttrss_version}.tar.gz
 
 # ***** PHP iCalendar *****
 
@@ -446,6 +453,9 @@ tar jxf phpicalendar-2.4_20100615.tar.bz2 --strip-components=1
 cd functions
 wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/icalendar/ical_parser.php.patch
 patch ical_parser.php ical_parser.php.patch
+
+cd $OPENSHIFT_DATA_DIR/apache/htdocs/cal
+rm phpicalendar-2.4_20100615.tar.bz2
 
 # ***** cron *****
 
@@ -541,6 +551,13 @@ export TZ=JST-9
 cd delegate
 ./delegated -r +=P50080
 
-echo https://$OPENSHIFT_APP_DNS/wordpress/
-echo https://$OPENSHIFT_APP_DNS/ttrss/install/
+cd $OPENSHIFT_REPO_DIR/.openshift/cron/hourly/
+./webalizer.sh
+
+echo https://$OPENSHIFT_APP_DNS/wordpress/ admin/password
+echo https://$OPENSHIFT_APP_DNS/ttrss/install/ ttrssuser/$ttrssuser_password
+echo https://$OPENSHIFT_APP_DNS/cal/
+echo https://$OPENSHIFT_APP_DNS/mail/
+echo https://$OPENSHIFT_APP_DNS/usage/
+echo https://$OPENSHIFT_APP_DNS/mrtg/
 
