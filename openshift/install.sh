@@ -15,6 +15,13 @@ echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $O
 # ***** apache *****
 
 cd $OPENSHIFT_TMP_DIR
+if [ -d $OPENSHIFT_DATA_DIR/apache ]
+then
+
+echo `date +%Y/%m/%d" "%H:%M:%S` httpd skip all >> $OPENSHIFT_LOG_DIR/install.log
+
+else
+
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd wget >> $OPENSHIFT_LOG_DIR/install.log
 wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.gz
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd tar >> $OPENSHIFT_LOG_DIR/install.log
@@ -22,7 +29,8 @@ tar xvfz httpd-${apache_version}.tar.gz
 cd httpd-${apache_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd configure >> $OPENSHIFT_LOG_DIR/install.log
 CFLAGS="-O3 -Wall -march=native" CXXFLAGS="-O3 -march=native" \
-./configure --prefix=$OPENSHIFT_DATA_DIR/apache --enable-mods-shared='all proxy' 2>&1 | tee $OPENSHIFT_LOG_DIR/httpd.configure.log
+./configure --prefix=$OPENSHIFT_DATA_DIR/apache \
+--enable-mods-shared='all proxy' 2>&1 | tee $OPENSHIFT_LOG_DIR/httpd.configure.log
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd make >> $OPENSHIFT_LOG_DIR/install.log
 make -j2
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd make install >> $OPENSHIFT_LOG_DIR/install.log
@@ -72,6 +80,8 @@ cd $OPENSHIFT_TMP_DIR
 rm httpd-${apache_version}.tar.gz
 rm -rf httpd-${apache_version}
 
+fi
+
 # ***** php *****
 
 echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
@@ -86,23 +96,24 @@ CFLAGS="-O3 -Wall -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
 --prefix=$OPENSHIFT_DATA_DIR/php \
 --with-apxs2=$OPENSHIFT_DATA_DIR/apache/bin/apxs \
---with-libdir=lib64 \
 --with-mysql \
 --with-pdo-mysql \
 --with-curl \
+--with-libdir=lib64 \
 --with-bz2 \
 --with-iconv \
 --with-openssl \
 --with-zlib \
 --enable-exif \
 --enable-ftp \
+--enable-xml \
 --enable-mbstring \
 --enable-mbregex \
 --enable-sockets \
---enable-xml \
 --with-gettext=$OPENSHIFT_DATA_DIR/php 2>&1 | tee $OPENSHIFT_LOG_DIR/php.configure.log
+
 echo `date +%Y/%m/%d" "%H:%M:%S` php make >> $OPENSHIFT_LOG_DIR/install.log
-make -j2
+make
 echo `date +%Y/%m/%d" "%H:%M:%S` php make install >> $OPENSHIFT_LOG_DIR/install.log
 make install
 echo `date +%Y/%m/%d" "%H:%M:%S` php make conf >> $OPENSHIFT_LOG_DIR/install.log
@@ -547,7 +558,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish >> $OPENSHIFT_LOG_DIR/install.lo
 kill `netstat -anpt 2>/dev/null | grep $OPENSHIFT_DIY_IP | grep LISTEN | awk '{print $7}' | awk -F/ '{print $1}'`
 cd $OPENSHIFT_DATA_DIR
 export TZ=JST-9
-./apache/bin/apachectl -k start
+./apache/bin/apachectl -k graceful
 cd delegate
 ./delegated -r +=P50080
 
