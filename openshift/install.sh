@@ -1,4 +1,6 @@
-#!/bin/bash -v
+#!/bin/bash
+
+set -x
 
 apache_version='2.2.27'
 php_version='5.5.15'
@@ -28,7 +30,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` httpd tar >> $OPENSHIFT_LOG_DIR/install.log
 tar xfz httpd-${apache_version}.tar.gz
 cd httpd-${apache_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd configure >> $OPENSHIFT_LOG_DIR/install.log
-CFLAGS="-O3 -Wall -march=native" CXXFLAGS="-O3 -march=native" \
+CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure --prefix=$OPENSHIFT_DATA_DIR/apache \
 --enable-mods-shared='all proxy' 2>&1 | tee $OPENSHIFT_LOG_DIR/httpd.configure.log
 echo `date +%Y/%m/%d" "%H:%M:%S` httpd make >> $OPENSHIFT_LOG_DIR/install.log
@@ -92,7 +94,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` php tar >> $OPENSHIFT_LOG_DIR/install.log
 tar xfz php-${php_version}.tar.gz
 cd php-${php_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` php configure >> $OPENSHIFT_LOG_DIR/install.log
-CFLAGS="-O3 -Wall -march=native" CXXFLAGS="-O3 -march=native" \
+CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
 --prefix=$OPENSHIFT_DATA_DIR/php \
 --with-apxs2=$OPENSHIFT_DATA_DIR/apache/bin/apxs \
@@ -139,7 +141,7 @@ tar xfz delegate${delegate_version}.tar.gz
 cd delegate${delegate_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> $OPENSHIFT_LOG_DIR/install.log
 perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
-make
+time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 
 mkdir $OPENSHIFT_DATA_DIR/delegate/
 cp src/delegated $OPENSHIFT_DATA_DIR/delegate/
 
@@ -178,6 +180,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> $OPENSHIFT_LOG_DIR/install.log
 tar xfz mrtg-${mrtg_version}.tar.gz
 cd mrtg-${mrtg_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg configure >> $OPENSHIFT_LOG_DIR/install.log
+CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure --prefix=$OPENSHIFT_DATA_DIR/mrtg 2>&1 | tee $OPENSHIFT_LOG_DIR/mrtg.configure.log
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make >> $OPENSHIFT_LOG_DIR/install.log
 time make
@@ -319,6 +322,7 @@ cd webalizer-${webalizer_version}
 mv lang/webalizer_lang.japanese lang/webalizer_lang.japanese_euc
 iconv -f euc-jp -t utf-8 lang/webalizer_lang.japanese_euc > lang/webalizer_lang.japanese
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer configure >> $OPENSHIFT_LOG_DIR/install.log
+CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --prefix=$OPENSHIFT_DATA_DIR/webalizer \
 --mandir=$OPENSHIFT_DATA_DIR/webalizer \
@@ -567,6 +571,8 @@ sleep 5s
 
 cd $OPENSHIFT_REPO_DIR/.openshift/cron/hourly/
 ./webalizer.sh
+
+set +x
 
 echo https://$OPENSHIFT_APP_DNS/wordpress/wp-admin/install.php
 echo https://$OPENSHIFT_APP_DNS/ttrss/install/ ttrssuser/$ttrssuser_password ttrss $OPENSHIFT_MYSQL_DB_HOST admin/password
