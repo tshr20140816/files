@@ -70,6 +70,12 @@ AddType application/x-httpd-php .php
 
 Header unset x-powered-by
 Header set server Apache
+
+<Location />
+    SetOutputFilter DEFLATE
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+    Header append Vary User-Agent env=!dont-vary
+</Location>
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
 
@@ -146,7 +152,7 @@ mkdir $OPENSHIFT_DATA_DIR/delegate/
 cp src/delegated $OPENSHIFT_DATA_DIR/delegate/
 
 # apache htdocs
-mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/delegate/icons
+mkdir -p $OPENSHIFT_DATA_DIR/apache/htdocs/delegate/icons
 cp src/builtin/icons/ysato/*.* $OPENSHIFT_DATA_DIR/apache/htdocs/delegate/icons/
 # */
 
@@ -333,7 +339,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make install >> $OPENSHIFT_LOG_DIR/in
 make install
 
 # apache htdocs
-mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/usage
+mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/webalizer
 cd $OPENSHIFT_DATA_DIR/webalizer/etc
 cp webalizer.conf.sample webalizer.conf
 echo >> webalizer.conf
@@ -358,7 +364,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> $OPENSHIFT_LOG_DIR/install.log
 tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
 
 # force ssl patch
-mkdir wp-content/mu-plugins
+mkdir -p wp-content/mu-plugins
 cd wp-content/mu-plugins
 wget https://gist.githubusercontent.com/franz-josef-kaiser/1891564/raw/9d3f519c1cfb0fff9ad5ca31f3e783deaf5d561c/is_ssl.php
 cd ../../wp-includes
@@ -537,7 +543,7 @@ echo keep_delegated.sh >> jobs.allow
 cat << '__HEREDOC__' > mrtg.sh
 #!/bin/bash
 
-mpstat 5 1 | grep ^Average | awk '{print $3}' > $OPENSHIFT_TMP_DIR/cpu_usage_current
+mpstat 5 1 | grep ^Average | awk '{print $3+$4+$5+$6+$7+$8+$9+$10}' > $OPENSHIFT_TMP_DIR/cpu_usage_current
 cd $OPENSHIFT_DATA_DIR/mrtg
 export TZ=JST-9
 env LANG=C ./bin/mrtg mrtg.conf
