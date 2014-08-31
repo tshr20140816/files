@@ -1,26 +1,3 @@
-h1. 20140819 Apache PHP Delegate Mrtg Webalizer Install Script
-
-・Apache
-・PHP
-・Delegate
-・Mrtg
-・Webalizer
-・Wordpress
-・Tiny Tiny RSS
-・PHP iCalendar
-
-http://sabaoh.sakura.ne.jp/wordpress/?p=136
-
-$ rhc app create boo diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
-$ rhc ssh -a boo
-
-cd /tmp/
-wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/install.sh
-chmod +x install.sh
-nohup ./install.sh > $OPENSHIFT_LOG_DIR/nohup.log &
-
-install.sh
-<pre><code class="bash">
 #!/bin/bash
 
 set -x
@@ -170,7 +147,7 @@ tar xfz delegate${delegate_version}.tar.gz
 cd delegate${delegate_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> $OPENSHIFT_LOG_DIR/install.log
 perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
-time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe"
+time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 
 mkdir $OPENSHIFT_DATA_DIR/delegate/
 cp src/delegated $OPENSHIFT_DATA_DIR/delegate/
 
@@ -185,8 +162,8 @@ cat << '__HEREDOC__' > P50080
 SERVER=http
 ADMIN=admin@rhcloud.local
 DGROOT=__OPENSHIFT_DATA_DIR__delegate
-MOUNT="/mail/* pop://pop.mail.yahoo.co.jp:110/* noapop"
-FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
+MOUNT="/mail/* pop://pop.mail.yahoo.co.jp:110/* noapop" 
+FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt" 
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P50080
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P50080
@@ -435,7 +412,7 @@ define('FORCE_SSL_ADMIN', true);
 define('FORCE_SSL_LOGIN', true);
 
 if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
+    define('ABSPATH', dirname(__FILE__) . '/');
 
 require_once(ABSPATH . 'wp-settings.php');
 
@@ -609,5 +586,4 @@ echo https://$OPENSHIFT_APP_DNS/cal/
 echo https://$OPENSHIFT_APP_DNS/mail/
 echo https://$OPENSHIFT_APP_DNS/webalizer/
 echo https://$OPENSHIFT_APP_DNS/mrtg/
-</pre>
 
