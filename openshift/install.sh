@@ -11,34 +11,160 @@ wordpress_version='3.9.2-ja'
 ttrss_version='1.13'
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Start >> $OPENSHIFT_LOG_DIR/install.log
-echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install Start >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
+# ***** download files *****
+
+cd ${OPENSHIFT_TMP_DIR}
+mkdir download_files
+cd download_files
+
+files_exists=0
+for i in `seq 0 9`
+do
+    files_exists=1
+
+    # *** apache ***
+    if [ ! -f httpd-${apache_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` apache wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.gz
+    fi
+    if [ ! -f httpd-${apache_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** php ***
+    if [ ! -f php-${php_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` php wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://jp1.php.net/get/php-${php_version}.tar.gz/from/this/mirror -O php-${php_version}.tar.gz
+    fi
+    if [ ! -f php-${php_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** delegate ***
+    if [ ! -f delegate${delegate_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
+    fi
+    if [ ! -f delegate${delegate_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** mrtg ***
+    if [ ! -f mrtg-${mrtg_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mrtg wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz
+    fi
+    if [ ! -f mrtg-${mrtg_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** webalizer ***
+    if [ ! -f webalizer-${webalizer_version}-src.tgz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` webalizer wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tgz
+    fi
+    if [ ! -f webalizer-${webalizer_version}-src.tgz ]; then
+        files_exists=0
+    fi
+
+    # *** wordpress ***
+    if [ ! -f wordpress-${wordpress_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` wordpress wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
+    fi
+    if [ ! -f wordpress-${wordpress_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** Tiny Tiny RSS ***
+    if [ ! -f ${ttrss_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
+    fi
+    if [ ! -f ${ttrss_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** PHP iCalendar ***
+    if [ ! -f phpicalendar-2.4_20100615.tar.bz2 ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` PHP iCalendar wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://downloads.sourceforge.net/project/phpicalendar/phpicalendar/phpicalendar%202.4%20RC7/phpicalendar-2.4_20100615.tar.bz2
+    fi
+    if [ ! -f phpicalendar-2.4_20100615.tar.bz2 ]; then
+        files_exists=0
+    fi
+
+    # *** etc ***
+    if [ ! -f is_ssl.php ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` is_ssl.php wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://gist.githubusercontent.com/franz-josef-kaiser/1891564/raw/9d3f519c1cfb0fff9ad5ca31f3e783deaf5d561c/is_ssl.php
+    fi
+    if [ ! -f is_ssl.php ]; then
+        files_exists=0
+    fi
+    if [ ! -f ical_parser.php.patch ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` ical_parser.php.patch wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/icalendar/ical_parser.php.patch
+    fi
+    if [ ! -f ical_parser.php.patch ]; then
+        files_exists=0
+    fi
+    if [ ! -f mysql_backup.sh ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mysql_backup.sh wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/redmine/mysql_backup.sh
+    fi
+    if [ ! -f mysql_backup.sh ]; then
+        files_exists=0
+    fi
+    if [ ! -f salt.txt ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` salt.txt wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        curl -o ./salt.txt https://api.wordpress.org/secret-key/1.1/salt/
+    fi
+    if [ ! -f salt.txt ]; then
+        files_exists=0
+    fi
+
+    if [ ${files_exists} -eq 1 ]; then
+        break
+    else
+        sleep 10s
+    fi
+done
+
+if [ ${files_exists} -eq 0 ]; then
+    echo `date +%Y/%m/%d" "%H:%M:%S` file download error >> ${OPENSHIFT_LOG_DIR}/install.log
+    exit 1
+fi
 
 # ***** apache *****
 
-cd $OPENSHIFT_TMP_DIR
-if [ -d $OPENSHIFT_DATA_DIR/apache ]
+cd ${OPENSHIFT_TMP_DIR}
+if [ -d ${OPENSHIFT_DATA_DIR}/apache ]
 then
 
-echo `date +%Y/%m/%d" "%H:%M:%S` httpd skip all >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` apache skip all >> ${OPENSHIFT_LOG_DIR}/install.log
 
 else
 
-echo `date +%Y/%m/%d" "%H:%M:%S` httpd wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.gz
-echo `date +%Y/%m/%d" "%H:%M:%S` httpd tar >> $OPENSHIFT_LOG_DIR/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
+cp ${OPENSHIFT_TMP_DIR}/download_files/httpd-${apache_version}.tar.gz ./
+echo `date +%Y/%m/%d" "%H:%M:%S` apache tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz httpd-${apache_version}.tar.gz
 cd httpd-${apache_version}
-echo `date +%Y/%m/%d" "%H:%M:%S` httpd configure >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` apache configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
-./configure --prefix=$OPENSHIFT_DATA_DIR/apache \
---enable-mods-shared='all proxy' 2>&1 | tee $OPENSHIFT_LOG_DIR/httpd.configure.log
-echo `date +%Y/%m/%d" "%H:%M:%S` httpd make >> $OPENSHIFT_LOG_DIR/install.log
+./configure --prefix=${OPENSHIFT_DATA_DIR}/apache \
+--enable-mods-shared='all proxy' 2>&1 | tee ${OPENSHIFT_LOG_DIR}/httpd.configure.log
+echo `date +%Y/%m/%d" "%H:%M:%S` apache make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make -j2
-echo `date +%Y/%m/%d" "%H:%M:%S` httpd make install >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` apache make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
-echo `date +%Y/%m/%d" "%H:%M:%S` httpd conf >> $OPENSHIFT_LOG_DIR/install.log
-cd $OPENSHIFT_DATA_DIR/apache
+echo `date +%Y/%m/%d" "%H:%M:%S` apache conf >> ${OPENSHIFT_LOG_DIR}/install.log
+cd ${OPENSHIFT_DATA_DIR}/apache
 cp conf/httpd.conf conf/httpd.conf.`date '+%Y%m%d'`
 perl -pi -e 's/^Listen .+$/Listen $ENV{OPENSHIFT_DIY_IP}:8080/g' conf/httpd.conf
 cat << '__HEREDOC__' >> conf/httpd.conf
@@ -84,7 +210,7 @@ User-agent: *
 Disallow: /
 __HEREDOC__
 
-cd $OPENSHIFT_TMP_DIR
+cd ${OPENSHIFT_TMP_DIR}
 rm httpd-${apache_version}.tar.gz
 rm -rf httpd-${apache_version}
 
@@ -92,18 +218,24 @@ fi
 
 # ***** php *****
 
-echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
-cd $OPENSHIFT_TMP_DIR
-echo `date +%Y/%m/%d" "%H:%M:%S` php wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://jp1.php.net/get/php-${php_version}.tar.gz/from/this/mirror -O php-${php_version}.tar.gz
-echo `date +%Y/%m/%d" "%H:%M:%S` php tar >> $OPENSHIFT_LOG_DIR/install.log
+if [ -d ${OPENSHIFT_DATA_DIR}/php ]
+then
+
+echo `date +%Y/%m/%d" "%H:%M:%S` php skip all >> ${OPENSHIFT_LOG_DIR}/install.log
+
+else
+
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+cd ${OPENSHIFT_TMP_DIR}
+cp ${OPENSHIFT_TMP_DIR}/download_files/php-${php_version}.tar.gz ./
+echo `date +%Y/%m/%d" "%H:%M:%S` php tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz php-${php_version}.tar.gz
 cd php-${php_version}
-echo `date +%Y/%m/%d" "%H:%M:%S` php configure >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` php configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
---prefix=$OPENSHIFT_DATA_DIR/php \
---with-apxs2=$OPENSHIFT_DATA_DIR/apache/bin/apxs \
+--prefix=${OPENSHIFT_DATA_DIR}/php \
+--with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
 --with-curl \
@@ -118,45 +250,53 @@ CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 --enable-mbstring \
 --enable-mbregex \
 --enable-sockets \
---with-gettext=$OPENSHIFT_DATA_DIR/php 2>&1 | tee $OPENSHIFT_LOG_DIR/php.configure.log
+--with-gettext=${OPENSHIFT_DATA_DIR}/php 2>&1 | tee ${OPENSHIFT_LOG_DIR}/php.configure.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` php make >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` php make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make
-echo `date +%Y/%m/%d" "%H:%M:%S` php make install >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` php make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
-echo `date +%Y/%m/%d" "%H:%M:%S` php make conf >> $OPENSHIFT_LOG_DIR/install.log
-cp php.ini-production $OPENSHIFT_DATA_DIR/php/lib/php.ini
-cp php.ini-production $OPENSHIFT_DATA_DIR/php/lib/php.ini-production
-cp php.ini-development $OPENSHIFT_DATA_DIR/php/lib/php.ini-development
-cd $OPENSHIFT_DATA_DIR/php
+echo `date +%Y/%m/%d" "%H:%M:%S` php make conf >> ${OPENSHIFT_LOG_DIR}/install.log
+cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
+cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-production
+cp php.ini-development ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-development
+cd ${OPENSHIFT_DATA_DIR}/php
 perl -pi -e 's/^short_open_tag .+$/short_open_tag = On/g' lib/php.ini
 perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/php.ini
 
-cd $OPENSHIFT_TMP_DIR
+cd ${OPENSHIFT_TMP_DIR}
 rm php-${php_version}.tar.gz
 rm -rf php-${php_version}
 
+fi
+
 # ***** delegate *****
 
-echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
-cd $OPENSHIFT_TMP_DIR
-echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
-echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar >> $OPENSHIFT_LOG_DIR/install.log
+if [ -d ${OPENSHIFT_DATA_DIR}/delegate ]
+then
+
+echo `date +%Y/%m/%d" "%H:%M:%S` delegate skip all >> ${OPENSHIFT_LOG_DIR}/install.log
+
+else
+
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+cd ${OPENSHIFT_TMP_DIR}
+cp ${OPENSHIFT_TMP_DIR}/download_files/delegate${delegate_version}.tar.gz ./
+echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz delegate${delegate_version}.tar.gz
 cd delegate${delegate_version}
-echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> ${OPENSHIFT_LOG_DIR}/install.log
 perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
 time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 
-mkdir $OPENSHIFT_DATA_DIR/delegate/
-cp src/delegated $OPENSHIFT_DATA_DIR/delegate/
+mkdir ${OPENSHIFT_DATA_DIR}/delegate/
+cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
 
 # apache htdocs
-mkdir -p $OPENSHIFT_DATA_DIR/apache/htdocs/delegate/icons
-cp src/builtin/icons/ysato/*.* $OPENSHIFT_DATA_DIR/apache/htdocs/delegate/icons/
+mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons
+cp src/builtin/icons/ysato/*.* ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/
 # */
 
-cd $OPENSHIFT_DATA_DIR/delegate/
+cd ${OPENSHIFT_DATA_DIR}/delegate/
 cat << '__HEREDOC__' > P50080
 -P__OPENSHIFT_DIY_IP__:50080
 SERVER=http
@@ -172,35 +312,44 @@ s/http:..__OPENSHIFT_DIY_IP__:50080.-.builtin.icons.ysato/\/delegate\/icons/g
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt
 
-cd $OPENSHIFT_TMP_DIR
+cd ${OPENSHIFT_TMP_DIR}
 rm delegate${delegate_version}.tar.gz
 rm -rf delegate${delegate_version}
 
+fi
+
 # ***** mrtg *****
 
-echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
-cd $OPENSHIFT_TMP_DIR
-echo `date +%Y/%m/%d" "%H:%M:%S` mrtg wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz
-echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> $OPENSHIFT_LOG_DIR/install.log
+cd ${OPENSHIFT_TMP_DIR}
+if [ -d ${OPENSHIFT_DATA_DIR}/mrtg ]
+then
+
+echo `date +%Y/%m/%d" "%H:%M:%S` mrtg skip all >> ${OPENSHIFT_LOG_DIR}/install.log
+
+else
+
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+cd ${OPENSHIFT_TMP_DIR}
+cp ${OPENSHIFT_TMP_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
+echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz mrtg-${mrtg_version}.tar.gz
 cd mrtg-${mrtg_version}
-echo `date +%Y/%m/%d" "%H:%M:%S` mrtg configure >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` mrtg configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
-./configure --prefix=$OPENSHIFT_DATA_DIR/mrtg 2>&1 | tee $OPENSHIFT_LOG_DIR/mrtg.configure.log
-echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make >> $OPENSHIFT_LOG_DIR/install.log
+./configure --prefix=${OPENSHIFT_DATA_DIR}/mrtg 2>&1 | tee ${OPENSHIFT_LOG_DIR}/mrtg.configure.log
+echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make
-echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make install >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
-mkdir $OPENSHIFT_DATA_DIR/mrtg/workdir
-mkdir $OPENSHIFT_DATA_DIR/mrtg/scripts
-cd $OPENSHIFT_DATA_DIR/mrtg
+mkdir ${OPENSHIFT_DATA_DIR}/mrtg/workdir
+mkdir ${OPENSHIFT_DATA_DIR}/mrtg/scripts
+cd ${OPENSHIFT_DATA_DIR}/mrtg
 
 touch scripts/cpu_usage.sh
 cat << '__HEREDOC__' > scripts/cpu_usage.sh
 #!/bin/bash
 
-echo `cat $OPENSHIFT_TMP_DIR/cpu_usage_current`
+echo `cat ${OPENSHIFT_TMP_DIR}/cpu_usage_current`
 echo 0
 echo dummy
 echo cpu usage
@@ -247,10 +396,9 @@ ImageDir: __OPENSHIFT_DATA_DIR__apache/htdocs/mrtg/
 LogDir: __OPENSHIFT_DATA_DIR__mrtg/log/
 Refresh: 60000
 
-PageTop[_]: <H1>MRTG</H1>
-
-Target[disk]: `$OPENSHIFT_DATA_DIR/mrtg/scripts/disk_usage.sh`
+Target[disk]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/disk_usage.sh`
 Title[disk]: Disk
+PageTop[disk]: Disk
 Options[disk]: gauge, nobanner, growright, unknaszero, noinfo
 AbsMax[disk]: 10000000
 MaxBytes[disk]: 1048576
@@ -265,8 +413,9 @@ Suppress[disk]: y
 Factor[disk]: 1024
 YTicsFactor[disk]: 1024
 
-Target[file]: `$OPENSHIFT_DATA_DIR/mrtg/scripts/file_usage.sh`
+Target[file]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/file_usage.sh`
 Title[file]: Files
+PageTop[file]: Files
 Options[file]: gauge, nobanner, growright, unknaszero, noinfo, integer
 AbsMax[file]: 1000000
 MaxBytes[file]: 80000
@@ -278,8 +427,9 @@ Legend2[file]: File Count Limit
 ShortLegend[file]: files
 Suppress[file]: y
 
-Target[memory]: `$OPENSHIFT_DATA_DIR/mrtg/scripts/memory_usage.sh`
+Target[memory]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/memory_usage.sh`
 Title[memory]: Memory
+PageTop[memory]: Memory
 Options[memory]: gauge, nobanner, growright, unknaszero, noinfo
 AbsMax[memory]: 5368709120
 MaxBytes[memory]: 536870912
@@ -291,8 +441,9 @@ Legend2[memory]: Memory Limit
 ShortLegend[memory]: B
 Suppress[memory]: y
 
-Target[cpu]: `$OPENSHIFT_DATA_DIR/mrtg/scripts/cpu_usage.sh`
+Target[cpu]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/cpu_usage.sh`
 Title[cpu]: Cpu
+PageTop[cpu]: Cpu
 Options[cpu]: gauge, nobanner, growright, unknaszero, noinfo, noo
 AbsMax[cpu]: 200
 MaxBytes[cpu]: 100
@@ -306,73 +457,96 @@ Unscaled[cpu]: dwm
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' mrtg.conf
 
-mkdir $OPENSHIFT_DATA_DIR/mrtg/log
-mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/mrtg
-cd $OPENSHIFT_DATA_DIR/mrtg
+mkdir ${OPENSHIFT_DATA_DIR}/mrtg/log
+mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/mrtg
+cd ${OPENSHIFT_DATA_DIR}/mrtg
 ./bin/indexmaker --output=index.html mrtg.conf
 cp index.html ../apache/htdocs/mrtg/
 
-cd $OPENSHIFT_TMP_DIR
+cd ${OPENSHIFT_TMP_DIR}
 rm mrtg-${mrtg_version}.tar.gz
 rm -rf mrtg-${mrtg_version}
 
+fi
+
 # ***** webalizer *****
 
-echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
-cd $OPENSHIFT_TMP_DIR
-echo `date +%Y/%m/%d" "%H:%M:%S` webalizer wget >> $OPENSHIFT_LOG_DIR/install.log
-wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tgz
-echo `date +%Y/%m/%d" "%H:%M:%S` webalizer tar >> $OPENSHIFT_LOG_DIR/install.log
+cd ${OPENSHIFT_TMP_DIR}
+if [ -d ${OPENSHIFT_DATA_DIR}/webalizer ]
+then
+
+echo `date +%Y/%m/%d" "%H:%M:%S` webalizer skip all >> ${OPENSHIFT_LOG_DIR}/install.log
+
+else
+
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+cd ${OPENSHIFT_TMP_DIR}
+cp ${OPENSHIFT_TMP_DIR}/download_files/webalizer-${webalizer_version}-src.tgz ./
+
+echo `date +%Y/%m/%d" "%H:%M:%S` webalizer tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz webalizer-${webalizer_version}-src.tgz
 cd webalizer-${webalizer_version}
 mv lang/webalizer_lang.japanese lang/webalizer_lang.japanese_euc
 iconv -f euc-jp -t utf-8 lang/webalizer_lang.japanese_euc > lang/webalizer_lang.japanese
-echo `date +%Y/%m/%d" "%H:%M:%S` webalizer configure >> $OPENSHIFT_LOG_DIR/install.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` webalizer configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
---prefix=$OPENSHIFT_DATA_DIR/webalizer \
---mandir=$OPENSHIFT_DATA_DIR/webalizer \
---with-language=japanese --enable-dns 2>&1 | tee $OPENSHIFT_LOG_DIR/webalizer.configure.log
-echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make >> $OPENSHIFT_LOG_DIR/install.log
+--prefix=${OPENSHIFT_DATA_DIR}/webalizer \
+--mandir=${OPENSHIFT_DATA_DIR}/webalizer \
+--with-language=japanese --enable-dns 2>&1 | tee ${OPENSHIFT_LOG_DIR}/webalizer.configure.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make
-echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make install >> $OPENSHIFT_LOG_DIR/install.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
 
 # apache htdocs
-mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/webalizer
-cd $OPENSHIFT_DATA_DIR/webalizer/etc
+mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/webalizer
+cd ${OPENSHIFT_DATA_DIR}/webalizer/etc
 cp webalizer.conf.sample webalizer.conf
 echo >> webalizer.conf
 echo >> webalizer.conf
-echo LogFile $OPENSHIFT_DATA_DIR/apache/logs/access_log >> webalizer.conf
-echo OutputDir $OPENSHIFT_DATA_DIR/apache/htdocs/webalizer >> webalizer.conf
-echo HostName $OPENSHIFT_APP_DNS >> webalizer.conf
+echo LogFile ${OPENSHIFT_DATA_DIR}/apache/logs/access_log >> webalizer.conf
+echo OutputDir ${OPENSHIFT_DATA_DIR}/apache/htdocs/webalizer >> webalizer.conf
+echo HostName ${OPENSHIFT_APP_DNS} >> webalizer.conf
 echo UseHTTPS yes >> webalizer.conf
 
-cd $OPENSHIFT_TMP_DIR
+cd ${OPENSHIFT_TMP_DIR}
 rm webalizer-${webalizer_version}-src.tgz
 rm -rf webalizer-${webalizer_version}
 
+fi
+
 # ***** wordpress *****
 
-echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
-mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/wordpress
-cd $OPENSHIFT_DATA_DIR/apache/htdocs/wordpress
-echo `date +%Y/%m/%d" "%H:%M:%S` wordpress wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
-echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> $OPENSHIFT_LOG_DIR/install.log
+cd ${OPENSHIFT_TMP_DIR}
+if [ -d ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress ]
+then
+
+echo `date +%Y/%m/%d" "%H:%M:%S` wordpress skip all >> ${OPENSHIFT_LOG_DIR}/install.log
+
+else
+
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+cp ${OPENSHIFT_TMP_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
+
+echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
 
 # force ssl patch
 mkdir -p wp-content/mu-plugins
 cd wp-content/mu-plugins
-wget https://gist.githubusercontent.com/franz-josef-kaiser/1891564/raw/9d3f519c1cfb0fff9ad5ca31f3e783deaf5d561c/is_ssl.php
+cp ${OPENSHIFT_TMP_DIR}/download_files/is_ssl.php ./
 cd ../../wp-includes
 perl -pi -e 's/(^function is_ssl\(\) \{)$/$1\n\treturn is_maybe_ssl\(\);/g' functions.php
 
 # create database
 wpuser_password=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
-cd $OPENSHIFT_TMP_DIR
+cd ${OPENSHIFT_TMP_DIR}
 cat << '__HEREDOC__' > create_database_wordpress.txt
 CREATE DATABASE wordpress CHARACTER SET utf8 COLLATE utf8_general_ci;
 GRANT ALL PRIVILEGES ON wordpress.* TO wpuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
@@ -380,14 +554,14 @@ FLUSH PRIVILEGES;
 EXIT
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_wordpress.txt
-sed -i -e "s/__PASSWORD__/$wpuser_password/g" create_database_wordpress.txt
+sed -i -e "s/__PASSWORD__/${wpuser_password}/g" create_database_wordpress.txt
 
-mysql -u "$OPENSHIFT_MYSQL_DB_USERNAME" \
---password="$OPENSHIFT_MYSQL_DB_PASSWORD" \
--h "$OPENSHIFT_MYSQL_DB_HOST" \
--P "$OPENSHIFT_MYSQL_DB_PORT" < create_database_wordpress.txt
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_wordpress.txt
 
-cd $OPENSHIFT_DATA_DIR/apache/htdocs/wordpress
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 cat << '__HEREDOC__' > wp-config.php
 <?php
 define('DB_NAME', 'wordpress');
@@ -398,10 +572,10 @@ define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', 'utf8_general_ci');
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' wp-config.php
-sed -i -e "s/__PASSWORD__/$wpuser_password/g" wp-config.php
-curl -o $OPENSHIFT_TMP_DIR/salt.txt https://api.wordpress.org/secret-key/1.1/salt/
-cat $OPENSHIFT_TMP_DIR/salt.txt >> wp-config.php
-rm $OPENSHIFT_TMP_DIR/salt.txt
+sed -i -e "s/__PASSWORD__/${wpuser_password}/g" wp-config.php
+cp ${OPENSHIFT_TMP_DIR}/download_files/salt.txt ./
+cat ${OPENSHIFT_TMP_DIR}/salt.txt >> wp-config.php
+rm ${OPENSHIFT_TMP_DIR}/salt.txt
 cat << '__HEREDOC__' >> wp-config.php
 
 $table_prefix  = 'wp_';
@@ -418,24 +592,34 @@ require_once(ABSPATH . 'wp-settings.php');
 
 __HEREDOC__
 
-echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/$wpuser_password >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/${wpuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
 
-cd $OPENSHIFT_DATA_DIR/apache/htdocs/wordpress
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 rm wordpress-${wordpress_version}.tar.gz
 
-# ***** tiny tiny rss *****
+fi
 
-echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
-mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/ttrss
-cd $OPENSHIFT_DATA_DIR/apache/htdocs/ttrss
-echo `date +%Y/%m/%d" "%H:%M:%S` ttrss wget >> $OPENSHIFT_LOG_DIR/install.log
-wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
-echo `date +%Y/%m/%d" "%H:%M:%S` ttrss tar >> $OPENSHIFT_LOG_DIR/install.log
+# ***** Tiny Tiny RSS *****
+
+cd ${OPENSHIFT_TMP_DIR}
+if [ -d ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss ]
+then
+
+echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS skip all >> ${OPENSHIFT_LOG_DIR}/install.log
+
+else
+
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
+cp ${OPENSHIFT_TMP_DIR}/download_files/${ttrss_version}.tar.gz ./
+
+echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz ${ttrss_version}.tar.gz --strip-components=1
 
 # create database
 ttrssuser_password=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
-cd $OPENSHIFT_TMP_DIR
+cd ${OPENSHIFT_TMP_DIR}
 cat << '__HEREDOC__' > create_database_ttrss.txt
 CREATE DATABASE ttrss CHARACTER SET utf8 COLLATE utf8_general_ci;
 GRANT ALL PRIVILEGES ON ttrss.* TO ttrssuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
@@ -443,52 +627,64 @@ FLUSH PRIVILEGES;
 EXIT
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_ttrss.txt
-# perl -pi -e 's/__PASSWORD__/$ttrssuser_password/g' create_database_ttrss.txt
-sed -i -e "s/__PASSWORD__/$ttrssuser_password/g" create_database_ttrss.txt
+sed -i -e "s/__PASSWORD__/${ttrssuser_password}/g" create_database_ttrss.txt
 
-mysql -u "$OPENSHIFT_MYSQL_DB_USERNAME" \
---password="$OPENSHIFT_MYSQL_DB_PASSWORD" \
--h "$OPENSHIFT_MYSQL_DB_HOST" \
--P "$OPENSHIFT_MYSQL_DB_PORT" < create_database_ttrss.txt
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_ttrss.txt
 
-mysql -u "$OPENSHIFT_MYSQL_DB_USERNAME" \
---password="$OPENSHIFT_MYSQL_DB_PASSWORD" \
--h "$OPENSHIFT_MYSQL_DB_HOST" \
--P "$OPENSHIFT_MYSQL_DB_PORT" ttrss < $OPENSHIFT_DATA_DIR/apache/htdocs/ttrss/schema/ttrss_schema_mysql.sql
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/schema/ttrss_schema_mysql.sql
 
-echo `date +%Y/%m/%d" "%H:%M:%S` ttrss mysql ttrssuser/$ttrssuser_password >> $OPENSHIFT_LOG_DIR/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS mysql ttrssuser/${ttrssuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
 
-cd $OPENSHIFT_DATA_DIR/apache/htdocs/ttrss
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 rm ${ttrss_version}.tar.gz
+
+fi
 
 # ***** PHP iCalendar *****
 
-echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
-mkdir $OPENSHIFT_DATA_DIR/apache/htdocs/cal
-cd $OPENSHIFT_DATA_DIR/apache/htdocs/cal
-echo `date +%Y/%m/%d" "%H:%M:%S` iCalendar wget >> $OPENSHIFT_LOG_DIR/install.log
-wget http://downloads.sourceforge.net/project/phpicalendar/phpicalendar/phpicalendar%202.4%20RC7/phpicalendar-2.4_20100615.tar.bz2
-echo `date +%Y/%m/%d" "%H:%M:%S` iCalendar tar >> $OPENSHIFT_LOG_DIR/install.log
+cd ${OPENSHIFT_TMP_DIR}
+if [ -d ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal ]
+then
+
+echo `date +%Y/%m/%d" "%H:%M:%S` PHP iCalendar skip all >> ${OPENSHIFT_LOG_DIR}/install.log
+
+else
+
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal
+cp ${OPENSHIFT_TMP_DIR}/download_files/phpicalendar-2.4_20100615.tar.bz2 ./
+
+echo `date +%Y/%m/%d" "%H:%M:%S` PHP iCalendar tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar jxf phpicalendar-2.4_20100615.tar.bz2 --strip-components=1
 
 cd functions
-wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/icalendar/ical_parser.php.patch
+cp ${OPENSHIFT_TMP_DIR}/download_files/ical_parser.php.patch ./
 patch ical_parser.php ical_parser.php.patch
 
-cd $OPENSHIFT_DATA_DIR/apache/htdocs/cal
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal
 rm phpicalendar-2.4_20100615.tar.bz2
+
+fi
 
 # ***** cron *****
 
 # *** daily ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` cron daily >> $OPENSHIFT_LOG_DIR/install.log
-pushd $OPENSHIFT_REPO_DIR/.openshift/cron/daily > /dev/null
+echo `date +%Y/%m/%d" "%H:%M:%S` cron daily >> ${OPENSHIFT_LOG_DIR}/install.log
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/daily > /dev/null
+rm -f *
 touch jobs.deny
 
 # * mysql_backup *
 
-wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/redmine/mysql_backup.sh
+cp ${OPENSHIFT_TMP_DIR}/download_files/mysql_backup.sh ./
 chmod +x mysql_backup.sh
 echo mysql_backup.sh >> jobs.allow
 ./mysql_backup.sh
@@ -496,8 +692,9 @@ popd > /dev/null
 
 # *** hourly ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` cron hourly >> $OPENSHIFT_LOG_DIR/install.log
-pushd $OPENSHIFT_REPO_DIR/.openshift/cron/hourly > /dev/null
+echo `date +%Y/%m/%d" "%H:%M:%S` cron hourly >> ${OPENSHIFT_LOG_DIR}/install.log
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
+rm -f *
 touch jobs.deny
 
 # * webalizer *
@@ -506,7 +703,7 @@ cat << '__HEREDOC__' > webalizer.sh
 #!/bin/bash
 
 export TZ=JST-9
-cd $OPENSHIFT_DATA_DIR/webalizer
+cd ${OPENSHIFT_DATA_DIR}/webalizer
 ./bin/webalizer -c ./etc/webalizer.conf
 __HEREDOC__
 chmod +x webalizer.sh
@@ -515,8 +712,9 @@ popd > /dev/null
 
 # *** minutely ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` cron minutely >> $OPENSHIFT_LOG_DIR/install.log
-pushd $OPENSHIFT_REPO_DIR/.openshift/cron/minutely > /dev/null
+echo `date +%Y/%m/%d" "%H:%M:%S` cron minutely >> ${OPENSHIFT_LOG_DIR}/install.log
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
+rm -f *
 touch jobs.deny
 
 # * keep_delegated *
@@ -525,12 +723,12 @@ cat << '__HEREDOC__' > keep_delegated.sh
 #!/bin/bash
 
 is_alive=`ps -ef | grep delegated | grep -v grep  | grep -v keep_delegate | wc -l`
-if [ $is_alive -eq 1 ]; then
+if [ ${is_alive} -eq 1 ]; then
   echo delegated is alive
 else
-  echo $is_alive
+  echo ${is_alive}
   echo RESTART delegated
-  cd $OPENSHIFT_DATA_DIR/delegate/
+  cd ${OPENSHIFT_DATA_DIR}/delegate/
   export TZ=JST-9
   ./delegated -r +=P50080
 fi
@@ -543,47 +741,47 @@ echo keep_delegated.sh >> jobs.allow
 cat << '__HEREDOC__' > mrtg.sh
 #!/bin/bash
 
-mpstat 5 1 | grep ^Average | awk '{print $3+$4+$5+$6+$7+$8+$9+$10}' > $OPENSHIFT_TMP_DIR/cpu_usage_current
-cd $OPENSHIFT_DATA_DIR/mrtg
+mpstat 5 1 | grep ^Average | awk '{print $3+$4+$5+$6+$7+$8+$9+$10}' > ${OPENSHIFT_TMP_DIR}/cpu_usage_current
+cd ${OPENSHIFT_DATA_DIR}/mrtg
 export TZ=JST-9
 env LANG=C ./bin/mrtg mrtg.conf
 __HEREDOC__
 chmod +x mrtg.sh
 echo mrtg.sh >> jobs.allow
 
-# * tiny tiny rss *
+# * Tiny Tiny Rss update feeds *
 
 cat << '__HEREDOC__' > update_feeds.sh
 #!/bin/bash
-$OPENSHIFT_DATA_DIR/apache/htdocs/ttrss/update.php --feeds
+${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
 __HEREDOC__
 chmod +x update_feeds.sh
-# echo update_feeds.sh >> jobs.allow
+echo update_feeds.sh >> jobs.allow
 
-echo `quota -s | grep -v a | awk {'print "Disk Usage : " $1,$4 " files"'}` >> $OPENSHIFT_LOG_DIR/install.log
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish >> $OPENSHIFT_LOG_DIR/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish >> ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** start *****
 
-kill `netstat -anpt 2>/dev/null | grep $OPENSHIFT_DIY_IP | grep LISTEN | awk '{print $7}' | awk -F/ '{print $1}'`
-cd $OPENSHIFT_DATA_DIR
+kill `netstat -anpt 2>/dev/null | grep ${OPENSHIFT_DIY_IP} | grep LISTEN | awk '{print $7}' | awk -F/ '{print $1}'`
+cd ${OPENSHIFT_DATA_DIR}
 export TZ=JST-9
 ./apache/bin/apachectl -k graceful
 cd delegate
 ./delegated -r +=P50080
 
-wget --spider https://$OPENSHIFT_APP_DNS/
+wget --spider https://${OPENSHIFT_APP_DNS}/
 sleep 5s
 
-cd $OPENSHIFT_REPO_DIR/.openshift/cron/hourly/
+cd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/
 ./webalizer.sh
 
 set +x
 
-echo https://$OPENSHIFT_APP_DNS/wordpress/wp-admin/install.php
-echo https://$OPENSHIFT_APP_DNS/ttrss/install/ ttrssuser/$ttrssuser_password ttrss $OPENSHIFT_MYSQL_DB_HOST admin/password
-echo https://$OPENSHIFT_APP_DNS/cal/
-echo https://$OPENSHIFT_APP_DNS/mail/
-echo https://$OPENSHIFT_APP_DNS/webalizer/
-echo https://$OPENSHIFT_APP_DNS/mrtg/
+echo https://${OPENSHIFT_APP_DNS}/wordpress/wp-admin/install.php
+echo https://${OPENSHIFT_APP_DNS}/ttrss/install/ ttrssuser/${ttrssuser_password} ttrss ${OPENSHIFT_MYSQL_DB_HOST} admin/password
+echo https://${OPENSHIFT_APP_DNS}/cal/
+echo https://${OPENSHIFT_APP_DNS}/mail/
+echo https://${OPENSHIFT_APP_DNS}/webalizer/
+echo https://${OPENSHIFT_APP_DNS}/mrtg/
 
