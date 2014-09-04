@@ -3,7 +3,7 @@
 set -x
 
 apache_version='2.2.27'
-php_version='5.5.15'
+php_version='5.5.16'
 delegate_version='9.9.11'
 mrtg_version='2.17.4'
 webalizer_version='2.23-08'
@@ -398,7 +398,7 @@ Refresh: 60000
 
 Target[disk]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/disk_usage.sh`
 Title[disk]: Disk
-PageTop[disk]: Disk
+PageTop[disk]: <h1>Disk</h1>
 Options[disk]: gauge, nobanner, growright, unknaszero, noinfo
 AbsMax[disk]: 10000000
 MaxBytes[disk]: 1048576
@@ -415,7 +415,7 @@ YTicsFactor[disk]: 1024
 
 Target[file]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/file_usage.sh`
 Title[file]: Files
-PageTop[file]: Files
+PageTop[file]: <h1>Files</h1>
 Options[file]: gauge, nobanner, growright, unknaszero, noinfo, integer
 AbsMax[file]: 1000000
 MaxBytes[file]: 80000
@@ -429,7 +429,7 @@ Suppress[file]: y
 
 Target[memory]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/memory_usage.sh`
 Title[memory]: Memory
-PageTop[memory]: Memory
+PageTop[memory]: <h1>Memory</h1>
 Options[memory]: gauge, nobanner, growright, unknaszero, noinfo
 AbsMax[memory]: 5368709120
 MaxBytes[memory]: 536870912
@@ -443,7 +443,7 @@ Suppress[memory]: y
 
 Target[cpu]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/cpu_usage.sh`
 Title[cpu]: Cpu
-PageTop[cpu]: Cpu
+PageTop[cpu]: <h1>Cpu</h1>
 Options[cpu]: gauge, nobanner, growright, unknaszero, noinfo, noo
 AbsMax[cpu]: 200
 MaxBytes[cpu]: 100
@@ -753,7 +753,12 @@ echo mrtg.sh >> jobs.allow
 
 cat << '__HEREDOC__' > update_feeds.sh
 #!/bin/bash
-${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
+
+minute=`date +%M`
+
+if [ `expr ${minute} % 5` -eq 0 ]; then
+    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
+fi
 __HEREDOC__
 chmod +x update_feeds.sh
 echo update_feeds.sh >> jobs.allow
