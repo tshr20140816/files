@@ -2,13 +2,24 @@
 
 set -x
 
-apache_version='2.2.27'
-php_version='5.5.16'
+# apache_version='2.2.27'
+apache_version='2.2.29'
+# php_version='5.5.16'
+php_version='5.6.0'
 delegate_version='9.9.11'
 mrtg_version='2.17.4'
 webalizer_version='2.23-08'
-wordpress_version='3.9.2-ja'
+# wordpress_version='3.9.2-ja'
+wordpress_version='4.0-ja'
 ttrss_version='1.13'
+memcached_version='1.4.20'
+libmemcached_version='1.0.18'
+memcached_php_ext_version='2.2.0'
+
+# port map
+# 8080 apache
+# 58080 delegate
+# 51121 memcached
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -43,12 +54,46 @@ do
         files_exists=0
     fi
 
+    # *** memcached ***
+    if [ ! -f memcached-${memcached_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` memcached wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://www.memcached.org/files/memcached-${memcached_version}.tar.gz
+    fi
+    if [ ! -f memcached-${memcached_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** libmemcached ***
+    if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
+    fi
+    if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** memcached (php extension) ***
+    if [ ! -f memcached-${memcached_php_ext_version}.tgz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` memcached php extension wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://pecl.php.net/get/memcached-${memcached_php_ext_version}.tgz
+    fi
+    if [ ! -f memcached-${memcached_php_ext_version}.tgz ]; then
+        files_exists=0
+    fi
+
     # *** delegate ***
     if [ ! -f delegate${delegate_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget >> ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
     fi
     if [ ! -f delegate${delegate_version}.tar.gz ]; then
+        files_exists=0
+    fi
+    if [ ! -f delegated.xz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` delegate binary wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://github.com/tshr20140816/files/raw/master/openshift/delegated.xz
+    fi
+    if [ ! -f delegated.xz ]; then
         files_exists=0
     fi
 
@@ -139,6 +184,32 @@ if [ ${files_exists} -eq 0 ]; then
     exit 1
 fi
 
+# ***** git etc *****
+
+if [ -d ${OPENSHIFT_DATA_DIR}/apache ]
+then
+
+echo `date +%Y/%m/%d" "%H:%M:%S` git skip all >> ${OPENSHIFT_LOG_DIR}/install.log
+
+else
+
+echo `date +%Y/%m/%d" "%H:%M:%S` git >> ${OPENSHIFT_LOG_DIR}/install.log
+
+cd ${OPENSHIFT_DATA_DIR}
+mkdir github
+cd github
+git init 
+git remote add origin https://github.com/tshr20140816/files.git
+git pull origin master
+
+cd ${OPENSHIFT_DATA_DIR}
+if [ ! -f ${OPENSHIFT_DATA_DIR}/.exrc ]
+then
+echo "set number" >> .exrc
+fi
+
+fi
+
 # ***** apache *****
 
 cd ${OPENSHIFT_TMP_DIR}
@@ -173,12 +244,26 @@ Include conf/custom.conf
 __HEREDOC__
 perl -pi -e 's/(^ +DirectoryIndex .*$)/$1 index.php/g' conf/httpd.conf
 
+sed -i -e 's/(^LoadModule.+mod_userdir.so$)/# $1/g' conf/httpd.conf
+sed -i -e 's/(^LoadModule.+mod_status.so$)/# $1/g' conf/httpd.conf
+sed -i -e 's/(^LoadModule.+mod_info.so$)/# $1/g' conf/httpd.conf
+sed -i -e 's/(^LoadModule.+mod_authn_anon.so$)/# $1/g' conf/httpd.conf
+sed -i -e 's/(^LoadModule.+mod_authn_dbm.so$)/# $1/g' conf/httpd.conf
+sed -i -e 's/(^LoadModule.+mod_proxy_ftp.so$)/# $1/g' conf/httpd.conf
+sed -i -e 's/(^LoadModule.+mod_proxy_balancer.so$)/# $1/g' conf/httpd.conf
+
 cat << '__HEREDOC__' >> conf/custom.conf
 MinSpareServers 1
 MaxSpareServers 5
 StartServers 1
+KeepAlive On
+Timeout 30
 
 ServerTokens Prod
+
+HostnameLookups Off
+UseCanonicalName Off
+AccessFileName .htaccess
 
 # for delegate
 ProxyRequests Off
@@ -192,8 +277,6 @@ AddType application/x-httpd-php .php
     SetHandler application/x-httpd-php
 </FilesMatch>
 
-# AddOutputFilterByType DEFLATE text/html text/plain text/xml 
-
 Header unset x-powered-by
 Header set server Apache
 
@@ -202,6 +285,29 @@ Header set server Apache
     SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
     Header append Vary User-Agent env=!dont-vary
 </Location>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+</IfModule>
+
+<ifModule mod_headers.c>
+    Header unset ETag
+</ifModule>
+
+FileETag None
+
+<IfModule mod_cache.c>
+    LoadModule mem_cache_module modules/mod_mem_cache.so
+    <IfModule mod_mem_cache.c>
+        CacheEnable mem /
+        MCacheSize 4096
+        MCacheMaxObjectCount 100
+        MCacheMinObjectSize 1
+        MCacheMaxObjectSize 2048
+    </IfModule>
+</IfModule> 
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
 
@@ -264,11 +370,80 @@ cd ${OPENSHIFT_DATA_DIR}/php
 perl -pi -e 's/^short_open_tag .+$/short_open_tag = On/g' lib/php.ini
 perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/php.ini
 
+# ToDo
+# for memcached
+# lib/php.ini
+# [Session]
+# session.save_handler = memcached
+# session.save_path = "__OPENSHIFT_DIY_IP__:51211" 
+# sed -i -e "s/__OPENSHIFT_DIY_IP__/${OPENSHIFT_DIY_IP}/g" lib/php.ini
+
 cd ${OPENSHIFT_TMP_DIR}
 rm php-${php_version}.tar.gz
 rm -rf php-${php_version}
 
 fi
+
+# ***** memcached *****
+
+# *** memcached ***
+
+memcached-${memcached_version}.tar.gz
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+cd ${OPENSHIFT_TMP_DIR}
+cp ${OPENSHIFT_TMP_DIR}/download_files/memcached-${memcached_version}.tar.gz ./
+echo `date +%Y/%m/%d" "%H:%M:%S` memcached tar >> ${OPENSHIFT_LOG_DIR}/install.log
+tar xfz memcached-${memcached_version}.tar.gz
+cd memcached-${memcached_version}
+echo `date +%Y/%m/%d" "%H:%M:%S` memcached configure >> ${OPENSHIFT_LOG_DIR}/install.log
+CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/memcached
+
+echo `date +%Y/%m/%d" "%H:%M:%S` memcached make >> ${OPENSHIFT_LOG_DIR}/install.log
+time make
+echo `date +%Y/%m/%d" "%H:%M:%S` memcached make install >> ${OPENSHIFT_LOG_DIR}/install.log
+make install
+
+# *** libmemcached ***
+
+cd ${OPENSHIFT_TMP_DIR}
+cp ${OPENSHIFT_TMP_DIR}/download_files/libmemcached-${libmemcached_version}.tar.gz ./
+echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached tar >> ${OPENSHIFT_LOG_DIR}/install.log
+tar xfz libmemcached-${libmemcached_version}.tar.gz
+cd libmemcached-${libmemcached_version}
+echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached configure >> ${OPENSHIFT_LOG_DIR}/install.log
+CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
+./configure \
+--prefix=$OPENSHIFT_DATA_DIR/libmemcached
+
+echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make >> ${OPENSHIFT_LOG_DIR}/install.log
+time make
+echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make install >> ${OPENSHIFT_LOG_DIR}/install.log
+make install
+
+# *** memcached php extention ***
+
+cd ${OPENSHIFT_TMP_DIR}
+cp ${OPENSHIFT_TMP_DIR}/download_files/memcached-${memcached_php_ext_version}.tgz ./
+echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext tar >> ${OPENSHIFT_LOG_DIR}/install.log
+tar xfz memcached-${memcached_php_ext_version}.tgz
+cd memcached-${memcached_php_ext_version}
+echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext phpize >> ${OPENSHIFT_LOG_DIR}/install.log
+${OPENSHIFT_DATA_DIR}/php/bin/phpize
+echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext configure >> ${OPENSHIFT_LOG_DIR}/install.log
+CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/php_memcached \
+--with-libmemcached-dir=$OPENSHIFT_DATA_DIR/libmemcached \
+--disable-memcached-sasl \
+--enable-memcached \
+--with-php-config=${OPENSHIFT_DATA_DIR}/php/bin/php-config
+
+echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext make >> ${OPENSHIFT_LOG_DIR}/install.log
+time make
+echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext make install >> ${OPENSHIFT_LOG_DIR}/install.log
+make install
 
 # ***** delegate *****
 
@@ -285,11 +460,14 @@ cp ${OPENSHIFT_TMP_DIR}/download_files/delegate${delegate_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz delegate${delegate_version}.tar.gz
 cd delegate${delegate_version}
-echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> ${OPENSHIFT_LOG_DIR}/install.log
-perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
-time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 
+# echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> ${OPENSHIFT_LOG_DIR}/install.log
+# perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
+# time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
-cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
+# cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
+cp ${OPENSHIFT_TMP_DIR}/download_files/delegated.xz ./
+xz -dv delegated.xz
+cp ./delegated ${OPENSHIFT_DATA_DIR}/delegate/
 
 # apache htdocs
 mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons
@@ -537,12 +715,12 @@ cp ${OPENSHIFT_TMP_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
 
-# force ssl patch
-mkdir -p wp-content/mu-plugins
-cd wp-content/mu-plugins
-cp ${OPENSHIFT_TMP_DIR}/download_files/is_ssl.php ./
-cd ../../wp-includes
-perl -pi -e 's/(^function is_ssl\(\) \{)$/$1\n\treturn is_maybe_ssl\(\);/g' functions.php
+# # force ssl patch
+# mkdir -p wp-content/mu-plugins
+# cd wp-content/mu-plugins
+# cp ${OPENSHIFT_TMP_DIR}/download_files/is_ssl.php ./
+# cd ../../wp-includes
+# perl -pi -e 's/(^function is_ssl\(\) \{)$/$1\n\treturn is_maybe_ssl\(\);/g' functions.php
 
 # create database
 wpuser_password=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
@@ -582,8 +760,8 @@ $table_prefix  = 'wp_';
 define('WPLANG', 'ja');
 define('WP_DEBUG', false);
 
-define('FORCE_SSL_ADMIN', true);
-define('FORCE_SSL_LOGIN', true);
+# define('FORCE_SSL_ADMIN', true);
+# define('FORCE_SSL_LOGIN', true);
 
 if ( !defined('ABSPATH') )
     define('ABSPATH', dirname(__FILE__) . '/');
@@ -717,13 +895,14 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
 
-# * keep_delegated *
+# * keep_process *
 
-cat << '__HEREDOC__' > keep_delegated.sh
+cat << '__HEREDOC__' > keep_process.sh
 #!/bin/bash
 
-is_alive=`ps -ef | grep delegated | grep -v grep  | grep -v keep_delegate | wc -l`
-if [ ${is_alive} -eq 1 ]; then
+# delegated
+is_alive=`ps -ef | grep delegated | grep -v grep | wc -l`
+if [ ${is_alive} -gt 1 ]; then
   echo delegated is alive
 else
   echo ${is_alive}
@@ -732,9 +911,21 @@ else
   export TZ=JST-9
   ./delegated -r +=P50080
 fi
+
+# memcached
+is_alive=`ps -ef | grep memcached | grep -v grep | wc -l`
+if [ ${is_alive} -gt 1 ]; then
+  echo memcached is alive
+else
+  echo ${is_alive}
+  echo RESTART memcached
+  cd ${OPENSHIFT_DATA_DIR}/memcached/
+  ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 51211 -d
+fi
 __HEREDOC__
-chmod +x keep_delegated.sh
-echo keep_delegated.sh >> jobs.allow
+
+chmod +x keep_process.sh
+echo keep_process.sh >> jobs.allow
 
 # * mrtg *
 
