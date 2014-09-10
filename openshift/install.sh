@@ -15,6 +15,7 @@ ttrss_version='1.13'
 memcached_version='1.4.20'
 libmemcached_version='1.0.18'
 memcached_php_ext_version='2.2.0'
+gperf_version='3.0.4'
 
 # port map
 # 8080 apache
@@ -24,6 +25,15 @@ memcached_php_ext_version='2.2.0'
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Start >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
+bash --version
+perl --version
+php --version
+python --version
+ruby --version
+httpd --version
 
 # ***** download files *****
 
@@ -42,6 +52,15 @@ do
         wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.gz
     fi
     if [ ! -f httpd-${apache_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** gperf ***
+    if [ ! -f gperf-${gperf_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` php wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://ftp.gnu.org/gnu/gperf/gperf-${gperf_version}.tar.gz
+    fi
+    if [ ! -f gperf-${gperf_version}.tar.gz ]; then
         files_exists=0
     fi
 
@@ -186,7 +205,7 @@ fi
 
 # ***** git etc *****
 
-if [ -d ${OPENSHIFT_DATA_DIR}/apache ]
+if [ -d ${OPENSHIFT_DATA_DIR}/github ]
 then
 
 echo `date +%Y/%m/%d" "%H:%M:%S` git skip all >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -198,7 +217,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` git >> ${OPENSHIFT_LOG_DIR}/install.log
 cd ${OPENSHIFT_DATA_DIR}
 mkdir github
 cd github
-git init 
+git init
 git remote add origin https://github.com/tshr20140816/files.git
 git pull origin master
 
@@ -221,6 +240,8 @@ echo `date +%Y/%m/%d" "%H:%M:%S` apache skip all >> ${OPENSHIFT_LOG_DIR}/install
 else
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 
 cp ${OPENSHIFT_TMP_DIR}/download_files/httpd-${apache_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` apache tar >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -244,13 +265,24 @@ Include conf/custom.conf
 __HEREDOC__
 perl -pi -e 's/(^ +DirectoryIndex .*$)/$1 index.php/g' conf/httpd.conf
 
-sed -i -e 's/(^LoadModule.+mod_userdir.so$)/# $1/g' conf/httpd.conf
-sed -i -e 's/(^LoadModule.+mod_status.so$)/# $1/g' conf/httpd.conf
-sed -i -e 's/(^LoadModule.+mod_info.so$)/# $1/g' conf/httpd.conf
-sed -i -e 's/(^LoadModule.+mod_authn_anon.so$)/# $1/g' conf/httpd.conf
-sed -i -e 's/(^LoadModule.+mod_authn_dbm.so$)/# $1/g' conf/httpd.conf
-sed -i -e 's/(^LoadModule.+mod_proxy_ftp.so$)/# $1/g' conf/httpd.conf
-sed -i -e 's/(^LoadModule.+mod_proxy_balancer.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_authn_anon.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_authn_dbm.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_authz_dbm.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_authz_groupfile.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_authz_owner.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_authz_user.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_info.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_proxy_balancer.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_proxy_ftp.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_speling.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_status.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_userdir.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_version.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_authn_dbd.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_dbd.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_log_forensic.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_proxy_ajp.so$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^LoadModule.+mod_proxy_scgi.so$)/# $1/g' conf/httpd.conf
 
 cat << '__HEREDOC__' >> conf/custom.conf
 MinSpareServers 1
@@ -307,7 +339,7 @@ FileETag None
         MCacheMinObjectSize 1
         MCacheMaxObjectSize 2048
     </IfModule>
-</IfModule> 
+</IfModule>
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
 
@@ -320,7 +352,96 @@ cd ${OPENSHIFT_TMP_DIR}
 rm httpd-${apache_version}.tar.gz
 rm -rf httpd-${apache_version}
 
+# *** gperf ***
+
+cd ${OPENSHIFT_TMP_DIR}
+cp ${OPENSHIFT_TMP_DIR}/download_files/gperf-${gperf_version}.tar.gz ./
+echo `date +%Y/%m/%d" "%H:%M:%S` gperf tar >> ${OPENSHIFT_LOG_DIR}/install.log
+tar xfz gperf-${gperf_version}.tar.gz
+cd gperf-${gperf_version}
+echo `date +%Y/%m/%d" "%H:%M:%S` gperf configure >> ${OPENSHIFT_LOG_DIR}/install.log
+CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/local
+
+echo `date +%Y/%m/%d" "%H:%M:%S` gperf make >> ${OPENSHIFT_LOG_DIR}/install.log
+time make
+echo `date +%Y/%m/%d" "%H:%M:%S` gperf make install >> ${OPENSHIFT_LOG_DIR}/install.log
+make install
+export PATH=$PATH:${OPENSHIFT_DATA_DIR}/local/bin
+
+# *** depot_tools ***
+
+# https://developers.google.com/speed/pagespeed/module/build_mod_pagespeed_from_source
+
+cd ${OPENSHIFT_DATA_DIR}
+
+echo `date +%Y/%m/%d" "%H:%M:%S` depot_tools svn >> ${OPENSHIFT_LOG_DIR}/install.log
+mkdir -p google/bin
+cd google/bin
+svn co http://src.chromium.org/svn/trunk/tools/depot_tools
+export PATH=$PATH:${OPENSHIFT_DATA_DIR}/google/bin/depot_tools
+
+# *** pagespeed ***
+
+cd ${OPENSHIFT_TMP_DIR}
+mkdir mod_pagespeed
+cd mod_pagespeed
+gclient config http://modpagespeed.googlecode.com/svn/branches/latest-beta/src
+gclient sync --force --jobs=1
+
+cd src
+make AR.host=`pwd`/build/wrappers/ar.sh AR.target=`pwd`/build/wrappers/ar.sh BUILDTYPE=Release
+APXS_BIN=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+APACHE_ROOT=${OPENSHIFT_DATA_DIR}/apache \
+./install_apxs.sh
+
+# ToDo
+
 fi
+
+# ***** ruby *****
+
+# http://diary-satoryu.rhcloud.com/?date=201307
+
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` rbenv install >> ${OPENSHIFT_LOG_DIR}/install.log
+
+# https://github.com/Seppone/openshift-rbenv-installer
+cd ${OPENSHIFT_TMP_DIR}
+curl -L https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer | bash
+
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+echo `date +%Y/%m/%d" "%H:%M:%S` ruby rbenv >> ${OPENSHIFT_LOG_DIR}/install.log
+ruby -v
+rbenv install 1.9.3-p547
+rbenv global 1.9.3-p547
+ruby -v
+
+# ***** passenger *****
+
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` passenger gem >> ${OPENSHIFT_LOG_DIR}/install.log
+
+cd ${OPENSHIFT_DATA_DIR}
+mkdir gems
+gem install passenger --install-dir ${OPENSHIFT_DATA_DIR}/gems/ --no-ri --no-rdoc
+
+# ToDo
+
+# export APXS2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs
+# export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
+
+# passenger-install-apache2-module
 
 # ***** php *****
 
@@ -332,6 +453,9 @@ echo `date +%Y/%m/%d" "%H:%M:%S` php skip all >> ${OPENSHIFT_LOG_DIR}/install.lo
 else
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
 cd ${OPENSHIFT_TMP_DIR}
 cp ${OPENSHIFT_TMP_DIR}/download_files/php-${php_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` php tar >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -375,8 +499,8 @@ perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/p
 # lib/php.ini
 # [Session]
 # session.save_handler = memcached
-# session.save_path = "__OPENSHIFT_DIY_IP__:51211" 
-# sed -i -e "s/__OPENSHIFT_DIY_IP__/${OPENSHIFT_DIY_IP}/g" lib/php.ini
+# session.save_path = "__OPENSHIFT_DIY_IP__:51211"
+# perl -pi -e "s/__OPENSHIFT_DIY_IP__/${OPENSHIFT_DIY_IP}/g" lib/php.ini
 
 cd ${OPENSHIFT_TMP_DIR}
 rm php-${php_version}.tar.gz
@@ -390,6 +514,9 @@ fi
 
 memcached-${memcached_version}.tar.gz
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
 cd ${OPENSHIFT_TMP_DIR}
 cp ${OPENSHIFT_TMP_DIR}/download_files/memcached-${memcached_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached tar >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -455,6 +582,9 @@ echo `date +%Y/%m/%d" "%H:%M:%S` delegate skip all >> ${OPENSHIFT_LOG_DIR}/insta
 else
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
 cd ${OPENSHIFT_TMP_DIR}
 cp ${OPENSHIFT_TMP_DIR}/download_files/delegate${delegate_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -462,7 +592,7 @@ tar xfz delegate${delegate_version}.tar.gz
 cd delegate${delegate_version}
 # echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> ${OPENSHIFT_LOG_DIR}/install.log
 # perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
-# time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 
+# time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe"
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
 # cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
 cp ${OPENSHIFT_TMP_DIR}/download_files/delegated.xz ./
@@ -480,8 +610,8 @@ cat << '__HEREDOC__' > P50080
 SERVER=http
 ADMIN=admin@rhcloud.local
 DGROOT=__OPENSHIFT_DATA_DIR__delegate
-MOUNT="/mail/* pop://pop.mail.yahoo.co.jp:110/* noapop" 
-FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt" 
+MOUNT="/mail/* pop://pop.mail.yahoo.co.jp:110/* noapop"
+FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P50080
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P50080
@@ -507,6 +637,9 @@ echo `date +%Y/%m/%d" "%H:%M:%S` mrtg skip all >> ${OPENSHIFT_LOG_DIR}/install.l
 else
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
 cd ${OPENSHIFT_TMP_DIR}
 cp ${OPENSHIFT_TMP_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -658,6 +791,9 @@ echo `date +%Y/%m/%d" "%H:%M:%S` webalizer skip all >> ${OPENSHIFT_LOG_DIR}/inst
 else
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
 cd ${OPENSHIFT_TMP_DIR}
 cp ${OPENSHIFT_TMP_DIR}/download_files/webalizer-${webalizer_version}-src.tgz ./
 
@@ -708,6 +844,9 @@ echo `date +%Y/%m/%d" "%H:%M:%S` wordpress skip all >> ${OPENSHIFT_LOG_DIR}/inst
 else
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 cp ${OPENSHIFT_TMP_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
@@ -732,7 +871,7 @@ FLUSH PRIVILEGES;
 EXIT
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_wordpress.txt
-sed -i -e "s/__PASSWORD__/${wpuser_password}/g" create_database_wordpress.txt
+perl -pi -e "s/__PASSWORD__/${wpuser_password}/g" create_database_wordpress.txt
 
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
@@ -750,7 +889,7 @@ define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', 'utf8_general_ci');
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' wp-config.php
-sed -i -e "s/__PASSWORD__/${wpuser_password}/g" wp-config.php
+perl -pi -e "s/__PASSWORD__/${wpuser_password}/g" wp-config.php
 cp ${OPENSHIFT_TMP_DIR}/download_files/salt.txt ./
 cat ${OPENSHIFT_TMP_DIR}/salt.txt >> wp-config.php
 rm ${OPENSHIFT_TMP_DIR}/salt.txt
@@ -788,6 +927,9 @@ echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS skip all >> ${OPENSHIFT_LOG_DIR}/
 else
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 cp ${OPENSHIFT_TMP_DIR}/download_files/${ttrss_version}.tar.gz ./
@@ -805,7 +947,7 @@ FLUSH PRIVILEGES;
 EXIT
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_ttrss.txt
-sed -i -e "s/__PASSWORD__/${ttrssuser_password}/g" create_database_ttrss.txt
+perl -pi -e "s/__PASSWORD__/${ttrssuser_password}/g" create_database_ttrss.txt
 
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
@@ -835,6 +977,9 @@ echo `date +%Y/%m/%d" "%H:%M:%S` PHP iCalendar skip all >> ${OPENSHIFT_LOG_DIR}/
 else
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal
 cp ${OPENSHIFT_TMP_DIR}/download_files/phpicalendar-2.4_20100615.tar.bz2 ./
@@ -955,6 +1100,9 @@ chmod +x update_feeds.sh
 echo update_feeds.sh >> jobs.allow
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish >> ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** start *****
@@ -980,4 +1128,3 @@ echo https://${OPENSHIFT_APP_DNS}/cal/
 echo https://${OPENSHIFT_APP_DNS}/mail/
 echo https://${OPENSHIFT_APP_DNS}/webalizer/
 echo https://${OPENSHIFT_APP_DNS}/mrtg/
-
