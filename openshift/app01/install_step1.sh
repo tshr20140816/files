@@ -80,6 +80,15 @@ do
         files_exists=0
     fi
 
+    # *** bash.rb ***
+    if [ ! -f bash.rb ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` bash.rb wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/bash.rb
+    fi
+    if [ ! -f bash.rb ]; then
+        files_exists=0
+    fi
+
     # *** ipa font ***
     if [ ! -f IPAfont${ipafont_version}.zip ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget >> ${OPENSHIFT_LOG_DIR}/install.log
