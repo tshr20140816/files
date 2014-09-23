@@ -191,6 +191,15 @@ do
         files_exists=0
     fi
 
+    # *** Lynx ***
+    if [ ! -f lynx2.8.7.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` Lynx wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://lynx.isc.org/lynx2.8.7/lynx2.8.7.tar.gz
+    fi
+    if [ ! -f lynx2.8.7.tar.gz ]; then
+        files_exists=0
+    fi
+
     # *** etc ***
 
     if [ ! -f salt.txt ]; then
