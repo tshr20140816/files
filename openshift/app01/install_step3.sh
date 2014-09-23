@@ -38,7 +38,6 @@ echo `date +%Y/%m/%d" "%H:%M:%S` ruby install >> ${OPENSHIFT_LOG_DIR}/install.lo
 
 export CFLAGS="-O3 -march=native -pipe" 
 export CXXFLAGS="-O3 -march=native -pipe" 
-export ruby_version='2.1.2'
 time CONFIGURE_OPTS="--disable-install-rdoc" rbenv install -v ${ruby_version}
 rbenv global ${ruby_version}
 rbenv rehash
