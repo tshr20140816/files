@@ -27,7 +27,8 @@ cd delegate${delegate_version}
 # time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
 # cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
-cp ${OPENSHIFT_TMP_DIR}/download_files/delegated.xz ./
+# cp ${OPENSHIFT_TMP_DIR}/download_files/delegated.xz ./
+cp ${OPENSHIFT_DATA_DIR}/github/openshift/delegated.xz ./
 xz -dv delegated.xz
 mv ./delegated ${OPENSHIFT_DATA_DIR}/delegate/
 
