@@ -193,7 +193,7 @@ RailsMaxPoolSize 2
 RailsPoolIdleTime 7200
 PassengerEnabled off
 PassengerStatThrottleRate 5
-RailsAutoDetect off
+# RailsAutoDetect off
 
 <Location "/redmine">
   PassengerEnabled on
