@@ -97,7 +97,7 @@ CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 --prefix=$OPENSHIFT_DATA_DIR/libmemcached 2>&1 | tee ${OPENSHIFT_LOG_DIR}/libmemcached.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make
+time make -j3
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
 
