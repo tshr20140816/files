@@ -190,6 +190,23 @@ do
         files_exists=0
     fi
 
+    # *** etc ***
+
+    if [ ! -f mysql_backup.sh ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mysql_backup.sh wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/redmine/mysql_backup.sh
+    fi
+    if [ ! -f mysql_backup.sh ]; then
+        files_exists=0
+    fi
+    if [ ! -f salt.txt ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` salt.txt wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        curl -o ./salt.txt https://api.wordpress.org/secret-key/1.1/salt/
+    fi
+    if [ ! -f salt.txt ]; then
+        files_exists=0
+    fi
+
     if [ ${files_exists} -eq 1 ]; then
         break
     else

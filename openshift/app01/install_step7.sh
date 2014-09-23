@@ -74,7 +74,7 @@ rm wordpress-${wordpress_version}.tar.gz
 
 # *** apache link ***
 
-ln -s ${OPENSHIFT_DATA_DIR}/wordpress-${wordpress_version} ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+ln -s ${OPENSHIFT_DATA_DIR}/wordpress ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 7 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
 
