@@ -58,6 +58,23 @@ cd ${OPENSHIFT_DATA_DIR}/webalizer
 __HEREDOC__
 chmod +x webalizer.sh
 echo webalizer.sh >> jobs.allow
+
+# * redmine repository check *
+
+cat << '__HEREDOC__' > redmine_repository_check.sh
+#!/bin/bash
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)" 
+
+rake redmine:fetch_changesets RAILS_ENV=production
+__HEREDOC__
+chmod +x redmine_repository_check.sh
+echo redmine_repository_check.sh >> jobs.allow
+
 popd > /dev/null
 
 # *** minutely ***
