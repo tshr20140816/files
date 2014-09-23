@@ -34,6 +34,10 @@ time make -j2
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
 
+cd ${OPENSHIFT_TMP_DIR}
+rm memcached-${memcached_version}.tar.gz
+rm -rf memcached-${memcached_version}
+
 # ***** php *****
 
 cd ${OPENSHIFT_TMP_DIR}
@@ -97,6 +101,10 @@ time make
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
 
+cd ${OPENSHIFT_TMP_DIR}
+rm libmemcached-${libmemcached_version}.tar.gz
+rm -rf libmemcached-${libmemcached_version}
+
 # *** memcached php extention ***
 
 cd ${OPENSHIFT_TMP_DIR}
@@ -120,5 +128,8 @@ time make
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 6 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+cd ${OPENSHIFT_TMP_DIR}
+rm memcached-${memcached_php_ext_version}.tgz
+rm -rf memcached-${memcached_php_ext_version}
 
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 6 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
