@@ -1,4 +1,6 @@
-et -x
+#!/bin/bash
+
+set -x
 
 while read LINE
 do
