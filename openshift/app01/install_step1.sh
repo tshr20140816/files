@@ -71,6 +71,15 @@ do
         files_exists=0
     fi
 
+    # *** Gemfile_redmine_custom ***
+    if [ ! -f Gemfile_redmine_custom ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` Gemfile_redmine_custom wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/Gemfile_redmine_custom
+    fi
+    if [ ! -f Gemfile_redmine_custom ]; then
+        files_exists=0
+    fi
+
     # *** redmine_logs ***
     if [ ! -f redmine_logs-0.0.5.zip ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` redmine_logs wget >> ${OPENSHIFT_LOG_DIR}/install.log
