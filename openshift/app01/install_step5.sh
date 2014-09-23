@@ -20,6 +20,8 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --snippet > ${OPENSHIFT_TMP_DIR}/passenger.conf
 
 # patch request_handler.rb
+# OPENSHIFT では 127.0.0.1 は使えないため
+# OPENSHIFT ではポートにも制限があるため固定ポートにしたけど大丈夫?
 pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/passenger-4.0.50/lib/phusion_passenger > /dev/null
 perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', 33000)/g" request_handler.rb
 perl -pi -e 's/127.0.0.1/$ENV{OPENSHIFT_DIY_IP}/g' request_handler.rb
@@ -57,7 +59,7 @@ __HEREDOC__
 
 # * create password *
 
-redmineuser_password=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
+redmineuser_password=`uuidgen | base64 | head -c 25`
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_redmine.txt
 perl -pi -e 's/__PASSWORD__/${redmineuser_password}/g' create_database_redmine.txt
 
@@ -105,7 +107,6 @@ mkdir public/plugin_assets
 
 # *** plugin ***
 pushd plugins > /dev/null
-# wget https://bitbucket.org/haru_iida/redmine_logs/downloads/redmine_logs-0.0.5.zip
 cp ${OPENSHIFT_TMP_DIR}/download_files/redmine_logs-0.0.5.zip ./
 unzip redmine_logs-0.0.5.zip
 rm redmine_logs-0.0.5.zip
@@ -120,7 +121,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH" 
 eval "$(rbenv init -)" 
 
-rbenv local 2.1.2
+rbenv local ${ruby_version}
 rbenv rehash
 
 # *** bundle ***
@@ -136,6 +137,7 @@ time RAILS_ENV=production bundle exec rake db:migrate
 
 # *** coderay bash ***
 
+# ★ TODO find ./ -name file_types.rb → xarg で実行する
 pushd $OPENSHIFT_DATA_DIR/redmine-${redmine_version}/vendor/bundle/ruby/2.1.0/gems/coderay-1.1.0/lib/coderay/scanners/ > /dev/null
 rm bash.rb
 cp ${OPENSHIFT_TMP_DIR}/download_files/bash.rb ./
@@ -145,6 +147,8 @@ perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27] => :bash,\012/' file_t
 popd > /dev/null
 
 # *** add log link ***
+
+# ログプラグインで見られるようにする
 
 # * cron *
 

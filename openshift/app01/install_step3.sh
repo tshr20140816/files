@@ -17,12 +17,14 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 # ***** ruby *****
 
+# ホームディレクトリはパーミッションがきつい
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 
 # *** rbenv ***
 
 echo `date +%Y/%m/%d" "%H:%M:%S` rbenv install >> ${OPENSHIFT_LOG_DIR}/install.log
 
+# OPENSHIFT用インストーラ
 cd ${OPENSHIFT_TMP_DIR}
 cp download_files/rbenv-installer ./
 bash rbenv-installer
@@ -47,7 +49,9 @@ rbenv rehash
 echo `date +%Y/%m/%d" "%H:%M:%S` bundler install >> ${OPENSHIFT_LOG_DIR}/install.log
 
 # patch resolv.rb
-perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g" ${OPENSHIFT_DATA_DIR}/.rbenv/versions/2.1.2/lib/ruby/2.1.0/resolv.rb
+# OPENSHIFT では  0.0.0.0 は使えないため
+# ★ TODO find ./ -name resolv.rb → xarg で実行する
+perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g" ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/resolv.rb
 
 time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V
 rbenv rehash

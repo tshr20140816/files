@@ -27,7 +27,7 @@ cd memcached-${memcached_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
---prefix=${OPENSHIFT_DATA_DIR}/memcached
+--prefix=${OPENSHIFT_DATA_DIR}/memcached 2>&1 | tee ${OPENSHIFT_LOG_DIR}/memcached.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make -j2
@@ -94,7 +94,7 @@ cd libmemcached-${libmemcached_version}
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
---prefix=$OPENSHIFT_DATA_DIR/libmemcached
+--prefix=$OPENSHIFT_DATA_DIR/libmemcached 2>&1 | tee ${OPENSHIFT_LOG_DIR}/libmemcached.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make
@@ -121,7 +121,7 @@ CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 --with-libmemcached-dir=$OPENSHIFT_DATA_DIR/libmemcached \
 --disable-memcached-sasl \
 --enable-memcached \
---with-php-config=${OPENSHIFT_DATA_DIR}/php/bin/php-config
+--with-php-config=${OPENSHIFT_DATA_DIR}/php/bin/php-config 2>&1 | tee ${OPENSHIFT_LOG_DIR}/memcached_php_extention.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make
