@@ -38,6 +38,7 @@ mkdir download_files
 cd download_files
 
 # *** 必要なファイルの事前ダウンロード 成功まで10回繰り返す ***
+# ★  TODO ダウンロードファイルのハッシュチェックを行う
 
 files_exists=0
 for i in `seq 0 9`

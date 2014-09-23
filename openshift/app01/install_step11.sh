@@ -29,7 +29,7 @@ mkdir ${OPENSHIFT_DATA_DIR}/delegate/
 # cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
 cp ${OPENSHIFT_TMP_DIR}/download_files/delegated.xz ./
 xz -dv delegated.xz
-cp ./delegated ${OPENSHIFT_DATA_DIR}/delegate/
+mv ./delegated ${OPENSHIFT_DATA_DIR}/delegate/
 
 # apache htdocs
 mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons
