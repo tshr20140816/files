@@ -61,7 +61,7 @@ __HEREDOC__
 
 redmineuser_password=`uuidgen | base64 | head -c 25`
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_redmine.txt
-perl -pi -e 's/__PASSWORD__/${redmineuser_password}/g' create_database_redmine.txt
+perl -pi -e "s/__PASSWORD__/${redmineuser_password}/g" create_database_redmine.txt
 
 # * create database *
 
