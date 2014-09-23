@@ -23,7 +23,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> ${OPENSHIFT_LOG_DIR}/install.l
 tar xfz wordpress-${wordpress_version}.tar.gz
 
 # create database
-wpuser_password=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
+wpuser_password=`uuidgen | base64 | head -c 25`
 cd ${OPENSHIFT_TMP_DIR}
 cat << '__HEREDOC__' > create_database_wordpress.txt
 CREATE DATABASE wordpress CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -45,11 +45,10 @@ cat << '__HEREDOC__' > wp-config.php
 define('DB_NAME', 'wordpress');
 define('DB_USER', 'wpuser');
 define('DB_PASSWORD', '__PASSWORD__');
-define('DB_HOST', '__OPENSHIFT_MYSQL_DB_HOST__');
+define('DB_HOST', getenv('OPENSHIFT_MYSQL_DB_HOST') . ':' . getenv('OPENSHIFT_MYSQL_DB_PORT'));
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', 'utf8_general_ci');
 __HEREDOC__
-perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' wp-config.php
 perl -pi -e "s/__PASSWORD__/${wpuser_password}/g" wp-config.php
 cp ${OPENSHIFT_TMP_DIR}/download_files/salt.txt ./
 cat ${OPENSHIFT_TMP_DIR}/salt.txt >> wp-config.php

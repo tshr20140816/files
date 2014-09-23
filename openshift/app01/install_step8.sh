@@ -23,7 +23,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS tar >> ${OPENSHIFT_LOG_DIR}/insta
 tar xfz ${ttrss_version}.tar.gz
 
 # create database
-ttrssuser_password=`uuidgen | awk -F - '{print $1 $2 $3 $4 $5}' | head -c 20`
+ttrssuser_password=`uuidgen | base64 | head -c 25`
 cd ${OPENSHIFT_TMP_DIR}
 cat << '__HEREDOC__' > create_database_ttrss.txt
 CREATE DATABASE ttrss CHARACTER SET utf8 COLLATE utf8_general_ci;
