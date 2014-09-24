@@ -35,12 +35,14 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 echo `date +%Y/%m/%d" "%H:%M:%S` github >> ${OPENSHIFT_LOG_DIR}/install.log
 
-cd ${OPENSHIFT_DATA_DIR}
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 mkdir github
-cd github
+pushd github > /dev/null
 git init
 git remote add origin https://github.com/tshr20140816/files.git
 git pull origin master
+popd > /dev/null
+popd > /dev/null
 
 # ***** download files *****
 
