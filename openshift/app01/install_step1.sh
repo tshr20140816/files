@@ -46,9 +46,9 @@ popd > /dev/null
 
 # ***** download files *****
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 mkdir download_files
-cd download_files
+pushd download_files > /dev/null
 
 # *** 必要なファイルの事前ダウンロード 成功まで10回繰り返す ***
 # ★  TODO ダウンロードファイルのハッシュチェックを行う
@@ -229,6 +229,9 @@ do
         sleep 10s
     fi
 done
+
+popd > /dev/null
+popd > /dev/null
 
 if [ ${files_exists} -eq 0 ]; then
     echo `date +%Y/%m/%d" "%H:%M:%S` Abort Install miss download files >> ${OPENSHIFT_LOG_DIR}/install.log
