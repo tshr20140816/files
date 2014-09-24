@@ -182,6 +182,11 @@ do
     if [ ! -f mrtg-${mrtg_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` mrtg wget >> ${OPENSHIFT_LOG_DIR}/install.log
         wget http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz
+        tarball_md5=$(md5sum mrtg-${mrtg_version}.tar.gz | cut -d ' ' -f 1)
+        mrtg_md5=$(curl -Ls http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz.md5 | cut -d ' ' -f 1)
+        if [ "${tarball_md5}" != "${mrtg_md5}" ]; then
+            rm mrtg-${mrtg_version}.tar.gz
+        fi
     fi
     if [ ! -f mrtg-${mrtg_version}.tar.gz ]; then
         files_exists=0
