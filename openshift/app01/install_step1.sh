@@ -262,7 +262,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_TMP_DIR}/download_files/lynx2.8.7.tar.gz ./
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx tar >> ${OPENSHIFT_LOG_DIR}/install.log
-tar -xfz lynx2.8.7.tar.gz
+tar xfz lynx2.8.7.tar.gz
 
 pushd lynx2-8-7 > /dev/null
 
