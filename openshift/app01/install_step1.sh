@@ -191,7 +191,7 @@ do
         files_exists=0
     fi
 
-    # *** wordpress ***
+    # *** wordpress ja ***
     if [ ! -f wordpress-${wordpress_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` wordpress wget >> ${OPENSHIFT_LOG_DIR}/install.log
         wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
