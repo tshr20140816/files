@@ -256,5 +256,33 @@ if [ ${files_exists} -eq 0 ]; then
     exit
 fi
 
+# ***** lynx *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp ${OPENSHIFT_TMP_DIR}/download_files/lynx2.8.7.tar.gz ./
+
+echo `date +%Y/%m/%d" "%H:%M:%S` lynx tar >> ${OPENSHIFT_LOG_DIR}/install.log
+tar -xfz lynx2.8.7.tar.gz
+
+pushd lynx2-8-7 > /dev/null
+
+echo `date +%Y/%m/%d" "%H:%M:%S` lynx configure >> ${OPENSHIFT_LOG_DIR}/install.log
+CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee ${OPENSHIFT_LOG_DIR}/lynx.configure.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` lynx make >> ${OPENSHIFT_LOG_DIR}/install.log
+time make -j2
+
+echo `date +%Y/%m/%d" "%H:%M:%S` lynx make install >> ${OPENSHIFT_LOG_DIR}/install.log
+make install
+
+popd > /dev/null
+
+rm lynx2.8.7.tar.gz
+rm -rf lynx2-8-7
+
+popd > /dev/null
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
 
