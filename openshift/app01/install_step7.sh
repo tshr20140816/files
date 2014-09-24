@@ -17,10 +17,12 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 # ***** wordpress *****
 
-cd ${OPENSHIFT_DATA_DIR}
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs
+mkdir wordpress
+cd wordpress
 cp ${OPENSHIFT_TMP_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz wordpress-${wordpress_version}.tar.gz
+tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
 
 # create database
 wpuser_password=`uuidgen | base64 | head -c 25`
@@ -68,12 +70,8 @@ __HEREDOC__
 
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/${wpuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
 
-cd ${OPENSHIFT_DATA_DIR}
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 rm wordpress-${wordpress_version}.tar.gz
-
-# *** apache link ***
-
-ln -s ${OPENSHIFT_DATA_DIR}/wordpress ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 7 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
 
