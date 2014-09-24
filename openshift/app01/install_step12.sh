@@ -151,19 +151,17 @@ echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 11 Finish >> ${OPENSHIFT_LOG_DIR}/
 
 # kill `netstat -anpt 2>/dev/null | grep ${OPENSHIFT_DIY_IP} | grep LISTEN | awk '{print $7}' | awk -F/ '{print $1}'`
 kill `ps auwx  2>/dev/null | grep testrubyserver.rb | grep -v grep | awk '{print $2}'`
-cd ${OPENSHIFT_DATA_DIR}
 export TZ=JST-9
-./apache/bin/apachectl -k graceful
-cd delegate
+${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
+pushd ${OPENSHIFT_DATA_DIR}/delegate
 ./delegated -r +=P30080
-cd ${OPENSHIFT_DATA_DIR}/memcached/
-./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
+popd > /dev/null
+${OPENSHIFT_DATA_DIR}/memcached/bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
 
 wget --spider https://${OPENSHIFT_APP_DNS}/
 sleep 5s
 
-cd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/
-./webalizer.sh
+${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly//webalizer.sh
 
 set +x
 
