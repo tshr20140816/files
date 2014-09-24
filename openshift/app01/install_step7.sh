@@ -41,7 +41,7 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_wordpress.txt
 
-cd ${OPENSHIFT_DATA_DIR}/wordpress
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 cat << '__HEREDOC__' > wp-config.php
 <?php
 define('DB_NAME', 'wordpress');
