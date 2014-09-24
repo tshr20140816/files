@@ -72,7 +72,6 @@ do
         files_exists=0
     fi
 
-
     # *** rbenv-installer ***
     if [ ! -f rbenv-installer ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` rbenv-installer wget >> ${OPENSHIFT_LOG_DIR}/install.log
