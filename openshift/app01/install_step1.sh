@@ -31,6 +31,17 @@ echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 
+# ***** git *****
+
+echo `date +%Y/%m/%d" "%H:%M:%S` github >> ${OPENSHIFT_LOG_DIR}/install.log
+
+cd ${OPENSHIFT_DATA_DIR}
+mkdir github
+cd github
+git init
+git remote add origin https://github.com/tshr20140816/files.git
+git pull origin master
+
 # ***** download files *****
 
 cd ${OPENSHIFT_TMP_DIR}
@@ -221,17 +232,6 @@ if [ ${files_exists} -eq 0 ]; then
     echo `date +%Y/%m/%d" "%H:%M:%S` Abort Install miss download files >> ${OPENSHIFT_LOG_DIR}/install.log
     exit
 fi
-
-# ***** git *****
-
-echo `date +%Y/%m/%d" "%H:%M:%S` github >> ${OPENSHIFT_LOG_DIR}/install.log
-
-cd ${OPENSHIFT_DATA_DIR}
-mkdir github
-cd github
-git init
-git remote add origin https://github.com/tshr20140816/files.git
-git pull origin master
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
 
