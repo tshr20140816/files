@@ -17,10 +17,11 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 # ***** Tiny Tiny RSS *****
 
-cd ${OPENSHIFT_DATA_DIR}
+mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 cp ${OPENSHIFT_TMP_DIR}/download_files/${ttrss_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS tar >> ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz ${ttrss_version}.tar.gz
+tar xfz ${ttrss_version}.tar.gz --strip-components=1
 
 # create database
 ttrssuser_password=`uuidgen | base64 | head -c 25`
@@ -42,15 +43,11 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
--P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < ${OPENSHIFT_DATA_DIR}/Tiny-Tiny-RSS-${ttrss_version}/schema/ttrss_schema_mysql.sql
+-P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/schema/ttrss_schema_mysql.sql
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS mysql ttrssuser/${ttrssuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
 
-cd ${OPENSHIFT_DATA_DIR}
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 rm ${ttrss_version}.tar.gz
-
-# *** apache link ***
-
-ln -s ${OPENSHIFT_DATA_DIR}/Tiny-Tiny-RSS-${ttrss_version} ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 8 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
