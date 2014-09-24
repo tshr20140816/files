@@ -17,9 +17,8 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 # ***** wordpress *****
 
-cd ${OPENSHIFT_DATA_DIR}/apache/htdocs
-mkdir wordpress
-cd wordpress
+mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 cp ${OPENSHIFT_TMP_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
