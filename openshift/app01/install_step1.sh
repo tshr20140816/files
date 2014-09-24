@@ -64,7 +64,7 @@ do
         wget http://www.gtlib.gatech.edu/pub/apache//httpd/httpd-${apache_version}.tar.gz
         tarball_md5=$(md5sum httpd-${apache_version}.tar.gz | cut -d ' ' -f 1)
         apache_md5=$(curl -Ls http://www.apache.org/dist/httpd/httpd-${apache_version}.tar.gz.md5 | cut -d ' ' -f 1)
-        if [ "${tarball_md5}" != "${wordpress_md5}" ]; then
+        if [ "${tarball_md5}" != "${apache_md5}" ]; then
             rm httpd-${apache_version}.tar.gz
         fi
     fi
@@ -148,6 +148,11 @@ do
     if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached wget >> ${OPENSHIFT_LOG_DIR}/install.log
         wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
+        tarball_md5=$(md5sum libmemcached-${libmemcached_version}.tar.gz | cut -d ' ' -f 1)
+        libmemcached_md5=$(curl -Ls https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz/+md5 | cut -d ' ' -f 1)
+        if [ "${tarball_md5}" != "${libmemcached_md5}" ]; then
+            rm libmemcached-${libmemcached_version}.tar.gz
+        fi
     fi
     if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
         files_exists=0
