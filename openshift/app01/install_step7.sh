@@ -26,7 +26,7 @@ popd > /dev/null
 
 # create database
 wpuser_password=`uuidgen | base64 | head -c 25`
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_wordpress.txt
 CREATE DATABASE wordpress CHARACTER SET utf8 COLLATE utf8_general_ci;
 GRANT ALL PRIVILEGES ON wordpress.* TO wpuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
@@ -40,8 +40,9 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_wordpress.txt
+popd > /dev/null
 
-cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
 cat << '__HEREDOC__' > wp-config.php
 <?php
 define('DB_NAME', 'wordpress');
@@ -69,9 +70,10 @@ require_once(ABSPATH . 'wp-settings.php');
 __HEREDOC__
 
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/${wpuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
+popd > /dev/null
 
-cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
 rm wordpress-${wordpress_version}.tar.gz
+popd > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 7 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
-
