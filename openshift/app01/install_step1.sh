@@ -35,20 +35,17 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 echo `date +%Y/%m/%d" "%H:%M:%S` github >> ${OPENSHIFT_LOG_DIR}/install.log
 
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-mkdir github
-pushd github > /dev/null
+mkdir ${OPENSHIFT_DATA_DIR}/github
+pushd ${OPENSHIFT_DATA_DIR}/github > /dev/null
 git init
 git remote add origin https://github.com/tshr20140816/files.git
 git pull origin master
 popd > /dev/null
-popd > /dev/null
 
 # ***** download files *****
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-mkdir download_files
-pushd download_files > /dev/null
+mkdir ${OPENSHIFT_TMP_DIR}/download_files
+pushd ${OPENSHIFT_TMP_DIR}/download_files > /dev/null
 
 # *** 必要なファイルの事前ダウンロード 成功まで10回繰り返す ***
 # ★  TODO ダウンロードファイルのハッシュチェックを行う
@@ -249,7 +246,6 @@ do
 done
 
 popd > /dev/null
-popd > /dev/null
 
 if [ ${files_exists} -eq 0 ]; then
     echo `date +%Y/%m/%d" "%H:%M:%S` Abort Install miss download files >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -285,4 +281,3 @@ rm -rf lynx2-8-7
 popd > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
-
