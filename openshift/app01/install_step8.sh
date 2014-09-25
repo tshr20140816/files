@@ -49,6 +49,8 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS mysql ttrssuser/${ttrssuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 
+# TODO define('_ENABLE_PDO', true);
+
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 rm ${ttrss_version}.tar.gz
 popd > /dev/null
