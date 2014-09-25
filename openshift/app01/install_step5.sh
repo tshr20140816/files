@@ -28,10 +28,13 @@ ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --snippet > ${OP
 # patch request_handler.rb
 # OPENSHIFT では 127.0.0.1 は使えないため
 # OPENSHIFT ではポートにも制限があるため固定ポートにしたけど大丈夫?
-pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/passenger-4.0.50/lib/phusion_passenger > /dev/null
-perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', 33000)/g" request_handler.rb
-perl -pi -e 's/127.0.0.1/$ENV{OPENSHIFT_DIY_IP}/g' request_handler.rb
-popd > /dev/null
+find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
+| grep lib/phusion_passenger/request_handler.rb \
+| xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', 33000)/g"
+
+find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
+| grep lib/phusion_passenger/request_handler.rb \
+| xargs perl -pi -e 's/127.0.0.1/$ENV{OPENSHIFT_DIY_IP}/g'
 
 # ***** font *****
 
