@@ -50,6 +50,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS mysql ttrssuser/${ttrssuser_passw
 popd > /dev/null
 
 # TODO define('_ENABLE_PDO', true);
+# /ttrss/classes/db.php
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 rm ${ttrss_version}.tar.gz
