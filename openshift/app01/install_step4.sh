@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ctl_all stop
+#ctl_all stop
+/usr/bin/gear stop
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
