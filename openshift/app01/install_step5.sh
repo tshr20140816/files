@@ -143,6 +143,7 @@ time bundle install --path vendor/bundle -j2
 
 time RAILS_ENV=production bundle exec rake generate_secret_token
 time RAILS_ENV=production bundle exec rake db:migrate
+time RAILS_ENV=production bundle exec rake redmine:plugins:migrate
 
 # *** coderay bash ***
 
