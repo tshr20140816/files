@@ -16,5 +16,5 @@ export BINDIR=${OPENSHIFT_DATA_DIR}/apache
 time CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --auto
 
-ctl_all restart
-
+#ctl_all restart
+/usr/bin/gear start

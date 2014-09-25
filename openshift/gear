@@ -1,0 +1,647 @@
+#!/usr/bin/env oo-ruby
+#--
+# Copyright 2013 Red Hat, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#++
+
+require 'pp'
+require 'rubygems'
+require 'json'
+require 'openshift-origin-node/model/application_container'
+require 'openshift-origin-node/model/application_repository'
+require 'openshift-origin-node/utils/node_logger'
+
+# Always keep this last for performance
+require 'commander/import'
+
+name="#{__FILE__}"
+
+program :name, "OpenShift Gear Control"
+program :version, "1.0.0"
+program :description, "An assortment of gear utilities"
+
+# Don't buffer output to the client
+STDOUT.sync = true
+STDERR.sync = true
+
+HOT_DEPLOY_MARKER = File.join(%w(.openshift markers hot_deploy))
+FORCE_CLEAN_BUILD_MARKER = File.join(%w(.openshift markers force_clean_build))
+RESULT_SUCCESS = 'success'
+RESULT_FAILURE = 'failure'
+
+OpenShift::Runtime::NodeLogger.disable
+
+class UsageException < Exception; end
+
+def gear_cartridge_names
+  cartridge_names = []
+  @container.cartridge_model.each_cartridge do |c|
+    cartridge_names << "#{c.name}-#{c.version}"
+  end
+  cartridge_names
+end
+
+def valid_git_ref?(ref)
+  Dir.chdir(@repo.path) do
+    system "git rev-parse --quiet --verify #{ref} >/dev/null 2>&1"
+  end
+end
+
+@container = OpenShift::Runtime::ApplicationContainer.new(ENV['OPENSHIFT_APP_UUID'], ENV['OPENSHIFT_GEAR_UUID'], Etc.getpwuid.uid, ENV['OPENSHIFT_APP_NAME'], ENV['OPENSHIFT_GEAR_NAME'], ENV['OPENSHIFT_NAMESPACE'])
+@repo = OpenShift::Runtime::ApplicationRepository.new(@container)
+
+def do_command(command, options)
+  begin
+    yield
+  rescue SystemExit, Interrupt
+    puts
+    exit 1
+  rescue OpenShift::Runtime::Utils::ShellExecutionException => e
+    $stderr.puts "An error occurred executing 'gear #{command.name}' (exit code: #{e.rc})"
+    $stderr.puts "Error message: #{e.message}" if e.message.is_a? String
+    $stderr.puts "stdout: #{e.stdout}" if e.stdout.is_a? String
+    $stderr.puts "stderr: #{e.stderr}" if e.stderr.is_a? String
+    $stderr.puts ""
+    if options.trace
+      $stderr.puts e.backtrace.join("\n")
+    else
+      $stderr.puts "For more details about the problem, try running the command again with the '--trace' option."
+    end
+    exit -1
+  rescue UsageException => e
+    $stderr.puts e.message
+    exit 255
+  rescue Exception => e
+    $stderr.puts e.message
+    if options.trace
+      $stderr.puts e.backtrace.join("\n")
+    end
+
+    exit -1
+  else
+    exit 0
+  end
+end
+
+global_option('--trace', 'Enable stack traces when reporting errors')
+default_command :help
+
+command :prereceive do |c|
+  c.syntax = "#{name} prereceive"
+
+  c.description = "Run the git prereceive steps"
+  c.option "--init", "Proceed even if the git ref to deploy isn't found. Used by post_configure"
+  c.action do |args, options|
+    do_command(c, options) do
+      if ENV['OPENSHIFT_DEPLOYMENT_TYPE'] == 'binary'
+        raise UsageException.new("OPENSHIFT_DEPLOYMENT_TYPE is 'binary' - git-based deployments are disabled.")
+      end
+
+      ref_to_deploy = @container.determine_deployment_ref(ENV)
+
+      found_deployment_ref = false
+      hot_deploy = false
+
+      new_rev = nil
+
+      $stdin.each_line do |str|
+        arr  = str.split
+        refs = arr[2].split('/')
+
+        old_rev  = arr[0]  # SHA
+        new_rev  = arr[1]  # SHA
+        ref_name = refs[2..-1].join('/') # develop, 1.4, dev/mybranch etc.
+
+        next unless ref_to_deploy == ref_name
+
+        found_deployment_ref = true
+
+        break
+      end
+
+      # only call pre_receive if
+      # - this is the first build ever (--init) or
+      # - auto deployments are enabled and the appropriate git ref was pushed
+      if options.init or (found_deployment_ref and ENV['OPENSHIFT_AUTO_DEPLOY'] != 'false')
+        if options.init
+          # if this is an initial build from post_configure, we shouldn't be hot deploying
+          # as that will keep things from starting up properly
+          hot_deploy = false
+          force_clean_build = false
+        else
+          # otherwise, check the repo for the marker
+          hot_deploy = @repo.file_exists?(HOT_DEPLOY_MARKER, new_rev)
+          force_clean_build = @repo.file_exists?(FORCE_CLEAN_BUILD_MARKER, new_rev)
+        end
+
+        @container.pre_receive(out: $stdout,
+                               err: $stderr,
+                               hot_deploy: hot_deploy,
+                               force_clean_build: force_clean_build,
+                               ref: ref_to_deploy,
+                               init: options.init)
+      end
+    end
+  end
+end
+
+command :postreceive do |c|
+  c.syntax = "#{name} postreceive"
+
+  c.description = "Run the git postreceive steps"
+  c.option "--init", "Proceed even if the git ref to deploy isn't found. Used by post_configure"
+  c.action do |args, options|
+    do_command(c, options) do
+      if ENV['OPENSHIFT_DEPLOYMENT_TYPE'] == 'binary'
+        raise UsageException.new("OPENSHIFT_DEPLOYMENT_TYPE is 'binary' - git-based deployments are disabled.")
+      end
+
+      ref_to_deploy = @container.determine_deployment_ref(ENV)
+
+      found_deployment_ref = false
+
+      $stdin.each_line do |str|
+        arr  = str.split
+        refs = arr[2].split('/')
+        ref_name = refs[2..-1].join('/') # develop, 1.4, dev/mybranch etc.
+        next unless ref_to_deploy == ref_name
+
+        found_deployment_ref = true
+        break
+      end
+
+      # only call post_receive if
+      # - this is the first build ever, i.e. --init or
+      # - auto deployments are enabled and the appropriate git ref was pushed
+      if options.init or (found_deployment_ref and ENV['OPENSHIFT_AUTO_DEPLOY'] != 'false')
+
+        result = @container.post_receive(out: $stdout,
+                                         err: $stderr,
+                                         ref: ref_to_deploy,
+                                         report_deployments: true,
+                                         all: true,
+                                         init: options.init)
+        puts "-------------------------"
+        puts "Git Post-Receive Result: #{result[:status]}"
+
+        if distribute_result = result[:distribute_result] and not distribute_result[:gear_results].empty?
+          distribute_status = distribute_result[:status]
+          puts "Distribution status: #{distribute_status}"
+
+          if distribute_status != RESULT_SUCCESS
+            puts "Distribution failed for the following gears:"
+            failures = distribute_result[:gear_results].values.select { |r| r[:status] != RESULT_SUCCESS }
+            puts failures.map { |f| "#{f[:gear_uuid]} (#{f[:errors][0]})" }.join("\n")
+          end
+        end
+
+        if activate_result = result[:activate_result]
+          activate_status = activate_result[:status]
+          puts "Activation status: #{activate_status}"
+
+          if activate_status != RESULT_SUCCESS
+            puts "Activation failed for the following gears:"
+            failures = activate_result[:gear_results].values.select { |r| r[:status] != RESULT_SUCCESS }
+            puts failures.map { |f| "#{f[:gear_uuid]} (#{f[:errors][0]})" }.join("\n")
+          end
+        end
+
+        puts "Deployment completed with status: #{result[:status]}"
+
+        raise "postreceive failed" unless result[:status] == RESULT_SUCCESS
+      end
+    end
+  end
+end
+
+command :build do |c|
+  c.syntax = "#{name} build"
+
+  c.description = "Run the build steps"
+  c.action do |args, options|
+    do_command(c, options) do
+      archive = false
+
+      # Jenkins builder gears place the git repo in $OPENSHIFT_REPO_DIR/.git.
+      # Use that if it exists. Otherwise, repo_dir will be nil and the default
+      # (normal) path to the git repo will be used.
+      ci_repo_path = PathUtils.join(ENV['OPENSHIFT_REPO_DIR'], '.git')
+      repo_dir = ci_repo_path if File.exist?(ci_repo_path)
+      @repo = ::OpenShift::Runtime::ApplicationRepository.new(@container, repo_dir)
+
+      if repo_dir.nil?
+        # if repo_dir is nil, it means we're using the default git repo location
+
+        # determine the git ref we're building
+        git_ref = @container.determine_deployment_ref(ENV, args[0])
+
+        # make sure we archive
+        archive = true
+      else
+        # repo_dir isn't nil, so we're using $OPENSHIFT_REPO_DIR/.git
+        #
+        # no need to archive as Jenkins will have already checked out the
+        # correct branch to $OPENSHIFT_REPO_DIR
+        #
+        # get the git ref from ENV
+        git_ref = ENV['GIT_BRANCH']
+      end
+
+      unless valid_git_ref?(git_ref)
+        raise UsageException.new("Git ref #{git_ref} is invalid")
+      end
+
+      if archive
+        # we need to archive the contents to $OPENSHIFT_REPO_DIR
+        @repo.archive(ENV['OPENSHIFT_REPO_DIR'], git_ref)
+      end
+
+
+
+      options = {
+        out: $stdout,
+        err: $stderr,
+        ref: git_ref,
+        hot_deploy: @repo.file_exists?(HOT_DEPLOY_MARKER, git_ref),
+        force_clean_build: @repo.file_exists?(FORCE_CLEAN_BUILD_MARKER, git_ref),
+        git_repo: @repo
+      }
+
+      @container.build(options)
+    end
+  end
+end
+
+command :prepare do |c|
+  c.syntax = "#{name} prepare <file>"
+
+  c.description = "Prepare a binary deployment artifact for distribution and activation"
+  c.action do |args, options|
+    do_command(c, options) do
+      raise UsageException.new("You must specify a deployment artifact file to prepare") if args.count == 0
+      raise UsageException.new("File '#{args[0]}' does not exist") unless File.exist?(args[0])
+      deployment_datetime = @container.create_deployment_dir
+      @container.prepare(out: $stdout, err: $stderr, deployment_datetime: deployment_datetime, file: args[0])
+    end
+  end
+end
+
+command :distribute do |c|
+  c.syntax = "#{name} distribute <deployment id>"
+
+  c.description = 'Distribute a build'
+  c.action do |args, options|
+    do_command(c, options) do
+      raise UsageException.new('You must specify a deployment id') if args.count == 0
+
+      unless @container.deployment_exists?(args[0])
+        raise "Deployment id #{args[0]} is invalid"
+      end
+
+      results = @container.distribute(out: $stdout, err: $stderr, deployment_id: args[0])
+      puts "Errors:\n  #{results[:errors].join("\n  ")}" if results[:status] == 'failure' || options.trace
+      puts "Messages:\n  #{results[:messages].join("\n  ")}" if options.trace
+    end
+  end
+end
+
+command :activate do |c|
+  c.syntax = "#{name} activate <deployment id>"
+
+  c.description = "Activate a build"
+  c.option "--post-install", "Run post_install for new gears"
+  c.option "--as-json", "Render the results as JSON to stdout"
+  c.option "--all", "Activate all gears in the application (only applicable if executed from a proxy gear)"
+  c.option "--[no-]rotation", "Rotate gears out/in (defaults to true)"
+
+  c.action do |args, options|
+    do_command(c, options) do
+      raise UsageException.new("You must specify a deployment id") if args.count == 0
+
+      unless @container.deployment_exists?(args[0])
+        raise "Deployment id #{args[0]} is invalid"
+      end
+
+      if options.as_json.nil?
+        out = $stdout
+        err = $stderr
+      else
+        out = nil
+        err = nil
+      end
+
+      rotate = true
+      if !options.rotation.nil?
+        rotate = options.rotation
+      end
+
+      result = @container.activate(deployment_id: args[0],
+                                   post_install: !!options.post_install,
+                                   all: !!options.all,
+                                   rotate: rotate,
+                                   report_deployments: true,
+                                   out: out,
+                                   err: err)
+
+      $stdout.puts(JSON.dump(result)) if options.as_json
+    end
+  end
+end
+
+command :'archive-deployment' do |c|
+  c.syntax = "#{name} archive-deployment"
+
+  c.option "--deployment-id ID", "Deployment ID to archive"
+
+  c.description = "Archive the current deployment"
+  c.action do |args, options|
+    @container.archive options.deployment_id
+  end
+end
+
+command :'create-deployment-dir' do |c|
+  c.syntax = "#{name} create_deployment_dir"
+  c.description = "Create a deployment directory. Should only be used by CI builders"
+  c.action do |args, options|
+    puts @container.create_deployment_dir
+  end
+end
+
+# This should only ever be called by a CI builder gear to deploy the code it built back to the upstream gear
+command :remotedeploy do |c|
+  c.syntax = "#{name} remotedeploy [options]"
+
+  c.description = "Run the remotedeploy steps"
+  c.option "--deployment-datetime NAME" "Datetime to deploy"
+
+  c.action do |args, options|
+    do_command(c, options) do
+      ref_to_deploy = @container.determine_deployment_ref(ENV)
+      hot_deploy_enabled = @repo.file_exists?(HOT_DEPLOY_MARKER, ref_to_deploy)
+
+      result = @container.remote_deploy(out: $stdout,
+                                        err: $stderr,
+                                        hot_deploy: hot_deploy_enabled,
+                                        deployment_datetime: options.deployment_datetime || @container.current_deployment_datetime,
+                                        report_deployments: true,
+                                        all: true)
+
+      if result[:status] != RESULT_SUCCESS
+        raise "Error deploying to gear"
+      end
+    end
+  end
+end
+
+command :deploy do |c|
+  c.syntax = "#{name} deploy"
+
+  c.description = "Run the deploy steps"
+  c.option "--hot-deploy", "Perform hot deployment"
+  c.option "--force-clean-build", "Perform a clean build"
+  c.action do |args, options|
+    do_command(c, options) do
+      if ENV['OPENSHIFT_DEPLOYMENT_TYPE'] == 'binary'
+        raise UsageException.new("OPENSHIFT_DEPLOYMENT_TYPE is 'binary' - git-based deployments are disabled.")
+      end
+
+      ref_to_deploy = @container.determine_deployment_ref(ENV, args[0])
+      hot_deploy_enabled = options.hot_deploy || false
+      force_clean_build_enabled = options.force_clean_build || false
+
+      unless valid_git_ref?(ref_to_deploy)
+        raise "Git ref #{ref_to_deploy} is invalid"
+      end
+
+      @container.deploy(hot_deploy: hot_deploy_enabled,
+                        force_clean_build: force_clean_build_enabled,
+                        ref: ref_to_deploy,
+                        out: $stdout,
+                        err: $stderr,
+                        report_deployments: true,
+                        all: true)
+    end
+  end
+end
+
+command :'binary-deploy' do |c|
+  c.syntax = "#{name} binary-deploy"
+
+  c.description = "Deploy a binary artifact"
+  c.option "--hot-deploy", "Perform hot deployment"
+  c.action do |args, options|
+    do_command(c, options) do
+      if ENV['OPENSHIFT_DEPLOYMENT_TYPE'] != 'binary'
+          raise UsageException.new("OPENSHIFT_DEPLOYMENT_TYPE is 'git' - binary deployments are disabled.")
+      end
+      hot_deploy_enabled = options.hot_deploy || false
+      options = { out: $stdout, err: $stderr, hot_deploy: hot_deploy_enabled }
+      if args.count > 0
+        options[:file] = args[0]
+      else
+        options[:stdin] = $stdin
+      end
+
+      result = @container.deploy_binary_artifact(options)
+    end
+  end
+end
+
+command :deployments do |c|
+  c.syntax = "#{name} deployments"
+  c.description = "List the gear's deployments"
+  c.action do |args, options|
+    do_command(c, options) do
+      puts @container.list_deployments
+    end
+  end
+end
+
+command :start do |c|
+  c.syntax = "#{name} start"
+
+  c.option "--cart CART", "The cart to start"
+
+  c.description = "Start the gear/cart"
+  c.action do |args, options|
+    do_command(c, options) do
+      if options.cart
+        @container.start(options.cart, out: $stdout, err: $stderr)
+      else
+        puts "Starting gear..."
+        @container.start_gear(out: $stdout, err: $stderr)
+      end
+    end
+  end
+end
+
+command :stop do |c|
+  c.syntax = "#{name} stop"
+
+  c.option "--cart CART", "The cart to stop"
+  c.option "--conditional", "Skip the gear stop if the hot deploy marker is present in the application Git repo in the commit specified by --git-ref"
+  c.option "--git-ref REF", "The git ref to use when checking for the presence of the hot deploy marker file"
+  c.option "--exclude-web-proxy", "Skip stopping the web proxy, if it exists"
+
+  c.description = "Stop the gear/cart"
+  c.action do |args, options|
+    do_command(c, options) do
+      if options.cart
+        @container.stop(options.cart, out: $stdout, err: $stderr)
+      else
+        if options.conditional and options.git_ref and @repo.file_exists?(HOT_DEPLOY_MARKER, options.git_ref)
+          puts "Skipping gear stop due to presence of hot deploy marker"
+        else
+          puts "Stopping gear..."
+
+          @container.stop_gear(exclude_web_proxy: !!options.exclude_web_proxy, out: $stdout, err: $stderr)
+        end
+      end
+    end
+  end
+end
+
+command :restart do |c|
+  c.syntax = "#{name} restart"
+
+  c.option "--cart CART", "The cart to restart"
+  c.option "--all", "Restart all instances of the specified cartridge for all gears for this application"
+  c.option "--as-json", "Render the results as JSON to stdout"
+  c.option "--all-cartridges", "Restart all cartridges in the gear"
+  c.description = "Restart a cart"
+  c.action do |args, options|
+    # TODO: Should we be able to restart the gear via stop_gear / start_gear calls
+    # in addition to individual cart restarts?
+    do_command(c, options) do
+      options.all_cartridges || options.cart ||= choose("Cart to restart?", *gear_cartridge_names)
+      out = nil
+      err = nil
+      if !options.as_json
+        out = $stdout
+        err = $stderr
+      end
+      result = @container.restart(options.cart, all: !!options.all, out: out, err: err)
+      $stdout.puts(JSON.dump(result)) if options.as_json
+    end
+  end
+end
+
+command :reload do |c|
+  c.syntax = "#{name} reload"
+
+  c.option "--cart CART", "The cart to reload"
+
+  c.description = "Reload a cart"
+  c.action do |args, options|
+    do_command(c, options) do
+      options.cart ||= choose("Cart to reload?", *gear_cartridge_names)
+      @container.reload(options.cart)
+    end
+  end
+end
+
+command :status do |c|
+  c.syntax = "#{name} status"
+
+  c.option "--cart CART", "The cart to get the status for"
+
+  c.description = "Get the status for a cart"
+  c.action do |args, options|
+    do_command(c, options) do
+      options.cart ||= choose("Cart to get the status for?", *gear_cartridge_names)
+      puts @container.status(options.cart)
+    end
+  end
+end
+
+command :snapshot do |c|
+  c.syntax = "#{name} snapshot"
+
+  c.description = "Snapshot an application"
+  c.action do |args, options|
+    @container.snapshot
+  end
+end
+
+command :restore do |c|
+  c.syntax = "#{name} restore"
+
+  c.option "--restore-git-repo", "Rebuild the application as part of restoration"
+  c.option "--no-report-deployments", "Do not report a deployment after restoration"
+
+  c.description = "Restore an application"
+  c.action do |args, options|
+    result = @container.restore(options.restore_git_repo, !options.no_report_deployments)
+
+    if distribute_result = result[:distribute_result] and not distribute_result[:gear_results].empty?
+      distribute_status = distribute_result[:status]
+      $stderr.puts "Distribution status: #{distribute_status}"
+
+      if distribute_status != RESULT_SUCCESS
+        $stderr.puts "Distribution failed for the following gears:"
+        failures = distribute_result[:gear_results].values.select { |r| r[:status] != RESULT_SUCCESS }
+        $stderr.puts failures.map { |f| "#{f[:gear_uuid]} (#{f[:errors][0]})" }.join("\n")
+      end
+    end
+
+    if activate_result = result[:activate_result]
+      activate_status = activate_result[:status]
+      $stderr.puts "Activation status: #{activate_status}"
+
+      if activate_status != RESULT_SUCCESS
+        $stderr.puts "Activation failed for the following gears:"
+        failures = activate_result[:gear_results].values.select { |r| r[:status] != RESULT_SUCCESS }
+        $stderr.puts failures.map { |f| "#{f[:gear_uuid]} (#{f[:errors][0]})" }.join("\n")
+      end
+    end
+  end
+end
+
+command :'rotate-out' do |c|
+  c.syntax = "#{name} disable-web-proxy"
+
+  c.option "--cart CART", "The cart to update"
+  c.option "--persist", "Store the disabling of this gear in the proxy configuration file"
+  c.option "--gear UUID", "UUID of the gear to disable"
+  c.option "--as-json", "Render the results as JSON to stdout"
+
+  c.description = "Disables this gear from receiving traffic from the proxy"
+  c.action do |args, options|
+    result = @container.update_proxy_status(cartridge: options.cart,
+                                            action: :disable,
+                                            gear_uuid: options.gear || @container.uuid,
+                                            persist: !!options.persist)
+
+    $stdout.puts(JSON.dump(result)) if options.as_json
+  end
+end
+
+command :'rotate-in' do |c|
+  c.syntax = "#{name} enable-web-proxy"
+
+  c.option "--cart CART", "The cart to update"
+  c.option "--persist", "Store the enabling of this gear in the proxy configuration file"
+  c.option "--gear UUID", "UUID of the gear to disable"
+  c.option "--as-json", "Render the results as JSON to stdout"
+
+  c.description = "Enables this gear to receive traffic from the proxy"
+  c.action do |args, options|
+    result = @container.update_proxy_status(cartridge: options.cart,
+                                            action: :enable,
+                                            gear_uuid: options.gear || @container.uuid,
+                                            persist: !!options.persist)
+
+    $stdout.puts(JSON.dump(result)) if options.as_json
+  end
+end
