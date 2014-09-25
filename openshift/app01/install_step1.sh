@@ -210,6 +210,15 @@ do
         files_exists=0
     fi
 
+    # *** is_ssl.php ***
+    if [ ! -f is_ssl.php ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` is_ssl.php wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://gist.githubusercontent.com/franz-josef-kaiser/1891564/raw/9d3f519c1cfb0fff9ad5ca31f3e783deaf5d561c/is_ssl.php
+    fi
+    if [ ! -f is_ssl.php ]; then
+        files_exists=0
+    fi
+
     # *** Tiny Tiny RSS ***
     if [ ! -f ${ttrss_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS wget >> ${OPENSHIFT_LOG_DIR}/install.log
