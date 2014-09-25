@@ -48,6 +48,8 @@ echo OutputDir ${OPENSHIFT_DATA_DIR}/webalizer/www >> webalizer.conf
 echo HostName ${OPENSHIFT_APP_DNS} >> webalizer.conf
 echo UseHTTPS yes >> webalizer.conf
 
+mkdir ${OPENSHIFT_DATA_DIR}/webalizer/www
+
 cd ${OPENSHIFT_TMP_DIR}
 rm webalizer-${webalizer_version}-src.tgz
 rm -rf webalizer-${webalizer_version}
