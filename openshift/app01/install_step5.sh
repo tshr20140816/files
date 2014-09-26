@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 5 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -41,7 +41,7 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 echo `date +%Y/%m/%d" "%H:%M:%S` font install >> ${OPENSHIFT_LOG_DIR}/install.log
 
 cd ${OPENSHIFT_DATA_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/IPAfont${ipafont_version}.zip ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/IPAfont${ipafont_version}.zip ./
 unzip -d fonts -j IPAfont${ipafont_version}.zip
 rm IPAfont${ipafont_version}.zip
 
@@ -52,9 +52,8 @@ echo `date +%Y/%m/%d" "%H:%M:%S` redmine install >> ${OPENSHIFT_LOG_DIR}/install
 # *** redmine ***
 
 cd ${OPENSHIFT_DATA_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/redmine-${redmine_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/redmine-${redmine_version}.tar.gz ./
 tar xfz redmine-${redmine_version}.tar.gz
-cd redmine-${redmine_version}
 
 # *** create database ***
 
@@ -116,7 +115,7 @@ mkdir public/plugin_assets
 
 # *** plugin ***
 pushd plugins > /dev/null
-cp ${OPENSHIFT_TMP_DIR}/download_files/redmine_logs-0.0.5.zip ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/redmine_logs-0.0.5.zip ./
 unzip redmine_logs-0.0.5.zip
 rm redmine_logs-0.0.5.zip
 mv redmine_logs/Gemfile redmine_logs/Gemfile.org
@@ -126,9 +125,9 @@ popd > /dev/null
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH" 
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH" 
-eval "$(rbenv init -)" 
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
 
 rbenv local ${ruby_version}
 rbenv rehash
@@ -136,7 +135,7 @@ rbenv rehash
 # *** bundle ***
 
 mv Gemfile Gemfile.`date '+%Y%m%d'`
-cp ${OPENSHIFT_TMP_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
+cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
 time bundle install --path vendor/bundle -j2
 
 # *** rake ***
@@ -150,7 +149,7 @@ time RAILS_ENV=production bundle exec rake redmine:plugins:migrate
 # ★ TODO find ./ -name file_types.rb → xarg で実行する
 pushd $OPENSHIFT_DATA_DIR/redmine-${redmine_version}/vendor/bundle/ruby/2.1.0/gems/coderay-1.1.0/lib/coderay/scanners/ > /dev/null
 rm bash.rb
-cp ${OPENSHIFT_TMP_DIR}/download_files/bash.rb ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb ./
 popd > /dev/null
 pushd $OPENSHIFT_DATA_DIR/redmine-${redmine_version}/vendor/bundle/ruby/2.1.0/gems/coderay-1.1.0/lib/coderay/helpers/ > /dev/null
 perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27] => :bash,\012/' file_types.rb
@@ -216,4 +215,3 @@ perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' ${OPENSHIFT_DA
 ln -s ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/public ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 5 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
-
