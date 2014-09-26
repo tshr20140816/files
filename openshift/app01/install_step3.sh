@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 3 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -26,12 +26,12 @@ echo `date +%Y/%m/%d" "%H:%M:%S` rbenv install >> ${OPENSHIFT_LOG_DIR}/install.l
 
 # OPENSHIFT用インストーラ
 cd ${OPENSHIFT_TMP_DIR}
-cp download_files/rbenv-installer ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/rbenv-installer ./
 bash rbenv-installer
 
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH" 
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH" 
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
 
 # *** ruby ***
