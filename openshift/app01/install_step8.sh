@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 8 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -19,7 +19,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
-cp ${OPENSHIFT_TMP_DIR}/download_files/${ttrss_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/${ttrss_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz ${ttrss_version}.tar.gz --strip-components=1
 popd > /dev/null
