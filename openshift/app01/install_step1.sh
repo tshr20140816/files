@@ -2,7 +2,7 @@
 
 set -x
 
-cat << '__HEREDOC__' >> ${OPENSHIFT_TMP_DIR}/version_list
+cat << '__HEREDOC__' >> ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
 php_version 5.6.0
 delegate_version 9.9.11
@@ -23,7 +23,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -44,8 +44,8 @@ popd > /dev/null
 
 # ***** download files *****
 
-mkdir ${OPENSHIFT_TMP_DIR}/download_files
-pushd ${OPENSHIFT_TMP_DIR}/download_files > /dev/null
+mkdir ${OPENSHIFT_DATA_DIR}/download_files
+pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
 # *** 必要なファイルの事前ダウンロード 成功まで10回繰り返す ***
 # ★  TODO ダウンロードファイルのハッシュチェックを行う
@@ -264,7 +264,7 @@ fi
 # ***** lynx *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp ${OPENSHIFT_TMP_DIR}/download_files/lynx2.8.7.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/lynx2.8.7.tar.gz ./
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz lynx2.8.7.tar.gz
