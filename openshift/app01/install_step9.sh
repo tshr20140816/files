@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 9 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -18,7 +18,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 # ***** mrtg *****
 
 cd ${OPENSHIFT_TMP_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz mrtg-${mrtg_version}.tar.gz
 cd mrtg-${mrtg_version}
