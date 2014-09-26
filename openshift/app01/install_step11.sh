@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 11 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -18,16 +18,16 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 # ***** delegate *****
 
 cd ${OPENSHIFT_TMP_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/delegate${delegate_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/delegate${delegate_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz delegate${delegate_version}.tar.gz
 cd delegate${delegate_version}
 # echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> ${OPENSHIFT_LOG_DIR}/install.log
 # perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
-# time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 
+# time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe"
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
 # cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
-# cp ${OPENSHIFT_TMP_DIR}/download_files/delegated.xz ./
+# cp ${OPENSHIFT_DATA_DIR}/download_files/delegated.xz ./
 cp ${OPENSHIFT_DATA_DIR}/github/openshift/delegated.xz ./
 xz -dv delegated.xz
 mv ./delegated ${OPENSHIFT_DATA_DIR}/delegate/
