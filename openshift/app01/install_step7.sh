@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 7 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -19,7 +19,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
-cp ${OPENSHIFT_TMP_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
 popd > /dev/null
@@ -53,7 +53,7 @@ define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', 'utf8_general_ci');
 __HEREDOC__
 perl -pi -e "s/__PASSWORD__/${wpuser_password}/g" wp-config.php
-cp ${OPENSHIFT_TMP_DIR}/download_files/salt.txt ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/salt.txt ./
 cat ${OPENSHIFT_TMP_DIR}/salt.txt >> wp-config.php
 rm ${OPENSHIFT_TMP_DIR}/salt.txt
 cat << '__HEREDOC__' >> wp-config.php
@@ -71,7 +71,7 @@ __HEREDOC__
 
 # force ssl patch
 mkdir -p wp-content/mu-plugins
-cp ${OPENSHIFT_TMP_DIR}/download_files/is_ssl.php wp-content/mu-plugins/
+cp ${OPENSHIFT_DATA_DIR}/download_files/is_ssl.php wp-content/mu-plugins/
 perl -pi -e 's/(^function is_ssl\(\) \{)$/$1\n\treturn is_maybe_ssl\(\);/g' functions.php
 
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/${wpuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
