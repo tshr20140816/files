@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 2 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -18,7 +18,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 # ***** apache *****
 
 cd ${OPENSHIFT_TMP_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/httpd-${apache_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` apache tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz httpd-${apache_version}.tar.gz
 cd httpd-${apache_version}
@@ -148,4 +148,3 @@ rm httpd-${apache_version}.tar.gz
 rm -rf httpd-${apache_version}
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 2 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
-
