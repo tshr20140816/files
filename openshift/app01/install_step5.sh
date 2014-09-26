@@ -147,13 +147,18 @@ time RAILS_ENV=production bundle exec rake redmine:plugins:migrate
 # *** coderay bash ***
 
 # ★ TODO find ./ -name file_types.rb → xarg で実行する
-pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/2.1.0/gems/coderay-1.1.0/lib/coderay/scanners/ > /dev/null
-rm bash.rb
-cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb ./
-popd > /dev/null
+# pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/2.1.0/gems/coderay-1.1.0/lib/coderay/scanners/ > /dev/null
+# rm bash.rb
+# cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb ./
+# popd > /dev/null
 # pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/2.1.0/gems/coderay-1.1.0/lib/coderay/helpers/ > /dev/null
 # perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27] => :bash,\012/' file_types.rb
 # popd > /dev/null
+
+find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name scanners --type d \
+| grep /lib/coderay/scanners \
+| xargs -l{} cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb {}/
+
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_types.rb -type f \
 | grep coderay/helpers/ \
 | xargs perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27] => :bash,\012/'
