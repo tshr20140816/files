@@ -77,9 +77,7 @@ cp php.ini-development ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-development
 cd ${OPENSHIFT_DATA_DIR}/php
 perl -pi -e 's/^short_open_tag .+$/short_open_tag = On/g' lib/php.ini
 perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/php.ini
-# TODO
-# ;extension=php_xsl.dll
-# extension=memcached.so
+perl -pi -e 's/(^;extension=php_xsl.*$)/$1\r\nextension=memcached.so/g' lib/php.ini
 perl -pi -e 's/^(session.save_handler =).+$/$1 memcached/g' lib/php.ini
 perl -pi -e 's/^;(session.save_path =).+$/$1 "$ENV{OPENSHIFT_DIY_IP}:31211"/g' lib/php.ini
 
