@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 6 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -18,7 +18,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 # ***** memcached *****
 
 cd ${OPENSHIFT_TMP_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/memcached-${memcached_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-${memcached_version}.tar.gz ./
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz memcached-${memcached_version}.tar.gz
@@ -41,7 +41,7 @@ rm -rf memcached-${memcached_version}
 # ***** php *****
 
 cd ${OPENSHIFT_TMP_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/php-${php_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/php-${php_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` php tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz php-${php_version}.tar.gz
 cd php-${php_version}
@@ -77,6 +77,7 @@ cp php.ini-development ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-development
 cd ${OPENSHIFT_DATA_DIR}/php
 perl -pi -e 's/^short_open_tag .+$/short_open_tag = On/g' lib/php.ini
 perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/php.ini
+# TODO
 # ;extension=php_xsl.dll
 # extension=memcached.so
 perl -pi -e 's/^(session.save_handler =).+$/$1 memcached/g' lib/php.ini
@@ -89,7 +90,7 @@ rm -rf php-${php_version}
 # *** libmemcached ***
 
 cd ${OPENSHIFT_TMP_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/libmemcached-${libmemcached_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/libmemcached-${libmemcached_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz libmemcached-${libmemcached_version}.tar.gz
 cd libmemcached-${libmemcached_version}
@@ -110,7 +111,7 @@ rm -rf libmemcached-${libmemcached_version}
 # *** memcached php extention ***
 
 cd ${OPENSHIFT_TMP_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/memcached-${memcached_php_ext_version}.tgz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-${memcached_php_ext_version}.tgz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz memcached-${memcached_php_ext_version}.tgz
 cd memcached-${memcached_php_ext_version}
