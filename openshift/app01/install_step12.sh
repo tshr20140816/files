@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 12 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -170,3 +170,4 @@ echo https://${OPENSHIFT_APP_DNS}/ttrss/install/ ttrssuser/${ttrssuser_password}
 echo https://${OPENSHIFT_APP_DNS}/mail/
 echo https://${OPENSHIFT_APP_DNS}/webalizer/
 echo https://${OPENSHIFT_APP_DNS}/mrtg/
+echo https://${OPENSHIFT_APP_DNS}/redmine/
