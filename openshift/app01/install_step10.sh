@@ -7,7 +7,7 @@ do
   product=`echo $LINE | awk '{print $1}'`
   version=`echo $LINE | awk '{print $2}'`
   eval "$product"=$version
-done < ${OPENSHIFT_TMP_DIR}/version_list
+done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 10 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -18,7 +18,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 # ***** webalizer *****
 
 cd ${OPENSHIFT_TMP_DIR}
-cp ${OPENSHIFT_TMP_DIR}/download_files/webalizer-${webalizer_version}-src.tgz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/webalizer-${webalizer_version}-src.tgz ./
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz webalizer-${webalizer_version}-src.tgz
