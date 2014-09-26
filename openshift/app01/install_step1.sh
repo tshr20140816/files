@@ -48,7 +48,6 @@ mkdir ${OPENSHIFT_DATA_DIR}/download_files
 pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
 # *** 必要なファイルの事前ダウンロード 成功まで10回繰り返す ***
-# ★  TODO ダウンロードファイルのハッシュチェックを行う
 
 files_exists=0
 for i in `seq 0 9`
