@@ -161,7 +161,7 @@ time RAILS_ENV=production bundle exec rake redmine:plugins:migrate
 
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name scanners -type d \
 | grep /lib/coderay/scanners \
-| xargs -l{} cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb {}/
+| xargs -I{} cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb {}/
 
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_types.rb -type f \
 | grep coderay/helpers/ \
