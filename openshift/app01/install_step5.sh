@@ -159,7 +159,7 @@ time RAILS_ENV=production bundle exec rake redmine:plugins:migrate
 # perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27] => :bash,\012/' file_types.rb
 # popd > /dev/null
 
-find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name scanners --type d \
+find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name scanners -type d \
 | grep /lib/coderay/scanners \
 | xargs -l{} cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb {}/
 
