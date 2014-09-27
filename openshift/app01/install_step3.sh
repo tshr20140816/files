@@ -54,6 +54,10 @@ echo `date +%Y/%m/%d" "%H:%M:%S` bundler install >> ${OPENSHIFT_LOG_DIR}/install
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
 | xargs perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
 
+echo `date +%Y/%m/%d" "%H:%M:%S` resolv.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
+| grep ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
+
 time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V
 rbenv rehash
 
