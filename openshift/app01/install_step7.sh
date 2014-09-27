@@ -54,8 +54,8 @@ define('DB_COLLATE', 'utf8_general_ci');
 __HEREDOC__
 perl -pi -e "s/__PASSWORD__/${wpuser_password}/g" wp-config.php
 cp ${OPENSHIFT_DATA_DIR}/download_files/salt.txt ./
-cat ${OPENSHIFT_TMP_DIR}/salt.txt >> wp-config.php
-rm ${OPENSHIFT_TMP_DIR}/salt.txt
+cat ./salt.txt >> wp-config.php
+rm ./salt.txt
 cat << '__HEREDOC__' >> wp-config.php
 
 $table_prefix  = 'wp_';
