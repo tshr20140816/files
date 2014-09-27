@@ -156,7 +156,7 @@ time RAILS_ENV=production bundle exec rake redmine:plugins:migrate
 # cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb ./
 # popd > /dev/null
 # pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/2.1.0/gems/coderay-1.1.0/lib/coderay/helpers/ > /dev/null
-# perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27] => :bash,\012/' file_type.rb
+# perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27 => :bash,\012/' file_type.rb
 # popd > /dev/null
 
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name scanners -type d \
@@ -165,7 +165,7 @@ find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name 
 
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f \
 | grep coderay/helpers/ \
-| xargs perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27] => :bash,\012/'
+| xargs perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27 => :bash,\012/'
 
 echo `date +%Y/%m/%d" "%H:%M:%S` bash.rb copy check >> ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name bash.rb -type f >> ${OPENSHIFT_LOG_DIR}/install.log
