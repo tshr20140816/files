@@ -58,7 +58,7 @@ perl -pi -e "s/define\(\'DB_USER\', \"fox\"/define('DB_USER', 'ttrssuser'/g" con
 perl -pi -e "s/define\(\'DB_NAME\', \"fox\"/define('DB_NAME', 'ttrss'/g" config.php
 perl -pi -e "s/define\(\'DB_PASS\', \"XXXXXX\"/define('DB_PASS', '${ttrssuser_password}'/g" config.php
 perl -pi -e "s/define\(\'DB_PORT\', \'\'/define('DB_PORT', getenv('OPENSHIFT_MYSQL_DB_PORT')/g" config.php
-perl -pi -e "s/(define\(\'MYSQL_CHARSET\', \'UTF8\'\);)/define('_ENABLE_PDO', true);\r\n        define('MYSQL_CHARSET', 'UTF8');/g" config.php
+perl -pi -e "s/define\(\'MYSQL_CHARSET\', \'UTF8\'\);/define('_ENABLE_PDO', true);\r\n        define('MYSQL_CHARSET', 'UTF8');/g" config.php
 perl -pi -e "s/define\(\'SELF_URL_PATH\', \'http:\/\/example.org\/tt-rss\/\'/define('SELF_URL_PATH', 'http:\/\/${OPENSHIFT_APP_DNS}\/ttrss\/'/g" config.php
 
 popd > /dev/null
