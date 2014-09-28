@@ -49,8 +49,18 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS mysql ttrssuser/${ttrssuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 
-# TODO define('_ENABLE_PDO', true);
-# /ttrss/classes/db.php
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
+
+cp config.php-dist config.php
+perl -pi -e "s/define\(\'DB_TYPE\', \"pgsql\"/define('DB_TYPE', 'mysql'/g" config.php
+perl -pi -e "s/define\(\'DB_HOST\', \"localhost\"/define('DB_HOST', getenv('OPENSHIFT_MYSQL_DB_HOST')/g" config.php
+perl -pi -e "s/define\(\'DB_USER\', \"fox\"/define('DB_USER', 'ttrssuser'/g" config.php
+perl -pi -e "s/define\(\'DB_NAME\', \"fox\"/define('DB_NAME', 'ttrss'/g" config.php
+perl -pi -e "s/define\(\'DB_PASS\', \"XXXXXX\"/define('DB_PASS', '${ttrssuser_password}'/g" config.php
+perl -pi -e "s/define\(\'DB_PORT\', \'\'/define('DB_PORT', getenv('OPENSHIFT_MYSQL_DB_PORT')/g" config.php
+perl -pi -e "s/(define\(\'MYSQL_CHARSET\', \'UTF8\'\);)/define('_ENABLE_PDO', true);\r\n        define('MYSQL_CHARSET', 'UTF8');/g" config.php
+
+popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 rm ${ttrss_version}.tar.gz
