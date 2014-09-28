@@ -159,6 +159,7 @@ popd > /dev/null
 ${OPENSHIFT_DATA_DIR}/memcached/bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
 
 wget --spider https://${OPENSHIFT_APP_DNS}/
+wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
 sleep 5s
 
 ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly//webalizer.sh
