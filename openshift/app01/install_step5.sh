@@ -204,16 +204,16 @@ if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ]; then
     touch ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 fi
 
-ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_monthly.log
-ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_weekly.log
-ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_daily.log
-ln -f -s ${OPENSHIFT_LOG_DIR}/cron_hourly.log log/cron_hourly.log
-ln -f -s ${OPENSHIFT_LOG_DIR}/cron_minutely.log log/cron_minutely.log
+# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_monthly.log
+# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_weekly.log
+# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_daily.log
+# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_hourly.log log/cron_hourly.log
+# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_minutely.log log/cron_minutely.log
 
 # * apache *
 
-ln -f -s ${OPENSHIFT_DATA_DIR}/apache/log/access_log log/access_log
-ln -f -s ${OPENSHIFT_DATA_DIR}/apache/log/error_log log/error_log
+# ln -f -s ${OPENSHIFT_DATA_DIR}/apache/log/access_log log/access_log
+# ln -f -s ${OPENSHIFT_DATA_DIR}/apache/log/error_log log/error_log
 
 # *** apache conf ***
 
