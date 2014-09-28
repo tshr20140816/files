@@ -40,6 +40,12 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 | grep lib/phusion_passenger/request_handler.rb \
 | xargs perl -pi -e 's/127.0.0.1/$ENV{OPENSHIFT_DIY_IP}/g'
 
+echo `date +%Y/%m/%d" "%H:%M:%S` request_handler.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
+| grep lib/phusion_passenger/request_handler.rb \
+| xargs cat \
+| grep ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
+
 # ***** font *****
 
 echo `date +%Y/%m/%d" "%H:%M:%S` font install >> ${OPENSHIFT_LOG_DIR}/install.log
