@@ -45,9 +45,12 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 echo `date +%Y/%m/%d" "%H:%M:%S` font install >> ${OPENSHIFT_LOG_DIR}/install.log
 
 cd ${OPENSHIFT_DATA_DIR}
-cp ${OPENSHIFT_DATA_DIR}/download_files/IPAfont${ipafont_version}.zip ./
-unzip -d fonts -j IPAfont${ipafont_version}.zip
-rm IPAfont${ipafont_version}.zip
+# cp ${OPENSHIFT_DATA_DIR}/download_files/IPAfont${ipafont_version}.zip ./
+# unzip -d fonts -j IPAfont${ipafont_version}.zip
+# rm IPAfont${ipafont_version}.zip
+cp ${OPENSHIFT_DATA_DIR}/download_files/ipagp${ipafont_version}.zip ./
+unzip -d fonts -j ipagp${ipafont_version}.zip
+rm ipagp${ipafont_version}.zip
 
 # ***** redmine *****
 
