@@ -72,7 +72,7 @@ __HEREDOC__
 # force ssl patch
 mkdir -p wp-content/mu-plugins
 cp ${OPENSHIFT_DATA_DIR}/download_files/is_ssl.php wp-content/mu-plugins/
-perl -pi -e 's/(^function is_ssl\(\) \{)$/$1\n\treturn is_maybe_ssl\(\);/g' functions.php
+perl -pi -e 's/(^function is_ssl\(\) \{)$/$1\n\treturn is_maybe_ssl\(\);/g' wp-includes/functions.php
 
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/${wpuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
