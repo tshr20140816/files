@@ -2,6 +2,9 @@
 
 set -x
 
+# TODO
+# ruby_version 2.1.2 → 2.1.3
+
 cat << '__HEREDOC__' >> ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
 php_version 5.6.0
@@ -13,7 +16,7 @@ ttrss_version 1.13
 memcached_version 1.4.20
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
-ruby_version 2.1.3
+ruby_version 2.1.2
 redmine_version 2.5.2
 ipafont_version 00303
 __HEREDOC__
