@@ -298,4 +298,7 @@ rm -rf lynx2-8-7
 
 popd > /dev/null
 
+cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
+export TMOUT=0
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
