@@ -118,12 +118,19 @@ do
     fi
 
     # *** ipa font ***
-    if [ ! -f IPAfont${ipafont_version}.zip ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget >> ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://ipafont.ipa.go.jp/ipafont/IPAfont${ipafont_version}.php -O IPAfont${ipafont_version}.zip
+    # if [ ! -f IPAfont${ipafont_version}.zip ]; then
+    #     echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget >> ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget http://ipafont.ipa.go.jp/ipafont/IPAfont${ipafont_version}.php -O IPAfont${ipafont_version}.zip
+    # fi
+    # if [ ! -f IPAfont${ipafont_version}.zip ]; then
+    #     files_exists=0
+    # fi
+    if [ ! -f ipagp${ipafont_version}.zip ]; then
+       echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget >> ${OPENSHIFT_LOG_DIR}/install.log
+       wget http://ipafont.ipa.go.jp/ipafont/ipagp${ipafont_version}.php -O ipagp${ipafont_version}.zip
     fi
-    if [ ! -f IPAfont${ipafont_version}.zip ]; then
-        files_exists=0
+    if [ ! -f ipagp${ipafont_version}.zip ]; then
+       files_exists=0
     fi
 
     # *** memcached ***
