@@ -162,7 +162,7 @@ wget --spider https://${OPENSHIFT_APP_DNS}/
 wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
 sleep 5s
 
-${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly//webalizer.sh
+${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/webalizer.sh
 
 set +x
 
