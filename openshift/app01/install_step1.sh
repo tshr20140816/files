@@ -2,7 +2,7 @@
 
 set -x
 
-# TODO
+# History
 # ruby_version 2.1.2 → 2.1.3
 
 cat << '__HEREDOC__' >> ${OPENSHIFT_DATA_DIR}/version_list
@@ -172,6 +172,15 @@ do
         wget http://pecl.php.net/get/memcached-${memcached_php_ext_version}.tgz
     fi
     if [ ! -f memcached-${memcached_php_ext_version}.tgz ]; then
+        files_exists=0
+    fi
+
+    # *** memcached-tool ***
+    if [ ! -f memcached-tool ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` memcached-tool wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool
+    fi
+    if [ ! -f memcached-tool ]; then
         files_exists=0
     fi
 
