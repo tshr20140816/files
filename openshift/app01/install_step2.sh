@@ -17,11 +17,15 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 # ***** apache *****
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` apache tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz httpd-${apache_version}.tar.gz
-cd httpd-${apache_version}
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
+
+# *** configure make install ***
+
 echo `date +%Y/%m/%d" "%H:%M:%S` apache configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/apache \
@@ -32,13 +36,24 @@ echo `date +%Y/%m/%d" "%H:%M:%S` apache make install >> ${OPENSHIFT_LOG_DIR}/ins
 make install
 echo `date +%Y/%m/%d" "%H:%M:%S` apache conf >> ${OPENSHIFT_LOG_DIR}/install.log
 cd ${OPENSHIFT_DATA_DIR}/apache
+
+# *** *.conf ***
+
 cp conf/httpd.conf conf/httpd.conf.`date '+%Y%m%d'`
+
+# * Listen 書き換え $ENV{OPENSHIFT_DIY_IP}:8080 *
+
 perl -pi -e 's/^Listen .+$/Listen $ENV{OPENSHIFT_DIY_IP}:8080/g' conf/httpd.conf
 cat << '__HEREDOC__' >> conf/httpd.conf
 
 Include conf/custom.conf
 __HEREDOC__
+
+# * DirectoryIndex に index.php 追加 *
+
 perl -pi -e 's/(^ +DirectoryIndex .*$)/$1 index.php/g' conf/httpd.conf
+
+# * 未使用モジュールコメントアウト *
 
 perl -pi -e 's/(^LoadModule.+mod_authn_anon.so$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^LoadModule.+mod_authn_dbm.so$)/# $1/g' conf/httpd.conf
@@ -138,13 +153,18 @@ FileETag None
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
 
+# *** robots.txt ***
+
 cat << '__HEREDOC__' > htdocs/robots.txt
 User-agent: *
 Disallow: /
 __HEREDOC__
 
-cd ${OPENSHIFT_TMP_DIR}
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm httpd-${apache_version}.tar.gz
 rm -rf httpd-${apache_version}
+popd > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 2 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
