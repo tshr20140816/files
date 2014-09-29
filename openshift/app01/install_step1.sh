@@ -4,6 +4,7 @@ set -x
 
 # History
 # 2014.09.29 ruby_version 2.1.2 → 2.1.3
+# 2014.09.23 first
 
 cat << '__HEREDOC__' >> ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
