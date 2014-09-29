@@ -164,6 +164,14 @@ sleep 5s
 
 ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/webalizer.sh
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
+chmod +x memcached-tool
+./memcached-tool ${OPENSHIFT_DIY_IP}:31211 dump
+./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats
+./memcached-tool ${OPENSHIFT_DIY_IP}:31211 display
+popd > /dev/null
+
 set +x
 
 echo https://${OPENSHIFT_APP_DNS}/wordpress/wp-admin/install.php
