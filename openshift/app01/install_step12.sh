@@ -167,7 +167,8 @@ sleep 5s
 ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/webalizer.sh
 
 # TODO
-# find ${OPENSHIFT_DATA_DIR} -name passenger-status -type f | xargs
+# find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs
+# option -v
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
