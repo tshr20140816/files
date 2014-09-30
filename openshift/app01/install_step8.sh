@@ -62,9 +62,9 @@ perl -pi -e "s/define\(\'MYSQL_CHARSET\', \'UTF8\'\);/define('_ENABLE_PDO', true
 perl -pi -e "s/define\(\'SELF_URL_PATH\', \'http:\/\/example.org\/tt-rss\/\'/define('SELF_URL_PATH', 'http:\/\/${OPENSHIFT_APP_DNS}\/ttrss\/'/g" config.php
 # TODO
 # perl -pi -e "s/define\(\'PHP_EXECUTABLE\', \'\/usr\/bin\/php\'/define('PHP_EXECUTABLE', getenv('OPENSHIFT_DATA_DIR')\/php\/bin\/php/g" config.php
-# zlib.output_compression php.ini
-# perl -pi -e "s/define\(\'ENABLE_GZIP_OUTPUT\', false/define('ENABLE_GZIP_OUTPUT', true/g" config.php
+perl -pi -e "s/define\(\'ENABLE_GZIP_OUTPUT\', false/define('ENABLE_GZIP_OUTPUT', true/g" config.php
 
+echo zlib.output_compression off > .htaccess
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
