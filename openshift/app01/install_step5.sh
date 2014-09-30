@@ -50,7 +50,7 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 
 echo `date +%Y/%m/%d" "%H:%M:%S` font install >> ${OPENSHIFT_LOG_DIR}/install.log
 
-cd ${OPENSHIFT_DATA_DIR}
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 # cp ${OPENSHIFT_DATA_DIR}/download_files/IPAfont${ipafont_version}.zip ./
 # unzip -d fonts -j IPAfont${ipafont_version}.zip
 # rm IPAfont${ipafont_version}.zip
@@ -68,9 +68,12 @@ cd ${OPENSHIFT_DATA_DIR}
 cp ${OPENSHIFT_DATA_DIR}/download_files/redmine-${redmine_version}.tar.gz ./
 tar xfz redmine-${redmine_version}.tar.gz
 
+popd > /dev/null
+
 # *** create database ***
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
 cat << '__HEREDOC__' > create_database_redmine.txt
 CREATE DATABASE redmine CHARACTER SET utf8 COLLATE utf8_general_ci;
 GRANT ALL PRIVILEGES ON redmine.* TO redmineuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
@@ -91,9 +94,11 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_redmine.txt
 
+popd > /dev/null
+
 # * config database *
 
-cd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}
+pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}
 cat << '__HEREDOC__' > config/database.yml
 production:
   adapter: mysql2
@@ -126,6 +131,8 @@ __HEREDOC__
 # *** plugin_assets ***
 mkdir public/plugin_assets
 
+popd > /dev/null
+
 # *** plugin ***
 pushd plugins > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/redmine_logs-0.0.5.zip ./
@@ -147,6 +154,7 @@ rbenv rehash
 
 # *** bundle ***
 
+pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}
 mv Gemfile Gemfile.`date '+%Y%m%d'`
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
 time bundle install --path vendor/bundle -j2
@@ -214,6 +222,8 @@ fi
 
 # ln -f -s ${OPENSHIFT_DATA_DIR}/apache/log/access_log log/access_log
 # ln -f -s ${OPENSHIFT_DATA_DIR}/apache/log/error_log log/error_log
+
+popd > /dev/null
 
 # *** apache conf ***
 
