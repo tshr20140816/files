@@ -70,10 +70,12 @@ export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)" 
 
-rake redmine:fetch_changesets RAILS_ENV=production
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
+bundle exec rake redmine:fetch_changesets RAILS_ENV=production
 __HEREDOC__
 chmod +x redmine_repository_check.sh
-echo redmine_repository_check.sh >> jobs.allow
+# TODO
+# echo redmine_repository_check.sh >> jobs.allow
 
 popd > /dev/null
 
