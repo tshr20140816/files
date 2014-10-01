@@ -35,7 +35,8 @@ time make -j2
 echo `date +%Y/%m/%d" "%H:%M:%S` apache make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
 echo `date +%Y/%m/%d" "%H:%M:%S` apache conf >> ${OPENSHIFT_LOG_DIR}/install.log
-cd ${OPENSHIFT_DATA_DIR}/apache
+popd > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
 
 # *** *.conf ***
 
