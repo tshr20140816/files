@@ -30,11 +30,12 @@ eval "$(rbenv init -)"
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --snippet > ${OPENSHIFT_TMP_DIR}/passenger.conf
 
 # patch request_handler.rb
-# OPENSHIFT では 127.0.0.1 は使えないため
-# OPENSHIFT ではポートにも制限があるため固定ポートにしたけど大丈夫?
+# OPENSHIFT では 127.0.0.1 は使えないため ${OPENSHIFT_DIY_IP} に置換
+# https://help.openshift.com/hc/en-us/articles/202185874
+# 15000 - 35530
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 | grep lib/phusion_passenger/request_handler.rb \
-| xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', 33000)/g"
+| xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', rand(15000..20000))/g"
 
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 | grep lib/phusion_passenger/request_handler.rb \
