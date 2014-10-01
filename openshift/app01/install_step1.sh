@@ -39,6 +39,8 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 echo `date +%Y/%m/%d" "%H:%M:%S` github >> ${OPENSHIFT_LOG_DIR}/install.log
 
+curl -L https://status.github.com/api/status.json >> ${OPENSHIFT_LOG_DIR}/install.log
+
 mkdir ${OPENSHIFT_DATA_DIR}/github
 pushd ${OPENSHIFT_DATA_DIR}/github > /dev/null
 git init
