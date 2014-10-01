@@ -161,6 +161,28 @@ User-agent: *
 Disallow: /
 __HEREDOC__
 
+# *** info ***
+
+mkdir htdocs/info
+
+# * htpassword *
+
+echo user:realm:`echo -n user:realm:bakayoke | md5sum | cut -c 1-32` > ${OPENSHIFT_DATA_DIR}.htpasswd
+
+# * htaccess *
+
+echo AuthType Digest > htdocs/info/.htaccess
+echo AuthUserFile $OPENSHIFT_DATA_DIR.htpasswd >> htdocs/info/.htaccess
+cat << __HEREDOC2__ >> htdocs/info/.htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+__HEREDOC2__
+
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
