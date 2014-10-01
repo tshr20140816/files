@@ -143,6 +143,12 @@ __HEREDOC__
 chmod +x update_feeds.sh
 echo update_feeds.sh >> jobs.allow
 
+# TODO
+# ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+# find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -I{} {} --verbose
+# ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats ※memcached-toolのインストール場所未定
+# oo-cgroup-read memory.failcnt → mrtg?
+
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
