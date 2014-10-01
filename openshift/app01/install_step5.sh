@@ -68,6 +68,11 @@ cd ${OPENSHIFT_DATA_DIR}
 cp ${OPENSHIFT_DATA_DIR}/download_files/redmine-${redmine_version}.tar.gz ./
 tar xfz redmine-${redmine_version}.tar.gz
 
+# *** patch ***
+# TODO
+# app\models\repository\subversion.rb
+# while (identifier_from <= scm_revision) → if identifier_from <= scm_revision
+
 popd > /dev/null
 
 # *** create database ***
@@ -166,15 +171,6 @@ time RAILS_ENV=production bundle exec rake db:migrate
 time RAILS_ENV=production bundle exec rake redmine:plugins:migrate
 
 # *** coderay bash ***
-
-# ★ TODO find ./ -name file_types.rb → xarg で実行する
-# pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/2.1.0/gems/coderay-1.1.0/lib/coderay/scanners/ > /dev/null
-# rm bash.rb
-# cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb ./
-# popd > /dev/null
-# pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/2.1.0/gems/coderay-1.1.0/lib/coderay/helpers/ > /dev/null
-# perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27 => :bash,\012/' file_type.rb
-# popd > /dev/null
 
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name scanners -type d \
 | grep /lib/coderay/scanners \
