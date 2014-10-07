@@ -174,7 +174,7 @@ echo user:realm:`echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32
 
 echo AuthType Digest > htdocs/info/.htaccess
 echo AuthUserFile $OPENSHIFT_DATA_DIR/apache/.htpasswd >> htdocs/info/.htaccess
-cat << __HEREDOC2__ >> htdocs/info/.htaccess
+cat << '__HEREDOC__' >> htdocs/info/.htaccess
 AuthName realm
 
 require valid-user
@@ -182,7 +182,7 @@ require valid-user
 <Files ~ "^.(htpasswd|htaccess)$">
     deny from all
 </Files>
-__HEREDOC2__
+__HEREDOC__
 
 popd > /dev/null
 
@@ -195,7 +195,7 @@ popd > /dev/null
 pushd $OPENSHIFT_DATA_DIR/apache/htdocs/ > /dev/null
 echo AuthType Digest > logs/.htaccess
 echo AuthUserFile ${OPENSHIFT_DATA_DIR}/apache/.htpasswd >> logs/.htaccess
-cat << __HEREDOC2__ >> logs/.htaccess
+cat << '__HEREDOC__' >> logs/.htaccess
 AuthName realm
 
 require valid-user
@@ -203,7 +203,7 @@ require valid-user
 <Files ~ "^.(htpasswd|htaccess)$">
     deny from all
 </Files>
-__HEREDOC2__
+__HEREDOC__
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
