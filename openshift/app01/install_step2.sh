@@ -186,6 +186,26 @@ __HEREDOC2__
 
 popd > /dev/null
 
+# * logs dir *
+
+pushd $OPENSHIFT_DATA_DIR/apache/htdocs/ > /dev/null
+ln -s ${OPENSHIFT_LOG_DIR} logs
+popd > /dev/null
+
+pushd $OPENSHIFT_DATA_DIR/apache/htdocs/ > /dev/null
+echo AuthType Digest > logs/.htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/apache/.htpasswd >> logs/.htaccess
+cat << __HEREDOC2__ >> logs/.htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+__HEREDOC2__
+popd > /dev/null
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm httpd-${apache_version}.tar.gz
 rm -rf httpd-${apache_version}
