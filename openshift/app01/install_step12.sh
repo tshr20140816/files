@@ -198,6 +198,8 @@ __HEREDOC__
 chmod +x for_restart.sh
 echo for_restart.sh >> jobs.allow
 
+# *** webalizer first process ***
+
 wget --spider https://${OPENSHIFT_APP_DNS}/
 wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
 sleep 5s
@@ -205,6 +207,8 @@ sleep 5s
 ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/webalizer.sh
 
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -I{} {} --verbose
+
+# *** memcached information ***
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
