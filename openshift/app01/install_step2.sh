@@ -167,12 +167,12 @@ mkdir htdocs/info
 
 # * htpassword *
 
-echo user:realm:`echo -n user:realm:bakayoke | md5sum | cut -c 1-32` > ${OPENSHIFT_DATA_DIR}.htpasswd
+echo user:realm:`echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32` > ${OPENSHIFT_DATA_DIR}/apache/.htpasswd
 
 # * htaccess *
 
 echo AuthType Digest > htdocs/info/.htaccess
-echo AuthUserFile $OPENSHIFT_DATA_DIR.htpasswd >> htdocs/info/.htaccess
+echo AuthUserFile $OPENSHIFT_DATA_DIR/apache/.htpasswd >> htdocs/info/.htaccess
 cat << __HEREDOC2__ >> htdocs/info/.htaccess
 AuthName realm
 
