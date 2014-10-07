@@ -143,6 +143,27 @@ __HEREDOC__
 chmod +x update_feeds.sh
 echo update_feeds.sh >> jobs.allow
 
+# * redmine repository check *
+
+cat << '__HEREDOC__' > redmine_repository_check.sh
+#!/bin/bash
+
+minute=`date +%M`
+
+if [ `expr ${minute} % 10` -eq 2 ]; then
+    export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+    export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+    export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+    export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+    eval "$(rbenv init -)" 
+
+    cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
+    bundle exec rake redmine:fetch_changesets RAILS_ENV=production
+fi
+__HEREDOC__
+chmod +x redmine_repository_check.sh
+echo redmine_repository_check.sh >> jobs.allow
+
 # TODO
 # ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 # find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -I{} {} --verbose
