@@ -178,8 +178,22 @@ __HEREDOC__
 chmod +x passenger_status.sh
 echo passenger_status.sh >> jobs.allow
 
+# * memcached status *
+
+cat << '__HEREDOC__' > memcached_status.sh
+#!/bin/bash
+
+export TZ=JST-9
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+echo `date +%Y/%m/%d" "%H:%M:%S` > memcached_status.txt
+${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> memcached_status.txt
+__HEREDOC__
+chmod +x memcached_status.sh
+echo memcached_status.sh >> jobs.allow
+
 # TODO
-# ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats ※memcached-toolのインストール場所未定
+# ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool
+# ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats
 # oo-cgroup-read memory.failcnt → mrtg?
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
