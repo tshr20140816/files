@@ -179,8 +179,6 @@ chmod +x passenger_status.sh
 echo passenger_status.sh >> jobs.allow
 
 # TODO
-# ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-# find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -I{} {} --verbose
 # ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats ※memcached-toolのインストール場所未定
 # oo-cgroup-read memory.failcnt → mrtg?
 
