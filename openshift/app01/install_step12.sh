@@ -173,7 +173,7 @@ cat << '__HEREDOC__' > passenger_status.sh
 export TZ=JST-9
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 echo `date +%Y/%m/%d" "%H:%M:%S` > passenger_status.txt
-find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -I{} {} --verbose >> passenger_status.txt
+find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -I {} {} --verbose >> passenger_status.txt
 __HEREDOC__
 chmod +x passenger_status.sh
 echo passenger_status.sh >> jobs.allow
@@ -253,7 +253,7 @@ sleep 5s
 
 ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/webalizer.sh
 
-find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -I{} {} --verbose
+find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -I {} {} --verbose
 
 # *** memcached information ***
 
