@@ -157,12 +157,25 @@ if [ `expr ${minute} % 10` -eq 2 ]; then
     export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
     eval "$(rbenv init -)" 
 
+    echo redmine_repository_check
     cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
     bundle exec rake redmine:fetch_changesets RAILS_ENV=production
 fi
 __HEREDOC__
 chmod +x redmine_repository_check.sh
 echo redmine_repository_check.sh >> jobs.allow
+
+# * passenger status *
+
+cat << '__HEREDOC__' > passenger_status.sh
+#!/bin/bash
+
+export TZ=JST-9
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -I{} {} --verbose > passenger_status.txt
+__HEREDOC__
+chmod +x passenger_status.sh
+echo passenger_status.sh >> jobs.allow
 
 # TODO
 # ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
