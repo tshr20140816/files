@@ -166,6 +166,7 @@ __HEREDOC__
 mkdir htdocs/info
 
 # * htpassword *
+# for more arrange please
 
 echo user:realm:`echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32` > ${OPENSHIFT_DATA_DIR}/apache/.htpasswd
 
