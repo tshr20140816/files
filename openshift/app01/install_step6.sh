@@ -38,6 +38,10 @@ cd ${OPENSHIFT_TMP_DIR}
 rm memcached-${memcached_version}.tar.gz
 rm -rf memcached-${memcached_version}
 
+mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
+cd ${OPENSHIFT_DATA_DIR}/local/bin
+wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool
+
 # ***** php *****
 
 cd ${OPENSHIFT_TMP_DIR}
