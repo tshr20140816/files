@@ -70,10 +70,9 @@ cp ${OPENSHIFT_DATA_DIR}/download_files/redmine-${redmine_version}.tar.gz ./
 tar xfz redmine-${redmine_version}.tar.gz
 
 # *** patch ***
-# TODO
-# app\models\repository\subversion.rb
-# while (identifier_from <= scm_revision) → if identifier_from <= scm_revision
+
 perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/$1\r\n        if identifier_from <= scm_revision/g' app/models/repository/subversion.rb
+perl -pi -e 's/committed_on/revision/g' app/models/repository.rb
 
 popd > /dev/null
 
