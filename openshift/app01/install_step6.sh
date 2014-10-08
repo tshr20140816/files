@@ -97,17 +97,19 @@ cat lib/php.ini | grep memcached.so >> ${OPENSHIFT_LOG_DIR}/install.log
 cat lib/php.ini | grep session.save_handler >> ${OPENSHIFT_LOG_DIR}/install.log
 cat lib/php.ini | grep session.save_path >> ${OPENSHIFT_LOG_DIR}/install.log
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm php-${php_version}.tar.gz
 rm -rf php-${php_version}
+popd > /dev/null
 
 # *** libmemcached ***
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/libmemcached-${libmemcached_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz libmemcached-${libmemcached_version}.tar.gz
-cd libmemcached-${libmemcached_version}
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
@@ -117,10 +119,12 @@ echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make >> ${OPENSHIFT_LOG_DIR}/insta
 time make -j3
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
+popd > /dev/null
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm libmemcached-${libmemcached_version}.tar.gz
 rm -rf libmemcached-${libmemcached_version}
+popd > /dev/null
 
 # *** memcached php extention ***
 
@@ -128,7 +132,8 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-${memcached_php_ext_version}.tgz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz memcached-${memcached_php_ext_version}.tgz
-cd memcached-${memcached_php_ext_version}
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_php_ext_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext phpize >> ${OPENSHIFT_LOG_DIR}/install.log
 ${OPENSHIFT_DATA_DIR}/php/bin/phpize
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext configure >> ${OPENSHIFT_LOG_DIR}/install.log
