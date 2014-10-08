@@ -58,6 +58,7 @@ pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/ipagp${ipafont_version}.zip ./
 unzip -d fonts -j ipagp${ipafont_version}.zip
 rm ipagp${ipafont_version}.zip
+popd > /dev/null
 
 # ***** redmine *****
 
@@ -65,12 +66,15 @@ echo `date +%Y/%m/%d" "%H:%M:%S` redmine install >> ${OPENSHIFT_LOG_DIR}/install
 
 # *** redmine ***
 
-cd ${OPENSHIFT_DATA_DIR}
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/redmine-${redmine_version}.tar.gz ./
 tar xfz redmine-${redmine_version}.tar.gz
+rm redmine-${redmine_version}.tar.gz
+popd > /dev/null
 
 # *** patch ***
 
+pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 # 1回で全部取得せず、少しずつ取得する
 perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/$1\r\n        if identifier_from <= scm_revision/g' app/models/repository/subversion.rb
 
@@ -108,7 +112,7 @@ popd > /dev/null
 
 # * config database *
 
-pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}
+pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 cat << '__HEREDOC__' > config/database.yml
 production:
   adapter: mysql2
@@ -164,7 +168,7 @@ rbenv rehash
 
 # *** bundle ***
 
-pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}
+pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 mv Gemfile Gemfile.`date '+%Y%m%d'`
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
 time bundle install --path vendor/bundle -j2
