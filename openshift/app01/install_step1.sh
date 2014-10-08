@@ -146,6 +146,15 @@ do
         files_exists=0
     fi
 
+    # *** memcached-tool ***
+    if [ ! -f memcached-tool ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` memcached-tool wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool
+    fi
+    if [ ! -f memcached-tool ]; then
+        files_exists=0
+    fi
+    
     # *** php ***
     if [ ! -f php-${php_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` php wget >> ${OPENSHIFT_LOG_DIR}/install.log
