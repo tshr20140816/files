@@ -165,6 +165,12 @@ __HEREDOC__
 
 mkdir htdocs/info
 
+cat << '__HEREDOC__' > htdocs/info/phpinfo.php
+<?php
+phpinfo();
+?>
+__HEREDOC__
+
 # * htpassword *
 # more arrange please
 
