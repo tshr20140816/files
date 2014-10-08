@@ -75,7 +75,8 @@ tar xfz redmine-${redmine_version}.tar.gz
 perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/$1\r\n        if identifier_from <= scm_revision/g' app/models/repository/subversion.rb
 
 # リビジョンが大きくても日時が古いことがある
-perl -pi -e 's/committed_on/revision/g' app/models/repository.rb
+perl -pi -e 's/committed_on DESC/revision DESC/g' app/models/repository.rb
+perl -pi -e 's/committed_on DESC/revision DESC/g' app/models/repository/subversion.rb
 
 popd > /dev/null
 
