@@ -41,6 +41,7 @@ rm -rf memcached-${memcached_version}
 mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
 cd ${OPENSHIFT_DATA_DIR}/local/bin
 cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
+chmod +x memcached-tool
 
 # ***** php *****
 
