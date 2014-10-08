@@ -40,7 +40,7 @@ rm -rf memcached-${memcached_version}
 
 mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
 cd ${OPENSHIFT_DATA_DIR}/local/bin
-wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool
+cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
 
 # ***** php *****
 
