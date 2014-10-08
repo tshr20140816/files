@@ -79,8 +79,8 @@ pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/$1\r\n        if identifier_from <= scm_revision/g' app/models/repository/subversion.rb
 
 # リビジョンが大きくても日時が古いことがある
-perl -pi -e 's/committed_on DESC/revision DESC/g' app/models/repository.rb
-perl -pi -e 's/committed_on DESC/revision DESC/g' app/models/repository/subversion.rb
+perl -pi -e 's/committed_on DESC/CONVERT(revision, UNSIGNED) DESC/g' app/models/repository.rb
+perl -pi -e 's/committed_on DESC/CONVERT(revision, UNSIGNED) DESC/g' app/models/repository/subversion.rb
 
 popd > /dev/null
 
