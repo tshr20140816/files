@@ -25,9 +25,11 @@ export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 echo `date +%Y/%m/%d" "%H:%M:%S` rbenv install >> ${OPENSHIFT_LOG_DIR}/install.log
 
 # OPENSHIFT用インストーラ
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/nul
 cp ${OPENSHIFT_DATA_DIR}/download_files/rbenv-installer ./
 bash rbenv-installer
+rm rbenv-installer
+popd > /dev/nul
 
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
@@ -67,8 +69,5 @@ echo `date +%Y/%m/%d" "%H:%M:%S` bundler passenger >> ${OPENSHIFT_LOG_DIR}/insta
 
 time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V
 rbenv rehash
-
-cd ${OPENSHIFT_TMP_DIR}
-rm rbenv-installer
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 3 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
