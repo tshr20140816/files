@@ -25,7 +25,7 @@ export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 echo `date +%Y/%m/%d" "%H:%M:%S` rbenv install >> ${OPENSHIFT_LOG_DIR}/install.log
 
 # OPENSHIFT用インストーラ
-pushd ${OPENSHIFT_TMP_DIR} > /dev/nul
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/rbenv-installer ./
 bash rbenv-installer
 rm rbenv-installer
