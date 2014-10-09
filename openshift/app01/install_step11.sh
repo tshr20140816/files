@@ -17,11 +17,12 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 # ***** delegate *****
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/delegate${delegate_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz delegate${delegate_version}.tar.gz
-cd delegate${delegate_version}
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
 # echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> ${OPENSHIFT_LOG_DIR}/install.log
 # perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
 # time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe"
@@ -36,8 +37,9 @@ mv ./delegated ${OPENSHIFT_DATA_DIR}/delegate/
 mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons
 cp src/builtin/icons/ysato/*.* ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/
 # */
+popd > /dev/null
 
-cd ${OPENSHIFT_DATA_DIR}/delegate/
+pushd ${OPENSHIFT_DATA_DIR}/delegate/ > /dev/null
 cat << '__HEREDOC__' > P30080
 -P__OPENSHIFT_DIY_IP__:30080
 SERVER=http
@@ -52,9 +54,11 @@ cat << '__HEREDOC__' > filter.txt
 s/http:..__OPENSHIFT_DIY_IP__:30080.-.builtin.icons.ysato/\/delegate\/icons/g
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt
+popd > /dev/null
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm delegate${delegate_version}.tar.gz
 rm -rf delegate${delegate_version}
+popd > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 11 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
