@@ -19,10 +19,9 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-${memcached_version}.tar.gz ./
-popd > /dev/null
-
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz memcached-${memcached_version}.tar.gz
+popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version} > /dev/null
 
