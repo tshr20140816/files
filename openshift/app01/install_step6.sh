@@ -51,11 +51,13 @@ popd > /dev/null
 
 # ***** php *****
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd cd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/php-${php_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` php tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz php-${php_version}.tar.gz
-cd php-${php_version}
+popd > /dev/null
+
+pushd cd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` php configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
@@ -98,6 +100,7 @@ cat lib/php.ini | grep date.timezone >> ${OPENSHIFT_LOG_DIR}/install.log
 cat lib/php.ini | grep memcached.so >> ${OPENSHIFT_LOG_DIR}/install.log
 cat lib/php.ini | grep session.save_handler >> ${OPENSHIFT_LOG_DIR}/install.log
 cat lib/php.ini | grep session.save_path >> ${OPENSHIFT_LOG_DIR}/install.log
+popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm php-${php_version}.tar.gz
