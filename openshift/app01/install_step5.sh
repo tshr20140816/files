@@ -83,6 +83,26 @@ perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\r\n   
 perl -pi -e 's/committed_on DESC/CONVERT(revision, UNSIGNED) DESC/g' app/models/repository.rb
 perl -pi -e 's/committed_on DESC/CONVERT(revision, UNSIGNED) DESC/g' app/models/repository/subversion.rb
 
+# *** patch check ***
+
+echo `date +%Y/%m/%d" "%H:%M:%S` subversion.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR} -name subversion.rb -type f \
+| grep app/models/repository/subversion.rb \
+| xargs cat \
+| grep identifier_from >> ${OPENSHIFT_LOG_DIR}/install.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` repository.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR} -name repository.rb -type f \
+| grep app/models/repository.rb \
+| xargs cat \
+| grep DESC >> ${OPENSHIFT_LOG_DIR}/install.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` subversion.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR} -name subversion.rb -type f \
+| grep app/models/repository/subversion.rb \
+| xargs cat \
+| grep DESC >> ${OPENSHIFT_LOG_DIR}/install.log
+
 popd > /dev/null
 
 # *** create database ***
