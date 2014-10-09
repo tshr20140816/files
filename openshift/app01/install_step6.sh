@@ -87,7 +87,9 @@ echo `date +%Y/%m/%d" "%H:%M:%S` php make conf >> ${OPENSHIFT_LOG_DIR}/install.l
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-production
 cp php.ini-development ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-development
-cd ${OPENSHIFT_DATA_DIR}/php
+popd > /dev/null
+
+pushd ${OPENSHIFT_DATA_DIR}/php > /dev/null
 perl -pi -e 's/^short_open_tag .+$/short_open_tag = On/g' lib/php.ini
 perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/php.ini
 perl -pi -e 's/(^;extension=php_xsl.*$)/$1\r\nextension=memcached.so/g' lib/php.ini
