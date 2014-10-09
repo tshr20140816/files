@@ -198,7 +198,7 @@ pushd $OPENSHIFT_DATA_DIR/apache/htdocs/ > /dev/null
 ln -s ${OPENSHIFT_LOG_DIR} logs
 popd > /dev/null
 
-pushd $OPENSHIFT_DATA_DIR/apache/htdocs/ > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
 echo AuthType Digest > logs/.htaccess
 echo AuthUserFile ${OPENSHIFT_DATA_DIR}/apache/.htpasswd >> logs/.htaccess
 cat << '__HEREDOC__' >> logs/.htaccess
