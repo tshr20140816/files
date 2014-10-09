@@ -17,11 +17,13 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 # ***** mrtg *****
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz mrtg-${mrtg_version}.tar.gz
-cd mrtg-${mrtg_version}
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/mrtg 2>&1 | tee ${OPENSHIFT_LOG_DIR}/mrtg.configure.log
@@ -29,9 +31,14 @@ echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make -j2
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
+popd > /dev/null
+
 mkdir ${OPENSHIFT_DATA_DIR}/mrtg/workdir
 mkdir ${OPENSHIFT_DATA_DIR}/mrtg/scripts
-cd ${OPENSHIFT_DATA_DIR}/mrtg
+mkdir ${OPENSHIFT_DATA_DIR}/mrtg/log
+mkdir ${OPENSHIFT_DATA_DIR}/mrtg/www
+
+pushd ${OPENSHIFT_DATA_DIR}/mrtg > /dev/null
 
 touch scripts/cpu_usage.sh
 cat << '__HEREDOC__' > scripts/cpu_usage.sh
@@ -145,15 +152,15 @@ Unscaled[cpu]: dwm
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' mrtg.conf
 
-mkdir ${OPENSHIFT_DATA_DIR}/mrtg/log
-mkdir ${OPENSHIFT_DATA_DIR}/mrtg/www
-cd ${OPENSHIFT_DATA_DIR}/mrtg
 ./bin/indexmaker --output=index.html mrtg.conf
 cp index.html www/
 
-cd ${OPENSHIFT_TMP_DIR}
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm mrtg-${mrtg_version}.tar.gz
 rm -rf mrtg-${mrtg_version}
+popd > /dev/null
 
 # *** apache link ***
 
