@@ -17,13 +17,13 @@ echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >
 
 # ***** webalizer *****
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/nul
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/webalizer-${webalizer_version}-src.tgz ./
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz webalizer-${webalizer_version}-src.tgz
-popd > /dev/nul
-cd webalizer-${webalizer_version}
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/webalizer-${webalizer_version} > /dev/null
 mv lang/webalizer_lang.japanese lang/webalizer_lang.japanese_euc
 iconv -f euc-jp -t utf-8 lang/webalizer_lang.japanese_euc > lang/webalizer_lang.japanese
 
@@ -39,8 +39,9 @@ time make -j2
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
+popd > /dev/null
 
-cd ${OPENSHIFT_DATA_DIR}/webalizer/etc
+pushd ${OPENSHIFT_DATA_DIR}/webalizer/etc > /dev/null
 cp webalizer.conf.sample webalizer.conf
 echo >> webalizer.conf
 echo >> webalizer.conf
@@ -48,12 +49,14 @@ echo LogFile ${OPENSHIFT_DATA_DIR}/apache/logs/access_log >> webalizer.conf
 echo OutputDir ${OPENSHIFT_DATA_DIR}/webalizer/www >> webalizer.conf
 echo HostName ${OPENSHIFT_APP_DNS} >> webalizer.conf
 echo UseHTTPS yes >> webalizer.conf
+popd > /dev/null
 
 mkdir ${OPENSHIFT_DATA_DIR}/webalizer/www
 
-cd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm webalizer-${webalizer_version}-src.tgz
 rm -rf webalizer-${webalizer_version}
+popd > /dev/null
 
 # *** apache link ***
 
