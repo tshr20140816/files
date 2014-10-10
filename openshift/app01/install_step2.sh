@@ -45,6 +45,13 @@ cp conf/httpd.conf conf/httpd.conf.`date '+%Y%m%d'`
 # * Listen 書き換え $ENV{OPENSHIFT_DIY_IP}:8080 *
 
 perl -pi -e 's/^Listen .+$/Listen $ENV{OPENSHIFT_DIY_IP}:8080/g' conf/httpd.conf
+
+# * AllowOverride None → All *
+
+perl -pi -e 's/^AllowOverride None$/AllowOverride All/g' conf/httpd.conf
+
+# * Add custom.conf *
+
 cat << '__HEREDOC__' >> conf/httpd.conf
 
 Include conf/custom.conf
