@@ -186,7 +186,7 @@ echo user:realm:`echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32
 # * htaccess *
 
 echo AuthType Digest > htdocs/info/.htaccess
-echo AuthUserFile $OPENSHIFT_DATA_DIR/apache/.htpasswd >> htdocs/info/.htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/apache/.htpasswd >> htdocs/info/.htaccess
 cat << '__HEREDOC__' >> htdocs/info/.htaccess
 AuthName realm
 
@@ -201,7 +201,7 @@ popd > /dev/null
 
 # * logs dir *
 
-pushd $OPENSHIFT_DATA_DIR/apache/htdocs/ > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
 ln -s ${OPENSHIFT_LOG_DIR} logs
 popd > /dev/null
 
