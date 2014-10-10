@@ -221,7 +221,7 @@ cat << '__HEREDOC__' > for_restart.sh
 
 #!/bin/bash
 
-testrubyserver_count=`grep testrubyserver.rb | grep -v grep | wc -l`
+testrubyserver_count=`ps aux | grep testrubyserver.rb | grep -v grep | wc -l`
 
 if [ ${testrubyserver_count} -gt 0 ]; then
 
