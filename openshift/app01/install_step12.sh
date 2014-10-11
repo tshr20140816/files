@@ -200,7 +200,7 @@ echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 11 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 12 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** start *****
 
