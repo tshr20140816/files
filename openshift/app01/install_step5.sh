@@ -265,7 +265,7 @@ RailsBaseURI /redmine
 PassengerBaseURI /redmine
 SetEnv GEM_HOME __OPENSHIFT_DATA_DIR__.gem
 
-RailsMaxPoolSize 2
+RailsMaxPoolSize 1
 RailsPoolIdleTime 7200
 PassengerEnabled off
 PassengerStatThrottleRate 5
