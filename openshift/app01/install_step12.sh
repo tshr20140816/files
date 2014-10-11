@@ -64,14 +64,18 @@ echo webalizer.sh >> jobs.allow
 cat << '__HEREDOC__' > redmine_repository_check.sh
 #!/bin/bash
 
-export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
-export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-eval "$(rbenv init -)" 
-
-cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
-bundle exec rake redmine:fetch_changesets RAILS_ENV=production
+if [ ! -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt ]; then
+    touch ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
+    export TZ=JST-9
+    export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+    export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+    export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+    export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+    eval "$(rbenv init -)"
+    cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
+    bundle exec rake redmine:fetch_changesets RAILS_ENV=production
+    rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
+fi
 __HEREDOC__
 chmod +x redmine_repository_check.sh
 # TODO
