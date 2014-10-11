@@ -199,12 +199,10 @@ echo memcached_status.sh >> jobs.allow
 # ***** action hooks *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks > /dev/null
-rm start
 cat << '__HEREDOC__' > start
 export TZ=JST-9
 ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
 __HEREDOC__
-chmod +x start
 popd > /dev/null
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
