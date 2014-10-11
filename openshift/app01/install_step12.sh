@@ -196,6 +196,17 @@ echo memcached_status.sh >> jobs.allow
 # ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats
 # oo-cgroup-read memory.failcnt → mrtg?
 
+# ***** action hooks *****
+
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks > /dev/null
+rm start
+cat << '__HEREDOC__' > start
+export TZ=JST-9
+${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
+__HEREDOC__
+chmod +x start
+popd > /dev/null
+
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
