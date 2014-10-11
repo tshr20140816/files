@@ -205,6 +205,17 @@ ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
 __HEREDOC__
 popd > /dev/null
 
+# ***** log link *****
+
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+touch ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/log/production.log
+ln -s ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/log/production.log production.log
+touch ${OPENSHIFT_DATA_DIR}/apache/log/access_log
+ln -s ${OPENSHIFT_DATA_DIR}/apache/log/access_log access_log
+touch ${OPENSHIFT_DATA_DIR}/apache/log/error_log
+ln -s ${OPENSHIFT_DATA_DIR}/apache/log/error_log error_log
+popd > /dev/null
+
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{print "Memory Usage : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{print "Memory Fail Count : " $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
