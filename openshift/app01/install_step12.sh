@@ -107,7 +107,7 @@ else
 fi
 
 # memcached
-is_alive=`ps -ef | grep memcached | grep -v grep | wc -l`
+is_alive=`ps -ef | grep bin/memcached | grep -v grep | wc -l`
 if [ ${is_alive} -gt 0 ]; then
   echo memcached is alive
 else
