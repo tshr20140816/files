@@ -166,7 +166,7 @@ if [ `expr ${minute} % 5` -eq 2 ]; then
 
         echo redmine_repository_check
         cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
-        bundle exec rake redmine:fetch_changesets RAILS_ENV=production
+        nohup bundle exec rake redmine:fetch_changesets RAILS_ENV=production &
         rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
     fi
 fi
