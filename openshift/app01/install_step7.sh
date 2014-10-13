@@ -61,6 +61,7 @@ cat << '__HEREDOC__' >> wp-config.php
 $table_prefix  = 'wp_';
 define('WPLANG', 'ja');
 define('WP_DEBUG', false);
+define('FORCE_SSL_ADMIN', true);
 
 if ( !defined('ABSPATH') )
     define('ABSPATH', dirname(__FILE__) . '/');
