@@ -220,10 +220,10 @@ popd > /dev/null
 pushd ${OPENSHIFT_LOG_DIR} > /dev/null
 touch ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/log/production.log
 ln -s ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/log/production.log production.log
-touch ${OPENSHIFT_DATA_DIR}/apache/log/access_log
-ln -s ${OPENSHIFT_DATA_DIR}/apache/log/access_log access_log
-touch ${OPENSHIFT_DATA_DIR}/apache/log/error_log
-ln -s ${OPENSHIFT_DATA_DIR}/apache/log/error_log error_log
+touch ${OPENSHIFT_DATA_DIR}/apache/logs/access_log
+ln -s ${OPENSHIFT_DATA_DIR}/apache/logs/access_log access_log
+touch ${OPENSHIFT_DATA_DIR}/apache/logs/error_log
+ln -s ${OPENSHIFT_DATA_DIR}/apache/logs/error_log error_log
 popd > /dev/null
 
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
