@@ -70,8 +70,8 @@ require_once(ABSPATH . 'wp-settings.php');
 __HEREDOC__
 
 # force ssl patch
-mkdir -p wp-content/mu-plugins
-cp ${OPENSHIFT_DATA_DIR}/download_files/is_ssl.php wp-content/mu-plugins/
+mkdir -p wp-contents/mu-plugins
+cp ${OPENSHIFT_DATA_DIR}/download_files/is_ssl.php wp-contents/mu-plugins/
 perl -pi -e 's/(^function is_ssl\(\) \{)$/$1\n\treturn is_maybe_ssl\(\);/g' wp-includes/functions.php
 
 echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/${wpuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
