@@ -216,6 +216,8 @@ require valid-user
 <Files ~ "^.(htpasswd|htaccess)$">
     deny from all
 </Files>
+
+IndexOptions +FancyIndexing
 __HEREDOC__
 popd > /dev/null
 
