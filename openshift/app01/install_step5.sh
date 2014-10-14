@@ -174,10 +174,10 @@ popd > /dev/null
 
 # *** plugin ***
 pushd plugins > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/redmine_logs-0.0.5.zip ./
-unzip redmine_logs-0.0.5.zip
-rm redmine_logs-0.0.5.zip
-mv redmine_logs/Gemfile redmine_logs/Gemfile.org
+# cp ${OPENSHIFT_DATA_DIR}/download_files/redmine_logs-0.0.5.zip ./
+# unzip redmine_logs-0.0.5.zip
+# rm redmine_logs-0.0.5.zip
+# mv redmine_logs/Gemfile redmine_logs/Gemfile.org
 popd > /dev/null
 
 # *** ruby env ***
