@@ -152,6 +152,16 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
 
+# * web beacon *
+
+cat << '__HEREDOC__' > beacon.sh
+#!/bin/bash
+
+wget --spider https://tshrapp9.appspot.com/beacon.txt >/dev/null 2>&1
+__HEREDOC__
+chmod +x beacon.sh
+echo beacon.sh >> jobs.allow
+
 # * keep_process *
 
 cat << '__HEREDOC__' > keep_process.sh
@@ -178,7 +188,6 @@ else
   ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
 fi
 __HEREDOC__
-
 chmod +x keep_process.sh
 echo keep_process.sh >> jobs.allow
 
