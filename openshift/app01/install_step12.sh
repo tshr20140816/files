@@ -80,7 +80,7 @@ touch jobs.deny
 
 cat << '__HEREDOC__' > logrotate.sh
 #!/bin/bash
-/usr/bin/logrotate -v -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf
+/usr/sbin/logrotate -v -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf
 __HEREDOC__
 chmod +x logrotate.sh
 echo logrotate.sh >> jobs.allow
