@@ -275,6 +275,8 @@ PassengerStatThrottleRate 5
 <Location "/redmine">
   PassengerEnabled on
 </Location>
+
+PassengerPreStart http://${OPENSHIFT_APP_DNS}/redmine/
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 
