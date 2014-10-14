@@ -293,6 +293,13 @@ if [ ${files_exists} -eq 0 ]; then
     exit
 fi
 
+# ***** make directories *****
+
+mkdir ${OPENSHIFT_DATA_DIR}/tmp
+mkdir ${OPENSHIFT_DATA_DIR}/etc
+mkdir ${OPENSHIFT_DATA_DIR}/var
+mkdir ${OPENSHIFT_DATA_DIR}/bin
+
 # ***** lynx *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
