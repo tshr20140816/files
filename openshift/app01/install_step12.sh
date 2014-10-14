@@ -37,6 +37,8 @@ noolddir
 rotate 7
 }
 __HEREDOC__
+perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' logrotate.conf
+perl -pi -e 's/__REDMINE_VERSION__/$ENV{redmine_version}/g' logrotate.conf
 popd > /dev/null
 
 # ***** cron *****
@@ -47,6 +49,16 @@ echo `date +%Y/%m/%d" "%H:%M:%S` cron daily >> ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/daily > /dev/null
 rm -f *
 touch jobs.deny
+
+# * logrotate *
+
+cat << '__HEREDOC__' > logrotate.sh
+#!/bin/bash
+/usr/bin/logrotate -v -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf
+__HEREDOC__
+chmod +x logrotate.sh
+echo logrotate.sh >> jobs.allow
+./logrotate.sh
 
 # * mysql_backup *
 
