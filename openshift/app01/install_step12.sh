@@ -15,6 +15,30 @@ echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 
+# ***** logrotate *****
+
+mkdir ${OPENSHIFT_DATA_DIR}/logrotate
+pushd ${OPENSHIFT_DATA_DIR}/logrotate > /dev/null/
+cat << '__HEREDOC__' > logrotate.conf
+compress
+create
+daily
+missingok
+notifempty
+noolddir
+rotate 7
+__OPENSHIFT_DATA_DIR__redmine-__REDMINE_VERSION__/log/production.log {
+daily
+missingok
+notifempty
+copytruncate
+compress
+noolddir
+rotate 7
+}
+__HEREDOC__
+popd > /dev/null
+
 # ***** cron *****
 
 # *** daily ***
