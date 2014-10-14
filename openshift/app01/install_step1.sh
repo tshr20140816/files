@@ -33,17 +33,21 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 2 ]; then
-    echo "arg1 : email address"
-    echo "arg2 : email password"
+if [ $# -ne 4 ]; then
+    echo "arg1 : redmine email address"
+    echo "arg2 : redmine email password"
+    echo "arg3 : openshift email address"
+    echo "arg4 : openshift email password"
     exit
 fi
 
-email_address=${1}
-email_password=${2}
+redmine_email_address=${1}
+redmine_email_password=${2}
+opensfhit_email_address=${3}
+opensfhit_email_password=${4}
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-echo ${email_address} > email_address
-echo ${email_password} > email_password
+echo ${redmine_email_address} > redmine_email_address
+echo ${redmine_email_password} > redmine_email_password
 popd > /dev/null
 
 export TZ=JST-9
@@ -314,6 +318,12 @@ mkdir ${OPENSHIFT_DATA_DIR}/tmp
 mkdir ${OPENSHIFT_DATA_DIR}/etc
 mkdir ${OPENSHIFT_DATA_DIR}/var
 mkdir ${OPENSHIFT_DATA_DIR}/bin
+
+# ***** rhc *****
+
+export HOME=${OPENSHIFT_DATA_DIR}
+gem install rhc --no-rdoc --no-ri --verbose
+${OPENSHIFT_DATA_DIR}/.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${opensfhit_email_address} -p ${opensfhit_email_password}
 
 # ***** lynx *****
 
