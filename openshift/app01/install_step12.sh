@@ -157,7 +157,7 @@ touch jobs.deny
 cat << '__HEREDOC__' > beacon.sh
 #!/bin/bash
 
-wget --spider https://tshrapp9.appspot.com/beacon.txt >/dev/null 2>&1
+wget --spider https://tshrapp9.appspot.com/beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1
 __HEREDOC__
 chmod +x beacon.sh
 echo beacon.sh >> jobs.allow
