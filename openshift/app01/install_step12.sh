@@ -17,6 +17,22 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** logrotate *****
 
+if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_monthly.log ]; then
+    touch ${OPENSHIFT_LOG_DIR}/cron_monthly.log
+fi
+if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_weekly.log ]; then
+    touch ${OPENSHIFT_LOG_DIR}/cron_weekly.log
+fi
+if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_daily.log ]; then
+    touch ${OPENSHIFT_LOG_DIR}/cron_daily.log
+fi
+if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_hourly.log ]; then
+    touch ${OPENSHIFT_LOG_DIR}/cron_hourly.log
+fi
+if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ]; then
+    touch ${OPENSHIFT_LOG_DIR}/cron_minutely.log
+fi
+
 mkdir ${OPENSHIFT_DATA_DIR}/logrotate
 pushd ${OPENSHIFT_DATA_DIR}/logrotate > /dev/null/
 cat << '__HEREDOC__' > logrotate.conf
@@ -28,6 +44,15 @@ notifempty
 noolddir
 rotate 7
 __OPENSHIFT_DATA_DIR__redmine-__REDMINE_VERSION__/log/production.log {
+daily
+missingok
+notifempty
+copytruncate
+compress
+noolddir
+rotate 7
+}
+__OPENSHIFT_LOG_DIR__cron_minutely.log {
 daily
 missingok
 notifempty
