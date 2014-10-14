@@ -91,6 +91,7 @@ MaxSpareServers 5
 StartServers 1
 KeepAlive On
 Timeout 30
+LanguagePriority ja en
 
 # security
 
