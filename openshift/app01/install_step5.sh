@@ -226,21 +226,21 @@ find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name 
 
 # * cron *
 
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_monthly.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_monthly.log
-fi
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_weekly.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_weekly.log
-fi
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_daily.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_daily.log
-fi
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_hourly.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_hourly.log
-fi
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_minutely.log
-fi
+# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_monthly.log ]; then
+#     touch ${OPENSHIFT_LOG_DIR}/cron_monthly.log
+# fi
+# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_weekly.log ]; then
+#     touch ${OPENSHIFT_LOG_DIR}/cron_weekly.log
+# fi
+# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_daily.log ]; then
+#     touch ${OPENSHIFT_LOG_DIR}/cron_daily.log
+# fi
+# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_hourly.log ]; then
+#     touch ${OPENSHIFT_LOG_DIR}/cron_hourly.log
+# fi
+# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ]; then
+#     touch ${OPENSHIFT_LOG_DIR}/cron_minutely.log
+# fi
 
 # ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_monthly.log
 # ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_weekly.log
