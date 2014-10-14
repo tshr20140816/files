@@ -31,6 +31,21 @@ do
   eval "$product"=$version
 done < ${OPENSHIFT_DATA_DIR}/version_list
 
+# ***** args *****
+
+if [ $# -ne 2 ]; then
+    echo "arg1 : email address"
+    echo "arg2 : email password"
+    exit
+fi
+
+email_address=${1}
+email_password=${2}
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+echo ${email_address} > email_address
+echo ${email_password} > email_password
+popd > /dev/null
+
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Start >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
