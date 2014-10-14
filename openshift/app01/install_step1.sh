@@ -333,8 +333,9 @@ cp ${OPENSHIFT_DATA_DIR}/download_files/lynx2.8.7.tar.gz ./
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz lynx2.8.7.tar.gz
+popd > /dev/null
 
-pushd lynx2-8-7 > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}lynx2-8-7 > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
@@ -346,12 +347,11 @@ time make -j4
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
-
 popd > /dev/null
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm lynx2.8.7.tar.gz
 rm -rf lynx2-8-7
-
 popd > /dev/null
 
 cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
