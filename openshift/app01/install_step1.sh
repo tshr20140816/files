@@ -49,12 +49,12 @@ fi
 
 redmine_email_address=${1}
 redmine_email_password=${2}
-opensfhit_email_address=${3}
-opensfhit_email_password=${4}
+openshift_email_address=${3}
+openshift_email_password=${4}
 echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/redmine_email_address
 echo ${redmine_email_password} > ${OPENSHIFT_DATA_DIR}/redmine_email_password
-echo ${opensfhit_email_address} > ${OPENSHIFT_DATA_DIR}/opensfhit_email_address
-echo ${opensfhit_email_password} > ${OPENSHIFT_DATA_DIR}/opensfhit_email_password
+echo ${openshift_email_address} > ${OPENSHIFT_DATA_DIR}/openshift_email_address
+echo ${openshift_email_password} > ${OPENSHIFT_DATA_DIR}/openshift_email_password
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Start >> ${OPENSHIFT_LOG_DIR}/install.log
