@@ -23,6 +23,7 @@ ruby_version 2.1.3
 redmine_version 2.5.2
 ipafont_version 00303
 rrdtool_version 1.4.9
+cacti_version 0.8.8b
 __HEREDOC__
 
 while read LINE
@@ -286,6 +287,25 @@ do
         wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-${rrdtool_version}.tar.gz
     fi
     if [ ! -f rrdtool-${rrdtool_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** cacti ***
+    if [ ! -f cacti-${cacti_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` cacti wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://www.cacti.net/downloads/cacti-${cacti_version}.tar.gz
+    fi
+    if [ ! -f cacti-${cacti_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** cacti patch ***
+    # patch -p1 -N < security.patch
+    if [ ! -f security.patch ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` cacti patch wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://www.cacti.net/downloads/patches/${cacti_version}/security.patch
+    fi
+    if [ ! -f security.patch ]; then
         files_exists=0
     fi
 
