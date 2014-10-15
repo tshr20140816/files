@@ -41,6 +41,11 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_cacti.txt
 
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" cacti < ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/cacti.sql
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Cacti mysql cactiuser/${cactiuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
 
 cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/config.php
