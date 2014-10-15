@@ -22,6 +22,7 @@ memcached_php_ext_version 2.2.0
 ruby_version 2.1.3
 redmine_version 2.5.2
 ipafont_version 00303
+rrdtool_version 1.4.9
 __HEREDOC__
 
 while read LINE
@@ -276,6 +277,15 @@ do
         wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
     fi
     if [ ! -f ${ttrss_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** rrdtool ***
+    if [ ! -f rrdtool-${rrdtool_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` rrdtool wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-${rrdtool_version}.tar.gz
+    fi
+    if [ ! -f rrdtool-${rrdtool_version}.tar.gz ]; then
         files_exists=0
     fi
 
