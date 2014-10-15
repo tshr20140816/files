@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.10.15 add cacti & rrdtool
 # 2014.10.08 delegate_version 9.9.11 → 9.9.12
 # 2014.10.06 php_version 5.6.0 → 5.6.1
 # 2014.09.29 ruby_version 2.1.2 → 2.1.3
@@ -281,9 +282,9 @@ do
         files_exists=0
     fi
 
-    # *** rrdtool ***
+    # *** RRDtool ***
     if [ ! -f rrdtool-${rrdtool_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` rrdtool wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` RRDtool wget >> ${OPENSHIFT_LOG_DIR}/install.log
         wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-${rrdtool_version}.tar.gz
     fi
     if [ ! -f rrdtool-${rrdtool_version}.tar.gz ]; then
