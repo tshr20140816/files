@@ -1,4 +1,4 @@
-#!/usr/bash
+#!/bin/bash
 
 cd /tmp/
 wget http://prdownloads.sourceforge.net/tcl/tcl8.6.2-src.tar.gz
