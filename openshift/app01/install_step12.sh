@@ -15,12 +15,12 @@ echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 
-# ***** rrdtool *****
+# ***** RRDtool *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/rrdtool-${rrdtool_version}.tar.gz ./
 
-echo `date +%Y/%m/%d" "%H:%M:%S` rrdtool tar >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` RRDtool tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar rrdtool-${rrdtool_version}.tar.gz
 popd > /dev/null
 
@@ -30,9 +30,9 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/rrdtool 2>&1 | tee ${OPENSHIFT_LOG_DIR}/rrdtool.configure.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` rrdtool make >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` RRDtool make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make -j2
-echo `date +%Y/%m/%d" "%H:%M:%S` rrdtool make install >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` RRDtool make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
 popd > /dev/null
 
