@@ -83,7 +83,7 @@ perl -pi -e 's/(^LoadModule.+mod_log_forensic.so$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^LoadModule.+mod_proxy_ajp.so$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^LoadModule.+mod_proxy_scgi.so$)/# $1/g' conf/httpd.conf
 
-cat << '__HEREDOC__' >> conf/custom.conf
+cat << '__HEREDOC__' > conf/custom.conf
 # tune
 
 MinSpareServers 1
