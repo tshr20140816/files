@@ -321,10 +321,23 @@ mkdir ${OPENSHIFT_DATA_DIR}/bin
 
 # ***** rhc *****
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 export HOME=${OPENSHIFT_DATA_DIR}
 gem install rhc --no-rdoc --no-ri --verbose
 # TODO expect
 # ${OPENSHIFT_DATA_DIR}/.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${opensfhit_email_address} -p ${opensfhit_email_password}
+
+cat << '__HEREDOC__' > expect_rhc.txt
+set timeout 120
+spawn ${OPENSHIFT_DATA_DIR}/.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${opensfhit_email_address} -p ${opensfhit_email_password}
+expect yes/no
+send "yes\r"
+interact
+__HEREDOC__
+
+# expect -d -f expect_rhc.txt
+
+popd > /dev/null
 
 # ***** lynx *****
 
