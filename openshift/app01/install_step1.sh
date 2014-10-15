@@ -8,7 +8,7 @@ set -x
 # 2014.09.29 ruby_version 2.1.2 → 2.1.3
 # 2014.09.23 first
 
-cat << '__HEREDOC__' >> ${OPENSHIFT_DATA_DIR}/version_list
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
 php_version 5.6.1
 delegate_version 9.9.12
