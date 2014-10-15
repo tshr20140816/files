@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.10.16 add tcl & expect
 # 2014.10.15 add cacti & rrdtool
 # 2014.10.08 delegate_version 9.9.11 → 9.9.12
 # 2014.10.06 php_version 5.6.0 → 5.6.1
@@ -25,6 +26,8 @@ redmine_version 2.5.2
 ipafont_version 00303
 rrdtool_version 1.4.9
 cacti_version 0.8.8b
+tcl_version 8.6.2
+expect_version 5.45
 __HEREDOC__
 
 while read LINE
@@ -50,6 +53,8 @@ opensfhit_email_address=${3}
 opensfhit_email_password=${4}
 echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/redmine_email_address
 echo ${redmine_email_password} > ${OPENSHIFT_DATA_DIR}/redmine_email_password
+echo ${opensfhit_email_address} > ${OPENSHIFT_DATA_DIR}/opensfhit_email_address
+echo ${opensfhit_email_password} > ${OPENSHIFT_DATA_DIR}/opensfhit_email_password
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Start >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -62,6 +67,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 echo `date +%Y/%m/%d" "%H:%M:%S` github >> ${OPENSHIFT_LOG_DIR}/install.log
 
 curl -L https://status.github.com/api/status.json >> ${OPENSHIFT_LOG_DIR}/install.log
+echo >> ${OPENSHIFT_LOG_DIR}/install.log
 
 mkdir ${OPENSHIFT_DATA_DIR}/github
 pushd ${OPENSHIFT_DATA_DIR}/github > /dev/null
@@ -305,6 +311,24 @@ do
         wget http://www.cacti.net/downloads/patches/${cacti_version}/security.patch
     fi
     if [ ! -f security.patch ]; then
+        files_exists=0
+    fi
+
+    # *** Tcl ***
+    if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` Tcl wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
+    fi
+    if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** Expect ***
+    if [ ! -f expect${expect_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` Expect wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
+    fi
+    if [ ! -f expect${expect_version}.tar.gz ]; then
         files_exists=0
     fi
 
