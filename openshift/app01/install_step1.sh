@@ -369,32 +369,6 @@ __HEREDOC__
 
 popd > /dev/null
 
-# ***** rrdtool *****
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/rrdtool-${rrdtool_version}.tar.gz ./
-
-echo `date +%Y/%m/%d" "%H:%M:%S` rrdtool tar >> ${OPENSHIFT_LOG_DIR}/install.log
-tar rrdtool-${rrdtool_version}.tar.gz
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR}rrdtool-${rrdtool_version} > /dev/null
-echo `date +%Y/%m/%d" "%H:%M:%S` rrdtool configure >> ${OPENSHIFT_LOG_DIR}/install.log
-CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
-./configure \
---prefix=${OPENSHIFT_DATA_DIR}/rrdtool 2>&1 | tee ${OPENSHIFT_LOG_DIR}/rrdtool.configure.log
-
-echo `date +%Y/%m/%d" "%H:%M:%S` rrdtool make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j2
-echo `date +%Y/%m/%d" "%H:%M:%S` rrdtool make install >> ${OPENSHIFT_LOG_DIR}/install.log
-make install
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm rrdtool-${rrdtool_version}.tar.gz
-rm -rf rrdtool-${rrdtool_version}
-popd > /dev/null
-
 # ***** lynx *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
