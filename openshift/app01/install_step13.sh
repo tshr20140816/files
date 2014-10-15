@@ -271,6 +271,21 @@ __HEREDOC__
 chmod +x memcached_status.sh
 echo memcached_status.sh >> jobs.allow
 
+# * cacti polling *
+
+cat << '__HEREDOC__' > cacti_poller.sh
+#!/bin/bash
+
+minute=`date +%M`
+
+if [ `expr ${minute} % 5` -eq 1 ]; then
+    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php > /dev/null 2>&1
+fi
+__HEREDOC__
+chmod +x cacti_poller.sh
+# TODO
+# echo cacti_poller.sh >> jobs.allow
+
 # TODO
 # ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool
 # ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats
