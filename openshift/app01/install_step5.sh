@@ -79,8 +79,7 @@ popd > /dev/null
 # *** patch ***
 
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
-# 1回で全部取得せず、少しずつ取得する
-# perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\r\n        if identifier_from <= scm_revision/g' app/models/repository/subversion.rb
+# 1回で全部取得しようとすると他の処理ができないので少しずつ取得する
 perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\r\n        if identifier_from <= scm_revision\r\n          logger.info "#{url} #{db_revision} #{scm_revision}"/g' app/models/repository/subversion.rb
 
 # リビジョンが大きくても日時が古いことがある
