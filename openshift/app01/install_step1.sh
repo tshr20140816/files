@@ -323,7 +323,7 @@ mkdir ${OPENSHIFT_DATA_DIR}/bin
 
 export HOME=${OPENSHIFT_DATA_DIR}
 gem install rhc --no-rdoc --no-ri --verbose
-# TODO except
+# TODO expect
 # ${OPENSHIFT_DATA_DIR}/.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${opensfhit_email_address} -p ${opensfhit_email_password}
 
 # ***** lynx *****
