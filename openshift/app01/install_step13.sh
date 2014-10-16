@@ -106,7 +106,7 @@ perl -pi -e 's/__OPENSHIFT_EMAIL_PASSWORD__/${openshift_email_password}/g' ${OPE
 
 env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
-${OPENSHIFT_DATA_DIR}/tcl/bin/except -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 export HOME=${env_home_backup}
 
 ${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid >> ${OPENSHIFT_LOG_DIR}/install.log
