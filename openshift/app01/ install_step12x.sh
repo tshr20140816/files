@@ -74,12 +74,13 @@ popd > /dev/null
 
 # *** install ***
 
+echo `date +%Y/%m/%d" "%H:%M:%S` rhc install >> ${OPENSHIFT_LOG_DIR}/install.log
+
 gem install rhc --no-rdoc --no-ri --verbose
 
 # *** setup ***
 
-# TODO
-# rhc setup
+echo `date +%Y/%m/%d" "%H:%M:%S` rhc setup >> ${OPENSHIFT_LOG_DIR}/install.log
 
 cat << '__HEREDOC__' > rhc_setup.txt
 set timeout 120
@@ -103,5 +104,9 @@ perl -pi -e 's/__OPENSHIFT_HOME_DIR__/$ENV{OPENSHIFT_HOME_DIR}/g' ${OPENSHIFT_TM
 perl -pi -e 's/__OPENSHIFT_EMAIL_ADDRESS__/${openshift_email_address}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 perl -pi -e 's/__OPENSHIFT_EMAIL_PASSWORD__/${openshift_email_password}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 
+env_home_backup=${HOME}
+export HOME=${OPENSHIFT_DATA_DIR}
+${OPENSHIFT_DATA_DIR}/tcl/bin/except -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+export HOME=${env_home_backup}
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
