@@ -67,7 +67,7 @@ rbenv rehash
 
 echo `date +%Y/%m/%d" "%H:%M:%S` bundler passenger >> ${OPENSHIFT_LOG_DIR}/install.log
 
-time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V
+time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V 2>&1 | tee ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log
 rbenv rehash
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 3 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
