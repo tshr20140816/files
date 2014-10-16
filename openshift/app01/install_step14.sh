@@ -156,6 +156,24 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
 
+# * another server check *
+
+cat << '__HEREDOC__' > another_server_check.sh
+#!/bin/bash
+
+target_app_name=`${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} | awk '{print $1}'`
+target_url=`${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} | awk '{print $3}'`
+http_status=`curl -LI https://${target_url}/ -o /dev/null -w '%{http_code}\n' -s`
+echo http_status $http_status
+if test $http_status -eq 503 ; then
+    echo app restart ${target_app_name}
+    ${OPENSHIFT_HOMEDIR}.gem/bin/rhc app restart -a ${target_app_name}
+fi
+__HEREDOC__
+chmod +x another_server_check.sh
+# TODO
+# echo another_server_check.sh >> jobs.allow
+
 # * web beacon *
 
 cat << '__HEREDOC__' > beacon.sh
