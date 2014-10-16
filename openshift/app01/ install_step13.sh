@@ -109,4 +109,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/except -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 export HOME=${env_home_backup}
 
+${OPENSHIFT_HOME_DIR}.gem/bin/rhc apps | grep uuid >> ${OPENSHIFT_LOG_DIR}/install.log
+${OPENSHIFT_HOME_DIR}.gem/bin/rhc apps | grep uuid
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
