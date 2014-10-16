@@ -36,6 +36,10 @@ fi
 mkdir ${OPENSHIFT_DATA_DIR}/logrotate
 pushd ${OPENSHIFT_DATA_DIR}/logrotate > /dev/null/
 cat << '__HEREDOC__' > logrotate.conf
+compresscmd /usr/bin/xz
+uncompresscmd /usr/bin/unxz
+compressext .xz
+
 compress
 create
 daily
