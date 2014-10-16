@@ -92,10 +92,11 @@ $cacti_session_name = "Cacti";
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' ${OPENSHIFT_TMP_DIR}/config.php
 perl -pi -e "s/__PASSWORD__/${cactiuser_password}/g" ${OPENSHIFT_TMP_DIR}/config.php
+popd > /dev/null
 
+popd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 mv include/config.php include/config.php.`date '+%Y%m%d'`
 cp ${OPENSHIFT_TMP_DIR}/config.php include/
-
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
