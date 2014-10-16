@@ -60,7 +60,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` resolv.rb patch check >> ${OPENSHIFT_LOG_DIR}/i
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
 | grep ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
 
-time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V
+time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V 2>&1 | tee ${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log
 rbenv rehash
 
 # *** passenger ***
