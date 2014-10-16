@@ -84,7 +84,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` rhc setup >> ${OPENSHIFT_LOG_DIR}/install.log
 
 cat << '__HEREDOC__' > rhc_setup.txt
 set timeout 120
-spawn __OPENSHIFT_HOME_DIR__.gem/bin/rhc setup --server openshift.redhat.com --create-token -l __OPENSHIFT_EMAIL_ADDRESS__ -p __OPENSHIFT_EMAIL_PASSWORD__
+spawn __OPENSHIFT_HOMEDIR__.gem/bin/rhc setup --server openshift.redhat.com --create-token -l __OPENSHIFT_EMAIL_ADDRESS__ -p __OPENSHIFT_EMAIL_PASSWORD__
 expect "Generate a token now? (yes|no)"
 send "yes\r"
 expect "Your public SSH key must be uploaded to the OpenShift server to access code.  Upload now? (yes|no)"
@@ -100,7 +100,7 @@ __HEREDOC__
 openshift_email_address=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_address`
 openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_password`
 
-perl -pi -e 's/__OPENSHIFT_HOME_DIR__/$ENV{OPENSHIFT_HOME_DIR}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+perl -pi -e 's/__OPENSHIFT_HOMEDIR__/$ENV{OPENSHIFT_HOMEDIR}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 perl -pi -e 's/__OPENSHIFT_EMAIL_ADDRESS__/${openshift_email_address}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 perl -pi -e 's/__OPENSHIFT_EMAIL_PASSWORD__/${openshift_email_password}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 
@@ -109,7 +109,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/except -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 export HOME=${env_home_backup}
 
-${OPENSHIFT_HOME_DIR}.gem/bin/rhc apps | grep uuid >> ${OPENSHIFT_LOG_DIR}/install.log
-${OPENSHIFT_HOME_DIR}.gem/bin/rhc apps | grep uuid
+${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid >> ${OPENSHIFT_LOG_DIR}/install.log
+${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
