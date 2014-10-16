@@ -29,7 +29,7 @@ eval "$(rbenv init -)"
 
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --snippet > ${OPENSHIFT_TMP_DIR}/passenger.conf
 
-# *** patch ***
+# *** passenger patch ***
 
 # patch request_handler.rb
 # OPENSHIFT では 127.0.0.1 は使えないため ${OPENSHIFT_DIY_IP} に置換
@@ -205,9 +205,9 @@ time bundle install --path vendor/bundle -j2
 
 # *** rake ***
 
-time RAILS_ENV=production bundle exec rake generate_secret_token
-time RAILS_ENV=production bundle exec rake db:migrate
-time RAILS_ENV=production bundle exec rake redmine:plugins:migrate
+time RAILS_ENV=production bundle exec rake generate_secret_token 2>&1 | tee ${OPENSHIFT_LOG_DIR}/generate_secret_token.rake.log
+time RAILS_ENV=production bundle exec rake db:migrate 2>&1 | tee ${OPENSHIFT_LOG_DIR}/db_migrate.rake.log
+time RAILS_ENV=production bundle exec rake redmine:plugins:migrate 2>&1 | tee ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log
 
 # *** coderay bash ***
 
@@ -224,39 +224,6 @@ find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name 
 
 echo `date +%Y/%m/%d" "%H:%M:%S` file_types.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f | xargs cat | grep bash >> ${OPENSHIFT_LOG_DIR}/install.log
-
-# *** add log link ***
-
-# ログプラグインで見られるようにする
-
-# * cron *
-
-# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_monthly.log ]; then
-#     touch ${OPENSHIFT_LOG_DIR}/cron_monthly.log
-# fi
-# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_weekly.log ]; then
-#     touch ${OPENSHIFT_LOG_DIR}/cron_weekly.log
-# fi
-# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_daily.log ]; then
-#     touch ${OPENSHIFT_LOG_DIR}/cron_daily.log
-# fi
-# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_hourly.log ]; then
-#     touch ${OPENSHIFT_LOG_DIR}/cron_hourly.log
-# fi
-# if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ]; then
-#     touch ${OPENSHIFT_LOG_DIR}/cron_minutely.log
-# fi
-
-# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_monthly.log
-# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_weekly.log
-# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_daily.log log/cron_daily.log
-# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_hourly.log log/cron_hourly.log
-# ln -f -s ${OPENSHIFT_LOG_DIR}/cron_minutely.log log/cron_minutely.log
-
-# * apache *
-
-# ln -f -s ${OPENSHIFT_DATA_DIR}/apache/log/access_log log/access_log
-# ln -f -s ${OPENSHIFT_DATA_DIR}/apache/log/error_log log/error_log
 
 popd > /dev/null
 
