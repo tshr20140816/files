@@ -96,4 +96,12 @@ expect {
 interact
 __HEREDOC__
 
+openshift_email_address=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_address`
+openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_password`
+
+perl -pi -e 's/__OPENSHIFT_HOME_DIR__/$ENV{OPENSHIFT_HOME_DIR}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+perl -pi -e 's/__OPENSHIFT_EMAIL_ADDRESS__/${openshift_email_address}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+perl -pi -e 's/__OPENSHIFT_EMAIL_PASSWORD__/${openshift_email_password}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
