@@ -166,7 +166,7 @@ target_url=`${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid | grep -v ${OPENSH
 http_status=`curl -LI https://${target_url}/ -o /dev/null -w '%{http_code}\n' -s`
 echo http_status $http_status
 if test $http_status -eq 503 ; then
-    echo app restart ${target_app_name}
+    echo app restart ${target_url}
     ${OPENSHIFT_HOMEDIR}.gem/bin/rhc app restart -a ${target_app_name}
 fi
 __HEREDOC__
