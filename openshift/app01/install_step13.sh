@@ -82,7 +82,7 @@ gem install rhc --no-rdoc --no-ri --verbose
 
 echo `date +%Y/%m/%d" "%H:%M:%S` rhc setup >> ${OPENSHIFT_LOG_DIR}/install.log
 
-cat << '__HEREDOC__' > rhc_setup.txt
+cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 set timeout 120
 spawn __OPENSHIFT_HOMEDIR__.gem/bin/rhc setup --server openshift.redhat.com --create-token -l __OPENSHIFT_EMAIL_ADDRESS__ -p __OPENSHIFT_EMAIL_PASSWORD__
 expect "Generate a token now? (yes|no)"
