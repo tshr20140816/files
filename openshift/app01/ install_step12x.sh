@@ -81,4 +81,19 @@ gem install rhc --no-rdoc --no-ri --verbose
 # TODO
 # rhc setup
 
+cat << '__HEREDOC__' > rhc_setup.txt
+set timeout 120
+spawn __OPENSHIFT_HOME_DIR__.gem/bin/rhc setup --server openshift.redhat.com --create-token -l __OPENSHIFT_EMAIL_ADDRESS__ -p __OPENSHIFT_EMAIL_PASSWORD__
+expect "Generate a token now? (yes|no)"
+send "yes\r"
+expect "Your public SSH key must be uploaded to the OpenShift server to access code.  Upload now? (yes|no)"
+send "yes\r"
+expect {
+    -re "^Provide a name for this key: .+" {
+        send "\r"
+    }
+}
+interact
+__HEREDOC__
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
