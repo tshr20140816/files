@@ -2,6 +2,8 @@
 
 set -x
 
+cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
+
 bash install_step5.sh
 bash install_step6.sh
 bash install_step7.sh
