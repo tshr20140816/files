@@ -370,7 +370,7 @@ fi
 
 mkdir ${OPENSHIFT_DATA_DIR}/tmp
 mkdir ${OPENSHIFT_DATA_DIR}/etc
-mkdir ${OPENSHIFT_DATA_DIR}/var
+mkdir -p ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin
 mkdir ${OPENSHIFT_DATA_DIR}/bin
 
 # ***** lynx *****
