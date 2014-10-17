@@ -104,8 +104,8 @@ openshift_email_address=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_address`
 openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_password`
 
 perl -pi -e 's/__OPENSHIFT_HOMEDIR__/$ENV{OPENSHIFT_HOMEDIR}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
-perl -pi -e 's/__OPENSHIFT_EMAIL_ADDRESS__/${openshift_email_address}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
-perl -pi -e 's/__OPENSHIFT_EMAIL_PASSWORD__/${openshift_email_password}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+perl -pi -e "s/__OPENSHIFT_EMAIL_ADDRESS__/${openshift_email_address}/g" ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+perl -pi -e "s/__OPENSHIFT_EMAIL_PASSWORD__/${openshift_email_password}/g" ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 
 env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
