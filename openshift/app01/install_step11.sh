@@ -4,9 +4,9 @@ set -x
 
 while read LINE
 do
-  product=`echo $LINE | awk '{print $1}'`
-  version=`echo $LINE | awk '{print $2}'`
-  eval "$product"=$version
+    product=`echo $LINE | awk '{print $1}'`
+    version=`echo $LINE | awk '{print $2}'`
+    eval "$product"=$version
 done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
@@ -23,15 +23,14 @@ echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar >> ${OPENSHIFT_LOG_DIR}/install.lo
 tar xfz delegate${delegate_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
-# echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> ${OPENSHIFT_LOG_DIR}/install.log
-# perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
-# time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe"
+echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> ${OPENSHIFT_LOG_DIR}/install.log
+perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
+time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/delegate.make.log
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
-# cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
-# cp ${OPENSHIFT_DATA_DIR}/download_files/delegated.xz ./
-cp ${OPENSHIFT_DATA_DIR}/github/openshift/delegated.xz ./
-xz -dv delegated.xz
-mv ./delegated ${OPENSHIFT_DATA_DIR}/delegate/
+cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
+# cp ${OPENSHIFT_DATA_DIR}/github/openshift/delegated.xz ./
+# xz -dv delegated.xz
+# mv ./delegated ${OPENSHIFT_DATA_DIR}/delegate/
 
 # apache htdocs
 mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons
