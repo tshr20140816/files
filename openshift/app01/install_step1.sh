@@ -33,9 +33,9 @@ __HEREDOC__
 
 while read LINE
 do
-  product=`echo $LINE | awk '{print $1}'`
-  version=`echo $LINE | awk '{print $2}'`
-  eval "$product"=$version
+    product=`echo $LINE | awk '{print $1}'`
+    version=`echo $LINE | awk '{print $2}'`
+    eval "$product"=$version
 done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
