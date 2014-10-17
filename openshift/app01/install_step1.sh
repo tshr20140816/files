@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.10.17 php_version 5.6.1 → 5.6.2
 # 2014.10.16 add tcl & expect
 # 2014.10.15 add cacti & rrdtool
 # 2014.10.08 delegate_version 9.9.11 → 9.9.12
