@@ -4,9 +4,9 @@ set -x
 
 while read LINE
 do
-  product=`echo $LINE | awk '{print $1}'`
-  version=`echo $LINE | awk '{print $2}'`
-  eval "$product"=$version
+    product=`echo $LINE | awk '{print $1}'`
+    version=`echo $LINE | awk '{print $2}'`
+    eval "$product"=$version
 done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
@@ -31,7 +31,7 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 --prefix=${OPENSHIFT_DATA_DIR}/rrdtool 2>&1 | tee ${OPENSHIFT_LOG_DIR}/rrdtool.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` RRDtool make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j2
+time make -j2 2>&1 | tee ${OPENSHIFT_LOG_DIR}/rrdtool.make.log
 echo `date +%Y/%m/%d" "%H:%M:%S` RRDtool make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
 popd > /dev/null
