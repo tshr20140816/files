@@ -92,7 +92,7 @@ expect "Generate a token now? (yes|no)"
 send "yes\r"
 expect {
     -re ".*Upload now. .yes.no.*" {
-        send "\r"
+        send "yes\r"
     }
 }
 expect {
