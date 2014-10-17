@@ -100,9 +100,9 @@ __HEREDOC__
 env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt 2>&1 | tee ${OPENSHIFT_LOG_DIR}/rhc.setup.log
-export HOME=${env_home_backup}
 
 ${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid >> ${OPENSHIFT_LOG_DIR}/install.log
 ${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid
+export HOME=${env_home_backup}
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
