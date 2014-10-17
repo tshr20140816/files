@@ -31,7 +31,7 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 --prefix=${OPENSHIFT_DATA_DIR}/tcl 2>&1 | tee ${OPENSHIFT_LOG_DIR}/tcl.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4
+time make -j4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/tcl.make.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
@@ -59,7 +59,7 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee ${OPENSHIFT_LOG_DIR}/expect.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4
+time make -j4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/expect.make.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install
@@ -76,7 +76,7 @@ popd > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` rhc install >> ${OPENSHIFT_LOG_DIR}/install.log
 
-gem install rhc --no-rdoc --no-ri --verbose
+gem install rhc --no-rdoc --no-ri --verbose 2>&1 | tee ${OPENSHIFT_LOG_DIR}/rhc.gem.log
 
 # *** setup ***
 
