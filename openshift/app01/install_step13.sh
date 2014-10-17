@@ -82,9 +82,12 @@ gem install rhc --no-rdoc --no-ri --verbose 2>&1 | tee ${OPENSHIFT_LOG_DIR}/rhc.
 
 echo `date +%Y/%m/%d" "%H:%M:%S` rhc setup >> ${OPENSHIFT_LOG_DIR}/install.log
 
-cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
-set timeout 60
-spawn __OPENSHIFT_HOMEDIR__.gem/bin/rhc setup --server openshift.redhat.com --create-token -l __OPENSHIFT_EMAIL_ADDRESS__ -p __OPENSHIFT_EMAIL_PASSWORD__
+openshift_email_address=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_address`
+openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_password`
+
+echo set timeout 60 > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+echo spawn ${OPENSHIFT_HOMEDIR}.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${openshift_email_address} -p ${openshift_email_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+cat << '__HEREDOC__' >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 expect "Generate a token now? (yes|no)"
 send "yes\r"
 expect {
@@ -99,13 +102,6 @@ expect {
 }
 interact
 __HEREDOC__
-
-openshift_email_address=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_address`
-openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_password`
-
-perl -pi -e 's/__OPENSHIFT_HOMEDIR__/$ENV{OPENSHIFT_HOMEDIR}/g' ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
-perl -pi -e "s/__OPENSHIFT_EMAIL_ADDRESS__/${openshift_email_address}/g" ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
-perl -pi -e "s/__OPENSHIFT_EMAIL_PASSWORD__/${openshift_email_password}/g" ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 
 env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
