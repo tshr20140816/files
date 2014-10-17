@@ -257,4 +257,16 @@ perl -pi -e 's/__OPENSHIFT_APP_DNS__/$ENV{OPENSHIFT_APP_DNS}/g' ${OPENSHIFT_DATA
 
 ln -s ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/public ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
 
+pushd ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin > /dev/null
+cat << '__HEREDOC__' > restart_redmine.cgi
+#!/usr/bin/perl
+
+system("touch __OPENSHIFT_DATA_DIR__/redmine-__REDMINE_VERSION__/tmp/restart.txt")
+
+exit;
+__HEREDOC__
+perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' restart_redmine.cgi
+perl -pi -e 's/__REDMINE_VERSION__/${redmine_version}/g' restart_redmine.cgi
+popd > /dev/null
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 5 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
