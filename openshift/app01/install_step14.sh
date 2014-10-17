@@ -67,7 +67,7 @@ rotate 7
 }
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' logrotate.conf
-perl -pi -e 's/__REDMINE_VERSION__/${redmine_version}/g' logrotate.conf
+perl -pi -e "s/__REDMINE_VERSION__/${redmine_version}/g" logrotate.conf
 perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' logrotate.conf
 popd > /dev/null
 
