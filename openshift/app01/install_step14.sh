@@ -167,7 +167,10 @@ http_status=`curl -LI https://${target_url}/ -o /dev/null -w '%{http_code}\n' -s
 echo http_status $http_status
 if test $http_status -eq 503 ; then
     echo app restart ${target_url}
+    env_home_backup=${HOME}
+    export HOME=${OPENSHIFT_DATA_DIR}
     ${OPENSHIFT_HOMEDIR}.gem/bin/rhc app restart -a ${target_app_name}
+    export HOME=${env_home_backup}
 fi
 __HEREDOC__
 chmod +x another_server_check.sh
