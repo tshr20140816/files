@@ -88,18 +88,12 @@ openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_password`
 echo set timeout 60 > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 echo spawn ${OPENSHIFT_HOMEDIR}.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${openshift_email_address} -p ${openshift_email_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 cat << '__HEREDOC__' >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
-expect "Generate a token now? (yes|no)"
+expect "(yes|no)"
 send "yes\r"
-expect {
-    -re ".*Upload now. .yes.no.*" {
-        send "yes\r"
-    }
-}
-expect {
-    -re "^Provide a name for this key: .+" {
-        send "\r"
-    }
-}
+expect "(yes|no)"
+send "yes\r"
+expect "Provide a name for this key"
+send "\r"
 interact
 __HEREDOC__
 
