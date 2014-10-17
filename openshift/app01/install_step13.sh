@@ -52,7 +52,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` Expect tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz expect${expect_version}.tar.gz
 popd > /dev/null
 
-pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version}/unix > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
