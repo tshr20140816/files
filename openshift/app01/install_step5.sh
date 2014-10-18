@@ -235,7 +235,7 @@ cat ${OPENSHIFT_TMP_DIR}/passenger.conf >> ${OPENSHIFT_DATA_DIR}/apache/conf/cus
 cat << '__HEREDOC__' >> ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 RailsBaseURI /redmine
 PassengerBaseURI /redmine
-PassengerTempDir __OPENSHIFT_DATA_DIR__tmp
+# PassengerTempDir __OPENSHIFT_DATA_DIR__tmp
 SetEnv GEM_HOME __OPENSHIFT_DATA_DIR__.gem
 
 RailsMaxPoolSize 1
