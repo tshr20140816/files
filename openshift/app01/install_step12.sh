@@ -21,7 +21,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/rrdtool-${rrdtool_version}.tar.gz ./
 
 echo `date +%Y/%m/%d" "%H:%M:%S` RRDtool tar >> ${OPENSHIFT_LOG_DIR}/install.log
-tar rrdtool-${rrdtool_version}.tar.gz
+tar xfz rrdtool-${rrdtool_version}.tar.gz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}rrdtool-${rrdtool_version} > /dev/null
