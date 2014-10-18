@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.10.19 del rrdtool
 # 2014.10.17 php_version 5.6.1 → 5.6.2
 # 2014.10.16 add tcl & expect
 # 2014.10.15 add cacti & rrdtool
@@ -25,7 +26,6 @@ memcached_php_ext_version 2.2.0
 ruby_version 2.1.3
 redmine_version 2.5.2
 ipafont_version 00303
-rrdtool_version 1.4.9
 cacti_version 0.8.8b
 tcl_version 8.6.2
 expect_version 5.45
@@ -284,15 +284,6 @@ do
         wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
     fi
     if [ ! -f ${ttrss_version}.tar.gz ]; then
-        files_exists=0
-    fi
-
-    # *** RRDtool ***
-    if [ ! -f rrdtool-${rrdtool_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` RRDtool wget >> ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-${rrdtool_version}.tar.gz
-    fi
-    if [ ! -f rrdtool-${rrdtool_version}.tar.gz ]; then
         files_exists=0
     fi
 
