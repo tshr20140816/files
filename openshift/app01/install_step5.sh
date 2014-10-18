@@ -169,8 +169,8 @@ __HEREDOC__
 redmine_email_address=`cat ${OPENSHIFT_DATA_DIR}/redmine_email_address`
 redmine_email_password=`cat ${OPENSHIFT_DATA_DIR}/redmine_email_password`
 
-perl -pi -e "s/__USER_NAME__/${redmine_email_address}/g" config/database.yml
-perl -pi -e "s/__PASSWORD__/${redmine_email_password}/g" config/database.yml
+perl -pi -e "s/__USER_NAME__/${redmine_email_address}/g" config/configuration.yml
+perl -pi -e "s/__PASSWORD__/${redmine_email_password}/g" config/configuration.yml
 
 # *** plugin_assets ***
 mkdir public/plugin_assets
