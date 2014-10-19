@@ -207,22 +207,22 @@ cat << '__HEREDOC__' > keep_process.sh
 # delegated
 is_alive=`ps -ef | grep delegated | grep -v grep | wc -l`
 if [ ${is_alive} -gt 0 ]; then
-  echo delegated is alive
+    echo delegated is alive
 else
-  echo RESTART delegated
-  cd ${OPENSHIFT_DATA_DIR}/delegate/
-  export TZ=JST-9
-  ./delegated -r +=P30080
+    echo RESTART delegated
+    cd ${OPENSHIFT_DATA_DIR}/delegate/
+    export TZ=JST-9
+    ./delegated -r +=P30080
 fi
 
 # memcached
 is_alive=`ps -ef | grep bin/memcached | grep -v grep | wc -l`
 if [ ${is_alive} -gt 0 ]; then
-  echo memcached is alive
+    echo memcached is alive
 else
-  echo RESTART memcached
-  cd ${OPENSHIFT_DATA_DIR}/memcached/
-  ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
+    echo RESTART memcached
+    cd ${OPENSHIFT_DATA_DIR}/memcached/
+    ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
 fi
 __HEREDOC__
 chmod +x keep_process.sh
