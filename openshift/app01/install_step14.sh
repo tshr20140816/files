@@ -15,6 +15,15 @@ echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 
+# ***** another server list *****
+
+env_home_backup=${HOME}
+export HOME=${OPENSHIFT_DATA_DIR}
+${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps \
+| grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} \
+| awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
+export HOME=${env_home_backup}
+
 # ***** logrotate *****
 
 if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_monthly.log ]; then
