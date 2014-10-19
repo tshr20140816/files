@@ -420,11 +420,11 @@ popd > /dev/null
 set +x
 
 echo https://${OPENSHIFT_APP_DNS}/wordpress/wp-admin/install.php
-# echo https://${OPENSHIFT_APP_DNS}/ttrss/install/ ttrssuser/${ttrssuser_password} ttrss ${OPENSHIFT_MYSQL_DB_HOST} admin/password
-echo https://${OPENSHIFT_APP_DNS}/ttrss/
+echo https://${OPENSHIFT_APP_DNS}/ttrss/ admin/password
 echo https://${OPENSHIFT_APP_DNS}/mail/
 echo https://${OPENSHIFT_APP_DNS}/webalizer/
 echo https://${OPENSHIFT_APP_DNS}/mrtg/
-echo https://${OPENSHIFT_APP_DNS}/redmine/
+echo https://${OPENSHIFT_APP_DNS}/redmine/ admin/admin
+echo https://${OPENSHIFT_APP_DNS}/cacti/ admin/admin
 echo https://${OPENSHIFT_APP_DNS}/info/
 echo https://${OPENSHIFT_APP_DNS}/logs/
