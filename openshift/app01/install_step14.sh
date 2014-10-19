@@ -170,17 +170,20 @@ touch jobs.deny
 cat << '__HEREDOC__' > another_server_check.sh
 #!/bin/bash
 
-env_home_backup=${HOME}
-export HOME=${OPENSHIFT_DATA_DIR}
-target_app_name=`${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} | awk '{print $1}'`
-target_url=`${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} | awk '{print $3}'`
-http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
-echo http_status $http_status
-if test $http_status -eq 503 ; then
-    echo app restart ${target_url}
-    ${OPENSHIFT_HOMEDIR}.gem/bin/rhc app restart -a ${target_app_name}
-fi
-export HOME=${env_home_backup}
+while read LINE
+do
+    target_app_name=`echo $LINE | awk '{print $1}'`
+    target_url=`echo $LINE | awk '{print $2}'`
+    http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
+    echo http_status ${http_status} ${target_url}
+    if test ${http_status} -eq 503 ; then
+        echo app restart ${target_url}
+        env_home_backup=${HOME}
+        export HOME=${OPENSHIFT_DATA_DIR}
+        ${OPENSHIFT_HOMEDIR}.gem/bin/rhc app restart -a ${target_app_name}
+        export HOME=${env_home_backup}
+    fi
+done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
 __HEREDOC__
 chmod +x another_server_check.sh
 # TODO
