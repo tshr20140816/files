@@ -27,6 +27,7 @@ ruby_version 2.1.3
 redmine_version 2.5.2
 ipafont_version 00303
 cacti_version 0.8.8b
+murlin_version 0.2.4
 tcl_version 8.6.2
 expect_version 5.45
 __HEREDOC__
@@ -303,6 +304,15 @@ do
         wget http://www.cacti.net/downloads/patches/${cacti_version}/security.patch
     fi
     if [ ! -f security.patch ]; then
+        files_exists=0
+    fi
+
+    # *** mURLin ***
+    if [ ! -f mURLin-${murlin_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mURLin wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://downloads.sourceforge.net/project/murlin/mURLin-${murlin_version}.tar.gz
+    fi
+    if [ ! -f mURLin-${murlin_version}.tar.gz ]; then
         files_exists=0
     fi
 
