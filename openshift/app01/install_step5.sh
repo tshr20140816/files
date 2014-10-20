@@ -237,6 +237,8 @@ RailsBaseURI /redmine
 PassengerBaseURI /redmine
 # PassengerTempDir __OPENSHIFT_DATA_DIR__tmp
 SetEnv GEM_HOME __OPENSHIFT_DATA_DIR__.gem
+# TODO
+# SetEnv GEM_PATH
 
 RailsMaxPoolSize 1
 RailsPoolIdleTime 7200
