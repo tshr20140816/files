@@ -73,6 +73,13 @@ mv include/config.php include/config.php.`date '+%Y%m%d'`
 cp ${OPENSHIFT_TMP_DIR}/config.php include/
 popd > /dev/null
 
+# *** plugin ***
+
+# * mURLin *
+
+# TODO
+# mURLin-${murlin_version}.tar.gz
+
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 rm cacti-${cacti_version}.tar.gz
 popd > /dev/null
