@@ -83,6 +83,16 @@ pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 # perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\r\n        if identifier_from <= scm_revision\r\n          logger.info "#{url} #{db_revision} #{scm_revision}"/g' app/models/repository/subversion.rb
 perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\n        if identifier_from <= scm_revision\n          now = Time.now.to_s\n          logger.info "#{now} #{url} #{db_revision} #{scm_revision}"/g' app/models/repository/subversion.rb
 
+# TODO
+
+cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/subversion.rb.patch.txt
+     if identifier_from <= scm_revision
+       now = Time.now.to_s
+       logger.info "#{now} #{url} #{db_revision} #{scm_revision}
+__HEREDOC__
+
+# perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\n__REPLACE_TARGET_1__"/g' app/models/repository/subversion.rb
+
 # リビジョンが大きくても日時が古いことがある
 perl -pi -e 's/#{Changeset.table_name}.committed_on DESC/CONVERT(#{Changeset.table_name}.revision, UNSIGNED) DESC/g' app/models/repository.rb
 perl -pi -e 's/committed_on DESC/CONVERT(revision, UNSIGNED) DESC/g' app/models/repository/subversion.rb
