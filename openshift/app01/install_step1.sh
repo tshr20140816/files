@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.10.22 redmine_version 2.5.2 → 2.5.3
 # 2014.10.19 del rrdtool
 # 2014.10.17 php_version 5.6.1 → 5.6.2
 # 2014.10.16 add tcl & expect
@@ -24,7 +25,7 @@ memcached_version 1.4.20
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
 ruby_version 2.1.3
-redmine_version 2.5.2
+redmine_version 2.5.3
 ipafont_version 00303
 cacti_version 0.8.8b
 murlin_version 0.2.4
