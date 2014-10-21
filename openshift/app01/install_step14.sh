@@ -255,6 +255,7 @@ chmod +x update_feeds.sh
 echo update_feeds.sh >> jobs.allow
 
 # * redmine repository check *
+# 時間が掛かるのでバックグラウンドジョブにする
 
 cat << '__HEREDOC__' > redmine_repository_check.sh
 #!/bin/bash
@@ -279,7 +280,18 @@ if [ `expr ${minute} % 5` -eq 2 ]; then
 fi
 __HEREDOC__
 chmod +x redmine_repository_check.sh
-echo redmine_repository_check.sh >> jobs.allow
+
+cat << '__HEREDOC__' > redmine_repository_check_start.sh
+#!/bin/bash
+
+cwd=`dirname "${0}"`
+expr "${0}" : "/.*" > /dev/null || cwd=`(cd "${cwd}" && pwd)`
+
+${cwd}/redmine_repository_check >/dev/null 2>&1 &
+
+__HEREDOC__
+chmod +x redmine_repository_check_start.sh
+echo redmine_repository_check_start.sh >> jobs.allow
 
 # * passenger status *
 
