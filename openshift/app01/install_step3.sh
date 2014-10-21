@@ -52,7 +52,6 @@ echo `date +%Y/%m/%d" "%H:%M:%S` bundler install >> ${OPENSHIFT_LOG_DIR}/install
 
 # patch resolv.rb
 # OPENSHIFT では  0.0.0.0 は使えないため
-# perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g" ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/resolv.rb
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
 | xargs perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
 
