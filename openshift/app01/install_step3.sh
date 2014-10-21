@@ -29,7 +29,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/rbenv-installer ./
 bash rbenv-installer
 rm rbenv-installer
-popd > /dev/nul
+popd > /dev/null
 
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
