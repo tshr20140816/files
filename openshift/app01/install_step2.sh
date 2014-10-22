@@ -105,15 +105,6 @@ Header always unset "X-Powered-By"
 Header always unset "X-Rack-Cache"
 Header always unset "X-Runtime"
 
-# delegate
-
-ProxyRequests Off
-ProxyPass /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
-ProxyPassReverse /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
-ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+__DELEGATE_MAIL_ALIAS__/
-ProxyPassReverse /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+__DELEGATE_MAIL_ALIAS__/
-ProxyMaxForwards 10
-
 # php
 
 AddType application/x-httpd-php .php
@@ -162,9 +153,6 @@ FileETag None
     </IfModule>
 </IfModule>
 __HEREDOC__
-perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
-delegate_mail_alias=`cat ${OPENSHIFT_DATA_DIR}/delegate_mail_alias`
-perl -pi -e "s/__DELEGATE_MAIL_ALIAS__/${delegate_mail_alias}/g" conf/custom.conf
 
 # *** robots.txt ***
 
