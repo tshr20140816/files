@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.10.22 ttrss_version 1.13 → 1.14
 # 2014.10.22 redmine_version 2.5.2 → 2.5.3
 # 2014.10.19 del rrdtool
 # 2014.10.17 php_version 5.6.1 → 5.6.2
@@ -20,7 +21,7 @@ delegate_version 9.9.12
 mrtg_version 2.17.4
 webalizer_version 2.23-08
 wordpress_version 4.0-ja
-ttrss_version 1.13
+ttrss_version 1.14
 memcached_version 1.4.20
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
