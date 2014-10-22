@@ -55,6 +55,26 @@ __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt
 popd > /dev/null
 
+# *** apache conf ***
+
+pushd ${OPENSHIFT_DATA_DIR}/apache/ > /dev/null
+
+cat << '__HEREDOC__' >> conf/custom.conf
+
+# delegate
+
+ProxyRequests Off
+ProxyPass /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
+ProxyPassReverse /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
+ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+__DELEGATE_MAIL_ALIAS__/
+ProxyPassReverse /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+__DELEGATE_MAIL_ALIAS__/
+ProxyMaxForwards 10
+__HEREDOC__
+perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
+delegate_mail_alias=`cat ${OPENSHIFT_DATA_DIR}/delegate_mail_alias`
+perl -pi -e "s/__DELEGATE_MAIL_ALIAS__/${delegate_mail_alias}/g" conf/custom.conf
+popd > /dev/null
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm delegate${delegate_version}.tar.gz
 rm -rf delegate${delegate_version}
