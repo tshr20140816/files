@@ -110,6 +110,8 @@ Header always unset "X-Runtime"
 ProxyRequests Off
 ProxyPass /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
 ProxyPassReverse /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
+ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+__DELEGATE_MAIL_ALIAS__/
+ProxyPassReverse /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+__DELEGATE_MAIL_ALIAS__/
 ProxyMaxForwards 10
 
 # php
