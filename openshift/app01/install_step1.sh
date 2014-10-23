@@ -380,10 +380,6 @@ mkdir -p ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin
 mkdir ${OPENSHIFT_DATA_DIR}/bin
 mkdir ${OPENSHIFT_DATA_DIR}/scripts
 
-# ***** scripts *****
-
-cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/monitor_resourse.sh ${OPENSHIFT_DATA_DIR}/scripts/
-
 # ***** lynx *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
