@@ -287,7 +287,7 @@ cat << '__HEREDOC__' > redmine_repository_check_start.sh
 cwd=`dirname "${0}"`
 expr "${0}" : "/.*" > /dev/null || cwd=`(cd "${cwd}" && pwd)`
 
-${cwd}/redmine_repository_check >/dev/null 2>&1 &
+${cwd}/redmine_repository_check.sh >/dev/null 2>&1 &
 
 __HEREDOC__
 chmod +x redmine_repository_check_start.sh
