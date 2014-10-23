@@ -378,6 +378,11 @@ mkdir ${OPENSHIFT_DATA_DIR}/tmp
 mkdir ${OPENSHIFT_DATA_DIR}/etc
 mkdir -p ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin
 mkdir ${OPENSHIFT_DATA_DIR}/bin
+mkdir ${OPENSHIFT_DATA_DIR}/scripts
+
+# ***** scripts *****
+
+cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/monitor_resourse.sh ${OPENSHIFT_DATA_DIR}/scripts/
 
 # ***** lynx *****
 
