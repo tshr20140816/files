@@ -490,4 +490,4 @@ echo https://${OPENSHIFT_APP_DNS}/cacti/ admin/admin
 echo https://${OPENSHIFT_APP_DNS}/info/
 echo https://${OPENSHIFT_APP_DNS}/logs/
 
-echo Don't git push
+echo Do not git push
