@@ -24,6 +24,54 @@ ${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps \
 | awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
 export HOME=${env_home_backup}
 
+# ***** memory usage logging *****
+
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
+#!/bin/bash
+
+export TZ=JST-9
+while :
+do
+    dt=`date +%Y/%m/%d" "%H:%M:%S`
+    usage_in_bytes=`oo-cgroup-read memory.usage_in_bytes`;
+    echo ${dt} ${usage_in_bytes}>>${OPENSHIFT_LOG_DIR}/memory_usage.log
+    sleep 1s
+done
+__HEREDOC__
+chmod +x ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
+
+# ***** redmine repository check *****
+
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh
+#!/bin/bash
+
+minute=`date +%M`
+
+if [ `expr ${minute} % 5` -eq 2 ]; then
+    # memory usage check
+    usage_in_bytes=`oo-cgroup-read memory.usage_in_bytes`
+    if [ ${usage_in_bytes} -gt 400000000 ]; then
+        exit
+    fi
+
+    if [ ! -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt ]; then
+        touch ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
+        export TZ=JST-9
+        export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+        export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+        export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+        export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+        eval "$(rbenv init -)" 
+
+        echo redmine_repository_check
+        cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
+        bundle exec rake redmine:fetch_changesets RAILS_ENV=production
+        rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
+    fi
+fi
+__HEREDOC__
+chmod +x ${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh
+
 # ***** logrotate *****
 
 if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_monthly.log ]; then
@@ -66,6 +114,15 @@ noolddir
 rotate 7
 }
 __OPENSHIFT_LOG_DIR__cron_minutely.log {
+daily
+missingok
+notifempty
+copytruncate
+compress
+noolddir
+rotate 7
+}
+__OPENSHIFT_LOG_DIR__memory_usage.log {
 daily
 missingok
 notifempty
@@ -186,8 +243,10 @@ do
 done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
 __HEREDOC__
 chmod +x another_server_check.sh
-# TODO
-# echo another_server_check.sh >> jobs.allow
+another_server_check=`echo ${OPENSHIFT_DATA_DIR}/another_server_check`
+if [ "${another_server_check}" = "yes" ]; then
+    echo another_server_check.sh >> jobs.allow
+fi
 
 # * web beacon *
 
@@ -223,6 +282,13 @@ else
     cd ${OPENSHIFT_DATA_DIR}/memcached/
     ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
 fi
+
+# memory usage logging
+is_alive=`ps -ef | grep memory_usage_logging.sh | grep -v grep | wc -l`
+if [ ! ${is_alive} -gt 0 ]; then
+    echo START memory_usage_logging.sh
+    ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh >/dev/null 2>&1 &
+fi
 __HEREDOC__
 chmod +x keep_process.sh
 echo keep_process.sh >> jobs.allow
@@ -255,40 +321,11 @@ chmod +x update_feeds.sh
 echo update_feeds.sh >> jobs.allow
 
 # * redmine repository check *
-# 時間が掛かるのでバックグラウンドジョブにする
-
-cat << '__HEREDOC__' > redmine_repository_check.sh
-#!/bin/bash
-
-minute=`date +%M`
-
-if [ `expr ${minute} % 5` -eq 2 ]; then
-    if [ ! -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt ]; then
-        touch ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-        export TZ=JST-9
-        export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
-        export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-        export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-        export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-        eval "$(rbenv init -)" 
-
-        echo redmine_repository_check
-        cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
-        bundle exec rake redmine:fetch_changesets RAILS_ENV=production
-        rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-    fi
-fi
-__HEREDOC__
-chmod +x redmine_repository_check.sh
 
 cat << '__HEREDOC__' > redmine_repository_check_start.sh
 #!/bin/bash
 
-cwd=`dirname "${0}"`
-expr "${0}" : "/.*" > /dev/null || cwd=`(cd "${cwd}" && pwd)`
-
-${cwd}/redmine_repository_check.sh >/dev/null 2>&1 &
-
+${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh >/dev/null 2>&1 &
 __HEREDOC__
 chmod +x redmine_repository_check_start.sh
 echo redmine_repository_check_start.sh >> jobs.allow
@@ -395,7 +432,6 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 # * for_restart *
 
 cat << '__HEREDOC__' > for_restart.sh
-
 #!/bin/bash
 
 testrubyserver_count=`ps aux | grep testrubyserver.rb | grep -v grep | wc -l`
@@ -453,3 +489,5 @@ echo https://${OPENSHIFT_APP_DNS}/redmine/ admin/admin
 echo https://${OPENSHIFT_APP_DNS}/cacti/ admin/admin
 echo https://${OPENSHIFT_APP_DNS}/info/
 echo https://${OPENSHIFT_APP_DNS}/logs/
+
+echo Don't git push
