@@ -91,7 +91,7 @@ if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ]; then
 fi
 
 mkdir -p ${OPENSHIFT_DATA_DIR}/logrotate
-pushd ${OPENSHIFT_DATA_DIR}/logrotate > /dev/null/
+pushd ${OPENSHIFT_DATA_DIR}/logrotate > /dev/null
 cat << '__HEREDOC__' > logrotate.conf
 compresscmd /usr/bin/xz
 uncompresscmd /usr/bin/unxz
