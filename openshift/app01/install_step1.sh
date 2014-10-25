@@ -52,6 +52,7 @@ if [ $# -ne 6 ]; then
     echo "arg4 : openshift email password"
     echo "arg5 : delegate mail alias"
     echo "arg6 : another server check (yes/no)"
+    echo "arg7 : web beacon server"
     exit
 fi
 
@@ -61,12 +62,14 @@ openshift_email_address=${3}
 openshift_email_password=${4}
 delegate_mail_alias=${5}
 another_server_check=${6}
+web_beacon=${7}
 echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/redmine_email_address
 echo ${redmine_email_password} > ${OPENSHIFT_DATA_DIR}/redmine_email_password
 echo ${openshift_email_address} > ${OPENSHIFT_DATA_DIR}/openshift_email_address
 echo ${openshift_email_password} > ${OPENSHIFT_DATA_DIR}/openshift_email_password
 echo ${delegate_mail_alias} > ${OPENSHIFT_DATA_DIR}/delegate_mail_alias
 echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/another_server_check
+echo ${web_beacon} > ${OPENSHIFT_DATA_DIR}/web_beacon
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Start >> ${OPENSHIFT_LOG_DIR}/install.log
