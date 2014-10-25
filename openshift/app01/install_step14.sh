@@ -140,6 +140,7 @@ __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' logrotate.conf
 perl -pi -e "s/__REDMINE_VERSION__/${redmine_version}/g" logrotate.conf
 perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' logrotate.conf
+cat logrotate.conf
 popd > /dev/null
 
 # ***** cron *****
@@ -195,29 +196,6 @@ cd ${OPENSHIFT_DATA_DIR}/webalizer
 __HEREDOC__
 chmod +x webalizer.sh
 echo webalizer.sh >> jobs.allow
-
-# * redmine repository check *
-
-cat << '__HEREDOC__' > redmine_repository_check.sh
-#!/bin/bash
-
-if [ ! -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt ]; then
-    touch ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-    export TZ=JST-9
-    export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
-    export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-    export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-    export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-    eval "$(rbenv init -)"
-    cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
-    bundle exec rake redmine:fetch_changesets RAILS_ENV=production
-    rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-fi
-__HEREDOC__
-chmod +x redmine_repository_check.sh
-# TODO
-# echo redmine_repository_check.sh >> jobs.allow
-
 popd > /dev/null
 
 # *** minutely ***
@@ -261,6 +239,7 @@ wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>
 __HEREDOC__
 web_beacon_server=`echo ${OPENSHIFT_DATA_DIR}/web_beacon_server`
 sed -i -e "s/__WEB_BEACON_SERVER__/${web_beacon_server}/g" beacon.sh
+cat beacon.sh
 chmod +x beacon.sh
 echo beacon.sh >> jobs.allow
 
