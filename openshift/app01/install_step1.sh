@@ -34,6 +34,8 @@ tcl_version 8.6.2
 expect_version 5.45
 __HEREDOC__
 
+# https://www.ruby-lang.org/ja/
+
 while read LINE
 do
     product=`echo ${LINE} | awk '{print $1}'`
