@@ -52,7 +52,7 @@ if [ $# -ne 7 ]; then
     echo "arg4 : openshift email password"
     echo "arg5 : delegate mail alias"
     echo "arg6 : another server check (yes/no)"
-    echo "arg7 : web beacon server"
+    echo "arg7 : web beacon server https://xxx/"
     exit
 fi
 
