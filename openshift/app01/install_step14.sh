@@ -257,8 +257,10 @@ fi
 
 cat << '__HEREDOC__' > beacon.sh
 #!/bin/bash
-wget --spider https://tshrapp9.appspot.com/beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1
+wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1
 __HEREDOC__
+web_beacon_server=`echo ${OPENSHIFT_DATA_DIR}/web_beacon_server`
+perl -pi -e "s/__WEB_BEACON_SERVER__/${web_beacon_server}/g" beacon.sh
 chmod +x beacon.sh
 echo beacon.sh >> jobs.allow
 
