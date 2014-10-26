@@ -198,6 +198,18 @@ cd ${OPENSHIFT_DATA_DIR}/webalizer
 __HEREDOC__
 chmod +x webalizer.sh
 echo webalizer.sh >> jobs.allow
+
+# * delegate *
+
+cat << '__HEREDOC__' > delegate.sh
+#!/bin/bash
+
+export TZ=JST-9
+wget --spider http://${OPENSHIFT_DIY_IP}:30080/mail/+
+__HEREDOC__
+chmod +x delegate.sh
+# TODO
+# echo delegate.sh >> jobs.allow
 popd > /dev/null
 
 # *** minutely ***
