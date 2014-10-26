@@ -205,8 +205,10 @@ cat << '__HEREDOC__' > delegate.sh
 #!/bin/bash
 
 export TZ=JST-9
-wget --spider http://${OPENSHIFT_DIY_IP}:30080/mail/+
+wget --http-user=__DELEGATE_EMAL_ADDRESS__ --http-passwd=__DELEGATE_EMAIL_PASSWORD__ http://${OPENSHIFT_DIY_IP}:30080/mail/+__DELEGATE_MAIL_ALIAS__/
 __HEREDOC__
+delegate_mail_alias=`echo ${OPENSHIFT_DATA_DIR}/delegate_mail_alias`
+perl -pi -e 's/__DELEGATE_MAIL_ALIAS__/{delegate_mail_alias}/g' delegate.sh
 chmod +x delegate.sh
 # TODO
 # echo delegate.sh >> jobs.allow
