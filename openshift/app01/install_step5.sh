@@ -88,7 +88,7 @@ perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\n     
 cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/subversion.rb.patch.txt
      if identifier_from <= scm_revision
        now = Time.now.to_s
-       logger.info "#{now} #{url} #{db_revision} #{scm_revision}
+       logger.info "#{now} #{url} #{db_revision} #{identifier_from} #{scm_revision}"
 __HEREDOC__
 
 # perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\n__REPLACE_TARGET_1__"/g' app/models/repository/subversion.rb
