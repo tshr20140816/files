@@ -10,7 +10,7 @@ do
 done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 5 Start >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 6 Start >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -282,4 +282,4 @@ perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' restart_redmin
 perl -pi -e 's/__REDMINE_VERSION__/${redmine_version}/g' restart_redmine.cgi
 popd > /dev/null
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 5 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 6 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
