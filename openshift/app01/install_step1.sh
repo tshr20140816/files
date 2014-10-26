@@ -34,6 +34,9 @@ tcl_version 8.6.2
 expect_version 5.45
 __HEREDOC__
 
+# http://httpd.apache.org/
+# http://php.net/
+# http://delegate.hpcc.jp/delegate/
 # https://www.ruby-lang.org/ja/
 
 while read LINE
