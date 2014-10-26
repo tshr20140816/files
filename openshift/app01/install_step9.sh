@@ -10,7 +10,7 @@ do
 done < ${OPENSHIFT_DATA_DIR}/version_list
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 8 Start >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 9 Start >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -73,4 +73,4 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 rm ${ttrss_version}.tar.gz
 popd > /dev/null
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 8 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 9 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
