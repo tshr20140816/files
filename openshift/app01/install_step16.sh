@@ -57,6 +57,8 @@ sleep 5s
 
 ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/webalizer.sh
 
+# TODO
+ruby --version
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose
 
 # *** memcached information ***
