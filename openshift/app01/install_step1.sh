@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.10.28 ruby_version 2.1.3 → 2.1.4
 # 2014.10.22 ttrss_version 1.13 → 1.14
 # 2014.10.22 redmine_version 2.5.2 → 2.5.3
 # 2014.10.19 del rrdtool
@@ -25,7 +26,7 @@ ttrss_version 1.14
 memcached_version 1.4.20
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
-ruby_version 2.1.3
+ruby_version 2.1.4
 redmine_version 2.5.3
 ipafont_version 00303
 cacti_version 0.8.8b
