@@ -72,7 +72,6 @@ chmod +x memcached-tool
 ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 display
 popd > /dev/null
 
-delegate_mail_alias=`echo ${OPENSHIFT_DATA_DIR}/delegate_mail_alias`
 set +x
 
 echo https://${OPENSHIFT_APP_DNS}/wordpress/wp-admin/install.php
