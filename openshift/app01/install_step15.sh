@@ -112,31 +112,31 @@ notifempty
 noolddir
 rotate 7
 __OPENSHIFT_DATA_DIR__redmine-__REDMINE_VERSION__/log/production.log {
-daily
-missingok
-notifempty
-copytruncate
-compress
-noolddir
-rotate 7
+  daily
+  missingok
+  notifempty
+  copytruncate
+  compress
+  noolddir
+  rotate 7
 }
 __OPENSHIFT_LOG_DIR__cron_minutely.log {
-daily
-missingok
-notifempty
-copytruncate
-compress
-noolddir
-rotate 7
+  daily
+  missingok
+  notifempty
+  copytruncate
+  compress
+  noolddir
+  rotate 7
 }
 __OPENSHIFT_LOG_DIR__memory_usage.log {
-daily
-missingok
-notifempty
-copytruncate
-compress
-noolddir
-rotate 7
+  daily
+  missingok
+  notifempty
+  copytruncate
+  compress
+  noolddir
+  rotate 7
 }
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' logrotate.conf
