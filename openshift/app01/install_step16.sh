@@ -24,12 +24,12 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 cat << '__HEREDOC__' > for_restart.sh
 #!/bin/bash
 
-testrubyserver_count=`ps aux | grep testrubyserver.rb | grep -v grep | wc -l`
+testrubyserver_count=`ps aux | grep testrubyserver.rb | grep ${OPENSHIFT_APP_UUID} | grep -v grep | wc -l`
 
 if [ ${testrubyserver_count} -gt 0 ]; then
 
     # *** kill testrubyserver.rb ***
-    kill `ps auwx 2>/dev/null | grep testrubyserver.rb | grep -v grep | awk '{print $2}'`
+    kill `ps auwx 2>/dev/null | grep testrubyserver.rb | grep ${OPENSHIFT_APP_UUID} | grep -v grep | awk '{print $2}'`
 
     # *** apache ***
     export TZ=JST-9
