@@ -242,7 +242,7 @@ do
 done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
 __HEREDOC__
 chmod +x another_server_check.sh
-another_server_check=`echo ${OPENSHIFT_DATA_DIR}/another_server_check`
+another_server_check=`cat ${OPENSHIFT_DATA_DIR}/another_server_check`
 if [ "${another_server_check}" = "yes" ]; then
     echo another_server_check.sh >> jobs.allow
 fi
@@ -253,7 +253,7 @@ cat << '__HEREDOC__' > beacon.sh
 #!/bin/bash
 wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1
 __HEREDOC__
-web_beacon_server=`echo ${OPENSHIFT_DATA_DIR}/web_beacon_server`
+web_beacon_server=`cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`
 sed -i -e "s/__WEB_BEACON_SERVER__/${web_beacon_server}/g" beacon.sh
 cat beacon.sh
 chmod +x beacon.sh
