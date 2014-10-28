@@ -33,6 +33,7 @@ cacti_version 0.8.8b
 murlin_version 0.2.4
 tcl_version 8.6.2
 expect_version 5.45
+lynx_version 2.8.7
 __HEREDOC__
 
 # http://httpd.apache.org/
@@ -359,11 +360,11 @@ do
     fi
 
     # *** Lynx ***
-    if [ ! -f lynx2.8.7.tar.gz ]; then
+    if [ ! -f lynx${lynx_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` Lynx wget >> ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://lynx.isc.org/lynx2.8.7/lynx2.8.7.tar.gz
+        wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz
     fi
-    if [ ! -f lynx2.8.7.tar.gz ]; then
+    if [ ! -f lynx${lynx_version}.tar.gz ]; then
         files_exists=0
     fi
 
