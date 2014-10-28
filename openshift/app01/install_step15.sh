@@ -311,6 +311,7 @@ export TZ=JST-9
 env LANG=C ./bin/mrtg mrtg.conf
 __HEREDOC__
 chmod +x mrtg.sh
+./mrtg.sh
 echo mrtg.sh >> jobs.allow
 
 # * Tiny Tiny Rss update feeds *
