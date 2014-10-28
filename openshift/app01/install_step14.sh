@@ -72,6 +72,14 @@ popd > /dev/null
 
 # ***** rhc *****
 
+# *** env ***
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+
 # *** install ***
 
 echo `date +%Y/%m/%d" "%H:%M:%S` rhc install >> ${OPENSHIFT_LOG_DIR}/install.log
