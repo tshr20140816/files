@@ -55,7 +55,7 @@ if [ $# -ne 9 ]; then
     echo "arg2 : redmine email password"
     echo "arg3 : openshift email address"
     echo "arg4 : openshift email password"
-    echo "arg5 : delegate email address"
+    echo "arg5 : delegate email address (mailaddress/none)"
     echo "arg6 : delegate email password"
     echo "arg7 : delegate mail alias"
     echo "arg8 : another server check (yes/no)"
