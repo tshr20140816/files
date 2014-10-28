@@ -208,10 +208,15 @@ export TZ=JST-9
 wget --http-user=__DELEGATE_EMAL_ADDRESS__ --http-passwd=__DELEGATE_EMAIL_PASSWORD__ http://${OPENSHIFT_DIY_IP}:30080/mail/+__DELEGATE_MAIL_ALIAS__/
 __HEREDOC__
 delegate_mail_alias=`cat ${OPENSHIFT_DATA_DIR}/delegate_mail_alias`
+delegate_email_address=`cat ${OPENSHIFT_DATA_DIR}/delegate_email_address`
+delegate_email_password=`cat ${OPENSHIFT_DATA_DIR}/delegate_email_password`
+if [ ! ${delegate_email_address} = 'none' ]; then
 perl -pi -e 's/__DELEGATE_MAIL_ALIAS__/{delegate_mail_alias}/g' delegate.sh
+perl -pi -e 's/__DELEGATE_EMAL_ADDRESS__/{delegate_email_address}/g' delegate.sh
+perl -pi -e 's/__DELEGATE_EMAIL_PASSWORD__/{delegate_email_password}/g' delegate.sh
 chmod +x delegate.sh
-# TODO
 # echo delegate.sh >> jobs.allow
+fi
 popd > /dev/null
 
 # *** minutely ***
