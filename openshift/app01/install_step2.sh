@@ -46,34 +46,4 @@ rm lynx${lynx_version}.tar.gz
 rm -rf lynx
 popd > /dev/null
 
-# ***** vim *****
-
-mkdir -p ${OPENSHIFT_TMP_DIR}/vim
-
-pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/vim-${vim_version}.tar.bz2 ./
-
-echo `date +%Y/%m/%d" "%H:%M:%S` vim tar >> ${OPENSHIFT_LOG_DIR}/install.log
-tar xfj vim-${vim_version}.tar.bz2 --strip-components=1
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR}vim > /dev/null
-
-echo `date +%Y/%m/%d" "%H:%M:%S` vim configure >> ${OPENSHIFT_LOG_DIR}/install.log
-CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
-./configure \
---mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/vim 2>&1 | tee ${OPENSHIFT_LOG_DIR}/vim.configure.log
-
-echo `date +%Y/%m/%d" "%H:%M:%S` vim make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4
-
-echo `date +%Y/%m/%d" "%H:%M:%S` vim make install >> ${OPENSHIFT_LOG_DIR}/install.log
-make install
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm vim-${vim_version}.tar.bz2
-rm -rf vim
-popd > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 2 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
