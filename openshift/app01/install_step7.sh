@@ -28,6 +28,7 @@ pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
+--mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/memcached 2>&1 | tee ${OPENSHIFT_LOG_DIR}/memcached.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached make >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -62,6 +63,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` php configure >> ${OPENSHIFT_LOG_DIR}/install.l
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
+--mandir=/tmp/man \
 --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
@@ -122,6 +124,7 @@ pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
+--mandir=/tmp/man \
 --prefix=$OPENSHIFT_DATA_DIR/libmemcached 2>&1 | tee ${OPENSHIFT_LOG_DIR}/libmemcached.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -148,6 +151,7 @@ ${OPENSHIFT_DATA_DIR}/php/bin/phpize
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
+--mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/php_memcached \
 --with-libmemcached-dir=$OPENSHIFT_DATA_DIR/libmemcached \
 --disable-memcached-sasl \
