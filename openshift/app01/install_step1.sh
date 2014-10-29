@@ -34,7 +34,7 @@ murlin_version 0.2.4
 tcl_version 8.6.2
 expect_version 5.45
 lynx_version 2.8.7
-vim 7.4
+vim_version 7.4
 __HEREDOC__
 
 # http://httpd.apache.org/
