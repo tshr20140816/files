@@ -46,4 +46,15 @@ rm lynx${lynx_version}.tar.gz
 rm -rf lynx
 popd > /dev/null
 
+# ***** vim *****
+
+mkdir -p ${OPENSHIFT_TMP_DIR}/vim
+
+pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
+cp ${OPENSHIFT_DATA_DIR}/download_files/vim-${vim_version}.tar.bz2 ./
+
+echo `date +%Y/%m/%d" "%H:%M:%S` vim tar >> ${OPENSHIFT_LOG_DIR}/install.log
+tar xfj vim-${vim_version}.tar.bz2 --strip-components=1
+popd > /dev/null
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 2 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
