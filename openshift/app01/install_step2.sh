@@ -31,6 +31,7 @@ pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
+--mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee ${OPENSHIFT_LOG_DIR}/lynx.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx make >> ${OPENSHIFT_LOG_DIR}/install.log
