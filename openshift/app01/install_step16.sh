@@ -45,7 +45,6 @@ if [ ${testrubyserver_count} -gt 0 ]; then
 fi
 __HEREDOC__
 chmod +x for_restart.sh
-# ERROR NOW
 ./for_restart.sh
 echo for_restart.sh >> jobs.allow
 popd > /dev/null
