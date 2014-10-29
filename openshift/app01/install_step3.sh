@@ -28,7 +28,9 @@ pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` apache configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
-./configure --prefix=${OPENSHIFT_DATA_DIR}/apache \
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/apache \
+--mandir=/tmp/man \
 --enable-mods-shared='all proxy' 2>&1 | tee ${OPENSHIFT_LOG_DIR}/httpd.configure.log
 echo `date +%Y/%m/%d" "%H:%M:%S` apache make >> ${OPENSHIFT_LOG_DIR}/install.log
 time make -j2 2>&1 | tee ${OPENSHIFT_LOG_DIR}/httpd.make.log
