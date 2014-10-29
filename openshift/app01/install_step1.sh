@@ -34,6 +34,7 @@ murlin_version 0.2.4
 tcl_version 8.6.2
 expect_version 5.45
 lynx_version 2.8.7
+vim 7.4
 __HEREDOC__
 
 # http://httpd.apache.org/
@@ -365,6 +366,15 @@ do
         wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz
     fi
     if [ ! -f lynx${lynx_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** vim ***
+    if [ ! -f vim-${vim_version}.tar.bz2 ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` vim wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://mirrors-usa.go-parts.com/pub/vim/unix/vim-${vim_version}.tar.bz2
+    fi
+    if [ ! -f vim-${vim_version}.tar.bz2 ]; then
         files_exists=0
     fi
 
