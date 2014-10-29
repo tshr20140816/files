@@ -58,6 +58,14 @@ sleep 5s
 ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/webalizer.sh
 
 # TODO
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+rbenv global ${ruby_version}
+rbenv rehash
+
 ruby --version
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose
 
