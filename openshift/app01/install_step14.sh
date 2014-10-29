@@ -28,6 +28,7 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` Tcl configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
+--mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/tcl 2>&1 | tee ${OPENSHIFT_LOG_DIR}/tcl.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -56,6 +57,7 @@ pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect configure >> ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
+--mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee ${OPENSHIFT_LOG_DIR}/expect.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect make >> ${OPENSHIFT_LOG_DIR}/install.log
