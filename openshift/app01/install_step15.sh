@@ -15,6 +15,10 @@ echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
 
+# ***** register url *****
+
+curl --digest -u tshrapp9:`date +%Y%m%d%H` -F "url=${OPENSHIFT_GEAR_DNS}" `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`createwebcroninformation
+
 # ***** another server list *****
 
 env_home_backup=${HOME}
