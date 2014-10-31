@@ -189,7 +189,7 @@ mkdir public/plugin_assets
 popd > /dev/null
 
 # *** plugin ***
-pushd plugins > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/plugins > /dev/null
 # cp ${OPENSHIFT_DATA_DIR}/download_files/redmine_logs-0.0.5.zip ./
 # unzip redmine_logs-0.0.5.zip
 # rm redmine_logs-0.0.5.zip
