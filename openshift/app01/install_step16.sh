@@ -57,7 +57,8 @@ sleep 5s
 
 ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly/webalizer.sh
 
-# TODO
+# *** passenger status ***
+
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
