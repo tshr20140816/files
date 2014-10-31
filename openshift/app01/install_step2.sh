@@ -42,7 +42,6 @@ make install
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm lynx${lynx_version}.tar.gz
 rm -rf lynx
 popd > /dev/null
 
