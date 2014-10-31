@@ -96,7 +96,6 @@ openshift_email_address=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_address`
 openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_password`
 
 echo set timeout 60 > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
-# echo spawn ${OPENSHIFT_HOMEDIR}.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${openshift_email_address} -p ${openshift_email_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 echo spawn ${OPENSHIFT_DATA_DIR}.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${openshift_email_address} -p ${openshift_email_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 cat << '__HEREDOC__' >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 expect "(yes|no)"
@@ -112,8 +111,8 @@ env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt 2>&1 | tee ${OPENSHIFT_LOG_DIR}/rhc.setup.log
 
-${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid >> ${OPENSHIFT_LOG_DIR}/install.log
-${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps | grep uuid
+${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | grep uuid >> ${OPENSHIFT_LOG_DIR}/install.log
+${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | grep uuid
 export HOME=${env_home_backup}
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 14 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
