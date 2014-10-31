@@ -23,7 +23,7 @@ curl --digest -u tshrapp9:`date +%Y%m%d%H` -F "url=https://${OPENSHIFT_GEAR_DNS}
 
 env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
-${OPENSHIFT_HOMEDIR}.gem/bin/rhc apps \
+${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
 | grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} \
 | awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
 export HOME=${env_home_backup}
@@ -245,7 +245,7 @@ do
         echo app restart ${target_url}
         env_home_backup=${HOME}
         export HOME=${OPENSHIFT_DATA_DIR}
-        ${OPENSHIFT_HOMEDIR}.gem/bin/rhc app restart -a ${target_app_name}
+        ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name}
         export HOME=${env_home_backup}
     fi
 done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
