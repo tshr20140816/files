@@ -349,9 +349,19 @@ cat << '__HEREDOC__' > passenger_status.sh
 
 export TZ=JST-9
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+rbenv global __RUBY_VERSION__
+rbenv rehash
+
 echo `date +%Y/%m/%d" "%H:%M:%S` > passenger_status.txt
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose >> passenger_status.txt
 __HEREDOC__
+sed -i -e "s|__RUBY_VERSION__|${ruby_version}|g" passenger_status.sh
 chmod +x passenger_status.sh
 echo passenger_status.sh >> jobs.allow
 
