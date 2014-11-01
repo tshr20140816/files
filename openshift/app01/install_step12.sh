@@ -44,6 +44,7 @@ cat << '__HEREDOC__' > P30080
 SERVER=http
 ADMIN=__ADMIN_MAILADDRESS__
 DGROOT=__OPENSHIFT_DATA_DIR__delegate
+LOGDIR="__OPENSHIFT_LOG_DIR__"
 MOUNT="/mail/* pop://pop.mail.yahoo.co.jp:110/* noapop"
 # MOUNT="/-/builtin/* http://__OPENSHIFT_DIY_IP__:30080/delegate/builtin/*"
 FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
@@ -53,6 +54,7 @@ DGSIGN="x.x.x/x.x.x"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P30080
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P30080
+perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' P30080
 redmine_email_address=`cat ${OPENSHIFT_DATA_DIR}redmine_email_address`
 sed -i -e "s|__ADMIN_MAILADDRESS__|${redmine_email_address}|g" P30080
 cat << '__HEREDOC__' > filter.txt
