@@ -56,7 +56,7 @@ if [ $# -ne 9 ]; then
     echo "arg2 : redmine email password"
     echo "arg3 : openshift email address"
     echo "arg4 : openshift email password"
-    echo "arg5 : delegate email address (mailaddress/none)"
+    echo "arg5 : delegate email account (mailaccount/none)"
     echo "arg6 : delegate email password"
     echo "arg7 : delegate mail alias"
     echo "arg8 : another server check (yes/no)"
@@ -68,7 +68,7 @@ redmine_email_address=${1}
 redmine_email_password=${2}
 openshift_email_address=${3}
 openshift_email_password=${4}
-delegate_email_address=${5}
+delegate_email_account=${5}
 delegate_email_password=${6}
 delegate_mail_alias=${7}
 another_server_check=${8}
@@ -77,7 +77,7 @@ echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/redmine_email_address
 echo ${redmine_email_password} > ${OPENSHIFT_DATA_DIR}/redmine_email_password
 echo ${openshift_email_address} > ${OPENSHIFT_DATA_DIR}/openshift_email_address
 echo ${openshift_email_password} > ${OPENSHIFT_DATA_DIR}/openshift_email_password
-echo ${delegate_email_address} > ${OPENSHIFT_DATA_DIR}/delegate_email_address
+echo ${delegate_email_account} > ${OPENSHIFT_DATA_DIR}/delegate_email_account
 echo ${delegate_email_password} > ${OPENSHIFT_DATA_DIR}/delegate_email_password
 echo ${delegate_mail_alias} > ${OPENSHIFT_DATA_DIR}/delegate_mail_alias
 echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/another_server_check
