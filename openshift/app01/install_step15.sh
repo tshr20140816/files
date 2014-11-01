@@ -209,20 +209,13 @@ cat << '__HEREDOC__' > delegate.sh
 #!/bin/bash
 
 export TZ=JST-9
-# wget --http-user=__DELEGATE_EMAL_ADDRESS__ --http-passwd=__DELEGATE_EMAIL_PASSWORD__ http://${OPENSHIFT_DIY_IP}:30080/mail/+__DELEGATE_MAIL_ALIAS__/
+delegate_email_account=`cat ${OPENSHIFT_DATA_DIR}delegate_email_account`
 delegate_email_password=`cat ${OPENSHIFT_DATA_DIR}delegate_email_password`
-curl -LI --basic -u tshrforward:${delegate_email_password} \
-https://${OPENSHIFT_DIY_IP}:30080/mail/+__DELEGATE_MAIL_ALIAS__/
+delegate_mail_alias=`cat ${OPENSHIFT_DATA_DIR}delegate_mail_alias`
+curl -LI --basic -u ${delegate_email_account}:${delegate_email_password} \
+https://${OPENSHIFT_DIY_IP}:30080/mail/+${delegate_mail_alias}/
 __HEREDOC__
-delegate_mail_alias=`cat ${OPENSHIFT_DATA_DIR}/delegate_mail_alias`
-delegate_email_address=`cat ${OPENSHIFT_DATA_DIR}/delegate_email_address`
-delegate_email_password=`cat ${OPENSHIFT_DATA_DIR}/delegate_email_password`
-if [ ! ${delegate_email_address} = 'none' ]; then
-perl -pi -e "s/__DELEGATE_MAIL_ALIAS__/${delegate_mail_alias}/g" delegate.sh
-# perl -pi -e "s/__DELEGATE_EMAL_ADDRESS__/${delegate_email_address}/g" delegate.sh
-# perl -pi -e "s/__DELEGATE_EMAIL_PASSWORD__/${delegate_email_password}/g" delegate.sh
-sed -i -e "s|__DELEGATE_EMAL_ADDRESS__|${delegate_email_address}|g" beacon.sh
-sed -i -e "s|__DELEGATE_EMAIL_PASSWORD__|${delegate_email_password}|g" beacon.sh
+if [ ! ${delegate_email_account} = 'none' ]; then
 chmod +x delegate.sh
 # echo delegate.sh >> jobs.allow
 fi
