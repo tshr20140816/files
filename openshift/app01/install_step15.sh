@@ -209,7 +209,10 @@ cat << '__HEREDOC__' > delegate.sh
 #!/bin/bash
 
 export TZ=JST-9
-wget --http-user=__DELEGATE_EMAL_ADDRESS__ --http-passwd=__DELEGATE_EMAIL_PASSWORD__ http://${OPENSHIFT_DIY_IP}:30080/mail/+__DELEGATE_MAIL_ALIAS__/
+# wget --http-user=__DELEGATE_EMAL_ADDRESS__ --http-passwd=__DELEGATE_EMAIL_PASSWORD__ http://${OPENSHIFT_DIY_IP}:30080/mail/+__DELEGATE_MAIL_ALIAS__/
+delegate_email_password=`cat ${OPENSHIFT_DATA_DIR}delegate_email_password`
+curl -LI --basic -u tshrforward:${delegate_email_password} \
+https://${OPENSHIFT_DIY_IP}:30080/mail/+__DELEGATE_MAIL_ALIAS__/
 __HEREDOC__
 delegate_mail_alias=`cat ${OPENSHIFT_DATA_DIR}/delegate_mail_alias`
 delegate_email_address=`cat ${OPENSHIFT_DATA_DIR}/delegate_email_address`
