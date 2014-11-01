@@ -42,15 +42,18 @@ pushd ${OPENSHIFT_DATA_DIR}/delegate/ > /dev/null
 cat << '__HEREDOC__' > P30080
 -P__OPENSHIFT_DIY_IP__:30080
 SERVER=http
-ADMIN=admin@rhcloud.local
+ADMIN=__ADMIN_MAILADDRESS__
 DGROOT=__OPENSHIFT_DATA_DIR__delegate
 MOUNT="/mail/* pop://pop.mail.yahoo.co.jp:110/* noapop"
 FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
 HTTPCONF=methods:GET,HEAD
-HTTPCONF='kill-head:Via,HTTP-VIA,DeleGate-Ver'
+HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
+DGSIGN="x.x.x/x.x.x"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P30080
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P30080
+redmine_email_address=`cat ${OPENSHIFT_DATA_DIR}redmine_email_address`
+sed -i -e "s|__ADMIN_MAILADDRESS__|${redmine_email_address}|g" P30080
 cat << '__HEREDOC__' > filter.txt
 s/http:..__OPENSHIFT_DIY_IP__:30080.-.builtin.icons.ysato/\/delegate\/icons/g
 __HEREDOC__
