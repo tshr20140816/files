@@ -44,8 +44,10 @@ cat << '__HEREDOC__' > P30080
 SERVER=http
 ADMIN=admin@rhcloud.local
 DGROOT=__OPENSHIFT_DATA_DIR__delegate
-MOUNT="/mail/* pop://pop.mail.yahoo.co.jp:110/* noapop" 
-FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt" 
+MOUNT="/mail/* pop://pop.mail.yahoo.co.jp:110/* noapop"
+FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
+HTTPCONF=methods:GET,HEAD
+HTTPCONF='kill-head:Via,HTTP-VIA,DeleGate-Ver'
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P30080
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P30080
