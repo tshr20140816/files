@@ -103,7 +103,7 @@ LanguagePriority ja en
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 CustomLog logs/access_log combined
 
-LogFormat "%{%Y-%m-%d %H:%M:%S %Z}t %p %a %s %b \"%{User-agent}i\"" remoteip
+LogFormat "%{%Y-%m-%d %H:%M:%S %Z}t %p %a %m %s %>s %b \"%{User-agent}i\"" remoteip
 CustomLog logs/access_remoteip_log remoteip
 
 # security
