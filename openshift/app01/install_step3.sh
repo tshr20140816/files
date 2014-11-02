@@ -95,6 +95,10 @@ KeepAlive On
 Timeout 30
 LanguagePriority ja en
 
+# log
+
+LogFormat "%h %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\""
+
 # security
 
 ServerTokens Prod
