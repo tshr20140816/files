@@ -127,6 +127,16 @@ do
         fi
     fi
     if [ ! -f httpd-${apache_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` apache wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.gz
+        tarball_md5=$(md5sum httpd-${apache_version}.tar.gz | cut -d ' ' -f 1)
+        apache_md5=$(curl -Ls http://www.apache.org/dist/httpd/httpd-${apache_version}.tar.gz.md5 | cut -d ' ' -f 1)
+        if [ "${tarball_md5}" != "${apache_md5}" ]; then
+            echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch >> ${OPENSHIFT_LOG_DIR}/install.log
+            rm httpd-${apache_version}.tar.gz
+        fi
+    fi
+    if [ ! -f httpd-${apache_version}.tar.gz ]; then
         files_exists=0
     fi
 
