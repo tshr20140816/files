@@ -400,7 +400,10 @@ mkdir -p ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin
 mkdir ${OPENSHIFT_DATA_DIR}/bin
 mkdir ${OPENSHIFT_DATA_DIR}/scripts
 
-cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
 export TMOUT=0
+
+set +x
+echo cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
+echo nohup ./install_step_from_2_to_16.sh &
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
