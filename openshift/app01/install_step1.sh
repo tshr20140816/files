@@ -58,7 +58,7 @@ if [ $# -ne 9 ]; then
     echo "arg4 : openshift email password"
     echo "arg5 : delegate email account (mailaccount/none)"
     echo "arg6 : delegate email password"
-    echo "arg7 : delegate mail alias"
+    echo "arg7 : delegate pop server"
     echo "arg8 : another server check (yes/no)"
     echo "arg9 : web beacon server https://xxx/"
     exit
@@ -70,7 +70,7 @@ openshift_email_address=${3}
 openshift_email_password=${4}
 delegate_email_account=${5}
 delegate_email_password=${6}
-delegate_mail_alias=${7}
+delegate_pop_server=${7}
 another_server_check=${8}
 web_beacon_server=${9}
 echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/redmine_email_address
@@ -79,7 +79,7 @@ echo ${openshift_email_address} > ${OPENSHIFT_DATA_DIR}/openshift_email_address
 echo ${openshift_email_password} > ${OPENSHIFT_DATA_DIR}/openshift_email_password
 echo ${delegate_email_account} > ${OPENSHIFT_DATA_DIR}/delegate_email_account
 echo ${delegate_email_password} > ${OPENSHIFT_DATA_DIR}/delegate_email_password
-echo ${delegate_mail_alias} > ${OPENSHIFT_DATA_DIR}/delegate_mail_alias
+echo ${delegate_pop_server} > ${OPENSHIFT_DATA_DIR}/delegate_pop_server
 echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/another_server_check
 echo ${web_beacon_server} > ${OPENSHIFT_DATA_DIR}/web_beacon_server
 
