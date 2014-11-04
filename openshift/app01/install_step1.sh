@@ -33,6 +33,7 @@ cacti_version 0.8.8b
 murlin_version 0.2.4
 tcl_version 8.6.2
 expect_version 5.45
+nginx_version 1.6.2
 lynx_version 2.8.7
 __HEREDOC__
 
@@ -366,6 +367,15 @@ do
         wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
     fi
     if [ ! -f expect${expect_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** nginx ***
+    if [ ! -f nginx-${nginx_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` nginx wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://nginx.org/download/nginx-1.6.2.tar.gz
+    fi
+    if [ ! -f nginx-${nginx_version}.tar.gz ]; then
         files_exists=0
     fi
 
