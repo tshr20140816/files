@@ -35,6 +35,7 @@ tcl_version 8.6.2
 expect_version 5.45
 nginx_version 1.6.2
 lynx_version 2.8.7
+logrotate_version 3.8.8
 __HEREDOC__
 
 # http://httpd.apache.org/
@@ -376,6 +377,15 @@ do
         wget http://nginx.org/download/nginx-1.6.2.tar.gz
     fi
     if [ ! -f nginx-${nginx_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** logrotate ***
+    if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` logrotate wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://fedorahosted.org/releases/l/o/logrotate/logrotate-${logrotate_version}.tar.gz
+    fi
+    if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
         files_exists=0
     fi
 
