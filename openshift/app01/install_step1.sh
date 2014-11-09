@@ -434,6 +434,6 @@ export TMOUT=0
 
 set +x
 echo cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
-echo nohup ./install_step_from_2_to_16.sh &
+echo nohup ./install_step_from_2_to_16.sh > ${OPENSHIFT_LOG_DIR}/nohup.log 2> ${OPENSHIFT_LOG_DIR}/nohup_error.log &
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
