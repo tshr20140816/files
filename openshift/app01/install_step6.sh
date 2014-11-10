@@ -212,7 +212,7 @@ rbenv rehash
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 mv Gemfile Gemfile.`date '+%Y%m%d'`
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
-time bundle install --path vendor/bundle -j2 2>&1 | tee ${OPENSHIFT_LOG_DIR}/bundle.install.log
+time bundle install --path vendor/bundle -j2 >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 
 # *** rake ***
 
