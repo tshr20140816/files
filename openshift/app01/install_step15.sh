@@ -385,6 +385,7 @@ export TZ=JST-9
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 echo `date +%Y/%m/%d" "%H:%M:%S` > process_status.txt
 ps auwx >> process_status.txt
+lsof >> lsof.txt
 __HEREDOC__
 chmod +x process_status.sh
 echo process_status.sh >> jobs.allow
