@@ -25,7 +25,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate make >> ${OPENSHIFT_LOG_DIR}/install.log
 perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
-time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/delegate.make.log
+time make -j2 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" >${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
 cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
 # cp ${OPENSHIFT_DATA_DIR}/github/openshift/delegated.xz ./
