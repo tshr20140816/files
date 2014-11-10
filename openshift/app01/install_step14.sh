@@ -29,13 +29,13 @@ echo `date +%Y/%m/%d" "%H:%M:%S` Tcl configure >> ${OPENSHIFT_LOG_DIR}/install.l
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/tcl 2>&1 | tee ${OPENSHIFT_LOG_DIR}/tcl.configure.log
+--prefix=${OPENSHIFT_DATA_DIR}/tcl >${OPENSHIFT_LOG_DIR}/tcl.configure.log 2>&1
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/tcl.make.log
+time make -j4 >${OPENSHIFT_LOG_DIR}/tcl.make.log 2>&1
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make install >> ${OPENSHIFT_LOG_DIR}/install.log
-make install
+make install >${OPENSHIFT_LOG_DIR}/tcl.make.install.log 2>&1
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -58,13 +58,13 @@ echo `date +%Y/%m/%d" "%H:%M:%S` Expect configure >> ${OPENSHIFT_LOG_DIR}/instal
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee ${OPENSHIFT_LOG_DIR}/expect.configure.log
+--prefix=${OPENSHIFT_DATA_DIR}/expect >${OPENSHIFT_LOG_DIR}/expect.configure.log 2>&1
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/expect.make.log
+time make -j4 >${OPENSHIFT_LOG_DIR}/expect.make.log 2>&1
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect make install >> ${OPENSHIFT_LOG_DIR}/install.log
-make install
+make install >${OPENSHIFT_LOG_DIR}/expect.make.install.log 2>&1
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -86,7 +86,7 @@ eval "$(rbenv init -)"
 
 echo `date +%Y/%m/%d" "%H:%M:%S` rhc install >> ${OPENSHIFT_LOG_DIR}/install.log
 
-gem install rhc --no-rdoc --no-ri --verbose 2>&1 | tee ${OPENSHIFT_LOG_DIR}/rhc.gem.log
+gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 
 # *** setup ***
 
