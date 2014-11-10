@@ -32,13 +32,13 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/webalizer \
 --mandir=/tmp/man \
---with-language=japanese --enable-dns 2>&1 | tee ${OPENSHIFT_LOG_DIR}/webalizer.configure.log
+--with-language=japanese --enable-dns >${OPENSHIFT_LOG_DIR}/webalizer.configure.log 2>&1
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j2 2>&1 | tee ${OPENSHIFT_LOG_DIR}/webalizer.make.log
+time make -j2 >${OPENSHIFT_LOG_DIR}/webalizer.make.log 2>&1
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make install >> ${OPENSHIFT_LOG_DIR}/install.log
-make install
+make install >${OPENSHIFT_LOG_DIR}/webalizer.make.install.log 2>&1
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/webalizer/etc > /dev/null
