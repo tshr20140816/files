@@ -31,11 +31,11 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/apache \
 --mandir=/tmp/man \
---enable-mods-shared='all proxy' 2>&1 | tee ${OPENSHIFT_LOG_DIR}/httpd.configure.log
+--enable-mods-shared='all proxy' >${OPENSHIFT_LOG_DIR}/httpd.configure.log 2>&1
 echo `date +%Y/%m/%d" "%H:%M:%S` apache make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j2 2>&1 | tee ${OPENSHIFT_LOG_DIR}/httpd.make.log
+time make -j2 >${OPENSHIFT_LOG_DIR}/httpd.make.log 2>&1
 echo `date +%Y/%m/%d" "%H:%M:%S` apache make install >> ${OPENSHIFT_LOG_DIR}/install.log
-make install
+make install >${OPENSHIFT_LOG_DIR}/httpd.make.install.log 2>&1
 echo `date +%Y/%m/%d" "%H:%M:%S` apache conf >> ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
