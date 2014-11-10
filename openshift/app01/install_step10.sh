@@ -28,11 +28,11 @@ echo `date +%Y/%m/%d" "%H:%M:%S` mrtg configure >> ${OPENSHIFT_LOG_DIR}/install.
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/mrtg 2>&1 | tee ${OPENSHIFT_LOG_DIR}/mrtg.configure.log
+--prefix=${OPENSHIFT_DATA_DIR}/mrtg >${OPENSHIFT_LOG_DIR}/mrtg.configure.log 2>&1
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j2 2>&1 | tee ${OPENSHIFT_LOG_DIR}/mrtg.make.log
+time make -j2 >${OPENSHIFT_LOG_DIR}/mrtg.make.log 2>&1
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make install >> ${OPENSHIFT_LOG_DIR}/install.log
-make install
+make install >${OPENSHIFT_LOG_DIR}/mrtg.make.install.log 2>&1
 popd > /dev/null
 
 mkdir ${OPENSHIFT_DATA_DIR}/mrtg/workdir
