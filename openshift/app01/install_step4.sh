@@ -42,7 +42,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` ruby install >> ${OPENSHIFT_LOG_DIR}/install.lo
 
 export CFLAGS="-O3 -march=native -pipe" 
 export CXXFLAGS="-O3 -march=native -pipe" 
-time CONFIGURE_OPTS="--disable-install-doc" rbenv install -v ${ruby_version} 2>&1 | tee ${OPENSHIFT_LOG_DIR}/ruby.rbenv.log
+time CONFIGURE_OPTS="--disable-install-doc" rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
 rbenv global ${ruby_version}
 rbenv rehash
 
@@ -59,14 +59,14 @@ echo `date +%Y/%m/%d" "%H:%M:%S` resolv.rb patch check >> ${OPENSHIFT_LOG_DIR}/i
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
 | grep ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
 
-time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V 2>&1 | tee ${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log
+time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V >${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log 2>&1
 rbenv rehash
 
 # *** passenger ***
 
 echo `date +%Y/%m/%d" "%H:%M:%S` bundler passenger >> ${OPENSHIFT_LOG_DIR}/install.log
 
-time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V 2>&1 | tee ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log
+time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V >${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log 2>&1
 rbenv rehash
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 4 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
