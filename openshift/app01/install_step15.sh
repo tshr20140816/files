@@ -162,11 +162,12 @@ touch jobs.deny
 
 cat << '__HEREDOC__' > logrotate.sh
 #!/bin/bash
-/usr/sbin/logrotate -v -s __OPENSHIFT_DATA_DIR__/logrotate/logrotate.status -f __OPENSHIFT_DATA_DIR__/logrotate/logrotate.conf
+/usr/sbin/logrotate -v -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' logrotate.conf
 chmod +x logrotate.sh
 echo logrotate.sh >> jobs.allow
+./logrotate.sh
 ./logrotate.sh
 
 # * mysql_backup *
