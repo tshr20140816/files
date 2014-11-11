@@ -1,13 +1,13 @@
 #!/bin/bash
 
-set -x
-
 while read LINE
 do
     product=`echo ${LINE} | awk '{print $1}'`
     version=`echo ${LINE} | awk '{print $2}'`
     eval "${product}"=${version}
 done < ${OPENSHIFT_DATA_DIR}/version_list
+
+set -x
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 10 Start >> ${OPENSHIFT_LOG_DIR}/install.log
