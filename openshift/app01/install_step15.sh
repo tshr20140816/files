@@ -58,12 +58,12 @@ if [ `expr ${minute} % 5` -eq 2 ]; then
     usage_in_bytes=`oo-cgroup-read memory.usage_in_bytes`
     if [ ${usage_in_bytes} -gt 400000000 ]; then
         dt=`date +%Y/%m/%d" "%H:%M:%S`
-        echo ${dt} skip ... memory use ${usage_in_bytes} bytes >> ${OPENSHIFT_LOG_DIR}\redmine_repository_check.log
+        echo ${dt} skip ... memory use ${usage_in_bytes} bytes >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
         exit
     fi
 
     if [ -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt ]; then
-        echo ${dt} skip ... file exists ${OPENSHIFT_TMP_DIR}redmine_repository_check.txt >> ${OPENSHIFT_LOG_DIR}\redmine_repository_check.log
+        echo ${dt} skip ... file exists ${OPENSHIFT_TMP_DIR}redmine_repository_check.txt >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
         exit
     fi
 
