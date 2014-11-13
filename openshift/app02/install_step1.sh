@@ -12,7 +12,7 @@ murlin_version 0.2.4
 tcl_version 8.6.2
 expect_version 5.45
 lynx_version 2.8.7
-fping_version 3.2
+fping_version 3.10
 pcre_version 8.36
 xymon_version 4.3.17
 __HEREDOC__
