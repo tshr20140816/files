@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.11.15 ruby_version 2.1.4 → 2.1.5
 # 2014.11.15 php_version 5.6.2 → 5.6.3
 # 2014.11.12 delegate_version 9.9.12 → 9.9.13
 # 2014.10.28 ruby_version 2.1.3 → 2.1.4
@@ -28,7 +29,7 @@ ttrss_version 1.14
 memcached_version 1.4.20
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
-ruby_version 2.1.4
+ruby_version 2.1.5
 redmine_version 2.5.3
 ipafont_version 00303
 cacti_version 0.8.8b
