@@ -225,13 +225,13 @@ do
     if [ ! -f memcached-tool ]; then
         files_exists=0
     fi
-    
+
     # *** php ***
-    if [ ! -f php-${php_version}.tar.gz ]; then
+    if [ ! -f php-${php_version}.tar.xz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` php wget >> ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://jp1.php.net/get/php-${php_version}.tar.gz/from/this/mirror -O php-${php_version}.tar.gz
+        wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
     fi
-    if [ ! -f php-${php_version}.tar.gz ]; then
+    if [ ! -f php-${php_version}.tar.xz ]; then
         files_exists=0
     fi
 
