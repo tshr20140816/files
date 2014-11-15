@@ -53,9 +53,9 @@ popd > /dev/null
 # ***** php *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/php-${php_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/php-${php_version}.tar.xz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` php tar >> ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz php-${php_version}.tar.gz
+tar Jxf php-${php_version}.tar.xz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
@@ -109,7 +109,7 @@ cat lib/php.ini | grep session.save_path >> ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm php-${php_version}.tar.gz
+rm php-${php_version}.tar.xz
 rm -rf php-${php_version}
 popd > /dev/null
 
