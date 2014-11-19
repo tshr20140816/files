@@ -76,15 +76,15 @@ cat << '__HEREDOC__' >> conf/custom.conf
 ProxyRequests Off
 ProxyPass /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
 ProxyPassReverse /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
-ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_MAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
-ProxyPassReverse /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_MAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
+ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_EMAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
+ProxyPassReverse /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_EMAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
 ProxyPass /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
 ProxyPassReverse /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
 ProxyMaxForwards 10
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
-delegate_mail_alias=`cat ${OPENSHIFT_DATA_DIR}/delegate_mail_alias`
-perl -pi -e "s/__DELEGATE_MAIL_ACCOUNT__/${delegate_email_account}/g" conf/custom.conf
+delegate_email_account=`cat ${OPENSHIFT_DATA_DIR}/delegate_email_account`
+perl -pi -e "s/__DELEGATE_EMAIL_ACCOUNT__/${delegate_email_account}/g" conf/custom.conf
 delegate_pop_server=`cat ${OPENSHIFT_DATA_DIR}delegate_pop_server`
 sed -i -e "s|__DELEGATE_POP_SERVER__|${delegate_pop_server}|g" conf/custom.conf
 popd > /dev/null
