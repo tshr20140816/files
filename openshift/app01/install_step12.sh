@@ -33,8 +33,8 @@ cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
 # mv ./delegated ${OPENSHIFT_DATA_DIR}/delegate/
 
 # apache htdocs
-mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons
-cp src/builtin/icons/ysato/*.* ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/
+# mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons
+# cp src/builtin/icons/ysato/*.* ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/
 # */
 popd > /dev/null
 
@@ -78,6 +78,8 @@ ProxyPass /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
 ProxyPassReverse /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
 ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_MAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
 ProxyPassReverse /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_MAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
+ProxyPass /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
+ProxyPassReverse /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
 ProxyMaxForwards 10
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
