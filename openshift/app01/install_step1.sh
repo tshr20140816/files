@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.12.09 ttrss_version 1.14 → 1.15
 # 2014.11.15 ruby_version 2.1.4 → 2.1.5
 # 2014.11.15 php_version 5.6.2 → 5.6.3
 # 2014.11.12 delegate_version 9.9.12 → 9.9.13
@@ -25,7 +26,7 @@ delegate_version 9.9.13
 mrtg_version 2.17.4
 webalizer_version 2.23-08
 wordpress_version 4.0-ja
-ttrss_version 1.14
+ttrss_version 1.15
 memcached_version 1.4.20
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
