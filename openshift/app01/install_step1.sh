@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.12.09 cacti_version 0.8.8b → 0.8.8c
 # 2014.12.09 ttrss_version 1.14 → 1.15
 # 2014.11.15 ruby_version 2.1.4 → 2.1.5
 # 2014.11.15 php_version 5.6.2 → 5.6.3
@@ -33,7 +34,7 @@ memcached_php_ext_version 2.2.0
 ruby_version 2.1.5
 redmine_version 2.5.3
 ipafont_version 00303
-cacti_version 0.8.8b
+cacti_version 0.8.8c
 murlin_version 0.2.4
 tcl_version 8.6.2
 expect_version 5.45
