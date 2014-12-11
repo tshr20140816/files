@@ -61,6 +61,7 @@ delegate_pop_server=`cat ${OPENSHIFT_DATA_DIR}delegate_pop_server`
 sed -i -e "s|__DELEGATE_POP_SERVER__|${delegate_pop_server}|g" P30080
 cat << '__HEREDOC__' > filter.txt
 s/http:..__OPENSHIFT_DIY_IP__:30080.-.builtin.icons.ysato/\/delegate\/icons/g
+s/<\/TITLE>/<\/TITLE><HEAD><meta http-equiv="refresh" content="900"><\/HEAD>/g
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt
 popd > /dev/null
