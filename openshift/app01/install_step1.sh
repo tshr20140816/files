@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2014.12.19 php_version 5.6.3 → 5.6.4
 # 2014.12.10 ttrss_version 1.15 → 1.15.2
 # 2014.12.09 cacti_version 0.8.8b → 0.8.8c
 # 2014.12.09 ttrss_version 1.14 → 1.15
@@ -23,7 +24,7 @@ set -x
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
-php_version 5.6.3
+php_version 5.6.4
 delegate_version 9.9.13
 mrtg_version 2.17.4
 webalizer_version 2.23-08
