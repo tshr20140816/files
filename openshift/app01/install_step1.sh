@@ -345,13 +345,13 @@ do
 
     # *** cacti patch ***
     # patch -p1 -N < security.patch
-    if [ ! -f security.patch ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` cacti patch wget >> ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://www.cacti.net/downloads/patches/${cacti_version}/security.patch
-    fi
-    if [ ! -f security.patch ]; then
-        files_exists=0
-    fi
+    #if [ ! -f security.patch ]; then
+    #    echo `date +%Y/%m/%d" "%H:%M:%S` cacti patch wget >> ${OPENSHIFT_LOG_DIR}/install.log
+    #    wget http://www.cacti.net/downloads/patches/${cacti_version}/security.patch
+    #fi
+    #if [ ! -f security.patch ]; then
+    #    files_exists=0
+    #fi
 
     # *** mURLin ***
     if [ ! -f mURLin-${murlin_version}.tar.gz ]; then
