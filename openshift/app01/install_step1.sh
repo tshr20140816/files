@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.01.09 wordpress_version 4.0-ja → 4.1-ja
 # 2014.12.19 php_version 5.6.3 → 5.6.4
 # 2014.12.10 ttrss_version 1.15 → 1.15.2
 # 2014.12.09 cacti_version 0.8.8b → 0.8.8c
@@ -28,7 +29,7 @@ php_version 5.6.4
 delegate_version 9.9.13
 mrtg_version 2.17.4
 webalizer_version 2.23-08
-wordpress_version 4.0-ja
+wordpress_version 4.1-ja
 ttrss_version 1.15.2
 memcached_version 1.4.20
 libmemcached_version 1.0.18
