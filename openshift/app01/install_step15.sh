@@ -231,6 +231,23 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
 
+# * my server check *
+
+cat << '__HEREDOC__' > my_server_check.sh
+#!/bin/bash
+
+target_url='http://${OPENSHIFT_APP_DNS}/'
+http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
+echo http_status ${http_status} ${target_url}
+if test ${http_status} -eq 503 ; then
+    echo app restart ${target_url}
+    /usr/bin/gear stop 2>&1 /dev/null
+    /usr/bin/gear start 2>&1 /dev/null
+fi
+__HEREDOC__
+chmod +x my_server_check.sh
+echo my_server_check.sh >> jobs.allow
+
 # * another server check *
 
 cat << '__HEREDOC__' > another_server_check.sh
