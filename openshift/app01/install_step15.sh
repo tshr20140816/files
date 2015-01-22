@@ -236,7 +236,7 @@ touch jobs.deny
 cat << '__HEREDOC__' > my_server_check.sh
 #!/bin/bash
 
-target_url='http://${OPENSHIFT_APP_DNS}/'
+target_url="http://${OPENSHIFT_APP_DNS}/"
 http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
 echo http_status ${http_status} ${target_url}
 if test ${http_status} -eq 503 ; then
