@@ -7,6 +7,8 @@ do
     eval "${product}"=${version}
 done < ${OPENSHIFT_DATA_DIR}/version_list
 
+# delegate
+
 set -x
 
 export TZ=JST-9
