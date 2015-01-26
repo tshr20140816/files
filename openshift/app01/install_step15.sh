@@ -246,10 +246,13 @@ target_url="http://${OPENSHIFT_APP_DNS}/"
 http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
 echo http_status ${http_status} ${target_url}
 if test ${http_status} -eq 503 ; then
+    export TZ=JST-9
+    dt=`date +%Y%m%d%H`
+    # TODO
+    # curl -F "subject=${OPENSHIFT_APP_DNS} RESTART" -F "body=${OPENSHIFT_APP_DNS} RESTART" --digest -u username:${dt} https://xxx/sendadminmail
     echo auto restart ${OPENSHIFT_APP_DNS}
     /usr/bin/gear stop 2>&1 /dev/null
     /usr/bin/gear start 2>&1 /dev/null
-    export TZ=JST-9
     echo `date +%Y/%m/%d" "%H:%M:%S` Auto Restart >> ${OPENSHIFT_LOG_DIR}/auto_restart.log
 fi
 __HEREDOC__
