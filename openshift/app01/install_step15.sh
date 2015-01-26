@@ -51,6 +51,7 @@ chmod +x ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh
 #!/bin/bash
 
+export TZ=JST-9
 minute=`date +%M`
 dt=`date +%Y/%m/%d" "%H:%M:%S`
 
@@ -69,7 +70,7 @@ if [ `expr ${minute} % 5` -eq 2 ]; then
 
     echo ${dt} start >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
     touch ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-    export TZ=JST-9
+    # export TZ=JST-9
     export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
     export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
     export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
