@@ -415,6 +415,8 @@ echo `date +%Y/%m/%d" "%H:%M:%S` > process_status.txt
 ps auwx >> process_status.txt
 echo `date +%Y/%m/%d" "%H:%M:%S` > lsof.txt
 lsof > lsof.txt
+echo `date +%Y/%m/%d" "%H:%M:%S` > lsof_i.txt
+lsof -i > lsof_i.txt
 __HEREDOC__
 chmod +x process_status.sh
 echo process_status.sh >> jobs.allow
