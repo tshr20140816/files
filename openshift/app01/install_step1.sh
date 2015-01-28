@@ -106,10 +106,10 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** git *****
 
-echo `date +%Y/%m/%d" "%H:%M:%S` github >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` github | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-curl -L https://status.github.com/api/status.json >> ${OPENSHIFT_LOG_DIR}/install.log
-echo >> ${OPENSHIFT_LOG_DIR}/install.log
+curl -L https://status.github.com/api/status.json | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 mkdir ${OPENSHIFT_DATA_DIR}/github
 pushd ${OPENSHIFT_DATA_DIR}/github > /dev/null
@@ -132,22 +132,22 @@ do
 
     # *** apache ***
     if [ ! -f httpd-${apache_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` apache wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` apache wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.gtlib.gatech.edu/pub/apache//httpd/httpd-${apache_version}.tar.gz
         tarball_md5=$(md5sum httpd-${apache_version}.tar.gz | cut -d ' ' -f 1)
         apache_md5=$(curl -Ls http://www.apache.org/dist/httpd/httpd-${apache_version}.tar.gz.md5 | cut -d ' ' -f 1)
         if [ "${tarball_md5}" != "${apache_md5}" ]; then
-            echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch >> ${OPENSHIFT_LOG_DIR}/install.log
+            echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
             rm httpd-${apache_version}.tar.gz
         fi
     fi
     if [ ! -f httpd-${apache_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` apache wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` apache wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.gz
         tarball_md5=$(md5sum httpd-${apache_version}.tar.gz | cut -d ' ' -f 1)
         apache_md5=$(curl -Ls http://www.apache.org/dist/httpd/httpd-${apache_version}.tar.gz.md5 | cut -d ' ' -f 1)
         if [ "${tarball_md5}" != "${apache_md5}" ]; then
-            echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch >> ${OPENSHIFT_LOG_DIR}/install.log
+            echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
             rm httpd-${apache_version}.tar.gz
         fi
     fi
@@ -157,7 +157,7 @@ do
 
     # *** rbenv-installer ***
     if [ ! -f rbenv-installer ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` rbenv-installer wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` rbenv-installer wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
     fi
     if [ ! -f rbenv-installer ]; then
@@ -166,7 +166,7 @@ do
 
     # *** redmine ***
     if [ ! -f redmine-${redmine_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` redmine wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` redmine wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.redmine.org/releases/redmine-${redmine_version}.tar.gz
     fi
     if [ ! -f redmine-${redmine_version}.tar.gz ]; then
@@ -175,7 +175,7 @@ do
 
     # *** Gemfile_redmine_custom ***
     if [ ! -f Gemfile_redmine_custom ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` Gemfile_redmine_custom wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` Gemfile_redmine_custom wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/Gemfile_redmine_custom
     fi
     if [ ! -f Gemfile_redmine_custom ]; then
@@ -184,7 +184,7 @@ do
 
     # *** redmine_logs ***
     if [ ! -f redmine_logs-0.0.5.zip ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` redmine_logs wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` redmine_logs wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://bitbucket.org/haru_iida/redmine_logs/downloads/redmine_logs-0.0.5.zip
     fi
     if [ ! -f redmine_logs-0.0.5.zip ]; then
@@ -193,7 +193,7 @@ do
 
     # *** bash.rb ***
     if [ ! -f bash.rb ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` bash.rb wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` bash.rb wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/bash.rb
     fi
     if [ ! -f bash.rb ]; then
@@ -202,14 +202,14 @@ do
 
     # *** ipa font ***
     # if [ ! -f IPAfont${ipafont_version}.zip ]; then
-    #     echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget >> ${OPENSHIFT_LOG_DIR}/install.log
+    #     echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     #     wget http://ipafont.ipa.go.jp/ipafont/IPAfont${ipafont_version}.php -O IPAfont${ipafont_version}.zip
     # fi
     # if [ ! -f IPAfont${ipafont_version}.zip ]; then
     #     files_exists=0
     # fi
     if [ ! -f ipagp${ipafont_version}.zip ]; then
-       echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget >> ${OPENSHIFT_LOG_DIR}/install.log
+       echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
        wget http://ipafont.ipa.go.jp/ipafont/ipagp${ipafont_version}.php -O ipagp${ipafont_version}.zip
     fi
     if [ ! -f ipagp${ipafont_version}.zip ]; then
@@ -218,7 +218,7 @@ do
 
     # *** memcached ***
     if [ ! -f memcached-${memcached_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` memcached wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` memcached wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.memcached.org/files/memcached-${memcached_version}.tar.gz
     fi
     if [ ! -f memcached-${memcached_version}.tar.gz ]; then
@@ -227,7 +227,7 @@ do
 
     # *** memcached-tool ***
     if [ ! -f memcached-tool ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` memcached-tool wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` memcached-tool wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool
     fi
     if [ ! -f memcached-tool ]; then
@@ -245,12 +245,12 @@ do
 
     # *** libmemcached ***
     if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
         tarball_md5=$(md5sum libmemcached-${libmemcached_version}.tar.gz | cut -d ' ' -f 1)
         libmemcached_md5=$(curl -Ls https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz/+md5 | cut -d ' ' -f 1)
         if [ "${tarball_md5}" != "${libmemcached_md5}" ]; then
-            echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached md5 unmatch >> ${OPENSHIFT_LOG_DIR}/install.log
+            echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
             rm libmemcached-${libmemcached_version}.tar.gz
         fi
     fi
@@ -260,7 +260,7 @@ do
 
     # *** memcached (php extension) ***
     if [ ! -f memcached-${memcached_php_ext_version}.tgz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` memcached php extension wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` memcached php extension wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://pecl.php.net/get/memcached-${memcached_php_ext_version}.tgz
     fi
     if [ ! -f memcached-${memcached_php_ext_version}.tgz ]; then
@@ -269,7 +269,7 @@ do
 
     # *** memcached-tool ***
     if [ ! -f memcached-tool ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` memcached-tool wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` memcached-tool wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool
     fi
     if [ ! -f memcached-tool ]; then
@@ -280,7 +280,7 @@ do
     # * src *
     # make済みバイナリが github に有る。
     if [ ! -f delegate${delegate_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
     fi
     if [ ! -f delegate${delegate_version}.tar.gz ]; then
@@ -289,12 +289,12 @@ do
 
     # *** mrtg ***
     if [ ! -f mrtg-${mrtg_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` mrtg wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` mrtg wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz
         tarball_md5=$(md5sum mrtg-${mrtg_version}.tar.gz | cut -d ' ' -f 1)
         mrtg_md5=$(curl -Ls http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz.md5 | cut -d ' ' -f 1)
         if [ "${tarball_md5}" != "${mrtg_md5}" ]; then
-            echo `date +%Y/%m/%d" "%H:%M:%S` mrtg md5 unmatch >> ${OPENSHIFT_LOG_DIR}/install.log
+            echo `date +%Y/%m/%d" "%H:%M:%S` mrtg md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
             rm mrtg-${mrtg_version}.tar.gz
         fi
     fi
@@ -304,7 +304,7 @@ do
 
     # *** webalizer ***
     if [ ! -f webalizer-${webalizer_version}-src.tgz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` webalizer wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` webalizer wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tgz
     fi
     if [ ! -f webalizer-${webalizer_version}-src.tgz ]; then
@@ -313,7 +313,7 @@ do
 
     # *** wordpress ja ***
     if [ ! -f wordpress-${wordpress_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` wordpress wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` wordpress wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
     fi
     if [ ! -f wordpress-${wordpress_version}.tar.gz ]; then
@@ -322,7 +322,7 @@ do
 
     # *** is_ssl.php ***
     if [ ! -f is_ssl.php ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` is_ssl.php wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` is_ssl.php wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://gist.githubusercontent.com/franz-josef-kaiser/1891564/raw/9d3f519c1cfb0fff9ad5ca31f3e783deaf5d561c/is_ssl.php
     fi
     if [ ! -f is_ssl.php ]; then
@@ -331,7 +331,7 @@ do
 
     # *** Tiny Tiny RSS ***
     if [ ! -f ${ttrss_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
     fi
     if [ ! -f ${ttrss_version}.tar.gz ]; then
@@ -340,7 +340,7 @@ do
 
     # *** cacti ***
     if [ ! -f cacti-${cacti_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` cacti wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` cacti wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.cacti.net/downloads/cacti-${cacti_version}.tar.gz
     fi
     if [ ! -f cacti-${cacti_version}.tar.gz ]; then
@@ -350,7 +350,7 @@ do
     # *** cacti patch ***
     # patch -p1 -N < security.patch
     #if [ ! -f security.patch ]; then
-    #    echo `date +%Y/%m/%d" "%H:%M:%S` cacti patch wget >> ${OPENSHIFT_LOG_DIR}/install.log
+    #    echo `date +%Y/%m/%d" "%H:%M:%S` cacti patch wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     #    wget http://www.cacti.net/downloads/patches/${cacti_version}/security.patch
     #fi
     #if [ ! -f security.patch ]; then
@@ -359,7 +359,7 @@ do
 
     # *** mURLin ***
     if [ ! -f mURLin-${murlin_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` mURLin wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` mURLin wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://downloads.sourceforge.net/project/murlin/mURLin-${murlin_version}.tar.gz
     fi
     if [ ! -f mURLin-${murlin_version}.tar.gz ]; then
@@ -368,7 +368,7 @@ do
 
     # *** Tcl ***
     if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` Tcl wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` Tcl wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
     fi
     if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
@@ -377,7 +377,7 @@ do
 
     # *** Expect ***
     if [ ! -f expect${expect_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` Expect wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` Expect wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
     fi
     if [ ! -f expect${expect_version}.tar.gz ]; then
@@ -386,7 +386,7 @@ do
 
     # *** nginx ***
     if [ ! -f nginx-${nginx_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` nginx wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` nginx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://nginx.org/download/nginx-1.6.2.tar.gz
     fi
     if [ ! -f nginx-${nginx_version}.tar.gz ]; then
@@ -395,7 +395,7 @@ do
 
     # *** pcre ***
     if [ ! -f pcre-${pcre_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` pcre wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` pcre wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.gz
     fi
     if [ ! -f pcre-${pcre_version}.tar.gz ]; then
@@ -404,7 +404,7 @@ do
 
     # *** xymon ***
     if [ ! -f xymon-${xymon_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` xymon wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` xymon wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://downloads.sourceforge.net/project/xymon/Xymon/${xymon_version}/xymon-${xymon_version}.tar.gz
     fi
     if [ ! -f xymon-${xymon_version}.tar.gz ]; then
@@ -413,7 +413,7 @@ do
 
     # *** logrotate ***
     if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` logrotate wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` logrotate wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://fedorahosted.org/releases/l/o/logrotate/logrotate-${logrotate_version}.tar.gz
     fi
     if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
@@ -422,7 +422,7 @@ do
 
     # *** Lynx ***
     if [ ! -f lynx${lynx_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` Lynx wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` Lynx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz
     fi
     if [ ! -f lynx${lynx_version}.tar.gz ]; then
@@ -432,7 +432,7 @@ do
     # *** etc ***
 
     if [ ! -f salt.txt ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` salt.txt wget >> ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` salt.txt wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         curl -o ./salt.txt https://api.wordpress.org/secret-key/1.1/salt/
     fi
     if [ ! -f salt.txt ]; then
@@ -449,7 +449,7 @@ done
 popd > /dev/null
 
 if [ ${files_exists} -eq 0 ]; then
-    echo `date +%Y/%m/%d" "%H:%M:%S` Abort Install miss download files >> ${OPENSHIFT_LOG_DIR}/install.log
+    echo `date +%Y/%m/%d" "%H:%M:%S` Abort Install miss download files | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     exit
 fi
 
