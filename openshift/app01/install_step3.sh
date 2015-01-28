@@ -10,33 +10,33 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 set -x
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 3 Start >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 3 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** apache *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.gz ./
-echo `date +%Y/%m/%d" "%H:%M:%S` apache tar >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` apache tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz httpd-${apache_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 
 # *** configure make install ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` apache configure >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` apache configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/apache \
 --mandir=/tmp/man \
 --enable-mods-shared='all proxy' >${OPENSHIFT_LOG_DIR}/httpd.configure.log 2>&1
-echo `date +%Y/%m/%d" "%H:%M:%S` apache make >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` apache make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 time make -j2 >${OPENSHIFT_LOG_DIR}/httpd.make.log 2>&1
-echo `date +%Y/%m/%d" "%H:%M:%S` apache make install >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` apache make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 make install >${OPENSHIFT_LOG_DIR}/httpd.make.install.log 2>&1
-echo `date +%Y/%m/%d" "%H:%M:%S` apache conf >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` apache conf | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
 
@@ -248,4 +248,4 @@ rm httpd-${apache_version}.tar.gz
 rm -rf httpd-${apache_version}
 popd > /dev/null
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 3 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 3 Finish | tee -a ${OPENSHIFT_LOG_DIR}/install.log
