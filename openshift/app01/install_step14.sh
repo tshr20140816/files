@@ -12,31 +12,31 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 set -x
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 14 Start >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 14 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** Tcl *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/tcl${tcl_version}-src.tar.gz ./
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Tcl tar >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Tcl tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz tcl${tcl_version}-src.tar.gz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
-echo `date +%Y/%m/%d" "%H:%M:%S` Tcl configure >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Tcl configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/tcl >${OPENSHIFT_LOG_DIR}/tcl.configure.log 2>&1
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 time make -j4 >${OPENSHIFT_LOG_DIR}/tcl.make.log 2>&1
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make install >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 make install >${OPENSHIFT_LOG_DIR}/tcl.make.install.log 2>&1
 popd > /dev/null
 
@@ -51,21 +51,21 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/expect${expect_version}.tar.gz ./
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Expect tar >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Expect tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz expect${expect_version}.tar.gz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
-echo `date +%Y/%m/%d" "%H:%M:%S` Expect configure >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Expect configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/expect >${OPENSHIFT_LOG_DIR}/expect.configure.log 2>&1
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Expect make >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Expect make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 time make -j4 >${OPENSHIFT_LOG_DIR}/expect.make.log 2>&1
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Expect make install >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Expect make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 make install >${OPENSHIFT_LOG_DIR}/expect.make.install.log 2>&1
 popd > /dev/null
 
@@ -86,13 +86,13 @@ eval "$(rbenv init -)"
 
 # *** install ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` rhc install >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` rhc install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 
 # *** setup ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` rhc setup >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` rhc setup | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 openshift_email_address=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_address`
 openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_password`
@@ -113,9 +113,8 @@ env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt >${OPENSHIFT_LOG_DIR}/rhc.setup.log 2>&1
 
-${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps >> ${OPENSHIFT_LOG_DIR}/install.log
-${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | grep uuid >> ${OPENSHIFT_LOG_DIR}/install.log
-${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | grep uuid
+${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | grep uuid | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 export HOME=${env_home_backup}
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 14 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 14 Finish | tee -a ${OPENSHIFT_LOG_DIR}/install.log
