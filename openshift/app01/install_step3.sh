@@ -234,11 +234,11 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
 wget http://www.google.com/favicon.ico
 popd > /dev/null
 
-# * robot.txt *
+# * robots.txt *
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
-cat << '__HEREDOC__' >> robot.txt
-User-Agent:* 
+cat << '__HEREDOC__' >> robots.txt
+User-Agent: * 
 Disallow: /
 __HEREDOC__
 popd > /dev/null
