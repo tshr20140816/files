@@ -234,6 +234,15 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
 wget http://www.google.com/favicon.ico
 popd > /dev/null
 
+# * robot.txt *
+
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
+cat << '__HEREDOC__' >> robot.txt
+User-Agent:* 
+Disallow: /
+__HEREDOC__
+popd > /dev/null
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm httpd-${apache_version}.tar.gz
 rm -rf httpd-${apache_version}
