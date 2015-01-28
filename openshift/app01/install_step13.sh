@@ -12,17 +12,17 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 set -x
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Start >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** Cacti *****
 
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/cacti-${cacti_version}.tar.gz ./
-echo `date +%Y/%m/%d" "%H:%M:%S` Cacti tar >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Cacti tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz cacti-${cacti_version}.tar.gz --strip-components=1
 # cp ${OPENSHIFT_DATA_DIR}/download_files/security.patch ./
 # patch -p1 -N < security.patch
@@ -50,7 +50,7 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" cacti < ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/cacti.sql
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Cacti mysql cactiuser/${cactiuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Cacti mysql cactiuser/${cactiuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/config.php
 <?php
@@ -86,4 +86,4 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 rm cacti-${cacti_version}.tar.gz
 popd > /dev/null
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 13 Finish | tee -a ${OPENSHIFT_LOG_DIR}/install.log
