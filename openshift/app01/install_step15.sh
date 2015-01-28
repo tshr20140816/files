@@ -27,6 +27,7 @@ ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
 | grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} \
 | awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
 export HOME=${env_home_backup}
+cp ${OPENSHIFT_DATA_DIR}/another_server_list.txt ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 
 # ***** memory usage logging *****
 
