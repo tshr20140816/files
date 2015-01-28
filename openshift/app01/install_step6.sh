@@ -10,10 +10,10 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 set -x
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 6 Start >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 6 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** restart *****
 
@@ -45,7 +45,7 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 
 # *** patch check ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` request_handler.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` request_handler.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 | grep lib/phusion_passenger/request_handler.rb \
 | xargs cat \
@@ -53,7 +53,7 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 
 # ***** font *****
 
-echo `date +%Y/%m/%d" "%H:%M:%S` font install >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` font install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 # cp ${OPENSHIFT_DATA_DIR}/download_files/IPAfont${ipafont_version}.zip ./
@@ -66,7 +66,7 @@ popd > /dev/null
 
 # ***** redmine *****
 
-echo `date +%Y/%m/%d" "%H:%M:%S` redmine install >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` redmine install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** redmine ***
 
@@ -99,19 +99,19 @@ perl -pi -e 's/committed_on DESC/CONVERT(revision, UNSIGNED) DESC/g' app/models/
 
 # *** patch check ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` subversion.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` subversion.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR} -name subversion.rb -type f \
 | grep app/models/repository/subversion.rb \
 | xargs cat \
 | grep identifier_from >> ${OPENSHIFT_LOG_DIR}/install.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` repository.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` repository.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR} -name repository.rb -type f \
 | grep app/models/repository.rb \
 | xargs cat \
 | grep DESC >> ${OPENSHIFT_LOG_DIR}/install.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` subversion.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` subversion.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR} -name subversion.rb -type f \
 | grep app/models/repository/subversion.rb \
 | xargs cat \
@@ -282,4 +282,4 @@ perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' restart_redmin
 perl -pi -e 's/__REDMINE_VERSION__/${redmine_version}/g' restart_redmine.cgi
 popd > /dev/null
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 6 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 6 Finish | tee -a ${OPENSHIFT_LOG_DIR}/install.log
