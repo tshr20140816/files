@@ -10,17 +10,17 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 set -x
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 9 Start >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 9 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** Tiny Tiny RSS *****
 
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/${ttrss_version}.tar.gz ./
-echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS tar >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz ${ttrss_version}.tar.gz --strip-components=1
 popd > /dev/null
 
@@ -46,7 +46,7 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/schema/ttrss_schema_mysql.sql
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS mysql ttrssuser/${ttrssuser_password} >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS mysql ttrssuser/${ttrssuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
@@ -73,4 +73,4 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 rm ${ttrss_version}.tar.gz
 popd > /dev/null
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 9 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 9 Finish | tee -a ${OPENSHIFT_LOG_DIR}/install.log
