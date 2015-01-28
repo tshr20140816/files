@@ -10,10 +10,10 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 set -x
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 15 Start >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 15 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** register url *****
 
@@ -168,7 +168,7 @@ popd > /dev/null
 
 # *** daily ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` cron daily >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` cron daily | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/daily > /dev/null
 rm -f *
 touch jobs.deny
@@ -202,7 +202,7 @@ popd > /dev/null
 
 # *** hourly ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` cron hourly >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` cron hourly | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
 rm -f *
 touch jobs.deny
@@ -239,7 +239,7 @@ popd > /dev/null
 
 # *** minutely ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` cron minutely >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` cron minutely | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
@@ -473,8 +473,8 @@ touch ${OPENSHIFT_DATA_DIR}/apache/logs/error_log
 ln -s ${OPENSHIFT_DATA_DIR}/apache/logs/error_log error_log
 popd > /dev/null
 
-echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 15 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 15 Finish | tee -a ${OPENSHIFT_LOG_DIR}/install.log
