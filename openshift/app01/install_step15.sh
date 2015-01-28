@@ -21,6 +21,12 @@ curl --digest -u tshrapp9:`date +%Y%m%d%H` -F "url=https://${OPENSHIFT_GEAR_DNS}
 
 # ***** another server list *****
 
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+
 env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
