@@ -99,10 +99,10 @@ echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/another_server_check
 echo ${web_beacon_server} > ${OPENSHIFT_DATA_DIR}/web_beacon_server
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Start >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
-echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** git *****
 
@@ -467,4 +467,4 @@ set +x
 echo cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
 echo nohup ./install_step_from_2_to_16.sh > ${OPENSHIFT_LOG_DIR}/nohup.log 2> ${OPENSHIFT_LOG_DIR}/nohup_error.log &
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Finish >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Finish | tee -a ${OPENSHIFT_LOG_DIR}/install.log
