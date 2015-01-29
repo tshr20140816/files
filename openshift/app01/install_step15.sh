@@ -279,6 +279,13 @@ do
     echo http_status ${http_status} ${target_url}
     if test ${http_status} -eq 503 ; then
         echo app restart ${target_url}
+
+        export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+        export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+        export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+        export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+        eval "$(rbenv init -)"
+
         env_home_backup=${HOME}
         export HOME=${OPENSHIFT_DATA_DIR}
         ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name}
