@@ -80,6 +80,7 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 
+cp app/models/repository.rb app/models/repository.rb.org
 cp app/models/repository/subversion.rb app/models/repository/subversion.rb.org
 
 # 1回で全部取得しようとすると他の処理ができないので少しずつ取得する
