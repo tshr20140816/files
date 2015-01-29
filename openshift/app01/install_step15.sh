@@ -450,8 +450,7 @@ if [ `expr ${minute} % 5` -eq 1 ]; then
 fi
 __HEREDOC__
 chmod +x cacti_poller.sh
-# TODO
-# echo cacti_poller.sh >> jobs.allow
+echo cacti_poller.sh >> jobs.allow
 
 # TODO
 # ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool
