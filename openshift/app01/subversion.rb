@@ -73,7 +73,7 @@ class Repository::Subversion < Repository
           end
           # loads changesets by batches of 200
           identifier_to = [identifier_from + 199, scm_revision].min
-          if rand(10) < 8
+          if rand(10) < 2
             identifier_to = [identifier_from, scm_revision].min
           end
           target_count = identifier_to - identifier_from + 1
