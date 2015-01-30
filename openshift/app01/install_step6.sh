@@ -87,20 +87,6 @@ cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/subversion.rb app/models/
 # リビジョンが大きくても日時が古いことがある
 perl -pi -e 's/#{Changeset.table_name}.committed_on DESC/CONVERT(#{Changeset.table_name}.revision, UNSIGNED) DESC/g' app/models/repository.rb
 
-# *** patch check ***
-
-echo `date +%Y/%m/%d" "%H:%M:%S` repository.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-find ${OPENSHIFT_DATA_DIR} -name repository.rb -type f \
-| grep app/models/repository.rb \
-| xargs cat \
-| grep DESC >> ${OPENSHIFT_LOG_DIR}/install.log
-
-echo `date +%Y/%m/%d" "%H:%M:%S` subversion.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-find ${OPENSHIFT_DATA_DIR} -name subversion.rb -type f \
-| grep app/models/repository/subversion.rb \
-| xargs cat \
-| grep DESC >> ${OPENSHIFT_LOG_DIR}/install.log
-
 popd > /dev/null
 
 # *** create database ***
