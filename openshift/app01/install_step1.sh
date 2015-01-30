@@ -76,6 +76,7 @@ if [ $# -ne 9 ]; then
     echo "arg7 : delegate pop server"
     echo "arg8 : another server check (yes/no)"
     echo "arg9 : web beacon server https://xxx/"
+    echo "arg10 : web beacon server user (digest auth)"
     exit
 fi
 
@@ -88,6 +89,7 @@ delegate_email_password=${6}
 delegate_pop_server=${7}
 another_server_check=${8}
 web_beacon_server=${9}
+web_beacon_server_user=${10}
 echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/redmine_email_address
 echo ${redmine_email_password} > ${OPENSHIFT_DATA_DIR}/redmine_email_password
 echo ${openshift_email_address} > ${OPENSHIFT_DATA_DIR}/openshift_email_address
@@ -97,6 +99,7 @@ echo ${delegate_email_password} > ${OPENSHIFT_DATA_DIR}/delegate_email_password
 echo ${delegate_pop_server} > ${OPENSHIFT_DATA_DIR}/delegate_pop_server
 echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/another_server_check
 echo ${web_beacon_server} > ${OPENSHIFT_DATA_DIR}/web_beacon_server
+echo ${web_beacon_server_user} > ${OPENSHIFT_DATA_DIR}/web_beacon_server_user
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
