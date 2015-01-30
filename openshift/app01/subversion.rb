@@ -81,7 +81,15 @@ class Repository::Subversion < Repository
           revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
           revisions.reverse_each do |revision|
             transaction do
-              logger.info "#{revision.identifier} #{revision.message}"
+              begin
+                logger.info "#{revision.identifier} #{revision.message}"
+              rescue
+                begin
+                  logger.info "#{revision.identifier}"
+                rescue
+                  logger.info "revision.identifier logging error"
+                end
+              end
               changeset = Changeset.create(:repository   => self,
                                            :revision     => revision.identifier,
                                            :committer    => revision.author,
