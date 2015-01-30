@@ -271,11 +271,13 @@ echo 000_timestamp.sh >> jobs.allow
 cat << '__HEREDOC__' > my_server_check.sh
 #!/bin/bash
 
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
 target_url="http://${OPENSHIFT_APP_DNS}/"
 http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
 echo http_status ${http_status} ${target_url}
 if test ${http_status} -eq 503 ; then
-    export TZ=JST-9
     dt=`date +%Y%m%d%H`
     # TODO
     # curl -F "subject=${OPENSHIFT_APP_DNS} RESTART" -F "body=${OPENSHIFT_APP_DNS} RESTART" --digest -u username:${dt} https://xxx/sendadminmail
@@ -292,6 +294,9 @@ echo my_server_check.sh >> jobs.allow
 
 cat << '__HEREDOC__' > another_server_check.sh
 #!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
 
 while read LINE
 do
@@ -325,6 +330,10 @@ fi
 
 cat << '__HEREDOC__' > beacon.sh
 #!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
 wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1
 __HEREDOC__
 web_beacon_server=`cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`
@@ -338,6 +347,9 @@ echo beacon.sh >> jobs.allow
 cat << '__HEREDOC__' > keep_process.sh
 #!/bin/bash
 
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
 # delegated
 is_alive=`ps -ef | grep delegated | grep -v grep | wc -l`
 if [ ${is_alive} -gt 0 ]; then
@@ -345,7 +357,6 @@ if [ ${is_alive} -gt 0 ]; then
 else
     echo RESTART delegated
     cd ${OPENSHIFT_DATA_DIR}/delegate/
-    export TZ=JST-9
     ./delegated -r +=P30080
 fi
 
@@ -374,9 +385,11 @@ echo keep_process.sh >> jobs.allow
 cat << '__HEREDOC__' > mrtg.sh
 #!/bin/bash
 
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
 mpstat 5 1 | grep ^Average | awk '{print $3+$4+$5+$6+$7+$8+$9+$10}' > ${OPENSHIFT_TMP_DIR}/cpu_usage_current
 cd ${OPENSHIFT_DATA_DIR}/mrtg
-export TZ=JST-9
 env LANG=C ./bin/mrtg mrtg.conf
 __HEREDOC__
 chmod +x mrtg.sh
@@ -387,6 +400,9 @@ echo mrtg.sh >> jobs.allow
 
 cat << '__HEREDOC__' > update_feeds.sh
 #!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
 
 minute=`date +%M`
 
@@ -402,6 +418,9 @@ echo update_feeds.sh >> jobs.allow
 cat << '__HEREDOC__' > redmine_repository_check_start.sh
 #!/bin/bash
 
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
 ${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh >/dev/null 2>&1 &
 __HEREDOC__
 chmod +x redmine_repository_check_start.sh
@@ -413,6 +432,8 @@ cat << '__HEREDOC__' > passenger_status.sh
 #!/bin/bash
 
 export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
@@ -436,6 +457,8 @@ cat << '__HEREDOC__' > memcached_status.sh
 #!/bin/bash
 
 export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 echo `date +%Y/%m/%d" "%H:%M:%S` > memcached_status.txt
 ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> memcached_status.txt
@@ -449,6 +472,8 @@ cat << '__HEREDOC__' > process_status.sh
 #!/bin/bash
 
 export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 echo `date +%Y/%m/%d" "%H:%M:%S` > process_status.txt
 ps auwx >> process_status.txt
@@ -464,6 +489,9 @@ echo process_status.sh >> jobs.allow
 
 cat << '__HEREDOC__' > cacti_poller.sh
 #!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
 
 minute=`date +%M`
 
