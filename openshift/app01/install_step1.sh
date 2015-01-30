@@ -65,7 +65,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 9 ]; then
+if [ $# -ne 10 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
