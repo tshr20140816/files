@@ -63,9 +63,7 @@ if [ `expr ${minute} % 5` -eq 2 ]; then
         exit
     fi
 
-    # echo ${dt} start >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
     touch ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-    # export TZ=JST-9
     export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
     export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
     export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
