@@ -295,6 +295,10 @@ do
     echo http_status ${http_status} ${target_url}
     if test ${http_status} -eq 503 ; then
         echo app restart ${target_url}
+        curl --digest -u `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server_user`:`date +%Y%m%d%H` \
+         -F "subject=SERVER RESTART" \
+         -F "body=${target_app_name} FROM ${OPENSHIFT_GEAR_DNS}" \
+         `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`sendadminmail
 
         export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
         export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
