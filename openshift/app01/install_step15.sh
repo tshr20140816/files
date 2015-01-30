@@ -19,22 +19,6 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 curl --digest -u tshrapp9:`date +%Y%m%d%H` -F "url=https://${OPENSHIFT_GEAR_DNS}/" `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`createwebcroninformation
 
-# ***** another server list *****
-
-export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-eval "$(rbenv init -)"
-
-env_home_backup=${HOME}
-export HOME=${OPENSHIFT_DATA_DIR}
-${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
-| grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} \
-| awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
-export HOME=${env_home_backup}
-cp ${OPENSHIFT_DATA_DIR}/another_server_list.txt ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-
 # ***** memory usage logging *****
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
@@ -198,6 +182,33 @@ __HEREDOC__
 chmod +x mysql_backup.sh
 echo mysql_backup.sh >> jobs.allow
 ./mysql_backup.sh
+
+# * another server list update *
+
+cat << '__HEREDOC__' > another_server_list_update.sh
+#!/bin/bash
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+
+env_home_backup=${HOME}
+export HOME=${OPENSHIFT_DATA_DIR}
+
+${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
+| grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} \
+| awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
+
+export HOME=${env_home_backup}
+
+cp ${OPENSHIFT_DATA_DIR}/another_server_list.txt ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+__HEREDOC__
+chmod +x another_server_list_update.sh
+echo another_server_list_update.sh >> jobs.allow
+./another_server_list_update.sh
+
 popd > /dev/null
 
 # *** hourly ***
