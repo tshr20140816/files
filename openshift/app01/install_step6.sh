@@ -80,37 +80,14 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 
-cp app/models/repository.rb app/models/repository.rb.org
+mv app/models/repository.rb app/models/repository.rb.org
+cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/subversion.rb app/models/
 cp app/models/repository/subversion.rb app/models/repository/subversion.rb.org
-
-# 1回で全部取得しようとすると他の処理ができないので少しずつ取得する
-perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\n        if identifier_from <= scm_revision\n          now = Time.now.to_s\n          logger.info "#{now} #{url} #{db_revision} #{scm_revision}"/g' app/models/repository/subversion.rb
-# 取得件数はランダムとする
-perl -pi -e 's/199/rand(300) + 1/g' app/models/repository/subversion.rb
-# ログ追加
-perl -pi -e 's/(^(        transaction do)/$1\n          logger.info #{revision.identifier}/g' app/models/repository/subversion.rb
-
-# TODO
-
-cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/subversion.rb.patch.txt
-     if identifier_from <= scm_revision
-       now = Time.now.to_s
-       logger.info "#{now} #{url} #{db_revision} #{identifier_from} #{scm_revision}"
-__HEREDOC__
-
-# perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\n__REPLACE_TARGET_1__"/g' app/models/repository/subversion.rb
 
 # リビジョンが大きくても日時が古いことがある
 perl -pi -e 's/#{Changeset.table_name}.committed_on DESC/CONVERT(#{Changeset.table_name}.revision, UNSIGNED) DESC/g' app/models/repository.rb
-perl -pi -e 's/committed_on DESC/CONVERT(revision, UNSIGNED) DESC/g' app/models/repository/subversion.rb
 
 # *** patch check ***
-
-echo `date +%Y/%m/%d" "%H:%M:%S` subversion.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-find ${OPENSHIFT_DATA_DIR} -name subversion.rb -type f \
-| grep app/models/repository/subversion.rb \
-| xargs cat \
-| grep identifier_from >> ${OPENSHIFT_LOG_DIR}/install.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` repository.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR} -name repository.rb -type f \
