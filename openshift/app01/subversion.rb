@@ -1,3 +1,5 @@
+# orginal https://svn.redmine.org/redmine/tags/2.5.3/app/models/repository/subversion.rb
+#
 # Redmine - project management software
 # Copyright (C) 2006-2014  Jean-Philippe Lang
 #
@@ -63,12 +65,18 @@ class Repository::Subversion < Repository
       if db_revision < scm_revision
         logger.debug "Fetching changesets for repository #{url}" if logger && logger.debug?
         identifier_from = db_revision + 1
-        while (identifier_from <= scm_revision)
+        if identifier_from <= scm_revision
+          now = Time.now.to_s
+          logger.info "#{now} #{url} #{db_revision} #{scm_revision}
           # loads changesets by batches of 200
           identifier_to = [identifier_from + 199, scm_revision].min
+          if rand(10) < 8
+            identifier_to = [identifier_from + 1, scm_revision].min
+          end
           revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
           revisions.reverse_each do |revision|
             transaction do
+              logger.info "#{revision.identifier} #{revision.message}"
               changeset = Changeset.create(:repository   => self,
                                            :revision     => revision.identifier,
                                            :committer    => revision.author,
