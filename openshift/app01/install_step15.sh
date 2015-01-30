@@ -17,7 +17,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** register url *****
 
-curl --digest -u tshrapp9:`date +%Y%m%d%H` -F "url=https://${OPENSHIFT_GEAR_DNS}/" `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`createwebcroninformation
+curl --digest -u `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server_user`:`date +%Y%m%d%H` -F "url=https://${OPENSHIFT_GEAR_DNS}/" `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`createwebcroninformation
 
 # ***** memory usage logging *****
 
