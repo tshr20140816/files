@@ -85,6 +85,8 @@ cp app/models/repository/subversion.rb app/models/repository/subversion.rb.org
 
 # 1回で全部取得しようとすると他の処理ができないので少しずつ取得する
 perl -pi -e 's/(^        while \(identifier_from <= scm_revision\)$)/# $1\n        if identifier_from <= scm_revision\n          now = Time.now.to_s\n          logger.info "#{now} #{url} #{db_revision} #{scm_revision}"/g' app/models/repository/subversion.rb
+# 取得件数はランダムとする
+perl -pi -e 's/199/rand(300) + 1/g' app/models/repository/subversion.rb
 
 # TODO
 
