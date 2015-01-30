@@ -255,17 +255,6 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
 
-# * time stamp *
-
-cat << '__HEREDOC__' > 000_timestamp.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-__HEREDOC__
-chmod +x 000_timestamp.sh
-echo 000_timestamp.sh >> jobs.allow
-
 # * my server check *
 
 cat << '__HEREDOC__' > my_server_check.sh
