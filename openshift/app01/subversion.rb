@@ -74,8 +74,10 @@ class Repository::Subversion < Repository
           # loads changesets by batches of 200
           identifier_to = [identifier_from + 199, scm_revision].min
           if rand(10) < 8
-            identifier_to = [identifier_from + 1, scm_revision].min
+            identifier_to = [identifier_from, scm_revision].min
           end
+          target_count = identifier_to - identifier_from + 1
+          logger.info "target count #{target_count}"
           revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
           revisions.reverse_each do |revision|
             transaction do
