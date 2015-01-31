@@ -84,7 +84,11 @@ class Repository::Subversion < Repository
             logger.info e.backtrace.join("\n")
           end
           logger.info "check point 010 pass"
-          logger info "#{revisions.count}"
+          begin
+            logger info "#{revisions.count}"
+          rescue => e
+            logger.info e.backtrace.join("\n")
+          end
           logger.info "check point 020 pass"
           revisions.reverse_each do |revision|
             transaction do
