@@ -91,6 +91,23 @@ class Repository::Subversion < Repository
                 revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
                 if revisions == nil
                   logger.info "#{now} revisions == nil"
+                  logger.info ""
+                  logger.info "SELECT (SELECT MAX(T3.id) FROM changesets T3) + 1"
+                  logger.info "      ,T2.repository_id"
+                  logger.info "      ,MAX(CONVERT(T2.revision, UNSIGNED)) + 1"
+                  logger.info "      ,'dummy'"
+                  logger.info "      ,'1973-05-05'"
+                  logger.info "      ,'dummy'"
+                  logger.info "      ,'1973-05-05'"
+                  logger.info "      ,NULL"
+                  logger.info "      ,NULL"
+                  logger.info "  FROM changesets T2"
+                  logger.info " WHERE T2.repository_id = ( SELECT T1.id"
+                  logger.info "                              FROM repositories T1"
+                  logger.info "                             WHERE url='https://github.com/openshift/openshift-docs'"
+                  logger.info "                          )"
+                  logger.info " GROUP BY T2.repository_id"
+                  logger.info ""
                 end
               end
             end
