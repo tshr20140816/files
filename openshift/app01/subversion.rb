@@ -56,7 +56,6 @@ class Repository::Subversion < Repository
   end
 
   def fetch_changesets
-    logger.info "#{Time.now.to_s} fetch_changesets"
     scm_info = scm.info
     if scm_info
       # latest revision found in database
