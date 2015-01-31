@@ -83,7 +83,7 @@ class Repository::Subversion < Repository
           begin
             if revisions == nil
               now = Time.now.to_s
-              logger.info "#{now} nil"
+              logger.info "#{now} revisions == nil"
               if target_count > 1
                 now = Time.now.to_s
                 logger.info "#{now} retry target count 1"
