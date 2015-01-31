@@ -91,23 +91,8 @@ class Repository::Subversion < Repository
           rescue => e
             logger.info "#{e.message}"
           end
-          begin
-            revisions_count = revisions.count
-            logger.info "#{revisions_count}"
-          rescue => e
-            logger.info "#{e.message}"
-          end
           revisions.reverse_each do |revision|
             transaction do
-              begin
-                logger.info "#{revision.identifier} #{revision.message}"
-              rescue
-                begin
-                  logger.info "#{revision.identifier}"
-                rescue
-                  logger.info "revision.identifier logging error"
-                end
-              end
               changeset = Changeset.create(:repository   => self,
                                            :revision     => revision.identifier,
                                            :committer    => revision.author,
