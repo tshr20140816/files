@@ -104,7 +104,7 @@ class Repository::Subversion < Repository
                   logger.info "  FROM changesets T2"
                   logger.info " WHERE T2.repository_id = ( SELECT T1.id"
                   logger.info "                              FROM repositories T1"
-                  logger.info "                             WHERE url='https://github.com/openshift/openshift-docs'"
+                  logger.info "                             WHERE url='#{url}'"
                   logger.info "                          )"
                   logger.info " GROUP BY T2.repository_id"
                   logger.info ""
