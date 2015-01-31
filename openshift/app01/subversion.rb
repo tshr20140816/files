@@ -80,7 +80,7 @@ class Repository::Subversion < Repository
           begin
             if revisions == nil
               logger.info "#{Time.now.to_s} revisions == nil"
-              dentifier_to = [identifier_from + rand(10) + 1, scm_revision].min
+              identifier_to = [identifier_from + rand(10) + 1, scm_revision].min
               target_count = identifier_to - identifier_from + 1
               logger.info "#{Time.now.to_s} retry 1 target count #{target_count}"
               revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
