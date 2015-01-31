@@ -78,7 +78,11 @@ class Repository::Subversion < Repository
           end
           target_count = identifier_to - identifier_from + 1
           logger.info "target count #{target_count}"
-          revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
+          begin
+            revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
+          rescue => e
+            logger.info e.backtrace.join("\n")
+          end
           revisions.reverse_each do |revision|
             transaction do
               begin
