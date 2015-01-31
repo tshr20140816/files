@@ -44,7 +44,8 @@ class Repository::Subversion < Repository
     revisions = scm.revisions(path, rev, nil, :limit => limit)
     if revisions
       identifiers = revisions.collect(&:identifier).compact
-      changesets.where(:revision => identifiers).reorder("committed_on DESC").includes(:repository, :user).all
+      # changesets.where(:revision => identifiers).reorder("committed_on DESC").includes(:repository, :user).all
+      changesets.where(:revision => identifiers).reorder("CONVERT(revision, UNSIGNED) DESC").includes(:repository, :user).all
     else
       []
     end
