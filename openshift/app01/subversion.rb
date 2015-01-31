@@ -89,6 +89,9 @@ class Repository::Subversion < Repository
                 logger.info "#{now} retry target count 1"
                 identifier_to = [identifier_from, scm_revision].min
                 revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
+                if revisions == nil
+                  logger.info "#{now} revisions == nil"
+                end
               end
             end
           rescue => e
