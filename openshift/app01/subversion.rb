@@ -85,9 +85,15 @@ class Repository::Subversion < Repository
             if revisions == nil
               now = Time.now.to_s
               logger.info "#{now} revisions == nil"
-              if target_count > 1
+              dentifier_to = [identifier_from + rand(10) + 1, scm_revision].min
+              target_count = identifier_to - identifier_from + 1
+              now = Time.now.to_s
+              logger.info "#{now} retry 1 target count #{target_count}"
+              revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
+              if revisions == nil
                 now = Time.now.to_s
-                logger.info "#{now} retry target count 1"
+                logger.info "#{now} revisions == nil"
+                logger.info "#{now} retry 2 target count 1"
                 identifier_to = [identifier_from, scm_revision].min
                 revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
                 if revisions == nil
@@ -114,6 +120,7 @@ class Repository::Subversion < Repository
                   logger.info ""
                   self.connection.execute(sql_text)
                   logger.info "SQL EXECUTE"
+                 end
                 end
               end
             end
