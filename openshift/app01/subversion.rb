@@ -91,6 +91,7 @@ class Repository::Subversion < Repository
                 revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
                 if revisions == nil
                   logger.info "#{now} revisions == nil"
+                  logger.info ""
                   sql_text = ""
                   sql_text += "INSERT INTO changesets "
                   sql_text += "SELECT (SELECT MAX(T3.id) FROM changesets T3) + 1"
@@ -109,6 +110,9 @@ class Repository::Subversion < Repository
                   sql_text += "                          )"
                   sql_text += " GROUP BY T2.repository_id"
                   logger.info sql_text
+                  logger.info ""
+                  self.connection.execute(sql_text)
+                  logger.info "SQL EXECUTE"
                 end
               end
             end
