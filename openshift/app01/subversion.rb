@@ -92,6 +92,7 @@ class Repository::Subversion < Repository
                 if revisions == nil
                   logger.info "#{now} revisions == nil"
                   logger.info ""
+                  logger.info "INSERT INTO changesets "
                   logger.info "SELECT (SELECT MAX(T3.id) FROM changesets T3) + 1"
                   logger.info "      ,T2.repository_id"
                   logger.info "      ,MAX(CONVERT(T2.revision, UNSIGNED)) + 1"
