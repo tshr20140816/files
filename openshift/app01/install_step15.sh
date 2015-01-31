@@ -74,8 +74,7 @@ if [ `expr ${minute} % 5` -eq 2 ]; then
     cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
     bundle exec rake redmine:fetch_changesets RAILS_ENV=production
     rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-    dt=`date +%Y/%m/%d" "%H:%M:%S`
-    echo ${dt} finish >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+    echo `date +%Y/%m/%d" "%H:%M:%S` finish (${dt}) >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
 fi
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh
