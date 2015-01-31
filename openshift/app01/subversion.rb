@@ -81,18 +81,18 @@ class Repository::Subversion < Repository
           revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
           if revisions == nil
             logger.info "nil"
+            if target_count > 1
+              logger.info "retry target count 1"
+              identifier_to = [identifier_from, scm_revision].min
+              revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
+            end
           end
           begin
             revisions_count = revisions.count
             logger.info "#{revisions_count}"
           rescue => e
             logger.info "#{e.message}"
-            # logger.info e.backtrace.join("\n")
-            if target_count == 1
-              # INSERT
-            end
           end
-          logger.info "check point 020 pass"
           revisions.reverse_each do |revision|
             transaction do
               begin
