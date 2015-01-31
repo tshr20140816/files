@@ -123,7 +123,6 @@ class Repository::Subversion < Repository
                                            :committer    => revision.author,
                                            :committed_on => revision.time,
                                            :comments     => revision.message)
-
               revision.paths.each do |change|
                 changeset.create_change(change)
               end unless changeset.new_record?
