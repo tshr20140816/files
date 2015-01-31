@@ -79,12 +79,15 @@ class Repository::Subversion < Repository
           target_count = identifier_to - identifier_from + 1
           logger.info "target count #{target_count}"
           revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
+          if revisions == nil
+            logger.info "nil"
+          end
           begin
             revisions_count = revisions.count
             logger.info "#{revisions_count}"
           rescue => e
             logger.info "#{e.message}"
-            logger.info e.backtrace.join("\n")
+            # logger.info e.backtrace.join("\n")
             if target_count == 1
               # INSERT
             end
