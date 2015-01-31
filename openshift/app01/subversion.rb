@@ -56,8 +56,7 @@ class Repository::Subversion < Repository
   end
 
   def fetch_changesets
-    now = Time.now.to_s
-    logger.info "#{now} fetch_changesets"
+    logger.info "#{Time.now.to_s} fetch_changesets"
     scm_info = scm.info
     if scm_info
       # latest revision found in database
@@ -70,34 +69,29 @@ class Repository::Subversion < Repository
         logger.debug "Fetching changesets for repository #{url}" if logger && logger.debug?
         identifier_from = db_revision + 1
         if identifier_from <= scm_revision
-          now = Time.now.to_s
-          logger.info "#{now} #{url} #{db_revision} #{scm_revision}"
+          logger.info "#{Time.now.to_s} #{url} #{db_revision} #{scm_revision}"
           if identifier_from == 1 && scm_revision > 1000
             identifier_from = scm_revision - 1000
           end
           # loads changesets by batches of 200
           identifier_to = [identifier_from + 199, scm_revision].min
           target_count = identifier_to - identifier_from + 1
-          now = Time.now.to_s
-          logger.info "#{now} target count #{target_count}"
+          logger.info "#{Time.now.to_s} target count #{target_count}"
           revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
           begin
             if revisions == nil
-              now = Time.now.to_s
-              logger.info "#{now} revisions == nil"
+              logger.info "#{Time.now.to_s} revisions == nil"
               dentifier_to = [identifier_from + rand(10) + 1, scm_revision].min
               target_count = identifier_to - identifier_from + 1
-              now = Time.now.to_s
-              logger.info "#{now} retry 1 target count #{target_count}"
+              logger.info "#{Time.now.to_s} retry 1 target count #{target_count}"
               revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
               if revisions == nil
-                now = Time.now.to_s
-                logger.info "#{now} revisions == nil"
-                logger.info "#{now} retry 2 target count 1"
+                logger.info "#{Time.now.to_s} revisions == nil"
+                logger.info "#{Time.now.to_s} retry 2 target count 1"
                 identifier_to = [identifier_from, scm_revision].min
                 revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
                 if revisions == nil
-                  logger.info "#{now} revisions == nil"
+                  logger.info "#{Time.now.to_s} revisions == nil"
                   logger.info ""
                   sql_text = ""
                   sql_text += "INSERT INTO changesets "
@@ -119,14 +113,13 @@ class Repository::Subversion < Repository
                   logger.info sql_text
                   logger.info ""
                   self.connection.execute(sql_text)
-                  logger.info "SQL EXECUTE"
+                  logger.info "#{Time.now.to_s} SQL EXECUTE"
                  end
                 end
               end
             end
           rescue => e
-            now = Time.now.to_s
-            logger.info "#{now} #{e.message}"
+            logger.info "#{Time.now.to_s}  #{e.message}"
           end
           revisions.reverse_each do |revision|
             transaction do
