@@ -64,7 +64,9 @@ class Repository::Subversion < Repository
       db_revision = latest_changeset ? latest_changeset.revision.to_i : 0
       # latest revision in the repository
       scm_revision = scm_info.lastrev.identifier.to_i
-      if db_revision < scm_revision
+      if db_revision >= scm_revision
+        logger.info "#{Time.now.to_s} skip #{url}"
+      else
         logger.debug "Fetching changesets for repository #{url}" if logger && logger.debug?
         identifier_from = db_revision + 1
         if identifier_from <= scm_revision
