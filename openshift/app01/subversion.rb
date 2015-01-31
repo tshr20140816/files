@@ -116,7 +116,6 @@ class Repository::Subversion < Repository
                   logger.info ""
                   self.connection.execute(sql_text)
                   logger.info "#{Time.now.to_s} SQL EXECUTE"
-                 end
                 end
               end
             end
