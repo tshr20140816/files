@@ -77,19 +77,23 @@ class Repository::Subversion < Repository
             identifier_to = [identifier_from, scm_revision].min
           end
           target_count = identifier_to - identifier_from + 1
-          logger.info "target count #{target_count}"
+          now = Time.now.to_s
+          logger.info "#{now} target count #{target_count}"
           revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
           begin
             if revisions == nil
-              logger.info "nil"
+              now = Time.now.to_s
+              logger.info "#{now} nil"
               if target_count > 1
-                logger.info "retry target count 1"
+                now = Time.now.to_s
+                logger.info "#{now} retry target count 1"
                 identifier_to = [identifier_from, scm_revision].min
                 revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
               end
             end
           rescue => e
-            logger.info "#{e.message}"
+            now = Time.now.to_s
+            logger.info "#{now} #{e.message}"
           end
           revisions.reverse_each do |revision|
             transaction do
