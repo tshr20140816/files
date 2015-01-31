@@ -88,6 +88,7 @@ class Repository::Subversion < Repository
             revisions_count = revisions.count
             logger info "#{revisions_count}"
           rescue => e
+            logger.info "#{e.message}"
             logger.info e.backtrace.join("\n")
           end
           logger.info "check point 020 pass"
