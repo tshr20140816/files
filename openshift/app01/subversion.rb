@@ -65,21 +65,21 @@ class Repository::Subversion < Repository
       if db_revision >= scm_revision
         logger.info "#{Time.now.to_s} skip #{url}"
       else
-        logger.debug "Fetching changesets for repository #{url}" if logger && logger.debug?
         identifier_from = db_revision + 1
         if identifier_from <= scm_revision
           logger.info "#{Time.now.to_s} #{url} #{db_revision} #{scm_revision}"
-          if identifier_from == 1 && scm_revision > 1000
-            identifier_from = scm_revision - 1000
+          if identifier_from == 1 && scm_revision > 500
+            identifier_from = scm_revision - 500
           end
           # loads changesets by batches of 200
           identifier_to = [identifier_from + 199, scm_revision].min
           if rand(10) < 2
-            identifier_to = [identifier_from + 10, scm_revision].min
+            identifier_to = [identifier_from + 50, scm_revision].min
           end
           target_count = identifier_to - identifier_from + 1
           logger.info "#{Time.now.to_s} target count #{target_count}"
           revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
+          logger.info "#{Time.now.to_s} get revisions"
           begin
             if revisions == nil
               logger.info "#{Time.now.to_s} revisions == nil"
