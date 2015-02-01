@@ -49,6 +49,7 @@ lynx_version 2.8.7
 logrotate_version 3.8.8
 pcre_version 8.36
 xymon_version 4.3.17
+fping 3.10
 __HEREDOC__
 
 # http://httpd.apache.org/
@@ -411,6 +412,15 @@ do
         wget http://downloads.sourceforge.net/project/xymon/Xymon/${xymon_version}/xymon-${xymon_version}.tar.gz
     fi
     if [ ! -f xymon-${xymon_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** fping ***
+    if [ ! -f fping-${fping_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` xymon wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://fping.org/dist/fping-${fping_version}.tar.gz
+    fi
+    if [ ! -f fping-${fping_version}.tar.gz ]; then
         files_exists=0
     fi
 
