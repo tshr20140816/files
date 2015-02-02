@@ -33,10 +33,10 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 --prefix=${OPENSHIFT_DATA_DIR}/fping 2>&1 | tee ${OPENSHIFT_LOG_DIR}/fping.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` fping make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4
+time make -j4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/fping.make.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` fping make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install
+make install 2>&1 | tee ${OPENSHIFT_LOG_DIR}/fping.make.install.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -61,7 +61,7 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 --prefix=${OPENSHIFT_DATA_DIR}/pcre 2>&1 | tee ${OPENSHIFT_LOG_DIR}/pcre.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` pcre make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make 2>&1 | tee ${OPENSHIFT_LOG_DIR}/pcre.make.log
+time make -j4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/pcre.make.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` pcre make install >> ${OPENSHIFT_LOG_DIR}/install.log
 make install 2>&1 | tee ${OPENSHIFT_LOG_DIR}/pcre.make.install.log
