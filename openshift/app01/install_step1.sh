@@ -198,9 +198,7 @@ do
     #     echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     #     wget http://ipafont.ipa.go.jp/ipafont/IPAfont${ipafont_version}.php -O IPAfont${ipafont_version}.zip
     # fi
-    # if [ ! -f IPAfont${ipafont_version}.zip ]; then
-    #     files_exists=0
-    # fi
+    # [ -f IPAfont${ipafont_version}.zip ] || files_exists=0
     if [ ! -f ipagp${ipafont_version}.zip ]; then
        echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
        wget http://ipafont.ipa.go.jp/ipafont/ipagp${ipafont_version}.php -O ipagp${ipafont_version}.zip
@@ -212,27 +210,21 @@ do
         echo `date +%Y/%m/%d" "%H:%M:%S` memcached wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.memcached.org/files/memcached-${memcached_version}.tar.gz
     fi
-    if [ ! -f memcached-${memcached_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f memcached-${memcached_version}.tar.gz ] || files_exists=0
 
     # *** memcached-tool ***
     if [ ! -f memcached-tool ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` memcached-tool wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool
     fi
-    if [ ! -f memcached-tool ]; then
-        files_exists=0
-    fi
+    [ -f memcached-tool ] || files_exists=0
 
     # *** php ***
     if [ ! -f php-${php_version}.tar.xz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` php wget >> ${OPENSHIFT_LOG_DIR}/install.log
         wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
     fi
-    if [ ! -f php-${php_version}.tar.xz ]; then
-        files_exists=0
-    fi
+    [ -f php-${php_version}.tar.xz ] || files_exists=0
 
     # *** libmemcached ***
     if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
@@ -245,27 +237,14 @@ do
             rm libmemcached-${libmemcached_version}.tar.gz
         fi
     fi
-    if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f libmemcached-${libmemcached_version}.tar.gz ] || files_exists=0
 
     # *** memcached (php extension) ***
     if [ ! -f memcached-${memcached_php_ext_version}.tgz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` memcached php extension wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://pecl.php.net/get/memcached-${memcached_php_ext_version}.tgz
     fi
-    if [ ! -f memcached-${memcached_php_ext_version}.tgz ]; then
-        files_exists=0
-    fi
-
-    # *** memcached-tool ***
-    if [ ! -f memcached-tool ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` memcached-tool wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool
-    fi
-    if [ ! -f memcached-tool ]; then
-        files_exists=0
-    fi
+    [ -f memcached-${memcached_php_ext_version}.tgz ] || files_exists=0
 
     # *** delegate ***
     # * src *
@@ -274,9 +253,7 @@ do
         echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
     fi
-    if [ ! -f delegate${delegate_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f delegate${delegate_version}.tar.gz ] || files_exists=0
 
     # *** mrtg ***
     if [ ! -f mrtg-${mrtg_version}.tar.gz ]; then
@@ -289,154 +266,120 @@ do
             rm mrtg-${mrtg_version}.tar.gz
         fi
     fi
-    if [ ! -f mrtg-${mrtg_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f mrtg-${mrtg_version}.tar.gz ] || files_exists=0
 
     # *** webalizer ***
     if [ ! -f webalizer-${webalizer_version}-src.tgz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` webalizer wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tgz
     fi
-    if [ ! -f webalizer-${webalizer_version}-src.tgz ]; then
-        files_exists=0
-    fi
+    [ -f webalizer-${webalizer_version}-src.tgz ] || files_exists=0
 
     # *** wordpress ja ***
     if [ ! -f wordpress-${wordpress_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` wordpress wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
     fi
-    if [ ! -f wordpress-${wordpress_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f wordpress-${wordpress_version}.tar.gz ] || files_exists=0
 
     # *** is_ssl.php ***
     if [ ! -f is_ssl.php ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` is_ssl.php wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://gist.githubusercontent.com/franz-josef-kaiser/1891564/raw/9d3f519c1cfb0fff9ad5ca31f3e783deaf5d561c/is_ssl.php
     fi
-    if [ ! -f is_ssl.php ]; then
-        files_exists=0
-    fi
+    [ -f is_ssl.php ] || files_exists=0
 
     # *** Tiny Tiny RSS ***
     if [ ! -f ${ttrss_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
     fi
-    if [ ! -f ${ttrss_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f ${ttrss_version}.tar.gz ] || files_exists=0
 
     # *** cacti ***
     if [ ! -f cacti-${cacti_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` cacti wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.cacti.net/downloads/cacti-${cacti_version}.tar.gz
     fi
-    if [ ! -f cacti-${cacti_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f cacti-${cacti_version}.tar.gz ] || files_exists=0
 
-    # *** cacti patch ***
-    # patch -p1 -N < security.patch
-    #if [ ! -f security.patch ]; then
-    #    echo `date +%Y/%m/%d" "%H:%M:%S` cacti patch wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    #    wget http://www.cacti.net/downloads/patches/${cacti_version}/security.patch
-    #fi
-    #if [ ! -f security.patch ]; then
-    #    files_exists=0
-    #fi
+    # # *** cacti patch ***
+    # # patch -p1 -N < security.patch
+    # if [ ! -f security.patch ]; then
+    #     echo `date +%Y/%m/%d" "%H:%M:%S` cacti patch wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget http://www.cacti.net/downloads/patches/${cacti_version}/security.patch
+    # fi
+    # [ -f security.patch ] || files_exists=0
 
     # *** mURLin ***
     if [ ! -f mURLin-${murlin_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` mURLin wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://downloads.sourceforge.net/project/murlin/mURLin-${murlin_version}.tar.gz
     fi
-    if [ ! -f mURLin-${murlin_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f mURLin-${murlin_version}.tar.gz ] || files_exists=0
 
     # *** Tcl ***
     if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` Tcl wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
     fi
-    if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f tcl${tcl_version}-src.tar.gz ] || files_exists=0
 
     # *** Expect ***
     if [ ! -f expect${expect_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` Expect wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
     fi
-    if [ ! -f expect${expect_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f expect${expect_version}.tar.gz ] || files_exists=0
 
     # *** nginx ***
     if [ ! -f nginx-${nginx_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` nginx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://nginx.org/download/nginx-1.6.2.tar.gz
     fi
-    if [ ! -f nginx-${nginx_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f nginx-${nginx_version}.tar.gz ] || files_exists=0
 
     # *** pcre ***
     if [ ! -f pcre-${pcre_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` pcre wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.gz
     fi
-    if [ ! -f pcre-${pcre_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f pcre-${pcre_version}.tar.gz ] || files_exists=0
 
     # *** xymon ***
     if [ ! -f xymon-${xymon_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` xymon wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://downloads.sourceforge.net/project/xymon/Xymon/${xymon_version}/xymon-${xymon_version}.tar.gz
     fi
-    if [ ! -f xymon-${xymon_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f xymon-${xymon_version}.tar.gz ] || files_exists=0
 
     # *** fping ***
     if [ ! -f fping-${fping_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` fping wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://fping.org/dist/fping-${fping_version}.tar.gz
     fi
-    if [ ! -f fping-${fping_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f fping-${fping_version}.tar.gz ] || files_exists=0
 
     # *** c-ares ***
     if [ ! -f c-ares-${c-ares_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` c-ares wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://c-ares.haxx.se/download/c-ares-${c-ares_version}.tar.gz
     fi
-    if [ ! -f c-ares-${c-ares_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f c-ares-${c-ares_version}.tar.gz ] || files_exists=0
 
     # *** logrotate ***
     if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` logrotate wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://fedorahosted.org/releases/l/o/logrotate/logrotate-${logrotate_version}.tar.gz
     fi
-    if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f logrotate-${logrotate_version}.tar.gz ] || files_exists=0
 
     # *** Lynx ***
     if [ ! -f lynx${lynx_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` Lynx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz
     fi
-    if [ ! -f lynx${lynx_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f lynx${lynx_version}.tar.gz ] || files_exists=0
 
     # *** etc ***
 
@@ -444,9 +387,7 @@ do
         echo `date +%Y/%m/%d" "%H:%M:%S` salt.txt wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         curl -o ./salt.txt https://api.wordpress.org/secret-key/1.1/salt/
     fi
-    if [ ! -f salt.txt ]; then
-        files_exists=0
-    fi
+    [ -f salt.txt ] || files_exists=0
 
     if [ ${files_exists} -eq 1 ]; then
         break
