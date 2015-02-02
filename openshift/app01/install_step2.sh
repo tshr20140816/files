@@ -35,10 +35,10 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 --prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee ${OPENSHIFT_LOG_DIR}/lynx.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4
+time make -j4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/lynx.make.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install
+make install 2>&1 | tee ${OPENSHIFT_LOG_DIR}/lynx.make.install.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
