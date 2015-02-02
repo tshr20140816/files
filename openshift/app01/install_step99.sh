@@ -77,6 +77,10 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm pcre-${pcre_version}.tar.gz
 popd > /dev/null
 
+# ***** c-ares *****
+
+#http://c-ares.haxx.se/download/c-ares-1.10.0.tar.gz
+
 # ***** xymon *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -92,6 +96,8 @@ echo `date +%Y/%m/%d" "%H:%M:%S` xymon configure | tee -a ${OPENSHIFT_LOG_DIR}/i
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
+--pcrelib=${OPENSHIFT_DATA_DIR}/pcre \
+--fping=${OPENSHIFT_DATA_DIR}/fping \
 --prefix=${OPENSHIFT_DATA_DIR}/xymon 2>&1 | tee ${OPENSHIFT_LOG_DIR}/xymon.configure.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` xymon make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
