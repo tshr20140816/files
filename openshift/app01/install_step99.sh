@@ -27,18 +27,21 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}fping-${fping_version} > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` fping configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo > ${OPENSHIFT_LOG_DIR}/install_fping.log
-echo `date +%Y/%m/%d" "%H:%M:%S` ***** configure ***** >> ${OPENSHIFT_LOG_DIR}/install_fping.log
-echo >> ${OPENSHIFT_LOG_DIR}/install_fping.log
+echo `date +%Y/%m/%d" "%H:%M:%S` ***** configure ***** $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_fping.log
+
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/fping 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fping.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` fping make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` ***** make ***** $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fping.log
+
 time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fping.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` fping make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` ***** make install ***** $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fping.log
+
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fping.log
 popd > /dev/null
 
