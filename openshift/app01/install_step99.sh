@@ -83,7 +83,35 @@ popd > /dev/null
 
 # ***** c-ares *****
 
-#http://c-ares.haxx.se/download/c-ares-1.10.0.tar.gz
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp ${OPENSHIFT_DATA_DIR}/download_files/c-ares-${c-ares_version}.tar.gz ./
+
+echo `date +%Y/%m/%d" "%H:%M:%S` pcre tar >> ${OPENSHIFT_LOG_DIR}/install.log
+
+tar xfz c-ares-${c-ares_version}.tar.gz
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR}/c-ares-${c-ares_version} > /dev/null
+
+echo `date +%Y/%m/%d" "%H:%M:%S` c-ares configure >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` ***** configure ***** $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_c-ares.log
+CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
+./configure \
+--mandir=/tmp/man \
+--prefix=${OPENSHIFT_DATA_DIR}/c-ares 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_c-ares.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` c-ares make >> ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` ***** make ***** $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_c-ares.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_c-ares.log
+
+echo `date +%Y/%m/%d" "%H:%M:%S` c-ares make install >> ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` ***** make install ***** $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_c-ares.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_c-ares.log
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm c-ares-${c-ares_version}.tar.gz
+popd > /dev/null
 
 # ***** xymon *****
 
