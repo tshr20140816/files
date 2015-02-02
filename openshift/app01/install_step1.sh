@@ -360,12 +360,12 @@ do
     fi
     [ -f fping-${fping_version}.tar.gz ] || files_exists=0
 
-    # *** c-ares ***
-    if [ ! -f c-ares-${c-ares_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` c-ares wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://c-ares.haxx.se/download/c-ares-${c-ares_version}.tar.gz
-    fi
-    [ -f c-ares-${c-ares_version}.tar.gz ] || files_exists=0
+    # # *** c-ares ***
+    # if [ ! -f c-ares-${c-ares_version}.tar.gz ]; then
+    #     echo `date +%Y/%m/%d" "%H:%M:%S` c-ares wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget http://c-ares.haxx.se/download/c-ares-${c-ares_version}.tar.gz
+    # fi
+    # [ -f c-ares-${c-ares_version}.tar.gz ] || files_exists=0
 
     # *** logrotate ***
     if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
