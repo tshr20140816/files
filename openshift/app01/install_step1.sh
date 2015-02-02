@@ -156,54 +156,42 @@ do
             rm httpd-${apache_version}.tar.gz
         fi
     fi
-    if [ ! -f httpd-${apache_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f httpd-${apache_version}.tar.gz ] || files_exists=0
 
     # *** rbenv-installer ***
     if [ ! -f rbenv-installer ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` rbenv-installer wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
     fi
-    if [ ! -f rbenv-installer ]; then
-        files_exists=0
-    fi
+    [ -f rbenv-installer ] || files_exists=0
 
     # *** redmine ***
     if [ ! -f redmine-${redmine_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` redmine wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.redmine.org/releases/redmine-${redmine_version}.tar.gz
     fi
-    if [ ! -f redmine-${redmine_version}.tar.gz ]; then
-        files_exists=0
-    fi
+    [ -f redmine-${redmine_version}.tar.gz ] || files_exists=0
 
     # *** Gemfile_redmine_custom ***
     if [ ! -f Gemfile_redmine_custom ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` Gemfile_redmine_custom wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/Gemfile_redmine_custom
     fi
-    if [ ! -f Gemfile_redmine_custom ]; then
-        files_exists=0
-    fi
+    [ -f Gemfile_redmine_custom ] || files_exists=0
 
-    # *** redmine_logs ***
-    if [ ! -f redmine_logs-0.0.5.zip ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` redmine_logs wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://bitbucket.org/haru_iida/redmine_logs/downloads/redmine_logs-0.0.5.zip
-    fi
-    if [ ! -f redmine_logs-0.0.5.zip ]; then
-        files_exists=0
-    fi
+    # # *** redmine_logs ***
+    # if [ ! -f redmine_logs-0.0.5.zip ]; then
+    #     echo `date +%Y/%m/%d" "%H:%M:%S` redmine_logs wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget https://bitbucket.org/haru_iida/redmine_logs/downloads/redmine_logs-0.0.5.zip
+    # fi
+    # [ -f redmine_logs-0.0.5.zip ] || files_exists=0
 
     # *** bash.rb ***
     if [ ! -f bash.rb ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` bash.rb wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/bash.rb
     fi
-    if [ ! -f bash.rb ]; then
-        files_exists=0
-    fi
+    [ -f bash.rb ] || files_exists=0
 
     # *** ipa font ***
     # if [ ! -f IPAfont${ipafont_version}.zip ]; then
@@ -217,9 +205,7 @@ do
        echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
        wget http://ipafont.ipa.go.jp/ipafont/ipagp${ipafont_version}.php -O ipagp${ipafont_version}.zip
     fi
-    if [ ! -f ipagp${ipafont_version}.zip ]; then
-       files_exists=0
-    fi
+    [ -f ipagp${ipafont_version}.zip ] || files_exists=0
 
     # *** memcached ***
     if [ ! -f memcached-${memcached_version}.tar.gz ]; then
