@@ -55,22 +55,26 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/pcre-${pcre_version}.tar.gz ./
 
 echo `date +%Y/%m/%d" "%H:%M:%S` pcre tar >> ${OPENSHIFT_LOG_DIR}/install.log
+
 tar xfz pcre-${pcre_version}.tar.gz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/pcre-${pcre_version} > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` pcre configure >> ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` ***** configure ***** $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_pcre.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/pcre 2>&1 | tee ${OPENSHIFT_LOG_DIR}/pcre.configure.log
+--prefix=${OPENSHIFT_DATA_DIR}/pcre 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pcre.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` pcre make >> ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/pcre.make.log
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` ***** make ***** $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_pcre.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pcre.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` pcre make install >> ${OPENSHIFT_LOG_DIR}/install.log
-make install 2>&1 | tee ${OPENSHIFT_LOG_DIR}/pcre.make.install.log
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` ***** make install ***** $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_pcre.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pcre.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
