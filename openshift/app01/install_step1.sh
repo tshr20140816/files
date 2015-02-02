@@ -50,6 +50,7 @@ logrotate_version 3.8.8
 pcre_version 8.36
 xymon_version 4.3.17
 fping 3.10
+c-ares 1.10.0
 __HEREDOC__
 
 # http://httpd.apache.org/
@@ -417,10 +418,19 @@ do
 
     # *** fping ***
     if [ ! -f fping-${fping_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` xymon wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` fping wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://fping.org/dist/fping-${fping_version}.tar.gz
     fi
     if [ ! -f fping-${fping_version}.tar.gz ]; then
+        files_exists=0
+    fi
+
+    # *** c-ares ***
+    if [ ! -f c-ares-${c-ares_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` c-ares wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://c-ares.haxx.se/download/c-ares-${c-ares_version}.tar.gz
+    fi
+    if [ ! -f c-ares-${c-ares_version}.tar.gz ]; then
         files_exists=0
     fi
 
