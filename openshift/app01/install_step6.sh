@@ -221,7 +221,7 @@ SetEnv GEM_HOME __OPENSHIFT_DATA_DIR__.gem
 # TODO
 # SetEnv GEM_PATH
 
-RailsMaxPoolSize 1
+RailsMaxPoolSize 2
 RailsPoolIdleTime 7200
 PassengerEnabled off
 PassengerStatThrottleRate 5
