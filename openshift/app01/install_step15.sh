@@ -488,7 +488,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S`
 minute=`date +%M`
 
 if [ `expr ${minute} % 5` -eq 1 ]; then
-    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php > /dev/null 2>&1
+    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php > /dev/null 2>&1 &
 fi
 __HEREDOC__
 chmod +x cacti_poller.sh
