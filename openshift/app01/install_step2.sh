@@ -31,16 +31,19 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` ***** configure ***** $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_lynx.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee ${OPENSHIFT_LOG_DIR}/lynx.configure.log
+--prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/lynx.make.log
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` ***** make ***** $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install 2>&1 | tee ${OPENSHIFT_LOG_DIR}/lynx.make.install.log
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` ***** make install ***** $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
