@@ -2,6 +2,8 @@
 
 set -x
 
+wget --spider `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`dummy?server=${OPENSHIFT_GEAR_DNS}&part1=`basename $0 .sh` >/dev/null 2>&1
+
 while read LINE
 do
     product=`echo ${LINE} | awk '{print $1}'`
