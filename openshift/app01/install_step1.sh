@@ -48,7 +48,7 @@ nginx_version 1.6.2
 lynx_version 2.8.7
 logrotate_version 3.8.8
 pcre_version 8.36
-xymon_version 4.3.17
+xymon_version 4.3.18
 fping_version 3.10
 c-ares_version 1.10.0
 __HEREDOC__
