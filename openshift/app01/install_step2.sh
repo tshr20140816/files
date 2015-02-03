@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 wget --spider `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`dummy?server=${OPENSHIFT_GEAR_DNS}&part=`basename $0 .sh` >/dev/null 2>&1
 
 while read LINE
@@ -10,6 +8,8 @@ do
     version=`echo ${LINE} | awk '{print $2}'`
     eval "${product}"=${version}
 done < ${OPENSHIFT_DATA_DIR}/version_list
+
+set -x
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 2 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
