@@ -29,15 +29,18 @@ pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 # *** configure make install ***
 
 echo `date +%Y/%m/%d" "%H:%M:%S` apache configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/apache \
 --mandir=/tmp/man \
---enable-mods-shared='all proxy' >${OPENSHIFT_LOG_DIR}/httpd.configure.log 2>&1
+--enable-mods-shared='all proxy' 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
 echo `date +%Y/%m/%d" "%H:%M:%S` apache make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make -j2 >${OPENSHIFT_LOG_DIR}/httpd.make.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache.log
+time make -j2 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
 echo `date +%Y/%m/%d" "%H:%M:%S` apache make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install >${OPENSHIFT_LOG_DIR}/httpd.make.install.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
 echo `date +%Y/%m/%d" "%H:%M:%S` apache conf | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
