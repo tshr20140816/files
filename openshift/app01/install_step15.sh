@@ -307,7 +307,7 @@ do
 
         env_home_backup=${HOME}
         export HOME=${OPENSHIFT_DATA_DIR}
-        ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name}
+        ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name} >/dev/null 2>&1 &
         export HOME=${env_home_backup}
     fi
 done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
