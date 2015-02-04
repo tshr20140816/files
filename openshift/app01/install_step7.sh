@@ -28,15 +28,19 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version} > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
 --mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/memcached >${OPENSHIFT_LOG_DIR}/memcached.configure.log 2>&1
+--prefix=${OPENSHIFT_DATA_DIR}/memcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make -j2 >${OPENSHIFT_LOG_DIR}/memcached.make.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached.log
+time make -j2 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
+
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install >${OPENSHIFT_LOG_DIR}/memcached.make.install.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -62,6 +66,7 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` php configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
@@ -83,12 +88,14 @@ CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 --enable-mbstring \
 --enable-mbregex \
 --enable-sockets \
---with-gettext=${OPENSHIFT_DATA_DIR}/php >${OPENSHIFT_LOG_DIR}/php.configure.log 2>&1
+--with-gettext=${OPENSHIFT_DATA_DIR}/php 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` php make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make >${OPENSHIFT_LOG_DIR}/php.make.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
+time make 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 echo `date +%Y/%m/%d" "%H:%M:%S` php make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install >${OPENSHIFT_LOG_DIR}/php.make.install.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 echo `date +%Y/%m/%d" "%H:%M:%S` php make conf | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-production
@@ -124,15 +131,19 @@ tar xfz libmemcached-${libmemcached_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
 --mandir=/tmp/man \
---prefix=$OPENSHIFT_DATA_DIR/libmemcached >${OPENSHIFT_LOG_DIR}/libmemcached.configure.log 2>&1
+--prefix=$OPENSHIFT_DATA_DIR/libmemcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make -j3 >${OPENSHIFT_LOG_DIR}/libmemcached.make.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+time make -j3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install >${OPENSHIFT_LOG_DIR}/libmemcached.make.install.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
