@@ -326,7 +326,7 @@ cat << '__HEREDOC__' > beacon.sh
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S`
 
-wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1
+wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1 &
 __HEREDOC__
 web_beacon_server=`cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`
 sed -i -e "s|__WEB_BEACON_SERVER__|${web_beacon_server}|g" beacon.sh
@@ -349,7 +349,7 @@ if [ ${is_alive} -gt 0 ]; then
 else
     echo RESTART delegated
     cd ${OPENSHIFT_DATA_DIR}/delegate/
-    ./delegated -r +=P30080
+    ./delegated -r +=P30080 >/dev/null 2>&1 &
 fi
 
 # memcached
@@ -359,7 +359,7 @@ if [ ${is_alive} -gt 0 ]; then
 else
     echo RESTART memcached
     cd ${OPENSHIFT_DATA_DIR}/memcached/
-    ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
+    ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d >/dev/null 2>&1 &
 fi
 
 # memory usage logging
@@ -382,7 +382,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S`
 
 mpstat 5 1 | grep ^Average | awk '{print $3+$4+$5+$6+$7+$8+$9+$10}' > ${OPENSHIFT_TMP_DIR}/cpu_usage_current
 cd ${OPENSHIFT_DATA_DIR}/mrtg
-env LANG=C ./bin/mrtg mrtg.conf
+env LANG=C ./bin/mrtg mrtg.conf >/dev/null 2>&1 &
 __HEREDOC__
 chmod +x mrtg.sh
 ./mrtg.sh
@@ -399,7 +399,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S`
 minute=`date +%M`
 
 if [ `expr ${minute} % 5` -eq 0 ]; then
-    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
+    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds >/dev/null 2>&1 &
 fi
 __HEREDOC__
 chmod +x update_feeds.sh
