@@ -30,16 +30,19 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` Tcl configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_tcl.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/tcl >${OPENSHIFT_LOG_DIR}/tcl.configure.log 2>&1
+--prefix=${OPENSHIFT_DATA_DIR}/tcl 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4 >${OPENSHIFT_LOG_DIR}/tcl.make.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_tcl.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Tcl make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install >${OPENSHIFT_LOG_DIR}/tcl.make.install.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_tcl.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -59,16 +62,19 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_expect.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/expect >${OPENSHIFT_LOG_DIR}/expect.configure.log 2>&1
+--prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make -j4 >${OPENSHIFT_LOG_DIR}/expect.make.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Expect make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install >${OPENSHIFT_LOG_DIR}/expect.make.install.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
