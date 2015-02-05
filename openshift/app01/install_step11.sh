@@ -30,17 +30,21 @@ mv lang/webalizer_lang.japanese lang/webalizer_lang.japanese_euc
 iconv -f euc-jp -t utf-8 lang/webalizer_lang.japanese_euc > lang/webalizer_lang.japanese
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_webalizer.log
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/webalizer \
 --mandir=/tmp/man \
---with-language=japanese --enable-dns >${OPENSHIFT_LOG_DIR}/webalizer.configure.log 2>&1
+--with-language=japanese \
+--enable-dns 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_webalizer.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make -j2 >${OPENSHIFT_LOG_DIR}/webalizer.make.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_webalizer.log
+time make -j2 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_webalizer.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install >${OPENSHIFT_LOG_DIR}/webalizer.make.install.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_webalizer.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_webalizer.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/webalizer/etc > /dev/null
