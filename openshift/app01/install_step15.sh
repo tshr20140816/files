@@ -21,9 +21,13 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 curl --digest -u `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server_user`:`date +%Y%m%d%H` -F "url=https://${OPENSHIFT_GEAR_DNS}/" `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`createwebcroninformation
 
-# ***** memory usage logging *****
+# ***** cron scripts *****
 
-cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
+pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
+
+# *** memory usage logging ***
+
+cat << '__HEREDOC__' > memory_usage_logging.sh
 #!/bin/bash
 
 export TZ=JST-9
@@ -37,11 +41,11 @@ do
     sleep 1s
 done
 __HEREDOC__
-chmod +x ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
+chmod +x memory_usage_logging.sh
 
-# ***** redmine repository check *****
+# *** redmine repository check ***
 
-cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh
+cat << '__HEREDOC__' > redmine_repository_check.sh
 #!/bin/bash
 
 export TZ=JST-9
@@ -79,7 +83,240 @@ if [ `expr ${minute} % 5` -eq 2 ]; then
     echo `date +%Y/%m/%d" "%H:%M:%S` finish ${dt} >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
 fi
 __HEREDOC__
-chmod +x ${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh
+chmod +x redmine_repository_check.sh
+
+# *** my server check ***
+
+cat << '__HEREDOC__' > my_server_check.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+target_url="http://${OPENSHIFT_APP_DNS}/"
+http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
+echo http_status ${http_status} ${target_url}
+if test ${http_status} -eq 503 ; then
+    dt=`date +%Y%m%d%H`
+    # TODO
+    # curl -F "subject=${OPENSHIFT_APP_DNS} RESTART" -F "body=${OPENSHIFT_APP_DNS} RESTART" --digest -u username:${dt} https://xxx/sendadminmail
+    echo auto restart ${OPENSHIFT_APP_DNS}
+    /usr/bin/gear stop 2>&1 /dev/null
+    /usr/bin/gear start 2>&1 /dev/null
+    echo `date +%Y/%m/%d" "%H:%M:%S` Auto Restart >> ${OPENSHIFT_LOG_DIR}/auto_restart.log
+fi
+__HEREDOC__
+chmod +x my_server_check.sh
+
+# *** another server check ***
+
+cat << '__HEREDOC__' > another_server_check.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+another_server_check=`cat ${OPENSHIFT_DATA_DIR}/another_server_check`
+if [ "${another_server_check}" != "yes" ]; then
+    exit
+fi
+
+while read LINE
+do
+    target_app_name=`echo $LINE | awk '{print $1}'`
+    target_url=`echo $LINE | awk '{print $2}'`
+    http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
+    echo http_status ${http_status} ${target_url}
+    if test ${http_status} -eq 503 ; then
+        echo app restart ${target_url}
+        curl --digest -u `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server_user`:`date +%Y%m%d%H` \
+         -F "subject=SERVER RESTART" \
+         -F "body=${target_app_name} FROM ${OPENSHIFT_GEAR_DNS}" \
+         `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`sendadminmail
+
+        export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+        export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+        export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+        export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+        eval "$(rbenv init -)"
+
+        env_home_backup=${HOME}
+        export HOME=${OPENSHIFT_DATA_DIR}
+        ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name} >/dev/null 2>&1 &
+        export HOME=${env_home_backup}
+    fi
+done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
+__HEREDOC__
+chmod +x another_server_check.sh
+
+# *** web beacon ***
+
+cat << '__HEREDOC__' > beacon.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1 &
+__HEREDOC__
+web_beacon_server=`cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`
+sed -i -e "s|__WEB_BEACON_SERVER__|${web_beacon_server}|g" beacon.sh
+cat beacon.sh
+chmod +x beacon.sh
+
+# *** keep_process ***
+
+cat << '__HEREDOC__' > keep_process.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+# delegated
+is_alive=`ps -ef | grep delegated | grep -v grep | wc -l`
+if [ ${is_alive} -gt 0 ]; then
+    echo delegated is alive
+else
+    echo RESTART delegated
+    cd ${OPENSHIFT_DATA_DIR}/delegate/
+    ./delegated -r +=P30080 >/dev/null 2>&1 &
+fi
+
+# memcached
+is_alive=`ps -ef | grep bin/memcached | grep -v grep | wc -l`
+if [ ${is_alive} -gt 0 ]; then
+    echo memcached is alive
+else
+    echo RESTART memcached
+    cd ${OPENSHIFT_DATA_DIR}/memcached/
+    ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d >/dev/null 2>&1 &
+fi
+
+# memory usage logging
+is_alive=`ps -ef | grep memory_usage_logging.sh | grep -v grep | wc -l`
+if [ ! ${is_alive} -gt 0 ]; then
+    echo START memory_usage_logging.sh
+    ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh >/dev/null 2>&1 &
+fi
+__HEREDOC__
+chmod +x keep_process.sh
+
+# *** mrtg ***
+
+cat << '__HEREDOC__' > mrtg.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+mpstat 5 1 | grep ^Average | awk '{print $3+$4+$5+$6+$7+$8+$9+$10}' > ${OPENSHIFT_TMP_DIR}/cpu_usage_current
+cd ${OPENSHIFT_DATA_DIR}/mrtg
+env LANG=C ./bin/mrtg mrtg.conf >/dev/null 2>&1 &
+__HEREDOC__
+chmod +x mrtg.sh
+./mrtg.sh
+
+# *** Tiny Tiny Rss update feeds ***
+
+cat << '__HEREDOC__' > update_feeds.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+minute=`date +%M`
+
+if [ `expr ${minute} % 5` -eq 0 ]; then
+    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds >/dev/null 2>&1 &
+fi
+__HEREDOC__
+chmod +x update_feeds.sh
+
+# *** redmine repository check ***
+
+cat << '__HEREDOC__' > redmine_repository_check_start.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh >/dev/null 2>&1 &
+__HEREDOC__
+chmod +x redmine_repository_check_start.sh
+
+# *** passenger status ***
+
+cat << '__HEREDOC__' > passenger_status.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+rbenv global __RUBY_VERSION__
+rbenv rehash
+
+echo `date +%Y/%m/%d" "%H:%M:%S` > passenger_status.txt
+find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose >> passenger_status.txt
+__HEREDOC__
+sed -i -e "s|__RUBY_VERSION__|${ruby_version}|g" passenger_status.sh
+chmod +x passenger_status.sh
+
+# *** memcached status ***
+
+cat << '__HEREDOC__' > memcached_status.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+echo `date +%Y/%m/%d" "%H:%M:%S` > memcached_status.txt
+${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> memcached_status.txt
+__HEREDOC__
+chmod +x memcached_status.sh
+
+# *** process status ***
+
+cat << '__HEREDOC__' > process_status.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+echo `date +%Y/%m/%d" "%H:%M:%S` > process_status.txt
+ps auwx >> process_status.txt
+echo `date +%Y/%m/%d" "%H:%M:%S` > lsof.txt
+lsof >> lsof.txt
+echo `date +%Y/%m/%d" "%H:%M:%S` > lsof_i.txt
+lsof -i >> lsof_i.txt
+__HEREDOC__
+chmod +x process_status.sh
+
+# *** cacti polling ***
+
+cat << '__HEREDOC__' > cacti_poller.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
+
+minute=`date +%M`
+
+if [ `expr ${minute} % 5` -eq 1 ]; then
+    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php > /dev/null 2>&1 &
+fi
+__HEREDOC__
+chmod +x cacti_poller.sh
+
+popd > /dev/null
 
 # ***** logrotate *****
 
@@ -254,245 +491,30 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
 
-# * my server check *
-
-cat << '__HEREDOC__' > my_server_check.sh
+cat << '__HEREDOC__' > minutely_jobs.sh
 #!/bin/bash
 
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S`
 
-target_url="http://${OPENSHIFT_APP_DNS}/"
-http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
-echo http_status ${http_status} ${target_url}
-if test ${http_status} -eq 503 ; then
-    dt=`date +%Y%m%d%H`
-    # TODO
-    # curl -F "subject=${OPENSHIFT_APP_DNS} RESTART" -F "body=${OPENSHIFT_APP_DNS} RESTART" --digest -u username:${dt} https://xxx/sendadminmail
-    echo auto restart ${OPENSHIFT_APP_DNS}
-    /usr/bin/gear stop 2>&1 /dev/null
-    /usr/bin/gear start 2>&1 /dev/null
-    echo `date +%Y/%m/%d" "%H:%M:%S` Auto Restart >> ${OPENSHIFT_LOG_DIR}/auto_restart.log
-fi
+pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
+
+./my_server_check.sh >/dev/null 2>&1 &
+./beacon.sh >/dev/null 2>&1 &
+./keep_process.sh >/dev/null 2>&1 &
+./mrtg.sh >/dev/null 2>&1 &
+./update_feeds.sh >/dev/null 2>&1 &
+./redmine_repository_check_start.sh >/dev/null 2>&1 &
+./passenger_status.sh >/dev/null 2>&1 &
+./memcached_status.sh >/dev/null 2>&1 &
+./process_status.sh >/dev/null 2>&1 &
+./cacti_poller.sh >/dev/null 2>&1 &
+./another_server_check.sh >/dev/null 2>&1 &
+
+popd > /dev/null
 __HEREDOC__
-chmod +x my_server_check.sh
-echo my_server_check.sh >> jobs.allow
-
-# * another server check *
-
-cat << '__HEREDOC__' > another_server_check.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-while read LINE
-do
-    target_app_name=`echo $LINE | awk '{print $1}'`
-    target_url=`echo $LINE | awk '{print $2}'`
-    http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
-    echo http_status ${http_status} ${target_url}
-    if test ${http_status} -eq 503 ; then
-        echo app restart ${target_url}
-        curl --digest -u `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server_user`:`date +%Y%m%d%H` \
-         -F "subject=SERVER RESTART" \
-         -F "body=${target_app_name} FROM ${OPENSHIFT_GEAR_DNS}" \
-         `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`sendadminmail
-
-        export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-        export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-        export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-        export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-        eval "$(rbenv init -)"
-
-        env_home_backup=${HOME}
-        export HOME=${OPENSHIFT_DATA_DIR}
-        ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name} >/dev/null 2>&1 &
-        export HOME=${env_home_backup}
-    fi
-done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
-__HEREDOC__
-chmod +x another_server_check.sh
-another_server_check=`cat ${OPENSHIFT_DATA_DIR}/another_server_check`
-if [ "${another_server_check}" = "yes" ]; then
-    echo another_server_check.sh >> jobs.allow
-fi
-
-# * web beacon *
-
-cat << '__HEREDOC__' > beacon.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1 &
-__HEREDOC__
-web_beacon_server=`cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`
-sed -i -e "s|__WEB_BEACON_SERVER__|${web_beacon_server}|g" beacon.sh
-cat beacon.sh
-chmod +x beacon.sh
-echo beacon.sh >> jobs.allow
-
-# * keep_process *
-
-cat << '__HEREDOC__' > keep_process.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-# delegated
-is_alive=`ps -ef | grep delegated | grep -v grep | wc -l`
-if [ ${is_alive} -gt 0 ]; then
-    echo delegated is alive
-else
-    echo RESTART delegated
-    cd ${OPENSHIFT_DATA_DIR}/delegate/
-    ./delegated -r +=P30080 >/dev/null 2>&1 &
-fi
-
-# memcached
-is_alive=`ps -ef | grep bin/memcached | grep -v grep | wc -l`
-if [ ${is_alive} -gt 0 ]; then
-    echo memcached is alive
-else
-    echo RESTART memcached
-    cd ${OPENSHIFT_DATA_DIR}/memcached/
-    ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d >/dev/null 2>&1 &
-fi
-
-# memory usage logging
-is_alive=`ps -ef | grep memory_usage_logging.sh | grep -v grep | wc -l`
-if [ ! ${is_alive} -gt 0 ]; then
-    echo START memory_usage_logging.sh
-    ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh >/dev/null 2>&1 &
-fi
-__HEREDOC__
-chmod +x keep_process.sh
-echo keep_process.sh >> jobs.allow
-
-# * mrtg *
-
-cat << '__HEREDOC__' > mrtg.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-mpstat 5 1 | grep ^Average | awk '{print $3+$4+$5+$6+$7+$8+$9+$10}' > ${OPENSHIFT_TMP_DIR}/cpu_usage_current
-cd ${OPENSHIFT_DATA_DIR}/mrtg
-env LANG=C ./bin/mrtg mrtg.conf >/dev/null 2>&1 &
-__HEREDOC__
-chmod +x mrtg.sh
-./mrtg.sh
-echo mrtg.sh >> jobs.allow
-
-# * Tiny Tiny Rss update feeds *
-
-cat << '__HEREDOC__' > update_feeds.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-minute=`date +%M`
-
-if [ `expr ${minute} % 5` -eq 0 ]; then
-    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds >/dev/null 2>&1 &
-fi
-__HEREDOC__
-chmod +x update_feeds.sh
-echo update_feeds.sh >> jobs.allow
-
-# * redmine repository check *
-
-cat << '__HEREDOC__' > redmine_repository_check_start.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh >/dev/null 2>&1 &
-__HEREDOC__
-chmod +x redmine_repository_check_start.sh
-echo redmine_repository_check_start.sh >> jobs.allow
-
-# * passenger status *
-
-cat << '__HEREDOC__' > passenger_status.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-
-export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
-export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-eval "$(rbenv init -)"
-rbenv global __RUBY_VERSION__
-rbenv rehash
-
-echo `date +%Y/%m/%d" "%H:%M:%S` > passenger_status.txt
-find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose >> passenger_status.txt
-__HEREDOC__
-sed -i -e "s|__RUBY_VERSION__|${ruby_version}|g" passenger_status.sh
-chmod +x passenger_status.sh
-echo passenger_status.sh >> jobs.allow
-
-# * memcached status *
-
-cat << '__HEREDOC__' > memcached_status.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-echo `date +%Y/%m/%d" "%H:%M:%S` > memcached_status.txt
-${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> memcached_status.txt
-__HEREDOC__
-chmod +x memcached_status.sh
-echo memcached_status.sh >> jobs.allow
-
-# * process status *
-
-cat << '__HEREDOC__' > process_status.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-echo `date +%Y/%m/%d" "%H:%M:%S` > process_status.txt
-ps auwx >> process_status.txt
-echo `date +%Y/%m/%d" "%H:%M:%S` > lsof.txt
-lsof >> lsof.txt
-echo `date +%Y/%m/%d" "%H:%M:%S` > lsof_i.txt
-lsof -i >> lsof_i.txt
-__HEREDOC__
-chmod +x process_status.sh
-echo process_status.sh >> jobs.allow
-
-# * cacti polling *
-
-cat << '__HEREDOC__' > cacti_poller.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-minute=`date +%M`
-
-if [ `expr ${minute} % 5` -eq 1 ]; then
-    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php > /dev/null 2>&1 &
-fi
-__HEREDOC__
-chmod +x cacti_poller.sh
-echo cacti_poller.sh >> jobs.allow
+chmod +x minutely_jobs.sh
+echo minutely_jobs.sh >> jobs.allow
 
 # TODO
 # ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool
