@@ -101,8 +101,8 @@ if test ${http_status} -eq 503 ; then
     # TODO
     # curl -F "subject=${OPENSHIFT_APP_DNS} RESTART" -F "body=${OPENSHIFT_APP_DNS} RESTART" --digest -u username:${dt} https://xxx/sendadminmail
     echo auto restart ${OPENSHIFT_APP_DNS}
-    /usr/bin/gear stop 2>&1 /dev/null
-    /usr/bin/gear start 2>&1 /dev/null
+    /usr/bin/gear stop
+    /usr/bin/gear start
     echo `date +%Y/%m/%d" "%H:%M:%S` Auto Restart >> ${OPENSHIFT_LOG_DIR}/auto_restart.log
 fi
 __HEREDOC__
@@ -142,7 +142,7 @@ do
 
         env_home_backup=${HOME}
         export HOME=${OPENSHIFT_DATA_DIR}
-        ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name} >/dev/null 2>&1 &
+        ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name}
         export HOME=${env_home_backup}
     fi
 done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
@@ -157,7 +157,7 @@ cat << '__HEREDOC__' > beacon.sh
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S`
 
-wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} >/dev/null 2>&1 &
+wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS}
 __HEREDOC__
 web_beacon_server=`cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`
 sed -i -e "s|__WEB_BEACON_SERVER__|${web_beacon_server}|g" beacon.sh
@@ -179,7 +179,7 @@ if [ ${is_alive} -gt 0 ]; then
 else
     echo RESTART delegated
     cd ${OPENSHIFT_DATA_DIR}/delegate/
-    ./delegated -r +=P30080 >/dev/null 2>&1 &
+    ./delegated -r +=P30080
 fi
 
 # memcached
@@ -189,14 +189,14 @@ if [ ${is_alive} -gt 0 ]; then
 else
     echo RESTART memcached
     cd ${OPENSHIFT_DATA_DIR}/memcached/
-    ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d >/dev/null 2>&1 &
+    ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
 fi
 
 # memory usage logging
 is_alive=`ps -ef | grep memory_usage_logging.sh | grep -v grep | wc -l`
 if [ ! ${is_alive} -gt 0 ]; then
     echo START memory_usage_logging.sh
-    ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh >/dev/null 2>&1 &
+    ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
 fi
 __HEREDOC__
 chmod +x keep_process.sh
@@ -211,7 +211,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S`
 
 mpstat 5 1 | grep ^Average | awk '{print $3+$4+$5+$6+$7+$8+$9+$10}' > ${OPENSHIFT_TMP_DIR}/cpu_usage_current
 cd ${OPENSHIFT_DATA_DIR}/mrtg
-env LANG=C ./bin/mrtg mrtg.conf >/dev/null 2>&1 &
+env LANG=C ./bin/mrtg mrtg.conf
 __HEREDOC__
 chmod +x mrtg.sh
 ./mrtg.sh
@@ -227,7 +227,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S`
 minute=`date +%M`
 
 if [ `expr ${minute} % 5` -eq 0 ]; then
-    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds >/dev/null 2>&1 &
+    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
 fi
 __HEREDOC__
 chmod +x update_feeds.sh
@@ -240,7 +240,7 @@ cat << '__HEREDOC__' > redmine_repository_check_start.sh
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S`
 
-${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh >/dev/null 2>&1 &
+${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh
 __HEREDOC__
 chmod +x redmine_repository_check_start.sh
 
@@ -311,7 +311,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S`
 minute=`date +%M`
 
 if [ `expr ${minute} % 5` -eq 1 ]; then
-    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php > /dev/null 2>&1 &
+    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php
 fi
 __HEREDOC__
 chmod +x cacti_poller.sh
