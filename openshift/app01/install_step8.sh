@@ -63,7 +63,11 @@ cat << '__HEREDOC__' >> wp-config.php
 $table_prefix  = 'wp_';
 define('WPLANG', 'ja');
 define('WP_DEBUG', false);
-define('FORCE_SSL_ADMIN', true);
+// define('FORCE_SSL_ADMIN', true);
+
+ini_set('display_errors', 0);
+ini_set("log_errors", 1);
+ini_set("error_log", "__LOG_DIR__wordpress_error.log");
 
 if ( !defined('ABSPATH') )
     define('ABSPATH', dirname(__FILE__) . '/');
@@ -71,6 +75,7 @@ if ( !defined('ABSPATH') )
 require_once(ABSPATH . 'wp-settings.php');
 
 __HEREDOC__
+perl -pi -e "s/__LOG_DIR__/${OPENSHIFT_LOG_DIR}/g" wp-config.php
 
 # force ssl patch
 mkdir -p wp-content/mu-plugins
