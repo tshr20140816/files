@@ -499,17 +499,17 @@ echo `date +%Y/%m/%d" "%H:%M:%S`
 
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
-./my_server_check.sh >/dev/null 2>&1 &
-./beacon.sh >/dev/null 2>&1 &
-./keep_process.sh >/dev/null 2>&1 &
-./mrtg.sh >/dev/null 2>&1 &
-./update_feeds.sh >/dev/null 2>&1 &
-./redmine_repository_check_start.sh >/dev/null 2>&1 &
-./passenger_status.sh >/dev/null 2>&1 &
-./memcached_status.sh >/dev/null 2>&1 &
-./process_status.sh >/dev/null 2>&1 &
-./cacti_poller.sh >/dev/null 2>&1 &
-./another_server_check.sh >/dev/null 2>&1 &
+./another_server_check.sh >>${OPENSHIFT_LOG_DIR}/another_server_check.sh.log 2>&1 &
+./beacon.sh >>${OPENSHIFT_LOG_DIR}/beacon.sh.log 2>&1 &
+./cacti_poller.sh >>${OPENSHIFT_LOG_DIR}/cacti_poller.sh.log 2>&1 &
+./keep_process.sh >>${OPENSHIFT_LOG_DIR}/keep_process.sh.log 2>&1 &
+./memcached_status.sh >>${OPENSHIFT_LOG_DIR}/memcached_status.sh.log 2>&1 &
+./mrtg.sh >>${OPENSHIFT_LOG_DIR}/mrtg.sh.log 2>&1 &
+./my_server_check.sh >>${OPENSHIFT_LOG_DIR}/my_server_check.sh.log 2>&1 &
+./passenger_status.sh >>${OPENSHIFT_LOG_DIR}/passenger_status.sh.log 2>&1 &
+./process_status.sh >>${OPENSHIFT_LOG_DIR}/process_status.sh.log 2>&1 &
+./redmine_repository_check_start.sh >>${OPENSHIFT_LOG_DIR}/redmine_repository_check_start.sh.log 2>&1 &
+./update_feeds.sh >>${OPENSHIFT_LOG_DIR}/update_feeds.sh.log 2>&1 &
 
 popd > /dev/null
 __HEREDOC__
