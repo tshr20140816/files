@@ -49,6 +49,7 @@ cat << '__HEREDOC__' > redmine_repository_check.sh
 #!/bin/bash
 
 export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S`
 minute=`date +%M`
 dt=`date +%Y/%m/%d" "%H:%M:%S`
 
@@ -195,7 +196,9 @@ fi
 
 # memory usage logging
 is_alive=`ps -ef | grep memory_usage_logging.sh | grep -v grep | wc -l`
-if [ ! ${is_alive} -gt 0 ]; then
+if [ ${is_alive} -gt 0 ]; then
+    echo memory_usage_logging is alive
+else
     echo START memory_usage_logging.sh
     ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
 fi
@@ -232,18 +235,6 @@ if [ `expr ${minute} % 5` -eq 0 ]; then
 fi
 __HEREDOC__
 chmod +x update_feeds.sh
-
-# *** redmine repository check ***
-
-cat << '__HEREDOC__' > redmine_repository_check_start.sh
-#!/bin/bash
-
-export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S`
-
-${OPENSHIFT_DATA_DIR}/scripts/redmine_repository_check.sh
-__HEREDOC__
-chmod +x redmine_repository_check_start.sh
 
 # *** passenger status ***
 
@@ -509,7 +500,7 @@ pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 ./my_server_check.sh >>${OPENSHIFT_LOG_DIR}/my_server_check.sh.log 2>&1 &
 ./passenger_status.sh >>${OPENSHIFT_LOG_DIR}/passenger_status.sh.log 2>&1 &
 ./process_status.sh >>${OPENSHIFT_LOG_DIR}/process_status.sh.log 2>&1 &
-./redmine_repository_check_start.sh >>${OPENSHIFT_LOG_DIR}/redmine_repository_check_start.sh.log 2>&1 &
+./redmine_repository_check.sh >>${OPENSHIFT_LOG_DIR}/redmine_repository_check.sh.log 2>&1 &
 ./update_feeds.sh >>${OPENSHIFT_LOG_DIR}/update_feeds.sh.log 2>&1 &
 
 popd > /dev/null
