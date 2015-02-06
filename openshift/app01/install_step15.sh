@@ -21,11 +21,9 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 curl --digest -u `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server_user`:`date +%Y%m%d%H` -F "url=https://${OPENSHIFT_GEAR_DNS}/" `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`createwebcroninformation
 
-# ***** cron scripts *****
+# ***** memory usage logging *****
 
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
-
-# *** memory usage logging ***
 
 cat << '__HEREDOC__' > memory_usage_logging.sh
 #!/bin/bash
@@ -42,6 +40,8 @@ do
 done
 __HEREDOC__
 chmod +x memory_usage_logging.sh
+
+# ***** cron scripts *****
 
 # *** redmine repository check ***
 
