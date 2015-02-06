@@ -282,12 +282,12 @@ do
     fi
     [ -f wordpress-${wordpress_version}.tar.gz ] || files_exists=0
 
-    # *** is_ssl.php ***
-    if [ ! -f is_ssl.php ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` is_ssl.php wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://gist.githubusercontent.com/franz-josef-kaiser/1891564/raw/9d3f519c1cfb0fff9ad5ca31f3e783deaf5d561c/is_ssl.php
-    fi
-    [ -f is_ssl.php ] || files_exists=0
+    # # *** is_ssl.php ***
+    # if [ ! -f is_ssl.php ]; then
+    #     echo `date +%Y/%m/%d" "%H:%M:%S` is_ssl.php wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget https://gist.githubusercontent.com/franz-josef-kaiser/1891564/raw/9d3f519c1cfb0fff9ad5ca31f3e783deaf5d561c/is_ssl.php
+    # fi
+    # [ -f is_ssl.php ] || files_exists=0
 
     # *** Tiny Tiny RSS ***
     if [ ! -f ${ttrss_version}.tar.gz ]; then
