@@ -68,6 +68,7 @@ ini_set('display_errors', 0);
 ini_set("log_errors", 1);
 ini_set("error_log", "__LOG_DIR__wordpress_error.log");
 
+// http://codex.wordpress.org/Administration_Over_SSL
 define('FORCE_SSL_ADMIN', true);
 if ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
     $_SERVER['HTTPS']='on';
