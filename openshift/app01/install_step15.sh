@@ -157,7 +157,8 @@ cat << '__HEREDOC__' > beacon.sh
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S`
 
-wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS}
+# wget --spider __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS}
+curl -LI __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} -s | head -n1
 __HEREDOC__
 web_beacon_server=`cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`
 sed -i -e "s|__WEB_BEACON_SERVER__|${web_beacon_server}|g" beacon.sh
