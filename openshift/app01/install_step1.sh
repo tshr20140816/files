@@ -335,7 +335,7 @@ do
     # *** nginx ***
     if [ ! -f nginx-${nginx_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` nginx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://nginx.org/download/nginx-1.6.2.tar.gz
+        wget http://nginx.org/download/nginx-${nginx_version}.tar.gz
     fi
     [ -f nginx-${nginx_version}.tar.gz ] || files_exists=0
 
