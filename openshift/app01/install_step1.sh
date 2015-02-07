@@ -148,6 +148,12 @@ if [ ${mirror_server} != "none" ]; then
     wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip
     # php
     wget -t1 ${mirror_server}/php-${php_version}.tar.xz
+    # delegate
+    wget -t1 ${mirror_server}/delegate${delegate_version}.tar.gz
+    # redmine
+    wget -t1 ${mirror_server}/redmine-${redmine_version}.tar.gz
+    # webalizer
+    wget -t1 ${mirror_server}/webalizer-${webalizer_version}-src.tgz
     # TODO
 fi
 
