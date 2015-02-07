@@ -67,7 +67,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 10 ]; then
+if [ $# -ne 11 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -79,6 +79,7 @@ if [ $# -ne 10 ]; then
     echo "arg8 : another server check (yes/no)"
     echo "arg9 : web beacon server https://xxx/"
     echo "arg10 : web beacon server user (digest auth)"
+    echo "arg11 : files download mirror server http://xxx/files/"
     exit
 fi
 
@@ -92,6 +93,7 @@ delegate_pop_server=${7}
 another_server_check=${8}
 web_beacon_server=${9}
 web_beacon_server_user=${10}
+mirror_server=${11}
 echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/redmine_email_address
 echo ${redmine_email_password} > ${OPENSHIFT_DATA_DIR}/redmine_email_password
 echo ${openshift_email_address} > ${OPENSHIFT_DATA_DIR}/openshift_email_address
@@ -129,6 +131,12 @@ mkdir ${OPENSHIFT_DATA_DIR}/download_files
 pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
 # *** 必要なファイルの事前ダウンロード 成功まで10回繰り返す ***
+
+# * まずミラーサーバよりダウンロード *
+
+wget ${mirror_server}/ipagp${ipafont_version}.zip
+# TODO
+# etc
 
 files_exists=0
 for i in `seq 0 9`
