@@ -154,6 +154,23 @@ if [ ${mirror_server} != "none" ]; then
     wget -t1 ${mirror_server}/redmine-${redmine_version}.tar.gz
     # webalizer
     wget -t1 ${mirror_server}/webalizer-${webalizer_version}-src.tgz
+    # wordpress
+    wget -t1 ${mirror_server}/wordpress-${wordpress_version}.tar.gz
+    # ttrss
+    wget -t1 ${mirror_server}/${ttrss_version}.tar.gz
+    # cacti
+    wget -t1 ${mirror_server}/cacti-${cacti_version}.tar.gz
+    # tcl
+    wget -t1 ${mirror_server}/tcl${tcl_version}-src.tar.gz
+    # expect
+    wget -t1 ${mirror_server}/expect${expect_version}.tar.gz
+    # logrotate
+    wget -t1 ${mirror_server}/logrotate-${logrotate_version}.tar.gz
+    # lynx
+    wget -t1 ${mirror_server}/lynx${lynx_version}.tar.gz
+    # nginx
+    wget -t1 ${mirror_server}/nginx-${nginx_version}.tar.gz
+
     # TODO
 fi
 
