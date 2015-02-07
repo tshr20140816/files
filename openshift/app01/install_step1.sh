@@ -79,7 +79,7 @@ if [ $# -ne 11 ]; then
     echo "arg8 : another server check (yes/no)"
     echo "arg9 : web beacon server https://xxx/"
     echo "arg10 : web beacon server user (digest auth)"
-    echo "arg11 : files download mirror server http://xxx/files/"
+    echo "arg11 : files download mirror server (http://xxx/files/ / none)"
     exit
 fi
 
@@ -134,9 +134,10 @@ pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
 # * まずミラーサーバよりダウンロード *
 
-wget ${mirror_server}/ipagp${ipafont_version}.zip
-# TODO
-# etc
+if [ ${mirror_server} != "none" ]; then
+    wget ${mirror_server}/ipagp${ipafont_version}.zip
+    # TODO
+fi
 
 files_exists=0
 for i in `seq 0 9`
