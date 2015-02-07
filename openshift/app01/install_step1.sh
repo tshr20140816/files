@@ -135,7 +135,19 @@ pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 # * まずミラーサーバよりダウンロード *
 
 if [ ${mirror_server} != "none" ]; then
-    wget ${mirror_server}/ipagp${ipafont_version}.zip
+    # apache
+    wget -t1 ${mirror_server}/httpd-${apache_version}.tar.gz
+    tarball_md5=$(md5sum httpd-${apache_version}.tar.gz | cut -d ' ' -f 1)
+    apache_md5=$(curl -Ls http://www.apache.org/dist/httpd/httpd-${apache_version}.tar.gz.md5 | cut -d ' ' -f 1)
+    if [ "${tarball_md5}" != "${apache_md5}" ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm httpd-${apache_version}.tar.gz
+    fi
+    # ipa font
+    wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip
+    # php
+    wget -t1 ${mirror_server}/php-${php_version}.tar.xz
     # TODO
 fi
 
@@ -152,6 +164,7 @@ do
         apache_md5=$(curl -Ls http://www.apache.org/dist/httpd/httpd-${apache_version}.tar.gz.md5 | cut -d ' ' -f 1)
         if [ "${tarball_md5}" != "${apache_md5}" ]; then
             echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
             rm httpd-${apache_version}.tar.gz
         fi
     fi
@@ -162,6 +175,7 @@ do
         apache_md5=$(curl -Ls http://www.apache.org/dist/httpd/httpd-${apache_version}.tar.gz.md5 | cut -d ' ' -f 1)
         if [ "${tarball_md5}" != "${apache_md5}" ]; then
             echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
             rm httpd-${apache_version}.tar.gz
         fi
     fi
@@ -423,6 +437,13 @@ mkdir ${OPENSHIFT_DATA_DIR}/scripts
 export TMOUT=0
 
 set +x
+
+if [ -f ${OPENSHIFT_LOG_DIR}/install_alert.log ]; then
+    echo '***** ALERT *****'
+    ${OPENSHIFT_LOG_DIR}/install_alert.log
+    echo
+fi
+
 echo cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
 echo nohup ./install_step_from_2_to_16.sh > ${OPENSHIFT_LOG_DIR}/nohup.log 2> ${OPENSHIFT_LOG_DIR}/nohup_error.log &
 
