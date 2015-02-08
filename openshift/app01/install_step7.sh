@@ -162,6 +162,7 @@ pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_php_ext_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext phpize | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 ${OPENSHIFT_DATA_DIR}/php/bin/phpize
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extention.log
 CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
 --mandir=/tmp/man \
@@ -169,12 +170,15 @@ CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 --with-libmemcached-dir=$OPENSHIFT_DATA_DIR/libmemcached \
 --disable-memcached-sasl \
 --enable-memcached \
---with-php-config=${OPENSHIFT_DATA_DIR}/php/bin/php-config >${OPENSHIFT_LOG_DIR}/memcached_php_extention.configure.log 2>&1
+--with-php-config=${OPENSHIFT_DATA_DIR}/php/bin/php-config 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time make >${OPENSHIFT_LOG_DIR}/memcached_php_extention.make.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extention.log
+time make 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-make install >${OPENSHIFT_LOG_DIR}/memcached_php_extention.make.install.log 2>&1
+echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extention.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
