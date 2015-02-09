@@ -154,6 +154,15 @@ if [ ${mirror_server} != "none" ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm libmemcached-${libmemcached_version}.tar.gz
     fi
+    # mrtg
+    wget -t1 ${mirror_server}/mrtg-${mrtg_version}.tar.gz
+    tarball_md5=$(md5sum mrtg-${mrtg_version}.tar.gz | cut -d ' ' -f 1)
+    mrtg_md5=$(curl -Ls http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz.md5 | cut -d ' ' -f 1)
+    if [ "${tarball_md5}" != "${mrtg_md5}" ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mrtg md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` mrtg md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm mrtg-${mrtg_version}.tar.gz
+    fi
     # ipa font
     wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip
     # php
