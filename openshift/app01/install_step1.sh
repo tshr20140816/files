@@ -144,6 +144,15 @@ if [ ${mirror_server} != "none" ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm httpd-${apache_version}.tar.gz
     fi
+    # libmemcached
+    wget -t1 ${mirror_server}/libmemcached-${libmemcached_version}.tar.gz
+    tarball_md5=$(md5sum libmemcached-${libmemcached_version}.tar.gz | cut -d ' ' -f 1)
+    libmemcached_md5=$(curl -Ls https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz/+md5 | cut -d ' ' -f 1)
+    if [ "${tarball_md5}" != "${libmemcached_md5}" ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm libmemcached-${libmemcached_version}.tar.gz
+    fi
     # ipa font
     wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip
     # php
