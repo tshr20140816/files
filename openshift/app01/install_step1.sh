@@ -190,6 +190,7 @@ do
 
     # *** apache ***
     if [ ! -f httpd-${apache_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing httpd-${apache_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` apache wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.gz
         tarball_md5=$(md5sum httpd-${apache_version}.tar.gz | cut -d ' ' -f 1)
@@ -211,6 +212,7 @@ do
 
     # *** redmine ***
     if [ ! -f redmine-${redmine_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing redmine-${redmine_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` redmine wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.redmine.org/releases/redmine-${redmine_version}.tar.gz
     fi
@@ -244,6 +246,7 @@ do
     # fi
     # [ -f IPAfont${ipafont_version}.zip ] || files_exists=0
     if [ ! -f ipagp${ipafont_version}.zip ]; then
+       echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing ipa font | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
        echo `date +%Y/%m/%d" "%H:%M:%S` ipa font wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
        wget http://ipafont.ipa.go.jp/ipafont/ipagp${ipafont_version}.php -O ipagp${ipafont_version}.zip
     fi
@@ -251,6 +254,7 @@ do
 
     # *** memcached ***
     if [ ! -f memcached-${memcached_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing memcached-${memcached_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` memcached wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.memcached.org/files/memcached-${memcached_version}.tar.gz
     fi
@@ -265,6 +269,7 @@ do
 
     # *** php ***
     if [ ! -f php-${php_version}.tar.xz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing php-${php_version}.tar.xz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` php wget >> ${OPENSHIFT_LOG_DIR}/install.log
         wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
     fi
@@ -272,6 +277,7 @@ do
 
     # *** libmemcached ***
     if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing libmemcached-${libmemcached_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
         tarball_md5=$(md5sum libmemcached-${libmemcached_version}.tar.gz | cut -d ' ' -f 1)
@@ -285,6 +291,7 @@ do
 
     # *** memcached (php extension) ***
     if [ ! -f memcached-${memcached_php_ext_version}.tgz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing memcached-${memcached_php_ext_version}.tgz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` memcached php extension wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://pecl.php.net/get/memcached-${memcached_php_ext_version}.tgz
     fi
@@ -294,6 +301,7 @@ do
     # * src *
     # make済みバイナリが github に有る。
     if [ ! -f delegate${delegate_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing delegate${delegate_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
     fi
@@ -301,6 +309,7 @@ do
 
     # *** mrtg ***
     if [ ! -f mrtg-${mrtg_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing mrtg-${mrtg_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` mrtg wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz
         tarball_md5=$(md5sum mrtg-${mrtg_version}.tar.gz | cut -d ' ' -f 1)
@@ -314,6 +323,7 @@ do
 
     # *** webalizer ***
     if [ ! -f webalizer-${webalizer_version}-src.tgz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing webalizer-${webalizer_version}-src.tgz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` webalizer wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tgz
     fi
@@ -321,6 +331,7 @@ do
 
     # *** wordpress ja ***
     if [ ! -f wordpress-${wordpress_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing wordpress-${wordpress_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` wordpress wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
     fi
