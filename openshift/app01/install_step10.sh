@@ -164,6 +164,10 @@ cp index.html www/
 
 popd > /dev/null
 
+pushd ${OPENSHIFT_DATA_DIR}/mrtg/www/ > /dev/null
+wget http://www.google.com/favicon.ico
+popd > /dev/null
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm mrtg-${mrtg_version}.tar.gz
 rm -rf mrtg-${mrtg_version}
