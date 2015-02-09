@@ -50,8 +50,9 @@ logrotate_version 3.8.8
 pcre_version 8.36
 xymon_version 4.3.18
 fping_version 3.10
-c-ares_version 1.10.0
 __HEREDOC__
+
+# c-ares_version 1.10.0
 
 # http://httpd.apache.org/
 # http://php.net/
@@ -346,6 +347,7 @@ do
 
     # *** Tiny Tiny RSS ***
     if [ ! -f ${ttrss_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing ${ttrss_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
     fi
@@ -353,6 +355,7 @@ do
 
     # *** cacti ***
     if [ ! -f cacti-${cacti_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing cacti-${cacti_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` cacti wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.cacti.net/downloads/cacti-${cacti_version}.tar.gz
     fi
@@ -369,12 +372,14 @@ do
     # *** mURLin ***
     if [ ! -f mURLin-${murlin_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` mURLin wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing mURLin-${murlin_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         wget http://downloads.sourceforge.net/project/murlin/mURLin-${murlin_version}.tar.gz
     fi
     [ -f mURLin-${murlin_version}.tar.gz ] || files_exists=0
 
     # *** Tcl ***
     if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing tcl${tcl_version}-src.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` Tcl wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
     fi
@@ -382,6 +387,7 @@ do
 
     # *** Expect ***
     if [ ! -f expect${expect_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing expect${expect_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` Expect wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
     fi
@@ -389,6 +395,7 @@ do
 
     # *** nginx ***
     if [ ! -f nginx-${nginx_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing nginx-${nginx_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` nginx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://nginx.org/download/nginx-${nginx_version}.tar.gz
     fi
@@ -396,6 +403,7 @@ do
 
     # *** pcre ***
     if [ ! -f pcre-${pcre_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing pcre-${pcre_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` pcre wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.gz
     fi
@@ -403,6 +411,7 @@ do
 
     # *** xymon ***
     if [ ! -f xymon-${xymon_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing xymon-${xymon_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` xymon wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://downloads.sourceforge.net/project/xymon/Xymon/${xymon_version}/xymon-${xymon_version}.tar.gz
     fi
@@ -424,6 +433,7 @@ do
 
     # *** logrotate ***
     if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing logrotate-${logrotate_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` logrotate wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://fedorahosted.org/releases/l/o/logrotate/logrotate-${logrotate_version}.tar.gz
     fi
@@ -431,6 +441,7 @@ do
 
     # *** Lynx ***
     if [ ! -f lynx${lynx_version}.tar.gz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing lynx${lynx_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` Lynx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz
     fi
