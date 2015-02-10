@@ -27,8 +27,8 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** lynx *****
 
-rmdir -rf ${OPENSHIFT_TMP_DIR}/lynx > /dev/null
-rmdir -rf ${OPENSHIFT_DATA_DIR}/lynx > /dev/null
+rmdir -rf ${OPENSHIFT_TMP_DIR}/lynx
+rmdir -rf ${OPENSHIFT_DATA_DIR}/lynx
 mkdir -p ${OPENSHIFT_TMP_DIR}/lynx
 
 pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
