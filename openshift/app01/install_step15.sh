@@ -354,7 +354,7 @@ missingok
 notifempty
 noolddir
 rotate 7
-__OPENSHIFT_DATA_DIR__redmine-__REDMINE_VERSION__/log/production.log {
+__OPENSHIFT_LOG_DIR__production.log {
   daily
   missingok
   notifempty
