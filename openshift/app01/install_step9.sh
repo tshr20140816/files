@@ -27,6 +27,8 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** Tiny Tiny RSS *****
 
+rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
+
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/${ttrss_version}.tar.gz ./
