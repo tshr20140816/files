@@ -62,6 +62,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S`
 cd ${OPENSHIFT_DATA_DIR}/logrotate
 logrotate logrotate.conf -s logrotate.status
 __HEREDOC__
+chmod +x logrotate.sh
 
 # *** redmine repository check ***
 
