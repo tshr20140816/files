@@ -95,6 +95,20 @@ another_server_check=${8}
 web_beacon_server=${9}
 web_beacon_server_user=${10}
 mirror_server=${11}
+
+mkdir ${OPENSHIFT_DATA_DIR}/params
+
+echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/params/redmine_email_address
+echo ${redmine_email_password} > ${OPENSHIFT_DATA_DIR}/params/redmine_email_password
+echo ${openshift_email_address} > ${OPENSHIFT_DATA_DIR}/params/openshift_email_address
+echo ${openshift_email_password} > ${OPENSHIFT_DATA_DIR}/params/openshift_email_password
+echo ${delegate_email_account} > ${OPENSHIFT_DATA_DIR}/params/delegate_email_account
+echo ${delegate_email_password} > ${OPENSHIFT_DATA_DIR}/params/delegate_email_password
+echo ${delegate_pop_server} > ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server
+echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/params/another_server_check
+echo ${web_beacon_server} > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server
+echo ${web_beacon_server_user} > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user
+
 echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/redmine_email_address
 echo ${redmine_email_password} > ${OPENSHIFT_DATA_DIR}/redmine_email_password
 echo ${openshift_email_address} > ${OPENSHIFT_DATA_DIR}/openshift_email_address
