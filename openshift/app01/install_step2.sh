@@ -27,6 +27,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** lynx *****
 
+rmdir -rf ${OPENSHIFT_TMP_DIR}/lynx > /dev/null
 mkdir -p ${OPENSHIFT_TMP_DIR}/lynx
 
 pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
@@ -57,5 +58,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -rf lynx
 popd > /dev/null
+
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
