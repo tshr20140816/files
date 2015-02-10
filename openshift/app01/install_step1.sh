@@ -147,7 +147,7 @@ popd > /dev/null
 mkdir ${OPENSHIFT_DATA_DIR}/download_files
 pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
-rm -f *
+rm -f ./*
 
 # *** 必要なファイルの事前ダウンロード 成功まで10回繰り返す ***
 
