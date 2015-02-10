@@ -20,7 +20,7 @@ if -f [ `basename $0`.ok ]; then
 fi
 popd > /dev/null
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 2 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install Start `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -58,4 +58,4 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -rf lynx
 popd > /dev/null
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 2 Finish | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
