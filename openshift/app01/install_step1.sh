@@ -107,6 +107,7 @@ web_beacon_server=${9}
 web_beacon_server_user=${10}
 mirror_server=${11}
 
+rmdir -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
 
 echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/params/redmine_email_address
@@ -143,6 +144,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` github | tee -a ${OPENSHIFT_LOG_DIR}/install.lo
 curl -L https://status.github.com/api/status.json | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
+rmdir -rf ${OPENSHIFT_DATA_DIR}/github
 mkdir ${OPENSHIFT_DATA_DIR}/github
 pushd ${OPENSHIFT_DATA_DIR}/github > /dev/null
 git init
@@ -152,12 +154,15 @@ popd > /dev/null
 
 # ***** download files *****
 
+rmdir -rf ${OPENSHIFT_DATA_DIR}/download_files
 mkdir ${OPENSHIFT_DATA_DIR}/download_files
 pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
-rm -f ./*
-
 # *** 必要なファイルの事前ダウンロード 成功まで10回繰り返す ***
+
+rmdir GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
+mkdir GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
+export GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
 
 # * まずミラーサーバよりダウンロード *
 
