@@ -59,6 +59,8 @@ __HEREDOC__
 # http://delegate.hpcc.jp/delegate/
 # https://www.ruby-lang.org/ja/
 
+export TZ=JST-9
+
 mkdir ${OPENSHIFT_DATA_DIR}/install_check_point
 
 pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
@@ -129,7 +131,6 @@ echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/another_server_check
 echo ${web_beacon_server} > ${OPENSHIFT_DATA_DIR}/web_beacon_server
 echo ${web_beacon_server_user} > ${OPENSHIFT_DATA_DIR}/web_beacon_server_user
 
-export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 1 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
