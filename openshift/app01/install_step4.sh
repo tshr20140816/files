@@ -12,7 +12,15 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 set -x
 
 export TZ=JST-9
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 4 Start | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
+pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
+if -f [ `basename $0`.ok ]; then
+    echo `date +%Y/%m/%d" "%H:%M:%S` Install Skip `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    exit
+fi
+popd > /dev/null
+
+echo `date +%Y/%m/%d" "%H:%M:%S` Install Start `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -71,4 +79,6 @@ echo `date +%Y/%m/%d" "%H:%M:%S` bundler passenger | tee -a ${OPENSHIFT_LOG_DIR}
 time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V >${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log 2>&1
 rbenv rehash
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install STEP 4 Finish | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+
+echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
