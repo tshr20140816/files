@@ -59,6 +59,8 @@ __HEREDOC__
 # http://delegate.hpcc.jp/delegate/
 # https://www.ruby-lang.org/ja/
 
+mkdir ${OPENSHIFT_DATA_DIR}/install_check_point
+
 while read LINE
 do
     product=`echo ${LINE} | awk '{print $1}'`
@@ -499,6 +501,8 @@ mkdir ${OPENSHIFT_DATA_DIR}/etc
 mkdir -p ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin
 mkdir ${OPENSHIFT_DATA_DIR}/bin
 mkdir ${OPENSHIFT_DATA_DIR}/scripts
+
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
 
 export TMOUT=0
 
