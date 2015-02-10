@@ -529,7 +529,7 @@ set +x
 
 if [ -f ${OPENSHIFT_LOG_DIR}/install_alert.log ]; then
     echo '***** ALERT *****'
-    ${OPENSHIFT_LOG_DIR}/install_alert.log
+    cat ${OPENSHIFT_LOG_DIR}/install_alert.log
     echo
 fi
 
