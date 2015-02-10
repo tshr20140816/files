@@ -27,6 +27,9 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** apache *****
 
+rm -rf ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/apache
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` apache tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
