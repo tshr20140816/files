@@ -160,9 +160,12 @@ pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
 # *** 必要なファイルの事前ダウンロード 成功まで10回繰り返す ***
 
+# * gpg *
+
 rmdir GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
 mkdir GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
+gpg --list-keys
 
 # * まずミラーサーバよりダウンロード *
 
