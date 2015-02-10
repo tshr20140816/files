@@ -73,8 +73,8 @@ class Repository::Subversion < Repository
           end
           # loads changesets by batches of 200
           identifier_to = [identifier_from + 199, scm_revision].min
-          if rand(10) < 2
-            identifier_to = [identifier_from + 50, scm_revision].min
+          if rand(10) < 7
+            identifier_to = [identifier_from + 49, scm_revision].min
           end
           target_count = identifier_to - identifier_from + 1
           logger.info "#{Time.now.to_s} target count #{target_count}"
