@@ -192,6 +192,7 @@ if [ ${mirror_server} != "none" ]; then
     # ipa font
     wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip
     # php
+    # TODD check gnupg
     wget -t1 ${mirror_server}/php-${php_version}.tar.xz
     # delegate
     wget -t1 ${mirror_server}/delegate${delegate_version}.tar.gz
