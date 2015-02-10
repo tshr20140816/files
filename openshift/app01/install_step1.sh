@@ -162,8 +162,8 @@ pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
 # * gpg *
 
-rmdir GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
-mkdir GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
+rmdir -rf ${OPENSHIFT_DATA_DIR}/gnupg
+mkdir ${OPENSHIFT_DATA_DIR}/gnupg
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
 gpg --list-keys
 
