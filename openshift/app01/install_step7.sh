@@ -27,6 +27,9 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** memcached *****
 
+rm -rf ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/memcached
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-${memcached_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached tar >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -65,6 +68,9 @@ chmod +x memcached-tool
 popd > /dev/null
 
 # ***** php *****
+
+rm -rf ${OPENSHIFT_TMP_DIR}/php-${php_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/php
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/php-${php_version}.tar.xz ./
@@ -132,6 +138,9 @@ popd > /dev/null
 
 # *** libmemcached ***
 
+rm -rf ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version}
+rm -rf $OPENSHIFT_DATA_DIR/libmemcached
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/libmemcached-${libmemcached_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -160,6 +169,9 @@ rm -rf libmemcached-${libmemcached_version}
 popd > /dev/null
 
 # *** memcached php extention ***
+
+rm -rf ${OPENSHIFT_TMP_DIR}/memcached-${memcached_php_ext_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/php_memcached
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-${memcached_php_ext_version}.tgz ./
