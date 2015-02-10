@@ -27,6 +27,9 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** ruby *****
 
+rm -rf ${OPENSHIFT_DATA_DIR}.gem
+rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
+
 # ホームディレクトリはパーミッションがきつい
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 
@@ -61,7 +64,7 @@ rbenv rehash
 echo `date +%Y/%m/%d" "%H:%M:%S` bundler install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # patch resolv.rb
-# OPENSHIFT では  0.0.0.0 は使えないため
+# OPENSHIFT では  0.0.0.0 は使えないため OPENSHIFT_DIY_IP に置換
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
 | xargs perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
 
