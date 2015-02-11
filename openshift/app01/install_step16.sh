@@ -78,7 +78,8 @@ rbenv global ${ruby_version}
 rbenv rehash
 
 ruby --version
-export PASSENGER_TEMP_DIR=${OPENSHIFT_DATA_DIR}/tmp
+# export PASSENGER_TEMP_DIR=${OPENSHIFT_DATA_DIR}/tmp
+# too long unix socket path (max: 107bytes)
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose
 
 # *** memcached information ***
