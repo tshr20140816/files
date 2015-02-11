@@ -138,7 +138,7 @@ cat << '__HEREDOC__' > another_server_check.sh
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S`
 
-another_server_check=`cat ${OPENSHIFT_DATA_DIR}/another_server_check`
+another_server_check=`cat ${OPENSHIFT_DATA_DIR}/params/another_server_check`
 if [ "${another_server_check}" != "yes" ]; then
     exit
 fi
