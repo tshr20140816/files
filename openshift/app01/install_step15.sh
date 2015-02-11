@@ -485,9 +485,9 @@ cat << '__HEREDOC__' > delegate.sh
 #!/bin/bash
 
 export TZ=JST-9
-delegate_email_account=`cat ${OPENSHIFT_DATA_DIR}delegate_email_account`
-delegate_email_password=`cat ${OPENSHIFT_DATA_DIR}delegate_email_password`
-delegate_pop_server=`cat ${OPENSHIFT_DATA_DIR}delegate_pop_server`
+delegate_email_account=`cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_account`
+delegate_email_password=`cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_password`
+delegate_pop_server=`cat ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server`
 curl -LI --basic -u ${delegate_email_account}:${delegate_email_password} \
 https://${OPENSHIFT_DIY_IP}:30080/mail/+pop.${delegate_email_account}.${delegate_pop_server}/
 __HEREDOC__
