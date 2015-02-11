@@ -291,6 +291,7 @@ cat << '__HEREDOC__' > memcached_status.sh
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S`
 
+export PASSENGER_TEMP_DIR=${OPENSHIFT_DATA_DIR}/tmp
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 echo `date +%Y/%m/%d" "%H:%M:%S` > memcached_status.txt
 ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> memcached_status.txt
