@@ -570,6 +570,8 @@ touch ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/log/production.log
 ln -s ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/log/production.log production.log
 touch ${OPENSHIFT_DATA_DIR}/apache/logs/access_log
 ln -s ${OPENSHIFT_DATA_DIR}/apache/logs/access_log access_log
+touch ${OPENSHIFT_DATA_DIR}/apache/logs/access_remoteip_log
+ln -s ${OPENSHIFT_DATA_DIR}/apache/logs/access_remoteip_log access_remoteip_log
 touch ${OPENSHIFT_DATA_DIR}/apache/logs/error_log
 ln -s ${OPENSHIFT_DATA_DIR}/apache/logs/error_log error_log
 popd > /dev/null
