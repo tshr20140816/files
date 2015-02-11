@@ -110,8 +110,8 @@ gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>
 
 echo `date +%Y/%m/%d" "%H:%M:%S` rhc setup | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-openshift_email_address=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_address`
-openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/openshift_email_password`
+openshift_email_address=`cat ${OPENSHIFT_DATA_DIR}/params/openshift_email_address`
+openshift_email_password=`cat ${OPENSHIFT_DATA_DIR}/params/openshift_email_password`
 
 echo set timeout 60 > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 echo spawn ${OPENSHIFT_DATA_DIR}.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${openshift_email_address} -p ${openshift_email_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
