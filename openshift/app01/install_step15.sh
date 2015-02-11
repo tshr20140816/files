@@ -542,13 +542,13 @@ echo minutely_jobs.sh >> jobs.allow
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/ > /dev/null
 
 echo "uname -a" > infrastructure.txt
-uname -a >> infrastructure.txt
+uname -a | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "cat /etc/redhat-release" >> infrastructure.txt
-cat /etc/redhat-release >> infrastructure.txt
+cat /etc/redhat-release | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "cat /proc/cpuinfo" >> infrastructure.txt
-cat /proc/cpuinfo >> infrastructure.txt
+cat /proc/cpuinfo | tee -a infrastructure.txt
 
 popd > /dev/null
 
