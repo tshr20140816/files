@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wget --spider `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`dummy?server=${OPENSHIFT_GEAR_DNS}\&part=`basename $0 .sh` >/dev/null 2>&1
+wget --spider `cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server`dummy?server=${OPENSHIFT_GEAR_DNS}\&part=`basename $0 .sh` >/dev/null 2>&1
 
 while read LINE
 do
@@ -27,7 +27,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** register url *****
 
-curl --digest -u `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server_user`:`date +%Y%m%d%H` -F "url=https://${OPENSHIFT_GEAR_DNS}/" `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`createwebcroninformation
+curl --digest -u `cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user`:`date +%Y%m%d%H` -F "url=https://${OPENSHIFT_GEAR_DNS}/" `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`createwebcroninformation
 
 # ***** memory usage logging *****
 
@@ -154,7 +154,7 @@ do
         curl --digest -u `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server_user`:`date +%Y%m%d%H` \
          -F "subject=SERVER RESTART" \
          -F "body=${target_app_name} FROM ${OPENSHIFT_GEAR_DNS}" \
-         `cat ${OPENSHIFT_DATA_DIR}/web_beacon_server`sendadminmail
+         `cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server`sendadminmail
 
         export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
         export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
