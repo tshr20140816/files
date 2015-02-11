@@ -7,7 +7,7 @@ set -x
 export TZ=JST-9
 
 pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
-if -f [ `basename $0`.ok ]; then
+if [ -f `basename $0`.ok ]; then
     echo `date +%Y/%m/%d" "%H:%M:%S` Install Skip `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     exit
 fi
