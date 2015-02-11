@@ -277,7 +277,6 @@ eval "$(rbenv init -)"
 rbenv global __RUBY_VERSION__
 rbenv rehash
 
-export PASSENGER_TEMP_DIR=${OPENSHIFT_DATA_DIR}/tmp
 echo `date +%Y/%m/%d" "%H:%M:%S` > passenger_status.txt
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose >> passenger_status.txt
 __HEREDOC__
