@@ -78,6 +78,7 @@ rbenv global ${ruby_version}
 rbenv rehash
 
 ruby --version
+export PASSENGER_TEMP_DIR=${OPENSHIFT_DATA_DIR}/tmp
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose
 
 # *** memcached information ***
