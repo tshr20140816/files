@@ -49,7 +49,7 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
-time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
+time make -j2 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` lynx make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
