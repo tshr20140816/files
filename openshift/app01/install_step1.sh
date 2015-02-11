@@ -151,9 +151,9 @@ pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
 # * gpg *
 
-rmdir -rf ${OPENSHIFT_DATA_DIR}/gnupg
-mkdir ${OPENSHIFT_DATA_DIR}/gnupg
-export GNUPGHOME=${OPENSHIFT_DATA_DIR}/gnupg
+rmdir -rf ${OPENSHIFT_DATA_DIR}/.gnupg
+mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
+export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
 gpg --list-keys
 
 # * まずミラーサーバよりダウンロード *
@@ -168,6 +168,7 @@ if [ ${mirror_server} != "none" ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm httpd-${apache_version}.tar.gz
     fi
+
     # libmemcached
     wget -t1 ${mirror_server}/libmemcached-${libmemcached_version}.tar.gz
     tarball_md5=$(md5sum libmemcached-${libmemcached_version}.tar.gz | cut -d ' ' -f 1)
@@ -177,6 +178,7 @@ if [ ${mirror_server} != "none" ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm libmemcached-${libmemcached_version}.tar.gz
     fi
+
     # mrtg
     wget -t1 ${mirror_server}/mrtg-${mrtg_version}.tar.gz
     tarball_md5=$(md5sum mrtg-${mrtg_version}.tar.gz | cut -d ' ' -f 1)
@@ -186,15 +188,38 @@ if [ ${mirror_server} != "none" ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` mrtg md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm mrtg-${mrtg_version}.tar.gz
     fi
+
     # ipa font
     wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip
+
     # php
-    # TODD check gnupg
     wget -t1 ${mirror_server}/php-${php_version}.tar.xz
+    wget http://jp1.php.net/distributions/php-${php_version}.tar.xz.asc
+    gpg --keyserver hkp://keyserver.ubuntu.com:80 \
+    --recv-keys `gpg --verify php-${php_version}.tar.xz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}'`
+    if [ `gpg --verify php-${php_version}.tar.xz.asc 2>&1 | grep "Good signature from" | wc -l` != 1 ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` php pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` php pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm php-${php_version}.tar.xz
+    fi
+
     # delegate
+    # TODO check
     wget -t1 ${mirror_server}/delegate${delegate_version}.tar.gz
+
     # redmine
     wget -t1 ${mirror_server}/redmine-${redmine_version}.tar.gz
+    tarball_md5=$(md5sum redmine-${redmine_version}.tar.gz | cut -d ' ' -f 1)
+    redmine_md5=`curl http://www.redmine.org/projects/redmine/wiki/Download -s \
+    | grep md5 \
+    | grep "redmine-${redmine_version}.tar.gz" \
+    | awk '{print substr(substr($0, index($0, "md5: ")), 6, 32)}'`
+    if [ "${tarball_md5}" != "${redmine_md5}" ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` redmine md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` redmine md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm redmine-${redmine_version}.tar.gz
+    fi
+
     # webalizer
     wget -t1 ${mirror_server}/webalizer-${webalizer_version}-src.tgz
     # wordpress
