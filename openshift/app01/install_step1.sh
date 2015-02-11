@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.02.11 tcl_version 8.6.2 → 8.6.3
 # 2015.01.23 php_version 5.6.4 → 5.6.5
 # 2015.01.19 ttrss_version 1.15.2 → 1.15.3
 # 2015.01.19 memcached_version 1.4.20 → 1.4.22
@@ -42,7 +43,7 @@ redmine_version 2.5.3
 ipafont_version 00303
 cacti_version 0.8.8c
 murlin_version 0.2.4
-tcl_version 8.6.2
+tcl_version 8.6.3
 expect_version 5.45
 nginx_version 1.6.2
 lynx_version 2.8.7
@@ -245,8 +246,18 @@ if [ ${mirror_server} != "none" ]; then
     wget -t1 ${mirror_server}/logrotate-${logrotate_version}.tar.gz
     # lynx
     wget -t1 ${mirror_server}/lynx${lynx_version}.tar.gz
+
     # nginx
     wget -t1 ${mirror_server}/nginx-${nginx_version}.tar.gz
+    wget http://nginx.org/download/nginx-${nginx_version}.tar.gz.asc
+    gpg --keyserver hkp://keyserver.ubuntu.com:80 \
+    --recv-keys `gpg --verify nginx-${nginx_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}'`
+    if [ `gpg --verify nginx-${nginx_version}.tar.gz.asc 2>&1 | grep "Good signature from" | wc -l` != 1 ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` nginx pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` nginx pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm nginx-${nginx_version}.tar.gz
+    fi
+
     # memcached
     wget -t1 ${mirror_server}/memcached-1.4.22.tar.gz
     # memcached(php extension)
