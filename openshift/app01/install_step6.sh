@@ -149,8 +149,8 @@ default:
 rmagick_font_path: <%= ENV['OPENSHIFT_DATA_DIR'] %>/fonts/ipagp.ttf
 __HEREDOC__
 
-redmine_email_address=`cat ${OPENSHIFT_DATA_DIR}/redmine_email_address`
-redmine_email_password=`cat ${OPENSHIFT_DATA_DIR}/redmine_email_password`
+redmine_email_address=`cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_address`
+redmine_email_password=`cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_password`
 
 sed -i -e "s/__USER_NAME__/${redmine_email_address}/g" config/configuration.yml
 perl -pi -e "s/__PASSWORD__/${redmine_email_password}/g" config/configuration.yml
