@@ -213,8 +213,16 @@ if [ ${mirror_server} != "none" ]; then
     wget -t1 ${mirror_server}/lynx${lynx_version}.tar.gz
     # nginx
     wget -t1 ${mirror_server}/nginx-${nginx_version}.tar.gz
-
-    # TODO
+    # memcached
+    wget -t1 ${mirror_server}/memcached-1.4.22.tar.gz
+    # memcached(php extension)
+    wget -t1 ${mirror_server}/memcached-2.2.0.tgz
+    # mURLin
+    wget -t1 ${mirror_server}/mURLin-0.2.4.tar.gz
+    # pcre
+    wget -t1 ${mirror_server}/pcre-8.36.tar.gz
+    # xymon
+    wget -t1 ${mirror_server}/xymon-4.3.18.tar.gz
 fi
 
 files_exists=0
