@@ -537,6 +537,21 @@ echo minutely_jobs.sh >> jobs.allow
 # ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats
 # oo-cgroup-read memory.failcnt → mrtg?
 
+# ***** infrastructure info *****
+
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/ > /dev/null
+
+echo "uname -a" > infrastructure.txt
+uname -a >> infrastructure.txt
+echo >> infrastructure.txt
+echo "cat /etc/redhat-release" >> infrastructure.txt
+cat /etc/redhat-release >> infrastructure.txt
+echo >> infrastructure.txt
+echo "cat /proc/cpuinfo" >> infrastructure.txt
+cat /proc/cpuinfo >> infrastructure.txt
+
+popd > /dev/null
+
 # ***** action hooks *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks > /dev/null
