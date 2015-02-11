@@ -264,4 +264,6 @@ perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' restart_redmin
 perl -pi -e 's/__REDMINE_VERSION__/${redmine_version}/g' restart_redmine.cgi
 popd > /dev/null
 
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
