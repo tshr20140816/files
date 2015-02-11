@@ -121,17 +121,6 @@ echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/params/another_server_check
 echo ${web_beacon_server} > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server
 echo ${web_beacon_server_user} > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user
 
-echo ${redmine_email_address} > ${OPENSHIFT_DATA_DIR}/redmine_email_address
-echo ${redmine_email_password} > ${OPENSHIFT_DATA_DIR}/redmine_email_password
-echo ${openshift_email_address} > ${OPENSHIFT_DATA_DIR}/openshift_email_address
-echo ${openshift_email_password} > ${OPENSHIFT_DATA_DIR}/openshift_email_password
-echo ${delegate_email_account} > ${OPENSHIFT_DATA_DIR}/delegate_email_account
-echo ${delegate_email_password} > ${OPENSHIFT_DATA_DIR}/delegate_email_password
-echo ${delegate_pop_server} > ${OPENSHIFT_DATA_DIR}/delegate_pop_server
-echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/another_server_check
-echo ${web_beacon_server} > ${OPENSHIFT_DATA_DIR}/web_beacon_server
-echo ${web_beacon_server_user} > ${OPENSHIFT_DATA_DIR}/web_beacon_server_user
-
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Start `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
