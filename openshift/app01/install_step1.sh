@@ -222,8 +222,17 @@ if [ ${mirror_server} != "none" ]; then
 
     # webalizer
     wget -t1 ${mirror_server}/webalizer-${webalizer_version}-src.tgz
+
     # wordpress
     wget -t1 ${mirror_server}/wordpress-${wordpress_version}.tar.gz
+    tarball_md5=$(md5sum wordpress-${wordpress_version}.tar.gz | cut -d ' ' -f 1)
+    wordpress_md5=$(curl -Ls https://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz.md5)
+    if [ "${tarball_md5}" != "${wordpress_md5}" ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` wordpress md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` wordpress md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm wordpress-${wordpress_version}.tar.gz
+    fi
+    
     # ttrss
     wget -t1 ${mirror_server}/${ttrss_version}.tar.gz
     # cacti
