@@ -225,6 +225,15 @@ else
     echo START memory_usage_logging.sh
     ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
 fi
+
+# redmine
+process_count=`find ${OPENSHIFT_DATA_DIR}/.gem/gems/ \
+-name passenger-status -type f \
+| xargs --replace={} ruby {} --verbose \
+| grep Processes | awk '{print $NF}'`
+if [ ${process_count} = 0 ]; then
+    wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
+fi
 __HEREDOC__
 chmod +x keep_process.sh
 
