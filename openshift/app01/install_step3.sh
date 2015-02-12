@@ -247,6 +247,7 @@ popd > /dev/null
 
 # * favicon.ico *
 
+# TODO
 # cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/favicon.ico ${OPENSHIFT_DATA_DIR}/apache/htdocs/
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
 wget http://www.google.com/favicon.ico
