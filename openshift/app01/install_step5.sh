@@ -32,7 +32,7 @@ export HTTPD=${OPENSHIFT_DATA_DIR}/apache/bin/httpd
 export BINDIR=${OPENSHIFT_DATA_DIR}/apache
 
 time CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
-${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --auto --languages=ruby
+${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --auto --languages ruby
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
 
