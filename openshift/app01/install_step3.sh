@@ -117,7 +117,7 @@ LanguagePriority ja en
 # log
 
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
-LogFormat "%{%Y-%m-%d %H:%M:%S %Z}t %p %a %m %s %>s %b \"%{User-Agent}i\"" remoteip
+LogFormat "%{%Y-%m-%d %H:%M:%S %Z}t %p %{X-Forwarded-For}i %m %s %>s %b \"%{User-Agent}i\"" remoteip
 
 CustomLog logs/access_log combined
 CustomLog logs/access_remoteip_log remoteip
