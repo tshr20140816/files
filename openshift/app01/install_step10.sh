@@ -42,7 +42,7 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 --prefix=${OPENSHIFT_DATA_DIR}/mrtg 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
-time make -j2 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
