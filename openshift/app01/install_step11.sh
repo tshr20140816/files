@@ -28,10 +28,10 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 # ***** webalizer *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/webalizer-${webalizer_version}-src.tgz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/webalizer-${webalizer_version}-src.tar.bz2 ./
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz webalizer-${webalizer_version}-src.tgz
+tar jxf webalizer-${webalizer_version}-src.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/webalizer-${webalizer_version} > /dev/null
 mv lang/webalizer_lang.japanese lang/webalizer_lang.japanese_euc
@@ -68,7 +68,7 @@ popd > /dev/null
 mkdir ${OPENSHIFT_DATA_DIR}/webalizer/www
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm webalizer-${webalizer_version}-src.tgz
+rm webalizer-${webalizer_version}-src.tar.bz2
 rm -rf webalizer-${webalizer_version}
 popd > /dev/null
 
