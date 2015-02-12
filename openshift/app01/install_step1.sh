@@ -266,8 +266,14 @@ if [ ${mirror_server} != "none" ]; then
     wget -t1 ${mirror_server}/mURLin-${murlin_version}.tar.gz
     # pcre
     wget -t1 ${mirror_server}/pcre-${pcre_version}.tar.bz2
-    # TODO
-    # ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.36.tar.bz2.sig
+    wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2.sig
+    gpg --keyserver hkp://keyserver.ubuntu.com:80 \
+    --recv-keys `gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}'`
+    if [ `gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "Good signature from" | wc -l` != 1 ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm pcre-${pcre_version}.tar.bz2
+    fi
     
     # xymon
     wget -t1 ${mirror_server}/xymon-${xymon_version}.tar.gz
