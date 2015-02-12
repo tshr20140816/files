@@ -31,9 +31,9 @@ rm -rf ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.gz ./
+cp ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.bz2 ./
 echo `date +%Y/%m/%d" "%H:%M:%S` apache tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz httpd-${apache_version}.tar.gz
+tar xfz httpd-${apache_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 
@@ -262,7 +262,7 @@ __HEREDOC__
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm httpd-${apache_version}.tar.gz
+rm httpd-${apache_version}.tar.bz2
 rm -rf httpd-${apache_version}
 popd > /dev/null
 
