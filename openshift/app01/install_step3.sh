@@ -33,7 +33,7 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.bz2 ./
 echo `date +%Y/%m/%d" "%H:%M:%S` apache tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz httpd-${apache_version}.tar.bz2
+tar jxf httpd-${apache_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 
