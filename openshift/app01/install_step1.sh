@@ -222,7 +222,7 @@ if [ ${mirror_server} != "none" ]; then
     fi
 
     # webalizer
-    wget -t1 ${mirror_server}/webalizer-${webalizer_version}-src.tgz
+    wget -t1 ${mirror_server}/webalizer-${webalizer_version}-src.tar.bz2
 
     # wordpress
     wget -t1 ${mirror_server}/wordpress-${wordpress_version}.tar.gz
@@ -409,12 +409,12 @@ do
     [ -f mrtg-${mrtg_version}.tar.gz ] || files_exists=0
 
     # *** webalizer ***
-    if [ ! -f webalizer-${webalizer_version}-src.tgz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing webalizer-${webalizer_version}-src.tgz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    if [ ! -f webalizer-${webalizer_version}-src.tar.bz2 ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing webalizer-${webalizer_version}-src.tar.bz2 | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` webalizer wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tgz
+        wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tar.bz2
     fi
-    [ -f webalizer-${webalizer_version}-src.tgz ] || files_exists=0
+    [ -f webalizer-${webalizer_version}-src.tar.bz2 ] || files_exists=0
 
     # *** wordpress ja ***
     if [ ! -f wordpress-${wordpress_version}.tar.gz ]; then
