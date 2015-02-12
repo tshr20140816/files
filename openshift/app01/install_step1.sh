@@ -259,15 +259,18 @@ if [ ${mirror_server} != "none" ]; then
     fi
 
     # memcached
-    wget -t1 ${mirror_server}/memcached-1.4.22.tar.gz
+    wget -t1 ${mirror_server}/memcached-${memcached_version}.tar.gz
     # memcached(php extension)
-    wget -t1 ${mirror_server}/memcached-2.2.0.tgz
+    wget -t1 ${mirror_server}/memcached-${memcached_php_ext_version}.tgz
     # mURLin
-    wget -t1 ${mirror_server}/mURLin-0.2.4.tar.gz
+    wget -t1 ${mirror_server}/mURLin-${murlin_version}.tar.gz
     # pcre
-    wget -t1 ${mirror_server}/pcre-8.36.tar.gz
+    wget -t1 ${mirror_server}/pcre-${pcre_version}.tar.bz2
+    # TODO
+    # ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.36.tar.bz2.sig
+    
     # xymon
-    wget -t1 ${mirror_server}/xymon-4.3.18.tar.gz
+    wget -t1 ${mirror_server}/xymon-${xymon_version}.tar.gz
 fi
 
 files_exists=0
@@ -488,12 +491,12 @@ do
     [ -f nginx-${nginx_version}.tar.gz ] || files_exists=0
 
     # *** pcre ***
-    if [ ! -f pcre-${pcre_version}.tar.gz ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing pcre-${pcre_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    if [ ! -f pcre-${pcre_version}.tar.bz2 ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing pcre-${pcre_version}.tar.bz2 | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` pcre wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.gz
+        wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2
     fi
-    [ -f pcre-${pcre_version}.tar.gz ] || files_exists=0
+    [ -f pcre-${pcre_version}.tar.bz2 ] || files_exists=0
 
     # *** xymon ***
     if [ ! -f xymon-${xymon_version}.tar.gz ]; then
