@@ -63,8 +63,6 @@ popd > /dev/null
 
 # *** memcached-tool ***
 
-echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-
 mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
 pushd ${OPENSHIFT_DATA_DIR}/local/bin > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
@@ -164,7 +162,7 @@ CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
-time make -j3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
@@ -204,7 +202,7 @@ CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extention.log
-time make 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extention.log
