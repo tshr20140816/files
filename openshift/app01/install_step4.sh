@@ -51,11 +51,16 @@ eval "$(rbenv init -)"
 
 # *** ruby ***
 
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `date +%Y/%m/%d" "%H:%M:%S` ruby install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 export CFLAGS="-O3 -march=native -pipe" 
 export CXXFLAGS="-O3 -march=native -pipe" 
-time CONFIGURE_OPTS="--disable-install-doc" rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
+time CONFIGURE_OPTS="--disable-install-doc" MAKE_OPTS="-j 2" \
+rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
+
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 rbenv global ${ruby_version}
 rbenv rehash
 
