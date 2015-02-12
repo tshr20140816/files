@@ -61,6 +61,8 @@ popd > /dev/null
 
 # ***** Expect *****
 
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/expect${expect_version}.tar.gz ./
 
@@ -91,6 +93,8 @@ rm -rf expect${expect_version}
 popd > /dev/null
 
 # ***** rhc *****
+
+echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** env ***
 
