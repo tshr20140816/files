@@ -27,6 +27,8 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 /usr/bin/gear stop
 
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 # ***** memcached *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version}
