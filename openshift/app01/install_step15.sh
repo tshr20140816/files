@@ -555,6 +555,9 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/ > /dev/null
 echo "uname -a" > infrastructure.txt
 uname -a | tee -a infrastructure.txt
 echo >> infrastructure.txt
+echo "cat /proc/version" >> infrastructure.txt
+cat /proc/version | tee -a infrastructure.txt
+echo >> infrastructure.txt
 echo "cat /etc/redhat-release" >> infrastructure.txt
 cat /etc/redhat-release | tee -a infrastructure.txt
 echo >> infrastructure.txt
@@ -563,14 +566,14 @@ cat /proc/cpuinfo | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "ulimit -a" >> infrastructure.txt
 ulimit -a | tee -a infrastructure.txt
-popd > /dev/null
+echo >> infrastructure.txt
+echo "cat /etc/inittab | grep -v ^#" >> infrastructure.txt
+cat /etc/inittab | grep -v ^# | tee -a infrastructure.txt
+echo >> infrastructure.txt
+echo "cat /etc/resolv.conf" >> infrastructure.txt
+cat /etc/resolv.conf | tee -a infrastructure.txt
 
-# TODO
-# cat /proc/version 
-# cat /etc/inittab 
-# cat /etc/selinux/config
-# uname -a
-# cat /etc/resolv.conf
+popd > /dev/null
 
 # ***** action hooks *****
 
