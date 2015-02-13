@@ -572,6 +572,9 @@ cat /etc/inittab | grep -v ^# | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "cat /etc/resolv.conf" >> infrastructure.txt
 cat /etc/resolv.conf | tee -a infrastructure.txt
+echo >> infrastructure.txt
+echo "mysql --help" >> infrastructure.txt
+mysql --help | tee -a infrastructure.txt
 
 popd > /dev/null
 
