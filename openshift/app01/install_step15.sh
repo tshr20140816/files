@@ -570,6 +570,7 @@ popd > /dev/null
 # cat /etc/inittab 
 # cat /etc/selinux/config
 # uname -a
+# cat /etc/resolv.conf
 
 # ***** action hooks *****
 
