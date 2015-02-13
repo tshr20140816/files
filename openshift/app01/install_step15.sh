@@ -575,6 +575,7 @@ popd > /dev/null
 # ***** action hooks *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks > /dev/null
+cp start start.org
 cat << '__HEREDOC__' > start
 export TZ=JST-9
 rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
