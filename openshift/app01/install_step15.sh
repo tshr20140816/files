@@ -560,7 +560,9 @@ cat /etc/redhat-release | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "cat /proc/cpuinfo" >> infrastructure.txt
 cat /proc/cpuinfo | tee -a infrastructure.txt
-
+echo >> infrastructure.txt
+echo "ulimit -a" >> infrastructure.txt
+ulimit -a | tee -a infrastructure.txt
 popd > /dev/null
 
 # ***** action hooks *****
