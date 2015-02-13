@@ -117,7 +117,7 @@ cat << '__HEREDOC__' > my_server_check.sh
 export TZ=JST-9
 echo `date +%Y/%m/%d" "%H:%M:%S`
 
-target_url="http://${OPENSHIFT_APP_DNS}/"
+target_url="https://${OPENSHIFT_APP_DNS}/?server=${OPENSHIFT_APP_DNS}"
 http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
 echo http_status ${http_status} ${target_url}
 if test ${http_status} -eq 503 ; then
@@ -149,7 +149,7 @@ while read LINE
 do
     target_app_name=`echo $LINE | awk '{print $1}'`
     target_url=`echo $LINE | awk '{print $2}'`
-    http_status=`curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s`
+    http_status=`curl -LI ${target_url}?server=${OPENSHIFT_APP_DNS} -o /dev/null -w '%{http_code}\n' -s`
     echo http_status ${http_status} ${target_url}
     if test ${http_status} -eq 503 ; then
         echo app restart ${target_url}
