@@ -569,6 +569,7 @@ popd > /dev/null
 # cat /proc/version 
 # cat /etc/inittab 
 # cat /etc/selinux/config
+# uname -a
 
 # ***** action hooks *****
 
