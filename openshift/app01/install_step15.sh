@@ -565,6 +565,11 @@ echo "ulimit -a" >> infrastructure.txt
 ulimit -a | tee -a infrastructure.txt
 popd > /dev/null
 
+# TODO
+# cat /proc/version 
+# cat /etc/inittab 
+# cat /etc/selinux/config
+
 # ***** action hooks *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks > /dev/null
