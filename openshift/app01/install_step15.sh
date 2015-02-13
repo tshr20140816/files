@@ -463,6 +463,8 @@ ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
 
 export HOME=${env_home_backup}
 
+perl -pi -e 's/^http/https/g' ${OPENSHIFT_DATA_DIR}/another_server_list.txt
+
 cp ${OPENSHIFT_DATA_DIR}/another_server_list.txt ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 __HEREDOC__
 chmod +x another_server_list_update.sh
