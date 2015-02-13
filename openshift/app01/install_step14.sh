@@ -27,6 +27,10 @@ echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
+/usr/bin/gear stop
+
+echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 # ***** Tcl *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -138,5 +142,7 @@ ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | grep uuid | tee -a ${OPENSHIFT_LOG_DIR}
 export HOME=${env_home_backup}
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+
+/usr/bin/gear start
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
