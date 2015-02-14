@@ -91,6 +91,7 @@ CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=/tmp/man \
+--docdir=/tmp/doc \
 --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
@@ -108,6 +109,7 @@ CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
 --enable-mbstring \
 --enable-mbregex \
 --enable-sockets \
+--disable-ipv6 \
 --with-gettext=${OPENSHIFT_DATA_DIR}/php 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 
 echo `date +%Y/%m/%d" "%H:%M:%S` php make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
