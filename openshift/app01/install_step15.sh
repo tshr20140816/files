@@ -480,6 +480,19 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
 rm -f *
 touch jobs.deny
 
+# * du *
+
+cat << '__HEREDOC__' > du.sh
+#!/bin/bash
+
+export TZ=JST-9
+echo `date +%Y/%m/%d" "%H:%M:%S` > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
+echo >> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
+du ${OPENSHIFT_HOMEDIR} >> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
+__HEREDOC__
+chmod +x du.sh
+echo du.sh >> jobs.allow
+
 # * webalizer *
 
 cat << '__HEREDOC__' > webalizer.sh
