@@ -6,7 +6,7 @@ wget http://nginx.org/download/nginx-1.7.10.tar.gz
 tar xfz nginx-1.7.10.tar.gz
 cd nginx-1.7.10
 
-./configure --prefix=$OPENSHIFT_DATA_DIR/nginx \
+./configure --prefix=${OPENSHIFT_DATA_DIR}/nginx \
 --without-http_ssi_module \
 --without-pcre \
 --without-http_rewrite_module \
@@ -22,4 +22,22 @@ cd nginx-1.7.10
 time make -j2
 make install
 
-vi ~/app-root/data/nginx/conf/nginx.conf
+perl -pi -e 's/^(\s+)(listen\s+)80;/$1$2$ENV{OPENSHIFT_DIY_IP}:8080;\n$1autoindex on;/g' ${OPENSHIFT_DATA_DIR}/nginx/conf/nginx.conf
+
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/ > /dev/null
+cp start start.org
+cat << '__HEREDOC__' > start
+#!/bin/bash
+
+${OPENSHIFT_DATA_DIR}/nginx/sbin/nginx
+__HEREDOC__
+
+popd > /dev/null
+
+pushd ${OPENSHIFT_DATA_DIR}/nginx/html > .dev/null
+mkdir ${OPENSHIFT_DATA_DIR}/files
+ln -s ${OPENSHIFT_DATA_DIR}/files files
+popd > /dev/null
+
+/usr/bin/gear stop
+/usr/bin/gear start
