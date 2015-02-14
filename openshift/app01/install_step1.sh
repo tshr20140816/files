@@ -299,6 +299,12 @@ do
     fi
     [ -f httpd-${apache_version}.tar.bz2 ] || files_exists=0
 
+    # *** spdy ***
+    if [ ! -f mod-spdy-beta_current_x86_64.rpm ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` spdy wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://dl-ssl.google.com/dl/linux/direct/mod-spdy-beta_current_x86_64.rpm
+    fi
+
     # *** rbenv-installer ***
     if [ ! -f rbenv-installer ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` rbenv-installer wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -320,13 +326,6 @@ do
         wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/Gemfile_redmine_custom
     fi
     [ -f Gemfile_redmine_custom ] || files_exists=0
-
-    # # *** redmine_logs ***
-    # if [ ! -f redmine_logs-0.0.5.zip ]; then
-    #     echo `date +%Y/%m/%d" "%H:%M:%S` redmine_logs wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    #     wget https://bitbucket.org/haru_iida/redmine_logs/downloads/redmine_logs-0.0.5.zip
-    # fi
-    # [ -f redmine_logs-0.0.5.zip ] || files_exists=0
 
     # *** bash.rb ***
     if [ ! -f bash.rb ]; then
@@ -394,8 +393,6 @@ do
     [ -f memcached-${memcached_php_ext_version}.tgz ] || files_exists=0
 
     # *** delegate ***
-    # * src *
-    # make済みバイナリが github に有る。
     if [ ! -f delegate${delegate_version}.tar.gz ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing delegate${delegate_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` delegate wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -432,13 +429,6 @@ do
         wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
     fi
     [ -f wordpress-${wordpress_version}.tar.gz ] || files_exists=0
-
-    # # *** is_ssl.php ***
-    # if [ ! -f is_ssl.php ]; then
-    #     echo `date +%Y/%m/%d" "%H:%M:%S` is_ssl.php wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    #     wget https://gist.githubusercontent.com/franz-josef-kaiser/1891564/raw/9d3f519c1cfb0fff9ad5ca31f3e783deaf5d561c/is_ssl.php
-    # fi
-    # [ -f is_ssl.php ] || files_exists=0
 
     # *** Tiny Tiny RSS ***
     if [ ! -f ${ttrss_version}.tar.gz ]; then
