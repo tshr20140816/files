@@ -16,7 +16,6 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 --without-http_userid_module \
 --without-http_access_module \
 --without-http_auth_basic_module \
---without-http_autoindex_module \
 --without-http_geo_module \
 --without-http_map_module \
 --without-http_split_clients_module \
@@ -40,7 +39,7 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 --without-mail_smtp_module \
 --without-pcre
 
-time make -j2
+time make -j4
 make install
 
 perl -pi -e 's/^(\s+)(listen\s+)80;/$1$2$ENV{OPENSHIFT_DIY_IP}:8080;\n$1autoindex on;/g' \
