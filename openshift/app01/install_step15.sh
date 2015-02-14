@@ -574,6 +574,9 @@ echo >> infrastructure.txt
 echo "cat /etc/redhat-release" >> infrastructure.txt
 cat /etc/redhat-release | tee -a infrastructure.txt
 echo >> infrastructure.txt
+echo "lscpu" >> infrastructure.txt
+cat lscpu | tee -a infrastructure.txt
+echo >> infrastructure.txt
 echo "cat /proc/cpuinfo" >> infrastructure.txt
 cat /proc/cpuinfo | tee -a infrastructure.txt
 echo >> infrastructure.txt
