@@ -1,2 +1,26 @@
 rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 rhc app create xxx diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
+
+cd /tmp
+wget http://nginx.org/download/nginx-1.7.10.tar.gz
+# wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.36.tar.bz2
+# tar jxf pcre-8.36.tar.bz2
+tar xfz nginx-1.7.10.tar.gz
+cd nginx-1.7.10
+
+./configure --prefix=$OPENSHIFT_DATA_DIR/nginx \
+--without-http_ssi_module \
+--without-pcre \
+--without-http_rewrite_module \
+--without-http_uwsgi_module \
+--without-http_scgi_module \
+--without-http_proxy_module \
+--without-http_auth_basic_module \
+--without-mail_pop3_module \
+--without-mail_imap_module \
+--without-mail_smtp_module \
+--without-http_fastcgi_module
+
+time make -j2
+
+make install
