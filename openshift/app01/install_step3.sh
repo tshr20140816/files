@@ -55,6 +55,17 @@ echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 echo `date +%Y/%m/%d" "%H:%M:%S` apache conf | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
+
+# *** spdy ***
+
+mkdir ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
+pushd ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64 > /dev/null
+cp ${OPENSHIFT_DATA_DIR}/download_files/mod-spdy-beta_current_x86_64.rpm ./
+rpm2cpio mod-spdy-beta_current_x86_64.rpm | cpio -idmv
+cp ./usr/lib64/httpd/modules/mod_spdy.so ${OPENSHIFT_DATA_DIR}/apache/modules/
+cp ./usr/lib64/httpd/modules/mod_ssl_with_npn.so ${OPENSHIFT_DATA_DIR}/apache/modules/
+popd > /dev/null
+
 pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
 
 # *** *.conf ***
@@ -106,6 +117,16 @@ perl -pi -e 's/(^ *LogFormat.+$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^ *CustomLog.+$)/# $1/g' conf/httpd.conf
 
 cat << '__HEREDOC__' > conf/custom.conf
+# spdy
+
+LoadModule ssl_module modules/mod_ssl_with_npn.so
+LoadModule spdy_module modules/mod_spdy.so
+<IfModule spdy_module>
+    SpdyEnabled on
+    #SpdyMaxThreadsPerProcess 30
+    #SpdyMaxStreamsPerConnection 100
+</IfModule>
+
 # tune
 
 MinSpareServers 1
@@ -252,15 +273,6 @@ popd > /dev/null
 # cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/favicon.ico ${OPENSHIFT_DATA_DIR}/apache/htdocs/
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
 wget http://www.google.com/favicon.ico
-popd > /dev/null
-
-# * robots.txt *
-
-pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
-cat << '__HEREDOC__' >> robots.txt
-User-Agent: * 
-Disallow: /
-__HEREDOC__
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
