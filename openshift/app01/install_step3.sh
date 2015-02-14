@@ -65,6 +65,7 @@ rpm2cpio mod-spdy-beta_current_x86_64.rpm | cpio -idmv
 cp ./usr/lib64/httpd/modules/mod_spdy.so ${OPENSHIFT_DATA_DIR}/apache/modules/
 cp ./usr/lib64/httpd/modules/mod_ssl_with_npn.so ${OPENSHIFT_DATA_DIR}/apache/modules/
 popd > /dev/null
+rm -rf ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
 
 pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
 
