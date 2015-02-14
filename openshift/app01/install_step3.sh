@@ -45,6 +45,7 @@ CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/apache \
 --mandir=/tmp/man \
+--docdir=/tmp/doc \
 --enable-mods-shared='all proxy' 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 echo `date +%Y/%m/%d" "%H:%M:%S` apache make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
