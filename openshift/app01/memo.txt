@@ -2,22 +2,25 @@ rhc setup --server openshift.redhat.com --create-token -l mail_address -p passwo
 rhc app create xxx diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
 
 cd /tmp
-wget http://nginx.org/download/nginx-1.7.10.tar.gz
-tar xfz nginx-1.7.10.tar.gz
-cd nginx-1.7.10
+wget http://nginx.org/download/nginx-1.6.2.tar.gz
+tar xfz nginx-1.6.2.tar.gz
+cd nginx-1.6.2
 
- CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
+CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/nginx \
 --without-select_module \
 --without-poll_module \
 --without-http_charset_module \
+--without-http_gzip_module \
 --without-http_ssi_module \
 --without-http_userid_module \
 --without-http_access_module \
 --without-http_auth_basic_module \
+--without-http_autoindex_module \
 --without-http_geo_module \
 --without-http_map_module \
 --without-http_split_clients_module \
+--without-http_referer_module \
 --without-http_rewrite_module \
 --without-http_proxy_module \
 --without-http_fastcgi_module \
@@ -28,7 +31,6 @@ cd nginx-1.7.10
 --without-http_limit_req_module \
 --without-http_empty_gif_module \
 --without-http_browser_module \
---without-http_upstream_hash_module \
 --without-http_upstream_ip_hash_module \
 --without-http_upstream_least_conn_module \
 --without-http_upstream_keepalive_module \
