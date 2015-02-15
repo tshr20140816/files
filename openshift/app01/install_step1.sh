@@ -562,6 +562,34 @@ mkdir -p ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin
 mkdir ${OPENSHIFT_DATA_DIR}/bin
 mkdir ${OPENSHIFT_DATA_DIR}/scripts
 
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
+rm -f *
+touch jobs.deny
+
+# install script
+
+cat << '__HEREDOC__' > install_script_check.sh
+#!/bin/bash
+
+if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_step16.sh.ok ]; then
+    exit
+fi
+
+is_alive=`ps -ef | grep install_step_from_2_to_16 | grep -v grep | wc -l`
+if [ ! ${is_alive} -gt 0 ]; then
+    export TZ=JST-9
+    echo `date +%Y/%m/%d" "%H:%M:%S` Install Retry | tee -a ${OPENSHIFT_LOG_DIR}/install_retry.log
+    cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
+    nohup ./install_step_from_2_to_16.sh \
+    >> ${OPENSHIFT_LOG_DIR}/nohup.log \
+    2>> ${OPENSHIFT_LOG_DIR}/nohup_error.log &
+fi
+__HEREDOC__
+chmod +x install_script_check.sh
+echo install_script_check.sh >> jobs.allow
+
+popd > /dev/null
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
 
 export TMOUT=0
@@ -574,7 +602,7 @@ if [ -f ${OPENSHIFT_LOG_DIR}/install_alert.log ]; then
     echo
 fi
 
-echo cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
-echo "nohup ./install_step_from_2_to_16.sh > ${OPENSHIFT_LOG_DIR}/nohup.log 2> ${OPENSHIFT_LOG_DIR}/nohup_error.log &"
+# echo cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
+# echo "nohup ./install_step_from_2_to_16.sh > ${OPENSHIFT_LOG_DIR}/nohup.log 2> ${OPENSHIFT_LOG_DIR}/nohup_error.log &"
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
