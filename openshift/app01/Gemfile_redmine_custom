@@ -1,3 +1,15 @@
+class << Bundler.ui
+  def tell_me (msg, color = nil, newline = nil)
+    msg = word_wrap(msg) if newline.is_a?(Hash) && newline[:wrap]
+    msg = "[#{Time.now}] " + msg if msg.length > 3
+    if newline.nil?
+      @shell.say(msg, color)
+    else
+      @shell.say(msg, color, newline)
+    end
+  end
+end
+
 source 'https://rubygems.org'
 
 gem "rails", "3.2.19" 
