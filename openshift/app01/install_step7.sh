@@ -42,7 +42,7 @@ pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version} > /dev/null
 
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached.log
-CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
+CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/memcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
@@ -85,7 +85,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` php configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
-CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
+CFLAGS="-O2 -march=native" CXXFLAGS="-O2 -march=native" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=/tmp/man \
@@ -157,7 +157,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
 echo `date +%Y/%m/%d" "%H:%M:%S` libmemcached configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
-CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
+CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
 --prefix=$OPENSHIFT_DATA_DIR/libmemcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
@@ -193,7 +193,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext phpize | tee -a ${OPENSHIFT_L
 ${OPENSHIFT_DATA_DIR}/php/bin/phpize
 echo `date +%Y/%m/%d" "%H:%M:%S` memcached_php_ext configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extention.log
-CFLAGS="-O3 -march=native" CXXFLAGS="-O3 -march=native" \
+CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/php_memcached \
