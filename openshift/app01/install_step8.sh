@@ -27,7 +27,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** wordpress *****
 
-rmdir -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
