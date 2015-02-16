@@ -144,7 +144,7 @@ popd > /dev/null
 
 # ***** download files *****
 
-rmdir -rf ${OPENSHIFT_DATA_DIR}/download_files
+rm -rf ${OPENSHIFT_DATA_DIR}/download_files
 mkdir ${OPENSHIFT_DATA_DIR}/download_files
 pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
@@ -152,7 +152,7 @@ pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
 # * gpg *
 
-rmdir -rf ${OPENSHIFT_DATA_DIR}/.gnupg
+rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
 mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
 gpg --list-keys
