@@ -27,6 +27,10 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** mrtg *****
 
+rm -f ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version}.tar.gz
+rm -rf ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/mrtg
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -54,6 +58,11 @@ echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 popd > /dev/null
+
+rm -rf ${OPENSHIFT_DATA_DIR}/mrtg/workdir
+rm -rf ${OPENSHIFT_DATA_DIR}/mrtg/scripts
+rm -rf ${OPENSHIFT_DATA_DIR}/mrtg/log
+rm -rf ${OPENSHIFT_DATA_DIR}/mrtg/www
 
 mkdir ${OPENSHIFT_DATA_DIR}/mrtg/workdir
 mkdir ${OPENSHIFT_DATA_DIR}/mrtg/scripts
@@ -190,6 +199,7 @@ popd > /dev/null
 
 # *** apache link ***
 
+[ -d ${OPENSHIFT_DATA_DIR}/apache/htdocs/mrtg ] && unlink ${OPENSHIFT_DATA_DIR}/apache/htdocs/mrtg
 ln -s ${OPENSHIFT_DATA_DIR}/mrtg/www ${OPENSHIFT_DATA_DIR}/apache/htdocs/mrtg
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
