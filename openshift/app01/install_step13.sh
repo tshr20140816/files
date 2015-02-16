@@ -29,7 +29,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** Cacti *****
 
-rmdir -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti
+rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/cacti-${cacti_version}.tar.gz ./
