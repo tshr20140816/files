@@ -360,7 +360,8 @@ if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ]; then
     touch ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 fi
 
-mkdir -p ${OPENSHIFT_DATA_DIR}/logrotate
+rm -rf ${OPENSHIFT_DATA_DIR}/logrotate
+mkdir ${OPENSHIFT_DATA_DIR}/logrotate
 pushd ${OPENSHIFT_DATA_DIR}/logrotate > /dev/null
 cat << '__HEREDOC__' > logrotate.conf
 compresscmd /usr/bin/xz
