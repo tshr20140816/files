@@ -39,7 +39,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` rbenv install >> ${OPENSHIFT_LOG_DIR}/install.l
 
 # OPENSHIFT用インストーラ
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/rbenv-installer ./
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/rbenv-installer ./
 bash rbenv-installer
 rm rbenv-installer
 popd > /dev/null
