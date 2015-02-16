@@ -8,7 +8,7 @@ wget http://nginx.org/download/nginx-1.6.2.tar.gz
 tar xfz nginx-1.6.2.tar.gz
 pushd cd nginx-1.6.2 > /dev/null
 
-CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
+CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/nginx \
 --without-select_module \
 --without-poll_module \
