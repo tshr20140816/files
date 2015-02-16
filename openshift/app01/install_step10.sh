@@ -199,7 +199,6 @@ popd > /dev/null
 
 # *** apache link ***
 
-[ -d ${OPENSHIFT_DATA_DIR}/apache/htdocs/mrtg ] && unlink ${OPENSHIFT_DATA_DIR}/apache/htdocs/mrtg
 ln -s ${OPENSHIFT_DATA_DIR}/mrtg/www ${OPENSHIFT_DATA_DIR}/apache/htdocs/mrtg
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
