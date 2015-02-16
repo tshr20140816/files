@@ -31,7 +31,7 @@ export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 export HTTPD=${OPENSHIFT_DATA_DIR}/apache/bin/httpd
 export BINDIR=${OPENSHIFT_DATA_DIR}/apache
 
-time CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
+time CFLAGS="-O2 -march=native" CXXFLAGS="-O2 -march=native" \
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
 --auto \
 --languages ruby \
