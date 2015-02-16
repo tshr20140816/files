@@ -564,11 +564,16 @@ mkdir -p ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin
 mkdir ${OPENSHIFT_DATA_DIR}/bin
 mkdir ${OPENSHIFT_DATA_DIR}/scripts
 
+# ***** install log *****
+
+touch ${OPENSHIFT_LOG_DIR}/nohup.log
+touch ${OPENSHIFT_LOG_DIR}/nohup_error.log
+
+# ***** install script *****
+
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
-
-# install script
 
 cat << '__HEREDOC__' > install_script_check.sh
 #!/bin/bash
