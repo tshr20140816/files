@@ -29,6 +29,9 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # ***** delegate *****
 
+rm -f ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}.tar.gz
+rm -rf ${OPENSHIFT_DATA_DIR}/delegate/
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/delegate${delegate_version}.tar.gz ./
 echo `date +%Y/%m/%d" "%H:%M:%S` delegate tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -40,6 +43,7 @@ perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
 time make -j4 \
 CFLAGS="-O2 -march=native -pipe" \
 CXXFLAGS="-O2 -march=native -pipe" >${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
+
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
 cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
 popd > /dev/null
