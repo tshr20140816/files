@@ -1,10 +1,12 @@
-rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
-rhc app create xxx diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
+#!/bin/bash
 
-cd /tmp
+# rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
+# rhc app create xxx diy-0.1 --server openshift.redhat.com
+
+pushd /tmp > /dev/null
 wget http://nginx.org/download/nginx-1.6.2.tar.gz
 tar xfz nginx-1.6.2.tar.gz
-cd nginx-1.6.2
+pushd cd nginx-1.6.2 > /dev/null
 
 CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/nginx \
@@ -44,6 +46,9 @@ make install
 
 perl -pi -e 's/^(\s+)(listen\s+)80;/$1$2$ENV{OPENSHIFT_DIY_IP}:8080;\n$1autoindex on;/g' \
 ${OPENSHIFT_DATA_DIR}/nginx/conf/nginx.conf
+
+popd > /dev/null
+popd > /dev/null
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/ > /dev/null
 cp start start.org
