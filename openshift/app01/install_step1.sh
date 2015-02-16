@@ -572,6 +572,7 @@ cat << '__HEREDOC__' > install_script_check.sh
 #!/bin/bash
 
 if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_step16.sh.ok ]; then
+    echo "please remove this cron !!!" `basename $0`
     exit
 fi
 
