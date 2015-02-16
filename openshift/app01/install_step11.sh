@@ -39,7 +39,7 @@ iconv -f euc-jp -t utf-8 lang/webalizer_lang.japanese_euc > lang/webalizer_lang.
 
 echo `date +%Y/%m/%d" "%H:%M:%S` webalizer configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_webalizer.log
-CFLAGS="-O3 -march=native -pipe" CXXFLAGS="-O3 -march=native -pipe" \
+CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/webalizer \
 --mandir=/tmp/man \
