@@ -5,8 +5,9 @@ function010 {
 
     set -x
 
+    processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
     mfc=$(oo-cgroup-read memory.memsw.failcnt | awk '{printf "%\047d\n", $1}')
-    query_string="server=${OPENSHIFT_GEAR_DNS}\&part=$(basename $0 .sh)&mfc=${mfc}"
+    query_string="server=${OPENSHIFT_GEAR_DNS}\&pc=${processor_count}\&part=$(basename $0 .sh)&mfc=${mfc}"
 
     wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} \
     > /dev/null 2>&1
@@ -39,8 +40,6 @@ function010 {
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $(oo-cgroup-read memory.memsw.failcnt | awk '{printf "Swap Memory Fail Count : %\047d\n", $1}') \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-
-    processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
 
     return 0
 }
