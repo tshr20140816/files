@@ -27,8 +27,8 @@ function010 {
     done < ${OPENSHIFT_DATA_DIR}/version_list
 
     # restart
-    /usr/bin/gear stop
-    /usr/bin/gear start
+    /usr/bin/gear --trace stop
+    /usr/bin/gear --trace start
 
     echo $(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename $0) \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
