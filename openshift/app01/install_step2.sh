@@ -41,6 +41,7 @@ rm -rf ${OPENSHIFT_TMP_DIR}/dbench
 # *** run dbench ***
 
 ${OPENSHIFT_DATA_DIR}/dbench/dbench 4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/dbench.log
+# Throughput
 
 # TODO
 # UnixBench
