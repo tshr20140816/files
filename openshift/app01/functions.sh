@@ -7,7 +7,7 @@ function010 {
 
     processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
     mfc=$(oo-cgroup-read memory.memsw.failcnt | awk '{printf "%\047d\n", $1}')
-    query_string="server=${OPENSHIFT_GEAR_DNS}\&pc=${processor_count}\&part=$(basename $0 .sh)&mfc=${mfc}"
+    query_string="server=${OPENSHIFT_GEAR_DNS}&pc=${processor_count}&part=$(basename $0 .sh)&mfc=${mfc}"
     # TODO clock speed
 
     wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} \
