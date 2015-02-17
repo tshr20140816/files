@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source functions.sh
-function010 && exit
+function010 || exit
 
 # ***** dbench *****
 
