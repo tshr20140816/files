@@ -111,7 +111,7 @@ eval "$(rbenv init -)"
 echo `date +%Y/%m/%d" "%H:%M:%S` rhc install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
-gem install rhc -no-document --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
+gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 
 # *** setup ***
 
