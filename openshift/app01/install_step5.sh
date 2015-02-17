@@ -20,6 +20,7 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 
 # # メモリが厳しいのでアプリケーションを止めて行う
 # /usr/bin/gear stop
+# TODO mysql と phpmyadmin だけ止められるか
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
