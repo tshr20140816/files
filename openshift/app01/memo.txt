@@ -1,0 +1,10 @@
+cd /tmp
+wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
+cd UnixBench
+./Run
+export HOME=${OPENSHIFT_DATA_DIR}
+cpanm Time::HiRes
+export PERL5LIB=/var/lib/openshift/54e332455973ca0d4200002d/app-root/data/perl5/lib/perl5/x86_64-linux-thread-multi
+# ./Run -i 1 int
+./Run
+
