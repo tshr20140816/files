@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # return code 0 : resume 1 : skip
 function010 {
 
