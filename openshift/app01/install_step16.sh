@@ -93,8 +93,8 @@ chmod +x memcached-tool
 popd > /dev/null
 
 # /usr/bin/gear restart --all-cartridges
-/usr/bin/gear stop
-/usr/bin/gear start
+/usr/bin/gear---trace stop
+/usr/bin/gear --trace start
 
 set +x
 
