@@ -20,32 +20,33 @@ echo `date +%Y/%m/%d" "%H:%M:%S` dbench autogen | tee -a ${OPENSHIFT_LOG_DIR}/in
 echo `date +%Y/%m/%d" "%H:%M:%S` '***** autogen *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_dbench.log
 ./autogen.sh 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` dbench configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_dbench.log
-CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
-./configure \
---mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/dbench 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
+# echo `date +%Y/%m/%d" "%H:%M:%S` dbench configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_dbench.log
+# CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
+# ./configure \
+# --mandir=/tmp/man \
+# --docdir=/tmp/doc \
+# --prefix=${OPENSHIFT_DATA_DIR}/dbench 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` dbench make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_dbench.log
-time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
+# echo `date +%Y/%m/%d" "%H:%M:%S` dbench make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_dbench.log
+# time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` dbench make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_dbench.log
-make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
-popd > /dev/null
+# echo `date +%Y/%m/%d" "%H:%M:%S` dbench make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_dbench.log
+# make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
+# popd > /dev/null
 
 rm -rf ${OPENSHIFT_TMP_DIR}/dbench
 
 # *** run dbench ***
 
-processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
-${OPENSHIFT_DATA_DIR}/dbench/dbench 4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/dbench_4.log
-if [ ${processor_count} != 4 ]; then
-    ${OPENSHIFT_DATA_DIR}/dbench/dbench ${processor_count} 2>&1 | tee ${OPENSHIFT_LOG_DIR}/dbench_${processor_count}.log
-fi
-# cat ${OPENSHIFT_LOG_DIR}/dbench.log | grep Throughput
+# processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
+# ${OPENSHIFT_DATA_DIR}/dbench/dbench 4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/dbench_4.log
+# if [ ${processor_count} != 4 ]; then
+#     ${OPENSHIFT_DATA_DIR}/dbench/dbench ${processor_count} 2>&1 | tee ${OPENSHIFT_LOG_DIR}/dbench_${processor_count}.log
+# fi
+# # cat ${OPENSHIFT_LOG_DIR}/dbench.log | grep Throughput
 
 # TODO
 # UnixBench
