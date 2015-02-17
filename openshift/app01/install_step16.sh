@@ -92,7 +92,9 @@ chmod +x memcached-tool
 ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 display
 popd > /dev/null
 
-/usr/bin/gear restart --all-cartridges
+# /usr/bin/gear restart --all-cartridges
+/usr/bin/gear stop
+/usr/bin/gear start
 
 set +x
 
