@@ -40,7 +40,11 @@ rm -rf ${OPENSHIFT_TMP_DIR}/dbench
 
 # *** run dbench ***
 
-${OPENSHIFT_DATA_DIR}/dbench/dbench 4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/dbench.log
+processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
+${OPENSHIFT_DATA_DIR}/dbench/dbench 4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/dbench_4.log
+if [ ${processor_count} != 4 ]; then
+    ${OPENSHIFT_DATA_DIR}/dbench/dbench ${processor_count} 2>&1 | tee ${OPENSHIFT_LOG_DIR}/dbench_${processor_count}.log
+fi
 # cat ${OPENSHIFT_LOG_DIR}/dbench.log | grep Throughput
 
 # TODO
