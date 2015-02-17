@@ -51,6 +51,7 @@ logrotate_version 3.8.8
 pcre_version 8.36
 xymon_version 4.3.18
 fping_version 3.10
+unix_bench_version 5.1.3
 __HEREDOC__
 
 # c-ares_version 1.10.0
@@ -279,6 +280,9 @@ if [ ${mirror_server} != "none" ]; then
     
     # xymon
     wget -t1 ${mirror_server}/xymon-${xymon_version}.tar.gz
+    
+    # UnixBench
+    wget -t1 ${mirror_server}/UnixBench${unix_bench_version}.tgz
 fi
 
 files_exists=0
@@ -531,6 +535,14 @@ do
         echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing lynx${lynx_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo `date +%Y/%m/%d" "%H:%M:%S` Lynx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz
+    fi
+    [ -f lynx${lynx_version}.tar.gz ] || files_exists=0
+
+    # *** UnixBench ***
+    if [ ! -f UnixBench${unix_bench_version}.tgz ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` mirror nothing UnixBench${unix_bench_version}.tgz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` UnixBench wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://byte-unixbench.googlecode.com/files/UnixBench${unix_bench_version}.tgz
     fi
     [ -f lynx${lynx_version}.tar.gz ] || files_exists=0
 
