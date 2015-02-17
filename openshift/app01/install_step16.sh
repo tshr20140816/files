@@ -111,5 +111,6 @@ echo https://${OPENSHIFT_APP_DNS}/logs/ user/${OPENSHIFT_APP_NAME}
 echo Do not git push
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
