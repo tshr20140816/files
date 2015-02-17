@@ -283,6 +283,16 @@ if [ ${mirror_server} != "none" ]; then
     
     # UnixBench
     wget -t1 ${mirror_server}/UnixBench${unix_bench_version}.tgz
+    tarball_sha1=$(sha1sum UnixBench${unix_bench_version}.tgz | cut -d ' ' -f 1)
+    unix_bench_sha1=`curl https://code.google.com/p/byte-unixbench/downloads/detail?name=UnixBench${unix_bench_version}.tgz -s \
+    | grep sha1 \
+    | awk '{print substr(substr($0, index($0, "sha1")), 6, 40)}'`
+    if [ "${tarball_sha1}" != "${unix_bench_sha1}" ]; then
+        echo `date +%Y/%m/%d" "%H:%M:%S` UnixBench sha1 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo `date +%Y/%m/%d" "%H:%M:%S` UnixBench sha1 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm UnixBench${unix_bench_version}.tgz
+    fi
+
 fi
 
 files_exists=0
