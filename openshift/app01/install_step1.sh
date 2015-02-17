@@ -271,8 +271,9 @@ if [ ${mirror_server} != "none" ]; then
     # pcre
     wget -t1 ${mirror_server}/pcre-${pcre_version}.tar.bz2
     wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2.sig
-    gpg --keyserver hkp://keyserver.ubuntu.com:80 \
-    --recv-keys `gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}'`
+    # gpg --keyserver hkp://keyserver.ubuntu.com:80 \
+    # --recv-keys `gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}'`
+    gpg --recv-keys `gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}'`
     if [ `gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "Good signature from" | wc -l` != 1 ]; then
         echo `date +%Y/%m/%d" "%H:%M:%S` pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo `date +%Y/%m/%d" "%H:%M:%S` pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
