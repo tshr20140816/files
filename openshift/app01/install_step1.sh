@@ -157,7 +157,7 @@ rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
 mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
 gpg --list-keys
-[ -f ${GNUPGHOME}/gpg.conf ] || touch ${GNUPGHOME}/gpg.conf
+# [ -f ${GNUPGHOME}/gpg.conf ] || touch ${GNUPGHOME}/gpg.conf
 echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 
 # * まずミラーサーバよりダウンロード *
