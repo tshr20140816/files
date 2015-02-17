@@ -3,6 +3,11 @@
 source functions.sh
 function010 || exit
 
+processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
+cpu_clock=$(cat /proc/cpuinfo | grep MHz | head -n1 | awk -F'[ .]' '{print $3}')
+query_string="server=${OPENSHIFT_GEAR_DNS}&pc=${processor_count}&clock=${cpu_clock}"
+wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
+
 # ***** dbench *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/dbench
