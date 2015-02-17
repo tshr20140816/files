@@ -230,6 +230,7 @@ RailsBaseURI /redmine
 PassengerBaseURI /redmine
 # PassengerTempDir __OPENSHIFT_DATA_DIR__tmp
 # too long unix socket path (max: 107bytes)
+PassengerTempDir /tmp/PassengerTempDir
 SetEnv GEM_HOME __OPENSHIFT_DATA_DIR__.gem
 # TODO
 # SetEnv GEM_PATH
@@ -250,6 +251,8 @@ PassengerFriendlyErrorPages off
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 perl -pi -e 's/__OPENSHIFT_APP_DNS__/$ENV{OPENSHIFT_APP_DNS}/g' ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
+
+mkdir /tmp/PassengerTempDir
 
 # *** apache link ***
 
