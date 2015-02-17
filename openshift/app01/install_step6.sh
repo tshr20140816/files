@@ -28,8 +28,8 @@ echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n
 # ***** restart *****
 
 # /usr/bin/gear restart --all-cartridges
-/usr/bin/gear stop
-/usr/bin/gear start
+/usr/bin/gear---trace stop
+/usr/bin/gear --trace start
 
 # ***** etc *****
 
