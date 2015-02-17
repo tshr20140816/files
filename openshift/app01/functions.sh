@@ -40,5 +40,7 @@ function010 {
     echo $(oo-cgroup-read memory.memsw.failcnt | awk '{printf "Swap Memory Fail Count : %\047d\n", $1}') \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
+    processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
+
     return 0
 }
