@@ -54,7 +54,7 @@ define('WPLANG', 'ja');
 define('WP_DEBUG', false);
 ini_set('display_errors', 0);
 ini_set("log_errors", 1);
-ini_set("error_log", "__LOG_DIR__wordpress_error.log");
+ini_set("error_log", getenv('OPENSHIFT_LOG_DIR') . "wordpress_error.log");
 
 // http://codex.wordpress.org/Administration_Over_SSL
 define('FORCE_SSL_ADMIN', true);
@@ -67,7 +67,6 @@ if ( !defined('ABSPATH') )
 require_once(ABSPATH . 'wp-settings.php');
 
 __HEREDOC__
-perl -pi -e 's/__LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' 
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) wordpress mysql wpuser/${wpuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
