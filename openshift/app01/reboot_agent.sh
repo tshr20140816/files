@@ -4,9 +4,8 @@ export TZ=JST-9
 
 while:
 do
-    if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
-        exit
-    fi
+    [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ] && exit
+
     if [ ! -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ]; then
         sleep 10s
         continue
