@@ -61,7 +61,8 @@ rm -rf ${OPENSHIFT_TMP_DIR}/dbench
 # UnixBench
 # SysBench
 # http://downloads.mysql.com/source/sysbench-0.4.12.5.tar.gz
-# Phoronix Test Suite
+# fio
+# http://brick.kernel.dk/snaps/fio-2.2.5.tar.bz2
 
 # ***** lynx *****
 
