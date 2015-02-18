@@ -67,7 +67,7 @@ if ( !defined('ABSPATH') )
 require_once(ABSPATH . 'wp-settings.php');
 
 __HEREDOC__
-perl -pi -e "s/__LOG_DIR__/${OPENSHIFT_LOG_DIR}/g" wp-config.php
+perl -pi -e 's/__LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' 
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) wordpress mysql wpuser/${wpuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
