@@ -18,10 +18,16 @@ echo `quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}'` | tee
 echo `oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo `oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}'` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-# # メモリが厳しいのでアプリケーションを止めて行う
-# /usr/bin/gear stop
-/usr/bin/gear --trace stop
-/usr/bin/gear --trace start
+# メモリが厳しいのでアプリケーションを止めて行う
+echo "stop" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
+while:
+do
+    if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ]; then
+        sleep 10s
+    else
+        break
+    fi
+done;
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
@@ -40,7 +46,5 @@ ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
 --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
-
-# /usr/bin/gear start
 
 echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
