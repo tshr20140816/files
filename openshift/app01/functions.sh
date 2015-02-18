@@ -26,9 +26,6 @@ function010 {
         eval "${product}"=${version}
     done < ${OPENSHIFT_DATA_DIR}/version_list
 
-    # restart
-    # /usr/bin/gear --trace stop
-    # /usr/bin/gear --trace start
     echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
     while:
     do
