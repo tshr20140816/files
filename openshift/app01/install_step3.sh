@@ -11,28 +11,28 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.bz2 ./
-echo `date +%Y/%m/%d" "%H:%M:%S` apache tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) apache tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar jxf httpd-${apache_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 
 # *** configure make install ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` apache configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) apache configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/apache \
 --mandir=/tmp/man \
 --docdir=/tmp/doc \
 --enable-mods-shared='all proxy' 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-echo `date +%Y/%m/%d" "%H:%M:%S` apache make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-echo `date +%Y/%m/%d" "%H:%M:%S` apache make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) apache make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
+time make -j$(cat /proc/cpuinfo | grep processor | wc -l) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) apache make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-echo `date +%Y/%m/%d" "%H:%M:%S` apache conf | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) apache conf | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 
 # *** spdy ***
@@ -50,7 +50,7 @@ pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
 
 # *** *.conf ***
 
-cp conf/httpd.conf conf/httpd.conf.`date '+%Y%m%d'`
+cp conf/httpd.conf conf/httpd.conf.$(date '+%Y%m%d')
 
 # * Listen 書き換え $ENV{OPENSHIFT_DIY_IP}:8080 *
 
@@ -205,7 +205,7 @@ __HEREDOC__
 # * htpassword *
 # more arrange please
 
-echo user:realm:`echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32` > ${OPENSHIFT_DATA_DIR}/apache/.htpasswd
+echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/apache/.htpasswd
 
 # * htaccess *
 
@@ -260,6 +260,6 @@ rm httpd-${apache_version}.tar.bz2
 rm -rf httpd-${apache_version}
 popd > /dev/null
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
