@@ -10,14 +10,14 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/cacti-${cacti_version}.tar.gz ./
-echo `date +%Y/%m/%d" "%H:%M:%S` Cacti tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Cacti tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz cacti-${cacti_version}.tar.gz --strip-components=1
 # cp ${OPENSHIFT_DATA_DIR}/download_files/security.patch ./
 # patch -p1 -N < security.patch
 popd > /dev/null
 
 # create database
-cactiuser_password=`uuidgen | base64 | head -c 25`
+cactiuser_password=$(uuidgen | base64 | head -c 25)
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_cacti.txt
 CREATE DATABASE cacti CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -38,7 +38,7 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" cacti < ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/cacti.sql
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Cacti mysql cactiuser/${cactiuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Cacti mysql cactiuser/${cactiuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/config.php
 <?php
@@ -59,7 +59,7 @@ perl -pi -e "s/__PASSWORD__/${cactiuser_password}/g" ${OPENSHIFT_TMP_DIR}/config
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
-mv include/config.php include/config.php.`date '+%Y%m%d'`
+mv include/config.php include/config.php.$(date '+%Y%m%d')
 cp ${OPENSHIFT_TMP_DIR}/config.php include/
 popd > /dev/null
 
@@ -74,6 +74,6 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 rm cacti-${cacti_version}.tar.gz
 popd > /dev/null
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
