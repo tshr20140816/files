@@ -11,12 +11,12 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/${ttrss_version}.tar.gz ./
-echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Tiny Tiny RSS tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz ${ttrss_version}.tar.gz --strip-components=1
 popd > /dev/null
 
 # create database
-ttrssuser_password=`uuidgen | base64 | head -c 25`
+ttrssuser_password=$(uuidgen | base64 | head -c 25)
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_ttrss.txt
 CREATE DATABASE ttrss CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -37,7 +37,7 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/schema/ttrss_schema_mysql.sql
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Tiny Tiny RSS mysql ttrssuser/${ttrssuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Tiny Tiny RSS mysql ttrssuser/${ttrssuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
@@ -64,6 +64,6 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 rm ${ttrss_version}.tar.gz
 popd > /dev/null
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
