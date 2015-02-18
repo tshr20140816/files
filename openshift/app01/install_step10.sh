@@ -12,13 +12,13 @@ rm -rf ${OPENSHIFT_DATA_DIR}/mrtg
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
-echo `date +%Y/%m/%d" "%H:%M:%S` mrtg tar >> ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg tar >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz mrtg-${mrtg_version}.tar.gz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version} > /dev/null
-echo `date +%Y/%m/%d" "%H:%M:%S` mrtg configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo `date +%Y/%m/%d" "%H:%M:%S` '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
@@ -26,13 +26,13 @@ CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 --docdir=/tmp/doc \
 --prefix=${OPENSHIFT_DATA_DIR}/mrtg 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
-time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
+time make -j$(cat /proc/cpuinfo | grep processor | wc -l) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` mrtg make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
@@ -54,7 +54,7 @@ touch scripts/cpu_usage.sh
 cat << '__HEREDOC__' > scripts/cpu_usage.sh
 #!/bin/bash
 
-echo `cat ${OPENSHIFT_TMP_DIR}/cpu_usage_current`
+echo $(cat ${OPENSHIFT_TMP_DIR}/cpu_usage_current)
 echo 0
 echo dummy
 echo cpu usage
@@ -65,8 +65,8 @@ touch scripts/disk_usage.sh
 cat << '__HEREDOC__' > scripts/disk_usage.sh
 #!/bin/bash
 
-echo `quota | grep -v a | awk '{print $1}'`
-echo `quota | grep -v a | awk '{print $3}'`
+echo $(quota | grep -v a | awk '{print $1}')
+echo $(quota | grep -v a | awk '{print $3}')
 echo dummy
 echo disk usage
 __HEREDOC__
@@ -76,8 +76,8 @@ touch scripts/file_usage.sh
 cat << '__HEREDOC__' > scripts/file_usage.sh
 #!/bin/bash
 
-echo `quota | grep -v a | awk '{print $4}'`
-echo `quota | grep -v a | awk '{print $6}'`
+echo $(quota | grep -v a | awk '{print $4}')
+echo $(quota | grep -v a | awk '{print $6}')
 echo dummy
 echo file usage
 __HEREDOC__
@@ -87,8 +87,8 @@ touch scripts/memory_usage.sh
 cat << '__HEREDOC__' > scripts/memory_usage.sh
 #!/bin/bash
 
-echo `oo-cgroup-read memory.usage_in_bytes | awk '{print $1}'`
-echo `oo-cgroup-read memory.limit_in_bytes | awk '{print $1}'`
+echo $(oo-cgroup-read memory.usage_in_bytes | awk '{print $1}')
+echo $(oo-cgroup-read memory.limit_in_bytes | awk '{print $1}')
 echo dummy
 echo memory usage
 __HEREDOC__
@@ -101,7 +101,7 @@ ImageDir: __OPENSHIFT_DATA_DIR__mrtg/www/
 LogDir: __OPENSHIFT_DATA_DIR__mrtg/log/
 Refresh: 60000
 
-Target[disk]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/disk_usage.sh`
+Target[disk]: $(${OPENSHIFT_DATA_DIR}/mrtg/scripts/disk_usage.sh)
 Title[disk]: Disk
 PageTop[disk]: <h1>Disk</h1>
 Options[disk]: gauge, nobanner, growright, unknaszero, noinfo
@@ -118,7 +118,7 @@ Suppress[disk]: y
 Factor[disk]: 1024
 YTicsFactor[disk]: 1024
 
-Target[file]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/file_usage.sh`
+Target[file]: $(${OPENSHIFT_DATA_DIR}/mrtg/scripts/file_usage.sh)
 Title[file]: Files
 PageTop[file]: <h1>Files</h1>
 Options[file]: gauge, nobanner, growright, unknaszero, noinfo, integer
@@ -132,7 +132,7 @@ Legend2[file]: File Count Limit
 ShortLegend[file]: files
 Suppress[file]: y
 
-Target[memory]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/memory_usage.sh`
+Target[memory]: $(${OPENSHIFT_DATA_DIR}/mrtg/scripts/memory_usage.sh)
 Title[memory]: Memory
 PageTop[memory]: <h1>Memory</h1>
 Options[memory]: gauge, nobanner, growright, unknaszero, noinfo
@@ -146,7 +146,7 @@ Legend2[memory]: Memory Limit
 ShortLegend[memory]: B
 Suppress[memory]: y
 
-Target[cpu]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/cpu_usage.sh`
+Target[cpu]: $(${OPENSHIFT_DATA_DIR}/mrtg/scripts/cpu_usage.sh)
 Title[cpu]: Cpu
 PageTop[cpu]: <h1>Cpu</h1>
 Options[cpu]: gauge, nobanner, growright, unknaszero, noinfo, noo
@@ -180,6 +180,6 @@ popd > /dev/null
 
 ln -s ${OPENSHIFT_DATA_DIR}/mrtg/www ${OPENSHIFT_DATA_DIR}/apache/htdocs/mrtg
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
