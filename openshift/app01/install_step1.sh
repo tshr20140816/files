@@ -622,6 +622,9 @@ echo install_script_check.sh >> jobs.allow
 
 popd > /dev/null
 
+chmod +x ${OPENSHIFT_DATA_DIR}/github/openshift/app01/reboot_agent.sh
+${OPENSHIFT_DATA_DIR}/github/openshift/app01/reboot_agent.sh >> ${OPENSHIFT_LOG_DIR}/reboot_agent.log 2>&1 &
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
 
 export TMOUT=0
