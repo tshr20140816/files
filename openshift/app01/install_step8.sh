@@ -10,12 +10,12 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
-echo `date +%Y/%m/%d" "%H:%M:%S` wordpress tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) wordpress tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
 popd > /dev/null
 
 # create database
-wpuser_password=`uuidgen | base64 | head -c 25`
+wpuser_password=$(uuidgen | base64 | head -c 25)
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_wordpress.txt
 CREATE DATABASE wordpress CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -69,13 +69,13 @@ require_once(ABSPATH . 'wp-settings.php');
 __HEREDOC__
 perl -pi -e "s/__LOG_DIR__/${OPENSHIFT_LOG_DIR}/g" wp-config.php
 
-echo `date +%Y/%m/%d" "%H:%M:%S` wordpress mysql wpuser/${wpuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) wordpress mysql wpuser/${wpuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
 rm wordpress-${wordpress_version}.tar.gz
 popd > /dev/null
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
