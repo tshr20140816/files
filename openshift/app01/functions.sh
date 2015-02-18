@@ -30,7 +30,7 @@ function010 {
     while:
     do
         [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
-    done;
+    done
 
     echo $(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename $0) \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
