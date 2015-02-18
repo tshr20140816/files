@@ -13,12 +13,12 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 cat << '__HEREDOC__' > for_restart.sh
 #!/bin/bash
 
-testrubyserver_count=`ps aux | grep testrubyserver.rb | grep ${OPENSHIFT_APP_UUID} | grep -v grep | wc -l`
+testrubyserver_count=$(ps aux | grep testrubyserver.rb | grep ${OPENSHIFT_APP_UUID} | grep -v grep | wc -l)
 
 if [ ${testrubyserver_count} -gt 0 ]; then
 
     # *** kill testrubyserver.rb ***
-    kill `ps auwx 2>/dev/null | grep testrubyserver.rb | grep ${OPENSHIFT_APP_UUID} | grep -v grep | awk '{print $2}'`
+    kill $(ps auwx 2>/dev/null | grep testrubyserver.rb | grep ${OPENSHIFT_APP_UUID} | grep -v grep | awk '{print $2}')
 
     # *** apache ***
     export TZ=JST-9
@@ -94,7 +94,7 @@ echo https://${OPENSHIFT_APP_DNS}/logs/ user/${OPENSHIFT_APP_NAME}
 
 echo Do not git push
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
