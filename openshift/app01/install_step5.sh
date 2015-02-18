@@ -32,11 +32,7 @@ echo $(oo-cgroup-read memory.memsw.failcnt | awk '{printf "Swap Memory Fail Coun
 echo "stop" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
 while:
 do
-    if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ]; then
-        sleep 10s
-    else
-        break
-    fi
+    [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
 done;
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
