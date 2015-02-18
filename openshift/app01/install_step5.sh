@@ -30,7 +30,7 @@ echo $(oo-cgroup-read memory.memsw.failcnt | awk '{printf "Swap Memory Fail Coun
 
 # メモリが厳しいのでアプリケーションを止めて行う
 echo "stop" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
-while:
+while :
 do
     [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
 done
