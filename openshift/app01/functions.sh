@@ -1,5 +1,5 @@
 # return code 0 : resume 1 : skip
-function010 {
+function010() {
 
     export TZ=JST-9
 
