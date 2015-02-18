@@ -30,7 +30,7 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 
 # *** patch check ***
 
-echo `date +%Y/%m/%d" "%H:%M:%S` request_handler.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) request_handler.rb patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 | grep lib/phusion_passenger/request_handler.rb \
 | xargs cat \
@@ -38,7 +38,7 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 
 # ***** font *****
 
-echo `date +%Y/%m/%d" "%H:%M:%S` font install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) font install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 # cp ${OPENSHIFT_DATA_DIR}/download_files/IPAfont${ipafont_version}.zip ./
@@ -51,7 +51,7 @@ popd > /dev/null
 
 # ***** redmine *****
 
-echo `date +%Y/%m/%d" "%H:%M:%S` redmine install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) redmine install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** redmine ***
 
@@ -87,7 +87,7 @@ __HEREDOC__
 
 # * create password *
 
-redmineuser_password=`uuidgen | base64 | head -c 25`
+redmineuser_password=$(uuidgen | base64 | head -c 25)
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_redmine.txt
 perl -pi -e "s/__PASSWORD__/${redmineuser_password}/g" create_database_redmine.txt
 
@@ -132,8 +132,8 @@ default:
 rmagick_font_path: <%= ENV['OPENSHIFT_DATA_DIR'] %>/fonts/ipagp.ttf
 __HEREDOC__
 
-redmine_email_address=`cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_address`
-redmine_email_password=`cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_password`
+redmine_email_address=$(cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_address)
+redmine_email_password=$(cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_password)
 
 sed -i -e "s/__USER_NAME__/${redmine_email_address}/g" config/configuration.yml
 perl -pi -e "s/__PASSWORD__/${redmine_email_password}/g" config/configuration.yml
@@ -165,9 +165,10 @@ rbenv rehash
 # *** bundle ***
 
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
-mv Gemfile Gemfile.`date '+%Y%m%d'`
+mv Gemfile Gemfile.$(date '+%Y%m%d')
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
-time bundle install --path vendor/bundle -j4 --retry 5 >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
+time bundle install --path vendor/bundle -j$(cat /proc/cpuinfo | grep processor | wc -l) --retry 5 \
+>${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 
 # *** rake ***
 
@@ -185,10 +186,10 @@ find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name 
 | grep coderay/helpers/ \
 | xargs perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27 => :bash,\012/g'
 
-echo `date +%Y/%m/%d" "%H:%M:%S` bash.rb copy check >> ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) bash.rb copy check >> ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name bash.rb -type f >> ${OPENSHIFT_LOG_DIR}/install.log
 
-echo `date +%Y/%m/%d" "%H:%M:%S` file_types.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) file_types.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f | xargs cat | grep bash >> ${OPENSHIFT_LOG_DIR}/install.log
 
 popd > /dev/null
@@ -244,6 +245,6 @@ perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' restart_redmin
 perl -pi -e 's/__REDMINE_VERSION__/${redmine_version}/g' restart_redmine.cgi
 popd > /dev/null
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
