@@ -71,9 +71,17 @@ chmod +x memcached-tool
 ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 display
 popd > /dev/null
 
-# /usr/bin/gear restart --all-cartridges
-/usr/bin/gear---trace stop
-/usr/bin/gear --trace start
+# ***** restart *****
+
+echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
+while:
+do
+    if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ]; then
+        sleep 10s
+    else
+        break
+    fi
+done;
 
 set +x
 
