@@ -2,7 +2,7 @@
 
 export TZ=JST-9
 
-while:
+while :
 do
     [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ] && exit
 
