@@ -78,7 +78,7 @@ echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
 while:
 do
     [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
-done;
+done
 
 set +x
 
