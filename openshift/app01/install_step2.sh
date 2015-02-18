@@ -44,7 +44,7 @@ echo `date +%Y/%m/%d" "%H:%M:%S` '***** autogen *****' $'\n'$'\n'> ${OPENSHIFT_L
 # echo `date +%Y/%m/%d" "%H:%M:%S` dbench make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # echo $'\n'`date +%Y/%m/%d" "%H:%M:%S` '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_dbench.log
 # make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
-# popd > /dev/null
+popd > /dev/null
 
 rm -rf ${OPENSHIFT_TMP_DIR}/dbench
 
