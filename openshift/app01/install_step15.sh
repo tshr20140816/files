@@ -25,8 +25,7 @@ do
     usage_in_bytes_format=`echo ${usage_in_bytes} | awk '{printf "%\047d\n", $0}'`
     failcnt=`oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}'`
     echo ${dt} ${usage_in_bytes_format} ${failcnt} >> ${OPENSHIFT_LOG_DIR}/memory_usage.log
-    [ -f ${OPENSHIFT_TMP_DIR}/stop ] || exit
-    sleep 1s
+    [ -f ${OPENSHIFT_TMP_DIR}/stop ] && exit || sleep 1s
 done
 __HEREDOC__
 chmod +x memory_usage_logging.sh
