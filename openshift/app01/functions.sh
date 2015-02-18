@@ -29,6 +29,15 @@ function010 {
     # restart
     # /usr/bin/gear --trace stop
     # /usr/bin/gear --trace start
+    touch ${OPENSHIFT_DATA_DIR}/install_check_point/restart.txt
+    while:
+    do
+        if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/restart.txt ]; then
+            sleep 10s
+        else
+            break
+        fi
+    done;
 
     echo $(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename $0) \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
