@@ -36,4 +36,4 @@ do
             ;;
     esac
     rm -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
-done;
+done
