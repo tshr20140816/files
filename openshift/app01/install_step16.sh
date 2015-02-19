@@ -67,6 +67,7 @@ find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --r
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
 chmod +x memcached-tool
+export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 dump
 ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats
 ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 display
