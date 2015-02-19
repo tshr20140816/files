@@ -74,6 +74,8 @@ perl -pi -e 's/#{Changeset.table_name}.committed_on DESC/CONVERT(#{Changeset.tab
 
 popd > /dev/null
 
+echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 # *** create database ***
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -162,6 +164,8 @@ eval "$(rbenv init -)"
 rbenv local ${ruby_version}
 rbenv rehash
 
+echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 # *** bundle ***
 
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
@@ -172,9 +176,13 @@ time bundle install --path vendor/bundle -j$(cat /proc/cpuinfo | grep processor 
 
 # *** rake ***
 
+echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 time RAILS_ENV=production bundle exec rake generate_secret_token 2>&1 | tee ${OPENSHIFT_LOG_DIR}/generate_secret_token.rake.log
+echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 time RAILS_ENV=production bundle exec rake db:migrate 2>&1 | tee ${OPENSHIFT_LOG_DIR}/db_migrate.rake.log
+echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 time RAILS_ENV=production bundle exec rake redmine:plugins:migrate 2>&1 | tee ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log
+echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** coderay bash ***
 
