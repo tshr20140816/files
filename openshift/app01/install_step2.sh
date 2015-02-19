@@ -12,57 +12,45 @@ model_name=$(cat /proc/cpuinfo | grep "model name" | head -n1 \
 query_string="server=${OPENSHIFT_GEAR_DNS}&pc=${processor_count}&clock=${cpu_clock}&model=${model_name}"
 wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
 
-# ***** dbench *****
+# ***** fio *****
 
-rm -rf ${OPENSHIFT_TMP_DIR}/dbench
-rm -rf ${OPENSHIFT_DATA_DIR}/dbench
+rm -rf ${OPENSHIFT_TMP_DIR}/fio-${fio_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/fio
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-echo $(date +%Y/%m/%d" "%H:%M:%S) dbench git pull | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-git clone git://git.samba.org/sahlberg/dbench.git dbench
-git pull
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/fio-${fio_version}.tar.bz2 ./
+echo $(date +%Y/%m/%d" "%H:%M:%S) fio tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+tar jxf fio-${fio_version}.tar.bz2
 popd > /dev/null
 
-pushd ${OPENSHIFT_TMP_DIR}/dbench > /dev/null
-
-echo $(date +%Y/%m/%d" "%H:%M:%S) dbench autogen | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) '***** autogen *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_dbench.log
-./autogen.sh 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
-
-# echo $(date +%Y/%m/%d" "%H:%M:%S) dbench configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_dbench.log
-# CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
-# ./configure \
-# --mandir=/tmp/man \
-# --docdir=/tmp/doc \
-# --prefix=${OPENSHIFT_DATA_DIR}/dbench 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
-
-# echo $(date +%Y/%m/%d" "%H:%M:%S) dbench make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_dbench.log
-# time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
-
-# echo $(date +%Y/%m/%d" "%H:%M:%S) dbench make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_dbench.log
-# make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_dbench.log
+pushd ${OPENSHIFT_TMP_DIR}/fio-${fio_version} > /dev/null
+echo $(date +%Y/%m/%d" "%H:%M:%S) fio configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_fio.log
+./configure --extra-cflags="-O2 -march=native -pipe"
+echo $(date +%Y/%m/%d" "%H:%M:%S) fio make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fio.log
+time make -j$(cat /proc/cpuinfo | grep processor | wc -l) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
+sed -i -e "s|^prefix .+$|prefix = ${OPENSHIFT_DATA_DIR}fio|g" Makefile
+echo $(date +%Y/%m/%d" "%H:%M:%S) fio make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fio.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
 popd > /dev/null
 
-rm -rf ${OPENSHIFT_TMP_DIR}/dbench
+# *** run fio ***
 
-# *** run dbench ***
-
-# processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
-# ${OPENSHIFT_DATA_DIR}/dbench/dbench 4 2>&1 | tee ${OPENSHIFT_LOG_DIR}/dbench_4.log
-# if [ ${processor_count} != 4 ]; then
-#     ${OPENSHIFT_DATA_DIR}/dbench/dbench ${processor_count} 2>&1 | tee ${OPENSHIFT_LOG_DIR}/dbench_${processor_count}.log
-# fi
-# # cat ${OPENSHIFT_LOG_DIR}/dbench.log | grep Throughput
+pushd ${OPENSHIFT_DATA_DIR}fio > /dev/null
+./bin/fio -rw=read -bs=4k -size=10m -numjobs=10 -runtime=60 \
+-direct=1 -invalidate=1 -ioengine=libaio \
+-iodepth=32 -iodepth_batch=32 -group_reporting -name=read -directory=${OPENSHIFT_DATA_DIR} \
+| tee ${OPENSHIFT_LOG_DIR}/fio_read.log
+# read write randread randwrite
+popd > /dev/null
 
 # TODO
+# dbench
 # UnixBench
 # SysBench
 # http://downloads.mysql.com/source/sysbench-0.4.12.5.tar.gz
-# fio
-# http://brick.kernel.dk/snaps/fio-2.2.5.tar.bz2
 
 # ***** lynx *****
 
