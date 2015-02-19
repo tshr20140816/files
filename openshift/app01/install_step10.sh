@@ -101,7 +101,7 @@ ImageDir: __OPENSHIFT_DATA_DIR__mrtg/www/
 LogDir: __OPENSHIFT_DATA_DIR__mrtg/log/
 Refresh: 60000
 
-Target[disk]: $(${OPENSHIFT_DATA_DIR}/mrtg/scripts/disk_usage.sh)
+Target[disk]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/disk_usage.sh`
 Title[disk]: Disk
 PageTop[disk]: <h1>Disk</h1>
 Options[disk]: gauge, nobanner, growright, unknaszero, noinfo
@@ -118,7 +118,7 @@ Suppress[disk]: y
 Factor[disk]: 1024
 YTicsFactor[disk]: 1024
 
-Target[file]: $(${OPENSHIFT_DATA_DIR}/mrtg/scripts/file_usage.sh)
+Target[file]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/file_usage.sh`
 Title[file]: Files
 PageTop[file]: <h1>Files</h1>
 Options[file]: gauge, nobanner, growright, unknaszero, noinfo, integer
@@ -132,7 +132,7 @@ Legend2[file]: File Count Limit
 ShortLegend[file]: files
 Suppress[file]: y
 
-Target[memory]: $(${OPENSHIFT_DATA_DIR}/mrtg/scripts/memory_usage.sh)
+Target[memory]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/memory_usage.sh`
 Title[memory]: Memory
 PageTop[memory]: <h1>Memory</h1>
 Options[memory]: gauge, nobanner, growright, unknaszero, noinfo
@@ -146,7 +146,7 @@ Legend2[memory]: Memory Limit
 ShortLegend[memory]: B
 Suppress[memory]: y
 
-Target[cpu]: $(${OPENSHIFT_DATA_DIR}/mrtg/scripts/cpu_usage.sh)
+Target[cpu]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/cpu_usage.sh`
 Title[cpu]: Cpu
 PageTop[cpu]: <h1>Cpu</h1>
 Options[cpu]: gauge, nobanner, growright, unknaszero, noinfo, noo
