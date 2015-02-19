@@ -27,6 +27,7 @@ function010() {
     done < ${OPENSHIFT_DATA_DIR}/version_list
 
     echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
+    sleep 30s
     while :
     do
         [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
