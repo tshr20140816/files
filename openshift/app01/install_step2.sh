@@ -59,6 +59,16 @@ popd > /dev/null
 # SysBench
 # http://downloads.mysql.com/source/sysbench-0.4.12.5.tar.gz
 
+# ***** super pi *****
+
+rm -rf ${OPENSHIFT_TMP_DIR}/superpi
+mkdir ${OPENSHIFT_TMP_DIR}/superpi
+pushd ${OPENSHIFT_TMP_DIR}/superpi > /dev/null
+wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
+tar xvz super_pi-jp.tar.gz
+# TODO
+popd > /dev/null
+
 # ***** lynx *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/lynx
