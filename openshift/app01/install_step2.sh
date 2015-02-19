@@ -38,12 +38,19 @@ popd > /dev/null
 
 # *** run fio ***
 
+rm -rf ${OPENSHIFT_DATA_DIR}/work
 pushd ${OPENSHIFT_DATA_DIR}fio > /dev/null
-./bin/fio -rw=read -bs=4k -size=10m -numjobs=10 -runtime=60 \
--direct=1 -invalidate=1 -ioengine=libaio \
--iodepth=32 -iodepth_batch=32 -group_reporting -name=read -directory=${OPENSHIFT_DATA_DIR} \
-| tee ${OPENSHIFT_LOG_DIR}/fio_read.log
-# read write randread randwrite
+for rwtype in read write randread randwrite
+do
+    mkdir ${OPENSHIFT_DATA_DIR}/work
+
+    ./bin/fio -rw=${rwtype} -bs=4k -size=10m -numjobs=10 -runtime=60 \
+    -direct=1 -invalidate=1 -ioengine=libaio \
+    -iodepth=32 -iodepth_batch=32 -group_reporting -name=${rwtype} -directory=${OPENSHIFT_DATA_DIR}/work \
+    | tee ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log
+
+    rm -rf ${OPENSHIFT_DATA_DIR}/work
+done
 popd > /dev/null
 
 # TODO
