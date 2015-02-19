@@ -208,6 +208,7 @@ else
 fi
 
 # redmine
+export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 process_count=$(find ${OPENSHIFT_DATA_DIR}/.gem/gems/ \
 -name passenger-status -type f \
 | xargs --replace={} ruby {} --verbose \
