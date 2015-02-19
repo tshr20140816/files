@@ -62,17 +62,6 @@ ruby --version
 export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose
 
-# *** memcached information ***
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
-chmod +x memcached-tool
-export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
-./memcached-tool ${OPENSHIFT_DIY_IP}:31211 dump
-./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats
-./memcached-tool ${OPENSHIFT_DIY_IP}:31211 display
-popd > /dev/null
-
 # ***** restart *****
 
 echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
