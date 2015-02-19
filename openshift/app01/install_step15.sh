@@ -280,6 +280,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 echo $(date +%Y/%m/%d" "%H:%M:%S) > memcached_status.txt
+export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> memcached_status.txt
 __HEREDOC__
 chmod +x memcached_status.sh
