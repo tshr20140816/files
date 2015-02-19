@@ -32,10 +32,11 @@ time make -j$(cat /proc/cpuinfo | grep processor | wc -l) 2>&1 | tee -a ${OPENSH
 echo $(date +%Y/%m/%d" "%H:%M:%S) apache make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) apache conf | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 
 # *** spdy ***
+
+echo $(date +%Y/%m/%d" "%H:%M:%S) apache spdy | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 mkdir ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
 pushd ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64 > /dev/null
@@ -47,6 +48,8 @@ popd > /dev/null
 rm -rf ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
 
 pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
+
+echo $(date +%Y/%m/%d" "%H:%M:%S) apache conf | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** *.conf ***
 
