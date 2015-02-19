@@ -4,7 +4,10 @@ export TZ=JST-9
 
 while :
 do
-    [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ] && exit
+    if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
+        echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
+        exit
+    fi
 
     if [ ! -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ]; then
         sleep 10s
