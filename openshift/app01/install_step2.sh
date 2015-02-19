@@ -45,7 +45,7 @@ do
     mkdir ${OPENSHIFT_DATA_DIR}/work
 
     ./bin/fio -rw=${rwtype} -bs=4k -size=10m -numjobs=10 -runtime=60 \
-    -direct=1 -invalidate=1 -ioengine=libaio \
+    -direct=1 -invalidate=1 \
     -iodepth=32 -iodepth_batch=32 -group_reporting -name=${rwtype} -directory=${OPENSHIFT_DATA_DIR}/work \
     | tee ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log
 
