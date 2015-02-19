@@ -62,13 +62,15 @@ if [ $(expr ${minute} % 5) -eq 2 ]; then
     usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
     if [ ${usage_in_bytes} -gt 400000000 ]; then
         dt=$(date +%Y/%m/%d" "%H:%M:%S)
-        echo ${dt} skip ... memory use ${usage_in_bytes} bytes >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+        echo ${dt} skip ... memory use ${usage_in_bytes} bytes \
+        >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
         exit
     fi
 
     if [ -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt ]; then
         dt=$(date +%Y/%m/%d" "%H:%M:%S)
-        echo ${dt} skip ... file exists ${OPENSHIFT_TMP_DIR}redmine_repository_check.txt >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+        echo ${dt} skip ... file exists ${OPENSHIFT_TMP_DIR}redmine_repository_check.txt \
+        >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
         exit
     fi
 
@@ -83,7 +85,8 @@ if [ $(expr ${minute} % 5) -eq 2 ]; then
     cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
     bundle exec rake redmine:fetch_changesets RAILS_ENV=production
     rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-    echo $(date +%Y/%m/%d" "%H:%M:%S) finish ${dt} >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+    echo $(date +%Y/%m/%d" "%H:%M:%S) finish ${dt} \
+    >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
 fi
 __HEREDOC__
 chmod +x redmine_repository_check.sh
@@ -264,8 +267,10 @@ eval "$(rbenv init -)"
 rbenv global __RUBY_VERSION__
 rbenv rehash
 
+export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 echo $(date +%Y/%m/%d" "%H:%M:%S) > passenger_status.txt
-find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose >> passenger_status.txt
+find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f \
+| xargs --replace={} ruby {} --verbose >> passenger_status.txt
 __HEREDOC__
 sed -i -e "s|__RUBY_VERSION__|${ruby_version}|g" passenger_status.sh
 chmod +x passenger_status.sh
@@ -280,7 +285,6 @@ echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 echo $(date +%Y/%m/%d" "%H:%M:%S) > memcached_status.txt
-export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> memcached_status.txt
 __HEREDOC__
 chmod +x memcached_status.sh
