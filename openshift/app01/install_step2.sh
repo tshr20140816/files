@@ -66,8 +66,9 @@ mkdir ${OPENSHIFT_TMP_DIR}/superpi
 pushd ${OPENSHIFT_TMP_DIR}/superpi > /dev/null
 wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
 tar xvz super_pi-jp.tar.gz
-# TODO
+./super_pi 20 | tee ${OPENSHIFT_LOG_DIR}/super_pi.log
 popd > /dev/null
+rm -rf ${OPENSHIFT_TMP_DIR}/superpi
 
 # ***** lynx *****
 
