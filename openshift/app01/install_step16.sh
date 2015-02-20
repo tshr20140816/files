@@ -65,6 +65,7 @@ find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --r
 # ***** restart *****
 
 echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
+sleep 30s
 while :
 do
     [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
