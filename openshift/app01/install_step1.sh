@@ -581,6 +581,12 @@ do
     fi
     [ -f fio-${fio_version}.tar.bz2 ] || files_exists=0
 
+    # *** super pi ***
+    if [ ! -f super_pi-jp.tar.gz ]; then
+        echo $(date +%Y/%m/%d" "%H:%M:%S) super pi wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
+    fi
+
     # *** etc ***
 
     if [ ! -f salt.txt ]; then
