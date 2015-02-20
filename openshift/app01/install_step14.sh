@@ -36,9 +36,10 @@ rm tcl${tcl_version}-src.tar.gz
 # rm -rf tcl${tcl_version}
 popd > /dev/null
 
-# ***** Expect *****
+echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') \
+| tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# ***** Expect *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/expect${expect_version}.tar.gz ./
@@ -71,8 +72,6 @@ popd > /dev/null
 
 # ***** rhc *****
 
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-
 # *** env ***
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
@@ -85,7 +84,6 @@ eval "$(rbenv init -)"
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) rhc install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-# gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 
 # *** setup ***
@@ -96,7 +94,8 @@ openshift_email_address=$(cat ${OPENSHIFT_DATA_DIR}/params/openshift_email_addre
 openshift_email_password=$(cat ${OPENSHIFT_DATA_DIR}/params/openshift_email_password)
 
 echo set timeout 60 > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
-echo spawn ${OPENSHIFT_DATA_DIR}.gem/bin/rhc setup --server openshift.redhat.com --create-token -l ${openshift_email_address} -p ${openshift_email_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+echo spawn ${OPENSHIFT_DATA_DIR}.gem/bin/rhc setup --server openshift.redhat.com \
+--create-token -l ${openshift_email_address} -p ${openshift_email_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 cat << '__HEREDOC__' >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 expect "(yes|no)"
 send "yes\r"
