@@ -43,7 +43,8 @@ OutputDir __OPENSHIFT_DATA_DIR__/webalizer/www
 HostName __OPENSHIFT_APP_DNS__
 UseHTTPS yes
 
-HTMLHead <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+HTMLHead <meta http-equiv="content-type" content="text/html; charset=utf-8">
+HTMLHead <meta http-equiv="content-style-type" content="text/css">
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" webalizer.conf
 sed -i -e "s|__OPENSHIFT_APP_DNS__|${OPENSHIFT_APP_DNS}|g" webalizer.conf
