@@ -22,6 +22,7 @@ CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/webalizer \
 --mandir=/tmp/man \
+--docdir=/tmp/doc \
 --with-language=japanese \
 --enable-dns 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_webalizer.log
 
