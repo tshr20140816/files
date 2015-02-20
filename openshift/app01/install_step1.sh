@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.02.20 redmine_version 2.5.3 → 2.6.3
 # 2015.02.20 wordpress_version 4.1-ja → 4.1.1-ja
 # 2015.02.11 tcl_version 8.6.2 → 8.6.3
 # 2015.01.23 php_version 5.6.4 → 5.6.5
@@ -40,7 +41,7 @@ memcached_version 1.4.22
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
 ruby_version 2.1.5
-redmine_version 2.5.3
+redmine_version 2.6.2
 ipafont_version 00303
 cacti_version 0.8.8c
 murlin_version 0.2.4
