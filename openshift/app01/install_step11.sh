@@ -36,12 +36,17 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/webalizer/etc > /dev/null
 cp webalizer.conf.sample webalizer.conf
-echo >> webalizer.conf
-echo >> webalizer.conf
-echo LogFile ${OPENSHIFT_DATA_DIR}/apache/logs/access_log >> webalizer.conf
-echo OutputDir ${OPENSHIFT_DATA_DIR}/webalizer/www >> webalizer.conf
-echo HostName ${OPENSHIFT_APP_DNS} >> webalizer.conf
-echo UseHTTPS yes >> webalizer.conf
+cat << '__HEREDOC__' >> webalizer.conf
+
+LogFile __OPENSHIFT_DATA_DIR__/apache/logs/access_log
+OutputDir __OPENSHIFT_DATA_DIR__/webalizer/www
+HostName __OPENSHIFT_APP_DNS__
+UseHTTPS yes
+
+HTMLHead <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+__HEREDOC__
+sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" webalizer.conf
+sed -i -e "s|__OPENSHIFT_APP_DNS__|${OPENSHIFT_APP_DNS}|g" webalizer.conf
 popd > /dev/null
 
 mkdir ${OPENSHIFT_DATA_DIR}/webalizer/www
