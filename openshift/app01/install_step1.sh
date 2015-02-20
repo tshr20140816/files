@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.02.20 php_version 5.6.5 → 5.6.6
 # 2015.02.20 redmine_version 2.5.3 → 2.6.2
 # 2015.02.20 wordpress_version 4.1-ja → 4.1.1-ja
 # 2015.02.11 tcl_version 8.6.2 → 8.6.3
@@ -31,7 +32,7 @@ set -x
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
-php_version 5.6.5
+php_version 5.6.6
 delegate_version 9.9.13
 mrtg_version 2.17.4
 webalizer_version 2.23-08
