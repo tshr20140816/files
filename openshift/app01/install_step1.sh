@@ -3,7 +3,7 @@
 set -x
 
 # History
-# 2015.02.20 redmine_version 2.5.3 → 2.6.3
+# 2015.02.20 redmine_version 2.5.3 → 2.6.2
 # 2015.02.20 wordpress_version 4.1-ja → 4.1.1-ja
 # 2015.02.11 tcl_version 8.6.2 → 8.6.3
 # 2015.01.23 php_version 5.6.4 → 5.6.5
