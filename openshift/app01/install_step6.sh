@@ -70,11 +70,10 @@ mv app/models/repository/subversion.rb app/models/repository/subversion.rb.org
 cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/subversion.rb app/models/repository/
 
 # リビジョンが大きくても日時が古いことがある
-perl -pi -e 's/#{Changeset.table_name}.committed_on DESC/CONVERT(#{Changeset.table_name}.revision, UNSIGNED) DESC/g' app/models/repository.rb
+perl -pi -e 's/#{Changeset.table_name}.committed_on DESC/CONVERT(#{Changeset.table_name}.revision, UNSIGNED) DESC/g' \
+app/models/repository.rb
 
 popd > /dev/null
-
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** create database ***
 
@@ -164,8 +163,6 @@ eval "$(rbenv init -)"
 rbenv local ${ruby_version}
 rbenv rehash
 
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-
 # *** bundle ***
 
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
@@ -176,13 +173,12 @@ time bundle install --path vendor/bundle -j$(cat /proc/cpuinfo | grep processor 
 
 # *** rake ***
 
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time RAILS_ENV=production bundle exec rake generate_secret_token 2>&1 | tee ${OPENSHIFT_LOG_DIR}/generate_secret_token.rake.log
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time RAILS_ENV=production bundle exec rake db:migrate 2>&1 | tee ${OPENSHIFT_LOG_DIR}/db_migrate.rake.log
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time RAILS_ENV=production bundle exec rake redmine:plugins:migrate 2>&1 | tee ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+time RAILS_ENV=production bundle exec rake generate_secret_token 2>&1 \
+| tee ${OPENSHIFT_LOG_DIR}/generate_secret_token.rake.log
+time RAILS_ENV=production bundle exec rake db:migrate 2>&1 \
+| tee ${OPENSHIFT_LOG_DIR}/db_migrate.rake.log
+time RAILS_ENV=production bundle exec rake redmine:plugins:migrate 2>&1 \
+| tee ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log
 
 # *** coderay bash ***
 
@@ -195,10 +191,12 @@ find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name 
 | xargs perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27 => :bash,\012/g'
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) bash.rb copy check >> ${OPENSHIFT_LOG_DIR}/install.log
-find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name bash.rb -type f >> ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name bash.rb -type f \
+>> ${OPENSHIFT_LOG_DIR}/install.log
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) file_types.rb patch check >> ${OPENSHIFT_LOG_DIR}/install.log
-find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f | xargs cat | grep bash >> ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f \
+| xargs cat | grep bash >> ${OPENSHIFT_LOG_DIR}/install.log
 
 popd > /dev/null
 
