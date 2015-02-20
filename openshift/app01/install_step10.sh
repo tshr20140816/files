@@ -162,7 +162,7 @@ Unscaled[cpu]: dwm
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' mrtg.conf
 
-./bin/indexmaker --output=index.html mrtg.conf
+./bin/indexmaker --output=index.html --nolegend mrtg.conf
 cp index.html www/
 
 popd > /dev/null
