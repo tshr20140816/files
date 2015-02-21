@@ -6,7 +6,7 @@ function010() {
     set -x
 
     processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
-    mfc=$(oo-cgroup-read memory.memsw.failcnt | awk '{printf "%\047d\n", $1}')
+    mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
     query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename $0 .sh)&mfc=${mfc}"
 
     wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} \
