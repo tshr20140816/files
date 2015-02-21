@@ -311,8 +311,10 @@ export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-echo $(date +%Y/%m/%d" "%H:%M:%S) > process_status.txt
-ps auwx >> process_status.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) > ps_auwx.txt
+ps auwx >> ps_auwx.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) > ps_lwx.txt
+ps lwx >> ps_lwx.txt
 echo $(date +%Y/%m/%d" "%H:%M:%S) > lsof.txt
 lsof >> lsof.txt
 echo $(date +%Y/%m/%d" "%H:%M:%S) > lsof_i_n_P.txt
