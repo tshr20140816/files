@@ -179,10 +179,10 @@ export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 # memcached
-is_alive=$(ps awux | grep bin/memcached | grep -v grep | grep ${OPENSHIFT_DIY_IP} | wc -l)
+is_alive=$(ps awhx | grep bin/memcached | grep -v grep | grep ${OPENSHIFT_DIY_IP} | wc -l)
 if [ ${is_alive} -gt 0 ]; then
     if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
-        kill $(ps awux | grep bin/memcached | grep -v grep | grep ${OPENSHIFT_DIY_IP} | awk '{print $2}' | head -n1)
+        kill $(ps awhx | grep bin/memcached | grep -v grep | grep ${OPENSHIFT_DIY_IP} | awk '{print $2}' | head -n1)
     else
         echo memcached is alive
     fi
@@ -193,7 +193,7 @@ elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
 fi
 
 # delegated
-is_alive=$(ps awux | grep delegated | grep -v grep | grep ${OPENSHIFT_DIY_IP} | wc -l)
+is_alive=$(ps awhx | grep delegated | grep -v grep | grep ${OPENSHIFT_DIY_IP} | wc -l)
 if [ ${is_alive} -gt 0 ]; then
     if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
         ./delegated +=P30080 -Fkill
@@ -207,10 +207,10 @@ elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
 fi
 
 # memory usage logging
-is_alive=$(ps auwx | grep memory_usage_logging.sh | grep -v grep | grep ${OPENSHIFT_DIY_IP} | wc -l)
+is_alive=$(ps awhx | grep memory_usage_logging.sh | grep -v grep | grep ${OPENSHIFT_DIY_IP} | wc -l)
 if [ ${is_alive} -gt 0 ]; then
     if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
-        kill $(ps auwx | grep memory_usage_logging.sh | grep -v grep | grep ${OPENSHIFT_DIY_IP} | awk '{print $2}' | head -n1)
+        kill $(ps awhx | grep memory_usage_logging.sh | grep -v grep | grep ${OPENSHIFT_DIY_IP} | awk '{print $2}' | head -n1)
     else
         echo memory_usage_logging is alive
     fi
