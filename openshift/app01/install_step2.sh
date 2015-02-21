@@ -49,6 +49,10 @@ do
     -iodepth=32 -iodepth_batch=32 -group_reporting -name=${rwtype} -directory=${OPENSHIFT_DATA_DIR}/work \
     | tee ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log
 
+    aggrb=$(cat ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log | grep aggrb | awk '{print $3}' | tr -d KB/s,)
+    query_string="server=${OPENSHIFT_GEAR_DNS}&fio=${rwtype}&${aggrb}&uuid=${USER}"
+    wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
+
     rm -rf ${OPENSHIFT_DATA_DIR}/work
 done
 popd > /dev/null
@@ -67,6 +71,11 @@ pushd ${OPENSHIFT_TMP_DIR}/superpi > /dev/null
 wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
 tar xfz super_pi-jp.tar.gz
 ./super_pi 20 | tee ${OPENSHIFT_LOG_DIR}/super_pi.log
+
+sec=$(cat ${OPENSHIFT_LOG_DIR}/super_pi.log | grep Total | awk '{print $4}' | tr -d \()
+query_string="server=${OPENSHIFT_GEAR_DNS}&super_pi=${sec}s&uuid=${USER}"
+wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
+
 popd > /dev/null
 rm -rf ${OPENSHIFT_TMP_DIR}/superpi
 
