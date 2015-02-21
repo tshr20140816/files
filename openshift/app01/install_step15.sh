@@ -181,8 +181,12 @@ echo $(date +%Y/%m/%d" "%H:%M:%S)
 # memcached
 is_alive=$(ps -ef | grep bin/memcached | grep -v grep | wc -l)
 if [ ${is_alive} -gt 0 ]; then
-    echo memcached is alive
-else
+    if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
+        kill $(ps -ef | grep bin/memcached | grep -v grep | awk '{print $2}' | head -n1)
+    else
+        echo memcached is alive
+    fi
+elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
     echo RESTART memcached
     cd ${OPENSHIFT_DATA_DIR}/memcached/
     ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
@@ -191,8 +195,12 @@ fi
 # delegated
 is_alive=$(ps -ef | grep delegated | grep -v grep | wc -l)
 if [ ${is_alive} -gt 0 ]; then
-    echo delegated is alive
-else
+    if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
+        ./delegated +=P30080 -Fkill
+    else
+        echo delegated is alive
+    fi
+elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
     echo RESTART delegated
     cd ${OPENSHIFT_DATA_DIR}/delegate/
     ./delegated -r +=P30080
@@ -201,8 +209,12 @@ fi
 # memory usage logging
 is_alive=$(ps -ef | grep memory_usage_logging.sh | grep -v grep | wc -l)
 if [ ${is_alive} -gt 0 ]; then
-    echo memory_usage_logging is alive
-else
+    if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
+        kill $(ps -ef | grep memory_usage_logging.sh | grep -v grep | awk '{print $2}' | head -n1)
+    else
+        echo memory_usage_logging is alive
+    fi
+elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
     echo START memory_usage_logging.sh
     ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh
 fi
