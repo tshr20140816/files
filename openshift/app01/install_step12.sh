@@ -31,7 +31,10 @@ cat << '__HEREDOC__' > P30080
 SERVER=http
 ADMIN=__ADMIN_MAILADDRESS__
 DGROOT=__OPENSHIFT_DATA_DIR__delegate
-# LOGDIR="__OPENSHIFT_LOG_DIR__"
+LOGDIR="__OPENSHIFT_LOG_DIR__"
+LOGFILE=${LOGDIR}/delegate_${PORT}.log
+PROTOLOG=${LOGDIR}/delegate_${PORT}.${PROTO}.log:%X
+ERRORLOG=${LOGDIR}/delegate_errors.log
 MOUNT="/mail/* pop://__DELEGATE_POP_SERVER__:110/* noapop"
 # MOUNT="/-/builtin/* http://__OPENSHIFT_DIY_IP__:30080/delegate/builtin/*"
 FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
