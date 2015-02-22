@@ -127,6 +127,10 @@ LogFormat "%{%Y-%m-%d %H:%M:%S %Z}t %p %{X-Forwarded-For}i %m %s %>s %b \"%{User
 CustomLog logs/access_log combined
 CustomLog logs/access_remoteip_log remoteip
 
+# indexes
+
+IndexOptions +NameWidth=*
+
 # security
 
 ServerTokens Prod
