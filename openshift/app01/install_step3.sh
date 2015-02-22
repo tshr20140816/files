@@ -139,9 +139,9 @@ HostnameLookups Off
 UseCanonicalName Off
 AccessFileName .htaccess
 
-Header always unset "X-Powered-By"
-Header always unset "X-Rack-Cache"
-Header always unset "X-Runtime"
+Header always unset X-Powered-By
+Header always unset X-Rack-Cache
+Header always unset X-Runtime
 
 # php
 
