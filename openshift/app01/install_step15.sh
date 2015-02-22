@@ -25,6 +25,7 @@ do
     usage_in_bytes_format=$(echo ${usage_in_bytes} | awk '{printf "%\047d\n", $0}')
     failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
     echo ${dt} ${usage_in_bytes_format} ${failcnt} >> ${OPENSHIFT_LOG_DIR}/memory_usage.log
+    tail -n 100 ${OPENSHIFT_LOG_DIR}/memory_usage.log | sort -r > ${OPENSHIFT_LOG_DIR}/memory_usage_tail_100_sort_r.log
     [ -f ${OPENSHIFT_TMP_DIR}/stop ] && exit || sleep 1s
 done
 __HEREDOC__
