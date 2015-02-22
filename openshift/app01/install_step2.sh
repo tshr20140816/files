@@ -12,6 +12,10 @@ model_name=$(cat /proc/cpuinfo | grep "model name" | head -n1 \
 query_string="server=${OPENSHIFT_GEAR_DNS}&pc=${processor_count}&clock=${cpu_clock}&model=${model_name}&uuid=${USER}"
 wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
 
+# ***** vim *****
+
+echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
+
 # ***** fio *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/fio-${fio_version}
