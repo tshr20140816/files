@@ -58,7 +58,7 @@ class Repository::Subversion < Repository
 
   def fetch_changesets
     scm_info = scm.info
-    if File.exist?(ENV["OPENSIHFT_TMP_DIR"] + "memory_over_400M")
+    if File.exist?(ENV["OPENSHIFT_TMP_DIR"] + "memory_over_400M")
       logger.info "#{Time.now.to_s} skip memory over 400M #{url}"
     elsif scm_info
       # latest revision found in database
