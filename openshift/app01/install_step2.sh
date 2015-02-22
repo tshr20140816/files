@@ -36,6 +36,8 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> $
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
 popd > /dev/null
 
+rm ${OPENSHIFT_TMP_DIR}/fio-${fio_version}.tar.bz2
+
 # *** run fio ***
 
 rm -rf ${OPENSHIFT_DATA_DIR}/work
