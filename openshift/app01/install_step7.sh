@@ -109,6 +109,7 @@ perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/p
 perl -pi -e 's/(^;extension=php_xsl.*$)/$1\r\nextension=memcached.so/g' lib/php.ini
 perl -pi -e 's/^(session.save_handler =).+$/$1 memcached/g' lib/php.ini
 perl -pi -e 's/^;(session.save_path =).+$/$1 "$ENV{OPENSHIFT_DIY_IP}:31211"/g' lib/php.ini
+perl -pi -e 's/^expose_php .+$/expose_php = Off/g' lib/php.ini
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) php.ini patch check | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cat lib/php.ini | grep short_open_tag | tee -a ${OPENSHIFT_LOG_DIR}/install.log
