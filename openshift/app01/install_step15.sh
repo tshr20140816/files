@@ -605,6 +605,7 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks > /dev/null
 cp start start.org
 cat << '__HEREDOC__' > start
 export TZ=JST-9
+echo $(date +%Y/%m/%d" "%H:%M:%S) start >> ${OPENSHIFT_LOG_DIR}/start.log
 rm -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
 rm -f ${OPENSHIFT_DATA_DIR}/mrtg/mrtg.conf_l
 ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
