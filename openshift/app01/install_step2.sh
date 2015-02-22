@@ -12,6 +12,16 @@ model_name=$(cat /proc/cpuinfo | grep "model name" | head -n1 \
 query_string="server=${OPENSHIFT_GEAR_DNS}&pc=${processor_count}&clock=${cpu_clock}&model=${model_name}&uuid=${USER}"
 wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
 
+# ***** make directories *****
+
+mkdir ${OPENSHIFT_DATA_DIR}/tmp
+mkdir ${OPENSHIFT_DATA_DIR}/etc
+mkdir -p ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin
+mkdir ${OPENSHIFT_DATA_DIR}/bin
+mkdir ${OPENSHIFT_DATA_DIR}/scripts
+mkdir ${OPENSHIFT_TMP_DIR}/man
+mkdir ${OPENSHIFT_TMP_DIR}/doc
+
 # ***** vim *****
 
 echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
