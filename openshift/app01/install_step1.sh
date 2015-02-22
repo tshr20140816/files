@@ -609,16 +609,6 @@ if [ ${files_exists} -eq 0 ]; then
     exit
 fi
 
-# ***** make directories *****
-
-mkdir ${OPENSHIFT_DATA_DIR}/tmp
-mkdir ${OPENSHIFT_DATA_DIR}/etc
-mkdir -p ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin
-mkdir ${OPENSHIFT_DATA_DIR}/bin
-mkdir ${OPENSHIFT_DATA_DIR}/scripts
-mkdir ${OPENSHIFT_TMP_DIR}/man
-mkdir ${OPENSHIFT_TMP_DIR}/doc
-
 # ***** install log *****
 
 touch ${OPENSHIFT_LOG_DIR}/nohup.log
