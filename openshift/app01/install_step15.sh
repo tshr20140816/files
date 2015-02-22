@@ -28,7 +28,8 @@ do
     tail -n 100 ${OPENSHIFT_LOG_DIR}/memory_usage.log | sort -r > ${OPENSHIFT_LOG_DIR}/memory_usage_tail_100_sort_r.log
     for size in 300 350 400 450 500
     do
-        [ ${usage_in_bytes} -gt $((${size} * 1000000)) ] && touch ${OPENSHIFT_TMP_DIR}/memory_over_${size}M || rm -f ${OPENSHIFT_TMP_DIR}/memory_over_${size}M
+        filename=${OPENSHIFT_TMP_DIR}/memory_over_${size}M
+        [ ${usage_in_bytes} -gt $((${size} * 1000000)) ] && touch ${filename} || rm -f ${filename}
     done
     [ -f ${OPENSHIFT_TMP_DIR}/stop ] && exit || sleep 1s
 done
