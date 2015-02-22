@@ -1,4 +1,5 @@
 # orginal https://svn.redmine.org/redmine/tags/2.5.3/app/models/repository/subversion.rb
+# ruby -cw subversion.rb
 #
 # Redmine - project management software
 # Copyright (C) 2006-2014  Jean-Philippe Lang
