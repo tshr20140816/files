@@ -304,7 +304,7 @@ if [ ${mirror_server} != "none" ]; then
     wget -t1 ${mirror_server}/fio-${fio_version}.tar.bz2
     
     # Baikal
-    wget -t1 ${mirror_server}/baikal-regular-${baikal_version}.tgz
+    wget -t1 ${mirror_server}/baikal-flat-${baikal_version}.zip
 
 fi
 
@@ -587,9 +587,9 @@ do
 
     # *** Baikal ***
     if [ ! -f baikal-regular-${baikal_version}.tgz ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing baikal-regular-${baikal_version}.tgz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing baikal-flat-${baikal_version}.zip | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo $(date +%Y/%m/%d" "%H:%M:%S) baikal wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://baikal-server.com/get/baikal-regular-${baikal_version}.tgz
+        wget http://baikal-server.com/get/baikal-flat-${baikal_version}.zip
     fi
     [ -f baikal-regular-${baikal_version}.tgz ] || files_exists=0
 
