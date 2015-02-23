@@ -80,7 +80,7 @@ echo https://${OPENSHIFT_APP_DNS}/webalizer/
 echo https://${OPENSHIFT_APP_DNS}/mrtg/
 echo https://${OPENSHIFT_APP_DNS}/redmine/ admin/admin
 echo https://${OPENSHIFT_APP_DNS}/cacti/ admin/admin
-echo https://${OPENSHIFT_APP_DNS}/baikal/ admin/--
+echo https://${OPENSHIFT_APP_DNS}/baikal/ --/--
 echo https://${OPENSHIFT_APP_DNS}/info/ user/${OPENSHIFT_APP_NAME}
 echo https://${OPENSHIFT_APP_DNS}/logs/ user/${OPENSHIFT_APP_NAME}
 
