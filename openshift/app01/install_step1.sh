@@ -585,6 +585,14 @@ do
     fi
     [ -f fio-${fio_version}.tar.bz2 ] || files_exists=0
 
+    # *** baikal ***
+    if [ ! -f baikal-regular-${baikal_version}.tgz ]; then
+        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing baikal-regular-${baikal_version}.tgz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo $(date +%Y/%m/%d" "%H:%M:%S) baikal wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://baikal-server.com/get/baikal-regular-${baikal_version}.tgz
+    fi
+    [ -f baikal-regular-${baikal_version}.tgz ] || files_exists=0
+
     # *** super pi ***
     if [ ! -f super_pi-jp.tar.gz ]; then
         echo $(date +%Y/%m/%d" "%H:%M:%S) super pi wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
