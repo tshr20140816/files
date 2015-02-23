@@ -4,7 +4,7 @@ source functions.sh
 function010
 $? && exit
 
-# ***** baikal *****
+# ***** Baikal *****
 
 rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-regular
 rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal
