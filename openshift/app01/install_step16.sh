@@ -118,7 +118,7 @@ if test ${http_status} -eq 503 ; then
     echo $(date +%Y/%m/%d" "%H:%M:%S) Auto Restart >> ${OPENSHIFT_LOG_DIR}/auto_restart.log
 fi
 __HEREDOC__
-# chmod +x my_server_check.sh
+chmod +x my_server_check.sh
 
 # *** another server check ***
 
@@ -550,7 +550,7 @@ pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 ./logrotate.sh >>${OPENSHIFT_LOG_DIR}/logrotate.sh.log 2>&1 &
 ./memcached_status.sh >>${OPENSHIFT_LOG_DIR}/memcached_status.sh.log 2>&1 &
 ./mrtg.sh >>${OPENSHIFT_LOG_DIR}/mrtg.sh.log 2>&1 &
-./my_server_check.sh >>${OPENSHIFT_LOG_DIR}/my_server_check.sh.log 2>&1 &
+# ./my_server_check.sh >>${OPENSHIFT_LOG_DIR}/my_server_check.sh.log 2>&1 &
 ./passenger_status.sh >>${OPENSHIFT_LOG_DIR}/passenger_status.sh.log 2>&1 &
 ./process_status.sh >>${OPENSHIFT_LOG_DIR}/process_status.sh.log 2>&1 &
 ./redmine_repository_check.sh >>${OPENSHIFT_LOG_DIR}/redmine_repository_check.sh.log 2>&1 &
