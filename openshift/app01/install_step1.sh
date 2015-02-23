@@ -640,6 +640,7 @@ if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
     exit
 fi
 
+# OPENSHIFT_DIY_IP is marker
 is_alive=$(ps ahwx | grep install_step_from_2_to_17 | grep ${OPENSHIFT_DIY_IP} | grep -v grep | wc -l)
 if [ ! ${is_alive} -gt 0 ]; then
     export TZ=JST-9
