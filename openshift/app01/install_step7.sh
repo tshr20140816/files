@@ -71,6 +71,7 @@ CFLAGS="-O2 -march=native" CXXFLAGS="-O2 -march=native" \
 --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
+--without-sqlite3 \
 --without-pdo-sqlite \
 --with-curl \
 --with-libdir=lib64 \
