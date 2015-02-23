@@ -152,6 +152,7 @@ popd > /dev/null
 
 # ***** download files *****
 
+rm -f ${OPENSHIFT_LOG_DIR}/install_alert.log
 rm -rf ${OPENSHIFT_DATA_DIR}/download_files
 mkdir ${OPENSHIFT_DATA_DIR}/download_files
 pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
