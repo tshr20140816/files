@@ -48,18 +48,18 @@ cacti_version 0.8.8c
 murlin_version 0.2.4
 tcl_version 8.6.3
 expect_version 5.45
-nginx_version 1.6.2
 lynx_version 2.8.7
 logrotate_version 3.8.8
-pcre_version 8.36
-xymon_version 4.3.18
-fping_version 3.10
-unix_bench_version 5.1.3
-sysbench_version 0.4.12.5
 fio_version 2.2.5
 baikal_version 0.2.7
 __HEREDOC__
 
+# nginx_version 1.6.2
+# pcre_version 8.36
+# xymon_version 4.3.18
+# fping_version 3.10
+# unix_bench_version 5.1.3
+# sysbench_version 0.4.12.5
 # c-ares_version 1.10.0
 
 # http://httpd.apache.org/
@@ -256,15 +256,15 @@ if [ ${mirror_server} != "none" ]; then
     # lynx
     wget -t1 ${mirror_server}/lynx${lynx_version}.tar.gz
 
-    # nginx
-    wget -t1 ${mirror_server}/nginx-${nginx_version}.tar.gz
-    wget http://nginx.org/download/nginx-${nginx_version}.tar.gz.asc
-    gpg --recv-keys $(gpg --verify nginx-${nginx_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-    if [ $(gpg --verify nginx-${nginx_version}.tar.gz.asc 2>&1 | grep "Good signature from" | wc -l) != 1 ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) nginx pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) nginx pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm nginx-${nginx_version}.tar.gz
-    fi
+    # # nginx
+    # wget -t1 ${mirror_server}/nginx-${nginx_version}.tar.gz
+    # wget http://nginx.org/download/nginx-${nginx_version}.tar.gz.asc
+    # gpg --recv-keys $(gpg --verify nginx-${nginx_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    # if [ $(gpg --verify nginx-${nginx_version}.tar.gz.asc 2>&1 | grep "Good signature from" | wc -l) != 1 ]; then
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) nginx pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) nginx pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     rm nginx-${nginx_version}.tar.gz
+    # fi
 
     # memcached
     wget -t1 ${mirror_server}/memcached-${memcached_version}.tar.gz
@@ -272,33 +272,33 @@ if [ ${mirror_server} != "none" ]; then
     wget -t1 ${mirror_server}/memcached-${memcached_php_ext_version}.tgz
     # mURLin
     wget -t1 ${mirror_server}/mURLin-${murlin_version}.tar.gz
-    # pcre
-    wget -t1 ${mirror_server}/pcre-${pcre_version}.tar.bz2
-    wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2.sig
-    gpg --recv-keys $(gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-    if [ $(gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "Good signature from" | wc -l) != 1 ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm pcre-${pcre_version}.tar.bz2
-    fi
+    # # pcre
+    # wget -t1 ${mirror_server}/pcre-${pcre_version}.tar.bz2
+    # wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2.sig
+    # gpg --recv-keys $(gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    # if [ $(gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "Good signature from" | wc -l) != 1 ]; then
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     rm pcre-${pcre_version}.tar.bz2
+    # fi
     
-    # xymon
-    wget -t1 ${mirror_server}/xymon-${xymon_version}.tar.gz
+    # # xymon
+    # wget -t1 ${mirror_server}/xymon-${xymon_version}.tar.gz
     
-    # UnixBench
-    wget -t1 ${mirror_server}/UnixBench${unix_bench_version}.tgz
-    tarball_sha1=$(sha1sum UnixBench${unix_bench_version}.tgz | cut -d ' ' -f 1)
-    unix_bench_sha1=$(curl https://code.google.com/p/byte-unixbench/downloads/detail?name=UnixBench${unix_bench_version}.tgz -s \
-    | grep sha1 \
-    | awk '{print substr(substr($0, index($0, "sha1")), 7, 40)}')
-    if [ "${tarball_sha1}" != "${unix_bench_sha1}" ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) UnixBench sha1 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) UnixBench sha1 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm UnixBench${unix_bench_version}.tgz
-    fi
+    # # UnixBench
+    # wget -t1 ${mirror_server}/UnixBench${unix_bench_version}.tgz
+    # tarball_sha1=$(sha1sum UnixBench${unix_bench_version}.tgz | cut -d ' ' -f 1)
+    # unix_bench_sha1=$(curl https://code.google.com/p/byte-unixbench/downloads/detail?name=UnixBench${unix_bench_version}.tgz -s \
+    # | grep sha1 \
+    # | awk '{print substr(substr($0, index($0, "sha1")), 7, 40)}')
+    # if [ "${tarball_sha1}" != "${unix_bench_sha1}" ]; then
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) UnixBench sha1 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) UnixBench sha1 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     rm UnixBench${unix_bench_version}.tgz
+    # fi
 
-    # SysBench
-    wget -t1 ${mirror_server}/sysbench-${sysbench_version}.tar.gz
+    # # SysBench
+    # wget -t1 ${mirror_server}/sysbench-${sysbench_version}.tar.gz
     
     # fio
     wget -t1 ${mirror_server}/fio-${fio_version}.tar.bz2
@@ -507,29 +507,29 @@ do
     fi
     [ -f expect${expect_version}.tar.gz ] || files_exists=0
 
-    # *** nginx ***
-    if [ ! -f nginx-${nginx_version}.tar.gz ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing nginx-${nginx_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) nginx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://nginx.org/download/nginx-${nginx_version}.tar.gz
-    fi
-    [ -f nginx-${nginx_version}.tar.gz ] || files_exists=0
+    # # *** nginx ***
+    # if [ ! -f nginx-${nginx_version}.tar.gz ]; then
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing nginx-${nginx_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) nginx wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget http://nginx.org/download/nginx-${nginx_version}.tar.gz
+    # fi
+    # [ -f nginx-${nginx_version}.tar.gz ] || files_exists=0
 
-    # *** pcre ***
-    if [ ! -f pcre-${pcre_version}.tar.bz2 ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing pcre-${pcre_version}.tar.bz2 | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) pcre wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2
-    fi
-    [ -f pcre-${pcre_version}.tar.bz2 ] || files_exists=0
+    # # *** pcre ***
+    # if [ ! -f pcre-${pcre_version}.tar.bz2 ]; then
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing pcre-${pcre_version}.tar.bz2 | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) pcre wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2
+    # fi
+    # [ -f pcre-${pcre_version}.tar.bz2 ] || files_exists=0
 
-    # *** xymon ***
-    if [ ! -f xymon-${xymon_version}.tar.gz ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing xymon-${xymon_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) xymon wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://downloads.sourceforge.net/project/xymon/Xymon/${xymon_version}/xymon-${xymon_version}.tar.gz
-    fi
-    [ -f xymon-${xymon_version}.tar.gz ] || files_exists=0
+    # # *** xymon ***
+    # if [ ! -f xymon-${xymon_version}.tar.gz ]; then
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing xymon-${xymon_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) xymon wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget http://downloads.sourceforge.net/project/xymon/Xymon/${xymon_version}/xymon-${xymon_version}.tar.gz
+    # fi
+    # [ -f xymon-${xymon_version}.tar.gz ] || files_exists=0
 
     # # *** fping ***
     # if [ ! -f fping-${fping_version}.tar.gz ]; then
@@ -561,21 +561,21 @@ do
     fi
     [ -f lynx${lynx_version}.tar.gz ] || files_exists=0
 
-    # *** UnixBench ***
-    if [ ! -f UnixBench${unix_bench_version}.tgz ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing UnixBench${unix_bench_version}.tgz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) UnixBench wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://byte-unixbench.googlecode.com/files/UnixBench${unix_bench_version}.tgz
-    fi
-    [ -f UnixBench${unix_bench_version}.tgz ] || files_exists=0
+    # # *** UnixBench ***
+    # if [ ! -f UnixBench${unix_bench_version}.tgz ]; then
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing UnixBench${unix_bench_version}.tgz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) UnixBench wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget https://byte-unixbench.googlecode.com/files/UnixBench${unix_bench_version}.tgz
+    # fi
+    # [ -f UnixBench${unix_bench_version}.tgz ] || files_exists=0
 
-    # *** SysBench ***
-    if [ ! -f sysbench-${sysbench_version}.tar.gz ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing sysbench-${sysbench_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) SysBench wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://downloads.mysql.com/source/sysbench-${sysbench_version}.tar.gz
-    fi
-    [ -f sysbench-${sysbench_version}.tar.gz ] || files_exists=0
+    # # *** SysBench ***
+    # if [ ! -f sysbench-${sysbench_version}.tar.gz ]; then
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing sysbench-${sysbench_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo $(date +%Y/%m/%d" "%H:%M:%S) SysBench wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget http://downloads.mysql.com/source/sysbench-${sysbench_version}.tar.gz
+    # fi
+    # [ -f sysbench-${sysbench_version}.tar.gz ] || files_exists=0
 
     # *** fio ***
     if [ ! -f fio-${fio_version}.tar.bz2 ]; then
