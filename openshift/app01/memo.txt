@@ -1,7 +1,5 @@
 http://www.inf-it.com/CalDavZAP_0.12.0.zip
 
-start でロギング
-
 cd /tmp
 wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
 cd UnixBench
