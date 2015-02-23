@@ -118,7 +118,7 @@ if test ${http_status} -eq 503 ; then
     echo $(date +%Y/%m/%d" "%H:%M:%S) Auto Restart >> ${OPENSHIFT_LOG_DIR}/auto_restart.log
 fi
 __HEREDOC__
-chmod +x my_server_check.sh
+# chmod +x my_server_check.sh
 
 # *** another server check ***
 
