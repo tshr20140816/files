@@ -74,6 +74,9 @@ ProxyPassReverse /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_EMA
 ProxyPass /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
 ProxyPassReverse /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
 ProxyMaxForwards 10
+
+SetEnvIf Request_URI \/delegate\/icons\/\.+?gif$ GIFFILE
+Header add Last-Modified "Mon, 01 Jan 1990 00:00:00 GMT"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
 delegate_email_account=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_account)
