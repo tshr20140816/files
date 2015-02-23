@@ -15,7 +15,15 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) Baikal unzip | tee -a ${OPENSHIFT_LOG_DIR}/ins
 unzip baikal-flat-${baikal_version}.zip
 mv baikal-flat baikal
 touch baikal/Specific/ENABLE_INSTALL
-rm baikal-flat-${baikal_version}.zip
+
+# *** Starndard.php ***
+
+sed -i -e "s|Europe/Paris|Asia/Tokyo|g" Core/Frameworks/Baikal/Model/Config/Standard.php
+sed -i -e 's|"BAIKAL_CARD_ENABLED" => TRUE|"BAIKAL_CARD_ENABLED" => FALSE|g' Core/Frameworks/Baikal/Model/Config/Standard.php
+sed -i -e 's|define("BAIKAL_CARD_ENABLED", TRUE);|define("BAIKAL_CARD_ENABLED", FALSE);|g' \
+Core/Frameworks/Baikal/Model/Config/Standard.php
+
+
 popd > /dev/null
 
 # create database
@@ -37,6 +45,8 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) Baikal mysql baikaluser/${baikaluser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
+
+rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-flat-${baikal_version}.zip
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
