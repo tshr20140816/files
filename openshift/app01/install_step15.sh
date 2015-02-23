@@ -10,11 +10,11 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-regular
 rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/baikal-regular-${baikal_version}.tgz ./
-echo $(date +%Y/%m/%d" "%H:%M:%S) baikal tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz baikal-regular-${baikal_version}.tgz
-mv baikal-regular baikal
-rm baikal-regular-${baikal_version}.tgz
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/baikal-flat-${baikal_version}.zip ./
+echo $(date +%Y/%m/%d" "%H:%M:%S) Baikal unzip | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+unzip baikal-flat-${baikal_version}.zip
+mv baikal-flat baikal
+rm baikal-flat-${baikal_version}.zip
 popd > /dev/null
 
 # # create database
