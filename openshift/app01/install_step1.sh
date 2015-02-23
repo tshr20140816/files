@@ -57,6 +57,7 @@ fping_version 3.10
 unix_bench_version 5.1.3
 sysbench_version 0.4.12.5
 fio_version 2.2.5
+baikal_version 0.2.7
 __HEREDOC__
 
 # c-ares_version 1.10.0
@@ -301,6 +302,9 @@ if [ ${mirror_server} != "none" ]; then
     
     # fio
     wget -t1 ${mirror_server}/fio-${fio_version}.tar.bz2
+    
+    # baikal
+    wget -t1 ${mirror_server}/baikal-regular-${baikal_version}.tgz
 
 fi
 
