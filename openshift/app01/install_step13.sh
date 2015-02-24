@@ -20,6 +20,7 @@ popd > /dev/null
 cactiuser_password=$(uuidgen | base64 | head -c 25)
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_cacti.txt
+DROP DATABASE IF EXISTS cacti;
 CREATE DATABASE cacti CHARACTER SET utf8 COLLATE utf8_general_ci;
 GRANT ALL PRIVILEGES ON cacti.* TO cactiuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
 FLUSH PRIVILEGES;
