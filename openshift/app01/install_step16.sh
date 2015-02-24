@@ -576,31 +576,34 @@ echo minutely_jobs.sh >> jobs.allow
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/ > /dev/null
 
-echo "uname -a" > infrastructure.txt
+echo "\$ hostname" > infrastructure.txt
+hostname | tee -a infrastructure.txt
+echo >> infrastructure.txt
+echo "\$ uname -a" >> infrastructure.txt
 uname -a | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "cat /proc/version" >> infrastructure.txt
+echo "\$ cat /proc/version" >> infrastructure.txt
 cat /proc/version | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "cat /etc/redhat-release" >> infrastructure.txt
+echo "\$ cat /etc/redhat-release" >> infrastructure.txt
 cat /etc/redhat-release | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "lscpu" >> infrastructure.txt
+echo "\$ lscpu" >> infrastructure.txt
 cat lscpu | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "cat /proc/cpuinfo" >> infrastructure.txt
+echo "\$ cat /proc/cpuinfo" >> infrastructure.txt
 cat /proc/cpuinfo | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "ulimit -a" >> infrastructure.txt
+echo "\$ ulimit -a" >> infrastructure.txt
 ulimit -a | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "cat /etc/inittab | grep -v ^#" >> infrastructure.txt
+echo "\$ cat /etc/inittab | grep -v ^#" >> infrastructure.txt
 cat /etc/inittab | grep -v ^# | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "cat /etc/resolv.conf" >> infrastructure.txt
+echo "\$ cat /etc/resolv.conf" >> infrastructure.txt
 cat /etc/resolv.conf | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "mysql --help" >> infrastructure.txt
+echo "\$ mysql --help" >> infrastructure.txt
 mysql --help | tee -a infrastructure.txt
 
 popd > /dev/null
