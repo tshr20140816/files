@@ -8,6 +8,7 @@ $? && exit
 
 rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-regular
 rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal
+rm -f ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-flat-${baikal_version}.zip
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/baikal-flat-${baikal_version}.zip ./
