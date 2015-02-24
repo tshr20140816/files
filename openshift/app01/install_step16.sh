@@ -329,6 +329,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/lsof.txt
 lsof >> ${OPENSHIFT_TMP_DIR}/lsof.txt
 cp -f ${OPENSHIFT_TMP_DIR}/lsof.txt lsof.txt
 echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt
+uptime >> ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt
 lsof -i -n -P >> ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt
 cp -f ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt lsof_i_n_P.txt
 __HEREDOC__
