@@ -48,11 +48,26 @@ sed -i -e 's|define("BAIKAL_CARD_ENABLED", TRUE);|define("BAIKAL_CARD_ENABLED", 
 # *** Database.php ***
 
 sed -i -e 's|"PROJECT_DB_MYSQL" => FALSE|"PROJECT_DB_MYSQL" => TRUE|g' Database.php
-sed -i -e 's|"PROJECT_DB_MYSQL_HOST" => ""|"PROJECT_DB_MYSQL_HOST" => "${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}"|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_HOST" => ""|"PROJECT_DB_MYSQL_HOST" => "${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}"|g' \
+Database.php
 sed -i -e 's|"PROJECT_DB_MYSQL_DBNAME" => ""|"PROJECT_DB_MYSQL_DBNAME" => "baikal"|g' Database.php
 sed -i -e 's|"PROJECT_DB_MYSQL_USERNAME" => ""|"PROJECT_DB_MYSQL_USERNAME" => "baikaluser"|g' Database.php
 sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => "${baikaluser_password}"|g' Database.php
 
+# *** System.php ***
+
+sed -i -e 's|"PROJECT_DB_MYSQL" => FALSE|"PROJECT_DB_MYSQL" => TRUE|g' System.php
+sed -i -e 's|"PROJECT_DB_MYSQL_HOST" => ""|"PROJECT_DB_MYSQL_HOST" => "${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}"|g' \
+System.php
+sed -i -e 's|"PROJECT_DB_MYSQL_DBNAME" => ""|"PROJECT_DB_MYSQL_DBNAME" => "baikal"|g' System.php
+sed -i -e 's|"PROJECT_DB_MYSQL_USERNAME" => ""|"PROJECT_DB_MYSQL_USERNAME" => "baikaluser"|g' System.php
+sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => "${baikaluser_password}"|g' System.php
+sed -i -e 's|define("PROJECT_DB_MYSQL", FALSE);|define("PROJECT_DB_MYSQL", TRUE);|g' System.php
+sed -i -e 's|define("PROJECT_DB_MYSQL_HOST", "");|define("PROJECT_DB_MYSQL_HOST", "${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}");|g' \
+System.php
+sed -i -e 's|define("PROJECT_DB_MYSQL_DBNAME", "");|define("PROJECT_DB_MYSQL_DBNAME", "baikal");|g' System.php
+sed -i -e 's|define("PROJECT_DB_MYSQL_USERNAME", "");|define("PROJECT_DB_MYSQL_USERNAME", "baikaluser");|g' System.php
+sed -i -e 's|define("PROJECT_DB_MYSQL_PASSWORD", "");|define("PROJECT_DB_MYSQL_PASSWORD", "${baikaluser_password}");|g' System.php
 popd > /dev/null
 
 rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-flat-${baikal_version}.zip
