@@ -15,15 +15,6 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) Baikal unzip | tee -a ${OPENSHIFT_LOG_DIR}/ins
 unzip baikal-flat-${baikal_version}.zip
 mv baikal-flat baikal
 touch baikal/Specific/ENABLE_INSTALL
-
-# *** Starndard.php ***
-
-sed -i -e "s|Europe/Paris|Asia/Tokyo|g" Core/Frameworks/Baikal/Model/Config/Standard.php
-sed -i -e 's|"BAIKAL_CARD_ENABLED" => TRUE|"BAIKAL_CARD_ENABLED" => FALSE|g' Core/Frameworks/Baikal/Model/Config/Standard.php
-sed -i -e 's|define("BAIKAL_CARD_ENABLED", TRUE);|define("BAIKAL_CARD_ENABLED", FALSE);|g' \
-Core/Frameworks/Baikal/Model/Config/Standard.php
-
-
 popd > /dev/null
 
 # create database
@@ -44,6 +35,24 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_baikal.txt
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) Baikal mysql baikaluser/${baikaluser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+popd > /dev/null
+
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal/Core/Frameworks/Baikal/Model/Config > /dev/null
+
+# *** Starndard.php ***
+
+sed -i -e "s|Europe/Paris|Asia/Tokyo|g" Standard.php
+sed -i -e 's|"BAIKAL_CARD_ENABLED" => TRUE|"BAIKAL_CARD_ENABLED" => FALSE|g' Standard.php
+sed -i -e 's|define("BAIKAL_CARD_ENABLED", TRUE);|define("BAIKAL_CARD_ENABLED", FALSE);|g' Standard.php
+
+# *** Database.php ***
+
+sed -i -e 's|"PROJECT_DB_MYSQL" => FALSE|"PROJECT_DB_MYSQL" => TRUE|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_HOST" => ""|"PROJECT_DB_MYSQL_HOST" => "${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}"|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_DBNAME" => ""|"PROJECT_DB_MYSQL_DBNAME" => "baikal"|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_USERNAME" => ""|"PROJECT_DB_MYSQL_USERNAME" => "baikaluser"|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => "${baikaluser_password}"|g' Database.php
+
 popd > /dev/null
 
 rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-flat-${baikal_version}.zip
