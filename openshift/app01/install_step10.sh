@@ -50,7 +50,6 @@ mkdir ${OPENSHIFT_DATA_DIR}/mrtg/www
 
 pushd ${OPENSHIFT_DATA_DIR}/mrtg > /dev/null
 
-touch scripts/cpu_usage.sh
 cat << '__HEREDOC__' > scripts/cpu_usage.sh
 #!/bin/bash
 
@@ -61,7 +60,6 @@ echo cpu usage
 __HEREDOC__
 chmod +x scripts/cpu_usage.sh
 
-touch scripts/disk_usage.sh
 cat << '__HEREDOC__' > scripts/disk_usage.sh
 #!/bin/bash
 
@@ -72,7 +70,6 @@ echo disk usage
 __HEREDOC__
 chmod +x scripts/disk_usage.sh
 
-touch scripts/file_usage.sh
 cat << '__HEREDOC__' > scripts/file_usage.sh
 #!/bin/bash
 
@@ -83,7 +80,6 @@ echo file usage
 __HEREDOC__
 chmod +x scripts/file_usage.sh
 
-touch scripts/memory_usage.sh
 cat << '__HEREDOC__' > scripts/memory_usage.sh
 #!/bin/bash
 
@@ -93,6 +89,16 @@ echo dummy
 echo memory usage
 __HEREDOC__
 chmod +x scripts/memory_usage.sh
+
+cat << '__HEREDOC__' > scripts/memory_failcnt.sh
+#!/bin/bash
+
+echo $(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
+echo 0
+echo dummy
+echo memory failcnt
+__HEREDOC__
+chmod +x scripts/memory_failcnt.sh
 
 cat << '__HEREDOC__' > mrtg.conf
 WorkDir: __OPENSHIFT_DATA_DIR__mrtg/www/
