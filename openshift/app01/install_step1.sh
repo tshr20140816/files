@@ -52,6 +52,7 @@ lynx_version 2.8.7
 logrotate_version 3.8.8
 fio_version 2.2.5
 baikal_version 0.2.7
+caldavzap_version 0.12.0
 __HEREDOC__
 
 # nginx_version 1.6.2
@@ -306,6 +307,9 @@ if [ ${mirror_server} != "none" ]; then
     
     # Baikal
     wget -t1 ${mirror_server}/baikal-flat-${baikal_version}.zip
+
+    # CalDavZAP
+    wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip
 
 fi
 
@@ -589,10 +593,18 @@ do
     # *** Baikal ***
     if [ ! -f baikal-flat-${baikal_version}.zip ]; then
         echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing baikal-flat-${baikal_version}.zip | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) baikal wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo $(date +%Y/%m/%d" "%H:%M:%S) Baikal wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://baikal-server.com/get/baikal-flat-${baikal_version}.zip
     fi
     [ -f baikal-flat-${baikal_version}.zip ] || files_exists=0
+
+    # *** CalDavZAP ***
+    if [ ! -f CalDavZAP_${caldavzap_version}.zip ]; then
+        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing CalDavZAP_${caldavzap_version}.zip | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo $(date +%Y/%m/%d" "%H:%M:%S) CalDavZAP wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://www.inf-it.com/CalDavZAP_${caldavzap_version}.zip
+    fi
+    [ -f CalDavZAP_${caldavzap_version}.zip ] || files_exists=0
 
     # *** super pi ***
     if [ ! -f super_pi-jp.tar.gz ]; then
