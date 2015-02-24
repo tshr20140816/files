@@ -80,6 +80,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
 cat << '__HEREDOC__' > create_database_redmine.txt
+DROP DATABASE IF EXISTS redmine;
 CREATE DATABASE redmine CHARACTER SET utf8 COLLATE utf8_general_ci;
 GRANT ALL PRIVILEGES ON redmine.* TO redmineuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
 FLUSH PRIVILEGES;
