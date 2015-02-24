@@ -304,8 +304,9 @@ export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-echo $(date +%Y/%m/%d" "%H:%M:%S) > memcached_status.txt
-${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> memcached_status.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/memcached_status.txt
+${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> ${OPENSHIFT_TMP_DIR}/memcached_status.txt
+cp -f ${OPENSHIFT_TMP_DIR}/memcached_status.txt memcached_status.txt
 __HEREDOC__
 chmod +x memcached_status.sh
 
