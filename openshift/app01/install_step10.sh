@@ -165,6 +165,18 @@ ShortLegend[cpu]: %
 Suppress[cpu]: y
 WithPeak[cpu]: dwm
 Unscaled[cpu]: dwm
+
+Target[mfc]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/memory_failcnt.sh`
+Title[mfc]: Memory
+PageTop[mfc]: <h1>Memory Fail Count</h1>
+Options[mfc]: nobanner, growright, unknaszero, noinfo, noo
+AbsMax[mfc]: 10000000
+MaxBytes[mfc]: 100000
+YLegend[mfc]: Memory Fail Count
+LegendI[mfc]: Count
+Legend1[mfc]: Fail Count
+ShortLegend[mfc]: .
+Suppress[mfc]: y
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' mrtg.conf
 
