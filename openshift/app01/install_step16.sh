@@ -29,7 +29,7 @@ do
     for size in 300 350 400 450 500
     do
         filename=${OPENSHIFT_TMP_DIR}/memory_over_${size}M
-        [ ${usage_in_bytes} -gt $((${size} * 1000000)) ] && touch ${filename} || rm -f ${filename}
+        [ ${usage_in_bytes} -gt $((${size} * (10**6))) ] && touch ${filename} || rm -f ${filename}
     done
     [ -f ${OPENSHIFT_TMP_DIR}/stop ] && exit || sleep 1s
 done
