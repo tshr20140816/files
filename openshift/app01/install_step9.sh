@@ -19,6 +19,7 @@ popd > /dev/null
 ttrssuser_password=$(uuidgen | base64 | head -c 25)
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_ttrss.txt
+DROP DATABASE IF EXISTS ttrss;
 CREATE DATABASE ttrss CHARACTER SET utf8 COLLATE utf8_general_ci;
 GRANT ALL PRIVILEGES ON ttrss.* TO ttrssuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
 FLUSH PRIVILEGES;
