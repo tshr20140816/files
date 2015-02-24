@@ -287,9 +287,10 @@ rbenv global __RUBY_VERSION__
 rbenv rehash
 
 export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
-echo $(date +%Y/%m/%d" "%H:%M:%S) > passenger_status.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/passenger_status.txt
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f \
-| xargs --replace={} ruby {} --verbose >> passenger_status.txt
+| xargs --replace={} ruby {} --verbose >> ${OPENSHIFT_TMP_DIR}/passenger_status.txt
+cp -f ${OPENSHIFT_TMP_DIR}/passenger_status.txt passenger_status.txt
 __HEREDOC__
 sed -i -e "s|__RUBY_VERSION__|${ruby_version}|g" passenger_status.sh
 chmod +x passenger_status.sh
@@ -317,14 +318,18 @@ export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-echo $(date +%Y/%m/%d" "%H:%M:%S) > ps_auwx.txt
-ps auwx >> ps_auwx.txt
-echo $(date +%Y/%m/%d" "%H:%M:%S) > ps_lwx.txt
-ps lwx >> ps_lwx.txt
-echo $(date +%Y/%m/%d" "%H:%M:%S) > lsof.txt
-lsof >> lsof.txt
-echo $(date +%Y/%m/%d" "%H:%M:%S) > lsof_i_n_P.txt
-lsof -i -n -P >> lsof_i_n_P.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/ps_auwx.txt
+ps auwx >> ${OPENSHIFT_TMP_DIR}/ps_auwx.txt
+cp -f ${OPENSHIFT_TMP_DIR}/ps_auwx.txt ps_auwx.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/ps_lwx.txt
+ps lwx >> ${OPENSHIFT_TMP_DIR}/ps_lwx.txt
+cp -f ${OPENSHIFT_TMP_DIR}/ps_lwx.txt ps_lwx.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/lsof.txt
+lsof >> ${OPENSHIFT_TMP_DIR}/lsof.txt
+cp -f ${OPENSHIFT_TMP_DIR}/lsof.txt lsof.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt
+lsof -i -n -P >> ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt
+cp -f ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt lsof_i_n_P.txt
 __HEREDOC__
 chmod +x process_status.sh
 
