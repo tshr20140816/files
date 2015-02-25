@@ -2,7 +2,7 @@
 
 source functions.sh
 function010
-$? && exit
+[ $? -eq 0 ] || exit
 
 processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
 cpu_clock=$(cat /proc/cpuinfo | grep MHz | head -n1 | awk -F'[ .]' '{print $3}')
