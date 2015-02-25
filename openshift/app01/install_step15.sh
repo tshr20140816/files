@@ -74,6 +74,19 @@ popd > /dev/null
 
 rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-flat-${baikal_version}.zip
 
+# ***** CalDavZAP *****
+
+rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/caldavzap
+rm -f ${OPENSHIFT_DATA_DIR}/apache/htdocs/CalDavZAP_${caldavzap_version}.zip
+
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/CalDavZAP_${caldavzap_version}.zip ./
+echo $(date +%Y/%m/%d" "%H:%M:%S) CalDavZAP unzip | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+unzip CalDavZAP_${caldavzap_version}.zip
+popd > /dev/null
+
+rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/CalDavZAP_${caldavzap_version}.zip
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
