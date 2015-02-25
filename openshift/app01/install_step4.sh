@@ -2,7 +2,7 @@
 
 source functions.sh
 function010
-$? && exit
+[ $? -eq 0 ] || exit
 
 # ***** ruby *****
 
