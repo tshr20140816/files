@@ -144,6 +144,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
+--docdir=/tmp/doc \
 --prefix=$OPENSHIFT_DATA_DIR/libmemcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) libmemcached make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
