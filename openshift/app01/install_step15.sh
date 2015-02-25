@@ -87,6 +87,17 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) CalDavZAP unzip | tee -a ${OPENSHIFT_LOG_DIR}/
 unzip CalDavZAP_${caldavzap_version}.zip
 popd > /dev/null
 
+pushd ${OPENSHIFT_DATA_DIR}/apache/ > /dev/null
+
+cat << '__HEREDOC__' >> conf/custom.conf
+<Directory __OPENSHIFT_DATA_DIR__/apache/htdocs/caldavzap/>
+    AllowOverride FileInfo Limit
+    Order allow,deny
+    Allow from all
+</Directory>
+__HEREDOC__
+popd > /dev/null
+
 rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/CalDavZAP_${caldavzap_version}.zip
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
