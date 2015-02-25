@@ -169,7 +169,7 @@ Unscaled[cpu]: dwm
 Target[mfc]: `${OPENSHIFT_DATA_DIR}/mrtg/scripts/memory_failcnt.sh`
 Title[mfc]: Memory
 PageTop[mfc]: <h1>Memory Fail Count</h1>
-Options[mfc]: nobanner, growright, unknaszero, noinfo, noo
+Options[mfc]: nobanner, growright, unknaszero, noinfo, noo, nopercent
 AbsMax[mfc]: 10000000
 MaxBytes[mfc]: 100000
 YLegend[mfc]: Memory Fail Count
