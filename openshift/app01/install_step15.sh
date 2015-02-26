@@ -91,7 +91,7 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/caldavzap/ > /dev/null
 
 # *** config.js ***
 
-dt=.$(date '+%Y%m%d')
+dt=$(date '+%Y%m%d')
 cp config.js config.js.${dt}
 
 perl -pi -e 's/^var globalNetworkCheckSettings={href: .+, hrefLabel:(.+$)/var globalNetworkCheckSettings={href: __GLOBAL_NETWORK_CHECK_SETTINGS_HREF__, hrefLabel:${2}/g' config.js
