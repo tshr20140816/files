@@ -65,7 +65,7 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 
-cp app/models/repository.rb app/models/repository.rb.org
+cp app/models/repository.rb app/models/repository.rb.$(date '+%Y%m%d')
 mv app/models/repository/subversion.rb app/models/repository/subversion.rb.org
 cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/subversion.rb app/models/repository/
 
