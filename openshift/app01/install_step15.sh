@@ -87,6 +87,10 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) CalDavZAP unzip | tee -a ${OPENSHIFT_LOG_DIR}/
 unzip CalDavZAP_${caldavzap_version}.zip
 popd > /dev/null
 
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/caldavzap/ > /dev/null
+perl -pi -e "s/^var globalNetworkCheckSettings={href: .+, hrefLabel:(.+$)/var globalNetworkCheckSettings={__GLOBAL_NETWORK_CHECK_SETTINGS_HREF__, hrefLabel:${2}/g" config.js
+popd > /dev/null
+
 pushd ${OPENSHIFT_DATA_DIR}/apache/ > /dev/null
 
 cat << '__HEREDOC__' >> conf/custom.conf
