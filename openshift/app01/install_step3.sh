@@ -138,6 +138,7 @@ ServerTokens Prod
 HostnameLookups Off
 UseCanonicalName Off
 AccessFileName .htaccess
+TraceEnable Off
 
 Header always unset X-Powered-By
 Header always unset X-Rack-Cache
