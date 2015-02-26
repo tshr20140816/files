@@ -91,7 +91,8 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/caldavzap/ > /dev/null
 
 # *** config.js ***
 
-cp config.js config.js.$(date '+%Y%m%d')
+dt=.$(date '+%Y%m%d')
+cp config.js config.js.${dt}
 
 perl -pi -e 's/^var globalNetworkCheckSettings={href: .+, hrefLabel:(.+$)/var globalNetworkCheckSettings={href: __GLOBAL_NETWORK_CHECK_SETTINGS_HREF__, hrefLabel:${2}/g' config.js
 sed -i -e "s|__GLOBAL_NETWORK_CHECK_SETTINGS_HREF__|location.protocol+'//'+location.hostname+'/baikal/caldav.php/'|g" config.js
@@ -107,7 +108,7 @@ perl -pi -e "s/^var globalCalendarEndOfBusiness=17;/var globalCalendarEndOfBusin
 
 perl -pi -e "s/^var globalTimeZone='Europe/Berlin';/var globalTimeZone='Asia/Tokyo';/g" config.js
 
-diff -u config.js.$(date '+%Y%m%d') config.js
+diff -u config.js.${dt} config.js
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/ > /dev/null
