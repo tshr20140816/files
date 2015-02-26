@@ -654,12 +654,13 @@ if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
 fi
 
 # OPENSHIFT_DIY_IP is marker
-is_alive=$(ps ahwx | grep install_step_from_2_to_17 | grep ${OPENSHIFT_DIY_IP} | grep -v grep | wc -l)
+install_script_file='install_step_from_2_to_18'
+is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -v grep | wc -l)
 if [ ! ${is_alive} -gt 0 ]; then
     export TZ=JST-9
     echo $(date +%Y/%m/%d" "%H:%M:%S) Install Retry | tee -a ${OPENSHIFT_LOG_DIR}/install_retry.log
     cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
-    nohup ./install_step_from_2_to_17.sh ${OPENSHIFT_DIY_IP} \
+    nohup ./${install_script_file}.sh ${OPENSHIFT_DIY_IP} \
     >> ${OPENSHIFT_LOG_DIR}/nohup.log \
     2>> ${OPENSHIFT_LOG_DIR}/nohup_error.log &
 fi
