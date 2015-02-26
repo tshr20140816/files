@@ -38,7 +38,7 @@ ERRORLOG=${LOGDIR}/delegate_errors.log
 MOUNT="/mail/* pop://__DELEGATE_POP_SERVER__:110/* noapop"
 # MOUNT="/-/builtin/* http://__OPENSHIFT_DIY_IP__:30080/delegate/builtin/*"
 FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
-HTTPCONF=methods:GET,HEAD
+HTTPCONF=methods:GET
 HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
 DGSIGN="x.x.x/x.x.x"
 __HEREDOC__
