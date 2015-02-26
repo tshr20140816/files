@@ -98,6 +98,14 @@ sed -i -e "s|__GLOBAL_NETWORK_CHECK_SETTINGS_HREF__|location.protocol+'//'+locat
 
 perl -pi -e "s/^var globalInterfaceLanguage='en_US';/var globalInterfaceLanguage='ja_JP';/g" config.js
 
+perl -pi -e "s/^var globalDatepickerFormat='dd.mm.yy';/var globalDatepickerFormat='yyyy\/mm\/dd';/g" config.js
+
+perl -pi -e "s/^var globalDatepickerFirstDayOfWeek=1;/var globalDatepickerFirstDayOfWeek=0;/g" config.js
+
+perl -pi -e "s/^var globalCalendarStartOfBusiness=8;/var globalCalendarStartOfBusiness=0;/g" config.js
+perl -pi -e "s/^var globalCalendarEndOfBusiness=17;/var globalCalendarEndOfBusiness=24;/g" config.js
+
+perl -pi -e "s/^var globalTimeZone='Europe/Berlin';/var globalTimeZone='Asia/Tokyo';/g" config.js
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/ > /dev/null
