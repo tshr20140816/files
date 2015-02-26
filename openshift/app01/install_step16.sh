@@ -587,11 +587,6 @@ __HEREDOC__
 chmod +x minutely_jobs.sh
 echo minutely_jobs.sh >> jobs.allow
 
-# TODO
-# ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool
-# ./memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats
-# oo-cgroup-read memory.failcnt → mrtg?
-
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
