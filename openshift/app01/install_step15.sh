@@ -88,8 +88,11 @@ unzip CalDavZAP_${caldavzap_version}.zip
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/caldavzap/ > /dev/null
+
+# *** config.js ***
 perl -pi -e 's/^var globalNetworkCheckSettings={href: .+, hrefLabel:(.+$)/var globalNetworkCheckSettings={href: __GLOBAL_NETWORK_CHECK_SETTINGS_HREF__, hrefLabel:${2}/g' config.js
 sed -i -e "s|__GLOBAL_NETWORK_CHECK_SETTINGS_HREF__|location.protocol+'//'+location.hostname+'/baikal/caldav.php/'|g" config.js
+
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/ > /dev/null
