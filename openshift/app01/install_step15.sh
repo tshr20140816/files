@@ -106,6 +106,8 @@ perl -pi -e "s/^var globalCalendarStartOfBusiness=8;/var globalCalendarStartOfBu
 perl -pi -e "s/^var globalCalendarEndOfBusiness=17;/var globalCalendarEndOfBusiness=24;/g" config.js
 
 perl -pi -e "s/^var globalTimeZone='Europe/Berlin';/var globalTimeZone='Asia/Tokyo';/g" config.js
+
+diff -u config.js.org config.js
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/ > /dev/null
