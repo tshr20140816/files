@@ -506,7 +506,7 @@ mysql --user "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
 --host "${OPENSHIFT_MYSQL_DB_HOST}" \
 --port "${OPENSHIFT_MYSQL_DB_PORT}"
---html < sql_record_count_top_30.txt > record_count_top_30.html
+--html < record_count_top_30_sql.txt > record_count_top_30.html
 __HEREDOC__
 chmod +x record_count_top_30.sh
 echo record_count_top_30.sh >> jobs.allow
