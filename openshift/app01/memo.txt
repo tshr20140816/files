@@ -10,3 +10,11 @@ export PERL5LIB=/var/lib/openshift/54e332455973ca0d4200002d/app-root/data/perl5/
 # ./Run -i 1 int
 ./Run
 
+
+#!/bin/bash
+set -x
+
+for file_name in $(ls openshift/app01/*.sh)
+do
+    /bin/bash -n ${file_name}
+done
