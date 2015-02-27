@@ -23,6 +23,10 @@ CXXFLAGS="-O2 -march=native -pipe" >${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
 
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
 cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
+
+mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/
+cp src/builtin/icons/ysato/*.gif ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/
+touch ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/index.html
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/delegate/ > /dev/null
@@ -71,12 +75,12 @@ ProxyPass /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
 ProxyPassReverse /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
 ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_EMAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
 ProxyPassReverse /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_EMAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
-ProxyPass /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
-ProxyPassReverse /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
+# ProxyPass /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
+# ProxyPassReverse /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
 ProxyMaxForwards 10
 
-SetEnvIf Request_URI \/delegate\/icons\/\.+?gif$ GIFFILE
-Header set Last-Modified "Mon, 01 Jan 1990 00:00:00 GMT"
+# SetEnvIf Request_URI \/delegate\/icons\/\.+?gif$ GIFFILE
+# Header set Last-Modified "Mon, 01 Jan 1990 00:00:00 GMT"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' conf/custom.conf
 delegate_email_account=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_account)
