@@ -26,12 +26,14 @@ function010() {
         eval "${product}"=${version}
     done < ${OPENSHIFT_DATA_DIR}/version_list
 
-    echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
-    sleep 30s
-    while :
-    do
-        [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
-    done
+    if [ $# -eq 0 || ${1} -ne 'no_restart' ]; then
+        echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
+        sleep 30s
+        while :
+        do
+            [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
+        done
+    fi
 
     echo $(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename $0) \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
