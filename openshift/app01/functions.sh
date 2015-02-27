@@ -28,7 +28,7 @@ function010() {
 
     if [ $# -gt 0 -a ${1} = "no_restart" ]; then
         :
-    elif
+    else
         echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
         sleep 30s
         while :
