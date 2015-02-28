@@ -26,9 +26,7 @@ function010() {
         eval "${product}"=${version}
     done < ${OPENSHIFT_DATA_DIR}/version_list
 
-    if [ $# -gt 0 -a ${1} = "no_restart" ]; then
-        :
-    else
+    if [ $# -gt 0 -a ${1} = "restart" ]; then
         echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
         sleep 30s
         while :
