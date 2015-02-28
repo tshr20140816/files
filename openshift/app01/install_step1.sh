@@ -679,6 +679,15 @@ export TMOUT=0
 
 set +x
 
+for file_name in $(ls openshift/app01/*.sh)
+do
+    set -x
+    /bin/bash -n ${file_name}
+    set +x
+done
+
+set +x
+
 if [ -f ${OPENSHIFT_LOG_DIR}/install_alert.log ]; then
     echo '***** ALERT *****'
     cat ${OPENSHIFT_LOG_DIR}/install_alert.log
