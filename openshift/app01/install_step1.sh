@@ -677,7 +677,7 @@ touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 export TMOUT=0
 
-for file_name in $(ls openshift/app01/*.sh)
+for file_name in $(ls ${OPENSHIFT_DATA_DIR}/github/openshift/app01/*.sh)
 do
     if [ $(/bin/bash -n ${file_name} 2>&1 | wc -l) -gt 0 ]; then
         /bin/bash -n ${file_name} 2>&1 >> ${OPENSHIFT_LOG_DIR}/install_alert.log
