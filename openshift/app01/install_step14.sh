@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source functions.sh
-function010
+function010 stop
 [ $? -eq 0 ] || exit
 
 # ***** Tcl *****
