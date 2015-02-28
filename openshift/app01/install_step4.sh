@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source functions.sh
-function010
+function010 restart
 [ $? -eq 0 ] || exit
 
 # ***** ruby *****
