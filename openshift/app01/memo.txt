@@ -18,3 +18,9 @@ for file_name in $(ls openshift/app01/*.sh)
 do
     /bin/bash -n ${file_name}
 done
+
+<?php
+
+system('touch ' . getenv('OPENSHIFT_DATA_DIR') . '/apache/htdocs/baikal/Specific/ENABLE_INSTALL');
+
+?>
