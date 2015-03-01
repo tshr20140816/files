@@ -45,8 +45,8 @@ function010() {
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo $(oo-cgroup-read memory.memsw.failcnt | awk '{printf "Swap Memory Fail Count : %\047d\n", $1}') \
-    | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    # echo $(oo-cgroup-read memory.memsw.failcnt | awk '{printf "Swap Memory Fail Count : %\047d\n", $1}') \
+    # | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
     return 0
 }
