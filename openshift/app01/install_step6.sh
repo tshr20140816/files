@@ -240,16 +240,13 @@ mkdir ${OPENSHIFT_TMP_DIR}/PassengerTempDir
 
 ln -s ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/public ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
 
-pushd ${OPENSHIFT_DATA_DIR}/var/www/cgi-bin > /dev/null
-cat << '__HEREDOC__' > restart_redmine.cgi
-#!/usr/bin/perl
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/system > /dev/null
+cat << '__HEREDOC__' > redmine.php
+#!/usr/bin/php
 
-system("touch __OPENSHIFT_DATA_DIR__/redmine-__REDMINE_VERSION__/tmp/restart.txt")
-
-exit;
+touch(getenve('OPENSHIFT_DATA_DIR') + '/redmine-__REDMINE_VERSION__/tmprestart.txt')
 __HEREDOC__
-perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' restart_redmine.cgi
-perl -pi -e 's/__REDMINE_VERSION__/${redmine_version}/g' restart_redmine.cgi
+perl -pi -e 's/__REDMINE_VERSION__/${redmine_version}/g' redmine.php
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
