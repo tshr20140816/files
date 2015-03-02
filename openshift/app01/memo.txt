@@ -7,3 +7,10 @@ cpanm Time::HiRes
 export PERL5LIB=/var/lib/openshift/54e332455973ca0d4200002d/app-root/data/perl5/lib/perl5/x86_64-linux-thread-multi
 # ./Run -i 1 int
 ./Run
+
+$url = $_POST['url']
+
+if(preg_match('^\w+?-\w+?\.rhcloud\.com$', $url) === 0)
+{
+    touch(getenve('OPENSHIFT_DATA_DIR') + 'ignore_server_list/' + $url)
+}
