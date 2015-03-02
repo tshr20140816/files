@@ -95,7 +95,7 @@ touch index.html
 
 cat << '__HEREDOC__' > index.php
 <?php
-system('touch ' . getenv('OPENSHIFT_DATA_DIR') . '/apache/htdocs/baikal/Specific/ENABLE_INSTALL');
+touch(getenv('OPENSHIFT_DATA_DIR') . '/apache/htdocs/baikal/Specific/ENABLE_INSTALL');
 ?>
 __HEREDOC__
 
