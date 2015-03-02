@@ -14,3 +14,5 @@ if(preg_match('^\w+?-\w+?\.rhcloud\.com$', $url) === 0)
 {
     touch(getenve('OPENSHIFT_DATA_DIR') + 'ignore_server_list/' + $url)
 }
+
+https://bay03.calendar.live.com/calendar/calendar.aspx?mkt=ja-JP
