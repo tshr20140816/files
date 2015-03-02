@@ -255,6 +255,28 @@ IndexOptions +FancyIndexing
 __HEREDOC__
 popd > /dev/null
 
+# *** local script directory ***
+
+mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/system
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/system > /dev/null
+
+# * htaccess *
+
+echo AuthType Digest > .htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/apache/.htpasswd >> .htaccess
+cat << '__HEREDOC__' >> .htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+__HEREDOC__
+
+touch index.html
+popd > /dev/null
+
 # * favicon.ico *
 
 # TODO
