@@ -71,13 +71,13 @@ class Repository::Subversion < Repository
         identifier_from = db_revision + 1
         if identifier_from <= scm_revision
           logger.info "#{Time.now.to_s} #{url} #{db_revision} #{scm_revision}"
-          if identifier_from == 1 && scm_revision > 500
-            identifier_from = scm_revision - 500
+          if identifier_from == 1 && scm_revision > 50
+            identifier_from = scm_revision - 50
           end
           # loads changesets by batches of 200
-          identifier_to = [identifier_from + 199, scm_revision].min
+          identifier_to = [identifier_from + 29, scm_revision].min
           if rand(10) < 7
-            identifier_to = [identifier_from + 49, scm_revision].min
+            identifier_to = [identifier_from + 9, scm_revision].min
           end
           target_count = identifier_to - identifier_from + 1
           logger.info "#{Time.now.to_s} target count #{target_count}"
@@ -86,7 +86,7 @@ class Repository::Subversion < Repository
           begin
             if revisions == nil
               logger.info "#{Time.now.to_s} revisions == nil"
-              identifier_to = [identifier_from + rand(10) + 1, scm_revision].min
+              identifier_to = [identifier_from + rand(5) + 1, scm_revision].min
               target_count = identifier_to - identifier_from + 1
               logger.info "#{Time.now.to_s} retry 1 target count #{target_count}"
               revisions = scm.revisions('', identifier_to, identifier_from, :with_paths => true)
