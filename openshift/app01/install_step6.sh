@@ -243,7 +243,7 @@ ln -s ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/public ${OPENSHIFT_DATA_D
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/system > /dev/null
 cat << '__HEREDOC__' > redmine.php
 <?php
-touch(getenve('OPENSHIFT_DATA_DIR') + '/redmine-__REDMINE_VERSION__/tmprestart.txt')
+touch(getenve('OPENSHIFT_DATA_DIR') + '/redmine-__REDMINE_VERSION__/tmp/restart.txt')
 ?>
 __HEREDOC__
 perl -pi -e 's/__REDMINE_VERSION__/${redmine_version}/g' redmine.php
