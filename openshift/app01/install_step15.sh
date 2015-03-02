@@ -104,7 +104,7 @@ dt=$(date '+%Y%m%d')
 cp config.js config.js.${dt}
 
 perl -pi -e 's/^var globalNetworkCheckSettings={href: .+, hrefLabel:(.+$)/var globalNetworkCheckSettings={href: __GLOBAL_NETWORK_CHECK_SETTINGS_HREF__, hrefLabel:${1}/g' config.js
-sed -i -e "s|__GLOBAL_NETWORK_CHECK_SETTINGS_HREF__|location.protocol+'//'+location.hostname+'/baikal/cal.php/'|g" config.js
+sed -i -e "s|__GLOBAL_NETWORK_CHECK_SETTINGS_HREF__|location.protocol+'//'+location.hostname+'/baikal/cal.php/principals/'|g" config.js
 
 perl -pi -e "s/^var globalInterfaceLanguage='en_US';/var globalInterfaceLanguage='ja_JP';/g" config.js
 
@@ -116,6 +116,9 @@ perl -pi -e "s/^var globalCalendarStartOfBusiness=8;/var globalCalendarStartOfBu
 perl -pi -e "s/^var globalCalendarEndOfBusiness=17;/var globalCalendarEndOfBusiness=24;/g" config.js
 
 perl -pi -e "s/^var globalTimeZone='Europe\/Berlin';/var globalTimeZone='Asia\/Tokyo';/g" config.js
+
+sed -i -e "s|//var globalUseJqueryAuth|location.protocol+'//'+location.hostname+'/baikal/cal.php/principals/'|g" config.js
+perl -pi -e "s/^\/\/var globalUseJqueryAuth=.+$/var globalUseJqueryAuth=true;/g" config.js
 
 diff -u config.js.${dt} config.js
 popd > /dev/null
