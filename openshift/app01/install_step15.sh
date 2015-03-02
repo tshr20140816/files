@@ -74,25 +74,7 @@ sed -i -e "s|__PROJECT_DB_MYSQL_PASSWORD__|${baikaluser_password}|g" System.php
 
 popd > /dev/null
 
-mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/system
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/system > /dev/null
-
-# * htaccess *
-
-echo AuthType Digest > .htaccess
-echo AuthUserFile ${OPENSHIFT_DATA_DIR}/apache/.htpasswd >> .htaccess
-cat << '__HEREDOC__' >> .htaccess
-AuthName realm
-
-require valid-user
-
-<Files ~ "^.(htpasswd|htaccess)$">
-    deny from all
-</Files>
-__HEREDOC__
-
-touch index.html
-
 cat << '__HEREDOC__' > baikal.php
 <?php
 touch(getenv('OPENSHIFT_DATA_DIR') . '/apache/htdocs/baikal/Specific/ENABLE_INSTALL');
