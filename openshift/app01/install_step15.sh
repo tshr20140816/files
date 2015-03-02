@@ -93,7 +93,7 @@ __HEREDOC__
 
 touch index.html
 
-cat << '__HEREDOC__' > index.php
+cat << '__HEREDOC__' > baikal.php
 <?php
 touch(getenv('OPENSHIFT_DATA_DIR') . '/apache/htdocs/baikal/Specific/ENABLE_INSTALL');
 ?>
