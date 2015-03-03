@@ -117,7 +117,6 @@ perl -pi -e "s/^var globalCalendarEndOfBusiness=17;/var globalCalendarEndOfBusin
 
 perl -pi -e "s/^var globalTimeZone='Europe\/Berlin';/var globalTimeZone='Asia\/Tokyo';/g" config.js
 
-sed -i -e "s|//var globalUseJqueryAuth|location.protocol+'//'+location.hostname+'/baikal/cal.php/principals/'|g" config.js
 perl -pi -e "s/^\/\/var globalUseJqueryAuth=.+$/var globalUseJqueryAuth=true;/g" config.js
 
 diff -u config.js.${dt} config.js
