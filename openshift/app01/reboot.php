@@ -1,7 +1,7 @@
 <?php
 $action = $_POST['action'];
-$url    = $_POST['url'];
-$rc     = 'OK';
+$url = $_POST['url'];
+$rc = 'OK';
 if (preg_match('^\w+?-\w+?\.rhcloud\.com$', $url) === 0) {
     $filename = getenve('OPENSHIFT_DATA_DIR') + 'ignore_server_list/' + $url;
     switch ($action) {
