@@ -21,10 +21,7 @@ set -x
 # 2014.10.28 ruby_version 2.1.3 → 2.1.4
 # 2014.10.22 ttrss_version 1.13 → 1.14
 # 2014.10.22 redmine_version 2.5.2 → 2.5.3
-# 2014.10.19 del rrdtool
 # 2014.10.17 php_version 5.6.1 → 5.6.2
-# 2014.10.16 add tcl & expect
-# 2014.10.15 add cacti & rrdtool
 # 2014.10.08 delegate_version 9.9.11 → 9.9.12
 # 2014.10.06 php_version 5.6.0 → 5.6.1
 # 2014.09.29 ruby_version 2.1.2 → 2.1.3
@@ -53,6 +50,7 @@ logrotate_version 3.8.8
 fio_version 2.2.5
 baikal_version 0.2.7
 caldavzap_version 0.12.0
+phpicalendar_version 2.4_20100615
 __HEREDOC__
 
 # nginx_version 1.6.2
@@ -311,6 +309,8 @@ if [ ${mirror_server} != "none" ]; then
     # CalDavZAP
     wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip
 
+    # phpicalendar
+    wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2
 fi
 
 files_exists=0
@@ -605,6 +605,14 @@ do
         wget http://www.inf-it.com/CalDavZAP_${caldavzap_version}.zip
     fi
     [ -f CalDavZAP_${caldavzap_version}.zip ] || files_exists=0
+
+    # *** phpicalendar ***
+    if [ ! -f phpicalendar-${phpicalendar_version}.tar.bz2 ]; then
+        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing phpicalendar-${phpicalendar_version}.tar.bz2 | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo $(date +%Y/%m/%d" "%H:%M:%S) phpicalendar wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://downloads.sourceforge.net/project/phpicalendar/phpicalendar/phpicalendar%202.4%20RC7/phpicalendar-${phpicalendar_version}.tar.bz2
+    fi
+    [ -f phpicalendar-${phpicalendar_version}.tar.bz2 ] || files_exists=0
 
     # *** super pi ***
     if [ ! -f super_pi-jp.tar.gz ]; then
