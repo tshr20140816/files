@@ -135,6 +135,23 @@ popd > /dev/null
 
 rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/CalDavZAP_${caldavzap_version}.zip
 
+# ***** phpicalendar *****
+
+rmdir -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal
+mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal
+
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal > /dev/null
+cp ${OPENSHIFT_DATA_DIR}/download_files/phpicalendar-${phpicalendar_version}.tar.bz2 ./
+tar jxf phpicalendar-${phpicalendar_version}.tar.bz2 --strip-components=1
+
+# perl -pi -e "s/$filename = tempnam(sys_get_temp_dir(), 'ICS');/ /g" functions/ical_parser.php
+# perl -pi -e "s/ / /g" functions/ical_parser.php
+# perl -pi -e "s/ / /g" functions/ical_parser.php
+# perl -pi -e "s/ / /g" functions/ical_parser.php
+
+rm phpicalendar-${phpicalendar_version}.tar.bz2
+popd > /dev/null
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
