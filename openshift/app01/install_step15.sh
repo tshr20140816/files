@@ -144,6 +144,8 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/phpicalendar-${phpicalendar_version}.tar.bz2 ./
 tar jxf phpicalendar-${phpicalendar_version}.tar.bz2 --strip-components=1
 
+patch functions/ical_parser.php ${OPENSHIFT_DATA_DIR}/download_files/ical_parser.php.patch
+# TODO
 # perl -pi -e "s/$filename = tempnam(sys_get_temp_dir(), 'ICS');/ /g" functions/ical_parser.php
 # perl -pi -e "s/ / /g" functions/ical_parser.php
 # perl -pi -e "s/ / /g" functions/ical_parser.php
