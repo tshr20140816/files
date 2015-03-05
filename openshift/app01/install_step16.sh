@@ -220,7 +220,7 @@ elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
 fi
 
 # redmine
-export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
+# export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 process_count=$(find ${OPENSHIFT_DATA_DIR}/.gem/gems/ \
 -name passenger-status -type f \
 | xargs --replace={} ruby {} --verbose \
@@ -280,7 +280,7 @@ eval "$(rbenv init -)"
 rbenv global __RUBY_VERSION__
 rbenv rehash
 
-export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
+# export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/passenger_status.txt
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f \
 | xargs --replace={} ruby {} --verbose >> ${OPENSHIFT_TMP_DIR}/passenger_status.txt
