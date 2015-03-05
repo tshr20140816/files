@@ -211,7 +211,8 @@ RailsBaseURI /redmine
 PassengerBaseURI /redmine
 # PassengerTempDir __OPENSHIFT_DATA_DIR__tmp
 # too long unix socket path (max: 107bytes)
-PassengerTempDir __OPENSHIFT_TMP_DIR__PassengerTempDir
+# PassengerTempDir __OPENSHIFT_TMP_DIR__PassengerTempDir
+# Invalid command 'PassengerTempDir', perhaps misspelled or defined by a module not included in the server configuration
 SetEnv GEM_HOME __OPENSHIFT_DATA_DIR__.gem
 # TODO
 # SetEnv GEM_PATH
