@@ -700,7 +700,7 @@ done
 
 for file_name in $(ls ${OPENSHIFT_DATA_DIR}/github/openshift/app01/*.rb)
 do
-    if [ $(ruby -cw ${file_name} 2>&1 | wc -l) -gt 0 ]; then
+    if [ $(ruby -cw ${file_name} 2>&1) != 'Syntax OK' ]; then
         ruby -cw ${file_name} 2>&1 >> ${OPENSHIFT_LOG_DIR}/install_alert.log
     fi
 done
