@@ -104,6 +104,8 @@ popd > /dev/null
 echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') \
 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
+touch ${OPENSHIFT_LOG_DIR}/php_error.log
+
 pushd ${OPENSHIFT_DATA_DIR}/php > /dev/null
 perl -pi -e 's/^short_open_tag .+$/short_open_tag = On/g' lib/php.ini
 perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/php.ini
