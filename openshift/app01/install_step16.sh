@@ -4,9 +4,32 @@ source functions.sh
 function010
 [ $? -eq 0 ] || exit
 
-# ***** memory usage logging *****
-
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
+
+# ***** logrotate (zantei) *****
+# https://bugzilla.redhat.com/show_bug.cgi?id=1181059
+
+cat << '__HEREDOC__' > logrotate_zantei.sh
+#!/bin/bash
+export TZ=JST-9
+
+day='00'
+while :
+do
+    sleep 10m
+    if [ %{day} != $(date +%d) ]; then
+        day=$(date +%d)
+        echo $(date +%Y/%m/%d" "%H:%M:%S) >> ${OPENSHIFT_LOG_DIR}/logrotate_zantei.log
+        /usr/sbin/logrotate -v \
+            -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status \
+            -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf \
+            >> ${OPENSHIFT_LOG_DIR}/logrotate_zantei.log
+    fi
+done
+__HEREDOC__
+chmod +x logrotate_zantei.sh
+
+# ***** memory usage logging *****
 
 cat << '__HEREDOC__' > memory_usage_logging.sh
 #!/bin/bash
