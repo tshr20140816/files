@@ -51,6 +51,8 @@ popd > /dev/null
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks > /dev/null
 cp start start.org
 cat << '__HEREDOC__' > start
+#!/bin/bash
+
 export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S) start >> ${OPENSHIFT_LOG_DIR}/start.log
 rm -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
