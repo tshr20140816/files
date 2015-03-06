@@ -59,7 +59,7 @@ rbenv rehash
 ruby --version
 # export PASSENGER_TEMP_DIR=${OPENSHIFT_DATA_DIR}/tmp
 # too long unix socket path (max: 107bytes)
-export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
+# export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs --replace={} ruby {} --verbose
 
 # ***** restart *****
