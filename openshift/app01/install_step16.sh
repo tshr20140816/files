@@ -11,8 +11,8 @@ pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
 cat << '__HEREDOC__' > logrotate_zantei.sh
 #!/bin/bash
-export TZ=JST-9
 
+export TZ=JST-9
 day='00'
 while :
 do
