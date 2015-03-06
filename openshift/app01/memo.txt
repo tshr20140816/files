@@ -15,3 +15,4 @@ if(preg_match('^\w+?-\w+?\.rhcloud\.com$', $url) === 0)
     touch(getenve('OPENSHIFT_DATA_DIR') + 'ignore_server_list/' + $url)
 }
 
+https://wordpress.org/plugins/all-in-one-wp-security-and-firewall/changelog/
