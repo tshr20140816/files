@@ -59,7 +59,9 @@ rm -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
 rm -f ${OPENSHIFT_DATA_DIR}/mrtg/mrtg.conf_l
 ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
 
-kill $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -v grep | awk '{print $2}')
+if [ $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -v grep | wc -l) -gt 0 ]; then
+    kill $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -v grep | awk '{print $2}')
+fi
 ${OPENSHIFT_DATA_DIR}/scripts/logrotate_zantei.sh ${OPENSHIFT_DIY_IP} &
 __HEREDOC__
 popd > /dev/null
