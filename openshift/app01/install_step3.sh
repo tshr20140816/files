@@ -122,7 +122,7 @@ LanguagePriority ja en
 # log
 
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
-LogFormat "%{%Y-%m-%d %H:%M:%S %Z}t %p %{X-Forwarded-For}i %l %m %s %b \"%r\" \"%{User-Agent}i\"" remoteip
+LogFormat "[%{%Y-%m-%d %H:%M:%S %Z}t] %p %{X-Forwarded-For}i %l %m %s %b \"%r\" \"%{User-Agent}i\"" remoteip
 
 SetEnvIf Request_Method (HEAD|OPTIONS) method_head_options
 
