@@ -124,10 +124,10 @@ LanguagePriority ja en
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 LogFormat "%{%Y-%m-%d %H:%M:%S %Z}t %p %{X-Forwarded-For}i %l %m %s %b \"%r\" \"%{User-Agent}i\"" remoteip
 
-SetEnvIf Request_Method HEAD method_head
+SetEnvIf Request_Method (HEAD|OPTIONS) method_head_options
 
 CustomLog logs/access_log combined
-CustomLog logs/access_remoteip_log remoteip env=!method_head
+CustomLog logs/access_remoteip_log remoteip env=!method_head_options
 
 # indexes
 
