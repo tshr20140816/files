@@ -72,9 +72,9 @@ cat << '__HEREDOC__' >> conf/custom.conf
 # delegate
 
 ProxyRequests Off
-ProxyPass /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
+ProxyPass /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/ retry=1
 ProxyPassReverse /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
-ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_EMAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
+ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_EMAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/ retry=1
 ProxyPassReverse /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_EMAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/
 # ProxyPass /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
 # ProxyPassReverse /delegate/icons/ http://__OPENSHIFT_DIY_IP__:30080/-/builtin/icons/ysato/
