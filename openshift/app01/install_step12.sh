@@ -72,6 +72,11 @@ cat << '__HEREDOC__' >> conf/custom.conf
 # delegate
 
 ProxyRequests Off
+
+<Location /ml>
+    SetEnv proxy-initial-not-pooled 1
+</Location>
+
 ProxyPass /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/ retry=1
 ProxyPassReverse /mail/ http://__OPENSHIFT_DIY_IP__:30080/mail/
 ProxyPass /ml/ http://__OPENSHIFT_DIY_IP__:30080/mail/+pop.__DELEGATE_EMAIL_ACCOUNT__.__DELEGATE_POP_SERVER__/ retry=1
