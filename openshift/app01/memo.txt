@@ -16,3 +16,8 @@ if(preg_match('^\w+?-\w+?\.rhcloud\.com$', $url) === 0)
 }
 
 https://wordpress.org/plugins/all-in-one-wp-security-and-firewall/changelog/
+
+B001D4NQ62
+B004OCUJM4
+B00KQFOQ8G
+B00OZJFEAS
