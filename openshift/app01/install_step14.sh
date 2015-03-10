@@ -86,7 +86,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) rhc install | tee -a ${OPENSHIFT_LOG_DIR}/inst
 
 gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 
-rhc --version | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+rhc --version
 
 # *** setup ***
 
