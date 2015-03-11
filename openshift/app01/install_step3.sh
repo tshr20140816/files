@@ -116,7 +116,7 @@ MinSpareServers 1
 MaxSpareServers 5
 StartServers 1
 KeepAlive On
-Timeout 30
+Timeout 60
 LanguagePriority ja en
 
 # log
