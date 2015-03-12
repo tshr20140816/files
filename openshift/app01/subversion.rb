@@ -71,7 +71,7 @@ class Repository::Subversion < Repository
         identifier_from = db_revision + 1
         if identifier_from <= scm_revision
           logger.info "#{Time.now.to_s} #{url} #{db_revision} #{scm_revision}"
-          if identifier_from == 1 && scm_revision > 50
+          if identifier_from == 1 && scm_revision > 1
             identifier_from = scm_revision - 1
           end
           # loads changesets by batches of 200
