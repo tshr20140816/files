@@ -21,3 +21,28 @@ B001D4NQ62
 B004OCUJM4
 B00KQFOQ8G
 B00OZJFEAS
+
+INSERT INTO calendarobjects
+VALUES (
+ 2
+,"BEGIN:VCALENDAR\r\nPRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nCREATED:20150311T225625Z\r\nLAST-MODIFIED:20150311T225625Z\r\nDTSTAMP:20150311T225625Z\r\nUID:UIDxcarpxBECA92C0641A2D92BA181A81FDFCF4A184AABABAx52\r\nSUMMARY:18:00 ヤクルト マツダスタジアム\r\nDTSTART;VALUE=DATE:20150327\r\nDTEND;VALUE=DATE:20150328\r\nTRANSP:TRANSPARENT\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+,NULL
+,1
+,NULL
+,NULL
+,0
+,NULL
+,NULL
+,NULL
+)
+
+
+UPDATE calendarobjects
+   SET size = LENGTH(calendardata)
+      ,etag = MD5(calendardata)
+      ,componenttype = "VEVENT"
+      ,lastmodified = unix_timestamp(now())
+      ,uri = "UIDxcarpxBECA92C0641A2D92BA181A81FDFCF4A184AABABAx52"
+      ,firstoccurence = unix_timestamp("2015-03-27")
+      ,lastoccurence = unix_timestamp("2015-03-27") + 60 * 60 * 24
+ WHERE id = 2
