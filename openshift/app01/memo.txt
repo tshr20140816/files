@@ -36,6 +36,7 @@ VALUES (
 ,NULL
 )
 
+https://github.com/openshift/origin-server/blob/master/cartridges/openshift-origin-cartridge-mysql/conf/my.cnf.erb#L39
 
 UPDATE calendarobjects
    SET size = LENGTH(calendardata)
@@ -46,21 +47,3 @@ UPDATE calendarobjects
       ,firstoccurence = unix_timestamp("2015-03-27")
       ,lastoccurence = unix_timestamp("2015-03-27") + 60 * 60 * 24
  WHERE id = 2
-
-DELETE
-  FROM changesets
- WHERE id NOT IN (
-SELECT id
-  FROM (
-SELECT MAX(id) id
-  FROM changesets
- GROUP BY repository_id
-       ) Q1
-                 )
-
-DELETE
-  FROM changes
- WHERE changeset_id NOT IN (
-SELECT id
-  FROM changesets
-                           )
