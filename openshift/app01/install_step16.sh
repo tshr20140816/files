@@ -368,6 +368,16 @@ fi
 __HEREDOC__
 chmod +x cacti_poller.sh
 
+cat << '__HEREDOC__' > record_count_top_30_sql.txt
+SELECT T1.*
+  FROM information_schema.TABLES T1
+ WHERE T1.TABLE_ROWS IS NOT NULL
+   AND T1.TABLE_ROWS > 0
+   AND T1.TABLE_SCHEMA NOT IN ('performance_schema', 'mysql')
+ ORDER BY T1.TABLE_ROWS DESC
+ LIMIT 0, 30
+__HEREDOC__
+
 cat << '__HEREDOC__' > redmine_sql1.txt
 DELETE
   FROM changesets
@@ -551,16 +561,6 @@ echo redmine_repository_data_maintenance.sh >> jobs.allow
 
 # * mysql record count top 30 *
 
-cat << '__HEREDOC__' > record_count_top_30_sql.txt
-SELECT T1.*
-  FROM information_schema.TABLES T1
- WHERE T1.TABLE_ROWS IS NOT NULL
-   AND T1.TABLE_ROWS > 0
-   AND T1.TABLE_SCHEMA NOT IN ('performance_schema', 'mysql')
- ORDER BY T1.TABLE_ROWS DESC
- LIMIT 0, 30
-__HEREDOC__
-
 cat << '__HEREDOC__' > record_count_top_30.sh
 #!/bin/bash
 export TZ=JST-9
@@ -569,7 +569,8 @@ mysql --user "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
 --host "${OPENSHIFT_MYSQL_DB_HOST}" \
 --port "${OPENSHIFT_MYSQL_DB_PORT}"
---html < record_count_top_30_sql.txt > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/record_count_top_30.html
+--html < ${OPENSHIFT_DATA_DIR}/scripts/record_count_top_30_sql.txt \
+> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/record_count_top_30.html
 __HEREDOC__
 chmod +x record_count_top_30.sh
 echo record_count_top_30.sh >> jobs.allow
