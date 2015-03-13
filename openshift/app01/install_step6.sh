@@ -221,7 +221,7 @@ RailsMaxPoolSize 2
 RailsPoolIdleTime 7200
 PassengerEnabled off
 PassengerStatThrottleRate 5
-PassengerStartTimeout 240
+PassengerStartTimeout 300
 PassengerFriendlyErrorPages off
 # RailsAutoDetect off
 
