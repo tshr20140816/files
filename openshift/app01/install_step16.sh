@@ -368,6 +368,28 @@ fi
 __HEREDOC__
 chmod +x cacti_poller.sh
 
+cat << '__HEREDOC__' > redmine_sql1.txt
+DELETE
+  FROM changesets
+ WHERE id NOT IN (
+                   SELECT Q1.id
+                     FROM (
+                            SELECT MAX(T1.id) id
+                              FROM changesets T1
+                             GROUP BY T1.repository_id
+                          ) Q1
+                 )
+__HEREDOC__
+
+cat << '__HEREDOC__' > redmine_sql2.txt
+DELETE
+  FROM changes
+ WHERE changeset_id NOT IN (
+                             SELECT T1.id
+                               FROM changesets T1
+                           )
+__HEREDOC__
+
 popd > /dev/null
 
 # ***** logrotate *****
@@ -508,6 +530,24 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) cron hourly | tee -a ${OPENSHIFT_LOG_DIR}/inst
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
 rm -f *
 touch jobs.deny
+
+# * redmine repository data maintenance *
+
+cat << '__HEREDOC__' > redmine_repository_data_maintenance.sh
+#!/bin/bash
+
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql1.txt
+
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql2.txt
+__HEREDOC__
+chmod +x redmine_repository_data_maintenance.sh
+echo redmine_repository_data_maintenance.sh >> jobs.allow
 
 # * mysql record count top 30 *
 
