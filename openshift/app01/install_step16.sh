@@ -171,6 +171,8 @@ do
 
         env_home_backup=${HOME}
         export HOME=${OPENSHIFT_DATA_DIR}
+        rhc env set OPENSHIFT_MYSQL_DEFAULT_STORAGE_ENGINE=INNODB -a ${target_app_name}
+        rhc env set OPENSHIFT_MYSQL_TIMEZONE='+09:00' -a ${target_app_name}
         ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name}
         export HOME=${env_home_backup}
     fi
