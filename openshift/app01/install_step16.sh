@@ -586,7 +586,7 @@ cat << '__HEREDOC__' > du.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) | tee ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
 echo >> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
 du ${OPENSHIFT_HOMEDIR} >> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
 __HEREDOC__
@@ -599,6 +599,7 @@ cat << '__HEREDOC__' > webalizer.sh
 #!/bin/bash
 
 export TZ=JST-9
+echo $(date +%Y/%m/%d" "%H:%M:%S)
 cd ${OPENSHIFT_DATA_DIR}/webalizer
 ./bin/webalizer -c ./etc/webalizer.conf
 __HEREDOC__
@@ -611,6 +612,7 @@ cat << '__HEREDOC__' > delegate.sh
 #!/bin/bash
 
 export TZ=JST-9
+echo $(date +%Y/%m/%d" "%H:%M:%S)
 delegate_email_account=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_account)
 delegate_email_password=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_password)
 delegate_pop_server=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server)
