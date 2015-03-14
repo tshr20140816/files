@@ -57,6 +57,7 @@ export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S) start >> ${OPENSHIFT_LOG_DIR}/start.log
 rm -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
 rm -f ${OPENSHIFT_DATA_DIR}/mrtg/mrtg.conf_l
+cp -f $OPENSHIFT_MYSQL_DIR/conf/my.cnf ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
 
 if [ $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -v grep | wc -l) -gt 0 ]; then
