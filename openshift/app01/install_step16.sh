@@ -545,6 +545,8 @@ touch jobs.deny
 
 cat << '__HEREDOC__' > redmine_repository_data_maintenance.sh
 #!/bin/bash
+export TZ=JST-9
+echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
@@ -564,6 +566,7 @@ echo redmine_repository_data_maintenance.sh >> jobs.allow
 cat << '__HEREDOC__' > record_count_top_30.sh
 #!/bin/bash
 export TZ=JST-9
+echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 mysql --user "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
