@@ -637,6 +637,7 @@ cat << '__HEREDOC__' > minutely_jobs.sh
 
 export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
+hour=$(date +%H)
 
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
@@ -650,8 +651,8 @@ pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 # ./my_server_check.sh >>${OPENSHIFT_LOG_DIR}/my_server_check.sh.log 2>&1 &
 ./passenger_status.sh >>${OPENSHIFT_LOG_DIR}/passenger_status.sh.log 2>&1 &
 ./process_status.sh >>${OPENSHIFT_LOG_DIR}/process_status.sh.log 2>&1 &
-./redmine_repository_check.sh >>${OPENSHIFT_LOG_DIR}/redmine_repository_check.sh.log 2>&1 &
-./update_feeds.sh >>${OPENSHIFT_LOG_DIR}/update_feeds.sh.log 2>&1 &
+[ ${hour} -ne 1 ] && ./redmine_repository_check.sh >>${OPENSHIFT_LOG_DIR}/redmine_repository_check.sh.log 2>&1 &
+[ ${hour} -ne 1 ] && ./update_feeds.sh >>${OPENSHIFT_LOG_DIR}/update_feeds.sh.log 2>&1 &
 
 popd > /dev/null
 __HEREDOC__
