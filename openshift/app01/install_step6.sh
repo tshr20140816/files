@@ -82,16 +82,16 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_redmine.txt
 DROP DATABASE IF EXISTS redmine;
 CREATE DATABASE redmine CHARACTER SET utf8 COLLATE utf8_general_ci;
-GRANT ALL PRIVILEGES ON redmine.* TO redmineuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
+GRANT ALL PRIVILEGES ON redmine.* TO __OPENSHIFT_MYSQL_DB_USERNAME__@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__OPENSHIFT_MYSQL_DB_PASSWORD__';
 FLUSH PRIVILEGES;
 EXIT
 __HEREDOC__
 
 # * create password *
 
-redmineuser_password=$(uuidgen | base64 | head -c 25)
+perl -pi -e 's/__OPENSHIFT_MYSQL_DB_USERNAME__/$ENV{OPENSHIFT_MYSQL_DB_USERNAME}/g' create_database_redmine.txt
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_redmine.txt
-perl -pi -e "s/__PASSWORD__/${redmineuser_password}/g" create_database_redmine.txt
+perl -pi -e 's/__OPENSHIFT_MYSQL_DB_PASSWORD__/$ENV{OPENSHIFT_MYSQL_DB_PASSWORD}/g' create_database_redmine.txt
 
 # * create database *
 
@@ -110,12 +110,11 @@ production:
   adapter: mysql2
   database: redmine
   host: <%= ENV['OPENSHIFT_MYSQL_DB_HOST'] %>
-  username: redmineuser
-  password: __PASSWORD__
+  username: <%= ENV['OPENSHIFT_MYSQL_DB_USERNAME'] %>
+  password: <%= ENV['OPENSHIFT_MYSQL_DB_PASSWORD'] %>
   port: <%= ENV['OPENSHIFT_MYSQL_DB_PORT'] %>
   encoding: utf8
 __HEREDOC__
-perl -pi -e "s/__PASSWORD__/${redmineuser_password}/g" config/database.yml
 
 # *** config mail font ***
 
