@@ -145,11 +145,28 @@ cp ${OPENSHIFT_DATA_DIR}/download_files/phpicalendar-${phpicalendar_version}.tar
 tar jxf phpicalendar-${phpicalendar_version}.tar.bz2 --strip-components=1
 
 patch functions/ical_parser.php ${OPENSHIFT_DATA_DIR}/github/openshift/app01/ical_parser.php.patch
-# TODO
-# perl -pi -e "s/$filename = tempnam(sys_get_temp_dir(), 'ICS');/ /g" functions/ical_parser.php
-# perl -pi -e "s/ / /g" functions/ical_parser.php
-# perl -pi -e "s/ / /g" functions/ical_parser.php
-# perl -pi -e "s/ / /g" functions/ical_parser.php
+
+cp config.inc.php config.inc.php.`date '+%Y%m%d'`
+cat << '__HEREDOC__' > config.inc.php
+<?php
+
+$configs = array(
+'default_path' => 'https://__OPENSHIFT_APP_DNS__/cal/',
+'timezone' => '+09:00',
+'language' => 'Japanese',
+'default_view' => 'month',
+'week_start_day' => 'Sunday',
+'phpicalendar_publishing' => 1,
+}
+
+$blacklisted_cals = array(
+''
+);
+
+$list_webcals = array(
+);
+__HEREDOC__
+sed -i -e "s|__OPENSHIFT_APP_DNS__|${OPENSHIFT_APP_DNS}|g" config.inc.php
 
 rm phpicalendar-${phpicalendar_version}.tar.bz2
 popd > /dev/null
