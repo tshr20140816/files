@@ -78,7 +78,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S)
 minute=$(date +%M)
 dt=$(date +%Y/%m/%d" "%H:%M:%S)
 
-if [ $(expr ${minute} % 5) -eq 2 ]; then
+if [ $((${minute} % 5)) -eq 2 ]; then
     echo ${dt} start >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
 
     # memory usage check
@@ -281,7 +281,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 minute=$(date +%M)
 
-if [ $(expr ${minute} % 5) -eq 0 ]; then
+if [ $((${minute} % 5)) -eq 0 ]; then
     ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
 fi
 __HEREDOC__
@@ -364,7 +364,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 minute=$(date +%M)
 
-if [ $(expr ${minute} % 5) -eq 1 ]; then
+if [ $((${minute} % 5)) -eq 1 ]; then
     ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php
 fi
 __HEREDOC__
