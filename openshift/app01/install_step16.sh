@@ -17,7 +17,7 @@ day='00'
 while :
 do
     sleep 10m
-    if [ %{day} != $(date +%d) ]; then
+    if [ ${day} != $(date +%d) ]; then
         day=$(date +%d)
         echo $(date +%Y/%m/%d" "%H:%M:%S) >> ${OPENSHIFT_LOG_DIR}/logrotate_zantei.log
         /usr/sbin/logrotate -v \
