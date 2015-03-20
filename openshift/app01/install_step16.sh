@@ -402,6 +402,16 @@ DELETE
                            )
 __HEREDOC__
 
+cat << '__HEREDOC__' > redmine_sql3.txt
+SELECT COUNT('X')
+  FROM changesets
+__HEREDOC__
+
+cat << '__HEREDOC__' > redmine_sql4.txt
+SELECT COUNT('X')
+  FROM changes
+__HEREDOC__
+
 popd > /dev/null
 
 # ***** logrotate *****
@@ -559,6 +569,16 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql2.txt
+
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql3.txt
+
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql4.txt
 __HEREDOC__
 chmod +x redmine_repository_data_maintenance.sh
 echo redmine_repository_data_maintenance.sh >> jobs.allow
