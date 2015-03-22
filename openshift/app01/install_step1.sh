@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.03.22 php_version 5.6.6 → 5.6.7
 # 2015.03.17 redmine_version 2.6.2 → 2.6.3
 # 2015.02.20 php_version 5.6.5 → 5.6.6
 # 2015.02.20 redmine_version 2.5.3 → 2.6.2
