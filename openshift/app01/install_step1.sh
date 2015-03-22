@@ -31,7 +31,7 @@ set -x
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
-php_version 5.6.6
+php_version 5.6.7
 delegate_version 9.9.13
 mrtg_version 2.17.4
 webalizer_version 2.23-08
