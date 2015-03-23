@@ -38,7 +38,7 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 
 # *** format compact -> compress
 
-function020
+function020 ttrss
 
 popd > /dev/null
 
