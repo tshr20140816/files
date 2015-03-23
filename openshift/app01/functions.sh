@@ -53,7 +53,7 @@ function010() {
 
 # ${1} : database name
 function020() {
-    if [ $# -ne 0 ]; then
+    if [ $# -ne 1 ]; then
         return
     fi
     
