@@ -16,6 +16,7 @@ tar xfz ${ttrss_version}.tar.gz --strip-components=1
 popd > /dev/null
 
 # *** create database ***
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_ttrss.txt
 DROP DATABASE IF EXISTS ttrss;
@@ -37,20 +38,7 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 
 # *** format compact -> compress
 
-cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/sql.txt
-SET GLOBAL innodb_file_per_table=1;
-SET GLOBAL innodb_file_format=Barracuda;
-ALTER TABLE ttrss_user_entries ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=1;
-ALTER TABLE ttrss_entries ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=1;
-ALTER TABLE ttrss_tags ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=1;
-__HEREDOC__
-
-mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
--h "${OPENSHIFT_MYSQL_DB_HOST}" \
--P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < ${OPENSHIFT_TMP_DIR}/sql.txt
-
-rm ${OPENSHIFT_TMP_DIR}/sql.txt
+function020
 
 popd > /dev/null
 
