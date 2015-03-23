@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.03.23 caldavzap_version 0.12.0 → 0.12.1
 # 2015.03.22 php_version 5.6.6 → 5.6.7
 # 2015.03.17 redmine_version 2.6.2 → 2.6.3
 # 2015.02.20 php_version 5.6.5 → 5.6.6
@@ -51,7 +52,7 @@ lynx_version 2.8.7
 logrotate_version 3.8.8
 fio_version 2.2.5
 baikal_version 0.2.7
-caldavzap_version 0.12.0
+caldavzap_version 0.12.1
 phpicalendar_version 2.4_20100615
 __HEREDOC__
 
