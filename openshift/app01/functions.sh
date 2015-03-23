@@ -50,3 +50,35 @@ function010() {
 
     return 0
 }
+
+# ${1} : database name
+function020() {
+    if [ $# -ne 0 ]; then
+        return
+    fi
+    
+    tables=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+     --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+     --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+     --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+     --database="${1}" \
+     --silent \
+     --batch \
+     --execute="SHOW TABLES"`)
+
+    sql=""
+    for table in ${tables[@]}; do
+        sql="${sql}ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=1;\n"
+    done
+    
+    echo ${sql}
+
+    mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+     --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+     --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+     --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+     --database="${1}" \
+     --silent \
+     --batch \
+     --execute="${sql}"
+}
