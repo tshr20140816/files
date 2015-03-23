@@ -66,7 +66,8 @@ function020() {
      --batch \
      --execute="SHOW TABLES"`)
 
-    sql=""
+    sql="SET GLOBAL innodb_file_per_table=1;\n"
+    sql="${sql}SET GLOBAL innodb_file_format=Barracuda;\n"
     for table in ${tables[@]}; do
         sql="${sql}ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=1;\n"
     done
