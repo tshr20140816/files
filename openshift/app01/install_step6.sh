@@ -170,6 +170,22 @@ time RAILS_ENV=production bundle exec rake db:migrate 2>&1 \
 time RAILS_ENV=production bundle exec rake redmine:plugins:migrate 2>&1 \
 | tee ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log
 
+# *** format compact -> compress
+
+cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/sql.txt
+SET GLOBAL innodb_file_per_table=1;
+SET GLOBAL innodb_file_format=Barracuda;
+ALTER TABLE changes ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=8;
+ALTER TABLE changesets ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=8;
+__HEREDOC__
+
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_TMP_DIR}/sql.txt
+
+rm ${OPENSHIFT_TMP_DIR}/sql.txt
+
 # *** coderay bash ***
 
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name scanners -type d \
