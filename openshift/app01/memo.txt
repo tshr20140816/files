@@ -53,8 +53,6 @@ wget http://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/2.
 
 du -h * | sort -rh | head -50
 
-TABLES=(`mysql -u${USER} -p${PW} -D${DB} -sN -e "SHOW TABLES"`)
-
 TABLES=(`mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
  --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
  -h "${OPENSHIFT_MYSQL_DB_HOST}" \
