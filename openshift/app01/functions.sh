@@ -82,4 +82,6 @@ function020() {
      --silent \
      --batch \
      --execute="${sql}"
+
+    # select * from information_schema.INNODB_CMP
 }
