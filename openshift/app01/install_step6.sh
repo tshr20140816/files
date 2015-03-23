@@ -172,7 +172,7 @@ time RAILS_ENV=production bundle exec rake redmine:plugins:migrate 2>&1 \
 
 # *** format compact -> compress
 
-function020
+function020 redmine
 
 # *** coderay bash ***
 
