@@ -15,7 +15,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) Tiny Tiny RSS tar | tee -a ${OPENSHIFT_LOG_DIR
 tar xfz ${ttrss_version}.tar.gz --strip-components=1
 popd > /dev/null
 
-# create database
+# *** create database ***
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_ttrss.txt
 DROP DATABASE IF EXISTS ttrss;
@@ -28,10 +28,29 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_ttrss.txt
 
+# *** create tables ***
+
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/schema/ttrss_schema_mysql.sql
+
+# *** format compact -> compress
+
+cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/sql.txt
+SET GLOBAL innodb_file_per_table=1;
+SET GLOBAL innodb_file_format=Barracuda;
+ALTER TABLE ttrss_user_entries ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=8;
+ALTER TABLE ttrss_entries ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=8;
+ALTER TABLE ttrss_tags ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=8;
+__HEREDOC__
+
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < ${OPENSHIFT_TMP_DIR}/sql.txt
+
+rm ${OPENSHIFT_TMP_DIR}/sql.txt
 
 popd > /dev/null
 
