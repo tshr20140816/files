@@ -74,6 +74,15 @@ sed -i -e "s|__PROJECT_DB_MYSQL_PASSWORD__|${baikaluser_password}|g" System.php
 
 popd > /dev/null
 
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal/Core/Resources/Db/MySQL > /dev/null
+
+cp db.sql db.sql.`date '+%Y%m%d'`
+sed -i -e '1s/^/SET GLOBAL innodb_file_format=Barracuda;\n\n/' db.sql
+sed -i -e '1s/^/SET GLOBAL innodb_file_per_table=1;\n/' db.sql
+perl -pi -e 's/ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci/${1} ROW_FORMAT=compressed KEY_BLOCK_SIZE=1/' db.sql
+
+popd > /dev/null
+
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/system > /dev/null
 cat << '__HEREDOC__' > baikal.php
 <?php
