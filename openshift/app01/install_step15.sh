@@ -19,17 +19,12 @@ touch baikal/Specific/ENABLE_INSTALL
 popd > /dev/null
 
 # create database
-baikaluser_password=$(uuidgen | base64 | head -c 25)
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_baikal.txt
 DROP DATABASE IF EXISTS baikal;
 CREATE DATABASE baikal CHARACTER SET utf8 COLLATE utf8_general_ci;
-GRANT ALL PRIVILEGES ON baikal.* TO baikaluser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
-FLUSH PRIVILEGES;
 EXIT
 __HEREDOC__
-perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_baikal.txt
-perl -pi -e "s/__PASSWORD__/${baikaluser_password}/g" create_database_baikal.txt
 
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
@@ -52,25 +47,23 @@ sed -i -e 's|define("BAIKAL_CARD_ENABLED", TRUE);|define("BAIKAL_CARD_ENABLED", 
 sed -i -e 's|"PROJECT_DB_MYSQL" => FALSE|"PROJECT_DB_MYSQL" => TRUE|g' Database.php
 sed -i -e 's|"PROJECT_DB_MYSQL_HOST" => ""|"PROJECT_DB_MYSQL_HOST" => "__PROJECT_DB_MYSQL_HOST__"|g' Database.php
 sed -i -e 's|"PROJECT_DB_MYSQL_DBNAME" => ""|"PROJECT_DB_MYSQL_DBNAME" => "baikal"|g' Database.php
-sed -i -e 's|"PROJECT_DB_MYSQL_USERNAME" => ""|"PROJECT_DB_MYSQL_USERNAME" => "baikaluser"|g' Database.php
-sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => "__PROJECT_DB_MYSQL_PASSWORD__"|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_USERNAME" => ""|"PROJECT_DB_MYSQL_USERNAME" => "${OPENSHIFT_MYSQL_DB_USERNAME}"|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => "${OPENSHIFT_MYSQL_DB_PASSWORD}"|g' Database.php
 sed -i -e "s|__PROJECT_DB_MYSQL_HOST__|${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}|g" Database.php
-sed -i -e "s|__PROJECT_DB_MYSQL_PASSWORD__|${baikaluser_password}|g" Database.php
 
 # *** System.php ***
 
 sed -i -e 's|"PROJECT_DB_MYSQL" => FALSE|"PROJECT_DB_MYSQL" => TRUE|g' System.php
 sed -i -e 's|"PROJECT_DB_MYSQL_HOST" => ""|"PROJECT_DB_MYSQL_HOST" => "__PROJECT_DB_MYSQL_HOST__"|g' System.php
 sed -i -e 's|"PROJECT_DB_MYSQL_DBNAME" => ""|"PROJECT_DB_MYSQL_DBNAME" => "baikal"|g' System.php
-sed -i -e 's|"PROJECT_DB_MYSQL_USERNAME" => ""|"PROJECT_DB_MYSQL_USERNAME" => "baikaluser"|g' System.php
-sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => "__PROJECT_DB_MYSQL_PASSWORD__"|g' System.php
+sed -i -e 's|"PROJECT_DB_MYSQL_USERNAME" => ""|"PROJECT_DB_MYSQL_USERNAME" => "${OPENSHIFT_MYSQL_DB_USERNAME}"|g' System.php
+sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => "${OPENSHIFT_MYSQL_DB_PASSWORD}"|g' System.php
 sed -i -e 's|define("PROJECT_DB_MYSQL", FALSE);|define("PROJECT_DB_MYSQL", TRUE);|g' System.php
 sed -i -e 's|define("PROJECT_DB_MYSQL_HOST", "");|define("PROJECT_DB_MYSQL_HOST", "__PROJECT_DB_MYSQL_HOST__");|g' System.php
 sed -i -e 's|define("PROJECT_DB_MYSQL_DBNAME", "");|define("PROJECT_DB_MYSQL_DBNAME", "baikal");|g' System.php
-sed -i -e 's|define("PROJECT_DB_MYSQL_USERNAME", "");|define("PROJECT_DB_MYSQL_USERNAME", "baikaluser");|g' System.php
-sed -i -e 's|define("PROJECT_DB_MYSQL_PASSWORD", "");|define("PROJECT_DB_MYSQL_PASSWORD", "__PROJECT_DB_MYSQL_PASSWORD__");|g' System.php
+sed -i -e 's|define("PROJECT_DB_MYSQL_USERNAME", "");|define("PROJECT_DB_MYSQL_USERNAME", "${OPENSHIFT_MYSQL_DB_USERNAME}");|g' System.php
+sed -i -e 's|define("PROJECT_DB_MYSQL_PASSWORD", "");|define("PROJECT_DB_MYSQL_PASSWORD", "${OPENSHIFT_MYSQL_DB_PASSWORD}");|g' System.php
 sed -i -e "s|__PROJECT_DB_MYSQL_HOST__|${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}|g" System.php
-sed -i -e "s|__PROJECT_DB_MYSQL_PASSWORD__|${baikaluser_password}|g" System.php
 
 popd > /dev/null
 
