@@ -67,7 +67,7 @@ function020() {
      --silent \
      --batch \
      --execute="SET GLOBAL innodb_file_per_table=1;SET GLOBAL innodb_file_format=Barracuda;"
-    
+
     tables=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
      --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
      --host="${OPENSHIFT_MYSQL_DB_HOST}" \
