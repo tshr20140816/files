@@ -10,7 +10,7 @@ SELECT COUNT('X') CNT
  WHERE T1.uri = 'carp'
 __HEREDOC__)
 
-cnt=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+cnt=((mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
  --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
  --host="${OPENSHIFT_MYSQL_DB_HOST}" \
  --port="${OPENSHIFT_MYSQL_DB_PORT}" \
@@ -18,7 +18,7 @@ cnt=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
  --silent \
  --batch \
  --skip-column-names \
- --execute="${sql}"`)
+ --execute="${sql}"))
 
 [ ${cnt} -ne 1 ] && exit
 
@@ -37,7 +37,7 @@ SELECT T1.id
  WHERE T1.uri = 'carp'
 __HEREDOC__)
 
-calendar_id=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+calendar_id=((mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
  --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
  --host="${OPENSHIFT_MYSQL_DB_HOST}" \
  --port="${OPENSHIFT_MYSQL_DB_PORT}" \
@@ -45,7 +45,7 @@ calendar_id=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
  --silent \
  --batch \
  --skip-column-names \
- --execute="${sql}"`)
+ --execute="${sql}"))
 
 cat carp.ics | while read line
 do
