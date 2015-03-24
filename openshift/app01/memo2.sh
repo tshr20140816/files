@@ -2,6 +2,8 @@
 
 export TZ=JST-9
 
+schedule_server=""
+
 sql=$(cat << '__HEREDOC__'
 SELECT COUNT('X') CNT
   FROM calendars T1
@@ -23,7 +25,7 @@ cnt=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
 cd ${OPENSHIFT_TMP_DIR}
 
 [ -f carp.ics ] && mv -f carp.ics carp.ics.old || touch carp.ics.old
-wget tshrapp4.appspot.com/schedule/carp -O carp.ics
+wget https://${schedule_server}/schedule/carp -O carp.ics
 cmp carp.ics carp.ics.old
 [ $? -eq 0 ] && exit
 
