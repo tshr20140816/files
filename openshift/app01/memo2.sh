@@ -62,12 +62,13 @@ do
 
     if [ "${line}" =~ ^DTSTART: ]; then
         dtstart=${line:8}
-        y=${line:8:4}
-        m=${line:12:2}
-        d=${line:14:2}
-        h=${line:17:2}
-        n=${line:19:2}
-        s=${line:21:2}
+        y=$((10#${line:8:4}))
+        m=$((10#${line:12:2}))
+        d=$((10#${line:14:2}))
+        h=$((10#${line:17:2}))
+        n=$((10#${line:19:2}))
+        s=$((10#${line:21:2}))
+        utime=0
     fi
 
     if [ "${line}" = "END:VEVENT" ]; then
