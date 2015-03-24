@@ -83,7 +83,7 @@ function020() {
          --database="${1}" \
          --silent \
          --batch \
-         --execute="ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=1;"
+         --execute="ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=2;"
     done
 
     # select * from information_schema.INNODB_CMP
