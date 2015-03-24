@@ -73,17 +73,24 @@ function020() {
      --database="${1}" \
      --silent \
      --batch \
+     --skip-column-names \
      --execute="SHOW TABLES"`)
 
     for table in ${tables[@]}; do
-        mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
-         --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
-         --host="${OPENSHIFT_MYSQL_DB_HOST}" \
-         --port="${OPENSHIFT_MYSQL_DB_PORT}" \
-         --database="${1}" \
-         --silent \
-         --batch \
-         --execute="ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=2;"
+        for size in 1 2 4 8 16; do
+            mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+             --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+             --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+             --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+             --database="${1}" \
+             --silent \
+             --batch \
+             --execute="ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=${size};"
+            if [ $? -eq 0 ]; then
+                echo ${table} KEY_BLOCK_SIZE=${size}
+                break
+            fi
+        done
     done
 
     # select * from information_schema.INNODB_CMP
