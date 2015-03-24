@@ -57,6 +57,8 @@ function020() {
         return
     fi
 
+    echo "Database Compress ${1}"
+
     mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
      --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
      --host="${OPENSHIFT_MYSQL_DB_HOST}" \
@@ -87,7 +89,7 @@ function020() {
              --batch \
              --execute="ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=${size};"
             if [ $? -eq 0 ]; then
-                echo ${table} KEY_BLOCK_SIZE=${size}
+                echo "${table} KEY_BLOCK_SIZE=${size}"
                 break
             fi
         done
