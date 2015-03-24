@@ -641,7 +641,7 @@ SELECT T1.TABLE_NAME
  ORDER BY T1.TABLE_NAME
 __HEREDOC__)
 
-tables=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+tables=((mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
  --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
  --host="${OPENSHIFT_MYSQL_DB_HOST}" \
  --port="${OPENSHIFT_MYSQL_DB_PORT}" \
@@ -649,7 +649,7 @@ tables=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
  --silent \
  --batch \
  --skip-column-names \
- --execute="${sql}"`)
+ --execute="${sql}"))
 
 for table in ${tables[@]}; do
     mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
