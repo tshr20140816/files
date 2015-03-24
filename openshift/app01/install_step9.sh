@@ -47,7 +47,7 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
 cp config.php-dist config.php
 perl -pi -e "s/define\(\'DB_TYPE\', \"pgsql\"/define('DB_TYPE', 'mysql'/g" config.php
 perl -pi -e "s/define\(\'DB_HOST\', \"localhost\"/define('DB_HOST', getenv('OPENSHIFT_MYSQL_DB_HOST')/g" config.php
-perl -pi -e "s/define\(\'DB_USER\', \"fox\"/define('DB_USER', 'getenv('OPENSHIFT_MYSQL_DB_USERNAME')'/g" config.php
+perl -pi -e "s/define\(\'DB_USER\', \"fox\"/define('DB_USER', getenv('OPENSHIFT_MYSQL_DB_USERNAME')/g" config.php
 perl -pi -e "s/define\(\'DB_NAME\', \"fox\"/define('DB_NAME', 'ttrss'/g" config.php
 perl -pi -e "s/define\(\'DB_PASS\', \"XXXXXX\"/define('DB_PASS', 'getenv('OPENSHIFT_MYSQL_DB_PASSWORD')'/g" config.php
 perl -pi -e "s/define\(\'DB_PORT\', \'\'/define('DB_PORT', getenv('OPENSHIFT_MYSQL_DB_PORT')/g" config.php
