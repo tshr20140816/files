@@ -56,6 +56,15 @@ function020() {
     if [ $# -ne 1 ]; then
         return
     fi
+
+    mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+     --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+     --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+     --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+     --database="${1}" \
+     --silent \
+     --batch \
+     --execute="SET GLOBAL innodb_file_per_table=1;SET GLOBAL innodb_file_format=Barracuda;"
     
     tables=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
      --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
@@ -66,22 +75,16 @@ function020() {
      --batch \
      --execute="SHOW TABLES"`)
 
-    sql="SET GLOBAL innodb_file_per_table=1;\n"
-    sql="${sql}SET GLOBAL innodb_file_format=Barracuda;\n"
     for table in ${tables[@]}; do
-        sql="${sql}ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=1;\n"
+        mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+         --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+         --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+         --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+         --database="${1}" \
+         --silent \
+         --batch \
+         --execute="ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=1;"
     done
-    
-    echo ${sql}
-
-    mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
-     --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
-     --host="${OPENSHIFT_MYSQL_DB_HOST}" \
-     --port="${OPENSHIFT_MYSQL_DB_PORT}" \
-     --database="${1}" \
-     --silent \
-     --batch \
-     --execute="${sql}"
 
     # select * from information_schema.INNODB_CMP
 }
