@@ -88,7 +88,7 @@ INSERT INTO calendars
         ,"${uid}"
         ,"${calendar_id}"
         ,"VEVENT"
-        ,0
+        ,${utime}
         )
 __HEREDOC__)
 
