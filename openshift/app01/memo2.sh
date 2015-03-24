@@ -42,7 +42,10 @@ calendar_id=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
 
 cd ${OPENSHIFT_TMP_DIR}
 
+[ -f carp.ics ] && mv -f carp.ics carp.ics.old || touch carp.ics.old
 wget tshrapp4.appspot.com/schedule/carp -O carp.ics
+cmp carp.ics carp.ics.old
+[ $? -eq 0 ] && exit
 
 event=()
 cat carp.ics | while read line
