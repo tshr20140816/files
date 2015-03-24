@@ -626,6 +626,63 @@ __HEREDOC__
 chmod +x webalizer.sh
 echo webalizer.sh >> jobs.allow
 
+# * wordpress *
+
+cat << '__HEREDOC__' > wordpress.sh
+#!/bin/bash
+
+sql=$(cat << '__HEREDOC__'
+SELECT T1.TABLE_NAME
+  FROM information_schema.TABLES T1
+ WHERE T1.TABLE_TYPE = 'BASE TABLE'
+   AND T1.TABLE_SCHEMA = 'wordpress'
+   AND T1.ENGINE = 'InnoDB'
+   AND T1.ROW_FORMAT <> 'Compressed'
+ ORDER BY T1.TABLE_NAME
+__HEREDOC__)
+
+tables=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+ --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+ --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+ --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+ --database="${1}" \
+ --silent \
+ --batch \
+ --skip-column-names \
+ --execute="${sql}"`)
+
+for table in ${tables[@]}; do
+    mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+     --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+     --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+     --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+     --database="wordpress" \
+     --silent \
+     --batch \
+     --execute="SET GLOBAL innodb_file_per_table=1;SET GLOBAL innodb_file_format=Barracuda;"
+    break
+done
+
+for table in ${tables[@]}; do
+    for size in 1 2 4 8 16; do
+        mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+         --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+         --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+         --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+         --database="wordpress" \
+         --silent \
+         --batch \
+         --execute="ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=${size};"
+        if [ $? -eq 0 ]; then
+            echo "${table} KEY_BLOCK_SIZE=${size}"
+            break
+        fi
+    done
+done
+__HEREDOC__
+chmod +x wordpress.sh
+echo wordpress.sh >> jobs.allow
+
 # * delegate *
 
 cat << '__HEREDOC__' > delegate.sh
