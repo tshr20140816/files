@@ -47,11 +47,11 @@ calendar_id=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
  --skip-column-names \
  --execute="${sql}"`)
 
-event=()
 cat carp.ics | while read line
 do
     echo ${line}
     if [ "${line}" = "BEGIN:VEVENT" ]; then
+        event=""
         uid=""
         dtstart=""
         utime=0
@@ -71,10 +71,13 @@ do
         utime=$((date +%s --date "${y}-${m}-${d} ${h}:${n}:${s}"))
     fi
 
+    event="${event}${line}\r\n"
+
     if [ "${line}" = "END:VEVENT" ]; then
 
+        calendardata="BEGIN:VCALENDAR\r\nPRODID:dummy\r\nVERSION:2.0\r\n${event}END:VCALENDAR\r\n"
 
-sql=$(cat << '__HEREDOC__'
+        sql=$(cat << '__HEREDOC__'
 INSERT INTO calendars
        (
          calendardata
