@@ -18,9 +18,7 @@ cnt=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
  --skip-column-names \
  --execute="${sql}"`)
 
-if [ ${cnt} -ne 1 ]; then
-    exit
-fi
+[ ${cnt} -ne 1 ] && exit
 
 cd ${OPENSHIFT_TMP_DIR}
 
