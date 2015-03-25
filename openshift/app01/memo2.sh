@@ -17,6 +17,8 @@ __HEREDOC__
 )
 
 cnt=$(mysql ${connection_string} --execute="${sql}")
+echo $?
+echo "count ${cnt}"
 
 [ ${cnt} -ne 1 ] && exit
 
