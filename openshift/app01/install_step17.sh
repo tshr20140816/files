@@ -59,21 +59,23 @@ rm -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
 rm -f ${OPENSHIFT_DATA_DIR}/mrtg/mrtg.conf_l
 cp -f $OPENSHIFT_MYSQL_DIR/conf/my.cnf ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 
-mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
- --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
- --host="${OPENSHIFT_MYSQL_DB_HOST}" \
- --port="${OPENSHIFT_MYSQL_DB_PORT}" \
- --silent \
- --batch \
- --execute="SET GLOBAL default_storage_engine=InnoDB;SET GLOBAL time_zone='+9:00';"
+sqls=()
+sqls=("${sqls[@]}" "SET GLOBAL default_storage_engine=InnoDB;"))
+sqls=("${sqls[@]}" "SET GLOBAL time_zone='+9:00';"))
+sqls=("${sqls[@]}" "SET GLOBAL innodb_file_per_table=1;"))
+sqls=("${sqls[@]}" "SET GLOBAL innodb_file_format=Barracuda;"))
 
-mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
- --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
- --host="${OPENSHIFT_MYSQL_DB_HOST}" \
- --port="${OPENSHIFT_MYSQL_DB_PORT}" \
- --silent \
- --batch \
- --execute="SET GLOBAL innodb_file_per_table=1;SET GLOBAL innodb_file_format=Barracuda;"
+for sql in ${sqls[@]}; do
+
+    mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+     --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+     --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+     --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+     --silent \
+     --batch \
+     --execute="${sql}"
+
+done
 
 ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
 
