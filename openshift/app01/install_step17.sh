@@ -60,10 +60,10 @@ rm -f ${OPENSHIFT_DATA_DIR}/mrtg/mrtg.conf_l
 cp -f $OPENSHIFT_MYSQL_DIR/conf/my.cnf ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 
 sqls=()
-sqls=("${sqls[@]}" "SET GLOBAL default_storage_engine=InnoDB;"))
-sqls=("${sqls[@]}" "SET GLOBAL time_zone='+9:00';"))
-sqls=("${sqls[@]}" "SET GLOBAL innodb_file_per_table=1;"))
-sqls=("${sqls[@]}" "SET GLOBAL innodb_file_format=Barracuda;"))
+sqls=("${sqls[@]}" "SET GLOBAL default_storage_engine=InnoDB;")
+sqls=("${sqls[@]}" "SET GLOBAL time_zone='+9:00';")
+sqls=("${sqls[@]}" "SET GLOBAL innodb_file_per_table=1;")
+sqls=("${sqls[@]}" "SET GLOBAL innodb_file_format=Barracuda;")
 
 for sql in ${sqls[@]}; do
 
