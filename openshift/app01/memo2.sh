@@ -4,21 +4,20 @@ export TZ=JST-9
 
 schedule_server=""
 
+connection_string='--user="${OPENSHIFT_MYSQL_DB_USERNAME}" --password="${OPENSHIFT_MYSQL_DB_PASSWORD}"'
+connection_string='${connection_string} --host="${OPENSHIFT_MYSQL_DB_HOST}" --port="${OPENSHIFT_MYSQL_DB_PORT}"'
+connection_string='${connection_string} --silent --batch --skip-column-names'
+
 sql=$(cat << '__HEREDOC__'
 SELECT COUNT('X') CNT
   FROM calendars T1
  WHERE T1.uri = 'carp'
-__HEREDOC__)
+__HEREDOC__
+)
 
-cnt=((mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
- --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
- --host="${OPENSHIFT_MYSQL_DB_HOST}" \
- --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+cnt=$(mysql ${connection_string} \
  --database="baikal" \
- --silent \
- --batch \
- --skip-column-names \
- --execute="${sql}"))
+ --execute="${sql}")
 
 [ ${cnt} -ne 1 ] && exit
 
@@ -35,17 +34,12 @@ sql=$(cat << '__HEREDOC__'
 SELECT T1.id
   FROM calendars T1
  WHERE T1.uri = 'carp'
-__HEREDOC__)
+__HEREDOC__
+)
 
-calendar_id=((mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
- --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
- --host="${OPENSHIFT_MYSQL_DB_HOST}" \
- --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+calendar_id=$(mysql ${connection_string} \
  --database="baikal" \
- --silent \
- --batch \
- --skip-column-names \
- --execute="${sql}"))
+ --execute="${sql}")
 
 cat carp.ics | while read line
 do
@@ -93,7 +87,26 @@ INSERT INTO calendars
         ,"VEVENT"
         ,${utime}
         )
-__HEREDOC__)
+__HEREDOC__
+)
 
+        mysql ${connection_string} \
+         --database="baikal" \
+         --execute="${sql}"
     fi
 done
+
+sql=$(cat << '__HEREDOC__'
+UPDATE calendarobjects
+   SET size = LENGTH(calendardata)
+      ,etag = MD5(calendardata)
+      ,lastmodified = unix_timestamp(now())
+      ,lastoccurence = firstoccurence + 60 * 60 * 24
+ WHERE id = ${calendar_id}
+__HEREDOC__
+)
+
+mysql ${connection_string} \
+ --database="baikal" \
+ --execute="${sql}"
+ 
