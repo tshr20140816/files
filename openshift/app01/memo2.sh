@@ -37,6 +37,19 @@ __HEREDOC__
 )
 
 calendar_id=$(mysql ${connection_string} --execute="${sql}")
+echo $?
+echo "calendar_id : ${calendar_id}"
+
+sql=$(cat << '__HEREDOC__'
+DELETE
+  FROM calendars
+ WHERE id = ${calendar_id}
+__HEREDOC__
+)
+
+mysql ${connection_string} --execute="${sql}"
+echo $?
+echo "delete"
 
 cat carp.ics | while read line
 do
@@ -88,6 +101,8 @@ __HEREDOC__
 )
 
         mysql ${connection_string} --execute="${sql}"
+        echo $?
+        echo "insert uid : ${uid}"
     fi
 done
 
@@ -102,4 +117,6 @@ __HEREDOC__
 )
 
 mysql ${connection_string} --execute="${sql}"
+echo $?
+echo "update"
 
