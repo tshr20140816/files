@@ -77,6 +77,14 @@ for sql in ${sqls[@]}; do
 
 done
 
+mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+ --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+ --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+ --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+ --html \
+ --execute="SHOW GLOBAL VARIABLES" \
+ > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/mysql_global_variables.html
+
 ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
 
 if [ $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -v grep | wc -l) -gt 0 ]; then
