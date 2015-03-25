@@ -52,6 +52,3 @@ wget http://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/2.
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/zabbix --enable-server --enable-agent --with-mysql
 
 du -h * | sort -rh | head -50
-
-export server=boo
-yes | rhc app delete -a ${server} && rhc app create ${server} diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com && rhc apps | grep ssh | grep ${server} | awk '{print $3}' | awk -F/ '{print $3}' > server && ssh $(cat server) cat /proc/cpuinfo | grep processor | wc -l
