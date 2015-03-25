@@ -7,6 +7,7 @@ schedule_server=""
 connection_string='--user="${OPENSHIFT_MYSQL_DB_USERNAME}" --password="${OPENSHIFT_MYSQL_DB_PASSWORD}"'
 connection_string='${connection_string} --host="${OPENSHIFT_MYSQL_DB_HOST}" --port="${OPENSHIFT_MYSQL_DB_PORT}"'
 connection_string='${connection_string} --silent --batch --skip-column-names'
+connection_string='${connection_string} --database="baikal"'
 
 sql=$(cat << '__HEREDOC__'
 SELECT COUNT('X') CNT
@@ -15,7 +16,7 @@ SELECT COUNT('X') CNT
 __HEREDOC__
 )
 
-cnt=$(mysql ${connection_string} --database="baikal" --execute="${sql}")
+cnt=$(mysql ${connection_string} --execute="${sql}")
 
 [ ${cnt} -ne 1 ] && exit
 
@@ -35,7 +36,7 @@ SELECT T1.id
 __HEREDOC__
 )
 
-calendar_id=$(mysql ${connection_string} --database="baikal" --execute="${sql}")
+calendar_id=$(mysql ${connection_string} --execute="${sql}")
 
 cat carp.ics | while read line
 do
@@ -86,7 +87,7 @@ INSERT INTO calendars
 __HEREDOC__
 )
 
-        mysql ${connection_string} --database="baikal" --execute="${sql}"
+        mysql ${connection_string} --execute="${sql}"
     fi
 done
 
@@ -100,5 +101,5 @@ UPDATE calendarobjects
 __HEREDOC__
 )
 
-mysql ${connection_string} --database="baikal" --execute="${sql}"
+mysql ${connection_string} --execute="${sql}"
 
