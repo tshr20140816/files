@@ -15,9 +15,7 @@ SELECT COUNT('X') CNT
 __HEREDOC__
 )
 
-cnt=$(mysql ${connection_string} \
- --database="baikal" \
- --execute="${sql}")
+cnt=$(mysql ${connection_string} --database="baikal" --execute="${sql}")
 
 [ ${cnt} -ne 1 ] && exit
 
@@ -37,9 +35,7 @@ SELECT T1.id
 __HEREDOC__
 )
 
-calendar_id=$(mysql ${connection_string} \
- --database="baikal" \
- --execute="${sql}")
+calendar_id=$(mysql ${connection_string} --database="baikal" --execute="${sql}")
 
 cat carp.ics | while read line
 do
@@ -90,9 +86,7 @@ INSERT INTO calendars
 __HEREDOC__
 )
 
-        mysql ${connection_string} \
-         --database="baikal" \
-         --execute="${sql}"
+        mysql ${connection_string} --database="baikal" --execute="${sql}"
     fi
 done
 
@@ -106,7 +100,5 @@ UPDATE calendarobjects
 __HEREDOC__
 )
 
-mysql ${connection_string} \
- --database="baikal" \
- --execute="${sql}"
- 
+mysql ${connection_string} --database="baikal" --execute="${sql}"
+
