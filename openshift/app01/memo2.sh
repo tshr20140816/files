@@ -75,6 +75,7 @@ do
         n=${line:19:2}
         s=${line:21:2}
         utime=$((date +%s --date "${y}-${m}-${d} ${h}:${n}:${s}"))
+        echo "${y}-${m}-${d} ${h}:${n}:${s} ${utime}"
     fi
 
     event="${event}${line}\r\n"
