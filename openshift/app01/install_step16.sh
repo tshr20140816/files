@@ -204,7 +204,7 @@ export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
 
 # memcached
-is_alive=$(ps awhx | grep bin/memcached | grep -v grep | grep ${OPENSHIFT_DIY_IP} | wc -l)
+is_alive=$(ps awhx | grep bin/memcached | grep -v grep | grep -c ${OPENSHIFT_DIY_IP})
 if [ ${is_alive} -gt 0 ]; then
     if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
         kill $(ps awhx | grep bin/memcached | grep -v grep | grep ${OPENSHIFT_DIY_IP} | awk '{print $2}' | head -n1)
