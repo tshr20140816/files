@@ -218,7 +218,7 @@ elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
 fi
 
 # delegated
-is_alive=$(ps awhx | grep delegated | grep -v grep | grep ${OPENSHIFT_DIY_IP} | wc -l)
+is_alive=$(ps awhx | grep delegated | grep -v grep | grep -c ${OPENSHIFT_DIY_IP})
 if [ ${is_alive} -gt 0 ]; then
     if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
         ./delegated +=P30080 -Fkill
@@ -232,7 +232,7 @@ elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
 fi
 
 # memory usage logging
-is_alive=$(ps awhx | grep memory_usage_logging.sh | grep -v grep | grep ${OPENSHIFT_DIY_IP} | wc -l)
+is_alive=$(ps awhx | grep memory_usage_logging.sh | grep -v grep | grep -c ${OPENSHIFT_DIY_IP})
 if [ ${is_alive} -gt 0 ]; then
     if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
         kill $(ps awhx | grep memory_usage_logging.sh | grep -v grep | grep ${OPENSHIFT_DIY_IP} | awk '{print $2}' | head -n1)
