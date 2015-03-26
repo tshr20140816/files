@@ -4,7 +4,7 @@ source functions.sh
 function010
 [ $? -eq 0 ] || exit
 
-processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
+processor_count=$(cat /proc/cpuinfo | grep -c processor)
 cpu_clock=$(cat /proc/cpuinfo | grep MHz | head -n1 | awk -F'[ .]' '{print $3}')
 model_name=$(cat /proc/cpuinfo | grep "model name" | head -n1 \
 | awk '{print $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14}' \
@@ -119,7 +119,7 @@ CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) lynx make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
-time make -j$(cat /proc/cpuinfo | grep processor | wc -l) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
+time make -j$(cat /proc/cpuinfo | grep -c processor) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) lynx make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
