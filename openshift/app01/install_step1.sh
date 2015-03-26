@@ -694,7 +694,7 @@ export TMOUT=0
 for file_name in $(ls ${OPENSHIFT_DATA_DIR}/github/openshift/app01/*.sh)
 do
     if [ $(/bin/bash -n ${file_name} 2>&1 | wc -l) -gt 0 ]; then
-        /bin/bash -n ${file_name} 2>&1 >> ${OPENSHIFT_LOG_DIR}/install_alert.log
+        /bin/bash -n ${file_name} >> ${OPENSHIFT_LOG_DIR}/install_alert.log 2>&1
     fi
 done
 
@@ -703,7 +703,7 @@ done
 for file_name in $(ls ${OPENSHIFT_DATA_DIR}/github/openshift/app01/*.rb)
 do
     if [ "$(ruby -cw ${file_name} 2>&1)" != 'Syntax OK' ]; then
-        ruby -cw ${file_name} 2>&1 >> ${OPENSHIFT_LOG_DIR}/install_alert.log
+        ruby -cw ${file_name} >> ${OPENSHIFT_LOG_DIR}/install_alert.log 2>&1
     fi
 done
 
