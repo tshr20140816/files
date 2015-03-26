@@ -5,7 +5,7 @@ function010() {
 
     set -x
 
-    processor_count=$(cat /proc/cpuinfo | grep processor | wc -l)
+    processor_count=$(cat /proc/cpuinfo | grep -c processor)
     mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
     query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename $0 .sh)&mfc=${mfc}"
 
