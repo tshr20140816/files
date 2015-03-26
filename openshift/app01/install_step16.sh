@@ -639,7 +639,7 @@ echo webalizer.sh >> jobs.allow
 cat << '__HEREDOC__' > wordpress.sh
 #!/bin/bash
 
-sql=$(cat << '__HEREDOC__'
+sql=$(cat << '__HEREDOC_2__'
 SELECT T1.TABLE_NAME
   FROM information_schema.TABLES T1
  WHERE T1.TABLE_TYPE = 'BASE TABLE'
@@ -647,7 +647,7 @@ SELECT T1.TABLE_NAME
    AND T1.ENGINE = 'InnoDB'
    AND T1.ROW_FORMAT <> 'Compressed'
  ORDER BY T1.TABLE_NAME
-__HEREDOC__
+__HEREDOC_2__
 )
 
 tables=$(mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
