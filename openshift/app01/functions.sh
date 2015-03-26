@@ -34,6 +34,25 @@ function010() {
             do
                 [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
             done
+            if [ ${1} = "restart" ]; then
+                sqls=()
+                sqls=("${sqls[@]}" "SET GLOBAL default_storage_engine=InnoDB;")
+                sqls=("${sqls[@]}" "SET GLOBAL time_zone='+9:00';")
+                sqls=("${sqls[@]}" "SET GLOBAL innodb_file_per_table=1;")
+                sqls=("${sqls[@]}" "SET GLOBAL innodb_file_format=Barracuda;")
+
+                for sql in ${sqls[@]}; do
+
+                    mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+                     --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+                     --host="${OPENSHIFT_MYSQL_DB_HOST}" \
+                     --port="${OPENSHIFT_MYSQL_DB_PORT}" \
+                     --silent \
+                     --batch \
+                     --execute="${sql}"
+
+                done
+            fi
         fi
     fi
 
@@ -45,8 +64,6 @@ function010() {
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    # echo $(oo-cgroup-read memory.memsw.failcnt | awk '{printf "Swap Memory Fail Count : %\047d\n", $1}') \
-    # | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
     return 0
 }
