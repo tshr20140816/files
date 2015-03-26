@@ -209,7 +209,7 @@ if [ ${mirror_server} != "none" ]; then
     wget -t1 ${mirror_server}/php-${php_version}.tar.xz
     wget http://jp1.php.net/distributions/php-${php_version}.tar.xz.asc
     gpg --recv-keys $(gpg --verify php-${php_version}.tar.xz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-    if [ $(gpg --verify php-${php_version}.tar.xz.asc 2>&1 | grep "Good signature from" | wc -l) != 1 ]; then
+    if [ $(gpg --verify php-${php_version}.tar.xz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
         echo $(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo $(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm php-${php_version}.tar.xz
@@ -262,7 +262,7 @@ if [ ${mirror_server} != "none" ]; then
     # wget -t1 ${mirror_server}/nginx-${nginx_version}.tar.gz
     # wget http://nginx.org/download/nginx-${nginx_version}.tar.gz.asc
     # gpg --recv-keys $(gpg --verify nginx-${nginx_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-    # if [ $(gpg --verify nginx-${nginx_version}.tar.gz.asc 2>&1 | grep "Good signature from" | wc -l) != 1 ]; then
+    # if [ $(gpg --verify nginx-${nginx_version}.tar.gz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
     #     echo $(date +%Y/%m/%d" "%H:%M:%S) nginx pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     #     echo $(date +%Y/%m/%d" "%H:%M:%S) nginx pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
     #     rm nginx-${nginx_version}.tar.gz
@@ -278,7 +278,7 @@ if [ ${mirror_server} != "none" ]; then
     # wget -t1 ${mirror_server}/pcre-${pcre_version}.tar.bz2
     # wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2.sig
     # gpg --recv-keys $(gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-    # if [ $(gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep "Good signature from" | wc -l) != 1 ]; then
+    # if [ $(gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1 | grep -c "Good signature from") != 1 ]; then
     #     echo $(date +%Y/%m/%d" "%H:%M:%S) pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     #     echo $(date +%Y/%m/%d" "%H:%M:%S) pcre pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
     #     rm pcre-${pcre_version}.tar.bz2
@@ -665,7 +665,7 @@ fi
 
 # OPENSHIFT_DIY_IP is marker
 install_script_file='install_step_from_2_to_18'
-is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -v grep | wc -l)
+is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
 if [ ! ${is_alive} -gt 0 ]; then
     export TZ=JST-9
     echo $(date +%Y/%m/%d" "%H:%M:%S) Install Retry | tee -a ${OPENSHIFT_LOG_DIR}/install_retry.log
