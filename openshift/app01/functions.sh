@@ -14,15 +14,15 @@ function010() {
 
     pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
     if [ -f $(basename $0).ok ]; then
-        echo `date +%Y/%m/%d" "%H:%M:%S` Install Skip $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo $(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         return 1
     fi
     popd > /dev/null
     
     while read LINE
     do
-        product=`echo ${LINE} | awk '{print $1}'`
-        version=`echo ${LINE} | awk '{print $2}'`
+        product=$(echo ${LINE} | awk '{print $1}')
+        version=$(echo ${LINE} | awk '{print $2}')
         eval "${product}"=${version}
     done < ${OPENSHIFT_DATA_DIR}/version_list
 
@@ -68,7 +68,7 @@ function020() {
      --batch \
      --execute="SET GLOBAL innodb_file_per_table=1;SET GLOBAL innodb_file_format=Barracuda;"
 
-    tables=(`mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+    tables=$(mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
      --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
      --host="${OPENSHIFT_MYSQL_DB_HOST}" \
      --port="${OPENSHIFT_MYSQL_DB_PORT}" \
@@ -76,7 +76,7 @@ function020() {
      --silent \
      --batch \
      --skip-column-names \
-     --execute="SHOW TABLES"`)
+     --execute="SHOW TABLES")
 
     for table in ${tables[@]}; do
         for size in 1 2 4 8 16; do
