@@ -12,7 +12,7 @@ wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query
 
 pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
 if [ -f `basename $0`.ok ]; then
-    echo `date +%Y/%m/%d" "%H:%M:%S` Install Skip `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    echo $(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     exit
 fi
 popd > /dev/null
@@ -51,6 +51,6 @@ ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
 --languages ruby \
 --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/`basename $0`.ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo `date +%Y/%m/%d" "%H:%M:%S` Install Finish `basename $0` | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
