@@ -58,7 +58,7 @@ CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) Expect make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
-time make -j$(cat /proc/cpuinfo | grep processor | wc -l) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
+time make -j$(cat /proc/cpuinfo | grep -c processor) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) Expect make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
