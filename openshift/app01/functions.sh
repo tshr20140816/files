@@ -5,6 +5,7 @@ function010() {
 
     set -x
 
+    # shellcheck disable=SC2034
     processor_count="$(grep -c -e processor /proc/cpuinfo)"
     mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
     query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename "${0}" .sh)&mfc=${mfc}"
