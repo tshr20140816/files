@@ -487,7 +487,7 @@ popd > /dev/null
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) cron daily | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/daily > /dev/null
-rm -f *
+rm -f ./*
 touch jobs.deny
 
 # * logrotate *
@@ -550,7 +550,7 @@ popd > /dev/null
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) cron hourly | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
-rm -f *
+rm -f ./*
 touch jobs.deny
 
 # * redmine repository data maintenance *
@@ -715,7 +715,7 @@ popd > /dev/null
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) cron minutely | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
-rm -f *
+rm -f ./*
 touch jobs.deny
 
 cat << '__HEREDOC__' > minutely_jobs.sh
@@ -747,4 +747,4 @@ echo minutely_jobs.sh >> jobs.allow
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
