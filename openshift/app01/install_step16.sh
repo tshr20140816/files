@@ -474,6 +474,33 @@ __OPENSHIFT_LOG_DIR__memory_usage.log {
   noolddir
   rotate 7
 }
+__OPENSHIFT_LOG_DIR__update_feeds.sh.log {
+  daily
+  missingok
+  notifempty
+  copytruncate
+  compress
+  noolddir
+  rotate 7
+}
+__OPENSHIFT_DATA_DIR__apache/logs/access_log {
+  daily
+  missingok
+  notifempty
+  copytruncate
+  compress
+  noolddir
+  rotate 7
+}
+__OPENSHIFT_DATA_DIR__apache/logs/access_remoteip_log {
+  daily
+  missingok
+  notifempty
+  copytruncate
+  compress
+  noolddir
+  rotate 7
+}
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' logrotate.conf
 perl -pi -e "s/__REDMINE_VERSION__/${redmine_version}/g" logrotate.conf
