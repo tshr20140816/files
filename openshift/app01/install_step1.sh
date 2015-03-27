@@ -74,8 +74,8 @@ export TZ=JST-9
 mkdir ${OPENSHIFT_DATA_DIR}/install_check_point
 
 pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
-if [ -f $(basename $0).ok ]; then
-    echo $(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+if [ -f "$(basename "${0}").ok" ]; then
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     exit
 fi
 popd > /dev/null
@@ -131,15 +131,15 @@ echo ${another_server_check} > ${OPENSHIFT_DATA_DIR}/params/another_server_check
 echo ${web_beacon_server} > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server
 echo ${web_beacon_server_user} > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(oo-cgroup-read memory.memsw.failcnt | awk '{printf "Swap Memory Fail Count : %\047d\n", $1}') | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(oo-cgroup-read memory.memsw.failcnt | awk '{printf "Swap Memory Fail Count : %\047d\n", $1}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** git *****
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) github | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) github" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 curl -L https://status.github.com/api/status.json | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -177,8 +177,8 @@ if [ ${mirror_server} != "none" ]; then
     tarball_md5=$(md5sum httpd-${apache_version}.tar.bz2 | cut -d ' ' -f 1)
     apache_md5=$(curl -Ls http://www.apache.org/dist/httpd/httpd-${apache_version}.tar.bz2.md5 | cut -d ' ' -f 1)
     if [ "${tarball_md5}" != "${apache_md5}" ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) apache md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) apache md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) apache md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm httpd-${apache_version}.tar.bz2
     fi
 
@@ -187,8 +187,8 @@ if [ ${mirror_server} != "none" ]; then
     tarball_md5=$(md5sum libmemcached-${libmemcached_version}.tar.gz | cut -d ' ' -f 1)
     libmemcached_md5=$(curl -Ls https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz/+md5 | cut -d ' ' -f 1)
     if [ "${tarball_md5}" != "${libmemcached_md5}" ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) libmemcached md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) libmemcached md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm libmemcached-${libmemcached_version}.tar.gz
     fi
 
@@ -197,8 +197,8 @@ if [ ${mirror_server} != "none" ]; then
     tarball_md5=$(md5sum mrtg-${mrtg_version}.tar.gz | cut -d ' ' -f 1)
     mrtg_md5=$(curl -Ls http://oss.oetiker.ch/mrtg/pub/mrtg-${mrtg_version}.tar.gz.md5 | cut -d ' ' -f 1)
     if [ "${tarball_md5}" != "${mrtg_md5}" ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm mrtg-${mrtg_version}.tar.gz
     fi
 
@@ -210,8 +210,8 @@ if [ ${mirror_server} != "none" ]; then
     wget http://jp1.php.net/distributions/php-${php_version}.tar.xz.asc
     gpg --recv-keys $(gpg --verify php-${php_version}.tar.xz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
     if [ $(gpg --verify php-${php_version}.tar.xz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm php-${php_version}.tar.xz
     fi
 
@@ -227,8 +227,8 @@ if [ ${mirror_server} != "none" ]; then
     | grep "redmine-${redmine_version}.tar.gz" \
     | awk '{print substr(substr($0, index($0, "md5: ")), 6, 32)}')
     if [ "${tarball_md5}" != "${redmine_md5}" ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm redmine-${redmine_version}.tar.gz
     fi
 
@@ -240,8 +240,8 @@ if [ ${mirror_server} != "none" ]; then
     tarball_md5=$(md5sum wordpress-${wordpress_version}.tar.gz | cut -d ' ' -f 1)
     wordpress_md5=$(curl -Ls https://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz.md5)
     if [ "${tarball_md5}" != "${wordpress_md5}" ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) wordpress md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) wordpress md5 unmatch | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) wordpress md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) wordpress md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm wordpress-${wordpress_version}.tar.gz
     fi
     
