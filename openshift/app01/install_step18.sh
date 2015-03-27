@@ -77,20 +77,20 @@ done
 
 set +x
 
-echo https://${OPENSHIFT_APP_DNS}/wordpress/wp-admin/install.php
-echo https://${OPENSHIFT_APP_DNS}/ttrss/ admin/password
-echo https://${OPENSHIFT_APP_DNS}/mail/
-echo https://${OPENSHIFT_APP_DNS}/webalizer/
-echo https://${OPENSHIFT_APP_DNS}/mrtg/
-echo https://${OPENSHIFT_APP_DNS}/redmine/ admin/admin
-echo https://${OPENSHIFT_APP_DNS}/cacti/ admin/admin
-echo https://${OPENSHIFT_APP_DNS}/baikal/ admin/--
-echo https://${OPENSHIFT_APP_DNS}/info/ user/${OPENSHIFT_APP_NAME}
-echo https://${OPENSHIFT_APP_DNS}/logs/ user/${OPENSHIFT_APP_NAME}
+echo "https://${OPENSHIFT_APP_DNS}/wordpress/"
+echo "https://${OPENSHIFT_APP_DNS}/ttrss/ admin/password"
+echo "https://${OPENSHIFT_APP_DNS}/mail/"
+echo "https://${OPENSHIFT_APP_DNS}/webalizer/"
+echo "https://${OPENSHIFT_APP_DNS}/mrtg/"
+echo "https://${OPENSHIFT_APP_DNS}/redmine/ admin/admin"
+echo "https://${OPENSHIFT_APP_DNS}/cacti/ admin/admin"
+echo "https://${OPENSHIFT_APP_DNS}/baikal/ admin/--"
+echo "https://${OPENSHIFT_APP_DNS}/info/ user/${OPENSHIFT_APP_NAME}"
+echo "https://${OPENSHIFT_APP_DNS}/logs/ user/${OPENSHIFT_APP_NAME}"
 
-echo Do not git push
+echo "Do not git push"
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
