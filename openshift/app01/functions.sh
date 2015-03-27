@@ -5,36 +5,36 @@ function010() {
 
     set -x
 
-    processor_count=$(cat /proc/cpuinfo | grep -c processor)
+    processor_count="$(grep -c -e processor /proc/cpuinfo)"
     mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
-    query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename $0 .sh)&mfc=${mfc}"
+    query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename "${0}" .sh)&mfc=${mfc}"
 
-    wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} \
+    wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" \
     > /dev/null 2>&1
 
     pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
-    if [ -f $(basename $0).ok ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    if [ -f "$(basename "${0}").ok" ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         return 1
     fi
     popd > /dev/null
     
     while read LINE
     do
-        product=$(echo ${LINE} | awk '{print $1}')
-        version=$(echo ${LINE} | awk '{print $2}')
-        eval "${product}"=${version}
+        product=$(echo "${LINE}" | awk '{print $1}')
+        version=$(echo "${LINE}" | awk '{print $2}')
+        eval "${product}"="${version}"
     done < ${OPENSHIFT_DATA_DIR}/version_list
 
     if [ $# -gt 0 ]; then
-        if [ ${1} = "restart" -o ${1} = "stop" ]; then
-            echo ${1} > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
+        if [ "${1}" = "restart" -o "${1}" = "stop" ]; then
+            echo "${1}" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
             sleep 30s
             while :
             do
                 [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ] && sleep 10s || break
             done
-            if [ ${1} = "restart" ]; then
+            if [ "${1}" = "restart" ]; then
                 sqls=()
                 sqls=("${sqls[@]}" "SET GLOBAL default_storage_engine=InnoDB;")
                 sqls=("${sqls[@]}" "SET GLOBAL time_zone='+9:00';")
@@ -56,13 +56,13 @@ function010() {
         fi
     fi
 
-    echo $(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename $0) \
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo $(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}') \
+    echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo $(oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}') \
+    echo "$(oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}')" \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') \
+    echo "$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')" \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
     return 0
