@@ -17,7 +17,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
 echo $(date +%Y/%m/%d" "%H:%M:%S) delegate make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
-time make -j$(cat /proc/cpuinfo | grep -c processor) \
+time make -j$(grep -c -e processor /proc/cpuinfo) \
 CFLAGS="-O2 -march=native -pipe" \
 CXXFLAGS="-O2 -march=native -pipe" >${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
 
@@ -102,4 +102,4 @@ popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
