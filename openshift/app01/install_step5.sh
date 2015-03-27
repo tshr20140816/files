@@ -4,14 +4,14 @@ export TZ=JST-9
 
 set -x
 
-processor_count=$(cat /proc/cpuinfo | grep -c processor)
+processor_count=$(grep -c -e processor /proc/cpuinfo)
 mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
 query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename $0 .sh)&mfc=${mfc}"
 
 wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
 
 pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
-if [ -f `basename $0`.ok ]; then
+if [ -f $(basename "${0}").ok ]; then
     echo $(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     exit
 fi
@@ -53,4 +53,4 @@ ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
