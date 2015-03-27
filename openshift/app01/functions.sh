@@ -59,11 +59,11 @@ function010() {
 
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" \
+    quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}' \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo "$(oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}')" \
+    oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}' \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo "$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')" \
+    oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
     return 0
