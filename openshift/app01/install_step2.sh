@@ -43,7 +43,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 ./configure --extra-cflags="-O2 -march=native -pipe"
 echo $(date +%Y/%m/%d" "%H:%M:%S) fio make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fio.log
-time make -j$(cat /proc/cpuinfo | grep -c processor) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
 sed -i -E "s|^prefix .+$|prefix = ${OPENSHIFT_DATA_DIR}fio|g" Makefile
 echo $(date +%Y/%m/%d" "%H:%M:%S) fio make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fio.log
@@ -65,7 +65,7 @@ do
     -iodepth=32 -iodepth_batch=32 -group_reporting -name=${rwtype} -directory=${OPENSHIFT_DATA_DIR}/work \
     | tee ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log
 
-    aggrb=$(cat ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log | grep aggrb | awk '{print $3}' | tr -d KB/s,)
+    aggrb=$(grep -e aggrb ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log | awk '{print $3}' | tr -d KB/s,)
     query_string="server=${OPENSHIFT_GEAR_DNS}&fio=${rwtype}&${aggrb}&uuid=${USER}"
     wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
 
@@ -88,7 +88,7 @@ wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
 tar xfz super_pi-jp.tar.gz
 ./super_pi 20 | tee ${OPENSHIFT_LOG_DIR}/super_pi.log
 
-sec=$(cat ${OPENSHIFT_LOG_DIR}/super_pi.log | grep Total | awk '{print $4}' | tr -d \()
+sec=$(grep -e Total ${OPENSHIFT_LOG_DIR}/super_pi.log | awk '{print $4}' | tr -d \()
 query_string="server=${OPENSHIFT_GEAR_DNS}&super_pi=${sec}s&uuid=${USER}"
 wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
 
@@ -119,7 +119,7 @@ CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) lynx make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
-time make -j$(cat /proc/cpuinfo | grep -c processor) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 
 echo $(date +%Y/%m/%d" "%H:%M:%S) lynx make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
@@ -128,6 +128,6 @@ popd > /dev/null
 
 rm -rf ${OPENSHIFT_TMP_DIR}/lynx
 
-touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}).ok
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename $0) | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
