@@ -41,7 +41,7 @@ function010() {
                 sqls=("${sqls[@]}" "SET GLOBAL innodb_file_per_table=1;")
                 sqls=("${sqls[@]}" "SET GLOBAL innodb_file_format=Barracuda;")
 
-                for sql in ${sqls[@]}; do
+                for (( i = 0; i < ${#sqls[@]}; i++ )); do
 
                     mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
                      --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
@@ -49,7 +49,7 @@ function010() {
                      --port="${OPENSHIFT_MYSQL_DB_PORT}" \
                      --silent \
                      --batch \
-                     --execute="${sql}"
+                     --execute="${sqls[$i]}"
 
                 done
             fi
