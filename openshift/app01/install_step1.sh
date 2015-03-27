@@ -82,9 +82,9 @@ popd > /dev/null
 
 while read LINE
 do
-    product=$(echo ${LINE} | awk '{print $1}')
-    version=$(echo ${LINE} | awk '{print $2}')
-    eval "${product}"=${version}
+    product=$(echo "${LINE}" | awk '{print $1}')
+    version=$(echo "${LINE}" | awk '{print $2}')
+    eval "${product}"="${version}"
 done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
@@ -171,7 +171,7 @@ echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 
 # * まずミラーサーバよりダウンロード *
 
-if [ ${mirror_server} != "none" ]; then
+if [ "${mirror_server}" != "none" ]; then
     # apache
     wget -t1 ${mirror_server}/httpd-${apache_version}.tar.bz2
     tarball_md5=$(md5sum httpd-${apache_version}.tar.bz2 | cut -d ' ' -f 1)
@@ -408,8 +408,8 @@ do
 
     # *** libmemcached ***
     if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
-        echo $(date +%Y/%m/%d" "%H:%M:%S) mirror nothing libmemcached-${libmemcached_version}.tar.gz | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo $(date +%Y/%m/%d" "%H:%M:%S) libmemcached wget | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing libmemcached-${libmemcached_version}.tar.gz" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
         tarball_md5=$(md5sum libmemcached-${libmemcached_version}.tar.gz | cut -d ' ' -f 1)
         libmemcached_md5=$(curl -Ls https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz/+md5 | cut -d ' ' -f 1)
