@@ -2,12 +2,17 @@
 
 export TZ=JST-9
 
-schedule_server=""
+schedule_server="$1"
 
-connection_string='--user="${OPENSHIFT_MYSQL_DB_USERNAME}" --password="${OPENSHIFT_MYSQL_DB_PASSWORD}"'
-connection_string='${connection_string} --host="${OPENSHIFT_MYSQL_DB_HOST}" --port="${OPENSHIFT_MYSQL_DB_PORT}"'
-connection_string='${connection_string} --silent --batch --skip-column-names'
-connection_string='${connection_string} --database="baikal"'
+connection_string=$(cat << '__HEREDOC__'
+--user="${OPENSHIFT_MYSQL_DB_USERNAME}"
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}"
+--host="${OPENSHIFT_MYSQL_DB_HOST}"
+--port="${OPENSHIFT_MYSQL_DB_PORT}"
+--silent --batch --skip-column-names
+--database="baikal"
+__HEREDOC__
+)
 
 sql=$(cat << '__HEREDOC__'
 SELECT COUNT('X') CNT
@@ -63,11 +68,11 @@ do
         utime=0
     fi
 
-    if [ "${line}" =~ ^UID: ]; then
+    if [ "${line}" =~ ^UID ]; then
         uid=${line:4}
     fi
 
-    if [ "${line}" =~ ^DTSTART: ]; then
+    if [ "${line}" =~ ^DTSTART ]; then
         y=${line:8:4}
         m=${line:12:2}
         d=${line:14:2}
