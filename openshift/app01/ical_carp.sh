@@ -4,13 +4,13 @@ export TZ=JST-9
 
 schedule_server="$1"
 
-connection_string=$(cat << '__HEREDOC__'
---user="${OPENSHIFT_MYSQL_DB_USERNAME}"
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}"
---host="${OPENSHIFT_MYSQL_DB_HOST}"
---port="${OPENSHIFT_MYSQL_DB_PORT}"
+connection_string=$(cat << __HEREDOC__
+--user=${OPENSHIFT_MYSQL_DB_USERNAME}
+--password=${OPENSHIFT_MYSQL_DB_PASSWORD}
+--host=${OPENSHIFT_MYSQL_DB_HOST}
+--port=${OPENSHIFT_MYSQL_DB_PORT}
 --silent --batch --skip-column-names
---database="baikal"
+--database=baikal
 __HEREDOC__
 )
 
@@ -68,11 +68,11 @@ do
         utime=0
     fi
 
-    if [ "${line}" =~ ^UID ]; then
+    if [[ "${line}" =~ ^UID: ]]; then
         uid=${line:4}
     fi
 
-    if [ "${line}" =~ ^DTSTART ]; then
+    if [[ "${line}" =~ ^DTSTART: ]]; then
         y=${line:8:4}
         m=${line:12:2}
         d=${line:14:2}
@@ -89,7 +89,7 @@ do
 
         calendardata="BEGIN:VCALENDAR\r\nPRODID:dummy\r\nVERSION:2.0\r\n${event}END:VCALENDAR\r\n"
 
-        sql=$(cat << '__HEREDOC__'
+        sql=$(cat << __HEREDOC__
 INSERT INTO calendars
        (
          calendardata
@@ -114,7 +114,7 @@ __HEREDOC__
     fi
 done
 
-sql=$(cat << '__HEREDOC__'
+sql=$(cat << __HEREDOC__
 UPDATE calendarobjects
    SET size = LENGTH(calendardata)
       ,etag = MD5(calendardata)
