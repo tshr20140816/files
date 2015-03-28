@@ -84,7 +84,7 @@ rbenv rehash
 
 # *** install ***
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) rhc install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 
@@ -92,7 +92,7 @@ rhc --version
 
 # *** setup ***
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) rhc setup | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc setup" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 openshift_email_address=$(cat ${OPENSHIFT_DATA_DIR}/params/openshift_email_address)
 openshift_email_password=$(cat ${OPENSHIFT_DATA_DIR}/params/openshift_email_password)
