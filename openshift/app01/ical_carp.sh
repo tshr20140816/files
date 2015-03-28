@@ -72,14 +72,14 @@ do
         uid=${line:4}
     fi
 
-    if [[ "${line}" =~ ^DTSTART;VALUE=DATE: ]]; then
+    if [[ "${line}" =~ ^DTSTART.VALUE=DATE: ]]; then
         y=${line:19:4}
         m=${line:23:2}
         d=${line:25:2}
         #h=${line:17:2}
         #n=${line:19:2}
         #s=${line:21:2}
-        utime=$((date "+%s" --date "${y}-${m}-${d}"))
+        utime=$(date "+%s" --date "${y}-${m}-${d}")
         echo "${y}-${m}-${d} ${utime}"
     fi
 
