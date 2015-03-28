@@ -79,6 +79,8 @@ export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
+rbenv global ${ruby_version}
+rbenv rehash
 
 # *** install ***
 
