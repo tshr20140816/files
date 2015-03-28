@@ -120,7 +120,7 @@ UPDATE calendarobjects
       ,etag = MD5(calendardata)
       ,lastmodified = unix_timestamp(now())
       ,lastoccurence = firstoccurence + 60 * 60 * 24
- WHERE id = ${calendar_id}
+ WHERE calendarid = ${calendar_id}
 __HEREDOC__
 )
 
