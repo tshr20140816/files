@@ -60,11 +60,10 @@ echo "delete"
 
 cat carp.ics | while read line
 do
-    echo ${line}
+    # echo ${line}
     if [ "${line}" = "BEGIN:VEVENT" ]; then
         event=""
         uid=""
-        dtstart=""
         utime=0
     fi
 
@@ -76,9 +75,6 @@ do
         y=${line:19:4}
         m=${line:23:2}
         d=${line:25:2}
-        #h=${line:17:2}
-        #n=${line:19:2}
-        #s=${line:21:2}
         utime=$(date "+%s" --date "${y}-${m}-${d}")
         echo "${y}-${m}-${d} ${utime}"
     fi
