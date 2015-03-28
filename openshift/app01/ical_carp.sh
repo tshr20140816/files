@@ -47,7 +47,7 @@ calendar_id=$(mysql ${connection_string} --execute="${sql}")
 echo $?
 echo "calendar_id : ${calendar_id}"
 
-sql=$(cat << '__HEREDOC__'
+sql=$(cat << __HEREDOC__
 DELETE
   FROM calendarobjects
  WHERE calendarid = ${calendar_id}
