@@ -36,7 +36,7 @@ rm tcl${tcl_version}-src.tar.gz
 # rm -rf tcl${tcl_version}
 popd > /dev/null
 
-echo $(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}') \
+oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** Expect *****
