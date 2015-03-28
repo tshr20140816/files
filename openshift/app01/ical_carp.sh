@@ -49,8 +49,8 @@ echo "calendar_id : ${calendar_id}"
 
 sql=$(cat << '__HEREDOC__'
 DELETE
-  FROM calendars
- WHERE id = ${calendar_id}
+  FROM calendarobjects
+ WHERE calendarid = ${calendar_id}
 __HEREDOC__
 )
 
@@ -90,7 +90,7 @@ do
         calendardata="BEGIN:VCALENDAR\r\nPRODID:dummy\r\nVERSION:2.0\r\n${event}END:VCALENDAR\r\n"
 
         sql=$(cat << __HEREDOC__
-INSERT INTO calendars
+INSERT INTO calendarobjects
        (
          calendardata
         ,uri
