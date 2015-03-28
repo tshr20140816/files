@@ -73,14 +73,14 @@ do
     fi
 
     if [[ "${line}" =~ ^DTSTART;VALUE=DATE: ]]; then
-        y=${line:8:4}
-        m=${line:12:2}
-        d=${line:14:2}
-        h=${line:17:2}
-        n=${line:19:2}
-        s=${line:21:2}
-        utime=$((date "+%s" --date "${y}-${m}-${d} ${h}:${n}:${s}"))
-        echo "${y}-${m}-${d} ${h}:${n}:${s} ${utime}"
+        y=${line:19:4}
+        m=${line:23:2}
+        d=${line:25:2}
+        #h=${line:17:2}
+        #n=${line:19:2}
+        #s=${line:21:2}
+        utime=$((date "+%s" --date "${y}-${m}-${d}"))
+        echo "${y}-${m}-${d} ${utime}"
     fi
 
     event="${event}${line}\r\n"
