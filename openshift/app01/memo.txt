@@ -21,6 +21,7 @@ B001D4NQ62
 B004OCUJM4
 B00KQFOQ8G
 B00OZJFEAS
+B00HWJDWMK
 
 https://github.com/openshift/origin-server/blob/master/cartridges/openshift-origin-cartridge-mysql/conf/my.cnf.erb#L39
 
