@@ -616,13 +616,14 @@ cat << '__HEREDOC__' > record_count_top_30.sh
 #!/bin/bash
 export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
+hh=$(date +%H)
 
 mysql --user "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
 --host "${OPENSHIFT_MYSQL_DB_HOST}" \
 --port "${OPENSHIFT_MYSQL_DB_PORT}" \
 --html < ${OPENSHIFT_DATA_DIR}/scripts/record_count_top_30_sql.txt \
-> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/record_count_top_30.html
+> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/record_count_top_30_${hh}.html
 
 mysql --user "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
@@ -630,7 +631,7 @@ mysql --user "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --port "${OPENSHIFT_MYSQL_DB_PORT}" \
 --html \
 --execute="SHOW GLOBAL STATUS" \
-> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/mysql_global_status.html
+> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/mysql_global_status_${hh}.html
 __HEREDOC__
 chmod +x record_count_top_30.sh
 echo record_count_top_30.sh >> jobs.allow
