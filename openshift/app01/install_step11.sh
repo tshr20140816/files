@@ -43,6 +43,8 @@ LogFile __OPENSHIFT_DATA_DIR__/apache/logs/access_log
 OutputDir __OPENSHIFT_DATA_DIR__/webalizer/www
 HostName __OPENSHIFT_APP_DNS__
 UseHTTPS yes
+CountryGraph no
+CountryFlags no
 
 HTMLHead <meta http-equiv="content-type" content="text/html; charset=utf-8">
 HTMLHead <meta http-equiv="content-style-type" content="text/css">
