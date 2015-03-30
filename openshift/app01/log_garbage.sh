@@ -1,9 +1,8 @@
 #!/bin/bash
 
 [ $# -ne 1 ] || exit
-[ -f ${log_name} ] || exit
-
 log_name="${1}"
+[ -f "${log_name}" ] || exit
 
 for index in 6 5 4 3 2 1
 do
