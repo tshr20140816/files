@@ -483,15 +483,6 @@ __OPENSHIFT_LOG_DIR__update_feeds.sh.log {
   noolddir
   rotate 7
 }
-__OPENSHIFT_DATA_DIR__apache/logs/access_log {
-  daily
-  missingok
-  notifempty
-  copytruncate
-  compress
-  noolddir
-  rotate 7
-}
 __OPENSHIFT_DATA_DIR__apache/logs/access_remoteip_log {
   daily
   missingok
