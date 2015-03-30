@@ -87,10 +87,10 @@ mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
 
 ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
 
-if [ $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep) -gt 0 ]; then
-    kill $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -v grep | awk '{print $2}')
-fi
-${OPENSHIFT_DATA_DIR}/scripts/logrotate_zantei.sh ${OPENSHIFT_DIY_IP} &
+# if [ $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep) -gt 0 ]; then
+#     kill $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -v grep | awk '{print $2}')
+# fi
+# ${OPENSHIFT_DATA_DIR}/scripts/logrotate_zantei.sh ${OPENSHIFT_DIY_IP} &
 __HEREDOC__
 popd > /dev/null
 
