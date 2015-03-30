@@ -15,8 +15,12 @@ tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
 popd > /dev/null
 
 # create database
-wpuser_password=$(uuidgen | base64 | head -c 25)
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+cat << '__HEREDOC__' > create_database_wordpress.txt
+DROP DATABASE IF EXISTS wordpress;
+CREATE DATABASE wordpress CHARACTER SET utf8 COLLATE utf8_general_ci;
+__HEREDOC__
 
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
