@@ -2,7 +2,8 @@
 
 export TZ=JST-9
 
-schedule_server="$1"
+schedule_server="${1}"
+target_uri="${2}"
 
 connection_string=$(cat << __HEREDOC__
 --user=${OPENSHIFT_MYSQL_DB_USERNAME}
@@ -14,10 +15,10 @@ connection_string=$(cat << __HEREDOC__
 __HEREDOC__
 )
 
-sql=$(cat << '__HEREDOC__'
+sql=$(cat << __HEREDOC__
 SELECT COUNT('X') CNT
   FROM calendars T1
- WHERE T1.uri = 'carp'
+ WHERE T1.uri = '${target_uri}'
 __HEREDOC__
 )
 
@@ -29,17 +30,17 @@ echo "count ${cnt}"
 
 cd ${OPENSHIFT_TMP_DIR}
 
-[ -f carp.ics ] && mv -f carp.ics carp.ics.old || touch carp.ics.old
-wget https://${schedule_server}/schedule/carp -O carp.ics
-cmp carp.ics carp.ics.old
+[ -f ${target_uri}.ics ] && mv -f ${target_uri}.ics ${target_uri}.ics.old || touch ${target_uri}.ics.old
+wget https://${schedule_server}/schedule/${target_uri} -O ${target_uri}.ics
+cmp ${target_uri}.ics ${target_uri}.ics.old
 [ $? -eq 0 ] && exit
 
-echo carp
+echo ${target_uri}
 
-sql=$(cat << '__HEREDOC__'
+sql=$(cat << __HEREDOC__
 SELECT T1.id
   FROM calendars T1
- WHERE T1.uri = 'carp'
+ WHERE T1.uri = '${target_uri}'
 __HEREDOC__
 )
 
@@ -58,7 +59,7 @@ mysql ${connection_string} --execute="${sql}"
 echo $?
 echo "delete"
 
-cat carp.ics | while read line
+cat ${target_uri}.ics | while read line
 do
     # echo ${line}
     if [ "${line}" = "BEGIN:VEVENT" ]; then
