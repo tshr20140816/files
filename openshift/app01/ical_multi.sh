@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ${1} : ical_server_name
+# ${2} : ical_name
+
 export TZ=JST-9
 
 schedule_server="${1}"
