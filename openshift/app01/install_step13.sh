@@ -17,17 +17,11 @@ tar xfz cacti-${cacti_version}.tar.gz --strip-components=1
 popd > /dev/null
 
 # create database
-cactiuser_password=$(uuidgen | base64 | head -c 25)
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > create_database_cacti.txt
 DROP DATABASE IF EXISTS cacti;
 CREATE DATABASE cacti CHARACTER SET utf8 COLLATE utf8_general_ci;
-GRANT ALL PRIVILEGES ON cacti.* TO cactiuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
-FLUSH PRIVILEGES;
-EXIT
 __HEREDOC__
-perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_cacti.txt
-perl -pi -e "s/__PASSWORD__/${cactiuser_password}/g" create_database_cacti.txt
 
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
@@ -46,9 +40,9 @@ cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/config.php
 $database_type = "mysql";
 $database_default = "cacti";
 $database_hostname = "__OPENSHIFT_MYSQL_DB_HOST__";
-$database_username = "cactiuser";
-$database_password = "__PASSWORD__";
-$database_port = "3306";
+$database_username = "__OPENSHIFT_MYSQL_DB_USERNAME__";
+$database_password = "__OPENSHIFT_MYSQL_DB_PASSWORD__";
+$database_port = "__OPENSHIFT_MYSQL_DB_PORT__";
 $database_ssl = false;
 
 $url_path = "/cacti/";
@@ -56,7 +50,10 @@ $cacti_session_name = "Cacti";
 ?>
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' ${OPENSHIFT_TMP_DIR}/config.php
-perl -pi -e "s/__PASSWORD__/${cactiuser_password}/g" ${OPENSHIFT_TMP_DIR}/config.php
+perl -pi -e 's/__OPENSHIFT_MYSQL_DB_USERNAME__/$ENV{OPENSHIFT_MYSQL_DB_USERNAME}/g' ${OPENSHIFT_TMP_DIR}/config.php
+perl -pi -e 's/__OPENSHIFT_MYSQL_DB_PASSWORD__/$ENV{OPENSHIFT_MYSQL_DB_PASSWORD}/g' ${OPENSHIFT_TMP_DIR}/config.php
+perl -pi -e 's/__OPENSHIFT_MYSQL_DB_PORT__/$ENV{OPENSHIFT_MYSQL_DB_PORT}/g' ${OPENSHIFT_TMP_DIR}/config.php
+
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
