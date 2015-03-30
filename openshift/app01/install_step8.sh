@@ -17,15 +17,6 @@ popd > /dev/null
 # create database
 wpuser_password=$(uuidgen | base64 | head -c 25)
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cat << '__HEREDOC__' > create_database_wordpress.txt
-DROP DATABASE IF EXISTS wordpress;
-CREATE DATABASE wordpress CHARACTER SET utf8 COLLATE utf8_general_ci;
-GRANT ALL PRIVILEGES ON wordpress.* TO wpuser@__OPENSHIFT_MYSQL_DB_HOST__ IDENTIFIED BY '__PASSWORD__';
-FLUSH PRIVILEGES;
-EXIT
-__HEREDOC__
-perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' create_database_wordpress.txt
-perl -pi -e "s/__PASSWORD__/${wpuser_password}/g" create_database_wordpress.txt
 
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
@@ -37,13 +28,13 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
 cat << '__HEREDOC__' > wp-config.php
 <?php
 define('DB_NAME', 'wordpress');
-define('DB_USER', 'wpuser');
-define('DB_PASSWORD', '__PASSWORD__');
+define('DB_USER', getenv('OPENSHIFT_MYSQL_DB_USERNAME'));
+define('DB_PASSWORD', getenv('OPENSHIFT_MYSQL_DB_PASSWORD'));
 define('DB_HOST', getenv('OPENSHIFT_MYSQL_DB_HOST') . ':' . getenv('OPENSHIFT_MYSQL_DB_PORT'));
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', 'utf8_general_ci');
 __HEREDOC__
-perl -pi -e "s/__PASSWORD__/${wpuser_password}/g" wp-config.php
+
 cp ${OPENSHIFT_DATA_DIR}/download_files/salt.txt ./
 cat ./salt.txt >> wp-config.php
 rm ./salt.txt
@@ -69,7 +60,6 @@ require_once(ABSPATH . 'wp-settings.php');
 
 __HEREDOC__
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) wordpress mysql wpuser/${wpuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
