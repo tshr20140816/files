@@ -105,6 +105,9 @@ touch ${OPENSHIFT_DATA_DIR}/apache/logs/access_remoteip_log
 ln -s ${OPENSHIFT_DATA_DIR}/apache/logs/access_remoteip_log access_remoteip_log
 touch ${OPENSHIFT_DATA_DIR}/apache/logs/error_log
 ln -s ${OPENSHIFT_DATA_DIR}/apache/logs/error_log error_log
+touch ${OPENSHIFT_MYSQL_DIR}/stdout.err
+ln -s ${OPENSHIFT_MYSQL_DIR}/stdout.err mysql_stdout_err.log
+
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
