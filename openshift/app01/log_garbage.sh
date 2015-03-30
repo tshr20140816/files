@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ $# -ne 1 ] || exit
+[ $# -eq 1 ] || exit
 log_name="${1}"
 [ -f "${log_name}" ] || exit
 
