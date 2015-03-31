@@ -222,7 +222,7 @@ if [ ${is_alive} -gt 0 ]; then
 elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
     echo RESTART memcached
     cd ${OPENSHIFT_DATA_DIR}/memcached/
-    ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -U 0 -m 60 -C -d
+    ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -U 0 -m 60 -C -d &>> ${OPENSHIFT_LOG_DIR}/memcached.log
 fi
 
 # delegated
