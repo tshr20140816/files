@@ -75,7 +75,7 @@ cat << '__HEREDOC__' > redmine_repository_check.sh
 
 export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
-minute=$(date +%M)
+minute=10#$(date +%M)
 dt=$(date +%Y/%m/%d" "%H:%M:%S)
 
 if [ $((minute % 5)) -eq 2 ]; then
@@ -279,7 +279,7 @@ cat << '__HEREDOC__' > update_feeds.sh
 export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
 
-minute=$(date +%M)
+minute=10#$(date +%M)
 
 if [ $((minute % 5)) -eq 0 ]; then
     ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
@@ -362,7 +362,7 @@ cat << '__HEREDOC__' > cacti_poller.sh
 export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
 
-minute=$(date +%M)
+minute=10#$(date +%M)
 
 if [ $((minute % 5)) -eq 1 ]; then
     ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php
