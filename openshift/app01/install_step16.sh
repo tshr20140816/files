@@ -741,20 +741,18 @@ cat << '__HEREDOC__' > minutely_jobs.sh
 
 export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
-hour=$(date +%H)
+hour=10#$(date +%H)
 
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
-./another_server_check.sh >>${OPENSHIFT_LOG_DIR}/another_server_check.sh.log 2>&1 &
-./beacon.sh >>${OPENSHIFT_LOG_DIR}/beacon.sh.log 2>&1 &
+for shell_name in another_server_check beacon keep_process memcached_status mrtg passenger_status process_status
+do
+    ./${shell_name}.sh >>${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log 2>&1 &
+done
+
 # ./cacti_poller.sh >>${OPENSHIFT_LOG_DIR}/cacti_poller.sh.log 2>&1 &
-./keep_process.sh >>${OPENSHIFT_LOG_DIR}/keep_process.sh.log 2>&1 &
-./logrotate.sh >>${OPENSHIFT_LOG_DIR}/logrotate.sh.log 2>&1 &
-./memcached_status.sh >>${OPENSHIFT_LOG_DIR}/memcached_status.sh.log 2>&1 &
-./mrtg.sh >>${OPENSHIFT_LOG_DIR}/mrtg.sh.log 2>&1 &
+# ./logrotate.sh >>${OPENSHIFT_LOG_DIR}/logrotate.sh.log 2>&1 &
 # ./my_server_check.sh >>${OPENSHIFT_LOG_DIR}/my_server_check.sh.log 2>&1 &
-./passenger_status.sh >>${OPENSHIFT_LOG_DIR}/passenger_status.sh.log 2>&1 &
-./process_status.sh >>${OPENSHIFT_LOG_DIR}/process_status.sh.log 2>&1 &
 [ ${hour} -ne 1 ] && ./redmine_repository_check.sh >>${OPENSHIFT_LOG_DIR}/redmine_repository_check.sh.log 2>&1 &
 [ ${hour} -ne 1 ] && ./update_feeds.sh >>${OPENSHIFT_LOG_DIR}/update_feeds.sh.log 2>&1 &
 
