@@ -1,3 +1,5 @@
+http://blog.nomadscafe.jp/2012/03/-apache-241-rotatelogs.html
+
 cd /tmp
 wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
 cd UnixBench
