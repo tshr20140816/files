@@ -35,6 +35,7 @@ cat << '__HEREDOC__' > memory_usage_logging.sh
 #!/bin/bash
 
 export TZ=JST-9
+day='00'
 while :
 do
     dt=$(date +%Y/%m/%d" "%H:%M:%S)
@@ -49,6 +50,13 @@ do
         [ ${usage_in_bytes} -gt $((size * (10**6))) ] && touch ${filename} || rm -f ${filename}
     done
     [ -f ${OPENSHIFT_TMP_DIR}/stop ] && exit || sleep 1s
+    if [ ${day} != $(date +%d) ]; then
+        day=$(date +%d)
+        pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+        xz -z9ef memory_usage.log
+        mv -f memory_usage.log.xz memory_usage.log.$(date +%a).xz
+        popd > /dev/null
+    fi
 done
 __HEREDOC__
 chmod +x memory_usage_logging.sh
@@ -457,15 +465,6 @@ __OPENSHIFT_LOG_DIR__production.log {
   rotate 7
 }
 __OPENSHIFT_LOG_DIR__cron_minutely.log {
-  daily
-  missingok
-  notifempty
-  copytruncate
-  compress
-  noolddir
-  rotate 7
-}
-__OPENSHIFT_LOG_DIR__memory_usage.log {
   daily
   missingok
   notifempty
