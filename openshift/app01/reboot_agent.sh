@@ -7,9 +7,9 @@ do
     if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
         sleep 10s
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-        zip -9 nohup_error.log.zip nohup_error.log
+        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup_error.log.zip nohup_error.log
         rm -f nohup_error.log
-        zip -9 nohup.log.zip nohup.log
+        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup.log.zip nohup.log
         rm -f nohup.log
         popd > /dev/null
         echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
