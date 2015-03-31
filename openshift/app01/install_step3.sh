@@ -126,8 +126,8 @@ LogFormat "[%{%Y-%m-%d %H:%M:%S %Z}t] %p %{X-Forwarded-For}i %l %m %s %b \"%r\" 
 
 SetEnvIf Request_Method (HEAD|OPTIONS) method_head_options
 
-CustomLog "|bin/rotatelogs logs/access_log 86400" combined
-CustomLog "|bin/rotatelogs logs/access_remoteip_log 86400" remoteip env=!method_head_options
+CustomLog "|bin/rotatelogs logs/access_log 86400 540" combined
+CustomLog "|bin/rotatelogs logs/access_remoteip_log 86400 540" remoteip env=!method_head_options
 
 # indexes
 
