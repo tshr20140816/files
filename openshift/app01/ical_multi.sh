@@ -27,19 +27,20 @@ __HEREDOC__
 
 cnt=$(mysql ${connection_string} --execute="${sql}")
 echo $?
-echo "count ${cnt}"
+echo "${target_uri} count ${cnt}"
 
 [ ${cnt} -ne 1 ] && exit
 
-mkdir ${OPENSHIFT_DATA_DIR}/ics_files
+mkdir ${OPENSHIFT_DATA_DIR}/ics_files 2> /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/ics_files > /dev/null
 
 [ -f ${target_uri}.ics ] && mv -f ${target_uri}.ics ${target_uri}.ics.old || touch ${target_uri}.ics.old
 wget https://${schedule_server}/schedule/${target_uri} -O ${target_uri}.ics
 cmp ${target_uri}.ics ${target_uri}.ics.old
-[ $? -eq 0 ] && exit
-
-echo ${target_uri}
+if [ $? -eq 0 ]; then
+    echo "${target_uri}.ics is not changed"
+    exit
+fi
 
 sql=$(cat << __HEREDOC__
 SELECT T1.id
@@ -80,7 +81,6 @@ do
         m=${line:23:2}
         d=${line:25:2}
         utime=$(date "+%s" --date "${y}-${m}-${d}")
-        echo "${y}-${m}-${d} ${utime}"
     fi
 
     event="${event}${line}\r\n"
