@@ -30,7 +30,8 @@ if [ ${testrubyserver_count} -gt 0 ]; then
     popd > /dev/null
 
     # *** memcached ***
-    ${OPENSHIFT_DATA_DIR}/memcached/bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -d
+    ${OPENSHIFT_DATA_DIR}/memcached/bin/memcached -l ${OPENSHIFT_DIY_IP} \
+     -p 31211 -U 0 -m 60 -C -d &>> ${OPENSHIFT_LOG_DIR}/memcached.log
 fi
 __HEREDOC__
 chmod +x for_restart.sh
