@@ -568,25 +568,20 @@ cat << '__HEREDOC__' > redmine_repository_data_maintenance.sh
 export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
 
-mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
--h "${OPENSHIFT_MYSQL_DB_HOST}" \
--P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql1.txt
+connection_string=$(cat << __HEREDOC_2__
+--user=${OPENSHIFT_MYSQL_DB_USERNAME}
+--password=${OPENSHIFT_MYSQL_DB_PASSWORD}
+--host=${OPENSHIFT_MYSQL_DB_HOST}
+--port=${OPENSHIFT_MYSQL_DB_PORT}
+--database=redmine
+__HEREDOC_2__
+)
 
-mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
--h "${OPENSHIFT_MYSQL_DB_HOST}" \
--P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql2.txt
+for index in 1 2 3 4
+do
+    mysql ${connection_string} --execute="$(cat ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql${index}.txt)"
+done
 
-mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
--h "${OPENSHIFT_MYSQL_DB_HOST}" \
--P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql3.txt
-
-mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
--h "${OPENSHIFT_MYSQL_DB_HOST}" \
--P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < ${OPENSHIFT_DATA_DIR}/scripts/redmine_sql4.txt
 __HEREDOC__
 chmod +x redmine_repository_data_maintenance.sh
 echo redmine_repository_data_maintenance.sh >> jobs.allow
@@ -599,17 +594,19 @@ export TZ=JST-9
 echo $(date +%Y/%m/%d" "%H:%M:%S)
 hh=$(date +%H)
 
-mysql --user "${OPENSHIFT_MYSQL_DB_USERNAME}" \
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
---host "${OPENSHIFT_MYSQL_DB_HOST}" \
---port "${OPENSHIFT_MYSQL_DB_PORT}" \
+connection_string=$(cat << __HEREDOC_2__
+--user=${OPENSHIFT_MYSQL_DB_USERNAME}
+--password=${OPENSHIFT_MYSQL_DB_PASSWORD}
+--host=${OPENSHIFT_MYSQL_DB_HOST}
+--port=${OPENSHIFT_MYSQL_DB_PORT}
+__HEREDOC_2__
+)
+
+mysql ${connection_string} \
 --html < ${OPENSHIFT_DATA_DIR}/scripts/record_count_top_30_sql.txt \
 > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/record_count_top_30_${hh}.html
 
-mysql --user "${OPENSHIFT_MYSQL_DB_USERNAME}" \
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
---host "${OPENSHIFT_MYSQL_DB_HOST}" \
---port "${OPENSHIFT_MYSQL_DB_PORT}" \
+mysql ${connection_string} \
 --html \
 --execute="SHOW GLOBAL STATUS" \
 > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/mysql_global_status_${hh}.html
@@ -648,6 +645,16 @@ echo webalizer.sh >> jobs.allow
 cat << '__HEREDOC__' > wordpress.sh
 #!/bin/bash
 
+connection_string=$(cat << __HEREDOC_2__
+--user=${OPENSHIFT_MYSQL_DB_USERNAME}
+--password=${OPENSHIFT_MYSQL_DB_PASSWORD}
+--host=${OPENSHIFT_MYSQL_DB_HOST}
+--port=${OPENSHIFT_MYSQL_DB_PORT}
+--silent --batch
+--database="wordpress"
+__HEREDOC_2__
+)
+
 sql=$(cat << '__HEREDOC_2__'
 SELECT T1.TABLE_NAME
   FROM information_schema.TABLES T1
@@ -659,37 +666,19 @@ SELECT T1.TABLE_NAME
 __HEREDOC_2__
 )
 
-tables=$(mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
- --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
- --host="${OPENSHIFT_MYSQL_DB_HOST}" \
- --port="${OPENSHIFT_MYSQL_DB_PORT}" \
- --database="${1}" \
- --silent \
- --batch \
+tables=$(mysql ${connection_string} \
  --skip-column-names \
  --execute="${sql}")
 
 for table in ${tables[@]}; do
-    mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
-     --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
-     --host="${OPENSHIFT_MYSQL_DB_HOST}" \
-     --port="${OPENSHIFT_MYSQL_DB_PORT}" \
-     --database="wordpress" \
-     --silent \
-     --batch \
+    mysql ${connection_string} \
      --execute="SET GLOBAL innodb_file_per_table=1;SET GLOBAL innodb_file_format=Barracuda;"
     break
 done
 
 for table in ${tables[@]}; do
     for size in 1 2 4 8 16; do
-        mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
-         --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
-         --host="${OPENSHIFT_MYSQL_DB_HOST}" \
-         --port="${OPENSHIFT_MYSQL_DB_PORT}" \
-         --database="wordpress" \
-         --silent \
-         --batch \
+        mysql ${connection_string} \
          --execute="ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=${size};"
         if [ $? -eq 0 ]; then
             echo "${table} KEY_BLOCK_SIZE=${size}"
@@ -711,6 +700,16 @@ export TZ=JST-9
 
 date +%Y/%m/%d" "%H:%M:%S
 
+connection_string=$(cat << __HEREDOC_2__
+--user=${OPENSHIFT_MYSQL_DB_USERNAME}
+--password=${OPENSHIFT_MYSQL_DB_PASSWORD}
+--host=${OPENSHIFT_MYSQL_DB_HOST}
+--port=${OPENSHIFT_MYSQL_DB_PORT}
+--silent --batch
+--database="baikal"
+__HEREDOC_2__
+)
+
 sql=$(cat << '__HEREDOC_2__'
 SELECT T1.TABLE_NAME
   FROM information_schema.TABLES T1
@@ -722,37 +721,19 @@ SELECT T1.TABLE_NAME
 __HEREDOC_2__
 )
 
-tables=$(mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
- --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
- --host="${OPENSHIFT_MYSQL_DB_HOST}" \
- --port="${OPENSHIFT_MYSQL_DB_PORT}" \
- --database="${1}" \
- --silent \
- --batch \
+tables=$(mysql ${connection_string} \
  --skip-column-names \
  --execute="${sql}")
 
 for table in ${tables[@]}; do
-    mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
-     --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
-     --host="${OPENSHIFT_MYSQL_DB_HOST}" \
-     --port="${OPENSHIFT_MYSQL_DB_PORT}" \
-     --database="baikal" \
-     --silent \
-     --batch \
+    mysql ${connection_string} \
      --execute="SET GLOBAL innodb_file_per_table=1;SET GLOBAL innodb_file_format=Barracuda;"
     break
 done
 
 for table in ${tables[@]}; do
     for size in 1 2 4 8 16; do
-        mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
-         --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
-         --host="${OPENSHIFT_MYSQL_DB_HOST}" \
-         --port="${OPENSHIFT_MYSQL_DB_PORT}" \
-         --database="baikal" \
-         --silent \
-         --batch \
+        mysql ${connection_string} \
          --execute="ALTER TABLE ${table} ENGINE=InnoDB ROW_FORMAT=compressed KEY_BLOCK_SIZE=${size};"
         if [ $? -eq 0 ]; then
             echo "${table} KEY_BLOCK_SIZE=${size}"
