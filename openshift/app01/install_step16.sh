@@ -19,7 +19,7 @@ do
     sleep 10m
     if [ ${day} != $(date +%d) ]; then
         day=$(date +%d)
-        echo $(date +%Y/%m/%d" "%H:%M:%S) >> ${OPENSHIFT_LOG_DIR}/logrotate_zantei.log
+        date +%Y/%m/%d" "%H:%M:%S >> ${OPENSHIFT_LOG_DIR}/logrotate_zantei.log
         /usr/sbin/logrotate -v \
             -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status \
             -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf \
@@ -69,7 +69,7 @@ cat << '__HEREDOC__' > logrotate.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 cd ${OPENSHIFT_DATA_DIR}/logrotate
 logrotate logrotate.conf -s logrotate.status
@@ -82,7 +82,7 @@ cat << '__HEREDOC__' > redmine_repository_check.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 minute=10#$(date +%M)
 dt=$(date +%Y/%m/%d" "%H:%M:%S)
 
@@ -128,7 +128,7 @@ cat << '__HEREDOC__' > my_server_check.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 target_url="https://${OPENSHIFT_APP_DNS}/?server=${OPENSHIFT_APP_DNS}"
 http_status=$(curl -LI ${target_url} -o /dev/null -w '%{http_code}\n' -s)
@@ -151,7 +151,7 @@ cat << '__HEREDOC__' > another_server_check.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 another_server_check=$(cat ${OPENSHIFT_DATA_DIR}/params/another_server_check)
 if [ "${another_server_check}" != "yes" ]; then
@@ -194,7 +194,7 @@ cat << '__HEREDOC__' > beacon.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 curl -LI __WEB_BEACON_SERVER__beacon.txt?${OPENSHIFT_APP_DNS} -s | head -n1
 __HEREDOC__
@@ -209,7 +209,7 @@ cat << '__HEREDOC__' > keep_process.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 # memcached
 is_alive=$(ps awhx | grep bin/memcached | grep -v grep | grep -c ${OPENSHIFT_DIY_IP})
@@ -270,7 +270,7 @@ cat << '__HEREDOC__' > mrtg.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 mpstat 5 1 | grep ^Average | awk '{print $3+$4+$5+$6+$7+$8+$9+$10}' > ${OPENSHIFT_TMP_DIR}/cpu_usage_current
 cd ${OPENSHIFT_DATA_DIR}/mrtg
@@ -285,7 +285,7 @@ cat << '__HEREDOC__' > update_feeds.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 minute=10#$(date +%M)
 
@@ -301,7 +301,7 @@ cat << '__HEREDOC__' > passenger_status.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 
@@ -328,7 +328,7 @@ cat << '__HEREDOC__' > memcached_status.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/memcached_status.txt
@@ -343,7 +343,7 @@ cat << '__HEREDOC__' > process_status.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
 echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/ps_auwx.txt
@@ -368,7 +368,7 @@ cat << '__HEREDOC__' > cacti_poller.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 minute=10#$(date +%M)
 
@@ -556,7 +556,7 @@ popd > /dev/null
 
 # *** hourly ***
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) cron hourly | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) cron hourly" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
 rm -f ./*
 touch jobs.deny
@@ -566,7 +566,7 @@ touch jobs.deny
 cat << '__HEREDOC__' > redmine_repository_data_maintenance.sh
 #!/bin/bash
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 
 connection_string=$(cat << __HEREDOC_2__
 --user=${OPENSHIFT_MYSQL_DB_USERNAME}
@@ -591,7 +591,7 @@ echo redmine_repository_data_maintenance.sh >> jobs.allow
 cat << '__HEREDOC__' > record_count_top_30.sh
 #!/bin/bash
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 hh=$(date +%H)
 
 connection_string=$(cat << __HEREDOC_2__
@@ -620,7 +620,7 @@ cat << '__HEREDOC__' > du.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S) | tee ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
+date +%Y/%m/%d" "%H:%M:%S | tee ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
 echo >> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
 du ${OPENSHIFT_HOMEDIR} >> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
 __HEREDOC__
@@ -763,7 +763,7 @@ cat << '__HEREDOC__' > delegate.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 delegate_email_account=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_account)
 delegate_email_password=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_password)
 delegate_pop_server=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server)
