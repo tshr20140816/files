@@ -31,7 +31,8 @@ echo "count ${cnt}"
 
 [ ${cnt} -ne 1 ] && exit
 
-cd ${OPENSHIFT_TMP_DIR}
+mkdir ${OPENSHIFT_DATA_DIR}/ics_files
+pushd ${OPENSHIFT_DATA_DIR}/ics_files > /dev/null
 
 [ -f ${target_uri}.ics ] && mv -f ${target_uri}.ics ${target_uri}.ics.old || touch ${target_uri}.ics.old
 wget https://${schedule_server}/schedule/${target_uri} -O ${target_uri}.ics
@@ -64,7 +65,6 @@ echo "delete"
 
 cat ${target_uri}.ics | while read line
 do
-    # echo ${line}
     if [ "${line}" = "BEGIN:VEVENT" ]; then
         event=""
         uid=""
@@ -128,3 +128,4 @@ mysql ${connection_string} --execute="${sql}"
 echo $?
 echo "update"
 
+popd > /dev/null
