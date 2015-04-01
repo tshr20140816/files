@@ -633,7 +633,9 @@ cat << '__HEREDOC__' > webalizer.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
+cd ${OPENSHIFT_DATA_DIR}/apache/logs/
+ln -s -f ./access_log.$(date --date yesterday '+%Y%m%d') access_log.yesterday
 cd ${OPENSHIFT_DATA_DIR}/webalizer
 ./bin/webalizer -c ./etc/webalizer.conf
 __HEREDOC__
