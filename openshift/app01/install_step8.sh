@@ -64,6 +64,18 @@ require_once(ABSPATH . 'wp-settings.php');
 
 __HEREDOC__
 
+echo AuthType Digest > ./.htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/apache/.htpasswd >> ./.htaccess
+cat << '__HEREDOC__' >> ./.htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+__HEREDOC__
+
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
