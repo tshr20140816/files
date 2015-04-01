@@ -787,21 +787,31 @@ cat << '__HEREDOC__' > minutely_jobs.sh
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S)
+date +%Y/%m/%d" "%H:%M:%S
 hour=10#$(date +%H)
+weekday=$(date +%w)
 
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
 for shell_name in another_server_check beacon keep_process memcached_status mrtg passenger_status process_status
 do
-    ./${shell_name}.sh >>${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log 2>&1 &
+    touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
+    ./${shell_name}.sh >>${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1 &
+    ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
 done
 
 # ./cacti_poller.sh >>${OPENSHIFT_LOG_DIR}/cacti_poller.sh.log 2>&1 &
 # ./logrotate.sh >>${OPENSHIFT_LOG_DIR}/logrotate.sh.log 2>&1 &
 # ./my_server_check.sh >>${OPENSHIFT_LOG_DIR}/my_server_check.sh.log 2>&1 &
-[ ${hour} -ne 1 ] && ./redmine_repository_check.sh >>${OPENSHIFT_LOG_DIR}/redmine_repository_check.sh.log 2>&1 &
-[ ${hour} -ne 1 ] && ./update_feeds.sh >>${OPENSHIFT_LOG_DIR}/update_feeds.sh.log 2>&1 &
+
+for shell_name in redmine_repository_check update_feeds
+do
+    if [ ${hour} -ne 1 ]; then
+        touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
+        ./${shell_name}.sh >> ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1 &
+        ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
+    fi
+done
 
 popd > /dev/null
 __HEREDOC__
