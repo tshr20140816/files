@@ -44,7 +44,7 @@ cat ./salt.txt >> wp-config.php
 rm ./salt.txt
 cat << '__HEREDOC__' >> wp-config.php
 
-$table_prefix  = 'wp_';
+$table_prefix  = 'wp4_';
 define('WPLANG', 'ja');
 
 define('WP_DEBUG', false);
