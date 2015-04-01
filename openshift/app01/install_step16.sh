@@ -493,7 +493,7 @@ popd > /dev/null
 
 # *** daily ***
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) cron daily | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) cron daily" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/daily > /dev/null
 rm -f ./*
 touch jobs.deny
@@ -778,7 +778,7 @@ popd > /dev/null
 
 # *** minutely ***
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) cron minutely | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) cron minutely" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f ./*
 touch jobs.deny
