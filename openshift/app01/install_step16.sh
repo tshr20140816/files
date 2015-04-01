@@ -701,6 +701,28 @@ __HEREDOC__
 chmod +x wordpress.sh
 echo wordpress.sh >> jobs.allow
 
+# * baikal *
+cp ${OPENSHIFT_DATA_DIR}/download_files/ical_multi.sh ${OPENSHIFT_DATA_DIR}/scripts/
+chmod +x ${OPENSHIFT_DATA_DIR}/scripts/ical_multi.sh
+cat << '__HEREDOC__' > baikal.sh
+#!/bin/bash
+
+export TZ=JST-9
+
+date +%Y/%m/%d" "%H:%M:%S
+
+pushd ${OPENSHIFT_DATA_DIR}/scripts/ > /dev/null
+
+for target_uri in carp saekics soccer tv
+do
+    ./ical_multi.sh $(cat ${OPENSHIFT_DATA_DIR}/params/schedule_server) ${target_uri}
+done
+
+popd > /dev/null
+__HEREDOC__
+chmod +x baikal.sh
+echo baikal.sh >> jobs.allow
+
 # * delegate *
 
 cat << '__HEREDOC__' > delegate.sh
