@@ -651,6 +651,7 @@ fi
 
 touch ${OPENSHIFT_LOG_DIR}/nohup.log
 touch ${OPENSHIFT_LOG_DIR}/nohup_error.log
+mkdir ${OPENSHIFT_LOG_DIR}/install
 
 # ***** install script *****
 
