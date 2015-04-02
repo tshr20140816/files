@@ -16,6 +16,8 @@ if [ "${tarball_md5}" != "${apache_md5}" ]; then
 fi
 
 tar jxf httpd-${apache_version}.tar.bz2
+popd
+pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}
 
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
@@ -27,6 +29,9 @@ CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 time make -j$(grep -c -e processor /proc/cpuinfo)
 
 make install
+popd
+
+pushd ${OPENSHIFT_DATA_DIR}/apache
 
 cp conf/httpd.conf conf/httpd.conf.$(date '+%Y%m%d')
 
