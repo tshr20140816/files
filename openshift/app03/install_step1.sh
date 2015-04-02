@@ -44,7 +44,8 @@ perl -pi -e 's/(^ *CustomLog.+$)/# $1/g' conf/httpd.conf
 cat << '__HEREDOC__' >> conf/httpd.conf
 
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
-CustomLog "|/usr/sbin/rotatelogs -L logs/access_log logs/access_log.%Y%m%d 86400 540" combined
+CustomLog \
+"|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_log __APACHE_DIR__logs/access_log.%Y%m%d 86400 540" combined
 __HEREDOC__
 
 /usr/bin/gear stop --trace
