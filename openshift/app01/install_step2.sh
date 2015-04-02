@@ -33,21 +33,22 @@ rm -rf ${OPENSHIFT_DATA_DIR}/fio
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/fio-${fio_version}.tar.bz2 ./
-echo $(date +%Y/%m/%d" "%H:%M:%S) fio tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) fio tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar jxf fio-${fio_version}.tar.bz2
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/fio-${fio_version} > /dev/null
-echo $(date +%Y/%m/%d" "%H:%M:%S) fio configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) fio configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_fio.log
-./configure --extra-cflags="-O2 -march=native -pipe"
-echo $(date +%Y/%m/%d" "%H:%M:%S) fio make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+./configure --extra-cflags="-O2 -march=native -pipe" | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) fio make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fio.log
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
 sed -i -E "s|^prefix .+$|prefix = ${OPENSHIFT_DATA_DIR}fio|g" Makefile
-echo $(date +%Y/%m/%d" "%H:%M:%S) fio make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) fio make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fio.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
+mv ${OPENSHIFT_LOG_DIR}/install_fio.log ${OPENSHIFT_LOG_DIR}/install/install_fio.log
 popd > /dev/null
 
 rm ${OPENSHIFT_TMP_DIR}/fio-${fio_version}.tar.bz2
@@ -104,26 +105,27 @@ mkdir -p ${OPENSHIFT_TMP_DIR}/lynx
 pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/lynx${lynx_version}.tar.gz ./
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) lynx tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz lynx${lynx_version}.tar.gz --strip-components=1
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) lynx configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_lynx.log
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) lynx make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) lynx make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
+mv ${OPENSHIFT_LOG_DIR}/install_lynx.log ${OPENSHIFT_LOG_DIR}/install/install_lynx.log
 popd > /dev/null
 
 rm -rf ${OPENSHIFT_TMP_DIR}/lynx
