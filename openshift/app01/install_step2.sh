@@ -92,7 +92,7 @@ tar xfz super_pi-jp.tar.gz
 sec=$(grep -e Total ${OPENSHIFT_LOG_DIR}/super_pi.log | awk '{print $4}' | tr -d \()
 query_string="server=${OPENSHIFT_GEAR_DNS}&super_pi=${sec}s&uuid=${USER}"
 wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
-
+mv ${OPENSHIFT_LOG_DIR}/super_pi.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 rm -rf ${OPENSHIFT_TMP_DIR}/superpi
 
