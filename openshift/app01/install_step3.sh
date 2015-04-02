@@ -127,8 +127,10 @@ LogFormat "[%{%Y-%m-%d %H:%M:%S %Z}t] %p %{X-Forwarded-For}i %l %m %s %b \"%r\" 
 
 SetEnvIf Request_Method (HEAD|OPTIONS) method_head_options
 
-CustomLog "|/usr/sbin/rotatelogs -l -L logs/access_log logs/access_log.%Y%m%d 86400 540" combined
-CustomLog "|/usr/sbin/rotatelogs -l -L logs/access_remoteip_log logs/access_remoteip_log.%Y%m%d 86400 540" \
+CustomLog \
+"|/usr/sbin/rotatelogs -l -L __APACHE_DIR__logs/access_log __APACHE_DIR__logs/access_log.%Y%m%d 86400 540" combined
+CustomLog \
+"|/usr/sbin/rotatelogs -l -L __APACHE_DIR__logs/access_remoteip_log __APACHE_DIR__logs/access_remoteip_log.%Y%m%d 86400 540" \
 remoteip env=!method_head_options
 
 # indexes
@@ -196,6 +198,7 @@ FileETag None
     </IfModule>
 </IfModule>
 __HEREDOC__
+sed -i -e "s|__APACHE_DIR__|${OPENSHIFT_DATA_DIR}/apache/|g" conf/custom.conf
 
 # *** robots.txt ***
 
