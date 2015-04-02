@@ -47,6 +47,7 @@ LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combine
 CustomLog \
 "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_log __APACHE_DIR__logs/access_log.%Y%m%d 86400 540" combined
 __HEREDOC__
+sed -i -e "s|__APACHE_DIR__|${OPENSHIFT_DATA_DIR}/apache/|g" conf/httpd.conf
 
 /usr/bin/gear stop --trace
 /usr/bin/gear start --trace
