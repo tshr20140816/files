@@ -28,6 +28,7 @@ time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) Tcl make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_tcl.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
+mv ${OPENSHIFT_LOG_DIR}/install_tcl.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -63,6 +64,7 @@ time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_
 echo $(date +%Y/%m/%d" "%H:%M:%S) Expect make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
+mv ${OPENSHIFT_LOG_DIR}/install_expect.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -87,6 +89,7 @@ rbenv rehash
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 gem install rhc --no-rdoc --no-ri --verbose >${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
+mv ${OPENSHIFT_LOG_DIR}/rhc.gem.log ${OPENSHIFT_LOG_DIR}/install/
 
 rhc --version
 
