@@ -70,6 +70,7 @@ do
     query_string="server=${OPENSHIFT_GEAR_DNS}&fio=${rwtype}&${aggrb}&uuid=${USER}"
     wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
 
+    mv ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log ${OPENSHIFT_LOG_DIR}/install/
     rm -rf ${OPENSHIFT_DATA_DIR}/work
 done
 popd > /dev/null
