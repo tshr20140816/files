@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -x
+export TZ=JST-9
 
 # *** apache ***
 
@@ -51,5 +52,8 @@ sed -i -e "s|__APACHE_DIR__|${OPENSHIFT_DATA_DIR}/apache/|g" conf/httpd.conf
 
 /usr/bin/gear stop --trace
 /usr/bin/gear start --trace
+
+kill $(ps auwx 2>/dev/null | grep testrubyserver.rb | grep ${OPENSHIFT_APP_UUID} | grep -v grep | awk '{print $2}')
+${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
 
 popd
