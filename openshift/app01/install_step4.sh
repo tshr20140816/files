@@ -38,6 +38,7 @@ export CXXFLAGS="-O2 -march=native"
 time CONFIGURE_OPTS="--disable-install-doc --mandir=/tmp/man --docdir=/tmp/doc" \
 MAKE_OPTS="-j$(grep -c -e processor /proc/cpuinfo)" \
 rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
+mv ${OPENSHIFT_LOG_DIR}/ruby.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
 
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
@@ -59,6 +60,7 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
 
 time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V >${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log 2>&1
 rbenv rehash
+mv ${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
 
 # *** passenger ***
 
@@ -68,6 +70,7 @@ time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V >${OPENSHIFT_
 rbenv rehash
 pushd ${OPENSHIFT_LOG_DIR} > /dev/null
 zip -9 passenger.gem.rbenv.log.zip passenger.gem.rbenv.log
+mv ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log.zip ${OPENSHIFT_LOG_DIR}/install/
 rm -f passenger.gem.rbenv.log
 popd > /dev/null
 
