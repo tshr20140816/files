@@ -654,7 +654,7 @@ connection_string=$(cat << __HEREDOC_2__
 --host=${OPENSHIFT_MYSQL_DB_HOST}
 --port=${OPENSHIFT_MYSQL_DB_PORT}
 --silent --batch
---database="wordpress"
+--database=wordpress
 __HEREDOC_2__
 )
 
@@ -709,7 +709,7 @@ connection_string=$(cat << __HEREDOC_2__
 --host=${OPENSHIFT_MYSQL_DB_HOST}
 --port=${OPENSHIFT_MYSQL_DB_PORT}
 --silent --batch
---database="baikal"
+--database=baikal
 __HEREDOC_2__
 )
 
