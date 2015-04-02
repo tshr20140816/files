@@ -603,6 +603,12 @@ do
     fi
     [ -f baikal-flat-${baikal_version}.zip ] || files_exists=0
 
+    # *** ical_multi ***
+    if [ ! -f ical_multi.sh ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) ical_multi.sh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/ical_multi.sh
+    fi
+
     # *** CalDavZAP ***
     if [ ! -f CalDavZAP_${caldavzap_version}.zip ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing CalDavZAP_${caldavzap_version}.zip" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
