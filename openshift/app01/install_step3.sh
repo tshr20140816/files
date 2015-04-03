@@ -114,7 +114,7 @@ LoadModule spdy_module modules/mod_spdy.so
 # tune
 
 MinSpareServers 1
-MaxSpareServers 5
+MaxSpareServers 2
 StartServers 1
 KeepAlive On
 Timeout 60
