@@ -31,6 +31,7 @@ time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_
 echo $(date +%Y/%m/%d" "%H:%M:%S) memcached make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
+mv ${OPENSHIFT_LOG_DIR}/install_memcached.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -99,6 +100,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) php make conf | tee -a ${OPENSHIFT_LOG_DIR}/in
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-production
 cp php.ini-development ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-development
+mv ${OPENSHIFT_LOG_DIR}/install_php.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
@@ -153,6 +155,7 @@ time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_
 echo $(date +%Y/%m/%d" "%H:%M:%S) libmemcached make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+mv ${OPENSHIFT_LOG_DIR}/install_libmemcached.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -191,6 +194,7 @@ time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_
 echo $(date +%Y/%m/%d" "%H:%M:%S) memcached_php_ext make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extention.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached_php_extention.log
+mv ${OPENSHIFT_LOG_DIR}/install_memcached_php_extention.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
