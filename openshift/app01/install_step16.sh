@@ -54,7 +54,7 @@ do
         day=$(date +%d)
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         xz -z9ef memory_usage.log
-        mv -f memory_usage.log.xz memory_usage.log.$(date +%a).xz
+        mv -f memory_usage.log.xz memory_usage.log.$(date +%w).xz
         popd > /dev/null
     fi
 done
