@@ -35,7 +35,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg make install | tee -a ${OPENSHIFT_LOG_DIR
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
-
+mv ${OPENSHIFT_LOG_DIR}/install_mrtg.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 rm -rf ${OPENSHIFT_DATA_DIR}/mrtg/workdir
