@@ -19,8 +19,8 @@ __HEREDOC__
 
 sql=$(cat << '__HEREDOC__'
 SELECT COUNT('X')
-  FROM SCHEMATA
- WHERE SCHEMA_NAME = 'baikal'
+  FROM SCHEMATA T1
+ WHERE T1.SCHEMA_NAME = 'baikal'
 __HEREDOC__
 )
 
