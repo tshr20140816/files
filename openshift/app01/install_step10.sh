@@ -12,12 +12,12 @@ rm -rf ${OPENSHIFT_DATA_DIR}/mrtg
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
-echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg tar >> ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg tar" >> ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz mrtg-${mrtg_version}.tar.gz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version} > /dev/null
-echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
@@ -26,12 +26,12 @@ CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 --docdir=/tmp/doc \
 --prefix=${OPENSHIFT_DATA_DIR}/mrtg 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) mrtg make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
