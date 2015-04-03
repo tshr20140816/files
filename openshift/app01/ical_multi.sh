@@ -43,10 +43,9 @@ __HEREDOC__
 )
 
 cnt=$(mysql ${connection_string} --execute="${sql}")
-echo $?
-echo "${target_uri} count ${cnt}"
-
-[ ${cnt} -ne 1 ] && exit
+rc=$?
+echo "${rc} ${target_uri} count ${cnt}"
+$([ ${rc} -eq 0 ] && [ ${cnt} -eq  1 ]) || exit
 
 mkdir ${OPENSHIFT_DATA_DIR}/ics_files 2> /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/ics_files > /dev/null
