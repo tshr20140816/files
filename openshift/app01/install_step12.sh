@@ -11,11 +11,11 @@ rm -rf ${OPENSHIFT_DATA_DIR}/delegate/
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/delegate${delegate_version}.tar.gz ./
-echo $(date +%Y/%m/%d" "%H:%M:%S) delegate tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz delegate${delegate_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
-echo $(date +%Y/%m/%d" "%H:%M:%S) delegate make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
 time make -j$(grep -c -e processor /proc/cpuinfo) \
 CFLAGS="-O2 -march=native -pipe" \
