@@ -33,6 +33,7 @@ time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_
 echo $(date +%Y/%m/%d" "%H:%M:%S) webalizer make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_webalizer.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_webalizer.log
+mv ${OPENSHIFT_LOG_DIR}/install_webalizer.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/webalizer/etc > /dev/null
