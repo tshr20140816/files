@@ -27,8 +27,7 @@ __HEREDOC__
 cnt=$(mysql ${connection_string_no_db} --database=information_schema --execute="${sql}")
 rc=$?
 echo "${rc} database baikal count ${cnt}"
-[ ${rc} -eq 0 ] || exit
-[ ${cnt} -eq  1 ] || exit
+$([ ${rc} -eq 0 ] && [ ${cnt} -eq  1 ]) || exit
 
 connection_string=$(cat << __HEREDOC__
 ${connection_string_no_db}
