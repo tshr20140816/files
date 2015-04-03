@@ -8,12 +8,30 @@ export TZ=JST-9
 schedule_server="${1}"
 target_uri="${2}"
 
-connection_string=$(cat << __HEREDOC__
+connection_string_no_db=$(cat << __HEREDOC__
 --user=${OPENSHIFT_MYSQL_DB_USERNAME}
 --password=${OPENSHIFT_MYSQL_DB_PASSWORD}
 --host=${OPENSHIFT_MYSQL_DB_HOST}
 --port=${OPENSHIFT_MYSQL_DB_PORT}
 --silent --batch --skip-column-names
+__HEREDOC__
+)
+
+sql=$(cat << '__HEREDOC__'
+SELECT COUNT('X')
+  FROM SCHEMATA
+ WHERE SCHEMA_NAME = 'baikal'
+__HEREDOC__
+)
+
+cnt=$(mysql ${connection_string_no_db} --database=information_schema --execute="${sql}")
+rc=$?
+echo "${rc} database baikal count ${cnt}"
+[ ${rc} -eq 0 ] || exit
+[ ${cnt} -eq  1 ] || exit
+
+connection_string=$(cat << __HEREDOC__
+${connection_string_no_db}
 --database=baikal
 __HEREDOC__
 )
