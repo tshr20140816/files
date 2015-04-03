@@ -726,12 +726,17 @@ export TZ=JST-9
 
 date +%Y/%m/%d" "%H:%M:%S
 
-connection_string=$(cat << __HEREDOC_2__
+connection_string_no_db=$(cat << __HEREDOC_2__
 --user=${OPENSHIFT_MYSQL_DB_USERNAME}
 --password=${OPENSHIFT_MYSQL_DB_PASSWORD}
 --host=${OPENSHIFT_MYSQL_DB_HOST}
 --port=${OPENSHIFT_MYSQL_DB_PORT}
---silent --batch
+--silent --batch --skip-column-names
+__HEREDOC_2__
+)
+
+connection_string=$(cat << __HEREDOC_2__
+${connection_string_no_db}
 --database=baikal
 __HEREDOC_2__
 )
@@ -747,8 +752,9 @@ SELECT T1.TABLE_NAME
 __HEREDOC_2__
 )
 
-tables=$(mysql ${connection_string} \
+tables=$(mysql ${connection_string_no_db} \
  --skip-column-names \
+ --database=information_schema \
  --execute="${sql}")
 
 for table in ${tables[@]}; do
