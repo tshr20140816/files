@@ -350,7 +350,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/ps_auwx.txt
 ps auwx >> ${OPENSHIFT_TMP_DIR}/ps_auwx.txt
 cp -f ${OPENSHIFT_TMP_DIR}/ps_auwx.txt ps_auwx.txt
 echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/ps_lwx.txt
-ps lwx >> ${OPENSHIFT_TMP_DIR}/ps_lwx.txt
+ps lwx --sort -rss >> ${OPENSHIFT_TMP_DIR}/ps_lwx.txt
 cp -f ${OPENSHIFT_TMP_DIR}/ps_lwx.txt ps_lwx.txt
 echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/lsof.txt
 lsof >> ${OPENSHIFT_TMP_DIR}/lsof.txt
