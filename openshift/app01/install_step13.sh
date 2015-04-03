@@ -10,7 +10,7 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti
 mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/cacti-${cacti_version}.tar.gz ./
-echo $(date +%Y/%m/%d" "%H:%M:%S) Cacti tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Cacti tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz cacti-${cacti_version}.tar.gz --strip-components=1
 # cp ${OPENSHIFT_DATA_DIR}/download_files/security.patch ./
 # patch -p1 -N < security.patch
@@ -32,8 +32,6 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
 -h "${OPENSHIFT_MYSQL_DB_HOST}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" cacti < ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/cacti.sql
-
-echo $(date +%Y/%m/%d" "%H:%M:%S) Cacti mysql cactiuser/${cactiuser_password} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/config.php
 <?php
