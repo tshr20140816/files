@@ -505,7 +505,7 @@ cat << '__HEREDOC__' > logrotate.sh
 /usr/sbin/logrotate -v -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf
 __HEREDOC__
 chmod +x logrotate.sh
-echo logrotate.sh >> jobs.allow
+# echo logrotate.sh >> jobs.allow
 ./logrotate.sh
 ./logrotate.sh
 
@@ -551,6 +551,29 @@ __HEREDOC__
 chmod +x another_server_list_update.sh
 echo another_server_list_update.sh >> jobs.allow
 ./another_server_list_update.sh
+
+# * backup log files *
+
+cat << '__HEREDOC__' > bakup_log_files.sh
+#!/bin/bash
+
+export TZ=JST-9
+
+weekday=$(date --date '2 days ago' +%w)
+
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+mkdir ${OPENSHIFT_LOG_DIR}/backup 2> /dev/null
+for file in *log.${weekday}
+do
+    set -x
+    xz -z9ef ${file}
+    mv -f ${file}.xz ./backup/
+    set +x
+done
+popd > /dev/null
+__HEREDOC__
+chmod +x bakup_log_files.sh
+echo bakup_log_files.sh >> jobs.allow
 
 popd > /dev/null
 
