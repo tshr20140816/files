@@ -3,6 +3,8 @@
 # ${1} : ical_server_name
 # ${2} : ical_name
 
+[ $# -ne 2 ] && exit
+
 export TZ=JST-9
 
 schedule_server="${1}"
