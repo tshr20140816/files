@@ -33,8 +33,7 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 echo "$(date +%Y/%m/%d" "%H:%M:%S) request_handler.rb patch check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 | grep lib/phusion_passenger/request_handler.rb \
-| xargs cat \
-| grep ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
+| xargs grep -e ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** font *****
 
@@ -201,7 +200,7 @@ find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name 
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) file_types.rb patch check" >> ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f -print0 \
-| xargs -0 grep bash >> ${OPENSHIFT_LOG_DIR}/install.log
+| xargs -0 grep -e bash >> ${OPENSHIFT_LOG_DIR}/install.log
 
 popd > /dev/null
 
