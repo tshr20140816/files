@@ -178,7 +178,7 @@ AddType application/x-httpd-php .php
 <IfModule mod_rewrite.c>
     RewriteEngine on
     RewriteLog \
-     "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/rewrite_log __APACHE_DIR__logs/rewrite_log.%Y%m%d 86400 540"
+     "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/rewrite_log __APACHE_DIR__logs/rewrite_log.%w 86400 540"
     RewriteLogLevel 0
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
