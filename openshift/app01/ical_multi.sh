@@ -30,7 +30,7 @@ __HEREDOC__
 
 cnt=$(mysql ${connection_string_no_db} --database=information_schema --execute="${sql}")
 rc=$?
-echo "${rc} database baikal count ${cnt}"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ${rc} database baikal count ${cnt}"
 $([ ${rc} -eq 0 ] && [ ${cnt} -eq  1 ]) || exit
 
 connection_string=$(cat << __HEREDOC__
@@ -48,7 +48,7 @@ __HEREDOC__
 
 cnt=$(mysql ${connection_string} --execute="${sql}")
 rc=$?
-echo "${rc} ${target_uri} count ${cnt}"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ${rc} ${target_uri} count ${cnt}"
 $([ ${rc} -eq 0 ] && [ ${cnt} -eq  1 ]) || exit
 
 mkdir ${OPENSHIFT_DATA_DIR}/ics_files 2> /dev/null
@@ -58,7 +58,7 @@ pushd ${OPENSHIFT_DATA_DIR}/ics_files > /dev/null
 wget https://${schedule_server}/schedule/${target_uri} -O ${target_uri}.ics
 cmp ${target_uri}.ics ${target_uri}.ics.old
 if [ $? -eq 0 ]; then
-    echo "${target_uri}.ics is not changed"
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) ${target_uri}.ics is not changed"
     exit
 fi
 
@@ -70,8 +70,8 @@ __HEREDOC__
 )
 
 calendar_id=$(mysql ${connection_string} --execute="${sql}")
-echo $?
-echo "calendar_id : ${calendar_id}"
+rc=$?
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ${rc} calendar_id : ${calendar_id}"
 
 sql=$(cat << __HEREDOC__
 DELETE
@@ -81,8 +81,8 @@ __HEREDOC__
 )
 
 mysql ${connection_string} --execute="${sql}"
-echo $?
-echo "delete"
+rc=$?
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ${rc} delete"
 
 cat ${target_uri}.ics | while read line
 do
@@ -129,8 +129,8 @@ __HEREDOC__
 )
 
         mysql ${connection_string} --execute="${sql}"
-        echo $?
-        echo "insert uid : ${uid}"
+        rc=$?
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) ${rc} insert uid : ${uid}"
     fi
 done
 
@@ -145,7 +145,7 @@ __HEREDOC__
 )
 
 mysql ${connection_string} --execute="${sql}"
-echo $?
-echo "update"
+rc=$?
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ${rc} update"
 
 popd > /dev/null
