@@ -200,8 +200,8 @@ find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name 
 >> ${OPENSHIFT_LOG_DIR}/install.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) file_types.rb patch check" >> ${OPENSHIFT_LOG_DIR}/install.log
-find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f \
-| xargs cat | grep bash >> ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f -print0 \
+| xargs -0 grep bash >> ${OPENSHIFT_LOG_DIR}/install.log
 
 popd > /dev/null
 
