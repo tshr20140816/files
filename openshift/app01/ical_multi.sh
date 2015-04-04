@@ -21,8 +21,10 @@ __HEREDOC__
 
 sql=$(cat << '__HEREDOC__'
 SELECT COUNT('X')
-  FROM SCHEMATA T1
- WHERE T1.SCHEMA_NAME = 'baikal'
+  FROM information_schema.TABLES T1
+ WHERE T1.TABLE_TYPE = 'BASE TABLE'
+   AND T1.TABLE_SCHEMA = 'baikal'
+   AND T1.TABLE_NAME = 'calendars'
 __HEREDOC__
 )
 
