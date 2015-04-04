@@ -99,7 +99,7 @@ perl -pi -e 's/(^LoadModule.+mod_proxy_scgi.so$)/# $1/g' conf/httpd.conf
 
 perl -pi -e 's/(^ *LogFormat.+$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^ *CustomLog.+$)/# $1/g' conf/httpd.conf
-perl -pi -e 's/(^ *ErrorLog.+$/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^ *ErrorLog.+$)/# $1/g' conf/httpd.conf
 
 cat << '__HEREDOC__' > conf/custom.conf
 # spdy
