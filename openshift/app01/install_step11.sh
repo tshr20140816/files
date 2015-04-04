@@ -37,8 +37,12 @@ mv ${OPENSHIFT_LOG_DIR}/install_webalizer.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/webalizer/etc > /dev/null
-cp webalizer.conf.sample webalizer.conf
-cat << '__HEREDOC__' >> webalizer.conf
+# cp webalizer.conf.sample webalizer.conf
+cat << '__HEREDOC__' > webalizer.conf
+PageType *
+HistoryName webalizer.hist
+Incremental yes
+IncrementalName webalizer.current
 
 LogFile __OPENSHIFT_DATA_DIR__/apache/logs/access_log.yesterday
 LogFile __OPENSHIFT_DATA_DIR__/apache/logs/access_log
