@@ -559,13 +559,22 @@ export TZ=JST-9
 
 weekday=$(date --date '2 days ago' +%w)
 
-pushd ${OPENSHIFT_LOG_DIR} > /dev/null
 mkdir ${OPENSHIFT_LOG_DIR}/backup 2> /dev/null
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
 for file in *log.${weekday}
 do
     set -x
     xz -z9ef ${file}
-    mv -f ${file}.xz ./backup/
+    mv -f ${file}.xz ${OPENSHIFT_LOG_DIR}/backup/
+    set +x
+done
+popd > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/apache/logs/ > /dev/null
+for file in *log.${weekday}
+do
+    set -x
+    xz -z9ef ${file}
+    mv -f ${file}.xz ${OPENSHIFT_LOG_DIR}/backup/
     set +x
 done
 popd > /dev/null
