@@ -39,13 +39,12 @@ popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/webalizer/etc > /dev/null
 # cp webalizer.conf.sample webalizer.conf
 cat << '__HEREDOC__' > webalizer.conf
-PageType *
+# PageType *
 HistoryName webalizer.hist
 Incremental yes
 IncrementalName webalizer.current
 
-LogFile __OPENSHIFT_DATA_DIR__/apache/logs/access_log.yesterday
-LogFile __OPENSHIFT_DATA_DIR__/apache/logs/access_log
+# LogFile __OPENSHIFT_DATA_DIR__/apache/logs/access_log
 OutputDir __OPENSHIFT_DATA_DIR__/webalizer/www
 HostName __OPENSHIFT_APP_DNS__
 UseHTTPS yes
