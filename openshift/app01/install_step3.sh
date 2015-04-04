@@ -99,6 +99,7 @@ perl -pi -e 's/(^LoadModule.+mod_proxy_scgi.so$)/# $1/g' conf/httpd.conf
 
 perl -pi -e 's/(^ *LogFormat.+$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^ *CustomLog.+$)/# $1/g' conf/httpd.conf
+perl -pi -e 's/(^ *ErrorLog.+$/# $1/g' conf/httpd.conf
 
 cat << '__HEREDOC__' > conf/custom.conf
 # spdy
@@ -132,6 +133,9 @@ CustomLog \
 CustomLog \
 "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_remoteip_log __APACHE_DIR__logs/access_remoteip_log.%Y%m%d 86400 540" \
 remoteip env=!method_head_options
+
+ErrorLog \
+"|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/error_log __APACHE_DIR__logs/error_log.%Y%m%d 86400 540" combined
 
 # indexes
 
