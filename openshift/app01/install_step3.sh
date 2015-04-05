@@ -135,7 +135,7 @@ CustomLog \
 remoteip env=!method_head_options
 
 ErrorLog \
-"|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/error_log __APACHE_DIR__logs/error_log.%w 86400 540" combined
+"|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/error_log __APACHE_DIR__logs/error_log.%w 86400 540"
 
 # indexes
 
