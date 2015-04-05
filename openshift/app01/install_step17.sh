@@ -54,7 +54,7 @@ cat << '__HEREDOC__' > start
 #!/bin/bash
 
 export TZ=JST-9
-echo $(date +%Y/%m/%d" "%H:%M:%S) start >> ${OPENSHIFT_LOG_DIR}/start.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) start" >> ${OPENSHIFT_LOG_DIR}/start.log
 rm -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
 rm -f ${OPENSHIFT_DATA_DIR}/mrtg/mrtg.conf_l
 cp -f $OPENSHIFT_MYSQL_DIR/conf/my.cnf ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
@@ -103,6 +103,7 @@ ${OPENSHIFT_DATA_DIR}/memcached/bin/memcached -l ${OPENSHIFT_DIY_IP} \
 #     kill $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -v grep | awk '{print $2}')
 # fi
 # ${OPENSHIFT_DATA_DIR}/scripts/logrotate_zantei.sh ${OPENSHIFT_DIY_IP} &
+echo "$(date +%Y/%m/%d" "%H:%M:%S) finish" >> ${OPENSHIFT_LOG_DIR}/start.log
 __HEREDOC__
 popd > /dev/null
 
