@@ -73,7 +73,7 @@ for (( i = 0; i < ${#sqls[@]}; i++ )); do
      --port="${OPENSHIFT_MYSQL_DB_PORT}" \
      --silent \
      --batch \
-     --execute="${sqls[$i]}"
+     --execute="${sqls[$i]}" >> ${OPENSHIFT_LOG_DIR}/start.log 2>&1
 
 done
 
@@ -86,16 +86,18 @@ mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
  > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/mysql_global_variables.html
 
 # *** apache ***
-${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
+${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful \
+ >> ${OPENSHIFT_LOG_DIR}/start.log 2>&1
 
 # *** delegate ***
 pushd ${OPENSHIFT_DATA_DIR}/delegate
-./delegated -r +=P30080
+./delegated -r +=P30080 \
+ >> ${OPENSHIFT_LOG_DIR}/start.log 2>&1
 popd > /dev/null
 
 # *** memcached ***
 ${OPENSHIFT_DATA_DIR}/memcached/bin/memcached -l ${OPENSHIFT_DIY_IP} \
- -p 31211 -U 0 -m 60 -C -d &>> ${OPENSHIFT_LOG_DIR}/memcached.log
+ -p 31211 -U 0 -m 60 -C -d &>> ${OPENSHIFT_LOG_DIR}/memcached.log 2>&1
 
 # if [ $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep) -gt 0 ]; then
 #     kill $(ps auwx 2>/dev/null | grep logrotate_zantei.sh | grep ${OPENSHIFT_DIY_IP} | grep -v grep | awk '{print $2}')
