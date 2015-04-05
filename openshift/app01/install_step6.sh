@@ -72,12 +72,12 @@ cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/subversion.rb app/models/reposit
 perl -pi -e 's/#{Changeset.table_name}.committed_on DESC/CONVERT(#{Changeset.table_name}.revision, UNSIGNED) DESC/g' \
 app/models/repository.rb
 
-cp config/environments/production.rb config/environments/production.rb.$(date '+%Y%m%d')
-sed -i -e "s|^end$||g" config/environments/production.rb
-cat << '__HEREDOC__' >> config/environments/production.rb
-  config.logger = Logger.new(config.log_path, 'daily')
-end
-__HEREDOC__
+# cp config/environments/production.rb config/environments/production.rb.$(date '+%Y%m%d')
+# sed -i -e "s|^end$||g" config/environments/production.rb
+# cat << '__HEREDOC__' >> config/environments/production.rb
+#   config.logger = Logger.new(config.log_path, 'daily')
+# end
+# __HEREDOC__
 
 popd > /dev/null
 
