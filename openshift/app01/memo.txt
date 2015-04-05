@@ -1,6 +1,9 @@
 http://blog.nomadscafe.jp/2012/03/-apache-241-rotatelogs.html
 dstat
 
+http://d.hatena.ne.jp/koshigoeb/20110615/1308118056
+http://rxr.whitequark.org/mri/source/lib/resolv.rb
+
 cd /tmp
 wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
 cd UnixBench
