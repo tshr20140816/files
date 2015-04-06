@@ -631,6 +631,28 @@ do
         wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
     fi
 
+    # *** gem ***
+    for gem in bundler rack passenger
+    do
+        rm -f ${gem}.html
+        wget https://rubygems.org/gems/${gem} -O ${gem}.html
+        version=$(grep -e canonical ${gem}.html | sed -r -e 's|^.*versions/(.+)".*$|\1|g')
+        rm -f ${gem}-${version}.gem
+        wget https://rubygems.org/downloads/${gem}-${version}.gem -O ${gem}-${version}.gem
+        perl -pi -e 's/(\r|\n)//g' ${gem}.html
+        perl -pi -e 's/.*gem__sha"> +//g' ${gem}.html
+        perl -pi -e 's/ +<.*//g' ${gem}.html
+        gem_sha256=$(cat ${gem}.html)
+        file_sha256=$(sha256sum ${gem}-${version}.gem | cut -d ' ' -f 1)
+        if [ "${gem_sha256}" != "${file_sha256}" ]; then
+          echo "$(date +%Y/%m/%d" "%H:%M:%S) ${gem}-${version}.gem sha256 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+          echo "$(date +%Y/%m/%d" "%H:%M:%S) ${gem}-${version}.gem sha256 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+          rm ${gem}-${version}.gem
+        fi
+        rm -f ${gem}.html
+        [ -f ${gem}-${version}.gem ] || files_exists=0
+    done
+
     # *** etc ***
 
     if [ ! -f salt.txt ]; then
