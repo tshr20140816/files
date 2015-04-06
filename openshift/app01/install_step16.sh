@@ -254,7 +254,7 @@ fi
 # export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 process_count=$(find ${OPENSHIFT_DATA_DIR}/.gem/gems/ \
 -name passenger-status -type f \
-| xargs --replace={} ruby {} --verbose \
+| xargs -i ruby {} --verbose \
 | grep Processes | awk '{print $NF}')
 if [ ${process_count} = 0 ]; then
     wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
@@ -314,7 +314,7 @@ rbenv rehash
 # export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/passenger_status.txt
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f \
-| xargs --replace={} ruby {} --verbose >> ${OPENSHIFT_TMP_DIR}/passenger_status.txt
+| xargs -i ruby {} --verbose >> ${OPENSHIFT_TMP_DIR}/passenger_status.txt
 cp -f ${OPENSHIFT_TMP_DIR}/passenger_status.txt passenger_status.txt
 __HEREDOC__
 sed -i -e "s|__RUBY_VERSION__|${ruby_version}|g" passenger_status.sh
