@@ -52,11 +52,17 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) bundler install" | tee -a ${OPENSHIFT_LOG_DIR
 # patch resolv.rb
 # OPENSHIFT では  0.0.0.0 は使えないため OPENSHIFT_DIY_IP に置換
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+| xargs -i mv -f {} ${OPENSHIFT_TMP_DIR}
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
 | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+| xargs -i sed -i -e 's|@config = Config.new(config_info)|@config = Config.new(:nameserver => ['8.8.8.8'])|g' {}
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) resolv.rb patch check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
+# | grep -e ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
-| grep -e ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
+ | xargs diff -u ${OPENSHIFT_TMP_DIR}/resolv.rb {} >> ${OPENSHIFT_LOG_DIR}/install.log
 
 time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V >${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log 2>&1
 rbenv rehash
