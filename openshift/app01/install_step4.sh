@@ -56,7 +56,7 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
  | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
- | xargs -0i sed -i -e "s|@config = Config.new\(config_info\)|@config = Config.new(:nameserver => ['8.8.8.8'])|g" {}
+ | xargs -0i sed -i -e "s|@config = Config.new(config_info)|@config = Config.new(:nameserver => ['8.8.8.8'])|g" {}
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) resolv.rb patch check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
@@ -75,12 +75,18 @@ mv ${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) bundler passenger" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V >${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log 2>&1
+#time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V >${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log 2>&1
+rack_gem=$(ls ${OPENSHIFT_DATA_DIR}/download_files/rack-*.gem)
+time rbenv exec gem install --local ${rack_gem} --no-rdoc --no-ri --debug -V \
+ > ${OPENSHIFT_LOG_DIR}/rack.gem.rbenv.log 2>&1
+passenger_gem=$(ls ${OPENSHIFT_DATA_DIR}/download_files/passenger-*.gem)
+time rbenv exec gem install --local ${passenger_gem} --no-rdoc --no-ri --debug -V \
+ > ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log 2>&1
 rbenv rehash
 pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-zip -9 passenger.gem.rbenv.log.zip passenger.gem.rbenv.log
-mv ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log.zip ${OPENSHIFT_LOG_DIR}/install/
-rm -f passenger.gem.rbenv.log
+# zip -9 passenger.gem.rbenv.log.zip passenger.gem.rbenv.log
+# mv ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log.zip ${OPENSHIFT_LOG_DIR}/install/
+# rm -f passenger.gem.rbenv.log
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
