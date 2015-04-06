@@ -1,15 +1,5 @@
 http://blogs.technet.com/b/microsoft_surface/archive/2014/11/26/surface-pro-3-64gb.aspx
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -f passenger.html
-wget https://rubygems.org/gems/passenger -O passenger.html
-version=$(grep -e canonical passenger.html | sed -r -e 's|^.*versions/(.+)".*$|$1|g')
-rm -f passenger-${version}.gem
-wget https://rubygems.org/downloads/passenger-${version}.gem -O passenger-${version}.gem
-popd > /dev/null
-
-bundler rack
-
 cd /tmp
 wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
 cd UnixBench
