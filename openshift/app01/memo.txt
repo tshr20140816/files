@@ -4,6 +4,8 @@ dstat
 http://d.hatena.ne.jp/koshigoeb/20110615/1308118056
 https://github.com/ruby/ruby/blob/trunk/lib/resolv.rb
 
+http://blogs.technet.com/b/microsoft_surface/archive/2014/11/26/surface-pro-3-64gb.aspx
+
 cd /tmp
 wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
 cd UnixBench
