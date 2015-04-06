@@ -84,9 +84,9 @@ time rbenv exec gem install --local ${passenger_gem} --no-rdoc --no-ri --debug -
  > ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log 2>&1
 rbenv rehash
 pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-# zip -9 passenger.gem.rbenv.log.zip passenger.gem.rbenv.log
-# mv ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log.zip ${OPENSHIFT_LOG_DIR}/install/
-# rm -f passenger.gem.rbenv.log
+zip -9 passenger.gem.rbenv.log.zip passenger.gem.rbenv.log
+mv ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log.zip ${OPENSHIFT_LOG_DIR}/install/
+rm -f passenger.gem.rbenv.log
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
