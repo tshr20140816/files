@@ -1,10 +1,12 @@
-http://blog.nomadscafe.jp/2012/03/-apache-241-rotatelogs.html
-dstat
-
-http://d.hatena.ne.jp/koshigoeb/20110615/1308118056
-https://github.com/ruby/ruby/blob/trunk/lib/resolv.rb
-
 http://blogs.technet.com/b/microsoft_surface/archive/2014/11/26/surface-pro-3-64gb.aspx
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f passenger.html
+wget https://rubygems.org/gems/passenger -O passenger.html
+version=$(grep -e canonical passenger.html | sed -r -e 's|^.*versions/(.+)".*$|$1|g')
+rm -f passenger-${version}.gem
+wget https://rubygems.org/downloads/passenger-${version}.gem -O passenger-${version}.gem
+popd > /dev/null
 
 cd /tmp
 wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
@@ -23,19 +25,11 @@ if(preg_match('^\w+?-\w+?\.rhcloud\.com$', $url) === 0)
     touch(getenve('OPENSHIFT_DATA_DIR') + 'ignore_server_list/' + $url)
 }
 
-https://wordpress.org/plugins/all-in-one-wp-security-and-firewall/changelog/
-
 B001D4NQ62
 B004OCUJM4
 B00KQFOQ8G
 B00OZJFEAS
 B00HWJDWMK
 
-https://github.com/openshift/origin-server/blob/master/cartridges/openshift-origin-cartridge-mysql/conf/my.cnf.erb#L39
-
 wget http://downloads.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/2.4.4/zabbix-2.4.4.tar.gz
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/zabbix --enable-server --enable-agent --with-mysql
-
-du -h * | sort -rh | head -50
-
-shellcheck
