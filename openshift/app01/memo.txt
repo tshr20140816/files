@@ -8,6 +8,8 @@ rm -f passenger-${version}.gem
 wget https://rubygems.org/downloads/passenger-${version}.gem -O passenger-${version}.gem
 popd > /dev/null
 
+bundler rack
+
 cd /tmp
 wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
 cd UnixBench
