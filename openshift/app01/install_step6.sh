@@ -21,21 +21,21 @@ ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --snippet > ${OP
 # https://help.openshift.com/hc/en-us/articles/202185874
 # 15000 - 35530
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name request_handler.rb -type f -print0 \
-| xargs -0i mv -f {} ${OPENSHIFT_TMP_DIR}
+ | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
-| grep lib/phusion_passenger/request_handler.rb \
-| xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', rand(15000..20000))/g"
+ | grep lib/phusion_passenger/request_handler.rb \
+ | xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', rand(15000..20000))/g"
 
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
-| grep lib/phusion_passenger/request_handler.rb \
-| xargs perl -pi -e 's/127.0.0.1/$ENV{OPENSHIFT_DIY_IP}/g'
+ | grep lib/phusion_passenger/request_handler.rb \
+ | xargs perl -pi -e 's/127.0.0.1/$ENV{OPENSHIFT_DIY_IP}/g'
 
 # *** patch check ***
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) request_handler.rb patch check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
-# | grep lib/phusion_passenger/request_handler.rb \
-# | xargs grep -e ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
+#  | grep lib/phusion_passenger/request_handler.rb \
+#  | xargs grep -e ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name request_handler.rb -type f -print0 \
  | xargs -0i diff -u ${OPENSHIFT_TMP_DIR}/request_handler.rb {} >> ${OPENSHIFT_LOG_DIR}/install.log
 
