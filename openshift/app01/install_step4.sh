@@ -64,8 +64,10 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) resolv.rb patch check" | tee -a ${OPENSHIFT_L
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
  | xargs diff -u ${OPENSHIFT_TMP_DIR}/resolv.rb {} >> ${OPENSHIFT_LOG_DIR}/install.log
 
-time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V >${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log 2>&1
-# TODO gem install --local <gem ファイル名>
+# time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V >${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log 2>&1
+bundler_gem=$(ls ${OPENSHIFT_DATA_DIR}/download_files/bundler-*.gem)
+time rbenv exec gem install --local ${bundler_gem} --no-rdoc --no-ri --debug -V \
+ > ${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log 2>&1
 rbenv rehash
 mv ${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
 
