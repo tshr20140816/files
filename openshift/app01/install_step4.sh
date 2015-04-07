@@ -46,6 +46,7 @@ rbenv global ${ruby_version}
 rbenv rehash
 
 # *** patch resolv.rb ***
+
 # OPENSHIFT では  0.0.0.0 は使えないため OPENSHIFT_DIY_IP に置換
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
  | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
