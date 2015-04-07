@@ -66,11 +66,14 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
 for gem in bundler rack passenger
 do
     gemfile=$(ls ${OPENSHIFT_DATA_DIR}/download_files/${gem}-*.gem)
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) ${gemfile} install"
     time rbenv exec gem install --local ${gemfile} --no-rdoc --no-ri --debug -V \
      > ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log 2>&1
     rbenv rehash
     mv ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
 done
+
+gem list
 
 popd > /dev/null
 
