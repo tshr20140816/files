@@ -36,8 +36,8 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby install" | tee -a ${OPENSHIFT_LOG_DIR}/i
 export CFLAGS="-O2 -march=native" 
 export CXXFLAGS="-O2 -march=native" 
 time CONFIGURE_OPTS="--disable-install-doc --mandir=/tmp/man --docdir=/tmp/doc" \
-MAKE_OPTS="-j$(grep -c -e processor /proc/cpuinfo)" \
-rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
+ MAKE_OPTS="-j$(grep -c -e processor /proc/cpuinfo)" \
+ rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/ruby.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
 
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -90,7 +90,7 @@ rbenv rehash
 
 # *** bundler rack passenger ***
 
-for ${gem} in bundler rack passenger
+for gem in bundler rack passenger
 do
     gemfile=$(ls ${OPENSHIFT_DATA_DIR}/download_files/${gem}-*.gem)
     time rbenv exec gem install --local ${gemfile} --no-rdoc --no-ri --debug -V \
