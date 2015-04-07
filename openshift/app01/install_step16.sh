@@ -52,9 +52,10 @@ do
     [ -f ${OPENSHIFT_TMP_DIR}/stop ] && exit || sleep 1s
     if [ ${day} != $(date +%d) ]; then
         day=$(date +%d)
+        mkdir ${OPENSHIFT_LOG_DIR}/backup 2> /dev/null
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         xz -z9ef memory_usage.log
-        mv -f memory_usage.log.xz memory_usage.log.$(date +%w).xz
+        mv -f memory_usage.log.xz backup/memory_usage.log.$(date +%w).xz
         popd > /dev/null
     fi
 done
