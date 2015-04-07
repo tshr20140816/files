@@ -45,48 +45,20 @@ oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}
 rbenv global ${ruby_version}
 rbenv rehash
 
-# # *** bundler ***
-# 
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) bundler install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# 
-# # patch resolv.rb
-# # OPENSHIFT では  0.0.0.0 は使えないため OPENSHIFT_DIY_IP に置換
-# find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
-#  | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
-# find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
-#  | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
-# find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
-#  | xargs -0i sed -i -e "s|@config = Config.new(config_info)|@config = Config.new(:nameserver => ['8.8.8.8'])|g" {}
-# 
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) resolv.rb patch check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# # find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f \
-# # | grep -e ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
-# find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
-#  | xargs -0i diff -u ${OPENSHIFT_TMP_DIR}/resolv.rb {} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# 
-# # time rbenv exec gem install bundler --no-rdoc --no-ri --debug -V >${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log 2>&1
-# bundler_gem=$(ls ${OPENSHIFT_DATA_DIR}/download_files/bundler-*.gem)
-# time rbenv exec gem install --local ${bundler_gem} --no-rdoc --no-ri --debug -V \
-#  > ${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log 2>&1
-# rbenv rehash
-# mv ${OPENSHIFT_LOG_DIR}/bundler.gem.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
-# 
-# # *** passenger ***
-# 
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) bundler passenger" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# 
-# #time rbenv exec gem install passenger --no-ri --no-rdoc --debug -V >${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log 2>&1
-# rack_gem=$(ls ${OPENSHIFT_DATA_DIR}/download_files/rack-*.gem)
-# time rbenv exec gem install --local ${rack_gem} --no-rdoc --no-ri --debug -V \
-#  > ${OPENSHIFT_LOG_DIR}/rack.gem.rbenv.log 2>&1
-# passenger_gem=$(ls ${OPENSHIFT_DATA_DIR}/download_files/passenger-*.gem)
-# time rbenv exec gem install --local ${passenger_gem} --no-rdoc --no-ri --debug -V \
-#  > ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log 2>&1
-# rbenv rehash
-# pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-# zip -9 passenger.gem.rbenv.log.zip passenger.gem.rbenv.log
-# mv ${OPENSHIFT_LOG_DIR}/passenger.gem.rbenv.log.zip ${OPENSHIFT_LOG_DIR}/install/
-# rm -f passenger.gem.rbenv.log
+# *** patch resolv.rb ***
+# OPENSHIFT では  0.0.0.0 は使えないため OPENSHIFT_DIY_IP に置換
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+ | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+ | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
+# dns を強制的に google にする
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+ | xargs -0i sed -i -e "s|@config = Config.new(config_info)|@config = Config.new(:nameserver => ['8.8.8.8'])|g" {}
+
+# * patch check resolv.rb *
+echo "$(date +%Y/%m/%d" "%H:%M:%S) resolv.rb patch check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+ | xargs -0i diff -u ${OPENSHIFT_TMP_DIR}/resolv.rb {} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** bundler rack passenger ***
 
