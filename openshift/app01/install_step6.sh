@@ -23,11 +23,11 @@ ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --snippet > ${OP
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name request_handler.rb -type f -print0 \
  | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
- | grep lib/phusion_passenger/request_handler.rb \
+ | grep -e lib/phusion_passenger/request_handler.rb \
  | xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', rand(15000..20000))/g"
 
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
- | grep lib/phusion_passenger/request_handler.rb \
+ | grep -e lib/phusion_passenger/request_handler.rb \
  | xargs perl -pi -e 's/127.0.0.1/$ENV{OPENSHIFT_DIY_IP}/g'
 
 # *** patch check ***
@@ -193,7 +193,7 @@ function020 redmine
 
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name scanners -type d \
 | grep /lib/coderay/scanners \
-| xargs -I{} cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb {}/
+| xargs -i cp ${OPENSHIFT_DATA_DIR}/download_files/bash.rb {}/
 
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f \
 | grep coderay/helpers/ \
