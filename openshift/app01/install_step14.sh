@@ -91,6 +91,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/in
 gem list | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 time rbenv exec gem install rhc --no-rdoc --no-ri --verbose > ${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
+rbenv rehash
 mv ${OPENSHIFT_LOG_DIR}/rhc.gem.log ${OPENSHIFT_LOG_DIR}/install/
 
 rhc --version
