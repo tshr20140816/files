@@ -206,9 +206,11 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) bash.rb copy check" >> ${OPENSHIFT_LOG_DIR}/i
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name bash.rb -type f \
  >> ${OPENSHIFT_LOG_DIR}/install.log
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) file_types.rb patch check" >> ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) file_types.rb diff" >> ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f -print0 \
- | xargs -0i diff -u ${OPENSHIFT_TMP_DIR}/file_type.rb {} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+ | xargs -0i diff -u ${OPENSHIFT_TMP_DIR}/file_type.rb {}
+find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f -print0 \
+ | xargs -0i ruby -cw {}
 
 popd > /dev/null
 
