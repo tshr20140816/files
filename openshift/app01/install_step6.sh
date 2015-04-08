@@ -202,13 +202,14 @@ find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name 
  | grep coderay/helpers/ \
  | xargs perl -pi -e 's/(TypeFromExt = {)$/$1\012    \x27bash\x27 => :bash,\012/g'
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) bash.rb copy check" >> ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) bash.rb copy check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name bash.rb -type f \
  >> ${OPENSHIFT_LOG_DIR}/install.log
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) file_types.rb diff" >> ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) file_types.rb diff" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f -print0 \
  | xargs -0i diff -u ${OPENSHIFT_TMP_DIR}/file_type.rb {}
+echo "$(date +%Y/%m/%d" "%H:%M:%S) file_types.rb syntax check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/vendor/bundle/ruby/ -name file_type.rb -type f -print0 \
  | xargs -0i ruby -cw {}
 
