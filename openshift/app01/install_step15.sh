@@ -161,7 +161,7 @@ $configs = array(
 'default_view' => 'month',
 'week_start_day' => 'Sunday',
 'phpicalendar_publishing' => 1,
-}
+);
 
 $blacklisted_cals = array(
 ''
