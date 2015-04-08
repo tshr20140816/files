@@ -5,7 +5,7 @@ wget https://distcc.googlecode.com/files/distcc-3.1.tar.bz2
 tar jxf distcc-3.1.tar.bz2
 cd distcc-3.1
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/distcc
-time make -j2
+time make -j4
 make install
 
 cd ${OPENSHIFT_DATA_DIR}/distcc
