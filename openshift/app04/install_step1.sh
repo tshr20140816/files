@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /tmp
+cd ${OPENSHIFT_TMP_DIR}
 wget https://distcc.googlecode.com/files/distcc-3.1.tar.bz2
 tar jxf distcc-3.1.tar.bz2
 cd distcc-3.1
