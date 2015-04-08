@@ -38,7 +38,7 @@ rm tcl${tcl_version}-src.tar.gz
 popd > /dev/null
 
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
-| tee -a ${OPENSHIFT_LOG_DIR}/install.log
+ | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** Expect *****
 
@@ -53,9 +53,9 @@ pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_expect.log
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
-./configure \
---mandir=/tmp/man \
---prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
+ ./configure \
+ --mandir=/tmp/man \
+ --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
@@ -92,7 +92,14 @@ time rbenv exec gem install rhc --no-rdoc --no-ri --verbose > ${OPENSHIFT_LOG_DI
 rbenv rehash
 mv ${OPENSHIFT_LOG_DIR}/rhc.gem.log ${OPENSHIFT_LOG_DIR}/install/
 
-rhc --version
+touch ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
+rhc --version 2> ${OPENSHIFT_TMP_DIR}/rhc.stderr.log | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+if [ $(grep -c -e 'command not found' ${OPENSHIFT_TMP_DIR}/rhc.stderr.log) -gt 0 ]; then
+    query_string="server=${OPENSHIFT_GEAR_DNS}&error=rhc"
+    wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" \
+     > /dev/null 2>&1
+fi
+rm -f ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
 
 # *** setup ***
 
