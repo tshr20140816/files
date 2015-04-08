@@ -119,7 +119,7 @@ perl -pi -e 's/^expose_php .+$/expose_php = Off/g' lib/php.ini
 perl -pi -e 's/(^;error_log =.*$)/error_log = __OPENSHIFT_LOG_DIR__\/php_error.log/g' lib/php.ini
 sed -i -e "s|__OPENSHIFT_LOG_DIR__|${OPENSHIFT_LOG_DIR}|g" lib/php.ini
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) php.ini patch check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) php.ini diff" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 diff -u lib/php.ini-production lib/php.ini
 
 popd > /dev/null
