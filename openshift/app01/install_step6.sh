@@ -33,11 +33,10 @@ find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
 # *** patch check ***
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) request_handler.rb patch check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
-#  | grep lib/phusion_passenger/request_handler.rb \
-#  | xargs grep -e ${OPENSHIFT_DIY_IP} >> ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name request_handler.rb -type f -print0 \
- | xargs -0i diff -u ${OPENSHIFT_TMP_DIR}/request_handler.rb {} >> ${OPENSHIFT_LOG_DIR}/install.log
+ | xargs -0i diff -u ${OPENSHIFT_TMP_DIR}/request_handler.rb {} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name request_handler.rb -type f -print0 \
+ | xargs -0i ruby -cw {} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** font *****
 
