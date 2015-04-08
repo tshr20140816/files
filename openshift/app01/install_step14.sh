@@ -127,7 +127,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt >${OPENSHIFT_LOG_DIR}/rhc.setup.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/rhc.setup.log ${OPENSHIFT_LOG_DIR}/install/
 
-${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps
 ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | grep uuid | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 export HOME=${env_home_backup}
 
