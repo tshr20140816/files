@@ -14,7 +14,7 @@ export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 
 # *** rbenv ***
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) rbenv install" >> ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) rbenv install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # OPENSHIFT用インストーラ
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -27,6 +27,7 @@ export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
+rbenv -v | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** ruby ***
 
@@ -60,8 +61,12 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
 echo "$(date +%Y/%m/%d" "%H:%M:%S) resolv.rb patch check" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
  | xargs -0i diff -u ${OPENSHIFT_TMP_DIR}/resolv.rb {} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+ | xargs -0i ruby -cw {} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** bundler rack passenger ***
+
+rbenv exec gem env | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 for gem in bundler rack passenger
 do
@@ -74,7 +79,7 @@ do
     mv ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log.zip ${OPENSHIFT_LOG_DIR}/install/
 done
 
-gem list
+rbenv exec gem list | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 popd > /dev/null
 
