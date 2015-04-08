@@ -40,6 +40,7 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal/Core/Frameworks/Baikal/Model/Co
 sed -i -e 's|Europe/Paris|Asia/Tokyo|g' Standard.php
 sed -i -e 's|"BAIKAL_CARD_ENABLED" => TRUE|"BAIKAL_CARD_ENABLED" => FALSE|g' Standard.php
 sed -i -e 's|define("BAIKAL_CARD_ENABLED", TRUE);|define("BAIKAL_CARD_ENABLED", FALSE);|g' Standard.php
+php -l Standard.php
 
 # *** Database.php ***
 
@@ -51,6 +52,7 @@ sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => "_
 sed -i -e "s|__PROJECT_DB_MYSQL_HOST__|${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}|g" Database.php
 sed -i -e "s|__OPENSHIFT_MYSQL_DB_USERNAME__|${OPENSHIFT_MYSQL_DB_USERNAME}|g" Database.php
 sed -i -e "s|__OPENSHIFT_MYSQL_DB_PASSWORD__|${OPENSHIFT_MYSQL_DB_PASSWORD}|g" Database.php
+php -l Database.php
 
 # *** System.php ***
 
@@ -67,6 +69,7 @@ sed -i -e 's|define("PROJECT_DB_MYSQL_PASSWORD", "");|define("PROJECT_DB_MYSQL_P
 sed -i -e "s|__PROJECT_DB_MYSQL_HOST__|${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}|g" System.php
 sed -i -e "s|__OPENSHIFT_MYSQL_DB_USERNAME__|${OPENSHIFT_MYSQL_DB_USERNAME}|g" System.php
 sed -i -e "s|__OPENSHIFT_MYSQL_DB_PASSWORD__|${OPENSHIFT_MYSQL_DB_PASSWORD}|g" System.php
+php -l System.php
 
 popd > /dev/null
 
@@ -84,7 +87,7 @@ cat << '__HEREDOC__' > baikal.php
 touch(getenv('OPENSHIFT_DATA_DIR') . '/apache/htdocs/baikal/Specific/ENABLE_INSTALL');
 ?>
 __HEREDOC__
-
+php -l baikal.php
 popd > /dev/null
 
 rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-flat-${baikal_version}.zip
@@ -171,6 +174,7 @@ $list_webcals = array(
 );
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_APP_DNS__|${OPENSHIFT_APP_DNS}|g" config.inc.php
+php -l config.inc.php
 
 rm phpicalendar-${phpicalendar_version}.tar.bz2
 popd > /dev/null
