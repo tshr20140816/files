@@ -17,3 +17,17 @@ touch ${OPENSHIFT_LOG_DIR}/distccd.log
 ./bin/distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 2 --port 33632 \
  --allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
+
+openssh_version=6.8p1
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
+tar xfz openssh-${openssh_version}.tar.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
+./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
+
+#ssh_config
