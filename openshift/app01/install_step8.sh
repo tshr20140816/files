@@ -63,6 +63,7 @@ if ( !defined('ABSPATH') )
 require_once(ABSPATH . 'wp-settings.php');
 
 __HEREDOC__
+php -l wp-config.php
 
 echo AuthType Digest > ./.htaccess
 echo AuthUserFile ${OPENSHIFT_DATA_DIR}/apache/.htpasswd >> ./.htaccess
