@@ -70,7 +70,8 @@ do
     time rbenv exec gem install --local ${gemfile} --no-rdoc --no-ri --debug -V \
      > ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log 2>&1
     rbenv rehash
-    mv ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
+    zip -9m ${gem}.gem.rbenv.log.zip ${gem}.gem.rbenv.log
+    mv ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log.zip ${OPENSHIFT_LOG_DIR}/install/
 done
 
 gem list
