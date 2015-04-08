@@ -51,7 +51,7 @@ perl -pi -e 's/__OPENSHIFT_MYSQL_DB_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' ${OP
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_USERNAME__/$ENV{OPENSHIFT_MYSQL_DB_USERNAME}/g' ${OPENSHIFT_TMP_DIR}/config.php
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_PASSWORD__/$ENV{OPENSHIFT_MYSQL_DB_PASSWORD}/g' ${OPENSHIFT_TMP_DIR}/config.php
 perl -pi -e 's/__OPENSHIFT_MYSQL_DB_PORT__/$ENV{OPENSHIFT_MYSQL_DB_PORT}/g' ${OPENSHIFT_TMP_DIR}/config.php
-
+php -l ${OPENSHIFT_TMP_DIR}/config.php
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
