@@ -99,6 +99,7 @@ do
         event=""
         uid=""
         utime=0
+        # transp_flag=0
     fi
 
     if [[ "${line}" =~ ^UID: ]]; then
@@ -110,17 +111,27 @@ do
         m=${line:23:2}
         d=${line:25:2}
         utime=$(date "+%s" --date "${y}-${m}-${d}")
-    elif [[ "${line}" =~ ^DTSTART.2 ]]; then
-        y=${line:8:4}
-        m=${line:12:2}
-        d=${line:14:2}
-        utime=$(date "+%s" --date "${y}-${m}-${d}")
-        line="DTSTART;VALUE=DATE:${y}${m}${d}"
+    # elif [[ "${line}" =~ ^DTSTART.2 ]]; then
+    #     y=${line:8:4}
+    #     m=${line:12:2}
+    #     d=${line:14:2}
+    #     utime=$(date "+%s" --date "${y}-${m}-${d}")
+    #     line="DTSTART;VALUE=DATE:${y}${m}${d}"
     fi
     
-    if [[ "${line}" =~ ^DTEND.2 ]]; then
-        line="DTEND;VALUE=DATE:${line:6:8}"
-    fi
+    # if [[ "${line}" =~ ^DTEND.2 ]]; then
+    #     line="DTEND;VALUE=DATE:${line:6:8}"
+    # fi
+
+    # if [[ "${line}" =~ ^TRANSP: ]]; then
+    #     transp_flag=1
+    # fi
+    
+    # if [ "${line}" = "END:VEVENT" ]; then
+    #     if [ ${transp_flag} -eq 0 ]; then
+    #         event="${event}TRANSP:TRANSPARENT\r\n"
+    #     fi
+    # fi
 
     event="${event}${line}\r\n"
 
