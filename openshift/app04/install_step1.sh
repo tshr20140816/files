@@ -23,6 +23,7 @@ touch ${OPENSHIFT_LOG_DIR}/distccd.log
 ./bin/distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 2 --port 33632 \
  --allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
+lsof
 
 # ***** openssh *****
 
