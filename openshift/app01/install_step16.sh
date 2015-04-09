@@ -802,6 +802,28 @@ __HEREDOC__
 chmod +x baikal.sh
 echo baikal.sh >> jobs.allow
 
+# * icalendar *
+
+cat << '__HEREDOC__' > icalendar.sh
+#!/bin/bash
+
+export TZ=JST-9
+date +%Y/%m/%d" "%H:%M:%S
+
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cal/calendars/ > /dev/null
+rm -f shinkan.ics
+wget http://sinkan.net/?action_ical=true&uid=12500&key=dd01838215ab8f727710f8e711d9fa47 -O shinkan.ics
+rm -f f1.ics
+wget http://www.textbox1.com/apps/rss-to-ical/rsstoical.rsb?rssfeed=http%3A%2F%2Fpipes.yahoo.com%2Fpipes%2Fpipe.run%3F_id%3Dbeb6e75d9ac7dd3e05f8ef12653e3b71%26_render%3Drss&@format=ICAL -O f1.ics
+rm -f tenki.ics
+wget http://weather.livedoor.com/forecast/ical/34/90.ics -O tenki.ics
+rm -f holidays.ics
+wget http://ical.mac.com/ical/Japanese32Holidays.ics -O holidays.ics
+popd > /dev/null
+__HEREDOC__
+chmod +x icalendar.sh
+echo icalendar.sh >> jobs.allow
+
 # * delegate *
 
 cat << '__HEREDOC__' > delegate.sh
