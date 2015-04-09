@@ -4,7 +4,7 @@
 # ${2} : ical_name
 # ${3} : [OPTIONAL] static url
 
-[ $# -eq 2 ] || [ $# -eq 3 ] && exit
+[ $# -eq 2 ] || [ $# -eq 3 ] || exit
 
 export TZ=JST-9
 
