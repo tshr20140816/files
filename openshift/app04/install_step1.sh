@@ -30,4 +30,12 @@ time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
 
-#ssh_config
+export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+env_home_backup=${HOME}
+export HOME=${OPENSHIFT_DATA_DIR}
+cd ${HOME}
+ssh-keygen -t rsa -N hogehoge
+ls -lang ${OPENSHIFT_DATA_DIR}/.ssh/
+ssh-keygen -i -f id_rsa.pub >> authorized_keys
+# ssh ...
+
