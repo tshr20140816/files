@@ -115,6 +115,11 @@ do
         m=${line:12:2}
         d=${line:14:2}
         utime=$(date "+%s" --date "${y}-${m}-${d}")
+        line="DTSTART;VALUE=DATE:${y}${m}${d}"
+    fi
+    
+    if [[ "${line}" =~ ^DTEND.2 ]]; then
+        line="DTEND;VALUE=DATE:${line:6:8}"
     fi
 
     event="${event}${line}\r\n"
