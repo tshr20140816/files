@@ -1,5 +1,11 @@
 #!/bin/bash
 
+set -x
+
+export TZ=JST-9
+
+# ***** distcc *****
+
 distcc_version=3.1
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -17,6 +23,8 @@ touch ${OPENSHIFT_LOG_DIR}/distccd.log
 ./bin/distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 2 --port 33632 \
  --allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
+
+# ***** openssh *****
 
 openssh_version=6.8p1
 
