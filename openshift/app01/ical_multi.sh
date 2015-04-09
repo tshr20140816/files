@@ -110,6 +110,11 @@ do
         m=${line:23:2}
         d=${line:25:2}
         utime=$(date "+%s" --date "${y}-${m}-${d}")
+    elif [[ "${line}" =~ ^DTSTART.2 ]]; then
+        y=${line:8:4}
+        m=${line:12:2}
+        d=${line:14:2}
+        utime=$(date "+%s" --date "${y}-${m}-${d}")
     fi
 
     event="${event}${line}\r\n"
