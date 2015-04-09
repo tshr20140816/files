@@ -176,6 +176,8 @@ __HEREDOC__
 sed -i -e "s|__OPENSHIFT_APP_DNS__|${OPENSHIFT_APP_DNS}|g" config.inc.php
 php -l config.inc.php
 
+rm -rf ./calendars/*.ics
+
 rm phpicalendar-${phpicalendar_version}.tar.bz2
 popd > /dev/null
 
