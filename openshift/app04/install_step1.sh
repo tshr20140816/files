@@ -38,4 +38,4 @@ ssh-keygen -t rsa -N hogehoge
 ls -lang ${OPENSHIFT_DATA_DIR}/.ssh/
 ssh-keygen -i -f id_rsa.pub >> authorized_keys
 # ssh ...
-
+# export HOME=${HOME}
