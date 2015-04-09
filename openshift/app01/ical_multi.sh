@@ -2,13 +2,18 @@
 
 # ${1} : ical_server_name
 # ${2} : ical_name
+# ${3} : [OPTIONAL] static url
 
-[ $# -ne 2 ] && exit
+[ $# -eq 2 ] || [ $# -eq 3 ] && exit
 
 export TZ=JST-9
 
 schedule_server="${1}"
 target_uri="${2}"
+static_url="none"
+if [ $# -eq 3 ]; then
+    static_url="${3}"
+fi
 
 connection_string_no_db=$(cat << __HEREDOC__
 --user=${OPENSHIFT_MYSQL_DB_USERNAME}
@@ -55,7 +60,11 @@ mkdir ${OPENSHIFT_DATA_DIR}/ics_files 2> /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/ics_files > /dev/null
 
 [ -f ${target_uri}.ics ] && mv -f ${target_uri}.ics ${target_uri}.ics.old || touch ${target_uri}.ics.old
-wget https://${schedule_server}/schedule/${target_uri} -O ${target_uri}.ics
+if [ ${static_url} = "none" ]; then
+    wget https://${schedule_server}/schedule/${target_uri} -O ${target_uri}.ics
+else
+    wget ${static_url} -O ${target_uri}.ics
+fi
 cmp ${target_uri}.ics ${target_uri}.ics.old
 if [ $? -eq 0 ]; then
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ${target_uri}.ics is not changed"
