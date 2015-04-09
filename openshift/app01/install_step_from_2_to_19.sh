@@ -18,3 +18,4 @@ bash install_step15.sh
 bash install_step16.sh
 bash install_step17.sh
 bash install_step18.sh
+bash install_step19.sh
