@@ -4,6 +4,7 @@ B00KGNUY3E
 B00S66PWIA
 
 https://developers.openshift.com/en/managing-remote-connection.html
+http://docs.openshift.com/online/user_guide/ssh_keys.html
 https://code.google.com/p/distcc/
 
 http://blogs.technet.com/b/microsoft_surface/archive/2014/11/26/surface-pro-3-64gb.aspx
