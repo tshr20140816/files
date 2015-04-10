@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -x
+
+# export TZ=JST-9
+
 ruby_version=2.1.5
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
@@ -29,8 +33,6 @@ time CONFIGURE_OPTS="--disable-install-doc --mandir=/tmp/man --docdir=/tmp/doc" 
 rbenv global ${ruby_version}
 rbenv rehash
 
-find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
- | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
  | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
 
