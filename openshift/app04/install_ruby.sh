@@ -68,6 +68,7 @@ cat << '__HEREDOC__'
 ${OPENSHIFT_DATA_DIR}.gem/bin/rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 __HEREDOC__
 
+exit
 # ***** distcc *****
 
 distcc_version=3.1
@@ -87,7 +88,7 @@ touch ${OPENSHIFT_LOG_DIR}/distccd.log
 ./bin/distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 2 --port 33632 \
  --allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
-lsof
+# lsof
 
 # ***** finish *****
 
