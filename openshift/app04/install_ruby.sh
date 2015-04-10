@@ -18,9 +18,9 @@ time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
 
-# ***** rbenv *****
-
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+
+# ***** rbenv *****
 
 pushd ${OPENSHIFT_TMP_DIR}
 wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
