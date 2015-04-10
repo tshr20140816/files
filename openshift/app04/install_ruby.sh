@@ -16,6 +16,14 @@ pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
+export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+cat << __HEREDOC__ >> ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
+
+IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null
+LogLevel QUIET
+__HEREDOC__
 popd > /dev/null
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
