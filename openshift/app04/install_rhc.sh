@@ -36,5 +36,6 @@ gem install rhc
 cat << '__HEREDOC__'
 export TMOUT=0
 export HOME=${OPENSHIFT_DATA_DIR}
+export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
 rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 __HEREDOC__
