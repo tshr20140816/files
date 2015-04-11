@@ -93,5 +93,13 @@ popd > /dev/null
 # ***** finish *****
 
 cat << '__HEREDOC__'
+export TMOUT=0
+export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+export HOME=${OPENSHIFT_DATA_DIR}
+
 ${OPENSHIFT_DATA_DIR}.gem/bin/rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 __HEREDOC__
