@@ -34,6 +34,7 @@ gem install commander -v 4.2.1
 gem install rhc
 
 cat << '__HEREDOC__'
+export TMOUT=0
 export HOME=${OPENSHIFT_DATA_DIR}
 rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 __HEREDOC__
