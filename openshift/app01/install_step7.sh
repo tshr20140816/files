@@ -39,6 +39,9 @@ rm memcached-${memcached_version}.tar.gz
 rm -rf memcached-${memcached_version}
 popd > /dev/null
 
+query_string="server=${OPENSHIFT_GEAR_DNS}&installed=memcached"
+wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
+
 # *** memcached-tool ***
 
 mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
@@ -130,6 +133,9 @@ rm php-${php_version}.tar.xz
 rm -rf php-${php_version}
 popd > /dev/null
 
+query_string="server=${OPENSHIFT_GEAR_DNS}&installed=php"
+wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
+
 # *** libmemcached ***
 
 rm -rf ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version}
@@ -163,6 +169,9 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm libmemcached-${libmemcached_version}.tar.gz
 rm -rf libmemcached-${libmemcached_version}
 popd > /dev/null
+
+query_string="server=${OPENSHIFT_GEAR_DNS}&installed=libmemcached"
+wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # *** memcached php extension ***
 
@@ -202,6 +211,9 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm memcached-${memcached_php_ext_version}.tgz
 rm -rf memcached-${memcached_php_ext_version}
 popd > /dev/null
+
+query_string="server=${OPENSHIFT_GEAR_DNS}&installed=memcached_php_ext"
+wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
