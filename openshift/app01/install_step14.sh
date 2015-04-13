@@ -94,7 +94,7 @@ rbenv rehash
 mv ${OPENSHIFT_LOG_DIR}/rhc.gem.log ${OPENSHIFT_LOG_DIR}/install/
 
 touch ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
-rhc --version 2> ${OPENSHIFT_TMP_DIR}/rhc.stderr.log | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+rhc --version 2> ${OPENSHIFT_TMP_DIR}/rhc.stderr.log | grep -e rhc | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 if [ $(grep -c -e 'command not found' ${OPENSHIFT_TMP_DIR}/rhc.stderr.log) -gt 0 ]; then
     query_string="server=${OPENSHIFT_GEAR_DNS}&error=rhc"
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" \
