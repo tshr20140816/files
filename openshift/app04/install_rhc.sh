@@ -2,6 +2,8 @@
 
 # rhc app create xxx ruby-2.0 --server openshift.redhat.com
 
+# http://www.ibm.com/developerworks/jp/linux/library/l-distcc/index.html
+
 set -x
 
 export TZ=JST-9
