@@ -58,14 +58,19 @@ function010() {
         fi
     fi
 
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" \
-    | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}' \
-    | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}' \
-    | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
-    | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    # quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}' \
+    #  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    # oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}' \
+    #  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    # oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
+    #  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    disk_usage=$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) Disk Usage : ${disk_usage}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    memory_usage=$(oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}')
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Usage : ${memory_usage}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
     return 0
 }
