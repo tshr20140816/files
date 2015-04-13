@@ -105,9 +105,9 @@ EXIT
 __HEREDOC__
 
 mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
--h "${OPENSHIFT_MYSQL_DB_HOST}" \
--P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_redmine.txt
+ --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+ -h "${OPENSHIFT_MYSQL_DB_HOST}" \
+ -P "${OPENSHIFT_MYSQL_DB_PORT}" < create_database_redmine.txt
 
 popd > /dev/null
 
@@ -178,19 +178,19 @@ pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 mv Gemfile Gemfile.$(date '+%Y%m%d')
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
 time bundle install --path vendor/bundle -j$(grep -c -e processor /proc/cpuinfo) --retry 5 \
->${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
+ >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
 
 # *** rake ***
 
 time RAILS_ENV=production bundle exec rake generate_secret_token 2>&1 \
-| tee ${OPENSHIFT_LOG_DIR}/generate_secret_token.rake.log
+ | tee ${OPENSHIFT_LOG_DIR}/generate_secret_token.rake.log
 mv ${OPENSHIFT_LOG_DIR}/generate_secret_token.rake.log ${OPENSHIFT_LOG_DIR}/install/
 time RAILS_ENV=production bundle exec rake db:migrate 2>&1 \
-| tee ${OPENSHIFT_LOG_DIR}/db_migrate.rake.log
+ | tee ${OPENSHIFT_LOG_DIR}/db_migrate.rake.log
 mv ${OPENSHIFT_LOG_DIR}/db_migrate.rake.log ${OPENSHIFT_LOG_DIR}/install/
 time RAILS_ENV=production bundle exec rake redmine:plugins:migrate 2>&1 \
-| tee ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log
+ | tee ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log
 mv ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log ${OPENSHIFT_LOG_DIR}/install/
 
 # *** format compact -> compress
