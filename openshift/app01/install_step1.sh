@@ -40,7 +40,7 @@ wordpress_version 4.1.1-ja
 ttrss_version 1.15.3
 memcached_version 1.4.22
 libmemcached_version 1.0.18
-memcached_php_ext_version 2.2.7
+memcached_php_ext_version 2.2.0
 ruby_version 2.1.5
 redmine_version 2.6.3
 ipafont_version 00303
