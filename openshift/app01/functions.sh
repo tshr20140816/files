@@ -2,7 +2,7 @@
 function010() {
 
     export TZ=JST-9
-    export MAKEFLAGS="-j $(grep -c -e processor /proc/cpuinfo)"
+    # export MAKEFLAGS="-j $(grep -c -e processor /proc/cpuinfo)"
 
     set -x
 
