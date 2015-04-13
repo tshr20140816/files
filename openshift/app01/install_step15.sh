@@ -138,6 +138,10 @@ cat << '__HEREDOC__' >> conf/custom.conf
     Allow from all
 </Directory>
 __HEREDOC__
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configtest" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+./bin/apachectl configtest | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 popd > /dev/null
 
 rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/CalDavZAP_${caldavzap_version}.zip
