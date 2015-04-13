@@ -93,6 +93,10 @@ delegate_email_account=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_account
 perl -pi -e "s/__DELEGATE_EMAIL_ACCOUNT__/${delegate_email_account}/g" conf/custom.conf
 delegate_pop_server=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server)
 sed -i -e "s|__DELEGATE_POP_SERVER__|${delegate_pop_server}|g" conf/custom.conf
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configtest" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+./bin/apachectl configtest | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
