@@ -24,9 +24,15 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/distcc > /dev/null
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
-./bin/distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 2 --port 33632 \
- --allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
+# ./bin/distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 2 --port 33632 \
+#  --allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
+
+# DISTCC_HOSTS='user@fqdn/2'
+# DISTCC_LOG=${OPENSHIFT_LOG_DIR}
+# DISTCC_DIR=${OPENSHIFT_DATA_DIR}
+# TMPDIR=${OPENSHIFT_TMP_DIR}/distcc
+# DISTCC_FALLBACK=0
 
 # ***** openssh *****
 
