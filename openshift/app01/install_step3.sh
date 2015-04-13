@@ -11,27 +11,27 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.bz2 ./
-echo $(date +%Y/%m/%d" "%H:%M:%S) apache tar | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar jxf httpd-${apache_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 
 # *** configure make install ***
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) apache configure | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
-./configure \
---prefix=${OPENSHIFT_DATA_DIR}/apache \
---mandir=/tmp/man \
---docdir=/tmp/doc \
---enable-mods-shared='all proxy' 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) apache make | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+ ./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --mandir=/tmp/man \
+ --docdir=/tmp/doc \
+ --enable-mods-shared='all proxy' 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 # export MAKEFLAGS="-j $(grep -c -e processor /proc/cpuinfo)"
 # time make 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) apache make install | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 mv ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log ${OPENSHIFT_LOG_DIR}/install/
@@ -43,7 +43,7 @@ popd > /dev/null
 
 # *** spdy ***
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) apache spdy | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache spdy" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 mkdir ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
 pushd ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64 > /dev/null
@@ -56,7 +56,7 @@ rm -rf ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
 
 pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
 
-echo $(date +%Y/%m/%d" "%H:%M:%S) apache conf | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache conf" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** *.conf ***
 
@@ -135,13 +135,13 @@ LogFormat "[%{%Y-%m-%d %H:%M:%S %Z}t] %p %{X-Forwarded-For}i %l %m %s %b \"%r\" 
 SetEnvIf Request_Method (HEAD|OPTIONS) method_head_options
 
 CustomLog \
-"|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_log __APACHE_DIR__logs/access_log.%w 86400 540" combined
+ "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_log __APACHE_DIR__logs/access_log.%w 86400 540" combined
 CustomLog \
-"|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_remoteip_log __APACHE_DIR__logs/access_remoteip_log.%w 86400 540" \
-remoteip env=!method_head_options
+ "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_remoteip_log __APACHE_DIR__logs/access_remoteip_log.%w 86400 540" \
+ remoteip env=!method_head_options
 
 ErrorLog \
-"|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/error_log __APACHE_DIR__logs/error_log.%w 86400 540"
+ "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/error_log __APACHE_DIR__logs/error_log.%w 86400 540"
 
 # indexes
 
@@ -212,6 +212,9 @@ FileETag None
 </IfModule>
 __HEREDOC__
 sed -i -e "s|__APACHE_DIR__|${OPENSHIFT_DATA_DIR}/apache/|g" conf/custom.conf
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configtest" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+./bin/apachectl configtest | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** robots.txt ***
 
