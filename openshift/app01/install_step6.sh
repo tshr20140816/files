@@ -249,6 +249,9 @@ perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' ${OPENSHIFT_DA
 perl -pi -e 's/__OPENSHIFT_APP_DNS__/$ENV{OPENSHIFT_APP_DNS}/g' ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 perl -pi -e 's/__OPENSHIFT_TMP_DIR__/$ENV{OPENSHIFT_TMP_DIR}/g' ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configtest" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+${OPENSHIFT_DATA_DIR}/apache/bin/apachectl configtest | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 mkdir ${OPENSHIFT_TMP_DIR}/PassengerTempDir
 
 # *** apache link ***
