@@ -11,8 +11,7 @@ function010() {
     mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
     query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename "${0}" .sh)&mfc=${mfc}"
 
-    wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" \
-    > /dev/null 2>&1
+    wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
     pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
     if [ -f "$(basename "${0}").ok" ]; then
