@@ -83,6 +83,7 @@ cat << '__HEREDOC__' >> config/environments/production.rb
 end
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_LOG_DIR__|${OPENSHIFT_LOG_DIR}|g" config/environments/production.rb
+# https://www.loggly.com/docs/ruby-logs/
 
 cp config/application.rb config/application.rb.$(date '+%Y%m%d')
 perl -pi -e 's/^( +)(config.encoding.+)$/$1$2\r\n$1config.colorize_logging = false/g' \
