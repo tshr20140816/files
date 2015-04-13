@@ -43,7 +43,8 @@ do
     usage_in_bytes_format=$(echo ${usage_in_bytes} | awk '{printf "%\047d\n", $0}')
     failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
     echo ${dt} ${usage_in_bytes_format} ${failcnt} >> ${OPENSHIFT_LOG_DIR}/memory_usage.log
-    tail -n 100 ${OPENSHIFT_LOG_DIR}/memory_usage.log | sort -r > ${OPENSHIFT_LOG_DIR}/memory_usage_tail_100_sort_r.log
+    tail -n 100 ${OPENSHIFT_LOG_DIR}/memory_usage.log \
+     | sort -r > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/memory_usage_tail_100_sort_r.log
     for size in 300 350 400 450 500
     do
         filename=${OPENSHIFT_TMP_DIR}/memory_over_${size}M
