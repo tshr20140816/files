@@ -42,8 +42,7 @@ oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 query_string="server=${OPENSHIFT_GEAR_DNS}&installed=tcl"
-wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" \
- > /dev/null 2>&1
+wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # ***** Expect *****
 
@@ -78,8 +77,7 @@ rm -rf expect${expect_version}
 popd > /dev/null
 
 query_string="server=${OPENSHIFT_GEAR_DNS}&installed=expect"
-wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" \
- > /dev/null 2>&1
+wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # ***** rhc *****
 
@@ -111,8 +109,7 @@ fi
 rm -f ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
 
 query_string="server=${OPENSHIFT_GEAR_DNS}&installed=rhc"
-wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" \
- > /dev/null 2>&1
+wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # *** setup ***
 
