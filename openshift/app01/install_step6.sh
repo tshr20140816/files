@@ -80,6 +80,7 @@ cp config/environments/production.rb config/environments/production.rb.$(date '+
 sed -i -e "s|^end$||g" config/environments/production.rb
 cat << '__HEREDOC__' >> config/environments/production.rb
   config.logger = Logger.new('__OPENSHIFT_LOG_DIR__production.log', 'daily')
+  config.logger.level = Logger::WARN
 end
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_LOG_DIR__|${OPENSHIFT_LOG_DIR}|g" config/environments/production.rb
