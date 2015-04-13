@@ -182,7 +182,7 @@ if [ "${mirror_server}" != "none" ]; then
     if [ "${tarball_md5}" != "${apache_md5}" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) apache md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) apache md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm httpd-${apache_version}.tar.bz2
+        rm -f httpd-${apache_version}.tar.bz2
     fi
 
     # libmemcached
@@ -192,7 +192,7 @@ if [ "${mirror_server}" != "none" ]; then
     if [ "${tarball_md5}" != "${libmemcached_md5}" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm libmemcached-${libmemcached_version}.tar.gz
+        rm -f libmemcached-${libmemcached_version}.tar.gz
     fi
 
     # mrtg
@@ -202,7 +202,7 @@ if [ "${mirror_server}" != "none" ]; then
     if [ "${tarball_md5}" != "${mrtg_md5}" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm mrtg-${mrtg_version}.tar.gz
+        rm -f mrtg-${mrtg_version}.tar.gz
     fi
 
     # ipa font
@@ -215,7 +215,7 @@ if [ "${mirror_server}" != "none" ]; then
     if [ $(gpg --verify php-${php_version}.tar.xz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm php-${php_version}.tar.xz
+        rm -f php-${php_version}.tar.xz
     fi
 
     # delegate
@@ -226,13 +226,13 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/redmine-${redmine_version}.tar.gz
     tarball_md5=$(md5sum redmine-${redmine_version}.tar.gz | cut -d ' ' -f 1)
     redmine_md5=$(curl http://www.redmine.org/projects/redmine/wiki/Download -s \
-    | grep md5 \
-    | grep "redmine-${redmine_version}.tar.gz" \
-    | awk '{print substr(substr($0, index($0, "md5: ")), 6, 32)}')
+     | grep -e md5 \
+     | grep -e "redmine-${redmine_version}.tar.gz" \
+     | awk '{print substr(substr($0, index($0, "md5: ")), 6, 32)}')
     if [ "${tarball_md5}" != "${redmine_md5}" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm redmine-${redmine_version}.tar.gz
+        rm -f redmine-${redmine_version}.tar.gz
     fi
 
     # webalizer
@@ -245,7 +245,7 @@ if [ "${mirror_server}" != "none" ]; then
     if [ "${tarball_md5}" != "${wordpress_md5}" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) wordpress md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) wordpress md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm wordpress-${wordpress_version}.tar.gz
+        rm -f wordpress-${wordpress_version}.tar.gz
     fi
     
     # ttrss
