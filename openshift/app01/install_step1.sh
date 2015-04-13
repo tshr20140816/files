@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.04.14 ruby_version 2.1.5 → 2.1.6
 # 2015.03.23 caldavzap_version 0.12.0 → 0.12.1
 # 2015.03.22 php_version 5.6.6 → 5.6.7
 # 2015.03.17 redmine_version 2.6.2 → 2.6.3
@@ -41,7 +42,7 @@ ttrss_version 1.15.3
 memcached_version 1.4.22
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
-ruby_version 2.1.5
+ruby_version 2.1.6
 redmine_version 2.6.3
 ipafont_version 00303
 cacti_version 0.8.8c
