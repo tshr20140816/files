@@ -74,7 +74,7 @@ cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/subversion.rb app/models/reposit
 
 # リビジョンが大きくても日時が古いことがある
 perl -pi -e 's/#{Changeset.table_name}.committed_on DESC/CONVERT(#{Changeset.table_name}.revision, UNSIGNED) DESC/g' \
-app/models/repository.rb
+ app/models/repository.rb
 
 cp config/environments/production.rb config/environments/production.rb.$(date '+%Y%m%d')
 sed -i -e "s|^end$||g" config/environments/production.rb
@@ -83,6 +83,12 @@ cat << '__HEREDOC__' >> config/environments/production.rb
 end
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_LOG_DIR__|${OPENSHIFT_LOG_DIR}|g" config/environments/production.rb
+
+cp config/application.rb config/application.rb.$(date '+%Y%m%d')
+perl -pi -e 's/^( +)(config.encoding.+)$/$1$2\r\n$1config.colorize_logging = false/g' \
+ config/application.rb
+ruby -cw config/application.rb
+diff -u config/application.rb.$(date '+%Y%m%d') config/application.rb
 
 popd > /dev/null
 
