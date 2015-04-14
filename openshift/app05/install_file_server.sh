@@ -3,6 +3,8 @@
 # rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 # rhc app create xxx diy-0.1 cron-1.4 --server openshift.redhat.com
 
+export TZ=JST-9
+
 nginx_version=1.6.3
 
 pushd /tmp > /dev/null
@@ -53,10 +55,11 @@ popd > /dev/null
 popd > /dev/null
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/ > /dev/null
-cp start start.org
+cp start start.$(date '+%Y%m%d')
 cat << '__HEREDOC__' > start
 #!/bin/bash
 
+export TZ=JST-9
 ${OPENSHIFT_DATA_DIR}/nginx/sbin/nginx
 __HEREDOC__
 popd > /dev/null
@@ -75,6 +78,7 @@ touch jobs.deny
 cat << '__HEREDOC__' > gem.sh
 #!/bin/bash
 
+export TZ=JST-9
 pushd ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
 
 for gem in bundler rack passenger
@@ -107,6 +111,7 @@ echo gem.sh >> jobs.allow
 cat << '__HEREDOC__' > download_file_list.sh
 #!/bin/bash
 
+export TZ=JST-9
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f download_file_list.txt
 wget https://github.com/tshr20140816/files/raw/master/openshift/app05/download_file_list.txt
