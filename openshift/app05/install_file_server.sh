@@ -5,6 +5,8 @@
 
 export TZ=JST-9
 
+# ***** nginx *****
+
 nginx_version=1.6.3
 
 pushd /tmp > /dev/null
@@ -54,6 +56,14 @@ ${OPENSHIFT_DATA_DIR}/nginx/conf/nginx.conf
 popd > /dev/null
 popd > /dev/null
 
+pushd ${OPENSHIFT_DATA_DIR}/nginx/html > /dev/null
+mkdir ${OPENSHIFT_DATA_DIR}/files
+ln -s ${OPENSHIFT_DATA_DIR}/files files
+ln -s ${OPENSHIFT_LOG_DIR} logs
+popd > /dev/null
+
+# ***** action_hooks start *****
+
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/ > /dev/null
 cp start start.$(date '+%Y%m%d')
 cat << '__HEREDOC__' > start
@@ -70,14 +80,22 @@ ${OPENSHIFT_DATA_DIR}/nginx/sbin/nginx
 __HEREDOC__
 popd > /dev/null
 
-pushd ${OPENSHIFT_DATA_DIR}/nginx/html > .dev/null
-mkdir ${OPENSHIFT_DATA_DIR}/files
-ln -s ${OPENSHIFT_DATA_DIR}/files files
-popd > /dev/null
+# ***** cron daily *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/daily > /dev/null
 rm -f ./*
 touch jobs.deny
+
+# *** quota ***
+
+cat << '__HEREDOC__' > quota_info.sh
+#!/bin/bash
+
+export TZ=JST-9
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+quota -s > quota.txt
+popd > /dev/null
+__HEREDOC__
 
 # *** gem ***
 
@@ -111,8 +129,8 @@ chmod +x gem.sh
 echo gem.sh >> jobs.allow
 ./gem.sh
 
-# https://github.com/tshr20140816/files/raw/master/openshift/app05/download_file_list.txt
 # *** download_file_list ***
+# https://github.com/tshr20140816/files/raw/master/openshift/app05/download_file_list.txt
 
 cat << '__HEREDOC__' > download_file_list.sh
 #!/bin/bash
