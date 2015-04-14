@@ -3,10 +3,12 @@
 # rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 # rhc app create xxx diy-0.1 --server openshift.redhat.com
 
+nginx_version=1.6.2
+
 pushd /tmp > /dev/null
-wget http://nginx.org/download/nginx-1.6.2.tar.gz
-tar xfz nginx-1.6.2.tar.gz
-pushd cd nginx-1.6.2 > /dev/null
+wget http://nginx.org/download/nginx-${nginx_version}.tar.gz
+tar xfz nginx-${nginx_version}.tar.gz
+pushd cd nginx-${nginx_version} > /dev/null
 
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/nginx \
@@ -41,7 +43,7 @@ CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 --without-mail_smtp_module \
 --without-pcre
 
-time make -j4
+time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 
 perl -pi -e 's/^(\s+)(listen\s+)80;/$1$2$ENV{OPENSHIFT_DIY_IP}:8080;\n$1autoindex on;/g' \
