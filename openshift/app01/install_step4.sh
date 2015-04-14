@@ -34,8 +34,8 @@ rbenv -v | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-export CFLAGS="-O2 -march=native" 
-export CXXFLAGS="-O2 -march=native" 
+export CFLAGS="-O2 -march=native -pipe" 
+export CXXFLAGS="-O2 -march=native -pipe" 
 time CONFIGURE_OPTS="--disable-install-doc --mandir=/tmp/man --docdir=/tmp/doc" \
  MAKE_OPTS="-j$(grep -c -e processor /proc/cpuinfo)" \
  rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
