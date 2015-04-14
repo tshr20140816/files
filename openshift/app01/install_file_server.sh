@@ -3,7 +3,7 @@
 # rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 # rhc app create xxx diy-0.1 --server openshift.redhat.com
 
-nginx_version=1.6.2
+nginx_version=1.6.3
 
 pushd /tmp > /dev/null
 wget http://nginx.org/download/nginx-${nginx_version}.tar.gz
