@@ -39,3 +39,4 @@ cd /tmp
 
 ccache -s
 
+tar Jcf ccache_apache.tar.xz ccache_apache
