@@ -60,6 +60,12 @@ cat << '__HEREDOC__' > start
 #!/bin/bash
 
 export TZ=JST-9
+
+testrubyserver_count=$(ps aux | grep -e testrubyserver.rb | grep -e ${OPENSHIFT_APP_UUID} | grep -c -v grep)
+if [ ${testrubyserver_count} -gt 0 ]; then
+    kill $(ps auwx 2>/dev/null | grep -e testrubyserver.rb | grep -e ${OPENSHIFT_APP_UUID} | grep -v grep | awk '{print $2}')
+fi
+${OPENSHIFT_DATA_DIR}/nginx/sbin/nginx -s stop
 ${OPENSHIFT_DATA_DIR}/nginx/sbin/nginx
 __HEREDOC__
 popd > /dev/null
