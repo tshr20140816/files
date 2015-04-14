@@ -33,28 +33,29 @@ set -x
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
-php_version 5.6.7
+baikal_version 0.2.7
+cacti_version 0.8.8c
+caldavzap_version 0.12.1
+ccache_version 3.2.1
 delegate_version 9.9.13
+expect_version 5.45
+fio_version 2.2.5
+ipafont_version 00303
+libmemcached_version 1.0.18
+logrotate_version 3.8.8
+lynx_version 2.8.7
+memcached_php_ext_version 2.2.0
+memcached_version 1.4.22
 mrtg_version 2.17.4
+murlin_version 0.2.4
+php_version 5.6.7
+phpicalendar_version 2.4_20100615
+redmine_version 2.6.3
+ruby_version 2.1.6
+tcl_version 8.6.3
+ttrss_version 1.15.3
 webalizer_version 2.23-08
 wordpress_version 4.1.1-ja
-ttrss_version 1.15.3
-memcached_version 1.4.22
-libmemcached_version 1.0.18
-memcached_php_ext_version 2.2.0
-ruby_version 2.1.6
-redmine_version 2.6.3
-ipafont_version 00303
-cacti_version 0.8.8c
-murlin_version 0.2.4
-tcl_version 8.6.3
-expect_version 5.45
-lynx_version 2.8.7
-logrotate_version 3.8.8
-fio_version 2.2.5
-baikal_version 0.2.7
-caldavzap_version 0.12.1
-phpicalendar_version 2.4_20100615
 __HEREDOC__
 
 # nginx_version 1.6.2
