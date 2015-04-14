@@ -53,7 +53,8 @@ end
 require 'erb'
 require 'yaml'
 
-gem "mysql2", "~> 0.3.11"
+# gem "mysql2", "~> 0.3.11"
+gem "mysql2", "~> 0.3.17"
 
 # for loggly
 gem 'logglier', '~> 0.2.11'
