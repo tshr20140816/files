@@ -2,6 +2,7 @@
 
 # rhc app create xxx diy-1.0 --server openshift.redhat.com
 
+# https://ccache.samba.org/manual.html
 # http://www.ibm.com/developerworks/jp/linux/library/l-ccache/
 
 set -x
@@ -19,11 +20,15 @@ make install
 
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 
+mkdir /tmp/ccache_apache
+export CCACHE_DIR=/tmp/ccache_apache
+export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.apache.log
+
 cd /tmp
 
 wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
 tar jxf httpd-2.2.29.tar.bz2
-cd httpd
-./configure --prefix=${OPENSHIFT_DATA_DIR}/apache
+cd httpd-2.2.29
+CC="ccache gcc" ./configure --prefix=${OPENSHIFT_DATA_DIR}/apache
 time make -j4
 
