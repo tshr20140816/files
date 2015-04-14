@@ -26,6 +26,34 @@ mkdir ${OPENSHIFT_TMP_DIR}/doc
 
 echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
 
+# ***** ccache *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache-${ccache_version}.tar.xz ./
+tar Jxf ccache-${ccache_version}.tar.xz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version} > /dev/null
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_ccache.log
+CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
+./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_ccache.log
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) fio make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_ccache.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
+popd > /dev/null
+rm ${OPENSHIFT_TMP_DIR}/ccache-3.2.1.tar.xz
+
+mkdir ${OPENSHIFT_TMP_DIR}/ccache
+mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
+
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_MAXSIZE=300M
+
 # ***** fio *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/fio-${fio_version}
@@ -40,7 +68,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/fio-${fio_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) fio configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_fio.log
-./configure --extra-cflags="-O2 -march=native -pipe" | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
+CC="ccache gcc" ./configure --extra-cflags="-O2 -march=native -pipe" | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) fio make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fio.log
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
@@ -114,7 +142,7 @@ pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_lynx.log
-CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
+CC="ccache gcc" CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
 --prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
