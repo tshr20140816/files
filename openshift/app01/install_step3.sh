@@ -35,7 +35,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make install" | tee -a ${OPENSHIFT_LOG
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 mv ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log ${OPENSHIFT_LOG_DIR}/install/
-if [ $(./bin/apachectl -v | grep -c -e version) -eq 0 ]; then
+if [ $(${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -v | grep -c -e version) -eq 0 ]; then
     query_string="server=${OPENSHIFT_GEAR_DNS}&error=apache"
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 fi
