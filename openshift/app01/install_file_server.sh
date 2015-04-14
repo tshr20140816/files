@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
-# rhc app create xxx diy-0.1 --server openshift.redhat.com
+# rhc app create xxx diy-0.1 cron-1.4 --server openshift.redhat.com
 
 nginx_version=1.6.3
 
