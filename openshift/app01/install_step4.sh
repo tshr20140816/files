@@ -42,7 +42,7 @@ time CFLAGS="-O2 -march=native -pipe" export CXXFLAGS="-O2 -march=native -pipe" 
  CC="ccache gcc" \
  CONFIGURE_OPTS="--disable-install-doc --mandir=/tmp/man --docdir=/tmp/doc" \
  RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
- MAKE_OPTS="-j$(grep -c -e processor /proc/cpuinfo)" \
+ MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
  rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/ruby.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
 
