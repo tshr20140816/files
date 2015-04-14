@@ -539,8 +539,8 @@ env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 
 ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
-| grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} \
-| awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
+ | grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} \
+ | awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
 
 export HOME=${env_home_backup}
 
