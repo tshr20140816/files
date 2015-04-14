@@ -4,6 +4,16 @@ function010() {
     export TZ=JST-9
     # export MAKEFLAGS="-j $(grep -c -e processor /proc/cpuinfo)"
 
+    export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+    export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+    export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+    export CCACHE_MAXSIZE=300M
+
+    ccache=$(printenv | grep ^PATH= | grep ccache | wc -l)
+    if [ ${ccache} -eq 0 ]; then
+        export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+    fi
+
     set -x
 
     # shellcheck disable=SC2034
