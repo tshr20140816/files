@@ -1,3 +1,4 @@
+# Thanks http://d.hatena.ne.jp/suu-g/20130908/1378623978
 class << Bundler.ui
   def tell_me (msg, color = nil, newline = nil)
     msg = word_wrap(msg) if newline.is_a?(Hash) && newline[:wrap]
