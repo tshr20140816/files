@@ -580,6 +580,15 @@ do
     set +x
 done
 popd > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/redmine-__REDMINE_VERSION__/log/ > /dev/null
+if [ -t production.log.$(date --date '2 days ago' +%Y%m%d) ]; then
+    set -x
+    mv -f production.log.$(date --date '2 days ago' +%Y%m%d) production.log.${weekday}
+    xz -z9ef production.log.${weekday}
+    mv -f production.log.${weekday} ${OPENSHIFT_LOG_DIR}/backup/
+    set +x
+fi
+popd > /dev/null
 __HEREDOC__
 chmod +x bakup_log_files.sh
 echo bakup_log_files.sh >> jobs.allow
