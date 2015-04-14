@@ -797,6 +797,9 @@ done
 
 popd > /dev/null
 
+gcc --version
+gcc -march=native -Q --help=target
+
 set +x
 
 if [ -f ${OPENSHIFT_LOG_DIR}/install_alert.log ]; then
