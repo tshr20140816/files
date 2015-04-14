@@ -13,7 +13,7 @@ cd /tmp
 
 wget http://samba.org/ftp/ccache/ccache-3.2.1.tar.xz
 tar Jxf  ccache-3.2.1.tar.xz
-cd ccache
+cd ccache-3.2.1
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache
 time make -j4
 make install
