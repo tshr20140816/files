@@ -112,10 +112,12 @@ wget https://github.com/tshr20140816/files/raw/master/openshift/app05/download_f
 while read LINE
 do
     file_name=$(echo "${LINE}" | awk '{print $1}')
-    url=$(echo "${LINE}" | awk '{print $2}')
-    rm -f ${file_name}
-    wget ${url} -O ${file_name}
-    mv -f ${file_name} ${OPENSHIFT_DATA_DIR}/files/
+    if [ ! -t ${OPENSHIFT_DATA_DIR}/files/${file_name} ]; then
+        url=$(echo "${LINE}" | awk '{print $2}')
+        rm -f ${file_name}
+        wget ${url} -O ${file_name}
+        mv -f ${file_name} ${OPENSHIFT_DATA_DIR}/files/
+    fi
 done < download_file_list.txt
 popd > /dev/null
 __HEREDOC__
