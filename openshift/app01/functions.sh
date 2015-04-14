@@ -14,10 +14,6 @@ function010() {
         export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
         export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
         export CCACHE_MAXSIZE=300M
-
-        ccache_size=$(ccache -s | grep -e "^cache size" | awk '{print $3$4}')
-        ccache_hit_direct=$(ccache -s | grep -e "^cache hit .direct" | awk '{print $4}')
-        ccache_hit_preprocessed=$(ccache -s | grep -e "^cache hit .preprocessed" | awk '{print $4}')
     fi
 
     set -x
