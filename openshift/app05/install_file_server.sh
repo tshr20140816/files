@@ -108,6 +108,7 @@ pushd ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
 for gem in bundler rack passenger
 do
     rm -f ${gem}.html
+    # --no-check-certificate
     wget https://rubygems.org/gems/${gem} -O ${gem}.html
     version=$(grep -e canonical ${gem}.html | sed -r -e 's|^.*versions/(.+)".*$|\1|g')
     if [ ! -f ${gem}-${version}.gem ]; then
