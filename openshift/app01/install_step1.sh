@@ -319,6 +319,9 @@ if [ "${mirror_server}" != "none" ]; then
     # phpicalendar
     wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2
 
+    # ccache
+    wget -t1 ${mirror_server}/ccache-${ccache_version}.tar.xz
+
     # *** gem ***
     for gem in bundler rack passenger
     do
@@ -680,6 +683,15 @@ do
         wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
     fi
     [ -f super_pi-jp.tar.gz ] || files_exists=0
+
+    # *** ccache ***
+    if [ ! -f ccache-${ccache_version}.tar.xz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing ccache-${ccache_version}.tar.xz" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
+    fi
+    [ -f ccache-${ccache_version}.tar.xz ] || files_exists=0
 
     # *** gem ***
     for gem in bundler rack passenger
