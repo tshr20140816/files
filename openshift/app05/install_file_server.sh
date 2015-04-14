@@ -8,7 +8,7 @@ nginx_version=1.6.3
 pushd /tmp > /dev/null
 wget http://nginx.org/download/nginx-${nginx_version}.tar.gz
 tar xfz nginx-${nginx_version}.tar.gz
-pushd cd nginx-${nginx_version} > /dev/null
+pushd nginx-${nginx_version} > /dev/null
 
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
  ./configure --prefix=${OPENSHIFT_DATA_DIR}/nginx \
