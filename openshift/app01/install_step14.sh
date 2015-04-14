@@ -99,6 +99,7 @@ time rbenv exec gem install rhc --no-rdoc --no-ri --verbose > ${OPENSHIFT_LOG_DI
 rbenv rehash
 mv ${OPENSHIFT_LOG_DIR}/rhc.gem.log ${OPENSHIFT_LOG_DIR}/install/
 
+rm -f ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
 touch ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
 rhc_version_info=$(rhc --version 2> ${OPENSHIFT_TMP_DIR}/rhc.stderr.log | grep -e rhc)
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ${rhc_version_info}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
