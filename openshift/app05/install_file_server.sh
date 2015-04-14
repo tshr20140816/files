@@ -100,6 +100,28 @@ __HEREDOC__
 chmod +x gem.sh
 echo gem.sh >> jobs.allow
 
+# https://github.com/tshr20140816/files/raw/master/openshift/app05/download_file_list.txt
+# *** download_file_list ***
+
+cat << '__HEREDOC__' > download_file_list.sh
+#!/bin/bash
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f download_file_list.txt
+wget https://github.com/tshr20140816/files/raw/master/openshift/app05/download_file_list.txt
+while read LINE
+do
+    file_name=$(echo "${LINE}" | awk '{print $1}')
+    url=$(echo "${LINE}" | awk '{print $2}')
+    rm -f ${file_name}
+    wget ${url} -O ${file_name}
+    mv -f ${file_name} ${OPENSHIFT_DATA_DIR}/files/
+done < download_file_list.txt
+popd > /dev/null
+__HEREDOC__
+chmod +x download_file_list.sh
+echo download_file_list.sh >> jobs.allow
+
 popd > /dev/null
 
 /usr/bin/gear stop
