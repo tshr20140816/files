@@ -87,6 +87,9 @@ pushd ${OPENSHIFT_LOG_DIR} > /dev/null
 quota -s > quota.txt
 popd > /dev/null
 __HEREDOC__
+chmod +x quota_info.sh
+echo quota_info.sh >> jobs.allow
+./quota_info.sh
 
 # *** gem ***
 
