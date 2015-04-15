@@ -19,6 +19,11 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar Jcf ccache.tar.xz ccache
 ccache -C
+# ファイルサイズが大きいのでこっちからアップロードではなく向こうからダウンロードしてもらう
+mv ccache.tar.xz ${OPENSHIFT_DATA_DIR}/apache/htdocs/
+password=$(cat ${OPENSHIFT_DATA_DIR}/params/ccache_upload_password)
+wget --post-data="password=${password}&host_name=${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}" \
+ ${mirror_server}/ccache_file_upload_counter.php
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
