@@ -41,7 +41,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby install" | tee -a ${OPENSHIFT_LOG_DIR}/i
 time CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
  CONFIGURE_OPTS="--disable-install-doc --mandir=/tmp/man --docdir=/tmp/doc" \
  RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
- CC="ccache gcc" \
+ CC="ccache gcc" CXX="ccache g++" \
  MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
  rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/ruby.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
