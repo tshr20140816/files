@@ -61,7 +61,8 @@ export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=300M
 
-${OPENSHIFT_DATA_DIR}/ccache/bin/ccache -z
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+ccache -z
 
 # ***** fio *****
 
