@@ -36,7 +36,7 @@ pushd ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_ccache.log
 CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
-./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
+./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache --mandir=/tmp/man | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_ccache.log
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
