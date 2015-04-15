@@ -91,7 +91,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 12 ]; then
+if [ $# -ne 13 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -103,7 +103,8 @@ if [ $# -ne 12 ]; then
     echo "arg8 : another server check (yes/no)"
     echo "arg9 : web beacon server https://xxx/"
     echo "arg10 : web beacon server user (digest auth)"
-    echo "arg12 : files download mirror server (http://xxx/files/ / none)"
+    echo "arg11 : files download mirror server (http://xxx/files/ / none)"
+    echo "arg12 : password of ccache upload for mirror server"
     echo "arg13 : schedule server (fqdn)"
     exit
 fi
@@ -119,7 +120,8 @@ another_server_check=${8}
 web_beacon_server=${9}
 web_beacon_server_user=${10}
 mirror_server=${11}
-schedule_server=${12}
+ccache_upload_password=${12}
+schedule_server=${13}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -134,6 +136,7 @@ echo "${delegate_pop_server}" > ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server
 echo "${another_server_check}" > ${OPENSHIFT_DATA_DIR}/params/another_server_check
 echo "${web_beacon_server}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server
 echo "${web_beacon_server_user}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user
+echo "${ccache_upload_password}" > ${OPENSHIFT_DATA_DIR}/params/ccache_upload_password
 echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
