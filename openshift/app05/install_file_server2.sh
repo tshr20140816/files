@@ -7,6 +7,8 @@ set -x
 
 export TZ=JST-9
 
+php -v
+
 # ***** args *****
 
 if [ $# -ne 1 ]; then
