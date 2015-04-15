@@ -149,7 +149,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
+CC="ccache gcc" CXX="ccache g++" CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
  ./configure \
  --mandir=/tmp/man \
  --docdir=/tmp/doc \
