@@ -157,7 +157,7 @@ CC="ccache gcc" CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pi
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
-time make -j$(grep -c -e processor /proc/cpuinfo) -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+time make -j1 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
