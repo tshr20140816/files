@@ -5,8 +5,59 @@
 
 export TZ=JST-9
 
+# ***** args *****
+
+if [ $# -ne 1 ]; then
+    echo "arg1 : file upload password"
+    exit
+fi
+
+file_upload_password=${1}
+
+# ***** ccache file upload *****
+
 mkdir ${OPENSHIFT_DATA_DIR}/files
+# TODO
 # ln -s ${OPENSHIFT_DATA_DIR}/files files
+
+# TODO
+pushd /tmp > /dev/null
+cat << '__HEREDOC__' > ccache_file_upload_counter.php
+<?php
+$pw=$_POST['password'];
+$host_name=$_POST['hostname'];
+if ( $pw !== '__FILE_UPLOAD_PASSWORD__' ){
+    exit();
+}
+$file_name = '/tmp/url_ccache_tar_xz.txt';
+file_put_contents($file_name, $host_name);
+?>
+__HEREDOC__
+sed -i -e "s|__FILE_UPLOAD_PASSWORD__|${file_upload_password}|g" ccache_file_upload_counter.php
+php -l ccache_file_upload_counter.php
+popd > /dev/null
+
+# ***** cron hourly *****
+
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
+rm -f ./*
+touch jobs.deny
+
+# *** ccache file download ***
+
+cat << '__HEREDOC__' > quota_info.sh
+#!/bin/bash
+
+export TZ=JST-9
+[ -f ${OPENSHIFT_TMP_DIR}/url_ccache_tar_xz.txt ] || exit
+
+host_name=$(cat ${OPENSHIFT_TMP_DIR}/url_ccache_tar_xz.txt)
+
+wget https://${host_name}.rhcloud.com/ccache.tar.xz
+
+__HEREDOC__
+
+popd  > /dev/null
 
 # ***** cron daily *****
 
@@ -86,5 +137,5 @@ echo download_file_list.sh >> jobs.allow
 
 popd > /dev/null
 
-/usr/bin/gear stop
-/usr/bin/gear start
+# /usr/bin/gear stop
+# /usr/bin/gear start
