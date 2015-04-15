@@ -321,6 +321,7 @@ if [ "${mirror_server}" != "none" ]; then
 
     # ccache
     wget -t1 ${mirror_server}/ccache-${ccache_version}.tar.xz
+    wget -t1 ${mirror_server}/ccache.tar.xz
 
     # *** gem ***
     for gem in bundler rack passenger
