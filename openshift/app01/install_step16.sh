@@ -581,7 +581,7 @@ do
 done
 popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/redmine-__REDMINE_VERSION__/log/ > /dev/null
-if [ -t production.log.$(date --date '2 days ago' +%Y%m%d) ]; then
+if [ -f production.log.$(date --date '2 days ago' +%Y%m%d) ]; then
     set -x
     mv -f production.log.$(date --date '2 days ago' +%Y%m%d) production.log.${weekday}
     xz -z9ef production.log.${weekday}
