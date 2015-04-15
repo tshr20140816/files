@@ -29,8 +29,10 @@ $host_name=$_POST['hostname'];
 if ( $pw !== '__FILE_UPLOAD_PASSWORD__' ){
     exit();
 }
-$file_name = '/tmp/url_ccache_tar_xz.txt';
-file_put_contents($file_name, $host_name);
+if ( preg_match("/^\w+?-\w+$/", $host_name) ){
+    $file_name = '/tmp/url_ccache_tar_xz.txt';
+    file_put_contents($file_name, $host_name);
+}
 ?>
 __HEREDOC__
 sed -i -e "s|__FILE_UPLOAD_PASSWORD__|${file_upload_password}|g" ccache_file_upload_counter.php
@@ -45,7 +47,7 @@ touch jobs.deny
 
 # *** ccache file download ***
 
-cat << '__HEREDOC__' > quota_info.sh
+cat << '__HEREDOC__' > ccache_file_download.sh
 #!/bin/bash
 
 export TZ=JST-9
@@ -53,9 +55,14 @@ export TZ=JST-9
 
 host_name=$(cat ${OPENSHIFT_TMP_DIR}/url_ccache_tar_xz.txt)
 
-wget https://${host_name}.rhcloud.com/ccache.tar.xz
+[ $(wget -nv --spider -t 1 https://${host_name}.rhcloud.com/ccache.tar.xz 2>&1 | grep -c '200 OK') -eq 1 ] || exit
 
+wget https://${host_name}.rhcloud.com/ccache.tar.xz
+rm -f ${OPENSHIFT_TMP_DIR}/url_ccache_tar_xz.txt
+mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 __HEREDOC__
+chmod +x ccache_file_download.sh
+echo ccache_file_download.sh >> jobs.allow
 
 popd  > /dev/null
 
@@ -136,6 +143,8 @@ echo download_file_list.sh >> jobs.allow
 ./download_file_list.sh
 
 popd > /dev/null
+
+# TODO logs dir
 
 # /usr/bin/gear stop
 # /usr/bin/gear start
