@@ -746,6 +746,19 @@ if [ ${files_exists} -eq 0 ]; then
     exit
 fi
 
+# ***** bash_profile *****
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+touch .bash_profile
+cat << '__HEREDOC__' >> .bash_profile
+
+export TMOUT=0
+export TZ=JST-9
+alias ls='ls -lang --color=auto'
+__HEREDOC__
+popd > /dev/null
+
+
 # ***** install log *****
 
 touch ${OPENSHIFT_LOG_DIR}/nohup.log
