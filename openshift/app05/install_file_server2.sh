@@ -21,11 +21,11 @@ file_upload_password=${1}
 # ***** ccache file upload *****
 
 mkdir ${OPENSHIFT_DATA_DIR}/files
-# TODO change apache path
-# ln -s ${OPENSHIFT_DATA_DIR}/files files
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
+ln -s ${OPENSHIFT_DATA_DIR}/files files
+popd > /dev/null
 
-# TODO change apache path
-pushd /tmp > /dev/null
+pushd  ${OPENSHIFT_REPO_DIR} > /dev/null
 cat << '__HEREDOC__' > ccache_file_upload_counter.php
 <?php
 $pw=$_POST['password'];
@@ -174,7 +174,9 @@ RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
 __HEREDOC__
 popd > /dev/null
 
-# TODO logs dir
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
+ln -s ${OPENSHIFT_LOG_DIR} logs
+popd > /dev/null
 
 # /usr/bin/gear stop
 # /usr/bin/gear start
