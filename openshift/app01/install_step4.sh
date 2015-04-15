@@ -39,7 +39,6 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby install" | tee -a ${OPENSHIFT_LOG_DIR}/i
 # export CC="ccache gcc"
 # export RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*"
 time CFLAGS="-O2 -march=native -pipe" export CXXFLAGS="-O2 -march=native -pipe" \
- CC="ccache gcc" \
  CONFIGURE_OPTS="--disable-install-doc --mandir=/tmp/man --docdir=/tmp/doc" \
  RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
  MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
