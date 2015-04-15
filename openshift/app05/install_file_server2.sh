@@ -147,6 +147,29 @@ echo download_file_list.sh >> jobs.allow
 
 popd > /dev/null
 
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+
+echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
+echo AuthType Digest > .htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
+
+cat << '__HEREDOC__' > .htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+
+IndexOptions +FancyIndexing
+
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+__HEREDOC__
+popd > /dev/null
+
 # TODO logs dir
 
 # /usr/bin/gear stop
