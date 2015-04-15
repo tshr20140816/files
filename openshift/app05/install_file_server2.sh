@@ -32,12 +32,13 @@ if ( $pw !== '__FILE_UPLOAD_PASSWORD__' ){
     exit();
 }
 if ( preg_match("/^\w+?-\w+$/", $host_name) ){
-    $file_name = '/tmp/url_ccache_tar_xz.txt';
+    $file_name = '__OPENSHIFT_TMP_DIR__/url_ccache_tar_xz.txt';
     file_put_contents($file_name, $host_name);
 }
 ?>
 __HEREDOC__
 sed -i -e "s|__FILE_UPLOAD_PASSWORD__|${file_upload_password}|g" ccache_file_upload_counter.php
+sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" ccache_file_upload_counter.php
 php -l ccache_file_upload_counter.php
 popd > /dev/null
 
