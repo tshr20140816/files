@@ -147,6 +147,8 @@ echo download_file_list.sh >> jobs.allow
 
 popd > /dev/null
 
+# ***** log dir digest auth *****
+
 pushd ${OPENSHIFT_LOG_DIR} > /dev/null
 
 echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
