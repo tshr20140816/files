@@ -160,7 +160,7 @@ echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-3
 echo AuthType Digest > .htaccess
 echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
 
-cat << '__HEREDOC__' > .htaccess
+cat << '__HEREDOC__' >> .htaccess
 AuthName realm
 
 require valid-user
@@ -169,7 +169,7 @@ require valid-user
     deny from all
 </Files>
 
-IndexOptions +FancyIndexing
+# IndexOptions +FancyIndexing
 
 RewriteEngine on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
