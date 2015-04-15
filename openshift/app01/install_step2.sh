@@ -44,9 +44,16 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) fio make install" | tee -a ${OPENSHIFT_LOG_DI
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_ccache.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
 popd > /dev/null
-rm ${OPENSHIFT_TMP_DIR}/ccache-3.2.1.tar.xz
+rm ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version}.tar.xz
 
-mkdir ${OPENSHIFT_TMP_DIR}/ccache
+if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ]; then
+    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+    mv -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ./
+    tar Jxf ccache.tar.xz
+    popd > /dev/null
+else
+    mkdir ${OPENSHIFT_TMP_DIR}/ccache
+fi
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
