@@ -19,10 +19,10 @@ file_upload_password=${1}
 # ***** ccache file upload *****
 
 mkdir ${OPENSHIFT_DATA_DIR}/files
-# TODO
+# TODO change apache path
 # ln -s ${OPENSHIFT_DATA_DIR}/files files
 
-# TODO
+# TODO change apache path
 pushd /tmp > /dev/null
 cat << '__HEREDOC__' > ccache_file_upload_counter.php
 <?php
