@@ -38,7 +38,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby install" | tee -a ${OPENSHIFT_LOG_DIR}/i
 # export CXXFLAGS="-O2 -march=native -pipe" 
 # export CC="ccache gcc"
 # export RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*"
-time CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer" CXXFLAGS="-O2 -march=native -pipe" \
+time CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
  CONFIGURE_OPTS="--disable-install-doc --mandir=/tmp/man --docdir=/tmp/doc" \
  RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
  CC="ccache gcc" CXX="ccache g++" \
@@ -80,7 +80,7 @@ do
     gemfile=$(ls ${OPENSHIFT_DATA_DIR}/download_files/${gem}-*.gem)
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ${gemfile} install"
     time rbenv exec gem install --local ${gemfile} --no-rdoc --no-ri --debug \
-     -V -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer\" \
+     -V -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\" \
      > ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log 2>&1
     rbenv rehash
     pushd ${OPENSHIFT_LOG_DIR} > /dev/null
