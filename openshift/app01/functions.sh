@@ -1,8 +1,17 @@
 # return code 0 : resume 1 : skip
 function010() {
 
+    set -x
+
     export TZ=JST-9
     # export MAKEFLAGS="-j $(grep -c -e processor /proc/cpuinfo)"
+
+    pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
+    if [ -f "$(basename "${0}").ok" ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        return 1
+    fi
+    popd > /dev/null
 
     if [ -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
         ccache_exists=$(printenv | grep ^PATH= | grep ccache | wc -l)
@@ -16,8 +25,6 @@ function010() {
         export CCACHE_MAXSIZE=300M
     fi
 
-    set -x
-
     # shellcheck disable=SC2034
     processor_count="$(grep -c -e processor /proc/cpuinfo)"
     mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
@@ -27,13 +34,6 @@ function010() {
         query_string="${query_string}&ccache_hit_direct=${ccache_hit_direct}"
     fi
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
-
-    pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
-    if [ -f "$(basename "${0}").ok" ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        return 1
-    fi
-    popd > /dev/null
     
     while read LINE
     do
