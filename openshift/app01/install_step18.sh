@@ -41,23 +41,23 @@ echo >> infrastructure.txt
 echo "\$ cat /etc/resolv.conf" >> infrastructure.txt
 cat /etc/resolv.conf | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "\$ bash -v" >> infrastructure.txt
-bash -v  | tee -a infrastructure.txt
+echo "\$ bash --version" >> infrastructure.txt
+bash --version | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "\$ gcc -v" >> infrastructure.txt
-gcc -v  | tee -a infrastructure.txt
+echo "\$ gcc --version" >> infrastructure.txt
+gcc --version | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ perl -v" >> infrastructure.txt
-perl -v  | tee -a infrastructure.txt
+perl -v | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ php -v" >> infrastructure.txt
-php -v  | tee -a infrastructure.txt
+php -v | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ ruby -v" >> infrastructure.txt
-ruby -v  | tee -a infrastructure.txt
+ruby -v | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ python -v" >> infrastructure.txt
-python -v  | tee -a infrastructure.txt
+python -v | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ mysql --help" >> infrastructure.txt
 mysql --help | tee -a infrastructure.txt
