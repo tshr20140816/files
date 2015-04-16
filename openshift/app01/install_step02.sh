@@ -149,7 +149,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel tar" | tee -a ${OPENSHIFT_LOG_DI
 tar jxf parallel-latest.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/parallel-latest > /dev/null
-echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
 CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
  ./configure \
