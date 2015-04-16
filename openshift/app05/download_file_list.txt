@@ -3,7 +3,7 @@ mod-spdy-beta_current_x86_64.rpm https://dl-ssl.google.com/dl/linux/direct/mod-s
 redmine-2.6.3.tar.gz http://www.redmine.org/releases/redmine-2.6.3.tar.gz
 ipagp00303.zip http://ipafont.ipa.go.jp/ipafont/ipagp00303.php
 memcached-1.4.22.tar.gz http://www.memcached.org/files/memcached-1.4.22.tar.gz
-php-5.6.7.tar.xz wget http://jp1.php.net/get/php-5.6.7.tar.xz/from/this/mirror
+php-5.6.7.tar.xz http://jp1.php.net/get/php-5.6.7.tar.xz/from/this/mirror
 libmemcached-1.0.18.tar.gz https://launchpad.net/libmemcached/1.0/1.0.18/+download/libmemcached-1.0.18.tar.gz
 memcached-2.2.0.tgz http://pecl.php.net/get/memcached-2.2.0.tgz
 delegate9.9.13.tar.gz http://www.delegate.org/anonftp/DeleGate/delegate9.9.13.tar.gz
