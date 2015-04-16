@@ -324,6 +324,13 @@ if [ "${mirror_server}" != "none" ]; then
 
     # ccache
     wget -t1 ${mirror_server}/ccache-${ccache_version}.tar.xz
+    wget https://www.samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz.asc
+    gpg --recv-keys $(gpg --verify ccache-${ccache_version}.tar.xz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    if [ $(gpg --verify ccache-${ccache_version}.tar.xz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm -f ccache-${ccache_version}.tar.xz
+    fi
     wget -t1 ${mirror_server}/ccache.tar.xz
 
     # *** gem ***
