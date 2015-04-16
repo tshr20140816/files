@@ -56,8 +56,8 @@ echo >> infrastructure.txt
 echo "\$ ruby -v" >> infrastructure.txt
 ruby -v | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "\$ python -v" >> infrastructure.txt
-python -v | tee -a infrastructure.txt
+echo "\$ python -V" >> infrastructure.txt
+python -V | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ mysql --help" >> infrastructure.txt
 mysql --help | tee -a infrastructure.txt
