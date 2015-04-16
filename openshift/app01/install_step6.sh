@@ -177,6 +177,9 @@ rbenv rehash
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 mv Gemfile Gemfile.$(date '+%Y%m%d')
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
+bundle config build.activerecord --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+bundle config build.rails --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+bundle config build.rake --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 bundle config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 time bundle install --path vendor/bundle -j$(grep -c -e processor /proc/cpuinfo) --retry 5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
