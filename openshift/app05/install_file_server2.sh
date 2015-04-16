@@ -74,14 +74,6 @@ __HEREDOC__
 chmod +x make_index.sh
 echo make_index.sh >> jobs.allow
 
-popd > /dev/null
-
-# ***** cron hourly *****
-
-pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
-rm -f ./*
-touch jobs.deny
-
 # *** ccache file download ***
 
 cat << '__HEREDOC__' > ccache_file_download.sh
@@ -101,7 +93,7 @@ __HEREDOC__
 chmod +x ccache_file_download.sh
 echo ccache_file_download.sh >> jobs.allow
 
-popd  > /dev/null
+popd > /dev/null
 
 # ***** cron daily *****
 
