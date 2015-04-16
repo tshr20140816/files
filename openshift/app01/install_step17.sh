@@ -13,6 +13,10 @@ find ${OPENSHIFT_REPO_DIR}/.openshift/cron/ -name *.sh -type f -print0 | xargs -
  >> ${OPENSHIFT_LOG_DIR}/shell_syntax_error.log 2>&1
 popd > /dev/null
 
+# ***** delete files *****
+
+rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
+
 # ***** ccache compress *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
