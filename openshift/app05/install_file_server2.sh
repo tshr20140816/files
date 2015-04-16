@@ -44,6 +44,36 @@ sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" ccache_file_upload_co
 php -l ccache_file_upload_counter.php
 popd > /dev/null
 
+# ***** cron minutely *****
+
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
+rm -f ./*
+touch jobs.deny
+
+# *** index.html ***
+
+cat << '__HEREDOC__' > make_index.sh
+#!/bin/bash
+
+export TZ=JST-9
+
+pushd ${OPENSHIFT_DATA_DIR}/files > /dev/null
+echo "<HTML><BODY><PRE>" > ${OPENSHIFT_TMP_DIR}/index.html
+ls -lang >> ${OPENSHIFT_TMP_DIR}/index.html
+echo "</PRE></BODY></HTML>" >> ${OPENSHIFT_TMP_DIR}/index.html
+mv -f ${OPENSHIFT_TMP_DIR}/index.html ./
+popd > /dev/null
+
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+echo "<HTML><BODY><PRE>" > ${OPENSHIFT_TMP_DIR}/index.html
+ls -lang >> ${OPENSHIFT_TMP_DIR}/index.html
+echo "</PRE></BODY></HTML>" >> ${OPENSHIFT_TMP_DIR}/index.html
+mv -f ${OPENSHIFT_TMP_DIR}/index.html ./
+popd > /dev/null
+__HEREDOC__
+chmod +x make_index.sh
+echo make_index.sh >> jobs.allow
+
 # ***** cron hourly *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
