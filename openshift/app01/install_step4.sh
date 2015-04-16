@@ -38,7 +38,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby install" | tee -a ${OPENSHIFT_LOG_DIR}/i
 # export CXXFLAGS="-O2 -march=native -pipe" 
 # export CC="ccache gcc"
 # export RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*"
-time CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
+time CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer" CXXFLAGS="-O2 -march=native -pipe" \
  CONFIGURE_OPTS="--disable-install-doc --mandir=/tmp/man --docdir=/tmp/doc" \
  RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
  CC="ccache gcc" CXX="ccache g++" \
