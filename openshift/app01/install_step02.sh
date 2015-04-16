@@ -52,6 +52,7 @@ if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ]; then
     pushd ${OPENSHIFT_TMP_DIR} > /dev/null
     mv -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ./
     tar Jxf ccache.tar.xz
+    rm -f ccache.tar.xz
     popd > /dev/null
 else
     mkdir ${OPENSHIFT_TMP_DIR}/ccache
