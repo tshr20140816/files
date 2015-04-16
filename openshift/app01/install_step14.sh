@@ -57,7 +57,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_expect.log
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer" CXXFLAGS="-O2 -march=native -pipe" \
+CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
  ./configure \
  --mandir=/tmp/man \
  --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
@@ -96,7 +96,8 @@ rbenv rehash
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-time rbenv exec gem install rhc --no-rdoc --no-ri --verbose > ${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
+time rbenv exec gem install rhc --no-rdoc --no-ri --verbose \
+ -V -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\" > ${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 rbenv rehash
 mv ${OPENSHIFT_LOG_DIR}/rhc.gem.log ${OPENSHIFT_LOG_DIR}/install/
 
