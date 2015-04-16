@@ -74,6 +74,8 @@ __HEREDOC__
 chmod +x make_index.sh
 echo make_index.sh >> jobs.allow
 
+popd > /dev/null
+
 # ***** cron hourly *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
