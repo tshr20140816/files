@@ -25,7 +25,7 @@ pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 ln -s ${OPENSHIFT_DATA_DIR}/files files
 popd > /dev/null
 
-pushd  ${OPENSHIFT_REPO_DIR} > /dev/null
+pushd  ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
 cat << '__HEREDOC__' > ccache_file_upload_counter.php
 <?php
 $pw=$_POST['password'];
