@@ -20,7 +20,7 @@ pushd ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer" CXXFLAGS="-O2 -march=native -pipe" \
+CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --mandir=/tmp/man \
 --docdir=/tmp/doc \
