@@ -63,10 +63,6 @@ ruby --version
 # export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -i ruby {} --verbose
 
-# ***** delete files *****
-
-rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
-
 # ***** restart *****
 
 echo "restart" > ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt
