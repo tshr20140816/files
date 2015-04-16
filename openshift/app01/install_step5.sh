@@ -45,7 +45,7 @@ export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 export HTTPD=${OPENSHIFT_DATA_DIR}/apache/bin/httpd
 export BINDIR=${OPENSHIFT_DATA_DIR}/apache
 
-time CFLAGS="-O2 -march=native" CXXFLAGS="-O2 -march=native" \
+time CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer" CXXFLAGS="-O2 -march=native -pipe" \
 CC="ccache gcc" CXX="ccache g++" \
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
 --auto \
