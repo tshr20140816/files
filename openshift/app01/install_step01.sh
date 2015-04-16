@@ -697,6 +697,14 @@ do
     fi
     [ -f ccache-${ccache_version}.tar.xz ] || files_exists=0
 
+    # *** gnu parallel ***
+    if [ ! -f parallel-latest.tar.bz2 ]; then
+        # TODO http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) parallel wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2
+    fi
+    [ -f parallel-latest.tar.bz2 ] || files_exists=0
+
     # *** gem ***
     for gem in bundler rack passenger
     do
