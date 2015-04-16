@@ -79,7 +79,8 @@ for gem in bundler rack passenger
 do
     gemfile=$(ls ${OPENSHIFT_DATA_DIR}/download_files/${gem}-*.gem)
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ${gemfile} install"
-    time rbenv exec gem install --local ${gemfile} --no-rdoc --no-ri --debug -V \
+    time rbenv exec gem install --local ${gemfile} --no-rdoc --no-ri --debug \
+     -V -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer\" \
      > ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log 2>&1
     rbenv rehash
     pushd ${OPENSHIFT_LOG_DIR} > /dev/null
