@@ -139,6 +139,34 @@ mv ${OPENSHIFT_LOG_DIR}/super_pi.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 rm -rf ${OPENSHIFT_TMP_DIR}/superpi
 
+# ***** GNU Parallel *****
+
+rm -rf ${OPENSHIFT_TMP_DIR}/parallel-latest
+rm -rf ${OPENSHIFT_DATA_DIR}/parallel
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/parallel-latest.tar.bz2 ./
+echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+tar jxf parallel-latest.tar.bz2
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/parallel-latest > /dev/null
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
+CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
+ ./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/parallel \
+ --mandir=/tmp/man \
+ --docdir=/tmp/doc 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
+mv ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log ${OPENSHIFT_LOG_DIR}/install/
+popd > /dev/null
+rm ${OPENSHIFT_TMP_DIR}/parallel-latest.tar.bz2
+${OPENSHIFT_DATA_DIR}/parallel/bin/parallel -v | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 # ***** lynx *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/lynx
