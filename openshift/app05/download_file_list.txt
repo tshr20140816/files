@@ -21,3 +21,4 @@ fio-2.2.5.tar.bz2 http://brick.kernel.dk/snaps/fio-2.2.5.tar.bz2
 baikal-flat-0.2.7.zip http://baikal-server.com/get/baikal-flat-0.2.7.zip
 CalDavZAP_0.12.1.zip http://www.inf-it.com/CalDavZAP_0.12.1.zip
 phpicalendar-2.4_20100615.tar.bz2 http://downloads.sourceforge.net/project/phpicalendar/phpicalendar/phpicalendar%202.4%20RC7/phpicalendar-2.4_20100615.tar.bz2
+ccache-3.2.1.tar.xz http://samba.org/ftp/ccache/ccache-3.2.1.tar.xz
