@@ -52,6 +52,8 @@ if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ]; then
     pushd ${OPENSHIFT_TMP_DIR} > /dev/null
     mv -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ./
     tar Jxf ccache.tar.xz
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache files $(ls -laR ccache | grep -c '^-')" \
+     | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     popd > /dev/null
 else
     mkdir ${OPENSHIFT_TMP_DIR}/ccache
