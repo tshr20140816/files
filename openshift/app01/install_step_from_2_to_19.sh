@@ -1,14 +1,14 @@
 #!/bin/bash
 set -x
 cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
-bash install_step2.sh
-bash install_step3.sh
-bash install_step4.sh
-bash install_step5.sh
-bash install_step6.sh
-bash install_step7.sh
-bash install_step8.sh
-bash install_step9.sh
+bash install_step02.sh
+bash install_step03.sh
+bash install_step04.sh
+bash install_step05.sh
+bash install_step06.sh
+bash install_step07.sh
+bash install_step08.sh
+bash install_step09.sh
 bash install_step10.sh
 bash install_step11.sh
 bash install_step12.sh
