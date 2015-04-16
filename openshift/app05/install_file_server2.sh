@@ -25,6 +25,8 @@ pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 ln -s ${OPENSHIFT_DATA_DIR}/files files
 popd > /dev/null
 
+# 実際のダウンロードは cron から起動される ccache_file_download.sh で行う
+
 pushd  ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
 cat << '__HEREDOC__' > ccache_file_upload_counter.php
 <?php
