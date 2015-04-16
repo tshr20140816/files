@@ -57,7 +57,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_expect.log
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe" CXXFLAGS="-O2 -march=native -pipe" \
+CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer" CXXFLAGS="-O2 -march=native -pipe" \
  ./configure \
  --mandir=/tmp/man \
  --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
