@@ -72,7 +72,7 @@ cp app/models/repository.rb app/models/repository.rb.$(date '+%Y%m%d')
 mv app/models/repository/subversion.rb app/models/repository/subversion.rb.$(date '+%Y%m%d')
 cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/subversion.rb app/models/repository/
 
-# リビジョンが大きくても日時が古いことがある
+# リビジョンが大きくても日時が古いことがある...
 perl -pi -e 's/#{Changeset.table_name}.committed_on DESC/CONVERT(#{Changeset.table_name}.revision, UNSIGNED) DESC/g' \
  app/models/repository.rb
 
