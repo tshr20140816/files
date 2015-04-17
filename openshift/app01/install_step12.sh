@@ -16,17 +16,26 @@ tar xfz delegate${delegate_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# perl -pi -e 's/^ADMIN = undef$/ADMIN = admin\@rhcloud.local/g' src/Makefile
-# TODO CC="ccache gcc"
+# CC="ccache gcc"
 # ccache gcc -DMKMKMK -DDEFCC=\"ccache gcc\" -I../gen -I../include -O2 -march=native -pipe -fomit-frame-pointer -s -Llib mkmkmk.c -o mkmkmk.exe
 # gcc: gcc": No such file or directory
 # <command-line>: warning: missing terminating " character
+
+pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
+ln -s ccache cc
+ln -s ccache gcc
+popd > /dev/null
 
 time make -j$(grep -c -e processor /proc/cpuinfo) \
  ADMIN=user@rhcloud.local \
  CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" \
  CXXFLAGS="-O2 -march=native -pipe" \
  > ${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
+
+pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
+unlink cc
+unlink gcc
+popd > /dev/null
 
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
 cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
