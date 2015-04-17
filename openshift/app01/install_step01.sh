@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.04.17 fio_version 2.2.5 → 2.2.7
 # 2015.04.17 php_version 5.6.7 → 5.6.8
 # 2015.04.14 ruby_version 2.1.5 → 2.1.6
 # 2015.03.23 caldavzap_version 0.12.0 → 0.12.1
@@ -40,7 +41,7 @@ caldavzap_version 0.12.1
 ccache_version 3.2.1
 delegate_version 9.9.13
 expect_version 5.45
-fio_version 2.2.5
+fio_version 2.2.7
 ipafont_version 00303
 libmemcached_version 1.0.18
 logrotate_version 3.8.8
