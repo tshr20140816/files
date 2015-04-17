@@ -203,6 +203,15 @@ popd > /dev/null
 
 rm -rf ${OPENSHIFT_TMP_DIR}/lynx
 
+# For Test
+
+# ***** ccache compress *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f ccache.tar.xz
+tar Jcf ccache.tar.xz ccache
+popd > /dev/null
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
