@@ -96,6 +96,8 @@ rbenv rehash
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
+CC="ccache gcc" \
+CFLAGS="-O2 -pipe -march=native -fomit-frame-pointer -s" \
 time rbenv exec gem install rhc --no-rdoc --no-ri --verbose \
  -V -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\" > ${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 rbenv rehash
