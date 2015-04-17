@@ -174,7 +174,7 @@ rbenv rehash
 
 # *** bundle ***
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) bundle install before" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine bundle install before" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
@@ -189,7 +189,7 @@ CC="ccache gcc" time bundle install --path vendor/bundle --verbose \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) bundle install after" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine bundle install after" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 
 # *** rake ***
