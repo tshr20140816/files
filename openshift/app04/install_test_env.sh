@@ -40,8 +40,8 @@ cmp __BASH_SCRIPT_FILE__ __BASH_SCRIPT_FILE__.old
 
 bash __BASH_SCRIPT_FILE__
 __HEREDOC__
-sed -i -e 's|__BASH_SCRIPT_FILE__|${bash_script_file}|g' exec_bash_script.sh
-sed -i -e 's|__URL__|${url}|g' exec_bash_script.sh
+sed -i -e "s|__BASH_SCRIPT_FILE__|${bash_script_file}|g" exec_bash_script.sh
+sed -i -e "s|__URL__|${url}|g" exec_bash_script.sh
 chmod +x exec_bash_script.sh
 echo exec_bash_script.sh >> jobs.allow
 
