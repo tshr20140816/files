@@ -21,6 +21,7 @@ rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+rm -f ccache.tar.xz
 tar Jcf ccache.tar.xz ccache
 ccache -C
 # ファイルサイズが大きいのでこっちからアップロードではなく向こうからダウンロードしてもらう
