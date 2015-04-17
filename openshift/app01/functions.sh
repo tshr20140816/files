@@ -29,6 +29,7 @@ function010() {
         export CXXFLAGS="-O2 -march=native -pipe"
         
         # For Test
+        # rhc scp download ./ /tmp/ccache.tar.xz -a xxx
         pushd ${OPENSHIFT_TMP_DIR} > /dev/null
         rm -f ccache.tar.xz
         tar Jcf ccache.tar.xz ccache
