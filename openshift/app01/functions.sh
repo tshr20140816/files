@@ -26,8 +26,8 @@ function010() {
         export CC="ccache gcc"
         export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
         export CXX="ccache g++"
-        export CXXFLAGS="-O2 -march=native -pipe"
-        
+        export CXXFLAGS="${CFLAGS}"
+
         # For Test
         # rhc scp download ./ /tmp/ccache.tar.xz -a xxx
         pushd ${OPENSHIFT_TMP_DIR} > /dev/null
