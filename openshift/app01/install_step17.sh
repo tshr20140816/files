@@ -27,7 +27,7 @@ ccache -C
 # ファイルサイズが大きいのでこっちからアップロードではなく向こうからダウンロードしてもらう
 mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/apache/htdocs/
 password=$(cat ${OPENSHIFT_DATA_DIR}/params/ccache_upload_password)
-wget --post-data="password=${password}&host_name=${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}" \
+wget --post-data="\"password=${password}&host_name=${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}\"" \
  ${mirror_server}/ccache_file_upload_counter.php
 popd > /dev/null
 
