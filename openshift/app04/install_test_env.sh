@@ -39,3 +39,6 @@ bash ${bash_script_file}
 __HEREDOC__
 chmod +x exec_bash_script.sh
 echo exec_bash_script.sh >> jobs.allow
+
+cd ${OPENSHIFT_REPO_DIR}
+ln -s ${OPENSHIFT_LOG_DIR} logs
