@@ -2,6 +2,8 @@
 
 # rhc app create xxx php-5.4 cron-1.4 --server openshift.redhat.com
 
+set -x
+
 [ $# -ne 2 ] && exit
 
 pushd ${OPENSHIFT_TMP_DIR}
