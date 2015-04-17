@@ -174,17 +174,23 @@ rbenv rehash
 
 # *** bundle ***
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) bundle install before" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
+ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
+
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 mv Gemfile Gemfile.$(date '+%Y%m%d')
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
-bundle config build.activerecord --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-bundle config build.rails --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-bundle config build.rake --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+bundle config build.activerecord --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s"
+bundle config build.rails --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s"
+bundle config build.rake --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s"
 bundle config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time bundle install --path vendor/bundle --verbose \
+CC="ccache gcc" time bundle install --path vendor/bundle --verbose \
  -j$(grep -c -e processor /proc/cpuinfo) --retry 5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) bundle install after" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
+ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 
 # *** rake ***
 
