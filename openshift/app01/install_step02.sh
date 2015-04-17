@@ -152,7 +152,7 @@ cp -f ${OPENSHIFT_DATA_DIR}/download_files/parallel-latest.tar.bz2 ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar jxf parallel-latest.tar.bz2
 popd > /dev/null
-pushd ${OPENSHIFT_TMP_DIR}/parallel-latest > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/parallel-* > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
 ./configure \
