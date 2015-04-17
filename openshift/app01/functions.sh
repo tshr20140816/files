@@ -23,6 +23,8 @@ function010() {
         export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
         export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
         export CCACHE_MAXSIZE=300M
+        export CC="ccache gcc"
+        export CXX="ccache g++"
     fi
 
     # shellcheck disable=SC2034
