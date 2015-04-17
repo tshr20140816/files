@@ -96,12 +96,18 @@ rbenv rehash
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc gem install before" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
+ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
+
 CC="ccache gcc" \
 CFLAGS="-O2 -pipe -march=native -fomit-frame-pointer -s" \
 time rbenv exec gem install rhc --no-rdoc --no-ri --verbose \
  -V -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\" > ${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 rbenv rehash
 mv ${OPENSHIFT_LOG_DIR}/rhc.gem.log ${OPENSHIFT_LOG_DIR}/install/
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc gem install after" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
+ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 
 rm -f ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
 touch ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
