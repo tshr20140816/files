@@ -70,7 +70,8 @@ ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
+CC="ccache gcc" CXX="ccache g++" \
+CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=/tmp/man \
