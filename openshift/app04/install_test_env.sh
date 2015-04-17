@@ -40,5 +40,25 @@ __HEREDOC__
 chmod +x exec_bash_script.sh
 echo exec_bash_script.sh >> jobs.allow
 
+cd ${OPENSHIFT_LOG_DIR} 
+
+echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
+echo AuthType Digest > .htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
+
+cat << '__HEREDOC__' >> .htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+__HEREDOC__
+
 cd ${OPENSHIFT_REPO_DIR}
 ln -s ${OPENSHIFT_LOG_DIR} logs
