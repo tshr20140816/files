@@ -26,6 +26,9 @@ ln -s ccache cc
 ln -s ccache gcc
 popd > /dev/null
 
+export -n CC
+export -n CXX
+
 time make -j$(grep -c -e processor /proc/cpuinfo) \
  ADMIN=user@rhcloud.local \
  CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" \
