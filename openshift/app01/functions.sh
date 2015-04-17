@@ -24,7 +24,9 @@ function010() {
         export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
         export CCACHE_MAXSIZE=300M
         export CC="ccache gcc"
+        export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
         export CXX="ccache g++"
+        export CXXFLAGS="-O2 -march=native -pipe"
     fi
 
     # shellcheck disable=SC2034
