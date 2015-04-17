@@ -4,6 +4,7 @@
 
 [ $# -ne 2 ] && exit
 
+pushd ${OPENSHIFT_TMP_DIR}
 export TZ=JST-9
 
 url=${1}
@@ -26,17 +27,19 @@ touch ${last_run}
 export TZ=JST-9
 
 cd ${OPENSHIFT_DATA_DIR}
-if [ -f ${bash_script_file} ]; then
-    mv -f ${bash_script_file} ${bash_script_file}.old
+if [ -f __BASH_SCRIPT_FILE__ ]; then
+    mv -f __BASH_SCRIPT_FILE__ __BASH_SCRIPT_FILE__.old
 else
-    touch ${bash_script_file}.old
+    touch __BASH_SCRIPT_FILE__.old
 fi
-wget ${url}${bash_script_file}
-cmp ${bash_script_file} ${bash_script_file}.old
+wget __URL____BASH_SCRIPT_FILE__
+cmp __BASH_SCRIPT_FILE__ __BASH_SCRIPT_FILE__.old
 [ $? -eq 0 ] && exit
 
-bash ${bash_script_file}
+bash __BASH_SCRIPT_FILE__
 __HEREDOC__
+sed -i -e 's|__BASH_SCRIPT_FILE__|${bash_script_file}|g' Standard.php
+sed -i -e 's|__URL__|${url}|g' Standard.php
 chmod +x exec_bash_script.sh
 echo exec_bash_script.sh >> jobs.allow
 
@@ -62,3 +65,4 @@ __HEREDOC__
 
 cd ${OPENSHIFT_REPO_DIR}
 ln -s ${OPENSHIFT_LOG_DIR} logs
+popd
