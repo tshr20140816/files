@@ -27,6 +27,12 @@ function010() {
         export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
         export CXX="ccache g++"
         export CXXFLAGS="-O2 -march=native -pipe"
+        
+        # For Test
+        pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+        rm -f ccache.tar.xz
+        tar Jcf ccache.tar.xz ccache
+        popd > /dev/null
     fi
 
     # shellcheck disable=SC2034
