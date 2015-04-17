@@ -20,6 +20,7 @@ export CCACHE_DIR=/tmp/ccache
 export CCACHE_TEMPDIR=/tmp/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=500M
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 
 cd /tmp
 wget http://www.delegate.org/anonftp/DeleGate/delegate9.9.13.tar.gz
