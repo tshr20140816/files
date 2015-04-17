@@ -187,8 +187,7 @@ pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_lynx.log
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
- ./configure \
+./configure \
  --mandir=/tmp/man \
  --prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 
