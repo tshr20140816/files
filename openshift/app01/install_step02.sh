@@ -85,7 +85,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/fio-${fio_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) fio configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_fio.log
-CC="ccache gcc" ./configure --extra-cflags="-O2 -march=native -pipe -fomit-frame-pointer -s" \
+./configure \
  | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) fio make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fio.log
@@ -155,8 +155,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/parallel-latest > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
- ./configure \
+./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/parallel \
  --mandir=/tmp/man \
  --docdir=/tmp/doc 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
