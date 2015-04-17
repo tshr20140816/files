@@ -44,8 +44,10 @@ echo >> infrastructure.txt
 echo "\$ bash --version" >> infrastructure.txt
 bash --version | tee -a infrastructure.txt
 echo >> infrastructure.txt
-echo "\$ gcc --version" >> infrastructure.txt
-gcc --version | tee -a infrastructure.txt
+echo "\$ gcc --help" >> infrastructure.txt
+gcc --help | tee -a infrastructure.txt
+echo "\$ g++ --help" >> infrastructure.txt
+g++ --help | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ perl -v" >> infrastructure.txt
 perl -v | tee -a infrastructure.txt
