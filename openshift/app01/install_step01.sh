@@ -185,6 +185,9 @@ echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 # * まずミラーサーバよりダウンロード *
 
 if [ "${mirror_server}" != "none" ]; then
+    # cache apache
+    wget -t1 ${mirror_server}/ccache_apache.tar.xz
+
     # apache
     wget -t1 ${mirror_server}/httpd-${apache_version}.tar.bz2
     tarball_md5=$(md5sum httpd-${apache_version}.tar.bz2 | cut -d ' ' -f 1)
