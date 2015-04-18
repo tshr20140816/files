@@ -38,6 +38,26 @@ popd > /dev/null
 
 echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
 
+# ***** pigz *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/pigz-${pigz_version}.tar.gz ./
+tar Jxf pigz-${pigz_version}.tar.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/pigz-${pigz_version} > /dev/null
+echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_pigz.log
+CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
+ ./configure --prefix=${OPENSHIFT_DATA_DIR}/pigz --mandir=/tmp/man --docdir=/tmp/doc \
+ | tee -a ${OPENSHIFT_LOG_DIR}/install_pigz.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_pigz.log
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pigz.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_pigz.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pigz.log
+popd > /dev/null
+
 # ***** ccache *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
