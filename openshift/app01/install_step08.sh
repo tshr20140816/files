@@ -21,7 +21,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached configure" | tee -a ${OPENSHIFT_LOG
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached.log
 CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
---mandir=/tmp/man \
+--mandir=${OPENSHIFT_TMP_DIR}/man \
 --prefix=${OPENSHIFT_DATA_DIR}/memcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -74,8 +74,8 @@ CC="ccache gcc" CXX="ccache g++" \
 CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
---mandir=/tmp/man \
---docdir=/tmp/doc \
+--mandir=${OPENSHIFT_TMP_DIR}/man \
+--docdir=${OPENSHIFT_TMP_DIR}/doc \
 --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
@@ -163,8 +163,8 @@ CC="ccache gcc" CXX="ccache g++" \
 CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
 enable_jobserver="no" \
  ./configure \
- --mandir=/tmp/man \
- --docdir=/tmp/doc \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --prefix=${OPENSHIFT_DATA_DIR}/libmemcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -208,7 +208,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached_php_ext configure" | tee -a ${OPENS
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extension.log
 CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
---mandir=/tmp/man \
+--mandir=${OPENSHIFT_TMP_DIR}/man \
 --prefix=${OPENSHIFT_DATA_DIR}/php_memcached \
 --with-libmemcached-dir=$OPENSHIFT_DATA_DIR/libmemcached \
 --disable-memcached-sasl \
