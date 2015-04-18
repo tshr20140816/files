@@ -185,7 +185,7 @@ bundle config build.rails --with-cflags="-O2 -pipe -march=native -fomit-frame-po
 bundle config build.rake --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s"
 bundle config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 CC="ccache gcc" time bundle install --path vendor/bundle --verbose \
- -j$(grep -c -e processor /proc/cpuinfo) --retry 5 --disable-shared-gems \
+ -j$(grep -c -e processor /proc/cpuinfo) --retry 5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
 
