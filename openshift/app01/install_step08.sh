@@ -68,11 +68,16 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) php before" | tee -a ${OPENSHIFT_LOG_DIR}/cca
 ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
+
+if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
+    config_cache_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/php'
+else
+    config_cache_option='--config-cache'
+fi
+
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
-CC="ccache gcc" CXX="ccache g++" \
-CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
-./configure \
+./configure ${config_cache_option} \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
 --docdir=${OPENSHIFT_TMP_DIR}/doc \
@@ -96,6 +101,8 @@ CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=na
 --enable-sockets \
 --disable-ipv6 \
 --with-gettext=${OPENSHIFT_DATA_DIR}/php 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+
+[ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/php
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
