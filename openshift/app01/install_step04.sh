@@ -10,16 +10,21 @@ rm -rf ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_apache.tar.xz ./ccache.tar.xz
+ccache -C
+tar Jxf ccache.tar.xz
+ccache -z
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.bz2 ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar jxf httpd-${apache_version}.tar.bz2
 popd > /dev/null
+
 pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 
 # *** configure make install ***
-
-ccache -C
-ccache -z
 
 if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/apache ]; then
     config_cache_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/apache'
