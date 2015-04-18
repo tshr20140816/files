@@ -10,6 +10,10 @@ cd httpd-2.2.29
 
 time ./configure --config-cache
 mv config.cache ../config.cache.apache
+cd ..
+rm -rf httpd-2.2.29
+tar jxf httpd-2.2.29.tar.bz2
+cd httpd-2.2.29
 time ./configure CONFIG_SITE="../config.cache.apache" 
 
 # CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
