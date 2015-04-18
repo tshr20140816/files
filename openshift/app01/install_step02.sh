@@ -22,6 +22,18 @@ mkdir ${OPENSHIFT_DATA_DIR}/scripts
 mkdir ${OPENSHIFT_TMP_DIR}/man
 mkdir ${OPENSHIFT_TMP_DIR}/doc
 
+# ***** bash_profile *****
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+touch .bash_profile
+cat << '__HEREDOC__' >> .bash_profile
+
+export TMOUT=0
+export TZ=JST-9
+alias ls='ls -lang --color=auto'
+__HEREDOC__
+popd > /dev/null
+
 # ***** vim *****
 
 echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
