@@ -13,7 +13,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_apache.tar.xz ./ccache.tar.xz
 ccache -C
 rm -rf ccache
-tar Jxf ccache.tar.xz
+time tar Jxf ccache.tar.xz
 rm -f ccache.tar.xz
 ccache -z
 popd > /dev/null
@@ -58,7 +58,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 rm -f ccache.tar.xz
-tar Jcf ccache.tar.xz ccache
+time tar Jcf ccache.tar.xz ccache
 mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_apache.tar.xz
 popd > /dev/null
 
