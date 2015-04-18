@@ -18,6 +18,9 @@ pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 
 # *** configure make install ***
 
+ccache -C
+ccache -z
+
 if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/apache ]; then
     config_cache_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/apache'
 else
@@ -43,6 +46,13 @@ if [ $(${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -v | grep -c -e version) -eq 0
     query_string="server=${OPENSHIFT_GEAR_DNS}&error=apache"
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 fi
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+rm -f ccache.tar.xz
+tar Jcf ccache.tar.xz ccache
+mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_apache.tar.xz
 popd > /dev/null
 
 # *** spdy ***
