@@ -29,10 +29,10 @@ function010() {
 
         # For Test
         # rhc scp download ./ /tmp/ccache.tar.xz -a xxx
-        pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-        rm -f ccache.tar.xz
-        tar Jcf ccache.tar.xz ccache
-        popd > /dev/null
+        # pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+        # rm -f ccache.tar.xz
+        # tar Jcf ccache.tar.xz ccache
+        # popd > /dev/null
     fi
 
     # shellcheck disable=SC2034
