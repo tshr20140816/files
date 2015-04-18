@@ -52,6 +52,7 @@ mrtg_version 2.17.4
 murlin_version 0.2.4
 php_version 5.6.8
 phpicalendar_version 2.4_20100615
+pigz_version 2.3.3
 redmine_version 2.6.3
 ruby_version 2.1.6
 tcl_version 8.6.3
@@ -711,6 +712,13 @@ do
         wget http://samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
     fi
     [ -f ccache-${ccache_version}.tar.xz ] || files_exists=0
+
+    # *** pigz ***
+    if [ ! -f pigz-${pigz_version}.tar.gz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://www.zlib.net/pigz/pigz-${pigz_version}.tar.gz
+    fi
+    [ -f pigz-${pigz_version}.tar.gz ] || files_exists=0
 
     # *** GNU Parallel ***
     if [ ! -f parallel-latest.tar.bz2 ]; then
