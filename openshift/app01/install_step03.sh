@@ -18,8 +18,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/fio-${fio_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) fio configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_fio.log
-./configure \
- | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
+./configure | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) fio make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_fio.log
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_fio.log
@@ -90,8 +89,8 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel configure" | tee -a ${OPENSHIFT_
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/parallel \
- --mandir=/tmp/man \
- --docdir=/tmp/doc 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log
@@ -121,7 +120,7 @@ pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_lynx.log
 ./configure \
- --mandir=/tmp/man \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
  --prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
