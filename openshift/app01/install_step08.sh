@@ -58,6 +58,7 @@ oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f ccache.tar.xz
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_php.tar.xz ./ccache.tar.xz
+ccache -C
 if [ -f ccache.tar.xz ]; then
     ccache -C
     rm -rf ccache
@@ -128,6 +129,13 @@ cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-production
 cp php.ini-development ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-development
 mv ${OPENSHIFT_LOG_DIR}/install_php.log ${OPENSHIFT_LOG_DIR}/install/
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+rm -f ccache.tar.xz
+time tar Jcf ccache.tar.xz ccache
+mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_php.tar.xz
 popd > /dev/null
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php after" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
