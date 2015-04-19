@@ -55,6 +55,18 @@ popd > /dev/null
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f ccache.tar.xz
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_php.tar.xz ./ccache.tar.xz
+if [ -f ccache.tar.xz ]; then
+    ccache -C
+    rm -rf ccache
+    time tar Jxf ccache.tar.xz
+    rm -f ccache.tar.xz
+    ccache -z
+fi
+popd > /dev/null
+
 rm -rf ${OPENSHIFT_TMP_DIR}/php-${php_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/php
 
