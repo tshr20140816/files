@@ -188,6 +188,8 @@ echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 if [ "${mirror_server}" != "none" ]; then
     # cache apache
     wget -t1 ${mirror_server}/ccache_apache.tar.xz
+    wget -t1 ${mirror_server}/ccache_php.tar.xz
+    wget -t1 ${mirror_server}/ccache_libmemcached.tar.xz
 
     # apache
     wget -t1 ${mirror_server}/httpd-${apache_version}.tar.bz2
