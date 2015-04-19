@@ -42,7 +42,7 @@ echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/pigz-${pigz_version}.tar.gz ./
-tar Jxf pigz-${pigz_version}.tar.gz
+tar xfz pigz-${pigz_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/pigz-${pigz_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
