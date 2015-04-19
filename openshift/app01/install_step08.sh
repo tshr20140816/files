@@ -172,6 +172,19 @@ wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${quer
 
 # *** libmemcached ***
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f ccache.tar.xz
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_libmemcached.tar.xz ./ccache.tar.xz
+ccache -C
+if [ -f ccache.tar.xz ]; then
+    ccache -C
+    rm -rf ccache
+    time tar Jxf ccache.tar.xz
+    rm -f ccache.tar.xz
+    ccache -z
+fi
+popd > /dev/null
+
 rm -rf ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version}
 rm -rf $OPENSHIFT_DATA_DIR/libmemcached
 
@@ -210,6 +223,13 @@ ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm libmemcached-${libmemcached_version}.tar.gz
 rm -rf libmemcached-${libmemcached_version}
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+rm -f ccache.tar.xz
+time tar Jcf ccache.tar.xz ccache
+mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_libmemcached.tar.xz
 popd > /dev/null
 
 query_string="server=${OPENSHIFT_GEAR_DNS}&installed=libmemcached"
