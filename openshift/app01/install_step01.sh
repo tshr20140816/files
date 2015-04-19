@@ -714,6 +714,7 @@ do
     [ -f ccache-${ccache_version}.tar.xz ] || files_exists=0
 
     # *** pigz ***
+    # TODO http://www.zlib.net/pigz/pigz-2.3.3-sig.txt
     if [ ! -f pigz-${pigz_version}.tar.gz ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.zlib.net/pigz/pigz-${pigz_version}.tar.gz
