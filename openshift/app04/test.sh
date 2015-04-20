@@ -17,7 +17,7 @@ cd /tmp
 
 # tar Jxf ccache.tar.xz
 
-# ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
-
 time tar cf ccache.tar.bz2 --use-compress-program=/tmp/pbzip2 ccache >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
 time tar -c ccache | /tmp/pbzip2 -9 > ccache9.tar.bz2
+
+ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
