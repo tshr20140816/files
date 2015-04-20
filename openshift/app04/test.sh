@@ -13,4 +13,4 @@ cd pbzip2-1.1.12
 
 time make -j4 >> ${OPENSHIFT_LOG_DIR}/test.log
 
-ls >> ${OPENSHIFT_LOG_DIR}/test.log
+ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log
