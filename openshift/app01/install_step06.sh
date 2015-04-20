@@ -6,6 +6,8 @@ function010 stop
 
 # ***** passenger-install-apache2-module *****
 
+# *** ccache data restore ***
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f ccache.tar.xz
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_passenger.tar.xz ./ccache.tar.xz
@@ -19,6 +21,8 @@ else
 fi
 popd > /dev/null
 
+# *** env ***
+
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
@@ -28,10 +32,14 @@ export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 export HTTPD=${OPENSHIFT_DATA_DIR}/apache/bin/httpd
 export BINDIR=${OPENSHIFT_DATA_DIR}/apache
 
+# *** install ***
+
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
  --languages ruby \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
+
+# *** ccache data backup ***
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
