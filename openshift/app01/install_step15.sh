@@ -37,7 +37,8 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_tcl.log
 # j2 is limit (-l3 --load-average=3)
-time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
+# time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
+function030 ${OPENSHIFT_LOG_DIR}/install_tcl.log "-j2 -l3"
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_tcl.log
@@ -46,7 +47,6 @@ mv ${OPENSHIFT_LOG_DIR}/install_tcl.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
     time tar Jcf ccache.tar.xz ccache
     mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_tcl.tar.xz
