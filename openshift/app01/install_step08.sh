@@ -83,6 +83,7 @@ if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
 else
     config_cache_option='--config-cache'
 fi
+config_cache_option='--config-cache'
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
@@ -195,6 +196,7 @@ if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached ]; then
 else
     config_cache_option='--config-cache'
 fi
+config_cache_option='--config-cache'
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
