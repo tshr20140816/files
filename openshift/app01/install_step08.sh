@@ -79,17 +79,14 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 
 if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
-    config_site_option="CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/php"
-    config_cache_option=''
+    config_cache_option="CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/php"
 else
-    config_site_option=''
     config_cache_option='--config-cache'
 fi
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
-${config_site_option} \
-./configure ${config_cache_option} \
+./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
 --docdir=${OPENSHIFT_TMP_DIR}/doc \
@@ -112,7 +109,7 @@ ${config_site_option} \
 --enable-mbregex \
 --enable-sockets \
 --disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+--with-gettext=${OPENSHIFT_DATA_DIR}/php ${config_cache_option} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 
 [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/php
 
