@@ -11,7 +11,6 @@ function010 stop
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f ccache.tar.xz
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_passenger.tar.xz ./ccache.tar.xz
-ccache -z
 if [ -f ccache.tar.xz ]; then
     rm -rf ccache
     time tar Jxf ccache.tar.xz
@@ -19,6 +18,7 @@ if [ -f ccache.tar.xz ]; then
 else
     ccache -C
 fi
+ccache -z
 popd > /dev/null
 
 # *** env ***
