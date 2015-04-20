@@ -54,19 +54,6 @@ popd > /dev/null
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -f ccache.tar.xz
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_php.tar.xz ./ccache.tar.xz
-ccache -z
-if [ -f ccache.tar.xz ]; then
-    rm -rf ccache
-    time tar Jxf ccache.tar.xz
-    rm -f ccache.tar.xz
-else
-    ccache -C
-fi
-popd > /dev/null
-
 rm -rf ${OPENSHIFT_TMP_DIR}/php-${php_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/php
 
@@ -118,7 +105,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) php make" | tee -a ${OPENSHIFT_LOG_DIR}/insta
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 # j2 is limit (-l3 --load-average=3)
 # time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-function030 ${OPENSHIFT_LOG_DIR}/install_php.log "-j2 -l3"
+function030 php "-j2 -l3"
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
@@ -127,14 +114,6 @@ cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-production
 cp php.ini-development ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-development
 mv ${OPENSHIFT_LOG_DIR}/install_php.log ${OPENSHIFT_LOG_DIR}/install/
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
-    time tar Jcf ccache.tar.xz ccache
-    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_php.tar.xz
-fi
 popd > /dev/null
 
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
@@ -168,19 +147,6 @@ wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${quer
 
 # *** libmemcached ***
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -f ccache.tar.xz
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_libmemcached.tar.xz ./ccache.tar.xz
-ccache -z
-if [ -f ccache.tar.xz ]; then
-    rm -rf ccache
-    time tar Jxf ccache.tar.xz
-    rm -f ccache.tar.xz
-else
-    ccache -C
-fi
-popd > /dev/null
-
 rm -rf ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version}
 rm -rf $OPENSHIFT_DATA_DIR/libmemcached
 
@@ -212,7 +178,7 @@ enable_jobserver="no" \
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 # time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
-function030 ${OPENSHIFT_LOG_DIR}/install_libmemcached.log "-j2 -l3"
+function030 libmemcached "-j2 -l3"
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
@@ -223,14 +189,6 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm libmemcached-${libmemcached_version}.tar.gz
 rm -rf libmemcached-${libmemcached_version}
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
-    time tar Jcf ccache.tar.xz ccache
-    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_libmemcached.tar.xz
-fi
 popd > /dev/null
 
 query_string="server=${OPENSHIFT_GEAR_DNS}&installed=libmemcached"
