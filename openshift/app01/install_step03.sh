@@ -4,6 +4,9 @@ source functions.sh
 function010
 [ $? -eq 0 ] || exit
 
+unset CC
+unset CXX
+
 # ***** fio *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/fio-${fio_version}
