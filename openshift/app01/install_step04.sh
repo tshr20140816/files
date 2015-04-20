@@ -12,12 +12,12 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f ccache.tar.xz
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_apache.tar.xz ./ccache.tar.xz
+ccache -C
+ccache -z
 if [ -f ccache.tar.xz ]; then
-    ccache -C
     rm -rf ccache
     time tar Jxf ccache.tar.xz
     rm -f ccache.tar.xz
-    ccache -z
 fi
 popd > /dev/null
 
