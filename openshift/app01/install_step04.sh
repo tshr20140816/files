@@ -51,7 +51,8 @@ ${config_site_option} \
 [ -f ${OPENSHIFT_DATA_DIR}/config_cache/apache ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/apache
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
+# time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
+function030 ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log -j$(grep -c -e processor /proc/cpuinfo)
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
