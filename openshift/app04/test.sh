@@ -12,7 +12,8 @@ cd /tmp
 # time make -j4 >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
 # ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
 
-wget https://files3-20150217.rhcloud.com/files/ccache.tar.xz >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
+rm -f ccache.tar.xz
+wget https://files3-20150207.rhcloud.com/files/ccache.tar.xz >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
 
 tar Jxf ccache.tar.xz
 
