@@ -26,13 +26,6 @@ function010() {
         fi
         export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
         export CXXFLAGS="${CFLAGS}"
-
-        # For Test
-        # rhc scp download ./ /tmp/ccache.tar.xz -a xxx
-        # pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-        # rm -f ccache.tar.xz
-        # tar Jcf ccache.tar.xz ccache
-        # popd > /dev/null
     fi
 
     # shellcheck disable=SC2034
