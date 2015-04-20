@@ -10,6 +10,9 @@ rm -f ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version}.tar.gz
 rm -rf ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/mrtg
 
+unset CC
+unset CXX
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg tar" >> ${OPENSHIFT_LOG_DIR}/install.log
@@ -20,11 +23,10 @@ pushd ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---docdir=${OPENSHIFT_TMP_DIR}/doc \
---prefix=${OPENSHIFT_DATA_DIR}/mrtg 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --prefix=${OPENSHIFT_DATA_DIR}/mrtg 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
