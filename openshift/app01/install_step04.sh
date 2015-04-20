@@ -10,19 +10,6 @@ rm -rf ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -f ccache.tar.xz
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_apache.tar.xz ./ccache.tar.xz
-ccache -z
-if [ -f ccache.tar.xz ]; then
-    rm -rf ccache
-    time tar Jxf ccache.tar.xz
-    rm -f ccache.tar.xz
-else
-    ccache -C
-fi
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.bz2 ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar jxf httpd-${apache_version}.tar.bz2
@@ -41,33 +28,25 @@ fi
 config_cache_option='--config-cache'
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache.log
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --enable-mods-shared='all proxy' \
- ${config_cache_option} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
+ ${config_cache_option} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
 [ -f ${OPENSHIFT_DATA_DIR}/config_cache/apache ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/apache
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-# time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-function030 ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log -j$(grep -c -e processor /proc/cpuinfo)
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache.log
+# time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
+function030 apache -j$(grep -c -e processor /proc/cpuinfo)
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-mv ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log ${OPENSHIFT_LOG_DIR}/install/
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
+mv ${OPENSHIFT_LOG_DIR}/install_apache.log ${OPENSHIFT_LOG_DIR}/install/
 if [ $(${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -v | grep -c -e version) -eq 0 ]; then
     query_string="server=${OPENSHIFT_GEAR_DNS}&error=apache"
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
-fi
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
-    time tar Jcf ccache.tar.xz ccache
-    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_apache.tar.xz
 fi
 popd > /dev/null
 
