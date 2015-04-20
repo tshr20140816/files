@@ -33,7 +33,7 @@ pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 # *** configure make install ***
 
 if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/apache ]; then
-    config_site_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/apache'
+    config_site_option="CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/apache"
     config_cache_option=''
 else
     config_site_option=''
