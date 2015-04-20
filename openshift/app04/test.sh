@@ -17,8 +17,7 @@ cd /tmp
 
 # tar Jxf ccache.tar.xz
 
-rm -f ccache.tar.bz2
-rm -f ccache9.tar.bz2
+rm -f ccache.*.bz2
 time tar cf ccache.tar.bz2 --use-compress-program=/tmp/pbzip2-1.1.12/pbzip2 ccache >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
 time tar -c ccache | /tmp/pbzip2-1.1.12/pbzip2 --best -p4 -z > ccache9.tar.bz2
 time tar -c ccache | /tmp/pbzip2-1.1.12/pbzip2 --best -m200 -p4 -z > ccache9_200.tar.bz2
