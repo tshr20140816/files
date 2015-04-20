@@ -7,6 +7,19 @@ function010 stop
 # ***** Tcl *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f ccache.tar.xz
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_tcl.tar.xz ./ccache.tar.xz
+ccache -z
+if [ -f ccache.tar.xz ]; then
+    rm -rf ccache
+    time tar Jxf ccache.tar.xz
+    rm -f ccache.tar.xz
+else
+    ccache -C
+fi
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/tcl${tcl_version}-src.tar.gz ./
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -16,11 +29,10 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_tcl.log
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---disable-symbols \
---prefix=${OPENSHIFT_DATA_DIR}/tcl 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --disable-symbols \
+ --prefix=${OPENSHIFT_DATA_DIR}/tcl 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_tcl.log
@@ -31,6 +43,14 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl make install" | tee -a ${OPENSHIFT_LOG_DI
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_tcl.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
 mv ${OPENSHIFT_LOG_DIR}/install_tcl.log ${OPENSHIFT_LOG_DIR}/install/
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
+    time tar Jcf ccache.tar.xz ccache
+    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_tcl.tar.xz
+fi
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -47,6 +67,9 @@ wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${quer
 
 # ***** Expect *****
 
+unset CC
+unset CXX
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/expect${expect_version}.tar.gz ./
 
@@ -57,7 +80,6 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_expect.log
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
  ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
@@ -96,18 +118,10 @@ rbenv rehash
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc gem install before" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
-ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
-
-CC="ccache gcc" \
-CFLAGS="-O2 -pipe -march=native -fomit-frame-pointer -s" \
 time rbenv exec gem install rhc --no-rdoc --no-ri --verbose \
  -V -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\" > ${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 rbenv rehash
 mv ${OPENSHIFT_LOG_DIR}/rhc.gem.log ${OPENSHIFT_LOG_DIR}/install/
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc gem install after" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
-ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 
 rm -f ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
 touch ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
