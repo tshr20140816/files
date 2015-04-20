@@ -17,16 +17,14 @@ cd /tmp
 
 # tar Jxf ccache.tar.xz
 
-rm -f ccache.tar.bz2
-rm -f ccache9.tar.bz2
-rm -f ccache9_200.tar.bz2
-rm -f ccache9_300.tar.bz2
 # time tar cf ccache.tar.bz2 --use-compress-program=/tmp/pbzip2-1.1.12/pbzip2 ccache 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/test.log
 # time tar -c ccache | /tmp/pbzip2-1.1.12/pbzip2 --best -m200 -p4 -z > ccache9_200.tar.bz2 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/test.log
 
-wget http://tukaani.org/xz/xz-5.2.1.tar.gz
-tar xfz xz-5.2.1.tar.gz
+# wget http://tukaani.org/xz/xz-5.2.1.tar.gz
+# tar xfz xz-5.2.1.tar.gz
 cd xz-5.2.1
+./configure
+make -j4
 ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
 
 rm -rf pixz-1.0.2
