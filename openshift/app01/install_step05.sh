@@ -35,12 +35,12 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f ccache.tar.xz
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_ruby.tar.xz ./ccache.tar.xz
 ccache -C
-ccache -z
 if [ -f ccache.tar.xz ]; then
     rm -rf ccache
     time tar Jxf ccache.tar.xz
     rm -f ccache.tar.xz
 fi
+ccache -z
 popd > /dev/null
 
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' | tee -a ${OPENSHIFT_LOG_DIR}/install.log
