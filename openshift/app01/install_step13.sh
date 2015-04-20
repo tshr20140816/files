@@ -42,9 +42,12 @@ popd > /dev/null
 unset CC
 unset CXX
 
-time make -j$(grep -c -e processor /proc/cpuinfo) \
- ADMIN=user@rhcloud.local \
- > ${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
+# time make -j$(grep -c -e processor /proc/cpuinfo) \
+#  ADMIN=user@rhcloud.local \
+#  > ${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
+rm -f ${OPENSHIFT_LOG_DIR}/delegate.make.log
+function030 ${OPENSHIFT_LOG_DIR}/delegate.make.log "-j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local"
+mv ${OPENSHIFT_LOG_DIR}/delegate.make.log ${OPENSHIFT_LOG_DIR}/install/
 
 pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
 unlink cc
@@ -52,7 +55,6 @@ unlink gcc
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
     time tar Jcf ccache.tar.xz ccache
     mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_delegate.tar.xz
