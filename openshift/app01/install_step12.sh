@@ -6,6 +6,13 @@ function010
 
 # ***** webalizer *****
 
+rm -f ${OPENSHIFT_TMP_DIR}/webalizer-${webalizer_version}-src.tar.bz2
+rm -rf ${OPENSHIFT_TMP_DIR}/webalizer-${webalizer_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/webalizer
+
+unset CC
+unset CXX
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/webalizer-${webalizer_version}-src.tar.bz2 ./
 
@@ -18,7 +25,6 @@ iconv -f euc-jp -t utf-8 lang/webalizer_lang.japanese_euc > lang/webalizer_lang.
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) webalizer configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_webalizer.log
-CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/webalizer \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
