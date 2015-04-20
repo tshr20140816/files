@@ -32,14 +32,17 @@ pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 # *** configure make install ***
 
 if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/apache ]; then
-    config_cache_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/apache'
+    config_site_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/apache'
+    config_cache_option=''
 else
+    config_site_option=''
     config_cache_option='--config-cache'
 fi
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache_httpd.log
-./configure ${config_cache_option} \
+${config_site_option} \
+ ./configure ${config_cache_option} \
  --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
