@@ -94,7 +94,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 13 ]; then
+if [ $# -ne 14 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -109,6 +109,7 @@ if [ $# -ne 13 ]; then
     echo "arg11 : files download mirror server (http://xxx/files/ / none)"
     echo "arg12 : password of ccache upload for mirror server"
     echo "arg13 : schedule server (fqdn)"
+    echo "arg14 : make ccache data (yes/no)"
     exit
 fi
 
@@ -125,6 +126,7 @@ web_beacon_server_user=${10}
 mirror_server=${11}
 ccache_upload_password=${12}
 schedule_server=${13}
+is_make_ccache_data=${14}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -141,6 +143,7 @@ echo "${web_beacon_server}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server
 echo "${web_beacon_server_user}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user
 echo "${ccache_upload_password}" > ${OPENSHIFT_DATA_DIR}/params/ccache_upload_password
 echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
+echo "${is_make_ccache_data}" > ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
