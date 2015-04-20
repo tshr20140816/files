@@ -34,7 +34,7 @@ if [ -f __BASH_SCRIPT_FILE__ ]; then
 else
     touch __BASH_SCRIPT_FILE__.old
 fi
-wget --no-cache __URL____BASH_SCRIPT_FILE__
+wget --no-cache --no-check-certificate __URL____BASH_SCRIPT_FILE__
 cmp __BASH_SCRIPT_FILE__ __BASH_SCRIPT_FILE__.old
 [ $? -eq 0 ] && exit
 
