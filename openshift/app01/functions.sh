@@ -147,18 +147,38 @@ function020() {
     # select * from information_schema.INNODB_CMP
 }
 
-# ${1} : log file
+# ${1} : symbol
 # ${2} : make options
 function030() {
+    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+    rm -f ccache.tar.xz
+    cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_${1}.tar.xz ./ccache.tar.xz
+    ccache -z
+    if [ -f ccache.tar.xz ]; then
+        rm -rf ccache
+        time tar Jxf ccache.tar.xz
+        rm -f ccache.tar.xz
+    else
+        ccache -C
+    fi
+    popd > /dev/null
+
     echo "$(date +%Y/%m/%d" "%H:%M:%S) make before" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache -s" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    time make ${2} 2>&1 | tee -a ${1}
+    time make ${2} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_${1}.log
     echo "$(date +%Y/%m/%d" "%H:%M:%S) make after" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache -s" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
+    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+    if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
+        time tar Jcf ccache.tar.xz ccache
+        mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_${1}.tar.xz
+    fi
+    popd > /dev/null
 }
