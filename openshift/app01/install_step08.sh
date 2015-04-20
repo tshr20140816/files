@@ -80,7 +80,9 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 
 if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
     config_site_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/php'
+    config_cache_option=''
 else
+    config_site_option=''
     config_cache_option='--config-cache'
 fi
 
@@ -192,7 +194,9 @@ pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
 
 if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached ]; then
     config_site_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/libmemcached'
+    config_cache_option=''
 else
+    config_site_option=''
     config_cache_option='--config-cache'
 fi
 
