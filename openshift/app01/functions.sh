@@ -147,14 +147,15 @@ function020() {
     # select * from information_schema.INNODB_CMP
 }
 
-# ${1} : make options
+# ${1} : log file
+# ${2} : make options
 function030() {
     echo "$(date +%Y/%m/%d" "%H:%M:%S) make before" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache -s" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    time make ${1} | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    time make ${2} 2>&1 | tee -a ${1}
     echo "$(date +%Y/%m/%d" "%H:%M:%S) make after" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
