@@ -153,7 +153,6 @@ function030() {
     pushd ${OPENSHIFT_TMP_DIR} > /dev/null
     rm -f ccache.tar.xz
     cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_${1}.tar.xz ./ccache.tar.xz
-    ccache -z
     if [ -f ccache.tar.xz ]; then
         rm -rf ccache
         time tar Jxf ccache.tar.xz
@@ -161,6 +160,7 @@ function030() {
     else
         ccache -C
     fi
+    ccache -z
     popd > /dev/null
 
     echo "$(date +%Y/%m/%d" "%H:%M:%S) make before" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
