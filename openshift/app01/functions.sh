@@ -89,14 +89,14 @@ function010() {
     memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-    if [ $(which ccache | wc -l) -eq 1 ]; then
-        ccache_size=$(ccache -s | grep -e "^cache size" | awk '{print $3$4}')
-        ccache_hit_direct=$(ccache -s | grep -e "^cache hit .direct" | awk '{print $4}')
-        ccache_hit_preprocessed=$(ccache -s | grep -e "^cache hit .preprocessed" | awk '{print $4}')
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache size : ${ccache_size}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache hit direct : ${ccache_hit_direct}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache hit preprocessed : ${ccache_hit_preprocessed}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    fi
+    # if [ $(which ccache | wc -l) -eq 1 ]; then
+    #     ccache_size=$(ccache -s | grep -e "^cache size" | awk '{print $3$4}')
+    #     ccache_hit_direct=$(ccache -s | grep -e "^cache hit .direct" | awk '{print $4}')
+    #     ccache_hit_preprocessed=$(ccache -s | grep -e "^cache hit .preprocessed" | awk '{print $4}')
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache size : ${ccache_size}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache hit direct : ${ccache_hit_direct}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache hit preprocessed : ${ccache_hit_preprocessed}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    # fi
     return 0
 }
 
