@@ -10,19 +10,6 @@ rm -f ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}.tar.gz
 rm -rf ${OPENSHIFT_DATA_DIR}/delegate/
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -f ccache.tar.xz
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_delegate.tar.xz ./ccache.tar.xz
-ccache -z
-if [ -f ccache.tar.xz ]; then
-    rm -rf ccache
-    time tar Jxf ccache.tar.xz
-    rm -f ccache.tar.xz
-else
-    ccache -C
-fi
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/delegate${delegate_version}.tar.gz ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar xfz delegate${delegate_version}.tar.gz
@@ -45,20 +32,12 @@ unset CXX
 # time make -j$(grep -c -e processor /proc/cpuinfo) \
 #  ADMIN=user@rhcloud.local \
 #  > ${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
-rm -f ${OPENSHIFT_LOG_DIR}/delegate.make.log
-function030 ${OPENSHIFT_LOG_DIR}/delegate.make.log "-j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local"
+function030 delegate "-j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local"
 mv ${OPENSHIFT_LOG_DIR}/delegate.make.log ${OPENSHIFT_LOG_DIR}/install/
 
 pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
 unlink cc
 unlink gcc
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
-    time tar Jcf ccache.tar.xz ccache
-    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_delegate.tar.xz
-fi
 popd > /dev/null
 
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
