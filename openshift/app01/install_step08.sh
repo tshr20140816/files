@@ -79,13 +79,14 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 
 if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
-    config_cache_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/php'
+    config_site_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/php'
 else
     config_cache_option='--config-cache'
 fi
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
+${config_site_option} \
 ./configure ${config_cache_option} \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
@@ -188,13 +189,24 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached tar" | tee -a ${OPENSHIFT_LOG_DI
 tar xfz libmemcached-${libmemcached_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
+
+if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached ]; then
+    config_site_option='CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/libmemcached'
+else
+    config_cache_option='--config-cache'
+fi
+
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
-enable_jobserver="no" \
+${config_site_option} \
+ enable_jobserver="no" \
  ./configure \
+ ${config_cache_option} \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --prefix=${OPENSHIFT_DATA_DIR}/libmemcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+
+[ -f ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
