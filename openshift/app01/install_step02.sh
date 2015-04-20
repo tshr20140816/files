@@ -81,15 +81,16 @@ mv ${OPENSHIFT_LOG_DIR}/install_ccache.log ${OPENSHIFT_LOG_DIR}/install/
 rm ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version}.tar.xz
 rm -rf ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version}
 
-if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ]; then
-    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-    mv -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ./
-    tar Jxf ccache.tar.xz
-    rm -f ccache.tar.xz
-    popd > /dev/null
-else
-    mkdir ${OPENSHIFT_TMP_DIR}/ccache
-fi
+# if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ]; then
+#     pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+#     mv -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ./
+#     tar Jxf ccache.tar.xz
+#     rm -f ccache.tar.xz
+#     popd > /dev/null
+# else
+#     mkdir ${OPENSHIFT_TMP_DIR}/ccache
+# fi
+mkdir ${OPENSHIFT_TMP_DIR}/ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
