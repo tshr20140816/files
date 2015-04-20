@@ -62,7 +62,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
     time tar Jcf ccache.tar.xz ccache
-    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_apache.tar.xz
+    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_ruby.tar.xz
 fi
 popd > /dev/null
 
