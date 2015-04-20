@@ -31,17 +31,24 @@ rbenv -v | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** ruby ***
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f ccache.tar.xz
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_ruby.tar.xz ./ccache.tar.xz
+ccache -C
+ccache -z
+if [ -f ccache.tar.xz ]; then
+    rm -rf ccache
+    time tar Jxf ccache.tar.xz
+    rm -f ccache.tar.xz
+fi
+popd > /dev/null
+
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-# export CFLAGS="-O2 -march=native -pipe" 
-# export CXXFLAGS="-O2 -march=native -pipe" 
-# export CC="ccache gcc"
-# export RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*"
-time CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
+time \
  CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc" \
  RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
- CC="ccache gcc" CXX="ccache g++" \
  MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
  rbenv install -v ${ruby_version} >${OPENSHIFT_LOG_DIR}/ruby.rbenv.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/ruby.rbenv.log ${OPENSHIFT_LOG_DIR}/install/
@@ -50,6 +57,14 @@ oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}
 
 rbenv global ${ruby_version}
 rbenv rehash
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
+    time tar Jcf ccache.tar.xz ccache
+    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_apache.tar.xz
+fi
+popd > /dev/null
 
 # *** patch resolv.rb ***
 
