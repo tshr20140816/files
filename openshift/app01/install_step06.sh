@@ -15,12 +15,10 @@ export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 export HTTPD=${OPENSHIFT_DATA_DIR}/apache/bin/httpd
 export BINDIR=${OPENSHIFT_DATA_DIR}/apache
 
-time CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
-CC="ccache gcc" CXX="ccache g++" \
-${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
---auto \
---languages ruby \
---apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
+time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
+ --auto \
+ --languages ruby \
+ --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
