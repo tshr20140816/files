@@ -174,8 +174,8 @@ rbenv rehash
 
 # *** bundle ***
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine bundle install before" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
-ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
+unset CC
+unset CXX
 
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 mv Gemfile Gemfile.$(date '+%Y%m%d')
@@ -184,13 +184,10 @@ bundle config build.activerecord --with-cflags="-O2 -pipe -march=native -fomit-f
 bundle config build.rails --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s"
 bundle config build.rake --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s"
 bundle config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-CC="ccache gcc" time bundle install --path vendor/bundle --verbose \
+time bundle install --path vendor/bundle --verbose \
  -j$(grep -c -e processor /proc/cpuinfo) --retry 5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine bundle install after" | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
-ccache -s | grep -e ^cache | tee -a ${OPENSHIFT_LOG_DIR}/ccache_stats.log
 
 # *** rake ***
 
@@ -204,7 +201,7 @@ time RAILS_ENV=production bundle exec rake redmine:plugins:migrate 2>&1 \
  | tee ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log
 mv ${OPENSHIFT_LOG_DIR}/redmine_plugins_migrate.rake.log ${OPENSHIFT_LOG_DIR}/install/
 
-# *** format compact -> compress
+# *** database table format compact -> compress ***
 
 function020 redmine
 
