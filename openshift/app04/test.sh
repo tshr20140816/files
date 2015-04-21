@@ -9,7 +9,10 @@ cd /tmp
 
 cd grafana-2.0.1
 # ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
-tree >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
+# tree >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
+cat conf/defaults.ini >> ${OPENSHIFT_LOG_DIR}/test.log
+echo "-----" >> ${OPENSHIFT_LOG_DIR}/test.log
+cat conf/sample.ini >> ${OPENSHIFT_LOG_DIR}/test.log
 
 # cd /tmp
 # ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log 2>&1
