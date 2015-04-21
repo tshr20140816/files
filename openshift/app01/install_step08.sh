@@ -65,13 +65,6 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 
-if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
-    config_cache_option="CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/php"
-else
-    config_cache_option='--config-cache'
-fi
-config_cache_option='--config-cache'
-
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
 ./configure \
@@ -97,7 +90,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 --enable-mbregex \
 --enable-sockets \
 --disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php ${config_cache_option} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+--with-gettext=${OPENSHIFT_DATA_DIR}/php 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 
 [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/php
 
@@ -157,21 +150,13 @@ tar xfz libmemcached-${libmemcached_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
 
-if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached ]; then
-    config_cache_option="CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/libmemcached"
-else
-    config_cache_option='--config-cache'
-fi
-config_cache_option='--config-cache'
-
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 enable_jobserver="no" \
  ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --prefix=${OPENSHIFT_DATA_DIR}/libmemcached \
- ${config_cache_option} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+ --prefix=${OPENSHIFT_DATA_DIR}/libmemcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
 [ -f ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached
 
