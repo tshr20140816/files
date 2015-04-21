@@ -23,6 +23,7 @@ function010() {
             export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
             export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
             export CCACHE_MAXSIZE=300M
+            export CCACHE_BASEDIR=${OPENSHIFT_HOME_DIR}
         fi
         export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
         export CXXFLAGS="${CFLAGS}"
