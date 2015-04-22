@@ -66,7 +66,7 @@ cd php-5.6.8
 --with-gettext=${OPENSHIFT_DATA_DIR}/php
 date >> test.log
 
-(time make) >> test.log 2>&1
+time make >> test.log 2>&1
 date >> test.log
 
 ccache -s >> test.log
