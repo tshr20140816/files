@@ -29,12 +29,12 @@ export CCACHE_BASEDIR=${OPENSHIFT_HOME_DIR}
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-ps auwx | grep ccache
+# ps auwx | grep ccache
 ccache -s
 
-exit
+# exit
 
-ccache -C
+# ccache -C
 ccache -z
 
 cd /tmp
@@ -71,7 +71,7 @@ cd php-5.6.8
 --with-gettext=${OPENSHIFT_DATA_DIR}/php
 echo "$(date)" >> ${OPENSHIFT_LOG_DIR}/test.log
 
-nohup time make -j2 >> test.log 2>&1 &
+nohup time make -j2 >> test2.log 2>&1 &
 # echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
 
 # ccache -s >> test.log
