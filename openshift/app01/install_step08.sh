@@ -76,6 +76,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 --with-pdo-mysql \
 --without-sqlite3 \
 --without-pdo-sqlite \
+--without-pear \
 --with-curl \
 --with-libdir=lib64 \
 --with-bz2 \
