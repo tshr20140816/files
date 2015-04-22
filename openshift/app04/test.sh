@@ -32,7 +32,7 @@ export CXXFLAGS="${CFLAGS}"
 ps auwx | grep ccache
 ccache -s
 
-exit
+# exit
 
 # ccache -C
 ccache -z
@@ -68,10 +68,12 @@ cd php-5.6.8
 --enable-mbregex \
 --enable-sockets \
 --disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php
+--with-gettext=${OPENSHIFT_DATA_DIR}/php \
+--config-cache
+cat confg.cache >> ${OPENSHIFT_LOG_DIR}/php_config_cache
 echo "$(date)" >> ${OPENSHIFT_LOG_DIR}/test.log
 
-nohup time make -j2 >> test2.log 2>&1 &
+# nohup time make -j2 >> test2.log 2>&1 &
 # echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
 
 # ccache -s >> test.log
