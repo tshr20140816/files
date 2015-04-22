@@ -243,6 +243,8 @@ if [ "${mirror_server}" != "none" ]; then
 
     # delegate
     # TODO check
+    # http://delegate.hpcc.jp/anonftp/DeleGate/verify.sh
+    # wget http://delegate.hpcc.jp/anonftp/DeleGate/delegate{delegate_version}.tar.sign
     wget -t1 ${mirror_server}/delegate${delegate_version}.tar.gz
 
     # redmine
