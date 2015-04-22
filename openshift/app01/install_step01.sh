@@ -167,7 +167,8 @@ git remote add origin https://github.com/tshr20140816/files.git
 git pull origin master
 rm -rf ${OPENSHIFT_DATA_DIR}/config_cache
 mkdir ${OPENSHIFT_DATA_DIR}/config_cache
-mv openshift/app01/config_cache ${OPENSHIFT_DATA_DIR}
+cp openshift/app01/config_cache/* ${OPENSHIFT_DATA_DIR}/config_cache/
+chmod 666 ${OPENSHIFT_DATA_DIR}/config_cache/*
 popd > /dev/null
 
 # ***** download files *****
