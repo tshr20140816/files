@@ -2,7 +2,7 @@
 
 echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
 
-# dummy 1152
+# dummy
 
 cd /tmp
 if [ ! -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
@@ -29,10 +29,10 @@ export CCACHE_BASEDIR=${OPENSHIFT_HOME_DIR}
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-# ps auwx | grep ccache
+ps auwx | grep ccache
 ccache -s
 
-# exit
+exit
 
 # ccache -C
 ccache -z
