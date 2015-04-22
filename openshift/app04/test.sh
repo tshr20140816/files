@@ -29,9 +29,11 @@ export CCACHE_BASEDIR=${OPENSHIFT_HOME_DIR}
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+cd /tmp
 git init
 git remote add origin https://github.com/tshr20140816/files.git
 git pull origin master
 
 ls -lang
 
+ls -lang /tmp/openshift/app01/config_cache/
