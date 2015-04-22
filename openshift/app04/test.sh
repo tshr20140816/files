@@ -24,6 +24,12 @@ export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=300M
 export CCACHE_BASEDIR=${OPENSHIFT_HOME_DIR}
 
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
+ccache -C
+ccache -z
+
 cd /tmp
 if [ ! -f php-5.6.8.tar.xz ]; then
     wget https://files3-20150207.rhcloud.com/files/php-5.6.8.tar.xz
