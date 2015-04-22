@@ -60,7 +60,9 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine install" | tee -a ${OPENSHIFT_LOG_DIR
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/redmine-${redmine_version}.tar.gz ./
-tar xfz redmine-${redmine_version}.tar.gz
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+time tar xfz redmine-${redmine_version}.tar.gz
 rm redmine-${redmine_version}.tar.gz
 popd > /dev/null
 
