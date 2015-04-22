@@ -2,7 +2,7 @@
 
 echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
 
-# dummy
+# dummy 1152
 
 cd /tmp
 if [ ! -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
