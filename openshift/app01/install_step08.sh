@@ -157,7 +157,7 @@ tar xfz libmemcached-${libmemcached_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
 
-if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
+if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached ]; then
     config_cache_option="CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/libmemcached"
 else
     config_cache_option='--config-cache'
