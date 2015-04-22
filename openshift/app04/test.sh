@@ -3,9 +3,6 @@
 echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
 
 cd /tmp
-
-
-cd /tmp
 if [ ! -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
     if [ ! -f ccache-3.2.1.tar.xz ]; then
         wget https://files3-20150207.rhcloud.com/files/ccache-3.2.1.tar.xz
