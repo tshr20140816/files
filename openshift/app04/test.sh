@@ -39,7 +39,7 @@ fi
 rm -rf php-5.6.8
 tar Jxf php-5.6.8.tar.xz
 
-echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
+echo "$(date)" >> ${OPENSHIFT_LOG_DIR}/test.log
 cd php-5.6.8
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
@@ -64,7 +64,7 @@ cd php-5.6.8
 --enable-sockets \
 --disable-ipv6 \
 --with-gettext=${OPENSHIFT_DATA_DIR}/php
-echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
+echo "$(date)" >> ${OPENSHIFT_LOG_DIR}/test.log
 
 nohup time make -j2 >> test.log 2>&1 &
 # echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
