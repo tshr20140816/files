@@ -70,7 +70,7 @@ cd php-5.6.8
 --disable-ipv6 \
 --with-gettext=${OPENSHIFT_DATA_DIR}/php \
 --config-cache
-cat confg.cache >> ${OPENSHIFT_LOG_DIR}/php_config_cache
+mv confg.cache ${OPENSHIFT_LOG_DIR}/php_config_cache
 echo "$(date)" >> ${OPENSHIFT_LOG_DIR}/test.log
 
 # nohup time make -j2 >> test2.log 2>&1 &
