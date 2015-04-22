@@ -7,7 +7,7 @@ if [ ! -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
     if [ ! -f ccache-3.2.1.tar.xz ]; then
         wget https://files3-20150207.rhcloud.com/files/ccache-3.2.1.tar.xz
     fi
-    tar xfz ccache-3.2.1.tar.xz
+    tar Jxf ccache-3.2.1.tar.xz
     cd ccache-3.2.1
     CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
      ./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache --mandir=/tmp/man --docdir=/tmp/doc
