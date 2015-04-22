@@ -35,7 +35,7 @@ if [ ! -f php-5.6.8.tar.xz ]; then
     wget https://files3-20150207.rhcloud.com/files/php-5.6.8.tar.xz
 fi
 rm -rf php-5.6.8
-tar xfz php-5.6.8.tar.xz
+tar Jxf php-5.6.8.tar.xz
 
 date >> test.log
 cd php-5.6.8
