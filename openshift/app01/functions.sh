@@ -24,8 +24,10 @@ function010() {
             export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
             export CCACHE_MAXSIZE=300M
             export CCACHE_BASEDIR=${OPENSHIFT_HOME_DIR}
-            export CCACHE_READONLY=true
-            export CCACHE_READONLY_DIRECT=true
+            if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) != "yes" ]; then
+                export CCACHE_READONLY=true
+                export CCACHE_READONLY_DIRECT=true
+            fi
         fi
         export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
         export CXXFLAGS="${CFLAGS}"
