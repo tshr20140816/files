@@ -395,6 +395,54 @@ do
     fi
     [ -f super_pi-jp.tar.gz ] || files_exists=0
 
+    # *** spdy ***
+    if [ ! -f mod-spdy-beta_current_x86_64.rpm ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) spdy wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://dl-ssl.google.com/dl/linux/direct/mod-spdy-beta_current_x86_64.rpm &
+    fi
+    [ -f mod-spdy-beta_current_x86_64.rpm ] || files_exists=0
+
+    # *** rbenv-installer ***
+    if [ ! -f rbenv-installer ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) rbenv-installer wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer &
+    fi
+    [ -f rbenv-installer ] || files_exists=0
+
+    # *** Gemfile_redmine_custom ***
+    if [ ! -f Gemfile_redmine_custom ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) Gemfile_redmine_custom wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/Gemfile_redmine_custom &
+    fi
+    [ -f Gemfile_redmine_custom ] || files_exists=0
+
+    # *** bash.rb ***
+    if [ ! -f bash.rb ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) bash.rb wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/bash.rb &
+    fi
+    [ -f bash.rb ] || files_exists=0
+
+    # *** memcached-tool ***
+    if [ ! -f memcached-tool ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached-tool wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool &
+    fi
+    [ -f memcached-tool ] || files_exists=0
+
+    # *** ical_multi ***
+    if [ ! -f ical_multi.sh ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) ical_multi.sh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/ical_multi.sh &
+    fi
+
+    # *** wordpress salt ***
+    if [ ! -f salt.txt ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) salt.txt wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        curl -o ./salt.txt https://api.wordpress.org/secret-key/1.1/salt/ &
+    fi
+    [ -f salt.txt ] || files_exists=0
+
     # *** apache ***
     if [ ! -f httpd-${apache_version}.tar.bz2 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing httpd-${apache_version}.tar.bz2" \
@@ -411,20 +459,6 @@ do
     fi
     [ -f httpd-${apache_version}.tar.bz2 ] || files_exists=0
 
-    # *** spdy ***
-    if [ ! -f mod-spdy-beta_current_x86_64.rpm ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) spdy wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://dl-ssl.google.com/dl/linux/direct/mod-spdy-beta_current_x86_64.rpm
-    fi
-    [ -f mod-spdy-beta_current_x86_64.rpm ] || files_exists=0
-
-    # *** rbenv-installer ***
-    if [ ! -f rbenv-installer ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) rbenv-installer wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
-    fi
-    [ -f rbenv-installer ] || files_exists=0
-
     # *** redmine ***
     if [ ! -f redmine-${redmine_version}.tar.gz ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing redmine-${redmine_version}.tar.gz" \
@@ -433,20 +467,6 @@ do
         wget http://www.redmine.org/releases/redmine-${redmine_version}.tar.gz
     fi
     [ -f redmine-${redmine_version}.tar.gz ] || files_exists=0
-
-    # *** Gemfile_redmine_custom ***
-    if [ ! -f Gemfile_redmine_custom ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) Gemfile_redmine_custom wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/Gemfile_redmine_custom &
-    fi
-    [ -f Gemfile_redmine_custom ] || files_exists=0
-
-    # *** bash.rb ***
-    if [ ! -f bash.rb ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) bash.rb wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/bash.rb
-    fi
-    [ -f bash.rb ] || files_exists=0
 
     # *** ipa font ***
     # if [ ! -f IPAfont${ipafont_version}.zip ]; then
@@ -469,13 +489,6 @@ do
         wget http://www.memcached.org/files/memcached-${memcached_version}.tar.gz
     fi
     [ -f memcached-${memcached_version}.tar.gz ] || files_exists=0
-
-    # *** memcached-tool ***
-    if [ ! -f memcached-tool ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached-tool wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://raw.githubusercontent.com/memcached/memcached/master/scripts/memcached-tool
-    fi
-    [ -f memcached-tool ] || files_exists=0
 
     # *** php ***
     if [ ! -f php-${php_version}.tar.xz ]; then
@@ -695,12 +708,6 @@ do
     fi
     [ -f baikal-flat-${baikal_version}.zip ] || files_exists=0
 
-    # *** ical_multi ***
-    if [ ! -f ical_multi.sh ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) ical_multi.sh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/ical_multi.sh
-    fi
-
     # *** CalDavZAP ***
     if [ ! -f CalDavZAP_${caldavzap_version}.zip ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing CalDavZAP_${caldavzap_version}.zip" \
@@ -731,6 +738,8 @@ do
     # *** pigz ***
     # TODO http://www.zlib.net/pigz/pigz-2.3.3-sig.txt
     if [ ! -f pigz-${pigz_version}.tar.gz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing pigz-${pigz_version}.tar.gz" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget http://www.zlib.net/pigz/pigz-${pigz_version}.tar.gz
     fi
@@ -771,13 +780,6 @@ do
         rm -f ${gem}.html
         [ -f ${gem}-${version}.gem ] || files_exists=0
     done
-
-    # *** wordpress salt ***
-    if [ ! -f salt.txt ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) salt.txt wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        curl -o ./salt.txt https://api.wordpress.org/secret-key/1.1/salt/
-    fi
-    [ -f salt.txt ] || files_exists=0
 
     if [ "${files_exists}" -eq 1 ]; then
         break
