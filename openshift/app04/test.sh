@@ -30,4 +30,8 @@ export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 cd ~
-tree
+ls -lang php/conf/
+ls -lang php/configuration/etc/conf/
+ls -lang php/configuration/etc/conf.d/
+ls -lang php/modules/
+
