@@ -779,6 +779,8 @@ do
         break
     elif [ i > 5 ]; then
         sleep 10s
+    else
+        wait
     fi
 done
 
