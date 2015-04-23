@@ -777,7 +777,7 @@ do
 
     if [ "${files_exists}" -eq 1 ]; then
         break
-    elif [ i > 5 ]; then
+    elif [ i -gt 5 ]; then
         sleep 10s
     else
         wait
