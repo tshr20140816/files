@@ -182,10 +182,17 @@ unset CXX
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 mv Gemfile Gemfile.$(date '+%Y%m%d')
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
-bundle config build.activerecord --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s" --local
-bundle config build.rails --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s" --local
-bundle config build.rake --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s" --local
-bundle config --local 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# bundle config build.activerecord --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s" --local
+# bundle config build.rails --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s" --local
+# bundle config build.rake --with-cflags="-O2 -pipe -march=native -fomit-frame-pointer -s" --local
+# bundle config --local 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+mkdir .bundle
+cat << '__HEREDOC__' > .bundle/config
+---
+BUNDLE_BUILD__ACTIVERECORD: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
+BUNDLE_BUILD__RAILS: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
+BUNDLE_BUILD__RAKE: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
+__HEREDOC__
 time bundle install --path vendor/bundle --verbose \
  -j$(grep -c -e processor /proc/cpuinfo) --retry 5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
