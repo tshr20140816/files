@@ -30,10 +30,7 @@ export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
-git init
-git remote add origin https://github.com/tshr20140816/files.git
-git pull origin master
-
-ls -lang
-
-ls -lang /tmp/openshift/app01/config_cache/
+wget http://vault.centos.org/6.3/os/Source/SPackages/initscripts-9.03.31-2.el6.centos.src.rpm
+rpm2cpio initscripts-9.03.31-2.el6.centos.src.rpm | cpio -id
+tar xjf initscripts-9.03.31.tar.bz2
+cp initscripts-9.03.31/rc.d/init.d/functions ${OPENSHIFT_LOG_DIR}
