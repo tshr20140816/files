@@ -199,6 +199,7 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/ccache_ruby.tar.xz &
     wget -t1 ${mirror_server}/ccache_tcl.tar.xz &
     wget -t1 ${mirror_server}/ccache_passenger.tar.xz &
+    wait
 
     # apache
     wget -t1 ${mirror_server}/httpd-${apache_version}.tar.bz2
