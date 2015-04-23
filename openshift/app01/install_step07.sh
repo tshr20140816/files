@@ -192,6 +192,7 @@ cat << '__HEREDOC__' > .bundle/config
 BUNDLE_BUILD__ACTIVERECORD: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
 BUNDLE_BUILD__RAILS: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
 BUNDLE_BUILD__RAKE: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
+BUNDLE_BUILD__MYSQL2: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
 __HEREDOC__
 time bundle install --path vendor/bundle --verbose \
  -j$(grep -c -e processor /proc/cpuinfo) --retry 5 \
