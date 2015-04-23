@@ -194,7 +194,7 @@ BUNDLE_BUILD__RAILS: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer
 BUNDLE_BUILD__RAKE: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
 BUNDLE_BUILD__MYSQL2: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
 __HEREDOC__
-time bundle install --path vendor/bundle --verbose \
+time bundle install --path vendor/bundle --without test development --verbose \
  -j$(grep -c -e processor /proc/cpuinfo) --retry 5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
