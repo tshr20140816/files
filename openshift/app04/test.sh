@@ -72,6 +72,8 @@ done < version_list
 
 mirror_server="https://files3-20150207.rhcloud.com/files"
 
+echo "$(date)"
+
 # ccache cache
 wget -t1 ${mirror_server}/ccache_apache.tar.xz &
 wget -t1 ${mirror_server}/ccache_php.tar.xz &
@@ -113,5 +115,6 @@ wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip &
 # phpicalendar
 wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2 &
 wait
+echo "$(date)"
 
 ls -lang
