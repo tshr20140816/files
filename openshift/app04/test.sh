@@ -34,3 +34,8 @@ wget http://vault.centos.org/6.3/os/Source/SPackages/initscripts-9.03.31-2.el6.c
 rpm2cpio initscripts-9.03.31-2.el6.centos.src.rpm | cpio -id
 tar xjf initscripts-9.03.31.tar.bz2
 cp initscripts-9.03.31/rc.d/init.d/functions ${OPENSHIFT_LOG_DIR}
+
+rm -f initscripts-9.03.31-2.el6.centos.src.rpm
+rm -rf initscripts-9.03.31
+
+ls -lang
