@@ -30,6 +30,6 @@ export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
-rm -rf files
+rm -f ./initscripts*
 
 ls -lang
