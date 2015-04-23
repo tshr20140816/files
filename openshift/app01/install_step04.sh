@@ -24,6 +24,8 @@ if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/apache ]; then
 else
     config_cache_option='--config-cache'
 fi
+rm ${OPENSHIFT_DATA_DIR}/config_cache/apache
+config_cache_option='--config-cache'
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache.log
