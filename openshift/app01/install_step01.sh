@@ -191,7 +191,7 @@ echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 # * まずミラーサーバよりダウンロード *
 
 if [ "${mirror_server}" != "none" ]; then
-    # cache apache
+    # ccache cache
     wget -t1 ${mirror_server}/ccache_apache.tar.xz &
     wget -t1 ${mirror_server}/ccache_php.tar.xz &
     wget -t1 ${mirror_server}/ccache_libmemcached.tar.xz &
@@ -199,6 +199,38 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/ccache_ruby.tar.xz &
     wget -t1 ${mirror_server}/ccache_tcl.tar.xz &
     wget -t1 ${mirror_server}/ccache_passenger.tar.xz &
+    # wget -t1 ${mirror_server}/ccache.tar.xz
+
+    # ipa font
+    wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip &
+    # webalizer
+    wget -t1 ${mirror_server}/webalizer-${webalizer_version}-src.tar.bz2 &
+    # ttrss
+    wget -t1 ${mirror_server}/${ttrss_version}.tar.gz &
+    # cacti
+    wget -t1 ${mirror_server}/cacti-${cacti_version}.tar.gz &
+    # tcl
+    wget -t1 ${mirror_server}/tcl${tcl_version}-src.tar.gz &
+    # expect
+    wget -t1 ${mirror_server}/expect${expect_version}.tar.gz &
+    # logrotate
+    wget -t1 ${mirror_server}/logrotate-${logrotate_version}.tar.gz &
+    # lynx
+    wget -t1 ${mirror_server}/lynx${lynx_version}.tar.gz &
+    # memcached
+    wget -t1 ${mirror_server}/memcached-${memcached_version}.tar.gz &
+    # memcached(php extension)
+    wget -t1 ${mirror_server}/memcached-${memcached_php_ext_version}.tgz &
+    # mURLin
+    wget -t1 ${mirror_server}/mURLin-${murlin_version}.tar.gz &
+    # fio
+    wget -t1 ${mirror_server}/fio-${fio_version}.tar.bz2 &
+    # Baikal
+    wget -t1 ${mirror_server}/baikal-flat-${baikal_version}.zip &
+    # CalDavZAP
+    wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip &
+    # phpicalendar
+    wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2 &
     wait
 
     # apache
@@ -231,9 +263,6 @@ if [ "${mirror_server}" != "none" ]; then
         rm -f mrtg-${mrtg_version}.tar.gz
     fi
 
-    # ipa font
-    wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip
-
     # php
     wget -t1 ${mirror_server}/php-${php_version}.tar.xz
     wget http://jp1.php.net/distributions/php-${php_version}.tar.xz.asc
@@ -263,9 +292,6 @@ if [ "${mirror_server}" != "none" ]; then
         rm -f redmine-${redmine_version}.tar.gz
     fi
 
-    # webalizer
-    wget -t1 ${mirror_server}/webalizer-${webalizer_version}-src.tar.bz2
-
     # wordpress
     wget -t1 ${mirror_server}/wordpress-${wordpress_version}.tar.gz
     tarball_md5=$(md5sum wordpress-${wordpress_version}.tar.gz | cut -d ' ' -f 1)
@@ -275,19 +301,6 @@ if [ "${mirror_server}" != "none" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) wordpress md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm -f wordpress-${wordpress_version}.tar.gz
     fi
-    
-    # ttrss
-    wget -t1 ${mirror_server}/${ttrss_version}.tar.gz
-    # cacti
-    wget -t1 ${mirror_server}/cacti-${cacti_version}.tar.gz
-    # tcl
-    wget -t1 ${mirror_server}/tcl${tcl_version}-src.tar.gz
-    # expect
-    wget -t1 ${mirror_server}/expect${expect_version}.tar.gz
-    # logrotate
-    wget -t1 ${mirror_server}/logrotate-${logrotate_version}.tar.gz
-    # lynx
-    wget -t1 ${mirror_server}/lynx${lynx_version}.tar.gz
 
     # # nginx
     # wget -t1 ${mirror_server}/nginx-${nginx_version}.tar.gz
@@ -299,12 +312,6 @@ if [ "${mirror_server}" != "none" ]; then
     #     rm nginx-${nginx_version}.tar.gz
     # fi
 
-    # memcached
-    wget -t1 ${mirror_server}/memcached-${memcached_version}.tar.gz
-    # memcached(php extension)
-    wget -t1 ${mirror_server}/memcached-${memcached_php_ext_version}.tgz
-    # mURLin
-    wget -t1 ${mirror_server}/mURLin-${murlin_version}.tar.gz
     # # pcre
     # wget -t1 ${mirror_server}/pcre-${pcre_version}.tar.bz2
     # wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2.sig
@@ -332,18 +339,6 @@ if [ "${mirror_server}" != "none" ]; then
 
     # # SysBench
     # wget -t1 ${mirror_server}/sysbench-${sysbench_version}.tar.gz
-    
-    # fio
-    wget -t1 ${mirror_server}/fio-${fio_version}.tar.bz2
-    
-    # Baikal
-    wget -t1 ${mirror_server}/baikal-flat-${baikal_version}.zip
-
-    # CalDavZAP
-    wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip
-
-    # phpicalendar
-    wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2
 
     # ccache
     wget -t1 ${mirror_server}/ccache-${ccache_version}.tar.xz
@@ -354,7 +349,6 @@ if [ "${mirror_server}" != "none" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm -f ccache-${ccache_version}.tar.xz
     fi
-    wget -t1 ${mirror_server}/ccache.tar.xz
 
     # *** gem ***
     for gem in bundler rack passenger
