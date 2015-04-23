@@ -31,8 +31,44 @@ export CXXFLAGS="${CFLAGS}"
 
 
 cd /tmp
-mkdir files
+rm -rf files
+mkdir files 2> /dev/null
 cd files
+
+cat << '__HEREDOC__' > version_list
+apache_version 2.2.29
+baikal_version 0.2.7
+cacti_version 0.8.8c
+caldavzap_version 0.12.1
+ccache_version 3.2.1
+delegate_version 9.9.13
+expect_version 5.45
+fio_version 2.2.7
+ipafont_version 00303
+libmemcached_version 1.0.18
+logrotate_version 3.8.8
+lynx_version 2.8.7
+memcached_php_ext_version 2.2.0
+memcached_version 1.4.22
+mrtg_version 2.17.4
+murlin_version 0.2.4
+php_version 5.6.8
+phpicalendar_version 2.4_20100615
+pigz_version 2.3.3
+redmine_version 2.6.3
+ruby_version 2.1.6
+tcl_version 8.6.3
+ttrss_version 1.15.3
+webalizer_version 2.23-08
+wordpress_version 4.1.2-ja
+__HEREDOC__
+
+while read LINE
+do
+    product=$(echo "${LINE}" | awk '{print $1}')
+    version=$(echo "${LINE}" | awk '{print $2}')
+    eval "${product}"="${version}"
+done < version_list
 
 mirror_server="https://files3-20150207.rhcloud.com/files"
 
