@@ -29,7 +29,5 @@ export CCACHE_BASEDIR=${OPENSHIFT_HOME_DIR}
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-cd /tmp
-rm -f ./initscripts*
-
-ls -lang
+cd ~
+tree
