@@ -859,8 +859,8 @@ done
 
 popd > /dev/null
 
-gcc --version
-gcc -march=native -Q --help=target
+# gcc --version
+# gcc -march=native -Q --help=target
 
 set +x
 
