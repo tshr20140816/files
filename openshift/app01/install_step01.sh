@@ -387,6 +387,13 @@ for i in $(seq 0 9)
 do
     files_exists=1
 
+    # *** super pi ***
+    if [ ! -f super_pi-jp.tar.gz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) super pi wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz &
+    fi
+    [ -f super_pi-jp.tar.gz ] || files_exists=0
+
     # *** apache ***
     if [ ! -f httpd-${apache_version}.tar.bz2 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing httpd-${apache_version}.tar.bz2" \
@@ -408,6 +415,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) spdy wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://dl-ssl.google.com/dl/linux/direct/mod-spdy-beta_current_x86_64.rpm
     fi
+    [ -f mod-spdy-beta_current_x86_64.rpm ] || files_exists=0
 
     # *** rbenv-installer ***
     if [ ! -f rbenv-installer ]; then
@@ -428,7 +436,7 @@ do
     # *** Gemfile_redmine_custom ***
     if [ ! -f Gemfile_redmine_custom ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Gemfile_redmine_custom wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/Gemfile_redmine_custom
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/Gemfile_redmine_custom &
     fi
     [ -f Gemfile_redmine_custom ] || files_exists=0
 
@@ -710,13 +718,6 @@ do
     fi
     [ -f phpicalendar-${phpicalendar_version}.tar.bz2 ] || files_exists=0
 
-    # *** super pi ***
-    if [ ! -f super_pi-jp.tar.gz ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) super pi wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
-    fi
-    [ -f super_pi-jp.tar.gz ] || files_exists=0
-
     # *** ccache ***
     if [ ! -f ccache-${ccache_version}.tar.xz ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing ccache-${ccache_version}.tar.xz" \
@@ -779,7 +780,7 @@ do
 
     if [ "${files_exists}" -eq 1 ]; then
         break
-    else
+    elif [ i > 5 ]; then
         sleep 10s
     fi
 done
