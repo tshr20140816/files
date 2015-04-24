@@ -70,5 +70,5 @@ cd php-5.6.8
 
 time make -j2 -l3 &
 
+ps auwx
 # ccache -s
-
