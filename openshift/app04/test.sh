@@ -35,6 +35,9 @@ ls -lang /tmp
 
 cd /tmp
 
+export target_data_dir=/var/lib/openshift/552a8c5fe0b8cd8ae0000031/app-root/data/
+export target_tmp_dir=/tmp/
+
 rm -rf httpd-2.2.29
 rm -f httpd-2.2.29.tar.bz2
 
