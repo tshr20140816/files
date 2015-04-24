@@ -39,7 +39,7 @@ ccache -z
 
 ls -lang /tmp
 
-export target_data_dir=/var/lib/openshift/552a8c5fe0b8cd8ae0000031/app-root/data/
+export target_data_dir=/var/lib/openshift/553a0abbfcf9339532000021/app-root/data/
 export target_tmp_dir=/tmp/
 
 rm -rf httpd-2.2.29
