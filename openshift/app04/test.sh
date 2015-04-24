@@ -70,7 +70,7 @@ time make -j$(grep -c -e processor /proc/cpuinfo)
 
 cd ..
 rm -rf maked_httpd-2.2.29.tar.xz
-tar Jcf maked_httpd-2.2.29.tar.xz httpd-2.2.29
+time tar Jcf maked_httpd-2.2.29.tar.xz httpd-2.2.29
 rm -rf httpd-2.2.29
 
 ccache -s
