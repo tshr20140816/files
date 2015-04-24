@@ -2,23 +2,22 @@
 
 set -x
 
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
 cd /tmp
 
 wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
 tar jxf httpd-2.2.29.tar.bz2
 cd httpd-2.2.29
 
-time ./configure --config-cache
-mv config.cache ../config.cache.apache
-cd ..
-rm -rf httpd-2.2.29
-tar jxf httpd-2.2.29.tar.bz2
-cd httpd-2.2.29
-time ./configure CONFIG_SITE="../config.cache.apache" 
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --enable-mods-shared='all proxy'
 
-# CC="ccache gcc" CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
-#  ./configure \
-#  --prefix=${OPENSHIFT_DATA_DIR}/apache \
-#  --mandir=/tmp/man \
-#  --docdir=/tmp/doc \
-#  --enable-mods-shared='all proxy'
+make -j4
+
+cd ..
+tar Jcf httpd.tar.xz httpd-2.2.29
