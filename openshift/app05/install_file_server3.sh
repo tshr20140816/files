@@ -7,43 +7,18 @@ set -x
 
 export TZ=JST-9
 
-php -v
-
 # ***** args *****
 
 if [ $# -ne 1 ]; then
-    echo "arg1 : file upload password"
+    echo "arg1 : build password"
     exit
 fi
 
-file_upload_password=${1}
-
-# ***** ccache file upload *****
+build_password=${1}
 
 mkdir ${OPENSHIFT_DATA_DIR}/files
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 ln -s ${OPENSHIFT_DATA_DIR}/files files
-popd > /dev/null
-
-# 実際のダウンロードは cron から起動される ccache_file_download.sh で行う
-
-pushd  ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
-cat << '__HEREDOC__' > ccache_file_upload_counter.php
-<?php
-$pw=$_POST['password'];
-$host_name=$_POST['hostname'];
-if ( $pw !== '__FILE_UPLOAD_PASSWORD__' ){
-    exit();
-}
-if ( preg_match("/^\w+?-\w+$/", $host_name) ){
-    $file_name = '__OPENSHIFT_TMP_DIR__/url_ccache_tar_xz.txt';
-    file_put_contents($file_name, $host_name);
-}
-?>
-__HEREDOC__
-sed -i -e "s|__FILE_UPLOAD_PASSWORD__|${file_upload_password}|g" ccache_file_upload_counter.php
-sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" ccache_file_upload_counter.php
-php -l ccache_file_upload_counter.php
 popd > /dev/null
 
 # ***** cron minutely *****
@@ -75,25 +50,6 @@ popd > /dev/null
 __HEREDOC__
 chmod +x make_index.sh
 echo make_index.sh >> jobs.allow
-
-# *** ccache file download ***
-
-cat << '__HEREDOC__' > ccache_file_download.sh
-#!/bin/bash
-
-export TZ=JST-9
-[ -f ${OPENSHIFT_TMP_DIR}/url_ccache_tar_xz.txt ] || exit
-
-host_name=$(cat ${OPENSHIFT_TMP_DIR}/url_ccache_tar_xz.txt)
-
-[ $(wget -nv --spider -t 1 https://${host_name}.rhcloud.com/ccache.tar.xz 2>&1 | grep -c '200 OK') -eq 1 ] || exit
-
-wget https://${host_name}.rhcloud.com/ccache.tar.xz
-rm -f ${OPENSHIFT_TMP_DIR}/url_ccache_tar_xz.txt
-mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-__HEREDOC__
-chmod +x ccache_file_download.sh
-echo ccache_file_download.sh >> jobs.allow
 
 popd > /dev/null
 
