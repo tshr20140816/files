@@ -30,3 +30,24 @@ export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 ls -lang /tmp
+
+cd /tmp
+
+rm -rf httpd-2.2.29
+rm -f httpd-2.2.29.tar.bz2
+
+wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
+tar jxf httpd-2.2.29.tar.bz2
+cd httpd-2.2.29
+
+./configure \
+ --prefix=${target_data_dir}/apache \
+ --mandir=${target_tmp_dir}/man \
+ --docdir=${target_tmp_dir}/doc \
+ --enable-mods-shared='all proxy'
+
+time make -j$(grep -c -e processor /proc/cpuinfo)
+
+cd ..
+tar Jcf httpd.tar.xz httpd-2.2.29
+rm -rf httpd-2.2.29
