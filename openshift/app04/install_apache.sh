@@ -17,7 +17,23 @@ cd httpd-2.2.29
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --enable-mods-shared='all proxy'
 
-make -j4
+time make -j$(grep -c -e processor /proc/cpuinfo)
 
 cd ..
 tar Jcf httpd.tar.xz httpd-2.2.29
+rm -rf httpd-2.2.29
+
+wget https://launchpad.net/libmemcached/1.0/1.0.18/+download/libmemcached-1.0.18.tar.gz
+tar zxf libmemcached-1.0.18.tar.gz
+cd libmemcached-1.0.18
+
+./configure \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --prefix=${OPENSHIFT_DATA_DIR}/libmemcached
+
+time make -j2 -l3
+
+cd ..
+tar Jcf libmemcached.tar.xz libmemcached-1.0.18
+rm -rf libmemcached-1.0.18
