@@ -2,6 +2,8 @@
 
 set -x
 
+export target_data_dir='xxx' # ${OPENSHIFT_DATA_DIR}
+
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
@@ -12,7 +14,7 @@ tar jxf httpd-2.2.29.tar.bz2
 cd httpd-2.2.29
 
 ./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --prefix=${target_data_dir}/apache \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --enable-mods-shared='all proxy'
@@ -28,9 +30,9 @@ tar zxf libmemcached-1.0.18.tar.gz
 cd libmemcached-1.0.18
 
 ./configure \
+ --prefix=${target_data_dir}/libmemcached \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --prefix=${OPENSHIFT_DATA_DIR}/libmemcached
+ --docdir=${OPENSHIFT_TMP_DIR}/doc
 
 time make -j2 -l3
 
