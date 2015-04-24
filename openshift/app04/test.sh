@@ -35,17 +35,6 @@ ls -lang /tmp
 
 cd /tmp
 
-rm -rf grafana
-rm -rf grafana-2.0.1
-rm -f grafana-2.0.1.linux-x64.tar.gz
-rm -f centos-initscripts.patch
-rm -f ccache.tar.xz
-rm -f ccache_php.tar.xz
-rm -f pbzip2-1.1.12
-rm -f php-5.6.8.tar.xz
-rm -rf php-5.6.8
-
-ccache -C
 ccache -z
 
 ls -lang /tmp
