@@ -35,6 +35,21 @@ ls -lang /tmp
 
 cd /tmp
 
+rm -rf grafana
+rm -rf grafana-2.0.1
+rm -f grafana-2.0.1.linux-x64.tar.gz
+rm -f centos-initscripts.patch
+rm -f ccache.tar.xz
+rm -f ccache_php.tar.xz
+rm -f pbzip2-1.1.12
+rm -f php-5.6.8.tar.xz
+rm -rf php-5.6.8
+
+ccache -C
+ccache -z
+
+ls -lang /tmp
+
 export target_data_dir=/var/lib/openshift/552a8c5fe0b8cd8ae0000031/app-root/data/
 export target_tmp_dir=/tmp/
 
@@ -57,5 +72,7 @@ cd ..
 rm -rf maked_httpd-2.2.29.tar.xz
 tar Jcf maked_httpd-2.2.29.tar.xz httpd-2.2.29
 rm -rf httpd-2.2.29
+
+ccache -s
 
 ls -lang /tmp
