@@ -1,5 +1,6 @@
 http://grafana.org/
 http://www.gnu.org/software/parallel/
+http://www.gentoo-wiki.info/HOWTO_Distcc_over_SSH_with_Portage
 
 4月26日
 B00S66Q06I
