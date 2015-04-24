@@ -68,7 +68,10 @@ cd php-5.6.8
 --disable-ipv6 \
 --with-gettext=${OPENSHIFT_DATA_DIR}/php
 
-time make -j2 -l3 > /dev/null &
+# time make -j2 -l3 > /dev/null &
+make &
 
 ps auwx
 # ccache -s
+
+exit
