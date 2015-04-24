@@ -2,6 +2,11 @@
 
 set -x
 
+# configure 及び make の引数は全て貰う
+# configure の必要有無のフラグ
+# tar x 後のディレクトリ
+# configure のディレクトリ
+
 export target_data_dir='xxx' # ${OPENSHIFT_DATA_DIR}
 export target_tmp_dir='xxx' # ${OPENSHIFT_TMP_DIR}
 
