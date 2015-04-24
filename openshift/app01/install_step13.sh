@@ -33,7 +33,7 @@ unset CXX
 #  ADMIN=user@rhcloud.local \
 #  > ${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
 function030 delegate "-j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local"
-mv ${OPENSHIFT_LOG_DIR}/delegate.make.log ${OPENSHIFT_LOG_DIR}/install/
+mv ${OPENSHIFT_LOG_DIR}/install_delegate.log ${OPENSHIFT_LOG_DIR}/install/
 
 pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
 unlink cc
