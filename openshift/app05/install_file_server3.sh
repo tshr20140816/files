@@ -41,7 +41,7 @@ pushd  ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
 cat << '__HEREDOC__' > build_action.php
 <?php
 $pw=$_POST['password'];
-if ( $pw !== '__FILE_UPLOAD_PASSWORD__' ){
+if ( $pw !== '__BUILD_PASSWORD__' ){
     exit();
 }
 $data_dir=$_POST['data_dir'];
@@ -49,9 +49,15 @@ $tmp_dir=$_POST['tmp_dir'];
 $app=$_POST['app'];
 $version=$_POST['version'];
 
+$file_name = '__OPENSHIFT_TMP_DIR__/build_action.txt';
+file_put_contents($file_name, $data_dir . '\n')
+file_put_contents($file_name, $tmp_dir . '\n', FILE_APPEND)
+file_put_contents($file_name, $app . '\n', FILE_APPEND)
+file_put_contents($file_name, $version . '\n', FILE_APPEND)
 ?>
 __HEREDOC__
-sed -i -e "s|__FILE_UPLOAD_PASSWORD__|${build_password}|g" build_action.php
+sed -i -e "s|__BUILD_PASSWORD__|${build_password}|g" build_action.php
+sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" build_action.php
 popd > /dev/null
 
 # ***** cron minutely *****
