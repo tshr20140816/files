@@ -21,6 +21,25 @@ pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 ln -s ${OPENSHIFT_DATA_DIR}/files files
 popd > /dev/null
 
+# ***** build action *****
+
+pushd  ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
+cat << '__HEREDOC__' > build_action.php
+<?php
+$pw=$_POST['password'];
+if ( $pw !== '__FILE_UPLOAD_PASSWORD__' ){
+    exit();
+}
+$data_dir=$_POST['data_dir'];
+$tmp_dir=$_POST['tmp_dir'];
+$app=$_POST['app'];
+$version=$_POST['version'];
+
+?>
+__HEREDOC__
+sed -i -e "s|__FILE_UPLOAD_PASSWORD__|${build_password}|g" build_action.php
+popd > /dev/null
+
 # ***** cron minutely *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
