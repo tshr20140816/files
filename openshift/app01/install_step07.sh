@@ -198,9 +198,11 @@ BUNDLE_BUILD__CODERAY: --with-cflags='-O2 -pipe -march=native -fomit-frame-point
 BUNDLE_BUILD__REQUEST_STORE: --with-cflags='-O2 -pipe -march=native -fomit-frame-pointer -s'
 __HEREDOC__
 time bundle install --path vendor/bundle --without test development --verbose \
- -j$(grep -c -e processor /proc/cpuinfo) --retry 5 \
+ --jobs $(grep -c -e processor /proc/cpuinfo) --retry 5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
+bundle show | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+cat .bundle/config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** rake ***
 
