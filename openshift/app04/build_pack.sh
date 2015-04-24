@@ -60,3 +60,23 @@ time make -j$(grep -c -e processor /proc/cpuinfo)
 cd ..
 tar Jcf delegate.tar.xz delegate9.9.13
 rm -rf delegate9.9.13
+
+# Tcl
+
+cd /tmp
+
+wget http://prdownloads.sourceforge.net/tcl/tcl8.6.3-src.tar.gz
+tar zxf tcl8.6.3-src.tar.gz
+
+cd tcl8.6.3/unix
+
+./configure \
+ --prefix=${target_data_dir}/tcl \
+ --mandir=${target_tmp_dir}/man \
+ --disable-symbols
+
+time make -j2 -l3
+
+cd ../..
+tar Jcf tcl.tar.xz tcl8.6.3
+rm -rf tcl8.6.3
