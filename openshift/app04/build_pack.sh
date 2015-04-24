@@ -13,7 +13,7 @@ export target_tmp_dir='xxx' # ${OPENSHIFT_TMP_DIR}
 cd /tmp
 if [ ! -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
     if [ ! -f ccache-3.2.1.tar.xz ]; then
-        wget https://files3-20150207.rhcloud.com/files/ccache-3.2.1.tar.xz
+        wget http://samba.org/ftp/ccache/ccache-3.2.1.tar.xz
     fi
     tar Jxf ccache-3.2.1.tar.xz
     cd ccache-3.2.1
