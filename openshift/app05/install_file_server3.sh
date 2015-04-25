@@ -107,8 +107,14 @@ export CCACHE_MAXSIZE=300M
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
+rm -rf httpd-${apache_version}
+rm -f httpd-${apache_version}.tar.bz2
 
+tar jxf httpd-${apache_version}.tar.bz2
+
+popd > /dev/null
 __HEREDOC__
 popd > /dev/null
 
