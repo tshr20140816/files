@@ -10,35 +10,40 @@ rm -f ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}.tar.gz
 rm -rf ${OPENSHIFT_DATA_DIR}/delegate/
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/delegate${delegate_version}.tar.gz ./
-echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz delegate${delegate_version}.tar.gz
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+    file_name=${OPENSHIFT_APP_UUID}_maked_delegate${delegate_version}.tar.xz
+    url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
+    while :
+    do
+        if [ $(wget -nv --spider --timeout 60 -t 1 ${url} 2>&1 | grep -c '200 OK') -eq 1 ]; then
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate maked wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            break
+        else
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate maked waiting" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            sleep 10s
+        fi
+    done
+    wget $(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate maked tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    tar Jxf ${file_name}
+    rm -f ${file_name}
+else
+    cp ${OPENSHIFT_DATA_DIR}/download_files/delegate${delegate_version}.tar.gz ./
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    tar xfz delegate${delegate_version}.tar.gz
+fi
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
-echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# CC="ccache gcc"
-# ccache gcc -DMKMKMK -DDEFCC=\"ccache gcc\" -I../gen -I../include -O2 -march=native -pipe -fomit-frame-pointer -s -Llib mkmkmk.c -o mkmkmk.exe
-# gcc: gcc": No such file or directory
-# <command-line>: warning: missing terminating " character
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+    :
+else
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
-ln -s ccache cc
-ln -s ccache gcc
-popd > /dev/null
-
-unset CC
-unset CXX
-
-# time make -j$(grep -c -e processor /proc/cpuinfo) \
-#  ADMIN=user@rhcloud.local \
-#  > ${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
-function030 delegate "-j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local"
-mv ${OPENSHIFT_LOG_DIR}/install_delegate.log ${OPENSHIFT_LOG_DIR}/install/
-
-pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
-unlink cc
-unlink gcc
-popd > /dev/null
+    time make -j$(grep -c -e processor /proc/cpuinfo) \
+     ADMIN=user@rhcloud.local \
+     > ${OPENSHIFT_LOG_DIR}/delegate.make.log 2>&1
+    mv ${OPENSHIFT_LOG_DIR}/install_delegate.log ${OPENSHIFT_LOG_DIR}/install/
+fi
 
 mkdir ${OPENSHIFT_DATA_DIR}/delegate/
 cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
