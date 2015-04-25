@@ -151,33 +151,47 @@ rm -rf ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version}
 rm -rf $OPENSHIFT_DATA_DIR/libmemcached
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/libmemcached-${libmemcached_version}.tar.gz ./
-echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz libmemcached-${libmemcached_version}.tar.gz
-popd > /dev/null
-pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
-
-if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached ]; then
-    config_cache_option="CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/libmemcached"
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+    file_name=${OPENSHIFT_APP_UUID}_maked_libmemcached-${libmemcached_version}.tar.xz
+    url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
+    while :
+    do
+        if [ $(wget -nv --spider --timeout 60 -t 1 ${url} 2>&1 | grep -c '200 OK') -eq 1 ]; then
+            break
+        else
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached maked waiting" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            sleep 10s
+        fi
+    done
+    wget $(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached maked tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    tar Jxf ${file_name}
+    rm -f ${file_name}
 else
-    config_cache_option='--config-cache'
+    cp -f ${OPENSHIFT_DATA_DIR}/download_files/libmemcached-${libmemcached_version}.tar.gz ./
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    tar xfz libmemcached-${libmemcached_version}.tar.gz
 fi
+popd > /dev/null
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
-enable_jobserver="no" \
- ./configure \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --prefix=${OPENSHIFT_DATA_DIR}/libmemcached ${config_cache_option} 2>&1 \
- | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+    :
+else
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+    enable_jobserver="no" \
+     ./configure \
+     --mandir=${OPENSHIFT_TMP_DIR}/man \
+     --docdir=${OPENSHIFT_TMP_DIR}/doc \
+     --prefix=${OPENSHIFT_DATA_DIR}/libmemcached 2>&1 \
+     | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
-[ -f ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/libmemcached
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
-# time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
-function030 libmemcached "-j2 -l3"
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+    time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
+    # function030 libmemcached "-j2 -l3"
+fi
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
