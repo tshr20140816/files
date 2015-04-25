@@ -53,9 +53,36 @@ pushd httpd-${apache_version} > /dev/null
 
 time make -j$(grep -c -e processor /proc/cpuinfo)
 popd > /dev/null
-rm -rf maked_httpd-${apache_version}.tar.xz
+rm -f maked_httpd-${apache_version}.tar.xz
 time tar Jcf ${host_name}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
 mv -f ${host_name}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf httpd-${apache_version}
+
+popd > /dev/null
+
+# ***** libmemcached *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf libmemcached-${libmemcached_version}
+rm -f libmemcached-${libmemcached_version}.tar.gz
+
+cp ${OPENSHIFT_DATA_DIR}/files/libmemcached-${libmemcached_version}.tar.gz ./
+if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
+    wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
+fi
+tar zxf libmemcached-${libmemcached_version}.tar.gz
+pushd libmemcached-${libmemcached_version} > /dev/null
+./configure \
+ --prefix=${data_dir}/apache \
+ --mandir=${tmp_dir}/man \
+ --docdir=${tmp_dir}/doc
+
+time make -j$(grep -c -e processor /proc/cpuinfo)
+popd > /dev/null
+rm -f maked_libmemcached-${libmemcached_version}.tar.xz
+time tar Jcf ${host_name}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
+mv -f ${host_name}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf libmemcached-${libmemcached_version}
 
 popd > /dev/null
