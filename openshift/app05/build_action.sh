@@ -70,6 +70,8 @@ popd > /dev/null
 rm -rf ${OPENSHIFT_DATA_DIR}.gem
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f rbenv-installer
 wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
@@ -92,6 +94,7 @@ time \
 ccache -s
 
 unset RBENV_ROOT
+unset GEM_HOME
 export PATH="${path_old}"
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
