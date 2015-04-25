@@ -34,6 +34,8 @@ export CCACHE_MAXSIZE=300M
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+ccache -z
+
 # ***** apache *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -55,6 +57,7 @@ pushd httpd-${apache_version} > /dev/null
 
 time make -j$(grep -c -e processor /proc/cpuinfo)
 popd > /dev/null
+ccache -s
 rm -f maked_httpd-${apache_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
 mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
@@ -82,6 +85,7 @@ pushd libmemcached-${libmemcached_version} > /dev/null
 
 time make -j$(grep -c -e processor /proc/cpuinfo)
 popd > /dev/null
+ccache -s
 rm -f maked_libmemcached-${libmemcached_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
 mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
@@ -112,7 +116,7 @@ unset CXX
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local
 popd > /dev/null
-
+ccache -s
 pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
 unlink cc
 unlink gcc
