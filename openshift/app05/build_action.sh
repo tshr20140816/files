@@ -4,7 +4,7 @@ if [ $# -ne 3 ]; then
     exit
 fi
 
-export host_name=${1}
+export app_uuid=${1}
 export data_dir=${2}
 export tmp_dir=${3}
 
@@ -54,8 +54,8 @@ pushd httpd-${apache_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 popd > /dev/null
 rm -f maked_httpd-${apache_version}.tar.xz
-time tar Jcf ${host_name}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
-mv -f ${host_name}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+time tar Jcf ${app_uuid}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
+mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf httpd-${apache_version}
 
 popd > /dev/null
@@ -81,8 +81,8 @@ pushd libmemcached-${libmemcached_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 popd > /dev/null
 rm -f maked_libmemcached-${libmemcached_version}.tar.xz
-time tar Jcf ${host_name}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
-mv -f ${host_name}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
+mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf libmemcached-${libmemcached_version}
 
 popd > /dev/null
@@ -119,8 +119,8 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 
 rm -f maked_delegate${delegate_version}.tar.xz
-time tar Jcf ${host_name}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
-mv -f ${host_name}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+time tar Jcf ${app_uuid}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
+mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf delegate${delegate_version}
 
 popd > /dev/null
