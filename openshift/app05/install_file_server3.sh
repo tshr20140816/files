@@ -123,12 +123,13 @@ export TZ=JST-9
 set -x
 
 echo 'build start'
+ymdhms=$(date +%Y%m%d%H%M%S)
 
 params=$(cat ${OPENSHIFT_DATA_DIR}/build_action_params)
 echo "${params}"
 nohup bash ${OPENSHIFT_DATA_DIR}/build_action.sh ${params} \
- >> ${OPENSHIFT_LOG_DIR}/nohup.log \
- 2>> ${OPENSHIFT_LOG_DIR}/nohup_error.log &
+ >> ${OPENSHIFT_LOG_DIR}/nohup.${ymdhms}.log \
+ 2>> ${OPENSHIFT_LOG_DIR}/nohup_error.${ymdhms}.log &
 
 rm -f ${OPENSHIFT_DATA_DIR}/build_action_params
 __HEREDOC__
