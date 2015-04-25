@@ -895,7 +895,7 @@ sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
 sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
 
 if [ ${build_server_password} != 'none' ]; then
-    wget --post-file=build_request.xml ${mirror_server}/build_action.php -O -
+    wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
 fi
 popd > /dev/null
 
