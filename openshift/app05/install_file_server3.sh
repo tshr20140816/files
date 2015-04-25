@@ -62,7 +62,7 @@ if ( $password != '__BUILD_PASSWORD__' )
 {
     die;
 }
-$uuid = $xml->host_name['value'];
+$uuid = $xml->uuid['value'];
 $data_dir = $xml->data_dir['value'];
 $tmp_dir = $xml->tmp_dir['value'];
 unlink($file_name);
