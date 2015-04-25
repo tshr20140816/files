@@ -879,6 +879,8 @@ cat << '__HEREDOC__' > build_request.xml
   <tmp_dir value="__TMP_DIR__" />
   <items>
     <item app="apache" version="__APACHE_VERSION__" />
+    <item app="ruby" version="__RUBY_VERSION__" />
+    <item app="php" version="__PHP_VERSION__" />
     <item app="libmemcached" version="__LIBMEMCACHED_VERSION__" />
     <item app="delegate" version="__DELEGATE_VERSION__" />
     <item app="tcl" version="__TCL_VERSION__" />
@@ -890,6 +892,8 @@ sed -i -e "s|__UUID__|${OPENSHIFT_APP_UUID}|g" build_request.xml
 sed -i -e "s|__DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" build_request.xml
 sed -i -e "s|__TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" build_request.xml
 sed -i -e "s|__APACHE_VERSION__|${apache_version}|g" build_request.xml
+sed -i -e "s|__RUBY_VERSION__|${ruby_version}|g" build_request.xml
+sed -i -e "s|__PHP_VERSION__|${php_version}|g" build_request.xml
 sed -i -e "s|__LIBMEMCACHED_VERSION__|${libmemcached_version}|g" build_request.xml
 sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
 sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
