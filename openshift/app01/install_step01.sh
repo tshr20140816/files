@@ -96,7 +96,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 14 ]; then
+if [ $# -ne 15 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -112,6 +112,7 @@ if [ $# -ne 14 ]; then
     echo "arg12 : password of ccache upload for mirror server"
     echo "arg13 : schedule server (fqdn)"
     echo "arg14 : make ccache data (yes/no)"
+    echo "arg15 : build server uri (http://xxx/files/build_action.php / none)"
     exit
 fi
 
@@ -129,6 +130,7 @@ mirror_server=${11}
 ccache_upload_password=${12}
 schedule_server=${13}
 is_make_ccache_data=${14}
+build_server_uri=${15}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -146,6 +148,7 @@ echo "${web_beacon_server_user}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_serve
 echo "${ccache_upload_password}" > ${OPENSHIFT_DATA_DIR}/params/ccache_upload_password
 echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
 echo "${is_make_ccache_data}" > ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data
+echo "${build_server_uri}" > ${OPENSHIFT_DATA_DIR}/params/build_server_uri
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -862,6 +865,30 @@ popd > /dev/null
 
 # gcc --version
 # gcc -march=native -Q --help=target
+
+# ***** build request *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cat << '__HEREDOC__' > build_request.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <passsword value="__PASSWORD__" />
+  <host_name value="__HOST_NAME__" />
+  <data_dir value="__DATA_DIR__" />
+  <tmp_dir value="__TMP_DIR__" />
+  <items>
+    <item app="apache" version="__APACHE_VERSION__" />
+    <item app="libmemcached" version="__LIBMEMCACHED_VERSION__" />
+    <item app="delegate" version="__DELEGATE_VERSION__" />
+    <item app="tcl" version="__TCL_VERSION__" />
+  </items>
+</root>
+__HEREDOC__
+popd > /dev/null
+
+if [ ${build_server_uri} != 'none' ]; then
+    :
+fi
 
 set +x
 
