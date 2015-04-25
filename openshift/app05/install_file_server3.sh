@@ -43,7 +43,7 @@ pushd  ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <passsword value="" />
-  <host_name value="" />
+  <uuid value="" />
   <data_dir value="" />
   <tmp_dir value="" />
   <items>
@@ -57,20 +57,21 @@ cat << '__HEREDOC__' > build_action.php
 $file_name = getenv('OPENSHIFT_DATA_DIR') . 'version_list';
 $xml_data = file_get_contents('php://input');
 $xml = simplexml_load_string($xml_data);
-$password = $xml->root->passsword['value'];
+$password = $xml->passsword['value'];
 if ( $password != '__BUILD_PASSWORD__' )
 {
     die;
 }
-$host_name = $xml->root->host_name['value'];
-$data_dir = $xml->root->data_dir['value'];
-$tmp_dir = $xml->root->tmp_dir['value'];
+$uuid = $xml->host_name['value'];
+$data_dir = $xml->data_dir['value'];
+$tmp_dir = $xml->tmp_dir['value'];
 unlink($file_name);
-foreach($xml->root->items->item as $item)
+foreach($xml->items->item as $item)
 {
-    file_put_contents($file_name, $item['app'] . '_version ' . $item['version'] + '\r\n', FILE_APPEND);
+    file_put_contents($file_name, $item['app'] . '_version ' . $item['version'] . "\r\n", FILE_APPEND);
 }
-system('nohup bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $host_name . ' ' . $data_dir . ' ' . $tmp_dir . ' &');
+//system('nohup bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $uuid . ' ' . $data_dir . ' ' . $tmp_dir . ' &');
+file_put_contents(getenv('OPENSHIFT_DATA_DIR') . 'build_action_params', $uuid . ' ' . $data_dir . ' ' . $tmp_dir);
 ?>
 __HEREDOC__
 sed -i -e "s|__BUILD_PASSWORD__|${build_password}|g" build_action.php
