@@ -147,6 +147,7 @@ echo "${delegate_pop_server}" > ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server
 echo "${another_server_check}" > ${OPENSHIFT_DATA_DIR}/params/another_server_check
 echo "${web_beacon_server}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server
 echo "${web_beacon_server_user}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user
+echo "${mirror_server}" > ${OPENSHIFT_DATA_DIR}/params/mirror_server
 echo "${ccache_upload_password}" > ${OPENSHIFT_DATA_DIR}/params/ccache_upload_password
 echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
 echo "${is_make_ccache_data}" > ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data
