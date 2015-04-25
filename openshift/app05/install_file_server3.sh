@@ -70,7 +70,7 @@ foreach($xml->root->items->item as $item)
 {
     file_put_contents($file_name, $item['app'] . ' ' . $item['version'] + '\r\n', FILE_APPEND);
 }
-system('bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $host_name . ' ' . $data_dir . ' ' . $tmp_dir);
+system('nohup bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $host_name . ' ' . $data_dir . ' ' . $tmp_dir . ' &');
 ?>
 __HEREDOC__
 sed -i -e "s|__BUILD_PASSWORD__|${build_password}|g" build_action.php
