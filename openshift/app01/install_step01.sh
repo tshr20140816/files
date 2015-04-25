@@ -96,7 +96,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 16 ]; then
+if [ $# -ne 15 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -108,12 +108,11 @@ if [ $# -ne 16 ]; then
     echo "arg8 : another server check (yes/no)"
     echo "arg9 : web beacon server https://xxx/"
     echo "arg10 : web beacon server user (digest auth)"
-    echo "arg11 : files download mirror server (http://xxx/files/ / none)"
+    echo "arg11 : files download mirror/build server (http://xxx/files/ / none)"
     echo "arg12 : password of ccache upload for mirror server"
-    echo "arg13 : schedule server (fqdn)"
-    echo "arg14 : make ccache data (yes/no)"
-    echo "arg15 : build server uri (http://xxx/files/build_action.php / none)"
-    echo "arg16 : build server password"
+    echo "arg13 : build server password (password / none)"
+    echo "arg14 : schedule server (fqdn)"
+    echo "arg15 : make ccache data (yes/no)"
     exit
 fi
 
@@ -129,10 +128,9 @@ web_beacon_server=${9}
 web_beacon_server_user=${10}
 mirror_server=${11}
 ccache_upload_password=${12}
-schedule_server=${13}
-is_make_ccache_data=${14}
-build_server_uri=${15}
-build_server_password=${16}
+build_server_password=${13}
+schedule_server=${14}
+is_make_ccache_data=${15}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -151,7 +149,6 @@ echo "${mirror_server}" > ${OPENSHIFT_DATA_DIR}/params/mirror_server
 echo "${ccache_upload_password}" > ${OPENSHIFT_DATA_DIR}/params/ccache_upload_password
 echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
 echo "${is_make_ccache_data}" > ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data
-echo "${build_server_uri}" > ${OPENSHIFT_DATA_DIR}/params/build_server_uri
 echo "${build_server_password}" > ${OPENSHIFT_DATA_DIR}/params/build_server_password
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -898,7 +895,7 @@ sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
 sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
 
 if [ ${build_server_uri} != 'none' ]; then
-    wget --post-file=build_request.xml ${build_server_uri} -O -
+    wget --post-file=build_request.xml ${mirror_server}/build_action.php -O -
 fi
 popd > /dev/null
 
