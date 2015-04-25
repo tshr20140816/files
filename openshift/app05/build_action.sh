@@ -86,3 +86,41 @@ mv -f ${host_name}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT
 rm -rf libmemcached-${libmemcached_version}
 
 popd > /dev/null
+
+# ***** delegate *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf delegate${delegate_version}
+rm -f delegate${delegate_version}.tar.gz
+
+cp ${OPENSHIFT_DATA_DIR}/files/delegate${delegate_version}.tar.gz ./
+if [ ! -f delegate${delegate_version}.tar.gz ]; then
+    wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
+fi
+tar xfz delegate${delegate_version}.tar.gz
+
+pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
+ln -s ccache cc
+ln -s ccache gcc
+popd > /dev/null
+unset CC
+unset CXX
+
+pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
+time make -j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local
+popd > /dev/null
+
+pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
+unlink cc
+unlink gcc
+popd > /dev/null
+export CC="ccache gcc"
+export CXX="ccache g++"
+
+rm -f maked_delegate${delegate_version}.tar.xz
+time tar Jcf ${host_name}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
+mv -f ${host_name}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf delegate${delegate_version}
+
+popd > /dev/null
