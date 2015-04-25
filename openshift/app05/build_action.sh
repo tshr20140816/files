@@ -107,6 +107,11 @@ if [ ! -f delegate${delegate_version}.tar.gz ]; then
 fi
 tar xfz delegate${delegate_version}.tar.gz
 
+# CC="ccache gcc"
+# ccache gcc -DMKMKMK -DDEFCC=\"ccache gcc\" -I../gen -I../include -O2 -march=native -pipe -fomit-frame-pointer -s -Llib mkmkmk.c -o mkmkmk.exe
+# gcc: gcc": No such file or directory
+# <command-line>: warning: missing terminating " character
+    
 pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
 ln -s ccache cc
 ln -s ccache gcc
