@@ -68,7 +68,7 @@ $tmp_dir = $xml->root->tmp_dir['value'];
 unlink($file_name);
 foreach($xml->root->items->item as $item)
 {
-    file_put_contents($file_name, $item['app'] . ' ' . $item['version'] + '\r\n', FILE_APPEND);
+    file_put_contents($file_name, $item['app'] . '_version ' . $item['version'] + '\r\n', FILE_APPEND);
 }
 system('nohup bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $host_name . ' ' . $data_dir . ' ' . $tmp_dir . ' &');
 ?>
