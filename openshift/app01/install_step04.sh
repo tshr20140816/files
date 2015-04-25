@@ -10,7 +10,7 @@ rm -rf ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_uri) != "none" ]; then
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${OPENSHIFT_APP_UUID}_maked_httpd-${apache_version}.tar.xz
     while :
     do
@@ -35,7 +35,7 @@ pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 
 # *** configure make install ***
 
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_uri) != "none" ]; then
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     :
 else
     echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
