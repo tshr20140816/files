@@ -42,9 +42,9 @@ pushd  ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
 : << '__COMMENT__'
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-  <passsword="" />
-  <data_dir="" />
-  <tmp_dir="" />
+  <passsword value="" />
+  <data_dir value="" />
+  <tmp_dir value="" />
   <items>
     <item app="" version="" />
   </items>
@@ -53,11 +53,25 @@ __COMMENT__
 
 cat << '__HEREDOC__' > build_action.php
 <?php
-$file_name = '__OPENSHIFT_TMP_DIR__/build_action.xml';
-file_put_contents($file_name, file_get_contents('php://input'));
+$file_name = getenv('OPENSHIFT_DATA_DIR') . 'version_list';
+$xml_data = file_get_contents('php://input');
+$xml = simplexml_load_string($xml_data);
+$password = $xml->root->passsword['value'];
+if ( $password != '__BUILD_PASSWORD__' )
+{
+    die;
+}
+$data_dir = $xml->root->data_dir['value'];
+$tmp_dir = $xml->root->tmp_dir['value'];
+unlink($file_name);
+foreach($xml->root->items->item as $item)
+{
+    file_put_contents($file_name, $item['app'] . ' ' . $item['version'] + '\r\n', FILE_APPEND);
+}
+system('bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $data_dir . ' ' . $tmp_dir);
 ?>
 __HEREDOC__
-sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" build_action.php
+sed -i -e "s|__BUILD_PASSWORD__|${build_password}|g" build_action.php
 popd > /dev/null
 
 # ***** cron minutely *****
