@@ -157,6 +157,7 @@ if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     while :
     do
         if [ $(wget -nv --spider --timeout 60 -t 1 ${url} 2>&1 | grep -c '200 OK') -eq 1 ]; then
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached maked wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
             break
         else
             echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached maked waiting" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
