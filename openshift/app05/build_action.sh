@@ -58,7 +58,7 @@ pushd httpd-${apache_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 popd > /dev/null
 ccache -s
-rm -f maked_httpd-${apache_version}.tar.xz
+rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
 mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf httpd-${apache_version}
@@ -98,6 +98,8 @@ unset GEM_HOME
 export PATH="${path_old}"
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
+rm -f ${app_uuid}_maked_ruby_${ruby_version}_gem.tar.xz
 time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_gem.tar.xz ./.gem
@@ -128,7 +130,7 @@ pushd libmemcached-${libmemcached_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 popd > /dev/null
 ccache -s
-rm -f maked_libmemcached-${libmemcached_version}.tar.xz
+rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
 mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf libmemcached-${libmemcached_version}
@@ -172,9 +174,37 @@ popd > /dev/null
 export CC="ccache gcc"
 export CXX="ccache g++"
 
-rm -f maked_delegate${delegate_version}.tar.xz
+rm -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
 mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf delegate${delegate_version}
 rm -f delegate${delegate_version}.tar.gz
+popd > /dev/null
+
+# ***** tcl *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf delegate${delegate_version}
+rm -f tcl${tcl_version}-src.tar.gz
+
+cp ${OPENSHIFT_DATA_DIR}/files/tcl${tcl_version}-src.tar.gz ./
+if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
+    wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
+fi
+tar xfz tcl${tcl_version}-src.tar.gz
+
+pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
+./configure \
+ --mandir=${tmp_dir}/man \
+ --disable-symbols \
+ --prefix=${data_dir}/tcl
+
+time make -j2 -l3
+popd > /dev/null
+rm -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz
+time tar Jcf ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz tcl${tcl_version}
+mv -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf tcl${tcl_version}
+rm -f tcl${tcl_version}-src.tar.gz
 popd > /dev/null
