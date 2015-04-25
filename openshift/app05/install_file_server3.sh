@@ -111,6 +111,28 @@ __HEREDOC__
 chmod +x make_index.sh
 echo make_index.sh >> jobs.allow
 
+# *** build action ***
+
+cat << '__HEREDOC__' > build_action_start.sh
+#!/bin/bash
+
+export TZ=JST-9
+
+[ ! -f ${OPENSHIFT_DATA_DIR}/build_action_params ] && exit
+
+set -x
+
+echo 'build start'
+
+params=$(cat ${OPENSHIFT_DATA_DIR}/build_action_params)
+echo "${params}"
+nohup bash ${OPENSHIFT_DATA_DIR}/build_action.sh ${params} &
+
+rm -f ${OPENSHIFT_DATA_DIR}/build_action_params
+__HEREDOC__
+chmod +x build_action_start.sh
+echo build_action_start.sh >> jobs.allow
+
 popd > /dev/null
 
 # ***** cron daily *****
