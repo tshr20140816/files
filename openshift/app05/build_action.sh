@@ -79,7 +79,7 @@ fi
 tar zxf libmemcached-${libmemcached_version}.tar.gz
 pushd libmemcached-${libmemcached_version} > /dev/null
 ./configure \
- --prefix=${data_dir}/apache \
+ --prefix=${data_dir}/libmemcached \
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc
 
