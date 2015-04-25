@@ -65,6 +65,45 @@ rm -rf httpd-${apache_version}
 rm -f httpd-${apache_version}.tar.bz2
 popd > /dev/null
 
+# ***** ruby (rbenv) *****
+
+rm -rf ${OPENSHIFT_DATA_DIR}.gem
+rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f rbenv-installer
+wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
+bash rbenv-installer
+rm rbenv-installer
+popd > /dev/null
+
+path_old="$PATH"
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+
+time \
+ CONFIGURE_OPTS="--disable-install-doc --mandir=${tmp_dir}/man --docdir=${tmp_dir}/doc" \
+ RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
+ MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
+ rbenv install -v ${ruby_version}
+
+ccache -s
+
+unset RBENV_ROOT
+export PATH="${path_old}"
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
+mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_gem.tar.xz ./.gem
+mv -f ${app_uuid}_maked_ruby_${ruby_version}_gem.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+popd > /dev/null
+
+rm -rf ${OPENSHIFT_DATA_DIR}.gem
+rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
+
 # ***** libmemcached *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
