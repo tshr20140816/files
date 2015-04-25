@@ -70,8 +70,8 @@ foreach($xml->items->item as $item)
 {
     file_put_contents($file_name, $item['app'] . '_version ' . $item['version'] . "\n", FILE_APPEND);
 }
-system('nohup bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $uuid . ' ' . $data_dir . ' ' . $tmp_dir . ' &');
-// file_put_contents(getenv('OPENSHIFT_DATA_DIR') . 'build_action_params', $uuid . ' ' . $data_dir . ' ' . $tmp_dir);
+// system('nohup bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $uuid . ' ' . $data_dir . ' ' . $tmp_dir . ' &');
+file_put_contents(getenv('OPENSHIFT_DATA_DIR') . 'build_action_params', $uuid . ' ' . $data_dir . ' ' . $tmp_dir);
 ?>
 __HEREDOC__
 sed -i -e "s|__BUILD_PASSWORD__|${build_password}|g" build_action.php
@@ -126,7 +126,9 @@ echo 'build start'
 
 params=$(cat ${OPENSHIFT_DATA_DIR}/build_action_params)
 echo "${params}"
-nohup bash ${OPENSHIFT_DATA_DIR}/build_action.sh ${params} &
+nohup bash ${OPENSHIFT_DATA_DIR}/build_action.sh ${params} \
+ >> ${OPENSHIFT_LOG_DIR}/nohup.log \
+ 2>> ${OPENSHIFT_LOG_DIR}/nohup_error.log &
 
 rm -f ${OPENSHIFT_DATA_DIR}/build_action_params
 __HEREDOC__
