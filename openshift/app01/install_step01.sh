@@ -96,7 +96,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 15 ]; then
+if [ $# -ne 16 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -113,6 +113,7 @@ if [ $# -ne 15 ]; then
     echo "arg13 : schedule server (fqdn)"
     echo "arg14 : make ccache data (yes/no)"
     echo "arg15 : build server uri (http://xxx/files/build_action.php / none)"
+    echo "arg16 : build server password"
     exit
 fi
 
@@ -131,6 +132,7 @@ ccache_upload_password=${12}
 schedule_server=${13}
 is_make_ccache_data=${14}
 build_server_uri=${15}
+build_server_password=${16}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -149,6 +151,7 @@ echo "${ccache_upload_password}" > ${OPENSHIFT_DATA_DIR}/params/ccache_upload_pa
 echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
 echo "${is_make_ccache_data}" > ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data
 echo "${build_server_uri}" > ${OPENSHIFT_DATA_DIR}/params/build_server_uri
+echo "${build_server_password}" > ${OPENSHIFT_DATA_DIR}/params/build_server_password
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -873,7 +876,7 @@ cat << '__HEREDOC__' > build_request.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <passsword value="__PASSWORD__" />
-  <host_name value="__HOST_NAME__" />
+  <uuid value="__UUID__" />
   <data_dir value="__DATA_DIR__" />
   <tmp_dir value="__TMP_DIR__" />
   <items>
@@ -884,11 +887,19 @@ cat << '__HEREDOC__' > build_request.xml
   </items>
 </root>
 __HEREDOC__
-popd > /dev/null
+sed -i -e "s|__PASSWORD__|${build_server_password}|g" build_request.xml
+sed -i -e "s|__UUID__|${OPENSHIFT_APP_UUID}|g" build_request.xml
+sed -i -e "s|__DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" build_request.xml
+sed -i -e "s|__TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" build_request.xml
+sed -i -e "s|__APACHE_VERSION__|${apache_version}|g" build_request.xml
+sed -i -e "s|__LIBMEMCACHED_VERSION__|${libmemcached_version}|g" build_request.xml
+sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
+sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
 
 if [ ${build_server_uri} != 'none' ]; then
-    :
+    wget --post-file=build_request.xml ${build_server_uri}
 fi
+popd > /dev/null
 
 set +x
 
