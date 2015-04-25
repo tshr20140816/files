@@ -189,7 +189,7 @@ popd > /dev/null
 __HEREDOC__
 chmod +x gem.sh
 echo gem.sh >> jobs.allow
-./gem.sh
+./gem.sh &
 
 # *** download_file_list ***
 # https://github.com/tshr20140816/files/raw/master/openshift/app05/download_file_list.txt
@@ -218,6 +218,8 @@ echo download_file_list.sh >> jobs.allow
 ./download_file_list.sh
 
 popd > /dev/null
+
+wait
 
 # ***** log dir digest auth *****
 
