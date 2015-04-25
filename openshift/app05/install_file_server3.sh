@@ -24,15 +24,22 @@ popd > /dev/null
 # ***** ccache *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-if [ ! -f ccache-3.2.1.tar.xz ]; then
-    wget http://samba.org/ftp/ccache/ccache-3.2.1.tar.xz
-fi
+cat << '__HEREDOC__' > build_ccache.sh
+#!/bin/bash
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f ccache-3.2.1.tar.xz
+wget http://samba.org/ftp/ccache/ccache-3.2.1.tar.xz
 tar Jxf ccache-3.2.1.tar.xz
 cd ccache-3.2.1
 CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
  ./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache --mandir=/tmp/man --docdir=/tmp/doc
 make -j$(grep -c -e processor /proc/cpuinfo)
 make install
+popd > /dev/null
+__HEREDOC__
+chmod +x 
+./build_ccache.sh &
 popd > /dev/null
 
 # ***** build action *****
