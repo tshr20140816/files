@@ -8,9 +8,13 @@ export app_uuid=${1}
 export data_dir=${2}
 export tmp_dir=${3}
 
+date >> ${OPENSHIFT_LOG_DIR}/build_action.log
+
 if [ ! -f ${OPENSHIFT_DATA_DIR}/version_list ]; then
     exit
 fi
+
+echo 'start' >> ${OPENSHIFT_LOG_DIR}/build_action.log
 
 rm -f ${OPENSHIFT_DATA_DIR}/files/${host_name}_maked_*
 
