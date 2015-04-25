@@ -43,6 +43,7 @@ pushd  ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <passsword value="" />
+  <host_name value="" />
   <data_dir value="" />
   <tmp_dir value="" />
   <items>
@@ -61,6 +62,7 @@ if ( $password != '__BUILD_PASSWORD__' )
 {
     die;
 }
+$host_name = $xml->root->host_name['value'];
 $data_dir = $xml->root->data_dir['value'];
 $tmp_dir = $xml->root->tmp_dir['value'];
 unlink($file_name);
@@ -68,7 +70,7 @@ foreach($xml->root->items->item as $item)
 {
     file_put_contents($file_name, $item['app'] . ' ' . $item['version'] + '\r\n', FILE_APPEND);
 }
-system('bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $data_dir . ' ' . $tmp_dir);
+system('bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $host_name . ' ' . $data_dir . ' ' . $tmp_dir);
 ?>
 __HEREDOC__
 sed -i -e "s|__BUILD_PASSWORD__|${build_password}|g" build_action.php
