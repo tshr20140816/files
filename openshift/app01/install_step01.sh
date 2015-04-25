@@ -897,7 +897,7 @@ sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
 sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
 
 if [ ${build_server_uri} != 'none' ]; then
-    wget --post-file=build_request.xml ${build_server_uri}
+    wget --post-file=build_request.xml ${build_server_uri} -O -
 fi
 popd > /dev/null
 
