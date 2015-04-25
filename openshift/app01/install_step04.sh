@@ -11,7 +11,8 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
-    url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${OPENSHIFT_APP_UUID}_maked_httpd-${apache_version}.tar.xz
+    file_name=${OPENSHIFT_APP_UUID}_maked_httpd-${apache_version}.tar.xz
+    url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
     while :
     do
         if [ $(wget -nv --spider --timeout 60 -t 1 ${url} 2>&1 | grep -c '200 OK') -eq 1 ]; then
@@ -21,9 +22,10 @@ if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
             sleep 10s
         fi
     done
-    wget $(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${OPENSHIFT_APP_UUID}_maked_httpd-${apache_version}.tar.xz
+    wget $(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
     echo "$(date +%Y/%m/%d" "%H:%M:%S) apache maked tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    tar Jxf ${OPENSHIFT_APP_UUID}_maked_httpd-${apache_version}.tar.xz
+    tar Jxf ${file_name}
+    rm -f ${file_name}
 else
     cp -f ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.bz2 ./
     echo "$(date +%Y/%m/%d" "%H:%M:%S) apache tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -45,7 +47,6 @@ else
      --mandir=${OPENSHIFT_TMP_DIR}/man \
      --docdir=${OPENSHIFT_TMP_DIR}/doc \
      --enable-mods-shared='all proxy' 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
-    [ -f ${OPENSHIFT_DATA_DIR}/config_cache/apache ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/apache
     echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache.log
     time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
