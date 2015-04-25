@@ -197,12 +197,12 @@ echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 
 if [ "${mirror_server}" != "none" ]; then
     # ccache cache
-    wget -t1 ${mirror_server}/ccache_apache.tar.xz &
+    # wget -t1 ${mirror_server}/ccache_apache.tar.xz &
     wget -t1 ${mirror_server}/ccache_php.tar.xz &
-    wget -t1 ${mirror_server}/ccache_libmemcached.tar.xz &
-    wget -t1 ${mirror_server}/ccache_delegate.tar.xz &
+    # wget -t1 ${mirror_server}/ccache_libmemcached.tar.xz &
+    # wget -t1 ${mirror_server}/ccache_delegate.tar.xz &
     wget -t1 ${mirror_server}/ccache_ruby.tar.xz &
-    wget -t1 ${mirror_server}/ccache_tcl.tar.xz &
+    # wget -t1 ${mirror_server}/ccache_tcl.tar.xz &
     wget -t1 ${mirror_server}/ccache_passenger.tar.xz &
     # wget -t1 ${mirror_server}/ccache.tar.xz
 
