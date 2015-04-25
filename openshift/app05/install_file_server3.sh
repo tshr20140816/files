@@ -74,6 +74,44 @@ __HEREDOC__
 sed -i -e "s|__BUILD_PASSWORD__|${build_password}|g" build_action.php
 popd > /dev/null
 
+pushd  ${OPENSHIFT_DATA_DIR} > /dev/null
+cat << '__HEREDOC__' > build_action.sh
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    exit
+fi
+
+export data_dir=${1}
+export tmp_dir=${2}
+
+if [ ! -f ${OPENSHIFT_DATA_DIR}/version_list ]; then
+    exit
+fi
+
+while read LINE
+do
+    product=$(echo "${LINE}" | awk '{print $1}')
+    version=$(echo "${LINE}" | awk '{print $2}')
+    eval "${product}"="${version}"
+done < ${OPENSHIFT_DATA_DIR}/version_list
+
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+export CC="ccache gcc"
+export CXX="ccache g++"
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_MAXSIZE=300M
+
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
+
+
+__HEREDOC__
+popd > /dev/null
+
 # ***** cron minutely *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
