@@ -62,7 +62,7 @@ rm -f maked_httpd-${apache_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
 mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf httpd-${apache_version}
-
+rm -f httpd-${apache_version}.tar.bz2
 popd > /dev/null
 
 # ***** libmemcached *****
@@ -90,6 +90,7 @@ rm -f maked_libmemcached-${libmemcached_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
 mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf libmemcached-${libmemcached_version}
+rm -f libmemcached-${libmemcached_version}.tar.gz
 
 popd > /dev/null
 
@@ -128,5 +129,5 @@ rm -f maked_delegate${delegate_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
 mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf delegate${delegate_version}
-
+rm -f delegate${delegate_version}.tar.gz
 popd > /dev/null
