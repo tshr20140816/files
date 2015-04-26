@@ -89,7 +89,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
 
 time \
- CONFIGURE_OPTS="--disable-install-doc --mandir=${tmp_dir}/man --docdir=${tmp_dir}/doc" \
+ CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc" \
  RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
  MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
  rbenv install -v ${ruby_version}
