@@ -101,6 +101,7 @@ unset GEM_HOME
 export PATH="${path_old}"
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+tree ./.gem
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_gem.tar.xz
 time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
