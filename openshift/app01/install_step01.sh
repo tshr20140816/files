@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.04.27 redmine_version 2.6.3 → 2.6.4
 # 2015.04.24 wordpress_version 4.1.2-ja → 4.2-ja
 # 2015.04.22 wordpress_version 4.1.1-ja → 4.1.2-ja
 # 2015.04.17 fio_version 2.2.5 → 2.2.7
@@ -55,7 +56,7 @@ murlin_version 0.2.4
 php_version 5.6.8
 phpicalendar_version 2.4_20100615
 pigz_version 2.3.3
-redmine_version 2.6.3
+redmine_version 2.6.4
 ruby_version 2.1.6
 tcl_version 8.6.3
 ttrss_version 1.15.3
