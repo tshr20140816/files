@@ -781,12 +781,9 @@ do
         [ -f ${gem}-${version}.gem ] || files_exists=0
     done
 
+    wait
     if [ "${files_exists}" -eq 1 ]; then
         break
-    elif [ ${i} -gt 5 ]; then
-        sleep 10s
-    else
-        wait
     fi
 done
 
