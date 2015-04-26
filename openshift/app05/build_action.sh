@@ -104,16 +104,12 @@ unset GEM_HOME
 export PATH="${path_old}"
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-tree ./.gem
+find ./.rbenv/ -name * -type f print0 | xargs sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g"
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
-rm -f ${app_uuid}_maked_ruby_${ruby_version}_gem.tar.xz
 time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_gem.tar.xz ./.gem
-mv -f ${app_uuid}_maked_ruby_${ruby_version}_gem.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 popd > /dev/null
 
-rm -rf ${OPENSHIFT_DATA_DIR}.gem
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 
 # ***** libmemcached *****
