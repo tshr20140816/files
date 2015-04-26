@@ -31,7 +31,8 @@ rbenv -v | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** ruby ***
 
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+# if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+if [ 1 -eq 0 ]; then
     pushd ${OPENSHIFT_DATA_DIR} > /dev/null
     file_name=${OPENSHIFT_APP_UUID}_maked_ruby_${ruby_version}_rbenv.tar.xz
     url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
@@ -79,6 +80,7 @@ fi
 rbenv global ${ruby_version}
 rbenv rehash
 ruby -v
+tree ${OPENSHIFT_DATA_DIR}.gem
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
