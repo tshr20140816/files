@@ -58,6 +58,9 @@ pushd httpd-${apache_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 popd > /dev/null
 ccache -s
+rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
+time tar jcf ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 httpd-${apache_version}
+mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 ${OPENSHIFT_DATA_DIR}/files/
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
 mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
