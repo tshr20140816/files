@@ -11,7 +11,8 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
-    file_name=${OPENSHIFT_APP_UUID}_maked_httpd-${apache_version}.tar.xz
+    # file_name=${OPENSHIFT_APP_UUID}_maked_httpd-${apache_version}.tar.xz
+    file_name=${OPENSHIFT_APP_UUID}_maked_httpd-${apache_version}.tar.bz2
     url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
     while :
     do
@@ -25,7 +26,8 @@ if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     done
     wget $(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
     echo "$(date +%Y/%m/%d" "%H:%M:%S) apache maked tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    tar Jxf ${file_name}
+    # tar Jxf ${file_name}
+    tar jxf ${file_name}
     rm -f ${file_name}
 else
     cp -f ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.bz2 ./
