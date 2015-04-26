@@ -3,7 +3,7 @@
 if [ $# -ne 3 ]; then
     exit
 fi
-
+    
 export app_uuid=${1}
 export data_dir=${2}
 export tmp_dir=${3}
@@ -13,6 +13,9 @@ if [ ! -f ${OPENSHIFT_DATA_DIR}/version_list ]; then
 fi
 
 set -x
+
+memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
 rm -f ${OPENSHIFT_DATA_DIR}/files/${host_name}_maked_*
 
@@ -213,3 +216,6 @@ mv -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz ${OPENSHIFT_DATA_DIR}/files
 rm -rf tcl${tcl_version}
 rm -f tcl${tcl_version}-src.tar.gz
 popd > /dev/null
+
+memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
