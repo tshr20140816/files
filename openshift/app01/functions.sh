@@ -23,6 +23,7 @@ function010() {
             export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
             export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
             export CCACHE_MAXSIZE=300M
+            export CCACHE_COMPILERCHECK=content
             export CCACHE_BASEDIR=${OPENSHIFT_HOME_DIR}
             # if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) != "yes" ]; then
             #     export CCACHE_READONLY=true
