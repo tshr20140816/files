@@ -782,9 +782,7 @@ do
     done
 
     wait
-    if [ "${files_exists}" -eq 1 ]; then
-        break
-    fi
+    [ "${files_exists}" -eq 1 ] && break
 done
 
 popd > /dev/null
