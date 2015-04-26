@@ -202,6 +202,7 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 
 time make -j2 -l3
 popd > /dev/null
+ccache -s
 rm -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz
 time tar Jcf ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz tcl${tcl_version}
 mv -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz ${OPENSHIFT_DATA_DIR}/files/
