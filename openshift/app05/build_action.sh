@@ -14,6 +14,8 @@ fi
 
 set -x
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) start"
+
 memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
@@ -40,6 +42,8 @@ export CXXFLAGS="${CFLAGS}"
 ccache -z
 
 # ***** apache *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
@@ -73,6 +77,8 @@ popd > /dev/null
 
 # ***** libmemcached *****
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached"
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
 rm -rf libmemcached-${libmemcached_version}
@@ -101,6 +107,8 @@ rm -f libmemcached-${libmemcached_version}.tar.gz
 popd > /dev/null
 
 # ***** ruby (rbenv) *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby"
 
 rm -rf ${OPENSHIFT_DATA_DIR}.gem
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
@@ -143,6 +151,8 @@ rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 
 # ***** tcl *****
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) tcl"
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
 rm -rf delegate${delegate_version}
@@ -174,6 +184,8 @@ memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Co
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
 # ***** delegate *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
@@ -215,3 +227,5 @@ mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}
 rm -rf delegate${delegate_version}
 rm -f delegate${delegate_version}.tar.gz
 popd > /dev/null
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) finish"
