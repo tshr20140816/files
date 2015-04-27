@@ -32,6 +32,8 @@ rbenv -v | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # *** ruby ***
 
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+    export CC="ccache gcc"
+    export CXX="ccache g++"
     pushd ${OPENSHIFT_DATA_DIR} > /dev/null
     file_name=${OPENSHIFT_APP_UUID}_maked_ruby_${ruby_version}_rbenv.tar.xz
     url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
@@ -50,6 +52,8 @@ if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     tar Jxf ${file_name}
     rm -f ${file_name}
     popd > /dev/null
+    unset CC
+    unset CXX
 else
     pushd ${OPENSHIFT_TMP_DIR} > /dev/null
     rm -f ccache.tar.xz
@@ -81,14 +85,6 @@ rbenv rehash
 ruby -v
 tree ${OPENSHIFT_DATA_DIR}.gem
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
-    time tar Jcf ccache.tar.xz ccache
-    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_ruby.tar.xz
-fi
-popd > /dev/null
-
 # *** patch resolv.rb ***
 
 # OPENSHIFT では  0.0.0.0 は使えないため OPENSHIFT_DIY_IP に置換
@@ -112,8 +108,6 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
 
 rbenv exec gem --version | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 rbenv exec gem env | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-unset CC
-unset CXX
 
 for gem in bundler rack passenger
 do
