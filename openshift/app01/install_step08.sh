@@ -19,7 +19,7 @@ pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version} > /dev/null
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached.log
-CC="gcc" ./configure \
+./configure \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
 --prefix=${OPENSHIFT_DATA_DIR}/memcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
 
@@ -104,8 +104,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 # j2 is limit (-l3 --load-average=3)
-# time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-function030 php "-j2 -l3"
+time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
@@ -177,7 +176,8 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/libmemcached-${libmemcached_version} > /dev/null
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
-    :
+    export CC="ccache gcc"
+    export CXX="ccache g++"
 else
     echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
@@ -199,6 +199,8 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> $
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 mv ${OPENSHIFT_LOG_DIR}/install_libmemcached.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
+unset CC
+unset CXX
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm libmemcached-${libmemcached_version}.tar.gz
@@ -223,8 +225,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached_php_ext phpize" | tee -a ${OPENSHIF
 ${OPENSHIFT_DATA_DIR}/php/bin/phpize
 echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached_php_ext configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extension.log
-CC="gcc" \
- ./configure \
+./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --prefix=${OPENSHIFT_DATA_DIR}/php_memcached \
  --with-libmemcached-dir=$OPENSHIFT_DATA_DIR/libmemcached \
