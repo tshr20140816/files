@@ -38,26 +38,6 @@ popd > /dev/null
 
 echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
 
-# ***** pigz *****
-
-# pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-# cp -f ${OPENSHIFT_DATA_DIR}/download_files/pigz-${pigz_version}.tar.gz ./
-# tar xfz pigz-${pigz_version}.tar.gz
-# popd > /dev/null
-# pushd ${OPENSHIFT_TMP_DIR}/pigz-${pigz_version} > /dev/null
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_pigz.log
-# CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
-# ./configure --prefix=${OPENSHIFT_DATA_DIR}/pigz --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc \
-#  | tee -a ${OPENSHIFT_LOG_DIR}/install_pigz.log
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_pigz.log
-# time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pigz.log
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) pigz make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_pigz.log
-# make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pigz.log
-# popd > /dev/null
-
 # ***** ccache *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -67,8 +47,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_ccache.log
-CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
- ./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache --mandir=/tmp/man --docdir=/tmp/doc \
+ ./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc \
  | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_ccache.log
@@ -81,15 +60,6 @@ mv ${OPENSHIFT_LOG_DIR}/install_ccache.log ${OPENSHIFT_LOG_DIR}/install/
 rm ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version}.tar.xz
 rm -rf ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version}
 
-# if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ]; then
-#     pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-#     mv -f ${OPENSHIFT_DATA_DIR}/download_files/ccache.tar.xz ./
-#     tar Jxf ccache.tar.xz
-#     rm -f ccache.tar.xz
-#     popd > /dev/null
-# else
-#     mkdir ${OPENSHIFT_TMP_DIR}/ccache
-# fi
 mkdir ${OPENSHIFT_TMP_DIR}/ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 
@@ -97,12 +67,12 @@ export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=300M
-export CC="ccache gcc"
-export CXX="ccache g++"
+# export CC="ccache gcc"
+# export CXX="ccache g++"
 
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-ccache -z
-ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# ccache -z
+# ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
