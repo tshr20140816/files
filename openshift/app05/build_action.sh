@@ -128,11 +128,14 @@ export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
 
-time \
- CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc" \
- RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
- MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
- rbenv install -v ${ruby_version}
+# https://github.com/sstephenson/ruby-build#special-environment-variables
+export RUBY_CFLAGS="${CFLAGS}"
+export CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc"
+export MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)"
+time rbenv install -v ${ruby_version}
+unset RUBY_CFLAGS
+unset CONFIGURE_OPTS
+unset MAKE_OPTS
 
 ccache -s
 
