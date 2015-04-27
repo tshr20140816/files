@@ -4,7 +4,6 @@ function010() {
     set -x
 
     export TZ=JST-9
-    # export MAKEFLAGS="-j $(grep -c -e processor /proc/cpuinfo)"
 
     pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
     if [ -f "$(basename "${0}").ok" ]; then
@@ -17,23 +16,14 @@ function010() {
         ccache_exists=$(printenv | grep ^PATH= | grep ccache | wc -l)
         if [ ${ccache_exists} -eq 0 ]; then
             export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-            export CC="ccache gcc"
-            export CXX="ccache g++"
             export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
             export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
             export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
             export CCACHE_MAXSIZE=300M
-            export CCACHE_COMPILERCHECK=content
-            export CCACHE_SLOPPINESS='file_macro,time_macros,include_file_mtime'
-            export CCACHE_BASEDIR=${OPENSHIFT_HOME_DIR}
-            # if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) != "yes" ]; then
-            #     export CCACHE_READONLY=true
-            #     export CCACHE_READONLY_DIRECT=true
-            # fi
         fi
-        export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
-        export CXXFLAGS="${CFLAGS}"
     fi
+    export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+    export CXXFLAGS="${CFLAGS}"
 
     # shellcheck disable=SC2034
     processor_count="$(grep -c -e processor /proc/cpuinfo)"
@@ -83,12 +73,6 @@ function010() {
     fi
 
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    # quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}' \
-    #  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    # oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}' \
-    #  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    # oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
-    #  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     disk_usage=$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Disk Usage : ${disk_usage}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     memory_usage=$(oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}')
@@ -96,14 +80,6 @@ function010() {
     memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-    # if [ $(which ccache | wc -l) -eq 1 ]; then
-    #     ccache_size=$(ccache -s | grep -e "^cache size" | awk '{print $3$4}')
-    #     ccache_hit_direct=$(ccache -s | grep -e "^cache hit .direct" | awk '{print $4}')
-    #     ccache_hit_preprocessed=$(ccache -s | grep -e "^cache hit .preprocessed" | awk '{print $4}')
-    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache size : ${ccache_size}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache hit direct : ${ccache_hit_direct}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache hit preprocessed : ${ccache_hit_preprocessed}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    # fi
     return 0
 }
 
@@ -150,42 +126,4 @@ function020() {
             fi
         done
     done
-
-    # select * from information_schema.INNODB_CMP
-}
-
-# ${1} : symbol
-# ${2} : make options
-function030() {
-    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-    rm -f ccache.tar.xz
-    cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_${1}.tar.xz ./ccache.tar.xz
-    if [ -f ccache.tar.xz ]; then
-        rm -rf ccache
-        time tar Jxf ccache.tar.xz
-        rm -f ccache.tar.xz
-    else
-        ccache -C
-    fi
-    ccache -z
-    popd > /dev/null
-
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) make before" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache -s" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    time make ${2} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_${1}.log
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) make after" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache -s" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-
-    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-    if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
-        time tar Jcf ccache.tar.xz ccache
-        mv -f ccache.tar.xz ${OPENSHIFT_LOG_DIR}/ccache_${1}.tar.xz
-    fi
-    popd > /dev/null
 }
