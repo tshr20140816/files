@@ -130,7 +130,7 @@ eval "$(rbenv init -)"
 
 # https://github.com/sstephenson/ruby-build#special-environment-variables
 export RUBY_CFLAGS="${CFLAGS}"
-export CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc"
+export CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc --infodir=${OPENSHIFT_TMP_DIR}/info"
 export MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)"
 time rbenv install -v ${ruby_version}
 unset RUBY_CFLAGS
