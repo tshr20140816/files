@@ -34,7 +34,8 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
-    :
+    export CC="ccache gcc"
+    export CXX="ccache g++"
 else
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_tcl.log
@@ -47,7 +48,6 @@ else
     echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_tcl.log
     # j2 is limit (-l3 --load-average=3)
     time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
-    # function030 tcl "-j2 -l3"
 fi
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -55,6 +55,8 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> $
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
 mv ${OPENSHIFT_LOG_DIR}/install_tcl.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
+unset CC
+unset CXX
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm tcl${tcl_version}-src.tar.gz
@@ -69,9 +71,6 @@ query_string="server=${OPENSHIFT_GEAR_DNS}&installed=tcl"
 wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # ***** Expect *****
-
-unset CC
-unset CXX
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/expect${expect_version}.tar.gz ./
