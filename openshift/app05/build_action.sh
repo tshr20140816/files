@@ -214,7 +214,7 @@ unset CC
 unset CXX
 
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
-time make -j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local CFLAGS="${CFLAGS}"
+time make -j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local
 popd > /dev/null
 ccache -s
 pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
