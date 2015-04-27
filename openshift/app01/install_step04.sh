@@ -41,7 +41,8 @@ pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
 # *** configure make install ***
 
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
-    :
+    export CC="ccache gcc"
+    export CXX="ccache g++"
 else
     echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache.log
@@ -65,6 +66,9 @@ if [ $(${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -v | grep -c -e version) -eq 0
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 fi
 popd > /dev/null
+
+unset CC
+unset CXX
 
 # *** spdy ***
 
