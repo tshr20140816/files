@@ -71,6 +71,35 @@ rm -rf httpd-${apache_version}
 rm -f httpd-${apache_version}.tar.bz2
 popd > /dev/null
 
+# ***** libmemcached *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf libmemcached-${libmemcached_version}
+rm -f libmemcached-${libmemcached_version}.tar.gz
+
+cp ${OPENSHIFT_DATA_DIR}/files/libmemcached-${libmemcached_version}.tar.gz ./
+if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
+    wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
+fi
+tar zxf libmemcached-${libmemcached_version}.tar.gz
+pushd libmemcached-${libmemcached_version} > /dev/null
+./configure \
+ --prefix=${data_dir}/libmemcached \
+ --mandir=${tmp_dir}/man \
+ --docdir=${tmp_dir}/doc
+
+time make -j$(grep -c -e processor /proc/cpuinfo)
+popd > /dev/null
+ccache -s
+rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
+time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
+mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf libmemcached-${libmemcached_version}
+rm -f libmemcached-${libmemcached_version}.tar.gz
+
+popd > /dev/null
+
 # ***** ruby (rbenv) *****
 
 rm -rf ${OPENSHIFT_DATA_DIR}.gem
@@ -111,35 +140,6 @@ mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/
 popd > /dev/null
 
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
-
-# ***** libmemcached *****
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-
-rm -rf libmemcached-${libmemcached_version}
-rm -f libmemcached-${libmemcached_version}.tar.gz
-
-cp ${OPENSHIFT_DATA_DIR}/files/libmemcached-${libmemcached_version}.tar.gz ./
-if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
-    wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
-fi
-tar zxf libmemcached-${libmemcached_version}.tar.gz
-pushd libmemcached-${libmemcached_version} > /dev/null
-./configure \
- --prefix=${data_dir}/libmemcached \
- --mandir=${tmp_dir}/man \
- --docdir=${tmp_dir}/doc
-
-time make -j$(grep -c -e processor /proc/cpuinfo)
-popd > /dev/null
-ccache -s
-rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
-time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
-mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-rm -rf libmemcached-${libmemcached_version}
-rm -f libmemcached-${libmemcached_version}.tar.gz
-
-popd > /dev/null
 
 # ***** delegate *****
 
