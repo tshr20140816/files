@@ -10,9 +10,6 @@ rm -f ${OPENSHIFT_TMP_DIR}/webalizer-${webalizer_version}-src.tar.bz2
 rm -rf ${OPENSHIFT_TMP_DIR}/webalizer-${webalizer_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/webalizer
 
-unset CC
-unset CXX
-
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/webalizer-${webalizer_version}-src.tar.bz2 ./
 
