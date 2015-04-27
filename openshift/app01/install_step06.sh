@@ -6,21 +6,6 @@ function010 stop
 
 # ***** passenger-install-apache2-module *****
 
-# *** ccache data restore ***
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -f ccache.tar.xz
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_passenger.tar.xz ./ccache.tar.xz
-if [ -f ccache.tar.xz ]; then
-    rm -rf ccache
-    time tar Jxf ccache.tar.xz
-    rm -f ccache.tar.xz
-else
-    ccache -C
-fi
-ccache -z
-popd > /dev/null
-
 # *** env ***
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
@@ -38,16 +23,6 @@ time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
  --languages ruby \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
-
-# *** ccache data backup ***
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data) = "yes" ]; then
-    time tar Jcf ccache.tar.xz ccache
-    mv -f ccache.tar.xz ${OPENSHIFT_DATA_DIR}/ccache_passenger.tar.xz
-fi
-popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
