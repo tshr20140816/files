@@ -141,6 +141,38 @@ popd > /dev/null
 
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 
+# ***** tcl *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf delegate${delegate_version}
+rm -f tcl${tcl_version}-src.tar.gz
+
+cp ${OPENSHIFT_DATA_DIR}/files/tcl${tcl_version}-src.tar.gz ./
+if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
+    wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
+fi
+tar xfz tcl${tcl_version}-src.tar.gz
+
+pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
+./configure \
+ --mandir=${tmp_dir}/man \
+ --disable-symbols \
+ --prefix=${data_dir}/tcl
+
+time make -j2 -l3
+popd > /dev/null
+ccache -s
+rm -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz
+time tar Jcf ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz tcl${tcl_version}
+mv -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf tcl${tcl_version}
+rm -f tcl${tcl_version}-src.tar.gz
+popd > /dev/null
+
+memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
+
 # ***** delegate *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -183,35 +215,3 @@ mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}
 rm -rf delegate${delegate_version}
 rm -f delegate${delegate_version}.tar.gz
 popd > /dev/null
-
-# ***** tcl *****
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-
-rm -rf delegate${delegate_version}
-rm -f tcl${tcl_version}-src.tar.gz
-
-cp ${OPENSHIFT_DATA_DIR}/files/tcl${tcl_version}-src.tar.gz ./
-if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
-    wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
-fi
-tar xfz tcl${tcl_version}-src.tar.gz
-
-pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
-./configure \
- --mandir=${tmp_dir}/man \
- --disable-symbols \
- --prefix=${data_dir}/tcl
-
-time make -j2 -l3
-popd > /dev/null
-ccache -s
-rm -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz
-time tar Jcf ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz tcl${tcl_version}
-mv -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-rm -rf tcl${tcl_version}
-rm -f tcl${tcl_version}-src.tar.gz
-popd > /dev/null
-
-memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
-echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
