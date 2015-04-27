@@ -19,7 +19,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) start"
 memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
-rm -f ${OPENSHIFT_DATA_DIR}/files/${host_name}_maked_*
+rm -f ${OPENSHIFT_DATA_DIR}/files/${app_uuid}_maked_*
 
 while read LINE
 do
@@ -158,7 +158,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) tcl"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
-rm -rf delegate${delegate_version}
+rm -rf tcl${tcl_version}
 rm -f tcl${tcl_version}-src.tar.gz
 
 cp ${OPENSHIFT_DATA_DIR}/files/tcl${tcl_version}-src.tar.gz ./
