@@ -31,7 +31,7 @@ cat << '__HEREDOC__' >> .bash_profile
 export TMOUT=0
 export TZ=JST-9
 alias ls='ls -lang --color=auto'
-HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 __HEREDOC__
 popd > /dev/null
 
