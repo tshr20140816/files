@@ -144,7 +144,7 @@ unset GEM_HOME
 export PATH="${path_old}"
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ./.rbenv/ -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
+find ./.rbenv/ -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/files/
