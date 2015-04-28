@@ -84,7 +84,7 @@ sed -i -e "s|__BUILD_PASSWORD__|${build_password}|g" build_action.php
 popd > /dev/null
 
 pushd  ${OPENSHIFT_DATA_DIR} > /dev/null
-wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/build_action.sh
+wget --no-cache https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/build_action.sh
 popd > /dev/null
 
 # ***** cron minutely *****
