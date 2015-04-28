@@ -37,14 +37,11 @@ ls -lang /tmp
 
 cd /tmp
 
-curl --digest -u tshrapp9:2015042813 \
- -F "url=https://files3-20150207.rhcloud.com/" https://tshrapp9.appspot.com/createwebcroninformation
-
-rmdir -rf passenger-5.0.6
+# rmdir -rf passenger-5.0.6
 
 # wget http://s3.amazonaws.com/phusion-passenger/releases/passenger-5.0.6.tar.gz
 
-mkdir -p /tmp/opt/passenger
+# mkdir -p /tmp/opt/passenger
 cd /tmp/opt/passenger
-tar xfz /tmp/passenger-5.0.6.tar.gz
+# tar xfz /tmp/passenger-5.0.6.tar.gz
 tree /tmp/opt/passenger
