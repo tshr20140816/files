@@ -13,15 +13,15 @@ if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     while :
     do
         if [ $(wget -nv --spider --timeout 60 -t 1 ${url} 2>&1 | grep -c '200 OK') -eq 1 ]; then
-            echo "$(date +%Y/%m/%d" "%H:%M:%S) apache maked wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl maked wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
             break
         else
-            echo "$(date +%Y/%m/%d" "%H:%M:%S) apache maked waiting" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl maked waiting" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
             sleep 10s
         fi
     done
     wget $(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) apache maked tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl maked tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     tar Jxf ${file_name}
     rm -f ${file_name}
 else
