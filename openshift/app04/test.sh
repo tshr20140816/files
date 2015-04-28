@@ -2,8 +2,6 @@
 
 echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
 
-set -x
-
 # dummy
 
 cd /tmp
@@ -32,6 +30,8 @@ export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 ccache -z
+
+set -x
 
 ls -lang /tmp
 
