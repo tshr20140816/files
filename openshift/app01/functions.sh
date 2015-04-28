@@ -27,8 +27,8 @@ function010() {
 
     # shellcheck disable=SC2034
     processor_count="$(grep -c -e processor /proc/cpuinfo)"
-    mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
-    query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename "${0}" .sh)&mfc=${mfc}"
+    local mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
+    local query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename "${0}" .sh)&mfc=${mfc}"
     if [ $(which ccache | wc -l) -eq 1 ]; then
         ccache_hit_direct=$(ccache -s | grep -e "^cache hit .direct" | awk '{print $4}')
         query_string="${query_string}&ccache_hit_direct=${ccache_hit_direct}"
@@ -37,8 +37,8 @@ function010() {
     
     while read LINE
     do
-        product=$(echo "${LINE}" | awk '{print $1}')
-        version=$(echo "${LINE}" | awk '{print $2}')
+        local product=$(echo "${LINE}" | awk '{print $1}')
+        local version=$(echo "${LINE}" | awk '{print $2}')
         eval "${product}"="${version}"
     done < ${OPENSHIFT_DATA_DIR}/version_list
 
@@ -73,11 +73,11 @@ function010() {
     fi
 
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    disk_usage=$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')
+    local disk_usage=$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Disk Usage : ${disk_usage}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    memory_usage=$(oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}')
+    local memory_usage=$(oo-cgroup-read memory.usage_in_bytes | awk '{printf "Memory Usage : %\047d\n", $1}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Usage : ${memory_usage}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
+    local memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
     return 0
@@ -100,7 +100,7 @@ function020() {
      --batch \
      --execute="SET GLOBAL innodb_file_per_table=1;SET GLOBAL innodb_file_format=Barracuda;"
 
-    tables=$(mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
+    local tables=$(mysql --user="${OPENSHIFT_MYSQL_DB_USERNAME}" \
      --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
      --host="${OPENSHIFT_MYSQL_DB_HOST}" \
      --port="${OPENSHIFT_MYSQL_DB_PORT}" \
