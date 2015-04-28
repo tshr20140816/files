@@ -62,7 +62,7 @@ ruby_version 2.1.6
 tcl_version 8.6.3
 ttrss_version 1.15.3
 webalizer_version 2.23-08
-wordpress_version 4.2-ja
+wordpress_version 4.2.1-ja
 __HEREDOC__
 
 # nginx_version 1.6.2
