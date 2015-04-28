@@ -148,6 +148,27 @@ echo build_action_start.sh >> jobs.allow
 
 popd > /dev/null
 
+# ***** cron hourly *****
+
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
+rm -f ./*
+touch jobs.deny
+
+# *** rm build files ***
+
+cat << '__HEREDOC__' > rm_build_files.sh
+#!/bin/bash
+
+export TZ=JST-9
+
+find ${OPENSHIFT_DATA_DIR}/files/ -name '*_maked_*' -type f -mmin +600 -print0
+find ${OPENSHIFT_DATA_DIR}/files/ -name '*_maked_*' -type f -mmin +600 -print0 | xargs -0i rm -f {}
+__HEREDOC__
+chmod +x rm_build_files.sh
+echo rm_build_files.sh >> jobs.allow
+
+popd > /dev/null
+
 # ***** cron daily *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/daily > /dev/null
