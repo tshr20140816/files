@@ -77,7 +77,6 @@ foreach($xml->items->item as $item)
 {
     file_put_contents($file_name, $item['app'] . '_version ' . $item['version'] . "\n", FILE_APPEND);
 }
-// system('nohup bash ' . getenv('OPENSHIFT_DATA_DIR') . '/build_action.sh ' . $uuid . ' ' . $data_dir . ' ' . $tmp_dir . ' &');
 file_put_contents(getenv('OPENSHIFT_DATA_DIR') . 'build_action_params', $uuid . ' ' . $data_dir . ' ' . $tmp_dir);
 ?>
 __HEREDOC__
