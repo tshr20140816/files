@@ -2,8 +2,6 @@
 
 # echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
 
-# dummy
-
 cd /tmp
 if [ ! -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
     if [ ! -f ccache-3.2.1.tar.xz ]; then
