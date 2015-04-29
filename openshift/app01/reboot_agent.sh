@@ -8,7 +8,7 @@ do
     [ ! -f nohup_error.log.old ] && touch nohup_error.log.old
     cp -f ${OPENSHIFT_LOG_DIR}/nohup_error.log ./nohup_error.log.new
     # diff -u nohup_error.log.old nohup_error.log.new > diff_nohup_error.log
-    diff --new-line-format='%L' --unchanged-line-format='' nohup_error.log.old nohup_error.log.new
+    diff --new-line-format='%L' --unchanged-line-format='' nohup_error.log.old nohup_error.log.new > diff_nohup_error.log
     mv -f nohup_error.log.new nohup_error.log.old
     url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
     while read LINE
