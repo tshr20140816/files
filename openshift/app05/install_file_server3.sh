@@ -38,7 +38,7 @@ make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
 __HEREDOC__
-chmod +x 
+chmod +x build_ccache.sh
 ./build_ccache.sh &
 popd > /dev/null
 
