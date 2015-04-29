@@ -133,7 +133,7 @@ ymdhms=$(date +%Y%m%d%H%M%S)
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 rm -f build_action.sh
-wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/build_action.sh
+wget --no-cache https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/build_action.sh
 popd > /dev/null
 params=$(cat ${OPENSHIFT_DATA_DIR}/build_action_params)
 echo "${params}"
@@ -201,7 +201,7 @@ for gem in bundler rack passenger
 do
     rm -f ${gem}.html
     # --no-check-certificate
-    wget https://rubygems.org/gems/${gem} -O ${gem}.html
+    wget --no-cache https://rubygems.org/gems/${gem} -O ${gem}.html
     version=$(grep -e canonical ${gem}.html | sed -r -e 's|^.*versions/(.+)".*$|\1|g')
     if [ ! -f ${gem}-${version}.gem ]; then
         wget https://rubygems.org/downloads/${gem}-${version}.gem -O ${gem}-${version}.gem
@@ -231,7 +231,7 @@ cat << '__HEREDOC__' > download_file_list.sh
 export TZ=JST-9
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f download_file_list.txt
-wget https://github.com/tshr20140816/files/raw/master/openshift/app05/download_file_list.txt
+wget --no-cache https://github.com/tshr20140816/files/raw/master/openshift/app05/download_file_list.txt
 while read LINE
 do
     file_name=$(echo "${LINE}" | awk '{print $1}')
