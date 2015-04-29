@@ -43,7 +43,7 @@ url="https://tshrapp9.appspot.com/dummy"
 set +x
 while read LINE
 do
-    log_String=$(echo ${LINE:1} | perl -MURI::Escape -lne 'print uri_escape($_)')
+    log_String=$(echo ${LINE} | perl -MURI::Escape -lne 'print uri_escape($_)')
     query_string="server=${OPENSHIFT_GEAR_DNS}&file=cron_minutely&log=${log_String}"
     wget --spider "${url}?${query_string}" &
 done < diff_cron_minutely.log
