@@ -45,7 +45,7 @@ while read LINE
 do
     log_String=$(echo ${LINE} | perl -MURI::Escape -lne 'print uri_escape($_)')
     query_string="server=${OPENSHIFT_GEAR_DNS}&file=cron_minutely&log=${log_String}"
-    wget --spider "${url}?${query_string}" &
+    wget --spider -q "${url}?${query_string}" &
 done < diff_cron_minutely.log
 set -x
 rm -f diff_cron_minutely.log
