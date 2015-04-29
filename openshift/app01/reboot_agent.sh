@@ -13,13 +13,6 @@ do
     url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
     while read LINE
     do
-        # if [[ "${LINE}" =~ ^\+\+\+ ]]; then
-        #     :
-        # elif [[ "${LINE}" =~ ^\+ ]]; then
-        #     log_String=$(echo ${LINE:1} | perl -MURI::Escape -lne 'print uri_escape($_)')
-        #     query_string="server=${OPENSHIFT_GEAR_DNS}&file=nohup_error&log=${log_String}"
-        #     wget --spider "${url}?${query_string}" &
-        # fi
         log_String=$(echo ${LINE:1} | perl -MURI::Escape -lne 'print uri_escape($_)')
         query_string="server=${OPENSHIFT_GEAR_DNS}&file=nohup_error&log=${log_String}"
         wget --spider "${url}?${query_string}" &
@@ -34,6 +27,7 @@ do
         zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup.log.zip nohup.log
         rm -f nohup.log
         popd > /dev/null
+        wait
         echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
         exit
     fi
