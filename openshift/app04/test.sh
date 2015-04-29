@@ -33,10 +33,9 @@ set -x
 
 ls -lang /tmp
 
-# dummy
 cd /tmp
 
-wget -http-user=user --http-passwd=boo https://boo-20140818.rhcloud.com/logs/boo-20140818.nohup.log.zip
+wget --http-user=user --http-passwd=boo https://boo-20140818.rhcloud.com/logs/boo-20140818.nohup.log.zip
 unzip boo-20140818.nohup.log.zip
 
 url="https://tshrapp9.appspot.com/dummy"
