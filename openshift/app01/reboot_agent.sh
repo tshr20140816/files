@@ -9,12 +9,13 @@ do
     cp -f ${OPENSHIFT_LOG_DIR}/nohup_error.log ./nohup_error.log.new
     diff -u nohup_error.log.old nohup_error.log.new > diff_nohup_error.log
     mv -f nohup_error.log.new nohup_error.log.old
+    url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
     while read LINE
     do
         if [[ "${LINE}" =~ ^\+ ]]; then
             log_String=$(echo ${LINE:1} | perl -MURI::Escape -lne 'print uri_escape($_)')
             query_string="server=${OPENSHIFT_GEAR_DNS}&file=nohup_error&log=${log_String}"
-            wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" &
+            wget --spider "${url}?${query_string}" &
         fi
     done < diff_nohup_error.log
     popd > /dev/null
