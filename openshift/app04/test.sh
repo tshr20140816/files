@@ -33,6 +33,7 @@ set -x
 
 ls -lang /tmp
 
+# dummy
 cd /tmp
 
 wget -http-user=user --http-passwd=boo https://boo-20140818.rhcloud.com/logs/boo-20140818.nohup.log.zip
