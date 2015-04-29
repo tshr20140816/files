@@ -37,11 +37,4 @@ ls -lang /tmp
 
 cd /tmp
 
-# rmdir -rf passenger-5.0.6
-
-# wget http://s3.amazonaws.com/phusion-passenger/releases/passenger-5.0.6.tar.gz
-
-# mkdir -p /tmp/opt/passenger
-cd /tmp/opt/passenger
-# tar xfz /tmp/passenger-5.0.6.tar.gz
-tree /tmp/opt/passenger
+nkf -v
