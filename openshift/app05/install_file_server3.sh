@@ -132,7 +132,7 @@ echo 'build start'
 ymdhms=$(date +%Y%m%d%H%M%S)
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-rm -f build_action_params
+rm -f build_action.sh
 wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/build_action.sh
 popd > /dev/null
 params=$(cat ${OPENSHIFT_DATA_DIR}/build_action_params)
