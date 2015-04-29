@@ -35,10 +35,9 @@ ls -lang /tmp
 
 cd /tmp
 
-[ ! -f cron_minutely.log.old ] && touch cron_minutely.log.old
-cp -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ./cron_minutely.log.new
-diff --new-line-format='%L' --unchanged-line-format='' cron_minutely.log.old cron_minutely.log.new > diff_cron_minutely.log
-mv -f cron_minutely.log.new cron_minutely.log.old
+wget -http-user=user --http-passwd=boo https://boo-20140818.rhcloud.com/logs/boo-20140818.nohup.log.zip
+unzip boo-20140818.nohup.log.zip
+
 url="https://tshrapp9.appspot.com/dummy"
 set +x
 while read LINE
@@ -46,8 +45,11 @@ do
     log_String=$(echo ${LINE} | perl -MURI::Escape -lne 'print uri_escape($_)')
     query_string="server=${OPENSHIFT_GEAR_DNS}&file=cron_minutely&log=${log_String}"
     wget --spider -q "${url}?${query_string}" &
-done < diff_cron_minutely.log
+done < nohup.log
 set -x
-rm -f diff_cron_minutely.log
 
-# dummy
+date
+ps aux | wc -l
+wait
+ps aux | wc -l
+date
