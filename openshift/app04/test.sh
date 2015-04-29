@@ -40,10 +40,12 @@ cp -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ./cron_minutely.log.new
 diff --new-line-format='%L' --unchanged-line-format='' cron_minutely.log.old cron_minutely.log.new > diff_cron_minutely.log
 mv -f cron_minutely.log.new cron_minutely.log.old
 url="https://tshrapp9.appspot.com/dummy"
+set +x
 while read LINE
 do
     log_String=$(echo ${LINE:1} | perl -MURI::Escape -lne 'print uri_escape($_)')
     query_string="server=${OPENSHIFT_GEAR_DNS}&file=cron_minutely&log=${log_String}"
     wget --spider "${url}?${query_string}" &
 done < diff_cron_minutely.log
+set -x
 rm -f diff_cron_minutely.log
