@@ -4,18 +4,6 @@ export TZ=JST-9
 
 while :
 do
-    if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
-        sleep 10s
-        pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup_error.log.zip nohup_error.log
-        rm -f nohup_error.log
-        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup.log.zip nohup.log
-        rm -f nohup.log
-        popd > /dev/null
-        echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
-        exit
-    fi
-
     pushd ${OPENSHIFT_TMP_DIR} > /dev/null
     [ ! -f nohup_error.log.old ] && touch nohup_error.log.old
     cp -f ${OPENSHIFT_LOG_DIR}/nohup_error.log ./nohup_error.log.new
@@ -30,6 +18,18 @@ do
         fi
     done < diff_nohup_error.log
     popd > /dev/null
+
+    if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
+        sleep 10s
+        pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup_error.log.zip nohup_error.log
+        rm -f nohup_error.log
+        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup.log.zip nohup.log
+        rm -f nohup.log
+        popd > /dev/null
+        echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
+        exit
+    fi
 
     if [ ! -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ]; then
         sleep 5s
