@@ -14,7 +14,7 @@ do
         if [[ "${LINE}" =~ ^\+ ]]; then
             log_String=$(echo ${LINE:1} | perl -MURI::Escape -lne 'print uri_escape($_)')
             query_string="server=${OPENSHIFT_GEAR_DNS}&file=nohup_error&log=${log_String}"
-            wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}"
+            wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" &
         fi
     done < diff_nohup_error.log
     popd > /dev/null
