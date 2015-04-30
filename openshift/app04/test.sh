@@ -35,21 +35,15 @@ ls -lang /tmp
 
 cd /tmp
 
-wget --http-user=user --http-passwd=boo https://boo-20140818.rhcloud.com/logs/boo-20140818.nohup.log.zip
-unzip boo-20140818.nohup.log.zip
-
 url="https://tshrapp9.appspot.com/dummy"
 set +x
 while read LINE
 do
     log_String=$(echo ${LINE} | perl -MURI::Escape -lne 'print uri_escape($_)')
     query_string="server=${OPENSHIFT_GEAR_DNS}&file=cron_minutely&log=${log_String}"
-    wget --spider -q "${url}?${query_string}" &
+    nohup wget --spider -q "${url}?${query_string}" &
 done < nohup.log
 set -x
 
 date
 ps aux | wc -l
-wait
-ps aux | wc -l
-date
