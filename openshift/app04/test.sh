@@ -43,7 +43,7 @@ do
     i=$((i+1))
     log_String=$(echo ${LINE} | tr " " "_" | perl -MURI::Escape -lne 'print uri_escape($_)')
     query_string="server=${OPENSHIFT_GEAR_DNS}&file=cron_minutely&log=${i}_${log_String}"
-    nohup wget -b --spider -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1 &
+    nohup wget -b --spider -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
 done < nohup.log
 set -x
 
