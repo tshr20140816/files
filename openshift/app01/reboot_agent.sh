@@ -4,20 +4,6 @@ export TZ=JST-9
 
 while :
 do
-    # pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-    # [ ! -f nohup_error.log.old ] && touch nohup_error.log.old
-    # cp -f ${OPENSHIFT_LOG_DIR}/nohup_error.log ./nohup_error.log.new
-    # diff --new-line-format='%L' --unchanged-line-format='' nohup_error.log.old nohup_error.log.new > diff_nohup_error.log
-    # mv -f nohup_error.log.new nohup_error.log.old
-    # url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
-    # while read LINE
-    # do
-    #     log_String=$(echo ${LINE:1} | perl -MURI::Escape -lne 'print uri_escape($_)')
-    #     query_string="server=${OPENSHIFT_GEAR_DNS}&file=nohup_error&log=${log_String}"
-    #     wget --spider "${url}?${query_string}" &
-    # done < diff_nohup_error.log
-    # popd > /dev/null
-
     if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
         sleep 10s
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
