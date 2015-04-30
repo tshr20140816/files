@@ -142,7 +142,8 @@ rm php-${php_version}.tar.xz
 rm -rf php-${php_version}
 popd > /dev/null
 
-query_string="server=${OPENSHIFT_GEAR_DNS}&installed=php"
+php_installed_version=$(${OPENSHIFT_DATA_DIR}/php/bin/php -v | head -n 1 | perl -MURI::Escape -lne 'print uri_escape($_)')
+query_string="server=${OPENSHIFT_GEAR_DNS}&installed=php&version=${php_installed_version}"
 wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # *** libmemcached ***
