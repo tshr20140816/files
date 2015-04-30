@@ -2,14 +2,19 @@
 
 set -x
 
-[ $# -ne 1 ] && exit
+[ $# -ne 2 ] && exit
 
-export server=${1}
+export type=${1}
+export server=${2}
 
 while :
 do
     yes | rhc app delete -a ${server}
-    yes | rhc app create ${server} diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
+    if [ "${type}" = "diy" ]; then
+        yes | rhc app create ${server} diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
+    else
+        yes | rhc app create ${server} php-5.4 cron-1.4 --server openshift.redhat.com
+    fi
     server_link=$(rhc apps | grep ssh | grep ${server} | awk '{print $3}' | awk -F/ '{print $3}')
     processor_count=$(ssh ${server_link} cat /proc/cpuinfo | grep -c processor)
     [ ${processor_count} -eq 4 ] && exit
