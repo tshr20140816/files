@@ -215,6 +215,13 @@ unset CXX
 
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local
+mkdir -p ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}_backup/src/builtin/icons/ysato
+cp src/delegated ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}_backup/src/
+cp src/builtin/icons/ysato/*.gif ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}_backup/src/builtin/icons/ysato/
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -rf ./delegate${delegate_version}
+mv delegate${delegate_version}_backup delegate${delegate_version}
 popd > /dev/null
 ccache -s
 pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
