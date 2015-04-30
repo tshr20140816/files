@@ -85,7 +85,8 @@ rbenv global ${ruby_version}
 rbenv rehash
 ruby -v
 tree ${OPENSHIFT_DATA_DIR}.gem
-query_string="server=${OPENSHIFT_GEAR_DNS}&installed=ruby_$(ruby -v | perl -MURI::Escape -lne 'print uri_escape($_)')"
+ruby_installed_version=$(ruby -v | head -n 1 | perl -MURI::Escape -lne 'print uri_escape($_)')
+query_string="server=${OPENSHIFT_GEAR_DNS}&installed=ruby&version=${ruby_installed_version}"
 wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # *** patch resolv.rb ***
