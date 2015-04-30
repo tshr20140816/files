@@ -31,11 +31,9 @@ do
                 query_string="server=${OPENSHIFT_GEAR_DNS}&file=${file_name}&log=${i}_${log_String}"
                 wget --spider -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
             done < ${file_name}.log
+            zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log
+            rm -f ${file_name}.log
         done
-        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup_error.log.zip nohup_error.log
-        rm -f nohup_error.log
-        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup.log.zip nohup.log
-        rm -f nohup.log
         popd > /dev/null
         wait
         echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
