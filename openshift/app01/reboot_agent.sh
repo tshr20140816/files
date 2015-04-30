@@ -21,6 +21,17 @@ do
     if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
         sleep 10s
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+        for file_name in nohup nohup_error
+        do
+            i=0
+            while read LINE
+            do
+                i=$((i+1))
+                log_String=$(echo ${LINE:1} | perl -MURI::Escape -lne 'print uri_escape($_)')
+                query_string="server=${OPENSHIFT_GEAR_DNS}&file=${file_name}&log=${i}_${log_String}"
+                wget --spider -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
+            done < ${file_name}.log
+        done
         zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup_error.log.zip nohup_error.log
         rm -f nohup_error.log
         zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.nohup.log.zip nohup.log
