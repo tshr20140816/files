@@ -63,6 +63,9 @@ mv ${OPENSHIFT_LOG_DIR}/install_apache.log ${OPENSHIFT_LOG_DIR}/install/
 if [ $(${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -v | grep -c -e version) -eq 0 ]; then
     query_string="server=${OPENSHIFT_GEAR_DNS}&error=apache"
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
+else
+    query_string="server=${OPENSHIFT_GEAR_DNS}&installed=apache"
+    wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 fi
 popd > /dev/null
 
