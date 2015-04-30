@@ -41,10 +41,7 @@ while read LINE
 do
     log_String=$(echo ${LINE} | tr " " "_" | perl -MURI::Escape -lne 'print uri_escape($_)')
     query_string="server=${OPENSHIFT_GEAR_DNS}&file=cron_minutely&log=${log_String}"
-    nohup wget --spider -q "${url}?${query_string}" > /dev/null &
-    set -x
-    ps aux | wc -l
-    set +x
+    nohup wget -b --spider -q -o /dev/null "${url}?${query_string}" &
 done < nohup.log
 set -x
 
