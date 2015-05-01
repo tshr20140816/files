@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source functions.sh
-function010 stop
+function010 restart
 [ $? -eq 0 ] || exit
 
 # ***** memcached *****
