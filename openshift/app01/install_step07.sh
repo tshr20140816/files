@@ -106,6 +106,9 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHI
 # j2 is limit (-l3 --load-average=3)
 time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 # time make -j1 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) php make test" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make test *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
+time make test
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
