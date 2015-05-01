@@ -23,7 +23,7 @@ ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --help | tee -a 
 
 export EXTRA_CFLAGS="${CFLAGS}"
 export EXTRA_CXXFLAGS="${CXXFLAGS}"
-export HTTPD=${OPENSHIFT_DATA_DIR}/apache
+# export HTTPD=${OPENSHIFT_DATA_DIR}/apache
 
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto --force-colors \
