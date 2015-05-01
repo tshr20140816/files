@@ -69,8 +69,8 @@ rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
 time tar jcf ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 httpd-${apache_version}
 mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 ${OPENSHIFT_DATA_DIR}/files/
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz
-time tar Jcf ${app_uuid}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
-mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+# time tar Jcf ${app_uuid}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
+# mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf httpd-${apache_version}
 rm -f httpd-${apache_version}.tar.bz2
 popd > /dev/null
