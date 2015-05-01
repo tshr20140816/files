@@ -16,7 +16,7 @@ do
                 i=$((i+1))
                 log_String=$(echo ${LINE} | tr " " "_" | perl -MURI::Escape -lne 'print uri_escape($_)')
                 query_string="server=${OPENSHIFT_GEAR_DNS}&file=${file_name}&log=${i}_${log_String}"
-                wget --spider -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
+                wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
             done < ${file_name}.log
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log
             rm -f ${file_name}.log
