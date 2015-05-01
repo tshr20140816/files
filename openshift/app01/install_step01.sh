@@ -54,7 +54,7 @@ memcached_php_ext_version 2.2.0
 memcached_version 1.4.22
 mrtg_version 2.17.4
 murlin_version 0.2.4
-php_version 5.6.8
+php_version 5.6.7
 phpicalendar_version 2.4_20100615
 pigz_version 2.3.3
 redmine_version 2.6.4
