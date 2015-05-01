@@ -36,8 +36,9 @@ ls -lang /tmp
 cd /tmp
 apache_version=2.2.29
 rm httpd-${apache_version}.tar.bz2
+rm -rf httpd-${apache_version}
 wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
-tar xfz httpd-${apache_version}.tar.bz2
+tar jfz httpd-${apache_version}.tar.bz2
 cd httpd-${apache_version}
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/apache \
@@ -51,6 +52,7 @@ make install
 
 php_version=5.6.8
 rm php-${php_version}.tar.xz
+rm -rf php-${php_version}
 wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 cd php-${php_version}
