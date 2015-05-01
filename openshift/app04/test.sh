@@ -34,19 +34,53 @@ set -x
 ls -lang /tmp
 
 cd /tmp
-i=0
+apache_version=2.2.29
+rm httpd-${apache_version}.tar.bz2
+wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
+tar xfz httpd-${apache_version}.tar.bz2
+cd httpd-${apache_version}
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --enable-mods-shared='all proxy'
 
-url="https://tshrapp9.appspot.com/dummy"
-set +x
-while read LINE
-do
-    i=$((i+1))
-    log_String=$(echo ${LINE} | tr " " "_" | perl -MURI::Escape -lne 'print uri_escape($_)')
-    query_string="server=${OPENSHIFT_GEAR_DNS}&file=cron_minutely&log=${i}_${log_String}"
-    # nohup wget -b --spider -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
-    wget --spider -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
-done < nohup.log
-set -x
+time make -j4
+
+make install
+
+php_version=5.6.8
+rm php-${php_version}.tar.xz
+wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+tar Jxf php-${php_version}.tar.xz
+cd php-${php_version}
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/php \
+--mandir=${OPENSHIFT_TMP_DIR}/man \
+--docdir=${OPENSHIFT_TMP_DIR}/doc \
+--with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+--with-mysql \
+--with-pdo-mysql \
+--without-sqlite3 \
+--without-pdo-sqlite \
+--without-pear \
+--with-curl \
+--with-libdir=lib64 \
+--with-bz2 \
+--with-iconv \
+--with-openssl \
+--with-zlib \
+--with-gd \
+--enable-exif \
+--enable-ftp \
+--enable-xml \
+--enable-mbstring \
+--enable-mbregex \
+--enable-sockets \
+--disable-ipv6 \
+--with-gettext=${OPENSHIFT_DATA_DIR}/php
+
+time make -j1
 
 date
-ps aux | wc -l
+
