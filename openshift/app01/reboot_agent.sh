@@ -7,6 +7,7 @@ do
     if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
         sleep 10s
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+        url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
         for file_name in nohup nohup_error
         do
             i=0
@@ -19,6 +20,7 @@ do
             done < ${file_name}.log
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log
             rm -f ${file_name}.log
+            curl 
         done
         popd > /dev/null
         wait
