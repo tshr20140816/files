@@ -105,19 +105,19 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) php make" | tee -a ${OPENSHIFT_LOG_DIR}/insta
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 # j2 is limit (-l3 --load-average=3)
 # time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-(
-trap 'touch /tmp/trap_php_make.txt' 0 1 2 3 15 
+# (
+# trap 'touch /tmp/trap_php_make.txt' 0 1 2 3 15 
 time make 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-)
+# )
 # echo "$(date +%Y/%m/%d" "%H:%M:%S) php make test" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make test *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 # time make test
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
-(
-trap 'touch /tmp/trap_php_make_install.txt' 0 1 2 3 15 
+# (
+# trap 'touch /tmp/trap_php_make_install.txt' 0 1 2 3 15 
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-)
+# )
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make conf" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-production
