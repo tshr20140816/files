@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.05.08 wordpress_version 4.2.1-ja → 4.2.2-ja
 # 2015.04.29 wordpress_version 4.2-ja → 4.2.1-ja
 # 2015.04.27 redmine_version 2.6.3 → 2.6.4
 # 2015.04.24 wordpress_version 4.1.2-ja → 4.2-ja
@@ -62,7 +63,7 @@ ruby_version 2.1.6
 tcl_version 8.6.3
 ttrss_version 1.15.3
 webalizer_version 2.23-08
-wordpress_version 4.2.1-ja
+wordpress_version 4.2.2-ja
 __HEREDOC__
 
 # nginx_version 1.6.2
