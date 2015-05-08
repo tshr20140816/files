@@ -82,7 +82,7 @@ cd php-${php_version}
 --disable-ipv6 \
 --with-gettext=${OPENSHIFT_DATA_DIR}/php
 
-nohup time make -j1 > ${OPENSHIFT_LOG_DIR}/php_make.log &
+nohup time make -j1 > ${OPENSHIFT_LOG_DIR}/php_make.log 2>&1 &
 
 date
 
