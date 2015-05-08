@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.05.08 fio_version 2.2.7 → 2.2.8
 # 2015.05.08 wordpress_version 4.2.1-ja → 4.2.2-ja
 # 2015.04.29 wordpress_version 4.2-ja → 4.2.1-ja
 # 2015.04.27 redmine_version 2.6.3 → 2.6.4
@@ -46,7 +47,7 @@ caldavzap_version 0.12.1
 ccache_version 3.2.1
 delegate_version 9.9.13
 expect_version 5.45
-fio_version 2.2.7
+fio_version 2.2.8
 ipafont_version 00303
 libmemcached_version 1.0.18
 logrotate_version 3.8.8
