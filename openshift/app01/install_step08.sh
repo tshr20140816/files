@@ -21,9 +21,8 @@ export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --help | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-export EXTRA_CFLAGS="${CFLAGS}"
-export EXTRA_CXXFLAGS="${CXXFLAGS}"
-# export HTTPD=${OPENSHIFT_DATA_DIR}/apache
+# export EXTRA_CFLAGS="${CFLAGS}"
+# export EXTRA_CXXFLAGS="${CXXFLAGS}"
 
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
