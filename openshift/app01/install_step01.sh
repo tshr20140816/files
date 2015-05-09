@@ -843,6 +843,7 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
 
+install_script_file='install_step_from_02_to_20'
 cat << '__HEREDOC__' > install_script_check.sh
 #!/bin/bash
 
@@ -852,7 +853,7 @@ if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
 fi
 
 # OPENSHIFT_DIY_IP is marker
-install_script_file='install_step_from_02_to_20'
+install_script_file='__INSTALL_SCRIPT_FILE__'
 is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
 if [ ! ${is_alive} -gt 0 ]; then
     export TZ=JST-9
@@ -863,6 +864,7 @@ if [ ! ${is_alive} -gt 0 ]; then
     2>> ${OPENSHIFT_LOG_DIR}/nohup_error.log &
 fi
 __HEREDOC__
+sed -i -e "s|__INSTALL_SCRIPT_FILE__|${install_script_file}|g" install_script_check.sh
 chmod +x install_script_check.sh
 echo install_script_check.sh >> jobs.allow
 
@@ -870,7 +872,7 @@ popd > /dev/null
 
 chmod +x ${OPENSHIFT_DATA_DIR}/github/openshift/app01/reboot_agent.sh
 ${OPENSHIFT_DATA_DIR}/github/openshift/app01/reboot_agent.sh \
- install_step_from_02_to_20 \
+ ${install_script_file} \
  ${web_beacon_server} \
  >> ${OPENSHIFT_LOG_DIR}/reboot_agent.log 2>&1 &
 
