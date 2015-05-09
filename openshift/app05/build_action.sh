@@ -33,13 +33,14 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
-export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+# export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-rm -f ${CCACHE_LOGFILE}
+# rm -f ${CCACHE_LOGFILE}
 
 ccache -z
 
