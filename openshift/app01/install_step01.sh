@@ -831,6 +831,30 @@ if [ ${files_exists} -eq 0 ]; then
     exit
 fi
 
+# ***** syntax check *****
+
+pushd ${OPENSHIFT_DATA_DIR}/github/openshift/app01/ > /dev/null
+
+# *** shell ***
+
+for file_name in *.sh
+do
+    if [ $(/bin/bash -n ${file_name} 2>&1 | wc -l) -gt 0 ]; then
+        /bin/bash -n ${file_name} >> ${OPENSHIFT_LOG_DIR}/install_alert.log 2>&1
+    fi
+done
+
+# *** ruby ***
+
+for file_name in *.rb
+do
+    if [ "$(ruby -cw ${file_name} 2>&1)" != 'Syntax OK' ]; then
+        ruby -cw ${file_name} >> ${OPENSHIFT_LOG_DIR}/install_alert.log 2>&1
+    fi
+done
+
+popd > /dev/null
+
 # ***** install log *****
 
 touch ${OPENSHIFT_LOG_DIR}/nohup.log
@@ -879,30 +903,6 @@ ${OPENSHIFT_DATA_DIR}/github/openshift/app01/reboot_agent.sh \
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 export TMOUT=0
-
-# ***** syntax check *****
-
-pushd ${OPENSHIFT_DATA_DIR}/github/openshift/app01/ > /dev/null
-
-# *** shell ***
-
-for file_name in *.sh
-do
-    if [ $(/bin/bash -n ${file_name} 2>&1 | wc -l) -gt 0 ]; then
-        /bin/bash -n ${file_name} >> ${OPENSHIFT_LOG_DIR}/install_alert.log 2>&1
-    fi
-done
-
-# *** ruby ***
-
-for file_name in *.rb
-do
-    if [ "$(ruby -cw ${file_name} 2>&1)" != 'Syntax OK' ]; then
-        ruby -cw ${file_name} >> ${OPENSHIFT_LOG_DIR}/install_alert.log 2>&1
-    fi
-done
-
-popd > /dev/null
 
 # gcc --version
 # gcc -march=native -Q --help=target
