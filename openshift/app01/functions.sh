@@ -22,7 +22,8 @@ function010() {
             export CCACHE_MAXSIZE=300M
         fi
     fi
-    export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+    # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+    export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
     export CXXFLAGS="${CFLAGS}"
 
     # shellcheck disable=SC2034
