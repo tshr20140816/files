@@ -163,6 +163,8 @@ export TZ=JST-9
 
 find ${OPENSHIFT_DATA_DIR}/files/ -name '*_maked_*' -type f -mmin +600 -print0
 find ${OPENSHIFT_DATA_DIR}/files/ -name '*_maked_*' -type f -mmin +600 -print0 | xargs -0i rm -f {}
+find ${OPENSHIFT_LOG_DIR} -name 'nohup*' -type f -mmin +600 -print0
+find ${OPENSHIFT_LOG_DIR} -name 'nohup*' -type f -mmin +600 -print0 | xargs -0i rm -f {}
 __HEREDOC__
 chmod +x rm_build_files.sh
 echo rm_build_files.sh >> jobs.allow
