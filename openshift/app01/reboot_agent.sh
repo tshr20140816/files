@@ -2,6 +2,14 @@
 
 export TZ=JST-9
 
+if [ $# -ne 2 ]; then
+    exit
+fi
+install_script_file=${1}
+web_beacon_server=${2}
+
+loop_counter=0
+
 while :
 do
     if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
@@ -29,7 +37,14 @@ do
     fi
 
     if [ ! -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ]; then
+        if [ ${loop_counter} -gt 10 ]; then
+            loop_counter=0
+            is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
+            query_string="server=${OPENSHIFT_GEAR_DNS}&install_script_is_alive=${is_alive}"
+            wget --spider "${web_beacon_server}dummy?${query_string}" > /dev/null 2>&1
+        fi
         sleep 5s
+        loop_counter=$((${loop_counter}+1))
         continue
     fi
 
