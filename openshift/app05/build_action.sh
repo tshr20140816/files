@@ -39,6 +39,8 @@ export CCACHE_MAXSIZE=300M
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+rm -f ${CCACHE_LOGFILE}
+
 ccache -z
 
 # ***** apache *****
