@@ -26,7 +26,7 @@ export EXTRA_CXXFLAGS="${CXXFLAGS}"
 # export HTTPD=${OPENSHIFT_DATA_DIR}/apache
 
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
- --auto --force-colors \
+ --auto \
  --languages ruby \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
 
