@@ -31,58 +31,18 @@ ccache -z
 
 set -x
 
-ls -lang /tmp
+# ***** distcc *****
 
-cd /tmp
-apache_version=2.2.29
-rm httpd-${apache_version}.tar.bz2
-rm -rf httpd-${apache_version}
-wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
-tar jxf httpd-${apache_version}.tar.bz2
-cd httpd-${apache_version}
-./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/apache \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --enable-mods-shared='all proxy'
+distcc_version=3.1
 
-time make -j4
-
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
+tar jxf distcc-${distcc_version}.tar.bz2
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
+./configure --prefix=${OPENSHIFT_DATA_DIR}/distcc
+time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
+popd > /dev/null
 
-php_version=5.6.8
-rm php-${php_version}.tar.xz
-rm -rf php-${php_version}
-wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
-tar Jxf php-${php_version}.tar.xz
-cd php-${php_version}
-./configure \
---prefix=${OPENSHIFT_DATA_DIR}/php \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---docdir=${OPENSHIFT_TMP_DIR}/doc \
---with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
---with-mysql \
---with-pdo-mysql \
---without-sqlite3 \
---without-pdo-sqlite \
---without-pear \
---with-curl \
---with-libdir=lib64 \
---with-bz2 \
---with-iconv \
---with-openssl \
---with-zlib \
---with-gd \
---enable-exif \
---enable-ftp \
---enable-xml \
---enable-mbstring \
---enable-mbregex \
---enable-sockets \
---disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php
-
-nohup time make -j1 > ${OPENSHIFT_LOG_DIR}/php_make.log 2>&1 &
-
-date
-
+ls ${OPENSHIFT_DATA_DIR}/distcc
