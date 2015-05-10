@@ -3,6 +3,7 @@
 # rhc app create xxx ruby-2.0 --server openshift.redhat.com
 
 # http://www.ibm.com/developerworks/jp/linux/library/l-distcc/index.html
+# https://archlinuxjp.kusakata.com/wiki/Distcc
 
 set -x
 
