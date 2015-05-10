@@ -60,7 +60,7 @@ murlin_version 0.2.4
 php_version 5.6.8
 phpicalendar_version 2.4_20100615
 pigz_version 2.3.3
-redmine_version 2.6.4
+redmine_version 2.6.5
 ruby_version 2.1.6
 tcl_version 8.6.3
 ttrss_version 1.15.3
