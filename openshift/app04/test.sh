@@ -35,14 +35,18 @@ set -x
 
 distcc_version=3.1
 
+rm -f ${OPENSHIFT_DATA_DIR}/distcc-${distcc_version}.tar.bz2
+rm -rf ${OPENSHIFT_DATA_DIR}/distcc-${distcc_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/distcc
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -f distcc-${distcc_version}.tar.bz2
-rm -rf distcc-${distcc_version}
 wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
 tar jxf distcc-${distcc_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
-./configure --prefix=${OPENSHIFT_DATA_DIR}/distcc
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/distcc \
+ --mandir=${OPENSHIFT_TMP_DIR}/man
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
