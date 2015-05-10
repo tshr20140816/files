@@ -2,7 +2,7 @@
 CalDavZAP_0.12.1.zip http://www.inf-it.com/CalDavZAP_0.12.1.zip
 baikal-flat-0.2.7.zip http://baikal-server.com/get/baikal-flat-0.2.7.zip
 cacti-0.8.8c.tar.gz http://www.cacti.net/downloads/cacti-0.8.8c.tar.gz
-ccache-3.2.1.tar.xz http://samba.org/ftp/ccache/ccache-3.2.1.tar.xz
+ccache-3.2.2.tar.xz http://samba.org/ftp/ccache/ccache-3.2.2.tar.xz
 delegate9.9.13.tar.gz http://www.delegate.org/anonftp/DeleGate/delegate9.9.13.tar.gz
 expect5.45.tar.gz http://downloads.sourceforge.net/project/expect/Expect/5.45/expect5.45.tar.gz
 fio-2.2.8.tar.bz2 http://brick.kernel.dk/snaps/fio-2.2.8.tar.bz2
