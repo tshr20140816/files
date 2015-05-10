@@ -36,6 +36,8 @@ set -x
 distcc_version=3.1
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f distcc-${distcc_version}.tar.bz2
+rm -rf distcc-${distcc_version}
 wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
 tar jxf distcc-${distcc_version}.tar.bz2
 popd > /dev/null
