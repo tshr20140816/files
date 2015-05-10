@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.05.10 redmine_version 2.6.4 → 2.6.5
 # 2015.05.08 fio_version 2.2.7 → 2.2.8
 # 2015.05.08 wordpress_version 4.2.1-ja → 4.2.2-ja
 # 2015.04.29 wordpress_version 4.2-ja → 4.2.1-ja
