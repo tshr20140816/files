@@ -63,8 +63,8 @@ kill $(ps auwx 2>/dev/null | grep distccd | grep ${OPENSHIFT_APP_UUID} | grep -v
 
 rm -f ${OPENSHIFT_LOG_DIR}/distccd.log
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
-distccd --daemon --listen ${OPENSHIFT_PHP_IP} --jobs 1 --port 33632 \
---allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr
+# distccd --daemon --listen ${OPENSHIFT_PHP_IP} --jobs 1 --port 33632 \
+# --allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr
 # Warning: --user is ignored when distccd is not run by root
 popd > /dev/null
 
