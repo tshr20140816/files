@@ -81,6 +81,8 @@ wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_versi
 tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
 export CC=distcc
+mkdir ${OPENSHIFT_TMP_DIR}/.distcc
+chmod 666 ${OPENSHIFT_TMP_DIR}/.distcc
 export DISTCC_DIR=${OPENSHIFT_TMP_DIR}/.distcc
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh > /dev/null 2>&1
