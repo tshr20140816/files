@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# rhc app create xxx ruby-2.0 --server openshift.redhat.com
+
 set -x
 
 export TZ=JST-9
