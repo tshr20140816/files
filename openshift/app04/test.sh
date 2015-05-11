@@ -59,6 +59,7 @@ export DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/2"
 
 ps auwx | grep distccd
 lsof | grep distccd
+kill $(ps auwx 2>/dev/null | grep distccd | grep ${OPENSHIFT_APP_UUID} | grep -v grep | awk '{print $2}')
 
 rm -f ${OPENSHIFT_LOG_DIR}/distccd.log
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
