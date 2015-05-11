@@ -59,7 +59,7 @@ export DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/2"
 
 rm -f ${OPENSHIFT_LOG_DIR}/distccd.log
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
-distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 1 --port 33632 \
+distccd --daemon --listen ${OPENSHIFT_PHP_IP} --jobs 1 --port 33632 \
 --allow 0.0.0.0/0 --user nobody --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
 
