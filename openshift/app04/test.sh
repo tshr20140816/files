@@ -40,7 +40,7 @@ rm -rf ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/distcc
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
+wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2 > /dev/null 2>&1
 tar jxf distcc-${distcc_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
@@ -48,7 +48,7 @@ pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
  --mandir=${OPENSHIFT_TMP_DIR}/man > /dev/null 2>&1
 time make -j$(grep -c -e processor /proc/cpuinfo) > /dev/null 2>&1
-make install 2>&1
+make install > /dev/null 2>&1
 popd > /dev/null
 
 ls ${OPENSHIFT_DATA_DIR}/distcc
@@ -81,7 +81,7 @@ wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_versi
 tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
-./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh
+./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh > /dev/null 2>&1
 CC=distcc
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
 make install
