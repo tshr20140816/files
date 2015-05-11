@@ -19,7 +19,10 @@ tar jxf distcc-${distcc_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/distcc
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/distcc \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
