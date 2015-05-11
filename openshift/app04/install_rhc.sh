@@ -66,6 +66,8 @@ popd > /dev/null
 gem install commander -v 4.2.1
 gem install rhc
 
+rhc sshkey list
+
 cat << '__HEREDOC__'
 export TMOUT=0
 export HOME=${OPENSHIFT_DATA_DIR}
