@@ -82,7 +82,7 @@ tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh > /dev/null 2>&1
-CC=distcc
+export CC=distcc
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
 make install
 popd > /dev/null
