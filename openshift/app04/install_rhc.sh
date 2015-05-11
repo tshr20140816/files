@@ -27,15 +27,17 @@ export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 
 pushd ${OPENSHIFT_DATA_DIR}/distcc > /dev/null
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
-distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 2 --port 33632 \
---allow 0.0.0.0/0 --user nobody --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
+# distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 2 --port 33632 \
+# --allow 0.0.0.0/0 --user nobody --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
 
-export DISTCC_HOSTS="${OPENSHIFT_GEAR_DNS}/2"
-export DISTCC_LOG=${OPENSHIFT_LOG_DIR}
-export DISTCC_DIR=${OPENSHIFT_DATA_DIR}
-export TMPDIR=${OPENSHIFT_TMP_DIR}/distcc
-export DISTCC_FALLBACK=0
+# export DISTCC_HOSTS="${OPENSHIFT_GEAR_DNS}/2"
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
+rmdir -rf ${OPENSHIFT_DATA_DIR}.distcc 2> /dev/null
+mkdir ${OPENSHIFT_DATA_DIR}.distcc
+export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+# export TMPDIR=${OPENSHIFT_TMP_DIR}/distcc
+# export DISTCC_FALLBACK=0
 
 # ***** openssh *****
 
