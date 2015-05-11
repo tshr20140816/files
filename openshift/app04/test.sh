@@ -58,7 +58,7 @@ export DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/2"
 
 rm -f ${OPENSHIFT_LOG_DIR}/distccd.log
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
-distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 1 --port 33632 \
+${OPENSHIFT_DATA_DIR}/distcc/bin/distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 1 --port 33632 \
 --allow 0.0.0.0/0 --user nobody --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
 
@@ -76,6 +76,7 @@ tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh
+CC=distcc
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
 make install
 popd > /dev/null
