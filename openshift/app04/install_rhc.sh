@@ -76,6 +76,7 @@ export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 gem environment
 gem install commander -v 4.2.1
 gem install rhc
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 
 # https://docs.openshift.com/online/user_guide/ssh_keys.html
 rhc sshkey list
