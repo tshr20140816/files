@@ -35,8 +35,8 @@ set -x
 
 distcc_version=3.1
 
-rm -f ${OPENSHIFT_DATA_DIR}/distcc-${distcc_version}.tar.bz2
-rm -rf ${OPENSHIFT_DATA_DIR}/distcc-${distcc_version}
+rm -f ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}.tar.bz2
+rm -rf ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/distcc
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -47,8 +47,28 @@ pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
  --mandir=${OPENSHIFT_TMP_DIR}/man
-time make -j$(grep -c -e processor /proc/cpuinfo)
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
 make install
 popd > /dev/null
 
 ls ${OPENSHIFT_DATA_DIR}/distcc
+
+# ***** openssh *****
+
+openssh_version=6.8p1
+
+rm -f ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}.tar.gz
+rm -rf ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/openssh
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
+tar xfz openssh-${openssh_version}.tar.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
+./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
+make install
+popd > /dev/null
+
+ls ${OPENSHIFT_DATA_DIR}/openssh
