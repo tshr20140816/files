@@ -54,7 +54,7 @@ popd > /dev/null
 ls ${OPENSHIFT_DATA_DIR}/distcc
 
 pushd ${OPENSHIFT_DATA_DIR}/distcc > /dev/null
-DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/2"
+export DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/2"
 
 rm -f ${OPENSHIFT_LOG_DIR}/distccd.log
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
