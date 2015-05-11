@@ -71,8 +71,8 @@ popd > /dev/null
 export CC=distcc
 rm -rf ${OPENSHIFT_TMP_DIR}/.distcc
 mkdir ${OPENSHIFT_TMP_DIR}/.distcc
-chmod 666 ${OPENSHIFT_TMP_DIR}/.distcc
-export DISTCC_DIR=${OPENSHIFT_TMP_DIR}/.distcc
+chmod 666 ${OPENSHIFT_TMP_DIR}.distcc
+export DISTCC_DIR=${OPENSHIFT_TMP_DIR}.distcc
 DISTCC_ARGS="--log-level info --log-file ${OPENSHIFT_LOG_DIR}/distccd.log"
 
 # ***** openssh *****
