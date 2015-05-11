@@ -53,7 +53,11 @@ tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/openssh \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
