@@ -81,7 +81,7 @@ wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_versi
 tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
 export CC=distcc
-export DISTCC_DIR=${OPENSHIFT_TMP_DIR}
+export DISTCC_DIR=${OPENSHIFT_TMP_DIR}/.distcc
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh > /dev/null 2>&1
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
