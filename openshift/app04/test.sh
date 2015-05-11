@@ -55,7 +55,7 @@ ls ${OPENSHIFT_DATA_DIR}/distcc
 
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 pushd ${OPENSHIFT_DATA_DIR}/distcc > /dev/null
-export DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/2"
+export DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/1"
 
 ps auwx | grep distccd
 lsof | grep distccd
