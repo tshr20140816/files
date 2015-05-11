@@ -68,6 +68,12 @@ touch ${OPENSHIFT_LOG_DIR}/distccd.log
 # Warning: --user is ignored when distccd is not run by root
 popd > /dev/null
 
+export CC=distcc
+mkdir ${OPENSHIFT_TMP_DIR}/.distcc 2> /dev/null
+chmod 666 ${OPENSHIFT_TMP_DIR}/.distcc
+export DISTCC_DIR=${OPENSHIFT_TMP_DIR}/.distcc
+DISTCC_ARGS="--log-file ${OPENSHIFT_LOG_DIR}/distccd.log"
+
 # ***** openssh *****
 
 openssh_version=6.8p1
@@ -80,10 +86,6 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz > /dev/null 2>&1
 tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
-export CC=distcc
-mkdir ${OPENSHIFT_TMP_DIR}/.distcc
-chmod 666 ${OPENSHIFT_TMP_DIR}/.distcc
-export DISTCC_DIR=${OPENSHIFT_TMP_DIR}/.distcc
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh > /dev/null 2>&1
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
