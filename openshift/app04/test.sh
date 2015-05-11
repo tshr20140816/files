@@ -53,12 +53,13 @@ popd > /dev/null
 
 ls ${OPENSHIFT_DATA_DIR}/distcc
 
+export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 pushd ${OPENSHIFT_DATA_DIR}/distcc > /dev/null
 export DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/2"
 
 rm -f ${OPENSHIFT_LOG_DIR}/distccd.log
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
-${OPENSHIFT_DATA_DIR}/distcc/bin/distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 1 --port 33632 \
+distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 1 --port 33632 \
 --allow 0.0.0.0/0 --user nobody --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
 
