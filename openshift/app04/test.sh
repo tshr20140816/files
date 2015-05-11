@@ -86,7 +86,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh > /dev/null 2>&1
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
-# make install
+make install
 popd > /dev/null
 export HOME=${env_home_backup}
 
