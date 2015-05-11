@@ -15,9 +15,9 @@ if [ ! -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
     make install
 fi
 
-export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-export CC="ccache gcc"
-export CXX="ccache g++"
+# export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+# export CC="ccache gcc"
+# export CXX="ccache g++"
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
@@ -35,21 +35,21 @@ set -x
 
 distcc_version=3.1
 
-rm -f ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}.tar.bz2
-rm -rf ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
-rm -rf ${OPENSHIFT_DATA_DIR}/distcc
+# rm -f ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}.tar.bz2
+# rm -rf ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
+# rm -rf ${OPENSHIFT_DATA_DIR}/distcc
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2 > /dev/null 2>&1
-tar jxf distcc-${distcc_version}.tar.bz2
-popd > /dev/null
-pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
-./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/distcc \
- --mandir=${OPENSHIFT_TMP_DIR}/man > /dev/null 2>&1
-time make -j$(grep -c -e processor /proc/cpuinfo) > /dev/null 2>&1
-make install > /dev/null 2>&1
-popd > /dev/null
+# pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+# wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2 > /dev/null 2>&1
+# tar jxf distcc-${distcc_version}.tar.bz2
+# popd > /dev/null
+# pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
+# ./configure \
+#  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
+#  --mandir=${OPENSHIFT_TMP_DIR}/man > /dev/null 2>&1
+# time make -j$(grep -c -e processor /proc/cpuinfo) > /dev/null 2>&1
+# make install > /dev/null 2>&1
+# popd > /dev/null
 
 ls ${OPENSHIFT_DATA_DIR}/distcc
 
@@ -77,14 +77,14 @@ rm -rf ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/openssh
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz > /dev/null 2>&1
 tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
+export CC=distcc
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh > /dev/null 2>&1
-export CC=distcc
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
-make install
+# make install
 popd > /dev/null
 
 ls ${OPENSHIFT_DATA_DIR}/openssh
