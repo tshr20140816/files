@@ -66,6 +66,7 @@ popd > /dev/null
 gem install commander -v 4.2.1
 gem install rhc
 
+# https://docs.openshift.com/online/user_guide/ssh_keys.html
 rhc sshkey list
 
 cat << '__HEREDOC__'
