@@ -28,7 +28,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 pushd ${OPENSHIFT_DATA_DIR}/distcc > /dev/null
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
 distccd --daemon --listen ${OPENSHIFT_DIY_IP} --jobs 2 --port 33632 \
---allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
+--allow 0.0.0.0/0 --user nobody --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr 
 popd > /dev/null
 
 export DISTCC_HOSTS="${OPENSHIFT_GEAR_DNS}/2"
