@@ -72,3 +72,21 @@ export HOME=${OPENSHIFT_DATA_DIR}
 export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
 rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 __HEREDOC__
+
+# ***** bash_profile *****
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+touch .bash_profile
+cat << '__HEREDOC__' >> .bash_profile
+
+export TMOUT=0
+export TZ=JST-9
+alias ls='ls -lang --color=auto'
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+__HEREDOC__
+popd > /dev/null
+
+# ***** vim *****
+
+echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
