@@ -63,6 +63,7 @@ popd > /dev/null
 
 # ***** rhc *****
 
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 gem install commander -v 4.2.1
 gem install rhc
 
