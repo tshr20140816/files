@@ -46,9 +46,9 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
- --mandir=${OPENSHIFT_TMP_DIR}/man
-time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
-make install
+ --mandir=${OPENSHIFT_TMP_DIR}/man > /dev/null 2>&1
+time make -j$(grep -c -e processor /proc/cpuinfo) > /dev/null 2>&1
+make install 2>&1
 popd > /dev/null
 
 ls ${OPENSHIFT_DATA_DIR}/distcc
