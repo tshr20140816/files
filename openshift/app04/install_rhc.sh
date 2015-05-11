@@ -18,6 +18,7 @@ wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
 tar jxf distcc-${distcc_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
+./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/distcc
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
@@ -48,6 +49,7 @@ wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_versi
 tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
+./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
