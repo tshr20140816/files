@@ -57,6 +57,9 @@ export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 pushd ${OPENSHIFT_DATA_DIR}/distcc > /dev/null
 export DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/2"
 
+ps auwx | grep distccd
+lsof | grep distccd
+
 rm -f ${OPENSHIFT_LOG_DIR}/distccd.log
 touch ${OPENSHIFT_LOG_DIR}/distccd.log
 distccd --daemon --listen ${OPENSHIFT_PHP_IP} --jobs 1 --port 33632 \
