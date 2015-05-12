@@ -77,14 +77,14 @@ DISTCC_ARGS="--log-level info --log-file ${OPENSHIFT_LOG_DIR}/distccd.log"
 
 # ***** openssh *****
 
-openssh_version=6.8p1
+openssh_version=6.8
 
 rm -f ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}.tar.gz
 rm -rf ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/openssh
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz > /dev/null 2>&1
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/openssh-${openssh_version}.tar.gz > /dev/null 2>&1
 tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
