@@ -43,8 +43,10 @@ wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
 wget https://code.google.com/p/distcc/downloads/detail?name=distcc-${distcc_version}.tar.bz2 -O distcc.html
 tarball_sha1=$(sha1sum distcc-${distcc_version}.tar.bz2 | cut -d ' ' -f 1)
 echo ${tarball_sha1}
-test_data=$(cat distcc.html | grep sha1)
+cat distcc.html | grep sha1 > distcc.html
+perl -pi -e 's/<.+?>//g' distcc.html
+perl -pi -e 's/ //g' distcc.html
+test_data=$(cat distcc.html)
 echo "${test_data}"
-# cat distcc.html
 
 ls -lang
