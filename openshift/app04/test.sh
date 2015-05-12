@@ -37,9 +37,13 @@ cd /tmp
 
 distcc_version=3.1
 
+rm -f distcc-${distcc_version}.tar.bz2
+rm -f distcc.html
 wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
 wget https://code.google.com/p/distcc/downloads/detail?name=distcc-${distcc_version}.tar.bz2&can=2&q= -O distcc.html
 tarball_sha1=$(sha1sum distcc-${distcc_version}.tar.bz2 | cut -d ' ' -f 1)
 echo ${tarball_sha1}
+cat distcc.html | grep sha1 > distcc.html
+cat distcc.html
 
 ls -lang
