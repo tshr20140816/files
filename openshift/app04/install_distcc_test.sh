@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# ruby-2.0
+
 set -x
 
 export TZ=JST-9
@@ -25,6 +27,8 @@ popd > /dev/null
 export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 mkdir ${OPENSHIFT_DATA_DIR}.distcc
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+
+export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 
 # ***** openssh *****
 
@@ -124,4 +128,28 @@ __HEREDOC__
 env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+
+# ssh -fMN xxxxx@xxxxx-xxxxx.rhcloud.com
+# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd'
 export HOME=${env_home_backup}
+
+# ***** bash_profile *****
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+touch .bash_profile
+cat << '__HEREDOC__' >> .bash_profile
+
+export TMOUT=0
+export TZ=JST-9
+alias ls='ls -lang --color=auto'
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export env_home_backup=${HOME}
+# export HOME=${OPENSHIFT_DATA_DIR}
+__HEREDOC__
+popd > /dev/null
+
+# ***** vim *****
+
+echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
