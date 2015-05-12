@@ -130,7 +130,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 
 # ssh -fMN xxxxx@xxxxx-xxxxx.rhcloud.com
-# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd'
+# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start'
 export HOME=${env_home_backup}
 
 # ***** bash_profile *****
@@ -149,7 +149,7 @@ export CC=distcc
 export CXX=distcc
 export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd'
+# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start'
 __HEREDOC__
 
 # ***** vim *****
