@@ -74,6 +74,31 @@ LogLevel QUIET
 __HEREDOC__
 popd > /dev/null
 
+# ***** distcc *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/distcc-${distcc_version}.tar.bz2 ./
+tar jxf distcc-${distcc_version}.tar.bz2
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
+echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_distcc.log
+# ./configure --help
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/distcc \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_distcc.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_distcc.log
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_distcc.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_distcc.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_distcc.log
+popd > /dev/null
+mv ${OPENSHIFT_LOG_DIR}/install_distcc.log ${OPENSHIFT_LOG_DIR}/install/
+rm ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}.tar.bz2
+rm -rf distcc-${distcc_version}
+
 # ***** ccache *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
