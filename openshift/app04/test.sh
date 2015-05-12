@@ -46,4 +46,8 @@ echo ${tarball_sha1}
 cat distcc.html | grep sha1 > distcc.html
 cat distcc.html
 
+rm -rf openssh-6*
+rm -f openssh-6*
+rm -rf man
+
 ls -lang
