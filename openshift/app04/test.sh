@@ -48,3 +48,5 @@ perl -pi -e 's/<.+?>//g' distcc.html
 perl -pi -e 's/ //g' distcc.html
 test_data=$(cat distcc.html)
 echo "${test_data}"
+
+# dummy
