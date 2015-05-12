@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# export HOME=${OPENSHIFT_DATA_DIR}
+# export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+# export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+# ssh xxxxx@xxxxx-xxxxx.rhcloud.com
+# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd'
+# export CC=distcc
+# export DISTCC_DIR=/tmp/
+
+# vi app-root/data/.ssh/config
+# Host *
+# ControlMaster auto
+# ControlPath /tmp/.ssh_tmp/master-%r@%h:%p
+
+# ssh -fMN xxxxx@xxxxx-xxxxx.rhcloud.com
+
 set -x
 
 export TZ=JST-9
