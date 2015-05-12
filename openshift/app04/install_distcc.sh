@@ -56,5 +56,8 @@ export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=300M
 
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
 exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
