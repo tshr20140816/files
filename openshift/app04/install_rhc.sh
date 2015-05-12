@@ -4,6 +4,7 @@
 
 # http://www.ibm.com/developerworks/jp/linux/library/l-distcc/index.html
 # https://archlinuxjp.kusakata.com/wiki/Distcc
+# GXPによる分散処理入門
 
 set -x
 
