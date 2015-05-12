@@ -135,9 +135,7 @@ export HOME=${env_home_backup}
 
 # ***** bash_profile *****
 
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-touch .bash_profile
-cat << '__HEREDOC__' >> .bash_profile
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}.bash_profile
 
 export TMOUT=0
 export TZ=JST-9
@@ -151,9 +149,18 @@ export CC=distcc
 export CXX=distcc
 export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd'
 __HEREDOC__
-popd > /dev/null
 
 # ***** vim *****
 
 echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
+
+# ***** php *****
+
+php_version=5.6.8
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+tar Jxf php-${php_version}.tar.xz
+popd > /dev/null
