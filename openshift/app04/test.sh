@@ -31,67 +31,15 @@ export CXXFLAGS="${CFLAGS}"
 
 set -x
 
+cd /tmp
+
 # ***** distcc *****
 
 distcc_version=3.1
 
-# rm -f ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}.tar.bz2
-# rm -rf ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
-# rm -rf ${OPENSHIFT_DATA_DIR}/distcc
+wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
+wget https://code.google.com/p/distcc/downloads/detail?name=distcc-${distcc_version}.tar.bz2&can=2&q= -O distcc.html
+tarball_sha1=$(sha1sum distcc-${distcc_version}.tar.bz2 | cut -d ' ' -f 1)
+echo ${tarball_sha1}
 
-# pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-# wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2 > /dev/null 2>&1
-# tar jxf distcc-${distcc_version}.tar.bz2
-# popd > /dev/null
-# pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
-# ./configure \
-#  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
-#  --mandir=${OPENSHIFT_TMP_DIR}/man > /dev/null 2>&1
-# time make -j$(grep -c -e processor /proc/cpuinfo) > /dev/null 2>&1
-# make install > /dev/null 2>&1
-# popd > /dev/null
-
-ls ${OPENSHIFT_DATA_DIR}/distcc
-
-export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
-pushd ${OPENSHIFT_DATA_DIR}/distcc > /dev/null
-export DISTCC_HOSTS="@${OPENSHIFT_APP_DNS}/1"
-
-ps auwx | grep distccd
-lsof | grep distccd
-kill $(ps auwx 2>/dev/null | grep distccd | grep ${OPENSHIFT_APP_UUID} | grep -v grep | awk '{print $2}')
-
-rm -f ${OPENSHIFT_LOG_DIR}/distccd.log
-touch ${OPENSHIFT_LOG_DIR}/distccd.log
-# distccd --daemon --listen ${OPENSHIFT_PHP_IP} --jobs 1 --port 33632 \
-# --allow 0.0.0.0/0 --log-file=${OPENSHIFT_LOG_DIR}/distccd.log --verbose --log-stderr
-# Warning: --user is ignored when distccd is not run by root
-popd > /dev/null
-
-export CC=distcc
-rm -rf ${OPENSHIFT_TMP_DIR}/.distcc
-mkdir ${OPENSHIFT_TMP_DIR}/.distcc
-chmod 666 ${OPENSHIFT_TMP_DIR}.distcc
-export DISTCC_DIR=${OPENSHIFT_TMP_DIR}.distcc
-DISTCC_ARGS="--log-level info --log-file ${OPENSHIFT_LOG_DIR}/distccd.log"
-
-# ***** openssh *****
-
-openssh_version=6.8p1
-
-rm -f ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}.tar.gz
-rm -rf ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}
-rm -rf ${OPENSHIFT_DATA_DIR}/openssh
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz > /dev/null 2>&1
-tar xfz openssh-${openssh_version}.tar.gz
-popd > /dev/null
-pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
-./configure --prefix=${OPENSHIFT_DATA_DIR}/openssh > /dev/null 2>&1
 ls -lang
-time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1
-make install
-popd > /dev/null
-
-ls ${OPENSHIFT_DATA_DIR}/openssh
