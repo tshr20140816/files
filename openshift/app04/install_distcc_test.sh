@@ -147,6 +147,8 @@ export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:${
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export env_home_backup=${HOME}
 # export HOME=${OPENSHIFT_DATA_DIR}
+export CC=distcc
+export CXX=distcc
 __HEREDOC__
 popd > /dev/null
 
