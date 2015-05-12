@@ -43,8 +43,9 @@ wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
 wget https://code.google.com/p/distcc/downloads/detail?name=distcc-${distcc_version}.tar.bz2 -O distcc.html
 tarball_sha1=$(sha1sum distcc-${distcc_version}.tar.bz2 | cut -d ' ' -f 1)
 echo ${tarball_sha1}
-cat distcc.html | grep sha1 > distcc.html
-cat distcc.html
+test_data=$(cat distcc.html | grep sha1)
+echo "${test_data}"
+# cat distcc.html
 
 rm -rf openssh-6*
 rm -f openssh-6*
