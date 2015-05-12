@@ -243,8 +243,6 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip &
     # phpicalendar
     wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2 &
-    # openssh
-    wget -t1 ${mirror_server}/openssh-${openssh_version}.tar.gz &
     wait
 
     # apache
@@ -362,6 +360,16 @@ if [ "${mirror_server}" != "none" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm -f ccache-${ccache_version}.tar.xz
+    fi
+
+    # openssh
+    wget -t1 ${mirror_server}/openssh-${openssh_version}.tar.gz
+    wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/openssh-${openssh_version}.tar.gz.asc
+    gpg --recv-keys $(gpg --verify openssh-${openssh_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    if [ $(gpg --verify openssh-${openssh_version}.tar.gz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm -f openssh-${openssh_version}.tar.gz
     fi
 
     # *** gem ***
@@ -778,6 +786,15 @@ do
         wget http://samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
     fi
     [ -f ccache-${ccache_version}.tar.xz ] || files_exists=0
+
+    # *** openssh ***
+    if [ ! -f openssh-${openssh_version}.tar.gz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing openssh-${openssh_version}.tar.gz" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/openssh-${openssh_version}.tar.gz
+    fi
+    [ -f openssh-${openssh_version}.tar.gz ] || files_exists=0
 
     # *** pigz ***
     # # TODO http://www.zlib.net/pigz/pigz-2.3.3-sig.txt
