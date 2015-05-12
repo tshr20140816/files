@@ -364,7 +364,7 @@ if [ "${mirror_server}" != "none" ]; then
 
     # openssh
     wget -t1 ${mirror_server}/openssh-${openssh_version}.tar.gz
-    wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/openssh-${openssh_version}.tar.gz.asc
+    wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz.asc
     gpg --recv-keys $(gpg --verify openssh-${openssh_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
     if [ $(gpg --verify openssh-${openssh_version}.tar.gz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -792,7 +792,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing openssh-${openssh_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/openssh-${openssh_version}.tar.gz
+        wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
     fi
     [ -f openssh-${openssh_version}.tar.gz ] || files_exists=0
 
