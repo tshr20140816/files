@@ -47,6 +47,7 @@ baikal_version 0.2.7
 cacti_version 0.8.8c
 caldavzap_version 0.12.1
 ccache_version 3.2.2
+distcc_version 3.1
 delegate_version 9.9.13
 expect_version 5.45
 fio_version 2.2.8
@@ -243,6 +244,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip &
     # phpicalendar
     wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2 &
+    # distcc
+    wget -t1 ${mirror_server}/distcc-${distcc_version}.tar.bz2 &
     wait
 
     # apache
@@ -795,6 +798,15 @@ do
         wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
     fi
     [ -f openssh-${openssh_version}.tar.gz ] || files_exists=0
+
+    # *** distcc ***
+    if [ ! -f distcc-${distcc_version}.tar.bz2 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing distcc-${distcc_version}.tar.bz2" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
+    fi
+    [ -f distcc-${distcc_version}.tar.bz2 ] || files_exists=0
 
     # *** pigz ***
     # # TODO http://www.zlib.net/pigz/pigz-2.3.3-sig.txt
