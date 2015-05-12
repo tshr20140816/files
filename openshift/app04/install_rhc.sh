@@ -99,6 +99,8 @@ export TZ=JST-9
 alias ls='ls -lang --color=auto'
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+# export HOME=${OPENSHIFT_DATA_DIR}
 __HEREDOC__
 popd > /dev/null
 
