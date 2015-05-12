@@ -58,6 +58,7 @@ memcached_php_ext_version 2.2.0
 memcached_version 1.4.22
 mrtg_version 2.17.4
 murlin_version 0.2.4
+openssh_version 6.8p1
 php_version 5.6.8
 phpicalendar_version 2.4_20100615
 pigz_version 2.3.3
@@ -207,7 +208,7 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/ccache_php.tar.xz &
     # wget -t1 ${mirror_server}/ccache_libmemcached.tar.xz &
     # wget -t1 ${mirror_server}/ccache_delegate.tar.xz &
-    wget -t1 ${mirror_server}/ccache_ruby.tar.xz &
+    # wget -t1 ${mirror_server}/ccache_ruby.tar.xz &
     # wget -t1 ${mirror_server}/ccache_tcl.tar.xz &
     wget -t1 ${mirror_server}/ccache_passenger.tar.xz &
     # wget -t1 ${mirror_server}/ccache.tar.xz
@@ -242,6 +243,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip &
     # phpicalendar
     wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2 &
+    # openssh
+    wget -t1 ${mirror_server}/openssh-${openssh_version}.tar.gz &
     wait
 
     # apache
