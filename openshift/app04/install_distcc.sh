@@ -1,23 +1,28 @@
 #!/bin/bash
 
-# export HOME=${OPENSHIFT_DATA_DIR}
-# export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-# export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
-# ssh xxxxx@xxxxx-xxxxx.rhcloud.com
-# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd'
-# export CC=distcc
-# export DISTCC_DIR=/tmp/
-
-# vi app-root/data/.ssh/config
-# Host *
-# ControlMaster auto
-# ControlPath /tmp/.ssh_tmp/master-%r@%h:%p
-
-# ssh -fMN xxxxx@xxxxx-xxxxx.rhcloud.com
-
 set -x
 
 export TZ=JST-9
+
+# ***** ccache *****
+
+ccache_version=3.2.2
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
+tar Jxf ccache-${ccache_version}.tar.xz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version} > /dev/null
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/ccache \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
+
+mkdir ${OPENSHIFT_TMP_DIR}/ccache
+mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 
 # ***** distcc *****
 
@@ -44,6 +49,11 @@ export DISTCC_TCP_CORK=0
 export HOME=${OPENSHIFT_DATA_DIR}
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_MAXSIZE=300M
 
 exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
