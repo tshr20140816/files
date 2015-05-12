@@ -149,6 +149,8 @@ export env_home_backup=${HOME}
 # export HOME=${OPENSHIFT_DATA_DIR}
 export CC=distcc
 export CXX=distcc
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
+export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 __HEREDOC__
 popd > /dev/null
 
