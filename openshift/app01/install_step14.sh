@@ -82,7 +82,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_expect.log
- ./configure \
+./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 
