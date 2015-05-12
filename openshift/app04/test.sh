@@ -47,8 +47,4 @@ test_data=$(cat distcc.html | grep sha1)
 echo "${test_data}"
 # cat distcc.html
 
-rm -rf openssh-6*
-rm -f openssh-6*
-rm -rf man
-
 ls -lang
