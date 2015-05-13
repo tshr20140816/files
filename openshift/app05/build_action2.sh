@@ -40,6 +40,9 @@ export CCACHE_MAXSIZE=300M
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+
 # rm -f ${CCACHE_LOGFILE}
 
 ccache -z
