@@ -33,4 +33,8 @@ set -x
 
 cd /tmp
 
-printenv
+# xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start
+
+test_data="${uuid}@${OPENSHIFT_APP_DNS}"
+
+echo ${test_data}
