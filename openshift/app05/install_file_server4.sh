@@ -9,12 +9,16 @@ export TZ=JST-9
 
 # ***** args *****
 
-if [ $# -ne 1 ]; then
+if [ $# -ne 3 ]; then
     echo "arg1 : build password"
+    echo "arg2 : openshift account"
+    echo "arg3 : openshift password"
     exit
 fi
 
 build_password=${1}
+openshift_account=${2}
+openshift_password=${3}
 
 mkdir ${OPENSHIFT_DATA_DIR}/files
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
@@ -26,11 +30,29 @@ popd > /dev/null
 # tcl_version 8.6.3
 # expect_version 5.45
 
-# ***** ccache *****
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
+# ***** distcc *****
+
+distcc_version=3.1
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cat << '__HEREDOC__' > build_ccache.sh
-#!/bin/bash
+wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
+tar jxf distcc-${distcc_version}.tar.bz2
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/distcc \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
+
+mkdir ${OPENSHIFT_DATA_DIR}.distcc
+
+# ***** ccache *****
 
 ccache_version=3.2.2
 
@@ -40,15 +62,45 @@ wget http://samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
 tar Jxf ccache-${ccache_version}.tar.xz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version} > /dev/null
-CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
- ./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/ccache \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc
 make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
-__HEREDOC__
-chmod +x build_ccache.sh
-./build_ccache.sh &
+
+# ***** openssh *****
+
+openssh_version=6.8p1
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
+tar xfz openssh-${openssh_version}.tar.gz
 popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/openssh \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
+
+cat << __HEREDOC__ >> ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
+
+IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null
+LogLevel QUIET
+__HEREDOC__
+
+cat << __HEREDOC__ > ${OPENSHIFT_DATA_DIR}/.ssh/config
+Host *
+ControlMaster auto
+ControlPath /tmp/.ssh_tmp/master-%r@%h:%p
+__HEREDOC__
 
 # ***** build action *****
 
