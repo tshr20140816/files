@@ -8,6 +8,7 @@ if [ $# -ne 2 ]; then
     set +x
     echo "arg1 : web_beacon_server https://xxx/"
     echo "arg2 : web beacon server user (digest auth)"
+    exit
 fi
 
 web_beacon_server=${1}
