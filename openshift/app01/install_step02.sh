@@ -9,7 +9,7 @@ cpu_clock=$(grep -e MHz /proc/cpuinfo | head -n1 | awk -F'[ .]' '{print $3}')
 model_name=$(grep -e "model name" /proc/cpuinfo | head -n1 \
  | awk '{print $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14}' \
  | sed -e 's/[ \t]*$//' | sed -e 's/ /_/g')
-query_string="server=${OPENSHIFT_GEAR_DNS}&pc=${processor_count}&clock=${cpu_clock}&model=${model_name}&uuid=${USER}"
+query_string="server=${OPENSHIFT_APP_DNS}&pc=${processor_count}&clock=${cpu_clock}&model=${model_name}&uuid=${USER}"
 wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
 
 # ***** make directories *****
