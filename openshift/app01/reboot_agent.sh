@@ -40,7 +40,7 @@ do
         if [ ${loop_counter} -gt 20 ]; then
             loop_counter=0
             is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
-            query_string="server=${OPENSHIFT_GEAR_DNS}&install_script_is_alive=${is_alive}"
+            query_string="server=${OPENSHIFT_APP_DNS}&install_script_is_alive=${is_alive}"
             wget --spider "${web_beacon_server}dummy?${query_string}" > /dev/null 2>&1
         fi
         sleep 5s
@@ -51,7 +51,7 @@ do
     case "$(cat ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt)" in
         "restart" )
             echo $(date +%Y/%m/%d" "%H:%M:%S) gear restart
-            query_string="server=${OPENSHIFT_GEAR_DNS}&action=restart"
+            query_string="server=${OPENSHIFT_APP_DNS}&action=restart"
             wget --spider ${web_beacon_server}dummy?${query_string} > /dev/null 2>&1
     
             /usr/bin/gear stop --trace
@@ -59,14 +59,14 @@ do
             ;;
         "stop" )
             echo $(date +%Y/%m/%d" "%H:%M:%S) gear stop
-            query_string="server=${OPENSHIFT_GEAR_DNS}&action=stop"
+            query_string="server=${OPENSHIFT_APP_DNS}&action=stop"
             wget --spider ${web_beacon_server}dummy?${query_string} > /dev/null 2>&1
     
             /usr/bin/gear stop --trace
             ;;
         "start" )
             echo $(date +%Y/%m/%d" "%H:%M:%S) gear start
-            query_string="server=${OPENSHIFT_GEAR_DNS}&action=start"
+            query_string="server=${OPENSHIFT_APP_DNS}&action=start"
             wget --spider ${web_beacon_server}dummy?${query_string} > /dev/null 2>&1
     
             /usr/bin/gear start --trace
