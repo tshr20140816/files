@@ -74,5 +74,7 @@ export CXX="ccache g++"
 exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
 
+# ***** register url *****
+
 curl --digest -u ${web_beacon_server_user}:$(date +%Y%m%d%H) -F "url=https://${OPENSHIFT_APP_DNS}/" \
  ${web_beacon_server}createwebcroninformation
