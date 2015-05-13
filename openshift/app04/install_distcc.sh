@@ -4,6 +4,15 @@ set -x
 
 export TZ=JST-9
 
+if [ $# -ne 2 ]; then
+    set +x
+    echo "arg1 : web_beacon_server https://xxx/"
+    echo "arg2 : web beacon server user (digest auth)"
+fi
+
+web_beacon_server=${1}
+web_beacon_server_user=${2}
+
 # ***** ccache *****
 
 ccache_version=3.2.2
@@ -64,3 +73,6 @@ export CXX="ccache g++"
 
 exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
+
+curl --digest -u ${web_beacon_server_user}:$(date +%Y%m%d%H) -F "url=https://${OPENSHIFT_APP_DNS}/" \
+ ${web_beacon_server}createwebcroninformation
