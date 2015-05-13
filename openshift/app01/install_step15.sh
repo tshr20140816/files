@@ -67,7 +67,7 @@ popd > /dev/null
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-query_string="server=${OPENSHIFT_GEAR_DNS}&installed=tcl"
+query_string="server=${OPENSHIFT_APP_DNS}&installed=tcl"
 wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # ***** Expect *****
@@ -101,7 +101,7 @@ rm expect${expect_version}.tar.gz
 rm -rf expect${expect_version}
 popd > /dev/null
 
-query_string="server=${OPENSHIFT_GEAR_DNS}&installed=expect"
+query_string="server=${OPENSHIFT_APP_DNS}&installed=expect"
 wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # ***** rhc *****
@@ -130,13 +130,13 @@ touch ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
 rhc_version_info=$(rhc --version 2> ${OPENSHIFT_TMP_DIR}/rhc.stderr.log | grep -e rhc)
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ${rhc_version_info}" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 if [ $(grep -c -e 'command not found' ${OPENSHIFT_TMP_DIR}/rhc.stderr.log) -gt 0 ]; then
-    query_string="server=${OPENSHIFT_GEAR_DNS}&error=rhc"
+    query_string="server=${OPENSHIFT_APP_DNS}&error=rhc"
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" \
      > /dev/null 2>&1
 fi
 rm -f ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
 
-query_string="server=${OPENSHIFT_GEAR_DNS}&installed=rhc"
+query_string="server=${OPENSHIFT_APP_DNS}&installed=rhc"
 wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # *** setup ***
