@@ -40,3 +40,5 @@ test_data1="${uuid}@${OPENSHIFT_APP_DNS}"
 echo ${test_data1}
 test_data2=$(echo ${test_data1} | awk -F@ '{print $1}')
 echo ${test_data2}
+test_data3="${test_data1}/2:/var/lib/openshift/${test_data2}/app-root/data/distcc/bin/distccd_start"
+echo ${test_data3}
