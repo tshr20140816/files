@@ -8,7 +8,7 @@ function010
 
 curl --digest -u $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user):$(date +%Y%m%d%H) \
  -F "url=https://${OPENSHIFT_GEAR_DNS}/" \
-$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)createwebcroninformation
+ $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)createwebcroninformation
 
 # ***** infrastructure info *****
 
