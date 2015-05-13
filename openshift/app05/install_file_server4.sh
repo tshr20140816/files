@@ -212,7 +212,7 @@ sed -i -e "s|__BUILD_PASSWORD__|${build_password}|g" build_action.php
 popd > /dev/null
 
 pushd  ${OPENSHIFT_DATA_DIR} > /dev/null
-wget --no-cache https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/build_action.sh
+wget --no-cache https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/build_action2.sh
 popd > /dev/null
 
 # ***** cron minutely *****
@@ -260,12 +260,12 @@ echo 'build start'
 ymdhms=$(date +%Y%m%d%H%M%S)
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-rm -f build_action.sh
-wget --no-cache https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/build_action.sh
+rm -f build_action2.sh
+wget --no-cache https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/build_action2.sh
 popd > /dev/null
 params=$(cat ${OPENSHIFT_DATA_DIR}/build_action_params)
 echo "${params}"
-nohup bash ${OPENSHIFT_DATA_DIR}/build_action.sh ${params} \
+nohup bash ${OPENSHIFT_DATA_DIR}/build_action2.sh ${params} \
  >> ${OPENSHIFT_LOG_DIR}/nohup.${ymdhms}.log \
  2>> ${OPENSHIFT_LOG_DIR}/nohup_error.${ymdhms}.log &
 
