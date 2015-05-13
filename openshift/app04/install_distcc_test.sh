@@ -6,6 +6,16 @@ set -x
 
 export TZ=JST-9
 
+if [ $# -ne 2 ]; then
+    set +x
+    echo "arg1 : openshift account"
+    echo "arg2 : openshift password"
+    exit
+fi
+
+openshift_account=${1}
+openshift_password=${2}
+
 # ***** distcc *****
 
 distcc_version=3.1
@@ -109,8 +119,6 @@ gem install commander -v 4.2.1 --no-rdoc --no-ri
 gem install rhc --no-rdoc --no-ri
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 
-openshift_account=account
-openshift_password=password
 echo set timeout 60 > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 echo spawn ${OPENSHIFT_DATA_DIR}.gem/bin/rhc setup --server openshift.redhat.com \
  --create-token -l ${openshift_account} -p ${openshift_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
@@ -129,6 +137,17 @@ env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 
+rhc apps | grep -e SSH | awk '{print $2}' > user_fqdn.txt
+while read LINE
+do
+    user_fqdn=$(echo "${LINE}")
+    ssh -fMN ${user_fqdn}
+    user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
+    distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
+done < user_fqdn.txt
+rm -f user_fqdn.txt
+distcc_hosts_string=${distcc_hosts_string:1}
+
 # ssh -fMN xxxxx@xxxxx-xxxxx.rhcloud.com
 # export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start'
 export HOME=${env_home_backup}
@@ -141,16 +160,19 @@ export TMOUT=0
 export TZ=JST-9
 alias ls='ls -lang --color=auto'
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+# 後から上書きされてる？
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+# 後から上書きされてる？
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export env_home_backup=${HOME}
-# export HOME=${OPENSHIFT_DATA_DIR}
+export HOME=${OPENSHIFT_DATA_DIR}
 export CC=distcc
 export CXX=distcc
 export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start'
+export DISTCC_HOSTS='__DISTCC_HOSTS__'
 __HEREDOC__
+sed -i -e 's|__DISTCC_HOSTS__|${distcc_hosts_string}|g' ${OPENSHIFT_DATA_DIR}.bash_profile
 
 # ***** vim *****
 
