@@ -35,6 +35,8 @@ cd /tmp
 
 # xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start
 
-test_data="${uuid}@${OPENSHIFT_APP_DNS}"
+test_data1="${uuid}@${OPENSHIFT_APP_DNS}"
 
-echo ${test_data}
+echo ${test_data1}
+test_data2=$(echo ${test_data1} | awk -F@ '{print $1}')
+echo ${test_data2}
