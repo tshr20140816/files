@@ -29,7 +29,7 @@ function010() {
     # shellcheck disable=SC2034
     processor_count="$(grep -c -e processor /proc/cpuinfo)"
     local mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
-    local query_string="server=${OPENSHIFT_GEAR_DNS}&part=$(basename "${0}" .sh)&mfc=${mfc}"
+    local query_string="server=${OPENSHIFT_APP_DNS}&part=$(basename "${0}" .sh)&mfc=${mfc}"
     # if [ $(which ccache | wc -l) -eq 1 ]; then
     #     ccache_hit_direct=$(ccache -s | grep -e "^cache hit .direct" | awk '{print $4}')
     #     query_string="${query_string}&ccache_hit_direct=${ccache_hit_direct}"
