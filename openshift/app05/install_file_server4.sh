@@ -102,6 +102,74 @@ ControlMaster auto
 ControlPath /tmp/.ssh_tmp/master-%r@%h:%p
 __HEREDOC__
 
+# ***** Tcl *****
+
+tcl_version=8.6.3
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
+tar xfz tcl${tcl_version}-src.tar.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
+./configure --help
+./configure \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --disable-symbols \
+ --prefix=${OPENSHIFT_DATA_DIR}/tcl
+time make -j2 -l3
+make install
+popd > /dev/null
+
+# ***** Expect *****
+
+expect_version=5.45
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
+tar xfz expect${expect_version}.tar.gz
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
+./configure \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --prefix=${OPENSHIFT_DATA_DIR}/expect
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
+
+# ***** rhc *****
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+# gem environment
+gem install commander -v 4.2.1 --no-rdoc --no-ri
+gem install rhc --no-rdoc --no-ri
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+
+openshift_account=account
+openshift_password=password
+echo set timeout 60 > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+echo spawn ${OPENSHIFT_DATA_DIR}.gem/bin/rhc setup --server openshift.redhat.com \
+ --create-token -l ${openshift_account} -p ${openshift_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+
+cat << '__HEREDOC__' >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+expect "(yes|no)"
+send "yes\r"
+expect "(yes|no)"
+send "yes\r"
+expect "Provide a name for this key"
+send "\r"
+interact
+__HEREDOC__
+
+env_home_backup=${HOME}
+export HOME=${OPENSHIFT_DATA_DIR}
+${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
+
+# ssh -fMN xxxxx@xxxxx-xxxxx.rhcloud.com
+# export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start'
+export HOME=${env_home_backup}
+
 # ***** build action *****
 
 pushd  ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
