@@ -5,6 +5,7 @@ function010 stop
 [ $? -eq 0 ] || exit
 
 # ***** passenger-install-apache2-module *****
+# https://github.com/phusion/passenger/blob/master/bin/passenger-install-apache2-module
 
 # *** env ***
 
