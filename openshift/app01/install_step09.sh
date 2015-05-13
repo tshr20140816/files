@@ -24,6 +24,11 @@ ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --help | tee -a 
 # export EXTRA_CFLAGS="${CFLAGS}"
 # export EXTRA_CXXFLAGS="${CXXFLAGS}"
 
+# time CC="distcc gcc" CXX="distcc g++" ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
+#  --auto \
+#  --languages ruby \
+#  --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
+
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
  --languages ruby \
