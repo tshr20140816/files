@@ -21,19 +21,24 @@ pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 ln -s ${OPENSHIFT_DATA_DIR}/files files
 popd > /dev/null
 
+# distcc_version 3.1
+
 # ***** ccache *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > build_ccache.sh
 #!/bin/bash
 
+ccache_version=3.2.2
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -f ccache-3.2.2.tar.xz
-wget http://samba.org/ftp/ccache/ccache-3.2.2.tar.xz
-tar Jxf ccache-3.2.2.tar.xz
-cd ccache-3.2.2
+rm -f ccache-${ccache_version}.tar.xz
+wget http://samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
+tar Jxf ccache-${ccache_version}.tar.xz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version} > /dev/null
 CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s" CXXFLAGS="-O2 -march=native -pipe" \
- ./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache --mandir=/tmp/man --docdir=/tmp/doc
+ ./configure --prefix=${OPENSHIFT_DATA_DIR}/ccache --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc
 make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
