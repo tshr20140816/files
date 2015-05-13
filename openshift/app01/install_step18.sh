@@ -170,7 +170,7 @@ do
         echo app restart ${target_url}
         curl --digest -u $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user):$(date +%Y%m%d%H) \
          -F "subject=SERVER RESTART" \
-         -F "body=${target_app_name} FROM ${OPENSHIFT_GEAR_DNS}" \
+         -F "body=${target_app_name} FROM ${OPENSHIFT_APP_DNS}" \
          $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)sendadminmail
 
         export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
@@ -539,7 +539,7 @@ env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 
 ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
- | grep uuid | grep -v ${OPENSHIFT_GEAR_DNS} \
+ | grep uuid | grep -v ${OPENSHIFT_APP_DNS} \
  | awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
 
 export HOME=${env_home_backup}
