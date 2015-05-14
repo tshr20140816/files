@@ -33,12 +33,29 @@ set -x
 
 cd /tmp
 
-# xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cat << '__HEREDOC__' > build_request.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <passsword value="build" />
+  <uuid value="__UUID__" />
+  <data_dir value="__DATA_DIR__" />
+  <tmp_dir value="__TMP_DIR__" />
+  <items>
+    <item app="apache" version="2.2.29" />
+    <item app="ruby" version="2.1.6" />
+    <item app="php" version="5.6.8" />
+    <item app="libmemcached" version="1.0.18" />
+    <item app="delegate" version="9.9.13" />
+    <item app="tcl" version="8.6.3" />
+  </items>
+</root>
+__HEREDOC__
+sed -i -e "s|__UUID__|${OPENSHIFT_APP_UUID}|g" build_request.xml
+sed -i -e "s|__DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" build_request.xml
+sed -i -e "s|__TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" build_request.xml
 
-test_data1="${uuid}@${OPENSHIFT_APP_DNS}"
-
-echo ${test_data1}
-test_data2=$(echo ${test_data1} | awk -F@ '{print $1}')
-echo ${test_data2}
-test_data3="${test_data1}/2:/var/lib/openshift/${test_data2}/app-root/data/distcc/bin/distccd_start"
-echo ${test_data3}
+if [ ${build_server_password} != 'none' ]; then
+    wget --post-file=build_request.xml https://files1-20150207.rhcloud.com/files/build_action.php -O -
+fi
+popd > /dev/null
