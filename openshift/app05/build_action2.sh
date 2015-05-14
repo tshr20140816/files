@@ -16,6 +16,18 @@ set -x
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) start"
 
+while :
+do
+    if [ -e ${OPENSHIFT_TMP_DIR}/build_now ]; then
+        sleep 60s
+        find ${OPENSHIFT_TMP_DIR} -name 'build_now' -type f -mmin +60 -print0 | xargs -0i rm -f {}
+    else
+        break
+    fi
+done
+
+touch ${OPENSHIFT_TMP_DIR}/build_now
+
 memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
@@ -258,5 +270,7 @@ mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}
 rm -rf delegate${delegate_version}
 rm -f delegate${delegate_version}.tar.gz
 popd > /dev/null
+
+rm -f ${OPENSHIFT_TMP_DIR}/build_now
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) finish"
