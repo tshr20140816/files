@@ -52,6 +52,29 @@ popd > /dev/null
 
 mkdir ${OPENSHIFT_DATA_DIR}.distcc
 
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd_start
+#!/bin/bash
+
+export DISTCC_TCP_CORK=0
+export HOME=${OPENSHIFT_DATA_DIR}
+export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+# export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_LOGFILE=/dev/null
+export CCACHE_MAXSIZE=300M
+
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+export CC="ccache gcc"
+export CXX="ccache g++"
+
+exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
+__HEREDOC__
+
 # ***** ccache *****
 
 ccache_version=3.2.2
