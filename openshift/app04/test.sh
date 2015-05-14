@@ -32,3 +32,7 @@ export CXXFLAGS="${CFLAGS}"
 set -x
 
 cd /tmp
+
+export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start'
+
+echo ${DISTCC_HOSTS/3:/2:}
