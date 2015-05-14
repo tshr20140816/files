@@ -49,6 +49,8 @@ export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+export HOME=${OPENSHIFT_DATA_DIR}
+
 # rm -f ${CCACHE_LOGFILE}
 
 ccache -z
