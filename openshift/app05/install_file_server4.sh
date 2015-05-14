@@ -198,7 +198,8 @@ do
 done < user_fqdn.txt
 rm -f user_fqdn.txt
 popd > /dev/null
-distcc_hosts_string=${distcc_hosts_string:1}
+distcc_hosts_string="${distcc_hosts_string:1}"
+echo "${distcc_hosts_string}" > ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt
 export HOME=${env_home_backup}
 
 # ***** build action *****
