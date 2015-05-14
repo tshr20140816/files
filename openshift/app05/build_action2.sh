@@ -109,7 +109,11 @@ pushd httpd-${apache_version} > /dev/null
  --docdir=${tmp_dir}/doc \
  --enable-mods-shared='all proxy'
 
-time make -j$(grep -c -e processor /proc/cpuinfo)
+# time make -j$(grep -c -e processor /proc/cpuinfo)
+distcc_hosts_org=${DISTCC_HOSTS}
+export DISTCC_HOSTS=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/4:|g")
+time make -j8
+export DISTCC_HOSTS=${distcc_hosts_org}
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
