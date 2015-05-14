@@ -75,7 +75,7 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
  --prefix=${data_dir}/tcl
 
 # time make -j2 -l3
-time make -j$(grep -c -e processor /proc/cpuinfo)
+time make -j6
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz
@@ -112,7 +112,7 @@ pushd httpd-${apache_version} > /dev/null
 # time make -j$(grep -c -e processor /proc/cpuinfo)
 distcc_hosts_org=${DISTCC_HOSTS}
 export DISTCC_HOSTS=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/4:|g")
-time make -j8
+time make -j12
 export DISTCC_HOSTS=${distcc_hosts_org}
 popd > /dev/null
 ccache -s
@@ -146,7 +146,8 @@ pushd libmemcached-${libmemcached_version} > /dev/null
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc
 
-time make -j$(grep -c -e processor /proc/cpuinfo)
+# time make -j$(grep -c -e processor /proc/cpuinfo)
+time make -j6
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
@@ -182,7 +183,8 @@ eval "$(rbenv init -)"
 # https://github.com/sstephenson/ruby-build#special-environment-variables
 export RUBY_CFLAGS="${CFLAGS}"
 export CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc --infodir=${OPENSHIFT_TMP_DIR}/info"
-export MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)"
+# export MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)"
+export MAKE_OPTS="-j 6"
 time rbenv install -v ${ruby_version}
 unset RUBY_CFLAGS
 unset CONFIGURE_OPTS
