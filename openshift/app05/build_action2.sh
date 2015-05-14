@@ -37,11 +37,17 @@ export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 
+export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+# export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
+export DISTCC_LOG=/dev/null
+export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+export DISTCC_HOSTS="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
+
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
-
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
-export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 
 # rm -f ${CCACHE_LOGFILE}
 
@@ -68,7 +74,8 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
  --disable-symbols \
  --prefix=${data_dir}/tcl
 
-time make -j2 -l3
+# time make -j2 -l3
+time make -j$(grep -c -e processor /proc/cpuinfo)
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz
