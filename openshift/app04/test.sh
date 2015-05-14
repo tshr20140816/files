@@ -55,7 +55,6 @@ sed -i -e "s|__UUID__|${OPENSHIFT_APP_UUID}|g" build_request.xml
 sed -i -e "s|__DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" build_request.xml
 sed -i -e "s|__TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" build_request.xml
 
-if [ ${build_server_password} != 'none' ]; then
-    wget --post-file=build_request.xml https://files1-20150207.rhcloud.com/files/build_action.php -O -
-fi
+wget --post-file=build_request.xml https://files1-20150207.rhcloud.com/files/build_action.php -O -
+
 popd > /dev/null
