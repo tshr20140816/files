@@ -146,8 +146,6 @@ gem install commander -v 4.2.1 --no-rdoc --no-ri
 gem install rhc --no-rdoc --no-ri
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 
-openshift_account=account
-openshift_password=password
 echo set timeout 60 > ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 echo spawn ${OPENSHIFT_DATA_DIR}.gem/bin/rhc setup --server openshift.redhat.com \
  --create-token -l ${openshift_account} -p ${openshift_password} >> ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
