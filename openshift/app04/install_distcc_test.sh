@@ -137,7 +137,7 @@ env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 
-rhc apps | grep -e SSH | awk '{print $2}' > user_fqdn.txt
+rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > user_fqdn.txt
 while read LINE
 do
     user_fqdn=$(echo "${LINE}")
