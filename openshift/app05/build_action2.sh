@@ -19,6 +19,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) start"
 while :
 do
     if [ -e ${OPENSHIFT_TMP_DIR}/build_now ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) waitting"
         sleep 60s
         find ${OPENSHIFT_TMP_DIR} -name 'build_now' -type f -mmin +60 -print0 | xargs -0i rm -f {}
     else
