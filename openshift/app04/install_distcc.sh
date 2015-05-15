@@ -72,7 +72,7 @@ export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 
-# -pipe を入れたいけどメモリがきつい
+# -pipe を入れたいけどメモリがきついときがある
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 export CC="ccache gcc"
