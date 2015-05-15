@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# rhc app create xxx diy-0.1 cron-1.4 --server openshift.redhat.com
+
 set -x
 
 export TZ=JST-9
