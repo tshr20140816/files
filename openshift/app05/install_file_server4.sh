@@ -194,6 +194,7 @@ do
     ssh -fMN ${user_fqdn}
     user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
     distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
+    # distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
 done < user_fqdn.txt
 rm -f user_fqdn.txt
 popd > /dev/null
