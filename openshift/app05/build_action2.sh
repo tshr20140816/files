@@ -44,11 +44,14 @@ do
     eval "${product}"="${version}"
 done < ${OPENSHIFT_DATA_DIR}/version_list
 
+# 環境変数
+
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export CC="ccache distcc gcc"
 export CXX="ccache distcc g++"
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+# ログ多すぎ
 # export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
@@ -68,8 +71,7 @@ export CXXFLAGS="${CFLAGS}"
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
-# rm -f ${CCACHE_LOGFILE}
-
+# 統計情報クリア
 ccache -z
 
 # ***** tcl *****
@@ -93,6 +95,7 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
  --disable-symbols \
  --prefix=${data_dir}/tcl
 
+# 3機がけ前提 1機あたり2プロセス
 # time make -j2 -l3
 time make -j6
 popd > /dev/null
@@ -128,6 +131,7 @@ pushd httpd-${apache_version} > /dev/null
  --docdir=${tmp_dir}/doc \
  --enable-mods-shared='all proxy'
 
+# 3機がけ前提 1機あたり4プロセス
 # time make -j$(grep -c -e processor /proc/cpuinfo)
 distcc_hosts_org=${DISTCC_HOSTS}
 DISTCC_HOSTS=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/4:|g")
@@ -165,6 +169,7 @@ pushd libmemcached-${libmemcached_version} > /dev/null
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc
 
+# 3機がけ前提 1機あたり2プロセス
 # time make -j$(grep -c -e processor /proc/cpuinfo)
 time make -j6
 popd > /dev/null
@@ -202,6 +207,7 @@ eval "$(rbenv init -)"
 # https://github.com/sstephenson/ruby-build#special-environment-variables
 export RUBY_CFLAGS="${CFLAGS}"
 export CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc --infodir=${OPENSHIFT_TMP_DIR}/info"
+# 3機がけ前提 1機あたり2プロセス
 # export MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)"
 export MAKE_OPTS="-j 6"
 time rbenv install -v ${ruby_version}
