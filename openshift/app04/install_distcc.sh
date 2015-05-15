@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # rhc app create xxx diy-0.1 cron-1.4 --server openshift.redhat.com
+# wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/install_distcc.sh
+# chmod +x install_distcc.sh
 
 set -x
 
