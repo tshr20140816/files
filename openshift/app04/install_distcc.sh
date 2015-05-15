@@ -14,6 +14,10 @@ fi
 web_beacon_server=${1}
 web_beacon_server_user=${2}
 
+# -pipe を入れたいけどメモリがきつい
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
 # ***** ccache *****
 
 ccache_version=3.2.2
