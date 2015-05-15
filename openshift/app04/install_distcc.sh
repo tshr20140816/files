@@ -16,8 +16,7 @@ fi
 web_beacon_server=${1}
 web_beacon_server_user=${2}
 
-# -pipe を入れたいけどメモリがきつい
-export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 # ***** ccache *****
@@ -73,6 +72,7 @@ export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 
+# -pipe を入れたいけどメモリがきつい
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 export CC="ccache gcc"
