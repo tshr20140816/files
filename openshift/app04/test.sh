@@ -37,5 +37,6 @@ export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/ap
 
 echo ${DISTCC_HOSTS/3:/2:}
 echo ${DISTCC_HOSTS} | sed -e "s|/3:|/2:|g"
+echo ${DISTCC_HOSTS|3:|2:}
 
 # dummy
