@@ -82,6 +82,7 @@ export CXX="ccache g++"
 
 exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
+chmod 755 ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd_start
 
 # ***** register url *****
 
