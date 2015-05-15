@@ -60,8 +60,8 @@ export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 # export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_LOG=/dev/null
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-export DISTCC_HOSTS
-DISTCC_HOSTS="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
+tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
+export DISTCC_HOSTS="${tmp_string}"
 
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
@@ -134,9 +134,10 @@ pushd httpd-${apache_version} > /dev/null
 # 3機がけ前提 1機あたり4プロセス
 # time make -j$(grep -c -e processor /proc/cpuinfo)
 distcc_hosts_org=${DISTCC_HOSTS}
-DISTCC_HOSTS=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/4:|g")
+tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/4:|g")
+export DISTCC_HOSTS="${tmp_string}"
 time make -j12
-DISTCC_HOSTS=${distcc_hosts_org}
+export DISTCC_HOSTS=${distcc_hosts_org}
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
