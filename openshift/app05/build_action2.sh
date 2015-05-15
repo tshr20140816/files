@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# distcc のサーバは3機従えておく 1機あたり2～4のプロセスを与える
+
 if [ $# -ne 3 ]; then
     exit
 fi
