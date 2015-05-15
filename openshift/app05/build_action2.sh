@@ -58,6 +58,8 @@ export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 
+# export CCACHE_PREFIX="distcc"
+
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 # export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_LOG=/dev/null
