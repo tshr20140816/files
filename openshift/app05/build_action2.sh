@@ -16,6 +16,7 @@ set -x
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) start"
 
+# 多重起動チェック
 while :
 do
     if [ -e ${OPENSHIFT_TMP_DIR}/build_now ]; then
@@ -32,8 +33,10 @@ touch ${OPENSHIFT_TMP_DIR}/build_now
 memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
+# 作成済みファイルがあった場合削除
 rm -f ${OPENSHIFT_DATA_DIR}/files/${app_uuid}_maked_*
 
+# makeターゲットのバージョン取得
 while read LINE
 do
     product=$(echo "${LINE}" | awk '{print $1}')
@@ -54,7 +57,8 @@ export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 # export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_LOG=/dev/null
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-export DISTCC_HOSTS="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
+export DISTCC_HOSTS
+DISTCC_HOSTS="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
 
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
@@ -126,9 +130,9 @@ pushd httpd-${apache_version} > /dev/null
 
 # time make -j$(grep -c -e processor /proc/cpuinfo)
 distcc_hosts_org=${DISTCC_HOSTS}
-export DISTCC_HOSTS=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/4:|g")
+DISTCC_HOSTS=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/4:|g")
 time make -j12
-export DISTCC_HOSTS=${distcc_hosts_org}
+DISTCC_HOSTS=${distcc_hosts_org}
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
