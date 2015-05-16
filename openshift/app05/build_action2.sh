@@ -78,6 +78,38 @@ export HOME=${OPENSHIFT_DATA_DIR}
 # 統計情報クリア
 ccache -z
 
+# ***** openssh *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh"
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf openssh-${openssh_version}
+rm -f openssh-${openssh_version}.tar.gz
+
+cp ${OPENSHIFT_DATA_DIR}/files/openssh-${openssh_version}.tar.gz ./
+if [ ! -f openssh-${openssh_version}.tar.gz ]; then
+    wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
+fi
+tar zxf openssh-${openssh_version}.tar.gz
+pushd openssh-${openssh_version} > /dev/null
+./configure \
+ --prefix=${data_dir}/openssh \
+ --infodir=${tmp_dir}/info \
+ --mandir=${tmp_dir}/man \
+ --docdir=${tmp_dir}/doc
+
+# 3機がけ前提 1機あたり2プロセス
+time make -j6
+popd > /dev/null
+ccache -s
+rm -f ${app_uuid}_maked_openssh-${openssh_version}.tar.xz
+time tar Jcf ${app_uuid}_maked_openssh-${openssh_version}.tar.xz openssh-${openssh_version}
+mv -f ${app_uuid}_maked_openssh-${openssh_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf openssh-${openssh_version}
+rm -f openssh-${openssh_version}.tar.gz
+popd > /dev/null
+
 # ***** tcl *****
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) tcl"
@@ -104,9 +136,9 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 time make -j6
 popd > /dev/null
 ccache -s
-rm -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz
-time tar Jcf ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz tcl${tcl_version}
-mv -f ${app_uuid}_maked_tcl${tcl_version}-src.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -f ${app_uuid}_maked_tcl${tcl_version}.tar.xz
+time tar Jcf ${app_uuid}_maked_tcl${tcl_version}.tar.xz tcl${tcl_version}
+mv -f ${app_uuid}_maked_tcl${tcl_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf tcl${tcl_version}
 rm -f tcl${tcl_version}-src.tar.gz
 popd > /dev/null
