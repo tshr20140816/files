@@ -77,8 +77,8 @@ export CCACHE_MAXSIZE=300M
 # -pipe を入れたいけどメモリがきついときがある
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
-export CC="ccache gcc"
-export CXX="ccache g++"
+# export CC="ccache gcc"
+# export CXX="ccache g++"
 
 exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
