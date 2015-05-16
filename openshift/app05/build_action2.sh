@@ -212,13 +212,17 @@ eval "$(rbenv init -)"
 # https://github.com/sstephenson/ruby-build#special-environment-variables
 export RUBY_CFLAGS="${CFLAGS}"
 export CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc --infodir=${OPENSHIFT_TMP_DIR}/info"
-# 3機がけ前提 1機あたり2プロセス
+# 3機がけ前提 1機あたり4プロセス
 # export MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)"
-export MAKE_OPTS="-j 6"
+distcc_hosts_org=${DISTCC_HOSTS}
+tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/4:|g")
+export DISTCC_HOSTS="${tmp_string}"
+export MAKE_OPTS="-j 12"
 time rbenv install -v ${ruby_version}
 unset RUBY_CFLAGS
 unset CONFIGURE_OPTS
 unset MAKE_OPTS
+export DISTCC_HOSTS=${distcc_hosts_org}
 
 ccache -s
 
