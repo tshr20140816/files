@@ -8,7 +8,7 @@ function010 stop
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
-    file_name=${OPENSHIFT_APP_UUID}_maked_tcl${tcl_version}-src.tar.xz
+    file_name=${OPENSHIFT_APP_UUID}_maked_tcl${tcl_version}.tar.xz
     url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
     while :
     do
