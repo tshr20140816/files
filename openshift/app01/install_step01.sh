@@ -106,7 +106,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 15 ]; then
+if [ $# -ne 17 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -122,7 +122,9 @@ if [ $# -ne 15 ]; then
     echo "arg12 : password of ccache upload for mirror server"
     echo "arg13 : build server password (password / none)"
     echo "arg14 : schedule server (fqdn)"
-    echo "arg15 : make ccache data (yes/no)"
+    echo "arg15 : distcc server account"
+    echo "arg16 : distcc server password"
+    echo "arg17 : make ccache data (yes/no)"
     exit
 fi
 
@@ -140,7 +142,9 @@ mirror_server=${11}
 ccache_upload_password=${12}
 build_server_password=${13}
 schedule_server=${14}
-is_make_ccache_data=${15}
+distcc_server_account=${15}
+distcc_server_password=${16}
+is_make_ccache_data=${17}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -160,6 +164,8 @@ echo "${ccache_upload_password}" > ${OPENSHIFT_DATA_DIR}/params/ccache_upload_pa
 echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
 echo "${is_make_ccache_data}" > ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data
 echo "${build_server_password}" > ${OPENSHIFT_DATA_DIR}/params/build_server_password
+echo "${distcc_server_account}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_account
+echo "${distcc_server_password}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
