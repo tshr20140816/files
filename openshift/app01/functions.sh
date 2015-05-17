@@ -38,7 +38,7 @@ function010() {
         export CXX="distcc g++"
     fi
     # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
-    export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
+    export CFLAGS="-O2 -march=x86-64 -fomit-frame-pointer -s"
     export CXXFLAGS="${CFLAGS}"
 
     # shellcheck disable=SC2034
