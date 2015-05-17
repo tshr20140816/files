@@ -145,7 +145,7 @@ rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > u
 while read LINE
 do
     user_fqdn=$(echo "${LINE}")
-    ssh -fMNv ${user_fqdn}
+    ssh -fMNv ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
     distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
     # distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
