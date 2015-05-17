@@ -4,6 +4,7 @@ cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
 bash install_step02.sh
 bash install_step03.sh
 bash install_step04.sh
+bash install_step04a.sh
 bash install_step05.sh
 bash install_step06.sh
 bash install_step07.sh
