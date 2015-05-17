@@ -4,41 +4,6 @@ source functions.sh
 function010
 [ $? -eq 0 ] || exit
 
-# ***** openssh *****
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/openssh-${openssh_version}.tar.gz ./
-tar zxf openssh-${openssh_version}.tar.gz
-popd > /dev/null
-pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
-echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_openssh.log
-# ./configure --help
-./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/openssh \
- --infodir=${OPENSHIFT_TMP_DIR}/info \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
- | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
-echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_openssh.log
-time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
-echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_openssh.log
-make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
-mv ${OPENSHIFT_LOG_DIR}/install_openssh.log ${OPENSHIFT_LOG_DIR}/install/
-rm ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}.tar.gz
-rm -rf ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}
-# export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
-cat << __HEREDOC__ >> ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
-
-IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
-StrictHostKeyChecking no
-UserKnownHostsFile /dev/null
-LogLevel QUIET
-__HEREDOC__
-popd > /dev/null
-
 # ***** distcc *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -105,6 +70,41 @@ export CCACHE_MAXSIZE=300M
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 # ccache -z
 # ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
+# ***** openssh *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/openssh-${openssh_version}.tar.gz ./
+tar zxf openssh-${openssh_version}.tar.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
+echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_openssh.log
+# ./configure --help
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/openssh \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_openssh.log
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_openssh.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
+mv ${OPENSHIFT_LOG_DIR}/install_openssh.log ${OPENSHIFT_LOG_DIR}/install/
+rm ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}.tar.gz
+rm -rf ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}
+# export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+cat << __HEREDOC__ >> ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
+
+IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null
+LogLevel QUIET
+__HEREDOC__
+popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
