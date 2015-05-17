@@ -182,7 +182,7 @@ echo set number >> ${OPENSHIFT_DATA_DIR}/.vimrc
 
 # ***** php *****
 
-php_version=5.6.8
+php_version=5.6.9
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
