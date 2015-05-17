@@ -947,7 +947,7 @@ if [ ! ${is_alive} -gt 0 ]; then
 fi
 __HEREDOC__
 sed -i -e "s|__INSTALL_SCRIPT_FILE__|${install_script_file}|g" install_script_check.sh
-chmod +x install_script_check.sh
+chmod 755 install_script_check.sh
 echo install_script_check.sh >> jobs.allow
 
 popd > /dev/null
