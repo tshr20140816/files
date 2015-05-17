@@ -31,6 +31,12 @@ function010() {
             export DISTCC_LOG=/dev/null
         fi
     fi
+    if [ -e ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt ]; then
+        tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt)"
+        export DISTCC_HOSTS="${tmp_string}"
+        export CC="distcc gcc"
+        export CXX="distcc g++"
+    fi
     # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
     export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
     export CXXFLAGS="${CFLAGS}"
