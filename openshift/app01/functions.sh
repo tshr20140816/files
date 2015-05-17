@@ -23,6 +23,14 @@ function010() {
             export CCACHE_MAXSIZE=300M
         fi
     fi
+    if [ -e ${OPENSHIFT_DATA_DIR}/distcc ]; then
+        distcc_exists=$(printenv | grep ^PATH= | grep distcc | wc -l)
+        if [ ${distcc_exists} -eq 0 ]; then
+            export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+            export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+            export DISTCC_LOG=/dev/null
+        fi
+    fi
     # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
     export CFLAGS="-O2 -march=native -fomit-frame-pointer -s"
     export CXXFLAGS="${CFLAGS}"
