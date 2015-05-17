@@ -31,6 +31,10 @@ rm -rf distcc-${distcc_version}
 
 mkdir ${OPENSHIFT_DATA_DIR}/.distcc
 
+export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+export DISTCC_LOG=/dev/null
+
 # ***** ccache *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
