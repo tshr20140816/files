@@ -44,6 +44,7 @@ function010() {
             export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
         fi
     fi
+    # NG : distcc & -march=native
     # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
     export CFLAGS="-O2 -march=x86-64 -fomit-frame-pointer -s"
     export CXXFLAGS="${CFLAGS}"
