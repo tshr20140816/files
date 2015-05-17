@@ -33,10 +33,8 @@ set -x
 
 cd /tmp
 
-export DISTCC_HOSTS='xxxxx@xxxxx-xxxxx.rhcloud.com/3:/var/lib/openshift/xxxxx/app-root/data/distcc/bin/distccd_start'
-
-echo ${DISTCC_HOSTS/3:/2:}
-echo ${DISTCC_HOSTS} | sed -e "s|/3:|/2:|g"
-echo ${DISTCC_HOSTS|/3:|/2:}
+printenv
+gem help install
+gem install rhc --no-rdoc --no-ri --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 
 # dummy
