@@ -37,6 +37,12 @@ function010() {
         export CC="distcc gcc"
         export CXX="distcc g++"
     fi
+    if [ -e ${OPENSHIFT_DATA_DIR}/openssh ]; then
+        openssh_exists=$(printenv | grep ^PATH= | grep openssh | wc -l)
+        if [ ${openssh_exists} -eq 0 ]; then
+            export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+        fi
+    fi
     # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
     export CFLAGS="-O2 -march=x86-64 -fomit-frame-pointer -s"
     export CXXFLAGS="${CFLAGS}"
