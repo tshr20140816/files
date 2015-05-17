@@ -64,6 +64,8 @@ mv ${OPENSHIFT_LOG_DIR}/install_distcc.log ${OPENSHIFT_LOG_DIR}/install/
 rm ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}.tar.bz2
 rm -rf distcc-${distcc_version}
 
+mkdir ${OPENSHIFT_DATA_DIR}/.distcc
+
 # ***** ccache *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
