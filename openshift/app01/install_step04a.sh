@@ -109,8 +109,10 @@ wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${quer
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 gem environment
-gem install commander -v 4.2.1 --no-rdoc --no-ri --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-gem install rhc --no-rdoc --no-ri --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+# gem install commander -v 4.2.1 --no-rdoc --no-ri --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+# gem install rhc --no-rdoc --no-ri --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+gem install commander -v 4.2.1 --no-rdoc --no-ri > ${OPENSHIFT_LOG_DIR}/commander.gem.log 2>&1
+gem install rhc --no-rdoc --no-ri > ${OPENSHIFT_LOG_DIR}/rhc.gem.log 2>&1
 
 # *** setup ***
 
