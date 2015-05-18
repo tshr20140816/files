@@ -34,6 +34,7 @@ set -x
 cd /tmp
 
 printenv
+gem --version
 gem help install
 gem install commander -v 4.2.1 --no-rdoc --no-ri --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 
