@@ -106,7 +106,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 17 ]; then
+if [ $# -ne 16 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -124,7 +124,6 @@ if [ $# -ne 17 ]; then
     echo "arg14 : schedule server (fqdn)"
     echo "arg15 : distcc server account"
     echo "arg16 : distcc server password"
-    echo "arg17 : make ccache data (yes/no)"
     exit
 fi
 
@@ -144,7 +143,7 @@ build_server_password=${13}
 schedule_server=${14}
 distcc_server_account=${15}
 distcc_server_password=${16}
-is_make_ccache_data=${17}
+is_make_ccache_data=no
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -212,15 +211,6 @@ echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 # * まずミラーサーバよりダウンロード *
 
 if [ "${mirror_server}" != "none" ]; then
-    # ccache cache
-    # wget -t1 ${mirror_server}/ccache_apache.tar.xz &
-    wget -t1 ${mirror_server}/ccache_php.tar.xz &
-    # wget -t1 ${mirror_server}/ccache_libmemcached.tar.xz &
-    # wget -t1 ${mirror_server}/ccache_delegate.tar.xz &
-    # wget -t1 ${mirror_server}/ccache_ruby.tar.xz &
-    # wget -t1 ${mirror_server}/ccache_tcl.tar.xz &
-    wget -t1 ${mirror_server}/ccache_passenger.tar.xz &
-    # wget -t1 ${mirror_server}/ccache.tar.xz
 
     # ipa font
     wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip &
