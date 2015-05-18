@@ -95,6 +95,7 @@ tar zxf openssh-${openssh_version}.tar.gz
 pushd openssh-${openssh_version} > /dev/null
 ./configure \
  --prefix=${data_dir}/openssh \
+ --without-ssh1 \
  --infodir=${tmp_dir}/info \
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc
