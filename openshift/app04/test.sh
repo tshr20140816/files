@@ -33,8 +33,22 @@ set -x
 
 cd /tmp
 
-whoami
+rm -rf ${OPENSHIFT_DATA_DIR}/openssh
 
-ls -lang ${OPENSHIFT_DATA_DIR}/openssh
-ls -lang ${OPENSHIFT_DATA_DIR}/openssh/bin
-tree ${OPENSHIFT_DATA_DIR}/openssh
+openssh_version=6.8p1
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f openssh-${openssh_version}.tar.gz
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
+tar xfz openssh-${openssh_version}.tar.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
+./configure --help
+# ./configure \
+# --prefix=${OPENSHIFT_DATA_DIR}/openssh \
+# --infodir=${OPENSHIFT_TMP_DIR}/info \
+# --mandir=${OPENSHIFT_TMP_DIR}/man \
+# --docdir=${OPENSHIFT_TMP_DIR}/doc
+# time make -j$(grep -c -e processor /proc/cpuinfo)
+# make install
+popd > /dev/null
