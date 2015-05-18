@@ -72,37 +72,37 @@ wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${quer
 
 # ***** Expect *****
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/expect${expect_version}.tar.gz ./
+# pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+# cp ${OPENSHIFT_DATA_DIR}/download_files/expect${expect_version}.tar.gz ./
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz expect${expect_version}.tar.gz
-popd > /dev/null
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# tar xfz expect${expect_version}.tar.gz
+# popd > /dev/null
 
-pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
-echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_expect.log
-./configure \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
+# pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_expect.log
+# ./configure \
+#  --mandir=${OPENSHIFT_TMP_DIR}/man \
+#  --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
-time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
+# time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
-make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
-mv ${OPENSHIFT_LOG_DIR}/install_expect.log ${OPENSHIFT_LOG_DIR}/install/
-popd > /dev/null
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
+# make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
+# mv ${OPENSHIFT_LOG_DIR}/install_expect.log ${OPENSHIFT_LOG_DIR}/install/
+# popd > /dev/null
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm expect${expect_version}.tar.gz
-rm -rf expect${expect_version}
-popd > /dev/null
+# pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+# rm expect${expect_version}.tar.gz
+# rm -rf expect${expect_version}
+# popd > /dev/null
 
-query_string="server=${OPENSHIFT_APP_DNS}&installed=expect"
-wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
+# query_string="server=${OPENSHIFT_APP_DNS}&installed=expect"
+# wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # ***** rhc *****
 
