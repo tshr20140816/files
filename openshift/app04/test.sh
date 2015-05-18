@@ -35,4 +35,5 @@ cd /tmp
 
 whoami
 
-ls -lang ${OPENSHIFT_DATA_DIR}
+ls -lang ${OPENSHIFT_DATA_DIR}/openssh
+ls -lang ${OPENSHIFT_DATA_DIR}/openssh/bin
