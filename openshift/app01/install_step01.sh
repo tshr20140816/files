@@ -106,7 +106,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 16 ]; then
+if [ $# -ne 15 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -119,11 +119,10 @@ if [ $# -ne 16 ]; then
     echo "arg9 : web beacon server https://xxx/"
     echo "arg10 : web beacon server user (digest auth)"
     echo "arg11 : files download mirror/build server (http://xxx/files/ / none)"
-    echo "arg12 : password of ccache upload for mirror server"
-    echo "arg13 : build server password (password / none)"
-    echo "arg14 : schedule server (fqdn)"
-    echo "arg15 : distcc server account"
-    echo "arg16 : distcc server password"
+    echo "arg12 : build server password (password / none)"
+    echo "arg13 : schedule server (fqdn)"
+    echo "arg14 : distcc server account"
+    echo "arg15 : distcc server password"
     exit
 fi
 
@@ -138,12 +137,10 @@ another_server_check=${8}
 web_beacon_server=${9}
 web_beacon_server_user=${10}
 mirror_server=${11}
-ccache_upload_password=${12}
-build_server_password=${13}
-schedule_server=${14}
-distcc_server_account=${15}
-distcc_server_password=${16}
-is_make_ccache_data=no
+build_server_password=${12}
+schedule_server=${13}
+distcc_server_account=${14}
+distcc_server_password=${15}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -159,9 +156,7 @@ echo "${another_server_check}" > ${OPENSHIFT_DATA_DIR}/params/another_server_che
 echo "${web_beacon_server}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server
 echo "${web_beacon_server_user}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user
 echo "${mirror_server}" > ${OPENSHIFT_DATA_DIR}/params/mirror_server
-echo "${ccache_upload_password}" > ${OPENSHIFT_DATA_DIR}/params/ccache_upload_password
 echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
-echo "${is_make_ccache_data}" > ${OPENSHIFT_DATA_DIR}/params/is_make_ccache_data
 echo "${build_server_password}" > ${OPENSHIFT_DATA_DIR}/params/build_server_password
 echo "${distcc_server_account}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_account
 echo "${distcc_server_password}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password
