@@ -426,7 +426,6 @@ cat << '__HEREDOC__' > build_request.xml
     <item app="libmemcached" version="__LIBMEMCACHED_VERSION__" />
     <item app="delegate" version="__DELEGATE_VERSION__" />
     <item app="tcl" version="__TCL_VERSION__" />
-    <item app="expect" version="__EXPECT_VERSION__" />
   </items>
 </root>
 __HEREDOC__
@@ -440,7 +439,6 @@ sed -i -e "s|__OPENSSH_VERSION__|${openssh_version}|g" build_request.xml
 sed -i -e "s|__LIBMEMCACHED_VERSION__|${libmemcached_version}|g" build_request.xml
 sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
 sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
-sed -i -e "s|__EXPECT_VERSION__|${expect_version}|g" build_request.xml
 
 if [ ${build_server_password} != 'none' ]; then
     wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
