@@ -147,36 +147,6 @@ popd > /dev/null
 memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
-# ***** Expect *****
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) expect"
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-
-rm -rf expect${expect_version}
-rm -f expect${expect_version}.tar.gz
-
-cp ${OPENSHIFT_DATA_DIR}/files/expect${expect_version}.tar.gz ./
-if [ ! -f expect${expect_version}.tar.gz ]; then
-    wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
-fi
-tar xfz expect${expect_version}.tar.gz
-
-pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
-./configure \
- --mandir=${tmp_dir}/man \
- --prefix=${data_dir}/expect
-
-time make -j6
-popd > /dev/null
-ccache -s
-rm -f ${app_uuid}_maked_expect${expect_version}.tar.xz
-time tar Jcf ${app_uuid}_maked_expect${expect_version}.tar.xz expect${expect_version}
-mv -f ${app_uuid}_maked_expect${expect_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-rm -rf expect${expect_version}
-rm -f expect${expect_version}.tar.gz
-popd > /dev/null
-
 # ***** apache *****
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache"
