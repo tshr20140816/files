@@ -124,7 +124,7 @@ mv ${OPENSHIFT_LOG_DIR}/install_expect.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm expect${expect_version}.tar.gz
+rm -f expect${expect_version}.tar.gz
 rm -rf expect${expect_version}
 popd > /dev/null
 
