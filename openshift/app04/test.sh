@@ -38,10 +38,9 @@ find / -name '*Tcl*' -print 2>/dev/null
 
 expect_version=5.45
 
-rm -f expect${expect_version}.tar.gz
+# rm -f expect${expect_version}.tar.gz
+# wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
+# tar xfz expect${expect_version}.tar.gz
 
-wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
-
-tar xfz expect${expect_version}.tar.gz
-
+cd expect${expect_version}
 ./configure 2>&1
