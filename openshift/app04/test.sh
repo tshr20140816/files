@@ -33,10 +33,15 @@ set -x
 
 cd /tmp
 
-delegate_version=9.9.13
-
-rm -f delegate${delegate_version}.tar.gz
-rm -f delegate${delegate_version}.tar.sign
-
 find / -name '*tcl*' -print 2>/dev/null
 find / -name '*Tcl*' -print 2>/dev/null
+
+expect_version=5.45
+
+rm -f expect${expect_version}.tar.gz
+
+wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
+
+tar xfz expect${expect_version}.tar.gz
+
+./configure 2>&1
