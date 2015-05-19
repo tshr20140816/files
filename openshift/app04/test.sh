@@ -43,4 +43,5 @@ expect_version=5.45
 # tar xfz expect${expect_version}.tar.gz
 
 cd expect${expect_version}
+./configure --help
 ./configure 2>&1
