@@ -64,6 +64,8 @@ rm tcl${tcl_version}-src.tar.gz
 # rm -rf tcl${tcl_version}
 popd > /dev/null
 
+find ${OPENSHIFT_DATA_DIR}/tcl/ -name 'tclConfig.sh' -print 2>/dev/null
+
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
@@ -87,6 +89,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect configure" | tee -a ${OPENSHIFT_LOG_DI
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache.log
 ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --with-x=no \
  --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -95,7 +98,7 @@ time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_expect.log
-make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
+make SCRIPTS="" install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 mv ${OPENSHIFT_LOG_DIR}/install_expect.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
