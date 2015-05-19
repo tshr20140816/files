@@ -149,6 +149,8 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt >${OPENSHIFT_LOG_DIR}/rhc.setup2.log 2>&1
 mv ${OPENSHIFT_LOG_DIR}/rhc.setup2.log ${OPENSHIFT_LOG_DIR}/install/
 
+ls -la ${OPENSHIFT_DATA_DIR}.ssh 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > user_fqdn.txt
 while read LINE
