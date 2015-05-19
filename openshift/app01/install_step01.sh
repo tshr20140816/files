@@ -719,13 +719,13 @@ do
     # [ -f c-ares-${c-ares_version}.tar.gz ] || files_exists=0
 
     # *** logrotate ***
-    if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing logrotate-${logrotate_version}.tar.gz" \
-         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) logrotate wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://fedorahosted.org/releases/l/o/logrotate/logrotate-${logrotate_version}.tar.gz
-    fi
-    [ -f logrotate-${logrotate_version}.tar.gz ] || files_exists=0
+    # if [ ! -f logrotate-${logrotate_version}.tar.gz ]; then
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing logrotate-${logrotate_version}.tar.gz" \
+    #      | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) logrotate wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget https://fedorahosted.org/releases/l/o/logrotate/logrotate-${logrotate_version}.tar.gz
+    # fi
+    # [ -f logrotate-${logrotate_version}.tar.gz ] || files_exists=0
 
     # *** Lynx ***
     if [ ! -f lynx${lynx_version}.tar.gz ]; then
