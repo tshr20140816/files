@@ -44,6 +44,6 @@ expect_version=5.45
 
 cd expect${expect_version}
 ./configure --help
-./configure 2>&1
+./configure --with-x=no 2>&1
 
 find / -name 'tclConfig.sh' -print 2>/dev/null
