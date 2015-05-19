@@ -108,6 +108,7 @@ query_string="server=${OPENSHIFT_APP_DNS}&installed=expect"
 wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
 # ***** rhc *****
+# ruby はデフォルトインストールのものに頼る
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
