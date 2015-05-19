@@ -35,16 +35,7 @@ cd /tmp
 
 delegate_version=9.9.13
 
-# rm -f delegate${delegate_version}.tar.gz
-
-# wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
-
-md5sum delegate${delegate_version}.tar.gz
-
+rm -f delegate${delegate_version}.tar.gz
 rm -f delegate${delegate_version}.tar.sign
-wget http://delegate.hpcc.jp/anonftp/DeleGate/delegate${delegate_version}.tar.sign
 
-cat delegate${delegate_version}.tar.sign
-
-wget ftp://ftp.delegate.org/rsa-pubkey.pem
-cat rsa-pubkey.pem
+find / -name '*tcl*' -print 2>/dev/null
