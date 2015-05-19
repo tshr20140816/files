@@ -89,6 +89,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect configure" | tee -a ${OPENSHIFT_LOG_DI
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache.log
 ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
  --with-x=no \
  --prefix=${OPENSHIFT_DATA_DIR}/expect 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_expect.log
 
