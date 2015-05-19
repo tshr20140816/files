@@ -47,3 +47,4 @@ wget http://delegate.hpcc.jp/anonftp/DeleGate/delegate${delegate_version}.tar.si
 cat delegate${delegate_version}.tar.sign
 
 wget ftp://ftp.delegate.org/rsa-pubkey.pem
+cat rsa-pubkey.pem
