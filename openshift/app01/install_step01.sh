@@ -55,7 +55,6 @@ expect_version 5.45
 fio_version 2.2.8
 ipafont_version 00303
 libmemcached_version 1.0.18
-logrotate_version 3.8.8
 lynx_version 2.8.7
 memcached_php_ext_version 2.2.0
 memcached_version 1.4.24
@@ -73,6 +72,7 @@ webalizer_version 2.23-08
 wordpress_version 4.2.2-ja
 __HEREDOC__
 
+# logrotate_version 3.8.8
 # nginx_version 1.6.2
 # pcre_version 8.36
 # xymon_version 4.3.18
@@ -219,8 +219,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/tcl${tcl_version}-src.tar.gz &
     # expect
     wget -t1 ${mirror_server}/expect${expect_version}.tar.gz &
-    # logrotate
-    wget -t1 ${mirror_server}/logrotate-${logrotate_version}.tar.gz &
+    # # logrotate
+    # wget -t1 ${mirror_server}/logrotate-${logrotate_version}.tar.gz &
     # lynx
     wget -t1 ${mirror_server}/lynx${lynx_version}.tar.gz &
     # memcached
