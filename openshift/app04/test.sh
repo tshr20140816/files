@@ -39,3 +39,4 @@ rm -f delegate${delegate_version}.tar.gz
 rm -f delegate${delegate_version}.tar.sign
 
 find / -name '*tcl*' -print 2>/dev/null
+find / -name '*Tcl*' -print 2>/dev/null
