@@ -63,7 +63,6 @@ murlin_version 0.2.4
 openssh_version 6.8p1
 php_version 5.6.9
 phpicalendar_version 2.4_20100615
-pigz_version 2.3.3
 redmine_version 2.6.5
 ruby_version 2.1.6
 tcl_version 8.6.3
@@ -72,6 +71,7 @@ webalizer_version 2.23-08
 wordpress_version 4.2.2-ja
 __HEREDOC__
 
+# pigz_version 2.3.3
 # logrotate_version 3.8.8
 # nginx_version 1.6.2
 # pcre_version 8.36
