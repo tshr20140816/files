@@ -16,7 +16,7 @@ do
         sleep 10s
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         url="${web_beacon_server}dummy"
-        for file_name in nohup nohup_error
+        for file_name in install nohup nohup_error
         do
             i=0
             while read LINE
@@ -26,9 +26,10 @@ do
                 query_string="server=${OPENSHIFT_APP_DNS}&file=${file_name}&log=${i}_${log_String}"
                 wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
             done < ${file_name}.log
-            zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log
-            rm -f ${file_name}.log
-            curl 
+            if [ "${file_name}" != "install" ]; then
+                zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log
+                rm -f ${file_name}.log
+            fi
         done
         popd > /dev/null
         wait
