@@ -33,6 +33,4 @@ set -x
 
 cd /tmp
 
-rm -rf bundle_test
-
-ssh --help
+whereis httpd
