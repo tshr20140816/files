@@ -135,6 +135,8 @@ Host *
 #  LogLevel QUIET
   LogLevel VERBOSE
   Protocol 2
+#  ControlMaster auto
+#  ControlPath /tmp/.ssh_tmp/master-%r@%h:%p
 __HEREDOC__
 
 cat ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
