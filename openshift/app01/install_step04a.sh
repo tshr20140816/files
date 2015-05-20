@@ -158,6 +158,13 @@ chmod 600 ${OPENSHIFT_DATA_DIR}.ssh/authorized_keys
 ls -la ${OPENSHIFT_DATA_DIR}.ssh 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
+rhc apps | grep uuid | awk '{print $1}' > app_name.txt
+while read LINE
+do
+    app_name=$(echo "${LINE}")
+    rhc ssh -a ${app_name} pwd
+done < app_name.txt
+rm -f app_name.txt
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > user_fqdn.txt
 cat user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 while read LINE
