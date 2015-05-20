@@ -44,6 +44,18 @@ gem --version
 gem environment
 
 cat << '__HEREDOC__' > Gemfile
+class << Bundler.ui
+  def tell_me (msg, color = nil, newline = nil)
+    msg = word_wrap(msg) if newline.is_a?(Hash) && newline[:wrap]
+    msg = "[#{Time.now}] " + msg if msg.length > 3
+    if newline.nil?
+      @shell.say(msg, color)
+    else
+      @shell.say(msg, color, newline)
+    end
+  end
+end
+
 source 'https://rubygems.org'
 
 # gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
@@ -54,4 +66,4 @@ gem 'rhc'
 __HEREDOC__
 
 gem install bundler --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-bundle install --jobs=4 --retry=3
+bundle install --jobs=4 --retry=3 --verbose
