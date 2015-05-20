@@ -33,42 +33,6 @@ set -x
 
 cd /tmp
 
-mkdir bundle_test
-cd bundle_test
+rm -rf bundle_test
 
-rm -rf ${OPENSHIFT_DATA_DIR}/.gem
-mkdir ${OPENSHIFT_DATA_DIR}/.gem
-export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-gem --version
-gem environment
-
-cat << '__HEREDOC__' > Gemfile
-class << Bundler.ui
-  def tell_me (msg, color = nil, newline = nil)
-    msg = word_wrap(msg) if newline.is_a?(Hash) && newline[:wrap]
-    msg = "[#{Time.now}] " + msg if msg.length > 3
-    if newline.nil?
-      @shell.say(msg, color)
-    else
-      @shell.say(msg, color, newline)
-    end
-  end
-end
-
-source 'https://rubygems.org'
-
-# gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-# gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-
-gem 'commander', '= 4.2.1'
-gem 'rhc'
-__HEREDOC__
-
-# gem install rubygems-update --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-# update_rubygems
-gem update --system
-gem --version
-gem environment
-gem install bundler --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-bundle install --jobs=4 --retry=3 --verbose
+ssh --help
