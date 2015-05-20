@@ -36,6 +36,8 @@ cd /tmp
 mkdir bundle_test
 cd bundle_test
 
+rm -rf ${OPENSHIFT_DATA_DIR}/.gem
+mkdir ${OPENSHIFT_DATA_DIR}/.gem
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 gem --version
@@ -51,5 +53,5 @@ gem 'commander', '= 4.2.1'
 gem 'rhc'
 __HEREDOC__
 
-gem install bundler
+gem install bundler --jobs=4 --retry=3
 bundle install
