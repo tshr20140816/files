@@ -968,7 +968,8 @@ cp /usr/bin/ssh ./
 cp /usr/bin/ssh-keygen ./
 popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
-${OPENSHIFT_DATA_DIR}/bin/ssh-keygen -t rsa -f id_rsa -P ''
+ssh -V
+ssh-keygen -t rsa -f id_rsa -P ''
 cat << __HEREDOC__ > config
 Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
@@ -1010,6 +1011,8 @@ while read LINE
 do
     user_fqdn=$(echo "${LINE}")
     ssh -V
+    ssh -vvv -F ${OPENSHIFT_DATA_DIR}/.ssh/config -i ${OPENSHIFT_DATA_DIR}/.ssh/id_rsa ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -vvv -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ssh -vvv ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
     distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
