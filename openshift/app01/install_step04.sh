@@ -132,7 +132,8 @@ Host *
   IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
-  LogLevel QUIET
+#  LogLevel QUIET
+  LogLevel VERBOSE
   Protocol 2
 __HEREDOC__
 
