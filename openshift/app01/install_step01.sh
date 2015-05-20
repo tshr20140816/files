@@ -999,13 +999,13 @@ gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=
 
 rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
 pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
-rhc apps | grep uuid | awk '{print $1}' | tee app_name.txt
-while read LINE
-do
-    app_name=$(echo "${LINE}")
-    # rhc ssh -a ${app_name} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-done < app_name.txt
-rm -f app_name.txt
+# rhc apps | grep uuid | awk '{print $1}' | tee app_name.txt
+# while read LINE
+# do
+#     app_name=$(echo "${LINE}")
+#     # rhc ssh -a ${app_name} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# done < app_name.txt
+# rm -f app_name.txt
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee user_fqdn.txt
 cat user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 while read LINE
@@ -1014,10 +1014,10 @@ do
     # ssh -V
     echo "Pattern 1"
     ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config -i ${OPENSHIFT_DATA_DIR}/.ssh/id_rsa ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo "Pattern 2"
+    # echo "Pattern 2"
     # ssh -v -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     # ssh -vvv ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
+    user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
     distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
     # distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
 done < user_fqdn.txt
