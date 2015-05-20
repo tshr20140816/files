@@ -40,3 +40,4 @@ tree ${OPENSHIFT_DATA_DIR}/openssh
 find / -name sshd_config -print 2>/dev/null
 
 cat ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
+cat /etc/ssh/sshd_config
