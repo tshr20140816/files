@@ -34,3 +34,4 @@ set -x
 cd /tmp
 
 whereis httpd
+httpd --version
