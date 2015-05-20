@@ -1002,6 +1002,7 @@ popd > /dev/null
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+export HOME=${OPENSHIFT_DATA_DIR}
 gem --version
 gem environment
 gem help install
