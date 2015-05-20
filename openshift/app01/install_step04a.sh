@@ -152,6 +152,11 @@ mv ${OPENSHIFT_LOG_DIR}/rhc.setup2.log ${OPENSHIFT_LOG_DIR}/install/
 whoami | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 ls -la ${OPENSHIFT_DATA_DIR}.ssh 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
+chmod 700 ${OPENSHIFT_DATA_DIR}.ssh
+chmod 600 ${OPENSHIFT_DATA_DIR}.ssh/authorized_keys
+
+ls -la ${OPENSHIFT_DATA_DIR}.ssh 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > user_fqdn.txt
 while read LINE
