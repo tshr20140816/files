@@ -65,8 +65,9 @@ gem 'commander', '= 4.2.1'
 gem 'rhc'
 __HEREDOC__
 
-gem install rubygems-update --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-update_rubygems
+# gem install rubygems-update --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+# update_rubygems
+gem update --system
 gem --version
 gem environment
 gem install bundler --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
