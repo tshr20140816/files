@@ -162,7 +162,7 @@ rhc apps | grep uuid | awk '{print $1}' > app_name.txt
 while read LINE
 do
     app_name=$(echo "${LINE}")
-    rhc ssh -a ${app_name} pwd
+    rhc ssh -a ${app_name} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 done < app_name.txt
 rm -f app_name.txt
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > user_fqdn.txt
