@@ -33,17 +33,26 @@ set -x
 
 cd /tmp
 
-find / -name '*tcl*' -print 2>/dev/null
-find / -name '*Tcl*' -print 2>/dev/null
-
 expect_version=5.45
 
-# rm -f expect${expect_version}.tar.gz
-# wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
-# tar xfz expect${expect_version}.tar.gz
+rm -f expect${expect_version}.tar.gz
+rm -rf expect${expect_version}
 
-cd expect${expect_version}
+openssh_version=6.8p1
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
+tar xfz openssh-${openssh_version}.tar.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 ./configure --help
-./configure --with-x=no 2>&1
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/openssh \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
 
-find / -name 'tclConfig.sh' -print 2>/dev/null
+tree ${OPENSHIFT_DATA_DIR}/openssh
