@@ -1024,7 +1024,7 @@ while read LINE
 do
     user_fqdn=$(echo "${LINE}")
     ssh -V
-    ssh -fMNvvv ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -vvv ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
     distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
     # distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
