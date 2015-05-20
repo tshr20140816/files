@@ -958,6 +958,82 @@ export TMOUT=0
 # gcc --version
 # gcc -march=native -Q --help=target
 
+# ***** openssh *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/openssh-${openssh_version}.tar.gz ./
+echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+tar zxf openssh-${openssh_version}.tar.gz
+pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
+echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_openssh.log
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/openssh \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_openssh.log
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
+popd > /dev/null
+mv ${OPENSHIFT_LOG_DIR}/install_openssh.log ${OPENSHIFT_LOG_DIR}/install/
+rm -f ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}.tar.gz
+rm -rf ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}
+export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+cat << __HEREDOC__ >> ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
+
+Host *
+  IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+#  LogLevel QUIET
+  LogLevel DEBUG3
+  Protocol 2
+  ConnectionAttempts 5
+#  HashKnownHosts yes
+__HEREDOC__
+popd > /dev/null
+
+# ***** rhc *****
+# ruby はデフォルトインストールのものに頼る
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+gem --version
+gem environment
+gem help install
+gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+
+rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
+pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
+rhc apps | grep uuid | awk '{print $1}' > app_name.txt
+while read LINE
+do
+    app_name=$(echo "${LINE}")
+    rhc ssh -a ${app_name} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+done < app_name.txt
+rm -f app_name.txt
+rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > user_fqdn.txt
+cat user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+while read LINE
+do
+    user_fqdn=$(echo "${LINE}")
+    ssh -V
+    ssh -fMNvvv ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
+    distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
+    # distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
+done < user_fqdn.txt
+rm -f user_fqdn.txt
+popd > /dev/null
+distcc_hosts_string="${distcc_hosts_string:1}"
+echo "${distcc_hosts_string}" > ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
+export HOME=${env_home_backup}
+
 set +x
 
 if [ -f ${OPENSHIFT_LOG_DIR}/install_alert.log ]; then
