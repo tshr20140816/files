@@ -1011,11 +1011,11 @@ cat user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 while read LINE
 do
     user_fqdn=$(echo "${LINE}")
-    ssh -V
+    # ssh -V
     echo "Pattern 1"
-    ssh -v -F ${OPENSHIFT_DATA_DIR}/.ssh/config -i ${OPENSHIFT_DATA_DIR}/.ssh/id_rsa ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config -i ${OPENSHIFT_DATA_DIR}/.ssh/id_rsa ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo "Pattern 2"
-    ssh -v -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    # ssh -v -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     # ssh -vvv ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
     distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
