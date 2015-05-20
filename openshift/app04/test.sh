@@ -33,8 +33,23 @@ set -x
 
 cd /tmp
 
-tree ${OPENSHIFT_DATA_DIR}/openssh
-find / -name sshd_config -print 2>/dev/null
+mkdir bundle_test
+cd bundle_test
 
-cat ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
-cat /etc/ssh/sshd_config
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+gem --version
+gem environment
+
+cat << '__HEREDOC__' > Gemfile
+source 'https://rubygems.org'
+
+# gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+# gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+
+gem 'commander', '= 4.2.1'
+gem 'rhc'
+__HEREDOC__
+
+gem install bundler
+bundle install
