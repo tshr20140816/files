@@ -917,6 +917,15 @@ if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
     exit
 fi
 
+while :
+do
+    if [ ! -e ${OPENSHIFT_DATA_DIR}/install_check_point/__BASE_NAME__.ok ]; then
+        sleep 3s
+        continue
+    fi
+    break
+done
+
 # OPENSHIFT_DIY_IP is marker
 install_script_file='__INSTALL_SCRIPT_FILE__'
 is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
@@ -930,6 +939,7 @@ if [ ! ${is_alive} -gt 0 ]; then
 fi
 __HEREDOC__
 sed -i -e "s|__INSTALL_SCRIPT_FILE__|${install_script_file}|g" install_script_check.sh
+sed -i -e "s|__BASE_NAME__|$(basename ${0})|g" install_script_check.sh
 chmod 755 install_script_check.sh
 echo install_script_check.sh >> jobs.allow
 
