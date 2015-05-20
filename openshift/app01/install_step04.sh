@@ -135,9 +135,9 @@ Host *
 #  LogLevel QUIET
   LogLevel DEBUG3
   Protocol 2
-  ControlMaster auto
-  ControlPath /tmp/.ssh_tmp/master-%r@%h:%p
-  ControlPersist 6000
+#  ControlMaster auto
+#  ControlPath /tmp/.ssh_tmp/master-%r@%h:%p
+#  ControlPersist 6000
   ConnectionAttempts 5
 #  HashKnownHosts yes
 __HEREDOC__
