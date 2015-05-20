@@ -941,7 +941,7 @@ __HEREDOC__
 sed -i -e "s|__INSTALL_SCRIPT_FILE__|${install_script_file}|g" install_script_check.sh
 sed -i -e "s|__BASE_NAME__|$(basename ${0})|g" install_script_check.sh
 chmod 755 install_script_check.sh
-echo install_script_check.sh >> jobs.allow
+# echo install_script_check.sh >> jobs.allow
 
 popd > /dev/null
 
