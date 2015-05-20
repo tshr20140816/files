@@ -128,11 +128,15 @@ rm -rf ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}
 # export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
 cat << __HEREDOC__ >> ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
 
-IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
-StrictHostKeyChecking no
-UserKnownHostsFile /dev/null
-LogLevel QUIET
+Host *
+  IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  LogLevel QUIET
+  Protocol 2
 __HEREDOC__
+
+cat ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
