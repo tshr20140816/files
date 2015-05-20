@@ -133,10 +133,13 @@ Host *
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 #  LogLevel QUIET
-  LogLevel VERBOSE
+  LogLevel DEBUG3
   Protocol 2
   ControlMaster auto
   ControlPath /tmp/.ssh_tmp/master-%r@%h:%p
+  ControlPersist 6000
+  ConnectionAttempts 5
+#  HashKnownHosts yes
 __HEREDOC__
 
 cat ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
