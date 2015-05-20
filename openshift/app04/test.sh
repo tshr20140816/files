@@ -37,6 +37,6 @@ openssh_version=6.8p1
 
 rm openssh-${openssh_version}.tar.gz
 tree ${OPENSHIFT_DATA_DIR}/openssh
-find / -name sshd_config -print 2>&1
+find / -name sshd_config -print 2>/dev/null
 
 cat ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
