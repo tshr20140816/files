@@ -67,5 +67,7 @@ __HEREDOC__
 
 gem install rubygems-update --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 update_rubygems
+gem --version
+gem environment
 gem install bundler --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 bundle install --jobs=4 --retry=3 --verbose
