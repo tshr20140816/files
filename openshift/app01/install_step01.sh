@@ -1008,7 +1008,7 @@ pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
 # rm -f app_name.txt
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee user_fqdn.txt
 cat user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-while read LINE
+cat user_fqdn.txt | while read LINE
 do
     user_fqdn=$(echo "${LINE}")
     # ssh -V
@@ -1020,7 +1020,7 @@ do
     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
     distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
     # distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
-done < user_fqdn.txt
+done
 rm -f user_fqdn.txt
 popd > /dev/null
 distcc_hosts_string="${distcc_hosts_string:1}"
