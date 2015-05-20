@@ -960,33 +960,18 @@ export TMOUT=0
 
 # ***** openssh *****
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/openssh-${openssh_version}.tar.gz ./
-echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar zxf openssh-${openssh_version}.tar.gz
-pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
-echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_openssh.log
-./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/openssh \
- --infodir=${OPENSHIFT_TMP_DIR}/info \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
- | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
-echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_openssh.log
-time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
-make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_openssh.log
+mkdir ${OPENSHIFT_DATA_DIR}/bin
+mkdir ${OPENSHIFT_DATA_DIR}/.ssh
+export PATH="${OPENSHIFT_DATA_DIR}/bin:$PATH"
+pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
+cp /usr/bin/ssh ./
+cp /usr/bin/ssh-keygen ./
 popd > /dev/null
-mv ${OPENSHIFT_LOG_DIR}/install_openssh.log ${OPENSHIFT_LOG_DIR}/install/
-rm -f ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}.tar.gz
-rm -rf ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version}
-export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
-cat << __HEREDOC__ >> ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
-
+pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
+${OPENSHIFT_DATA_DIR}/bin/ssh-keygen -t rsa -f id_rsa -P ''
+cat << __HEREDOC__ > config
 Host *
-  IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
+  IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 #  LogLevel QUIET
@@ -995,6 +980,7 @@ Host *
   ConnectionAttempts 5
 #  HashKnownHosts yes
 __HEREDOC__
+sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 popd > /dev/null
 
 # ***** rhc *****
