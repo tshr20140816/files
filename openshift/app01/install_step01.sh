@@ -995,7 +995,7 @@ yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_
 pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee user_fqdn.txt
 cat user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-cat user_fqdn.txt | while read LINE
+while read LINE
 do
     user_fqdn=$(echo "${LINE}")
     # ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config -i ${OPENSHIFT_DATA_DIR}/.ssh/id_rsa ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -1006,7 +1006,7 @@ do
     distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start "
     # distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
     echo -n "${distcc_hosts_string}" >> ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
-done
+done < user_fqdn.txt
 # rm -f user_fqdn.txt
 popd > /dev/null
 cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
