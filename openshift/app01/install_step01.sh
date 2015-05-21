@@ -958,6 +958,7 @@ export TMOUT=0
 # gcc --version
 # gcc -march=native -Q --help=target
 
+if [ 1 -eq 0 ]; then
 # ***** openssh *****
 
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
@@ -1011,6 +1012,7 @@ done < user_fqdn.txt
 popd > /dev/null
 cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
 export HOME=${env_home_backup}
+fi
 
 set +x
 
