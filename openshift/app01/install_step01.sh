@@ -960,13 +960,7 @@ export TMOUT=0
 
 # ***** openssh *****
 
-mkdir ${OPENSHIFT_DATA_DIR}/bin
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
-export PATH="${OPENSHIFT_DATA_DIR}/bin:$PATH"
-pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
-cp /usr/bin/ssh ./
-cp /usr/bin/ssh-keygen ./
-popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
 ssh -V
 ssh-keygen -t rsa -f id_rsa -P ''
@@ -994,7 +988,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 gem --version
 gem environment
 gem help install
-gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+# gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 
 yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
@@ -1005,17 +999,17 @@ cat user_fqdn.txt | while read LINE
 do
     user_fqdn=$(echo "${LINE}")
     # ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config -i ${OPENSHIFT_DATA_DIR}/.ssh/id_rsa ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo "Pattern 2c"
+    echo "Pattern 2d"
     ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     # ssh -vvv ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
-    distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
+    distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start "
     # distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
+    echo -n "${distcc_hosts_string}" >> ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
 done
 # rm -f user_fqdn.txt
 popd > /dev/null
-distcc_hosts_string="${distcc_hosts_string:1}"
-echo "${distcc_hosts_string}" > ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
+cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
 export HOME=${env_home_backup}
 
 set +x
