@@ -192,7 +192,7 @@ mkdir ${OPENSHIFT_DATA_DIR}/.ssh
 pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
 ssh -V
 ssh-keygen -t rsa -f id_rsa -P ''
-cat << __HEREDOC__ > config
+cat << '__HEREDOC__' > config
 Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
   StrictHostKeyChecking no
@@ -206,7 +206,7 @@ sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 popd > /dev/null
 mkdir ${OPENSHIFT_DATA_DIR}/bin
 pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
-cat << __HEREDOC__ > distcc-ssh
+cat << '__HEREDOC__' > distcc-ssh
 #!/bin/bash
 echo "START" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 echo "${DISTCC_HOSTS}" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
