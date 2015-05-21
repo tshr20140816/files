@@ -204,6 +204,16 @@ Host *
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 popd > /dev/null
+mkdir ${OPENSHIFT_DATA_DIR}/bin
+pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
+cat << __HEREDOC__ > distcc_ssh.sh
+#!/bin/bash
+
+echo "$@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+/usr/bin/ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config $@
+__HEREDOC__
+chmod +x distcc_ssh.sh
+popd > /dev/null
 
 # ***** rhc *****
 # ruby はデフォルトインストールのものに頼る
