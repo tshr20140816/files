@@ -208,7 +208,8 @@ mkdir ${OPENSHIFT_DATA_DIR}/bin
 pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
 cat << __HEREDOC__ > distcc_ssh.sh
 #!/bin/bash
-
+echo "START" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+echo ${DISTCC_HOSTS} >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 echo "$@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 /usr/bin/ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config $@
 __HEREDOC__
