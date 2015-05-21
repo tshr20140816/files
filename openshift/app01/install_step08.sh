@@ -4,6 +4,16 @@ source functions.sh
 function010 restart
 [ $? -eq 0 ] || exit
 
+env_home_backup=${HOME}
+export HOME=${OPENSHIFT_DATA_DIR}
+
+cat ${OPENSHIFT_TMP_DIR}/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+while read LINE
+do
+    user_fqdn=$(echo "${LINE}")
+    ssh -24n -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+done < ${OPENSHIFT_TMP_DIR}/user_fqdn.txt
+
 # ***** memcached *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version}
@@ -63,16 +73,6 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) php tar" | tee -a ${OPENSHIFT_LOG_DIR}/instal
 tar Jxf php-${php_version}.tar.xz
 popd > /dev/null
 
-env_home_backup=${HOME}
-export HOME=${OPENSHIFT_DATA_DIR}
-
-cat ${OPENSHIFT_TMP_DIR}/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-while read LINE
-do
-    user_fqdn=$(echo "${LINE}")
-    ssh -24n -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-done < ${OPENSHIFT_TMP_DIR}/user_fqdn.txt
-
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 
 # if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
@@ -115,19 +115,13 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) php make" | tee -a ${OPENSHIFT_LOG_DIR}/insta
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 # j2 is limit (-l3 --load-average=3)
 # time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-# (
-# trap 'touch /tmp/trap_php_make.txt' 0 1 2 3 15 
-time make 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-# )
+time make -j6 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 # echo "$(date +%Y/%m/%d" "%H:%M:%S) php make test" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make test *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 # time make test
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
-# (
-# trap 'touch /tmp/trap_php_make_install.txt' 0 1 2 3 15 
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-# )
 export HOME=${env_home_backup}
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make conf" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
