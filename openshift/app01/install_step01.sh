@@ -958,62 +958,6 @@ export TMOUT=0
 # gcc --version
 # gcc -march=native -Q --help=target
 
-if [ 1 -eq 0 ]; then
-# ***** openssh *****
-
-mkdir ${OPENSHIFT_DATA_DIR}/.ssh
-pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
-ssh -V
-ssh-keygen -t rsa -f id_rsa -P ''
-cat << __HEREDOC__ > config
-Host *
-  IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
-  StrictHostKeyChecking no
-  UserKnownHostsFile /dev/null
-  LogLevel QUIET
-#  LogLevel DEBUG3
-  Protocol 2
-  ConnectionAttempts 5
-#  HashKnownHosts yes
-__HEREDOC__
-sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
-popd > /dev/null
-
-# ***** rhc *****
-# ruby はデフォルトインストールのものに頼る
-
-env_home_backup=${HOME}
-export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-export HOME=${OPENSHIFT_DATA_DIR}
-# gem --version
-# gem environment
-# gem help install
-# gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-
-yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
-pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
-rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee user_fqdn.txt
-cat user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-while read LINE
-do
-    user_fqdn=$(echo "${LINE}")
-    # ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config -i ${OPENSHIFT_DATA_DIR}/.ssh/id_rsa ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    echo "Pattern 2f"
-    ssh -24n -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    # ssh -vvv ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
-    distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start "
-    # distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
-    echo -n "${distcc_hosts_string}" >> ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
-done < user_fqdn.txt
-# rm -f user_fqdn.txt
-popd > /dev/null
-cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
-export HOME=${env_home_backup}
-fi
-
 set +x
 
 if [ -f ${OPENSHIFT_LOG_DIR}/install_alert.log ]; then
