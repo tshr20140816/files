@@ -77,6 +77,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 
 # ***** openssh *****
 
+if [ 1 -eq 0 ]; then
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     file_name=${OPENSHIFT_APP_UUID}_maked_openssh-${openssh_version}.tar.xz
@@ -144,6 +145,7 @@ __HEREDOC__
 
 cat ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
 popd > /dev/null
+fi
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
