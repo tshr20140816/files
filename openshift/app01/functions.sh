@@ -38,6 +38,9 @@ function010() {
         export CC="distcc gcc"
         export CXX="distcc g++"
     fi
+    if [ -e ${OPENSHIFT_DATA_DIR}/.ssh/config ]; then
+        export DISTCC_SSH="ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config"
+    fi
     if [ -e ${OPENSHIFT_DATA_DIR}/openssh ]; then
         openssh_exists=$(printenv | grep ^PATH= | grep openssh | wc -l)
         if [ ${openssh_exists} -eq 0 ]; then
