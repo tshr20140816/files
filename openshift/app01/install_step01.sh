@@ -440,9 +440,9 @@ sed -i -e "s|__LIBMEMCACHED_VERSION__|${libmemcached_version}|g" build_request.x
 sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
 sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
 
-# if [ ${build_server_password} != 'none' ]; then
-#     wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
-# fi
+if [ ${build_server_password} != 'none' ]; then
+    wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
+fi
 popd > /dev/null
 
 files_exists=0
@@ -941,7 +941,7 @@ __HEREDOC__
 sed -i -e "s|__INSTALL_SCRIPT_FILE__|${install_script_file}|g" install_script_check.sh
 sed -i -e "s|__BASE_NAME__|$(basename ${0})|g" install_script_check.sh
 chmod 755 install_script_check.sh
-# echo install_script_check.sh >> jobs.allow
+echo install_script_check.sh >> jobs.allow
 
 popd > /dev/null
 
@@ -1021,5 +1021,9 @@ if [ -f ${OPENSHIFT_LOG_DIR}/install_alert.log ]; then
     cat ${OPENSHIFT_LOG_DIR}/install_alert.log
     echo
 fi
+
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
+./install_script_check.sh
+popd > /dev/null
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
