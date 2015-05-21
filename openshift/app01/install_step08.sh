@@ -66,6 +66,13 @@ popd > /dev/null
 env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 
+cat ${OPENSHIFT_TMP_DIR}/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+while read LINE
+do
+    user_fqdn=$(echo "${LINE}")
+    ssh -24n -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+done < ${OPENSHIFT_TMP_DIR}/user_fqdn.txt
+
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 
 # if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
