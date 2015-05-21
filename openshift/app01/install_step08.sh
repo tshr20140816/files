@@ -63,6 +63,9 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) php tar" | tee -a ${OPENSHIFT_LOG_DIR}/instal
 tar Jxf php-${php_version}.tar.xz
 popd > /dev/null
 
+env_home_backup=${HOME}
+export HOME=${OPENSHIFT_DATA_DIR}
+
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 
 # if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
@@ -118,6 +121,7 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> $
 # trap 'touch /tmp/trap_php_make_install.txt' 0 1 2 3 15 
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 # )
+export HOME=${env_home_backup}
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make conf" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-production
