@@ -211,7 +211,7 @@ cat << __HEREDOC__ > distcc_ssh.sh
 echo "START" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 echo "${DISTCC_HOSTS}" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 echo "$@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
-/usr/bin/ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config $@
+exec /usr/bin/ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config $@
 __HEREDOC__
 chmod +x distcc_ssh.sh
 popd > /dev/null
