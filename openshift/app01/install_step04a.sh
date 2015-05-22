@@ -24,7 +24,8 @@ Host *
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 popd > /dev/null
-mkdir ${OPENSHIFT_DATA_DIR}/bin
+
+# mkdir ${OPENSHIFT_DATA_DIR}/bin
 pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
 cat << '__HEREDOC__' > distcc-ssh
 #!/bin/bash
@@ -43,7 +44,6 @@ popd > /dev/null
 distcc_server_account=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_account)
 distcc_server_password=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_password)
 
-env_home_backup=${HOME}
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
@@ -77,7 +77,6 @@ done < user_fqdn.txt
 # rm -f user_fqdn.txt
 popd > /dev/null
 cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-export HOME=${env_home_backup}
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
