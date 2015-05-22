@@ -24,6 +24,7 @@ Host *
   ConnectionAttempts 5
 #  ControlMaster auto
 #  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
+# ssh -O exit REMOTE
 #  ControlPersist yes
 #  ControlPersist 3600s
 __HEREDOC__
