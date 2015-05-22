@@ -12,6 +12,8 @@ function010() {
     fi
     popd > /dev/null
 
+    export env_home_backup=${HOME}
+
     if [ -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
         ccache_exists=$(printenv | grep ^PATH= | grep ccache | wc -l)
         if [ ${ccache_exists} -eq 0 ]; then
