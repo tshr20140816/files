@@ -356,15 +356,15 @@ if [ "${mirror_server}" != "none" ]; then
         rm -f ccache-${ccache_version}.tar.xz
     fi
 
-    # openssh
-    wget -t1 ${mirror_server}/openssh-${openssh_version}.tar.gz
-    wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz.asc
-    gpg --recv-keys $(gpg --verify openssh-${openssh_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-    if [ $(gpg --verify openssh-${openssh_version}.tar.gz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm -f openssh-${openssh_version}.tar.gz
-    fi
+    # # openssh
+    # wget -t1 ${mirror_server}/openssh-${openssh_version}.tar.gz
+    # wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz.asc
+    # gpg --recv-keys $(gpg --verify openssh-${openssh_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    # if [ $(gpg --verify openssh-${openssh_version}.tar.gz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     rm -f openssh-${openssh_version}.tar.gz
+    # fi
 
     # distcc
     wget -t1 ${mirror_server}/distcc-${distcc_version}.tar.bz2
@@ -795,14 +795,14 @@ do
     fi
     [ -f ccache-${ccache_version}.tar.xz ] || files_exists=0
 
-    # *** openssh ***
-    if [ ! -f openssh-${openssh_version}.tar.gz ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing openssh-${openssh_version}.tar.gz" \
-         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
-    fi
-    [ -f openssh-${openssh_version}.tar.gz ] || files_exists=0
+    # # *** openssh ***
+    # if [ ! -f openssh-${openssh_version}.tar.gz ]; then
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing openssh-${openssh_version}.tar.gz" \
+    #      | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) openssh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
+    # fi
+    # [ -f openssh-${openssh_version}.tar.gz ] || files_exists=0
 
     # *** distcc ***
     if [ ! -f distcc-${distcc_version}.tar.bz2 ]; then
