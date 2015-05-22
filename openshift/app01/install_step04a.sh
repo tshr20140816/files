@@ -29,7 +29,7 @@ pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
 cat << '__HEREDOC__' > distcc-ssh
 #!/bin/bash
 
-echo "$@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 exec /usr/bin/ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config $@
 __HEREDOC__
 chmod +x distcc-ssh
@@ -47,9 +47,9 @@ env_home_backup=${HOME}
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
-# gem --version
-# gem environment
-# gem help install
+gem --version
+gem environment
+gem help install
 
 # *** install ***
 
