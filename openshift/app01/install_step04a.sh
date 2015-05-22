@@ -25,7 +25,7 @@ Host *
 #  ControlMaster auto
 #  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
 #  ControlPersist yes
-#  ControlPersist 3600
+#  ControlPersist 3600s
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 popd > /dev/null
