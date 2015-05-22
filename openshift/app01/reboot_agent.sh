@@ -16,7 +16,7 @@ do
         sleep 10s
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         url="${web_beacon_server}dummy"
-        for file_name in install nohup nohup_error
+        for file_name in install nohup nohup_error distcc
         do
             i=0
             while read LINE
