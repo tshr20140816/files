@@ -114,7 +114,8 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) php make" | tee -a ${OPENSHIFT_LOG_DIR}/insta
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 # j2 is limit (-l3 --load-average=3)
 # time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-time make -j6 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+# time make -j6 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+time make -j12 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 # echo "$(date +%Y/%m/%d" "%H:%M:%S) php make test" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make test *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 # time make test
