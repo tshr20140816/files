@@ -36,3 +36,4 @@ cd /tmp
 whereis httpd
 httpd -v
 httpd -V
+apachectl -V
