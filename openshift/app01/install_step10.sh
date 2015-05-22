@@ -26,7 +26,7 @@ eval "$(rbenv init -)"
 export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 # export HTTPD=${OPENSHIFT_DATA_DIR}/apache/bin/httpd
 # export BINDIR=${OPENSHIFT_DATA_DIR}/apache
-export MAKEOPTS="-j2"
+export MAKEOPTS="-j3"
 
 # *** install ***
 
