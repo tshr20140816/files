@@ -32,6 +32,7 @@ function010() {
             export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
             # export DISTCC_LOG=/dev/null
             export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/distcc.log
         fi
     fi
     if [ -e ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt ]; then
