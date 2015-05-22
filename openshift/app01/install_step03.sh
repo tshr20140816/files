@@ -75,6 +75,7 @@ mv ${OPENSHIFT_LOG_DIR}/super_pi.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 rm -rf ${OPENSHIFT_TMP_DIR}/superpi
 
+if [ 1 -eq 0 ]; then
 # ***** GNU Parallel *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/parallel-latest
@@ -101,7 +102,9 @@ mv ${OPENSHIFT_LOG_DIR}/install_gnu_parallel.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 rm ${OPENSHIFT_TMP_DIR}/parallel-latest.tar.bz2
 ${OPENSHIFT_DATA_DIR}/parallel/bin/parallel -v | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+fi
 
+if [ 1 -eq 0 ]; then
 # ***** lynx *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/lynx
@@ -134,6 +137,7 @@ mv ${OPENSHIFT_LOG_DIR}/install_lynx.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
 rm -rf ${OPENSHIFT_TMP_DIR}/lynx
+fi
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
