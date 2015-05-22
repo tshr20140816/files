@@ -20,7 +20,12 @@ Host *
   LogLevel QUIET
 #  LogLevel DEBUG3
   Protocol 2
+  PasswordAuthentication no
   ConnectionAttempts 5
+#  ControlMaster auto
+#  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
+#  ControlPersist yes
+#  ControlPersist 3600
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 popd > /dev/null
