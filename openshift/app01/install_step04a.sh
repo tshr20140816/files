@@ -36,6 +36,8 @@ popd > /dev/null
 # ***** rhc *****
 # ruby はデフォルトインストールのものに頼る
 
+# *** env ***
+
 distcc_server_account=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_account)
 distcc_server_password=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_password)
 
@@ -46,8 +48,15 @@ export HOME=${OPENSHIFT_DATA_DIR}
 # gem --version
 # gem environment
 # gem help install
+
+# *** install ***
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 # gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc setup" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
 pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -62,6 +71,7 @@ do
     # distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo"
     echo -n "${distcc_hosts_string}" >> ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
 done < user_fqdn.txt
+# 後で使う
 # rm -f user_fqdn.txt
 popd > /dev/null
 cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
