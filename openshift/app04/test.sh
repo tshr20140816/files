@@ -37,3 +37,4 @@ whereis httpd
 httpd -v
 httpd -V
 apachectl -V
+rsync -V
