@@ -4,7 +4,6 @@ source functions.sh
 function010 restart
 [ $? -eq 0 ] || exit
 
-env_home_backup=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 
 cat ${OPENSHIFT_TMP_DIR}/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
