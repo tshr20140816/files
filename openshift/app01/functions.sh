@@ -46,12 +46,6 @@ function010() {
         # export DISTCC_SSH="/usr/bin/ssh -v -x -F ${OPENSHIFT_DATA_DIR}/.ssh/config"
         export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
     fi
-    # if [ -e ${OPENSHIFT_DATA_DIR}/openssh ]; then
-    #     openssh_exists=$(printenv | grep ^PATH= | grep openssh | wc -l)
-    #     if [ ${openssh_exists} -eq 0 ]; then
-    #         export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
-    #     fi
-    # fi
     # NG : distcc & -march=native
     # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
     export CFLAGS="-O2 -march=x86-64 -fomit-frame-pointer -s"
