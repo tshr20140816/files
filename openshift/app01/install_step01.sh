@@ -106,7 +106,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 15 ]; then
+if [ $# -ne 17 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -123,6 +123,8 @@ if [ $# -ne 15 ]; then
     echo "arg13 : schedule server (fqdn)"
     echo "arg14 : distcc server account"
     echo "arg15 : distcc server password"
+    echo "arg16 : distcc server account 2"
+    echo "arg17 : distcc server password 2"
     exit
 fi
 
@@ -141,6 +143,8 @@ build_server_password=${12}
 schedule_server=${13}
 distcc_server_account=${14}
 distcc_server_password=${15}
+distcc_server_account_2=${16}
+distcc_server_password_2=${17}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -160,6 +164,8 @@ echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
 echo "${build_server_password}" > ${OPENSHIFT_DATA_DIR}/params/build_server_password
 echo "${distcc_server_account}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_account
 echo "${distcc_server_password}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password
+echo "${distcc_server_account_2}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_account_2
+echo "${distcc_server_password_2}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password_2
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
