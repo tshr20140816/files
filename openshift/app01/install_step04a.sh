@@ -6,6 +6,8 @@ function010
 
 # ***** ssh *****
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ssh setup" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
 pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
 ssh -V
@@ -27,7 +29,7 @@ pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
 cat << '__HEREDOC__' > distcc-ssh
 #!/bin/bash
 
-# echo "$@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+echo "$@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 exec /usr/bin/ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config $@
 __HEREDOC__
 chmod +x distcc-ssh
