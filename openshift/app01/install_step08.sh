@@ -5,7 +5,7 @@ function010 restart
 [ $? -eq 0 ] || exit
 
 export HOME=${OPENSHIFT_DATA_DIR}
-
+rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 cat ${OPENSHIFT_TMP_DIR}/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 while read LINE
 do
