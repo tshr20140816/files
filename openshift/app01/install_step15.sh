@@ -72,7 +72,7 @@ oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}
 query_string="server=${OPENSHIFT_APP_DNS}&installed=tcl"
 wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
 
-***** Expect *****
+# ***** Expect *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/expect${expect_version}.tar.gz ./
