@@ -4,6 +4,9 @@ source functions.sh
 function010 restart
 [ $? -eq 0 ] || exit
 
+export MAKEOPTS="-j6"
+export HOME=${OPENSHIFT_DATA_DIR}
+
 # ***** etc *****
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
