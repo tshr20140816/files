@@ -5,6 +5,7 @@ https://archlinuxjp.kusakata.com/wiki/Distcc
 https://blog.openshift.com/12-tips-for-hosting-wordpress-on-openshift/
 
 バックアップファイルはscpで別サーバに
+RUBY_GC_MALLOC_LIMIT
 
 4月26日
 B00S66Q06I
