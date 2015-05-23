@@ -57,8 +57,9 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> $
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_tcl.log
 mv ${OPENSHIFT_LOG_DIR}/install_tcl.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
-unset CC
-unset CXX
+
+export CC="distcc gcc"
+export CXX="distcc g++"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm tcl${tcl_version}-src.tar.gz
