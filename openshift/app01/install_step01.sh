@@ -912,7 +912,7 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 rm -f *
 touch jobs.deny
 
-install_script_file='install_step_from_02_to_21'
+install_script_file='install_step_from_02_to_22'
 cat << '__HEREDOC__' > install_script_check.sh
 #!/bin/bash
 
