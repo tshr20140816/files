@@ -7,13 +7,6 @@ function010 stop
 export HOME=${OPENSHIFT_DATA_DIR}
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
-cat ${OPENSHIFT_TMP_DIR}/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-while read LINE
-do
-    user_fqdn=$(echo "${LINE}")
-    ssh -24n -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-done < ${OPENSHIFT_TMP_DIR}/user_fqdn.txt
-
 # ***** passenger-install-apache2-module *****
 # https://github.com/phusion/passenger/blob/master/bin/passenger-install-apache2-module
 
