@@ -3,6 +3,7 @@ http://www.gnu.org/software/parallel/
 http://www.gentoo-wiki.info/HOWTO_Distcc_over_SSH_with_Portage
 https://archlinuxjp.kusakata.com/wiki/Distcc
 https://blog.openshift.com/12-tips-for-hosting-wordpress-on-openshift/
+http://www.yafc-ftp.com/
 
 バックアップファイルはscpで別サーバに
 RUBY_GC_MALLOC_LIMIT
