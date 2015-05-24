@@ -384,7 +384,7 @@ if [ "${mirror_server}" != "none" ]; then
         rm -f distcc-${distcc_version}.tar.bz2
     fi
 
-    # php
+    # cadaver
     wget -t1 ${mirror_server}/cadaver-${cadaver_version}.tar.gz
     wget http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz.asc
     gpg --recv-keys $(gpg --verify cadaver-${cadaver_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
