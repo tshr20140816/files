@@ -46,7 +46,7 @@ hidrive_password=$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_password)
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 cat << '__HEREDOC__' > .netrc
-machine https://webdav.hidrive.strato.com/ login __HIDRIVE_ACCOUNT__ password __HIDRIVE_PASSWORD__
+machine webdav.hidrive.strato.com login __HIDRIVE_ACCOUNT__ password __HIDRIVE_PASSWORD__
 __HEREDOC__
 sed -i -e "s|__HIDRIVE_ACCOUNT__|${hidrive_account}|g" .netrc
 sed -i -e "s|__HIDRIVE_PASSWORD__|${hidrive_password}|g" .netrc
