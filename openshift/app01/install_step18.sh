@@ -84,7 +84,7 @@ s/<TITLE>/<HTML><HEAD><META HTTP-EQUIV="REFRESH" CONTENT="600"><TITLE>/g
 s/<\/TITLE>/<\/TITLE><\/HEAD>/g
 s/>V<\/A>/>V<\/A><\/HTML>/g
 __HEREDOC__
-perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt
+perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt &
 popd > /dev/null
 
 # *** apache conf ***
@@ -119,14 +119,16 @@ delegate_pop_server=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server)
 sed -i -e "s|__DELEGATE_POP_SERVER__|${delegate_pop_server}|g" conf/custom.conf
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configtest" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-./bin/apachectl configtest | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+./bin/apachectl configtest | tee -a ${OPENSHIFT_LOG_DIR}/install.log &
 
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm delegate${delegate_version}.tar.gz
+rm delegate${delegate_version}.tar.gz &
 rm -rf delegate${delegate_version}
 popd > /dev/null
+
+wait
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
