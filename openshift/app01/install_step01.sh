@@ -848,7 +848,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing cadaver-${cadaver_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver wget" >> ${OPENSHIFT_LOG_DIR}/install.log
-        http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz
+        wget http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz
     fi
     [ -f cadaver-${cadaver_version}.tar.gz ] || files_exists=0
 
