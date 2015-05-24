@@ -23,6 +23,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --with-ssl=openssl \
  --prefix=${OPENSHIFT_DATA_DIR}/cadaver 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_cadaver.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
