@@ -12,7 +12,7 @@ rm -rf ${OPENSHIFT_DATA_DIR}/cadaver
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/cadaver-${cadaver_version}.tar.gz ./
-echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver tar" >> ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar zxf cadaver-${cadaver_version}.tar.gz
 popd > /dev/null
 
