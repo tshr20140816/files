@@ -47,6 +47,7 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
 baikal_version 0.2.7
 cacti_version 0.8.8c
+cadaver_version 0.23.3
 caldavzap_version 0.12.1
 ccache_version 3.2.2
 distcc_version 3.1
@@ -80,11 +81,6 @@ __HEREDOC__
 # unix_bench_version 5.1.3
 # sysbench_version 0.4.12.5
 # c-ares_version 1.10.0
-
-# http://httpd.apache.org/
-# http://php.net/
-# http://delegate.hpcc.jp/delegate/
-# https://www.ruby-lang.org/ja/
 
 export TZ=JST-9
 
@@ -386,6 +382,16 @@ if [ "${mirror_server}" != "none" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc-${distcc_version}.tar.bz2 sha1 unmatch" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm -f distcc-${distcc_version}.tar.bz2
+    fi
+
+    # php
+    wget -t1 ${mirror_server}/cadaver-${cadaver_version}.tar.gz
+    wget http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz.asc
+    gpg --recv-keys $(gpg --verify cadaver-${cadaver_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    if [ $(gpg --verify cadaver-${cadaver_version}.tar.gz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm -f cadaver-${cadaver_version}.tar.gz
     fi
 
     # *** gem ***
@@ -836,6 +842,15 @@ do
         wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2
     fi
     [ -f parallel-latest.tar.bz2 ] || files_exists=0
+
+    # *** cadaver ***
+    if [ ! -f cadaver-${cadaver_version}.tar.gz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing cadaver-${cadaver_version}.tar.gz" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver wget" >> ${OPENSHIFT_LOG_DIR}/install.log
+        http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz
+    fi
+    [ -f cadaver-${cadaver_version}.tar.gz ] || files_exists=0
 
     # *** gem ***
     for gem in bundler rack passenger
