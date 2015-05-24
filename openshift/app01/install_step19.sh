@@ -27,7 +27,7 @@ do
     fi
 done
 __HEREDOC__
-chmod +x logrotate_zantei.sh
+chmod +x logrotate_zantei.sh &
 
 # ***** memory usage logging *****
 
@@ -61,7 +61,7 @@ do
     fi
 done
 __HEREDOC__
-chmod +x memory_usage_logging.sh
+chmod +x memory_usage_logging.sh &
 
 # ***** cron scripts *****
 
@@ -76,7 +76,7 @@ date +%Y/%m/%d" "%H:%M:%S
 cd ${OPENSHIFT_DATA_DIR}/logrotate
 logrotate logrotate.conf -s logrotate.status
 __HEREDOC__
-chmod +x logrotate.sh
+chmod +x logrotate.sh &
 
 # *** redmine repository check ***
 
@@ -122,7 +122,7 @@ if [ $((minute % 5)) -eq 2 ]; then
     >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
 fi
 __HEREDOC__
-chmod +x redmine_repository_check.sh
+chmod +x redmine_repository_check.sh &
 
 # *** my server check ***
 
@@ -145,7 +145,7 @@ if [ ${http_status} -eq 503 ]; then
     echo $(date +%Y/%m/%d" "%H:%M:%S) Auto Restart >> ${OPENSHIFT_LOG_DIR}/auto_restart.log
 fi
 __HEREDOC__
-chmod +x my_server_check.sh
+chmod +x my_server_check.sh &
 
 # *** another server check ***
 
@@ -188,7 +188,7 @@ do
     fi
 done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
 __HEREDOC__
-chmod +x another_server_check.sh
+chmod +x another_server_check.sh &
 
 # *** web beacon ***
 
@@ -201,7 +201,7 @@ __HEREDOC__
 web_beacon_server=$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)
 sed -i -e "s|__WEB_BEACON_SERVER__|${web_beacon_server}|g" beacon.sh
 cat beacon.sh
-chmod +x beacon.sh
+chmod +x beacon.sh &
 
 # *** keep_process ***
 
@@ -262,7 +262,7 @@ if [ ${process_count} = 0 ]; then
     wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
 fi
 __HEREDOC__
-chmod +x keep_process.sh
+chmod +x keep_process.sh &
 
 # *** mrtg ***
 
@@ -277,7 +277,7 @@ cd ${OPENSHIFT_DATA_DIR}/mrtg
 env LANG=C ./bin/mrtg mrtg.conf
 __HEREDOC__
 chmod +x mrtg.sh
-./mrtg.sh
+./mrtg.sh &
 
 # *** Tiny Tiny Rss update feeds ***
 
@@ -293,7 +293,7 @@ if [ $((minute % 5)) -eq 0 ]; then
     ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
 fi
 __HEREDOC__
-chmod +x update_feeds.sh
+chmod +x update_feeds.sh &
 
 # *** passenger status ***
 
@@ -320,7 +320,7 @@ find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f \
 cp -f ${OPENSHIFT_TMP_DIR}/passenger_status.txt passenger_status.txt
 __HEREDOC__
 sed -i -e "s|__RUBY_VERSION__|${ruby_version}|g" passenger_status.sh
-chmod +x passenger_status.sh
+chmod +x passenger_status.sh &
 
 # *** memcached status ***
 
@@ -335,7 +335,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/memcached_status.txt
 ${OPENSHIFT_DATA_DIR}/local/bin/memcached-tool ${OPENSHIFT_DIY_IP}:31211 stats >> ${OPENSHIFT_TMP_DIR}/memcached_status.txt
 cp -f ${OPENSHIFT_TMP_DIR}/memcached_status.txt memcached_status.txt
 __HEREDOC__
-chmod +x memcached_status.sh
+chmod +x memcached_status.sh &
 
 # *** process status ***
 
@@ -360,7 +360,7 @@ uptime >> ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt
 lsof -i -n -P >> ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt
 cp -f ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt lsof_i_n_P.txt
 __HEREDOC__
-chmod +x process_status.sh
+chmod +x process_status.sh &
 
 # *** cacti polling ***
 
@@ -376,7 +376,7 @@ if [ $((minute % 5)) -eq 1 ]; then
     ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php
 fi
 __HEREDOC__
-chmod +x cacti_poller.sh
+chmod +x cacti_poller.sh &
 
 cat << '__HEREDOC__' > record_count_top_30_sql.txt
 SELECT T1.*
@@ -507,7 +507,7 @@ __HEREDOC__
 chmod +x logrotate.sh
 # echo logrotate.sh >> jobs.allow
 ./logrotate.sh
-./logrotate.sh
+./logrotate.sh &
 
 # * mysql_backup *
 
@@ -522,7 +522,7 @@ mysqldump \
 __HEREDOC__
 chmod +x mysql_backup.sh
 echo mysql_backup.sh >> jobs.allow
-./mysql_backup.sh
+./mysql_backup.sh &
 
 # * another server list update *
 
@@ -550,7 +550,7 @@ cp ${OPENSHIFT_DATA_DIR}/another_server_list.txt ${OPENSHIFT_DATA_DIR}/apache/ht
 __HEREDOC__
 chmod +x another_server_list_update.sh
 echo another_server_list_update.sh >> jobs.allow
-./another_server_list_update.sh
+./another_server_list_update.sh &
 
 # * backup log files *
 
@@ -590,7 +590,7 @@ if [ -f production.log.$(date --date '2 days ago' +%Y%m%d) ]; then
 fi
 popd > /dev/null
 __HEREDOC__
-chmod +x bakup_log_files.sh
+chmod +x bakup_log_files.sh &
 echo bakup_log_files.sh >> jobs.allow
 
 popd > /dev/null
@@ -624,7 +624,7 @@ do
 done
 
 __HEREDOC__
-chmod +x redmine_repository_data_maintenance.sh
+chmod +x redmine_repository_data_maintenance.sh &
 echo redmine_repository_data_maintenance.sh >> jobs.allow
 
 # * mysql record count top 30 *
@@ -652,7 +652,7 @@ mysql ${connection_string} \
 --execute="SHOW GLOBAL STATUS" \
 > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/mysql_global_status_${hh}.html
 __HEREDOC__
-chmod +x record_count_top_30.sh
+chmod +x record_count_top_30.sh &
 echo record_count_top_30.sh >> jobs.allow
 
 # * du *
@@ -665,7 +665,7 @@ date +%Y/%m/%d" "%H:%M:%S | tee ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
 echo >> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
 du ${OPENSHIFT_HOMEDIR} >> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/du.txt
 __HEREDOC__
-chmod +x du.sh
+chmod +x du.sh &
 echo du.sh >> jobs.allow
 
 # * webalizer *
@@ -679,7 +679,7 @@ cd ${OPENSHIFT_DATA_DIR}/webalizer
 ./bin/webalizer -c ./etc/webalizer.conf ${OPENSHIFT_DATA_DIR}/apache/logs/access_log.$(date --date yesterday '+%w')
 ./bin/webalizer -c ./etc/webalizer.conf ${OPENSHIFT_DATA_DIR}/apache/logs/access_log
 __HEREDOC__
-chmod +x webalizer.sh
+chmod +x webalizer.sh &
 echo webalizer.sh >> jobs.allow
 
 # * wordpress *
@@ -739,7 +739,7 @@ for table in ${tables[@]}; do
     done
 done
 __HEREDOC__
-chmod +x wordpress.sh
+chmod +x wordpress.sh &
 echo wordpress.sh >> jobs.allow
 
 # * baikal *
@@ -813,7 +813,7 @@ done
 
 popd > /dev/null
 __HEREDOC__
-chmod +x baikal.sh
+chmod +x baikal.sh &
 echo baikal.sh >> jobs.allow
 
 # * icalendar *
@@ -835,7 +835,7 @@ rm -f holidays.ics
 wget "http://ical.mac.com/ical/Japanese32Holidays.ics" -O holidays.ics
 popd > /dev/null
 __HEREDOC__
-chmod +x icalendar.sh
+chmod +x icalendar.sh &
 echo icalendar.sh >> jobs.allow
 
 # * delegate *
@@ -852,7 +852,7 @@ curl -LI --basic -u ${delegate_email_account}:${delegate_email_password} \
 https://${OPENSHIFT_DIY_IP}:30080/mail/+pop.${delegate_email_account}.${delegate_pop_server}/
 __HEREDOC__
 if [ ! ${delegate_email_account} = 'none' ]; then
-chmod +x delegate.sh
+chmod +x delegate.sh &
 # echo delegate.sh >> jobs.allow
 fi
 popd > /dev/null
@@ -896,7 +896,7 @@ done
 
 popd > /dev/null
 __HEREDOC__
-chmod +x minutely_jobs.sh
+chmod +x minutely_jobs.sh &
 echo minutely_jobs.sh >> jobs.allow
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
