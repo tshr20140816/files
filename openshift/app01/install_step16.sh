@@ -8,6 +8,8 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 # ***** Tcl *****
 
+rm -rf ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     file_name=${OPENSHIFT_APP_UUID}_maked_tcl${tcl_version}.tar.xz
@@ -22,12 +24,13 @@ if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
             sleep 10s
         fi
     done
+    rm -f ${file_name}
     wget $(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl maked tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     tar Jxf ${file_name}
-    rm -f ${file_name}
+    rm -f ${file_name} &
 else
-    cp ${OPENSHIFT_DATA_DIR}/download_files/tcl${tcl_version}-src.tar.gz ./
+    cp -f ${OPENSHIFT_DATA_DIR}/download_files/tcl${tcl_version}-src.tar.gz ./
 
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     tar xfz tcl${tcl_version}-src.tar.gz
@@ -62,7 +65,7 @@ export CC="distcc gcc"
 export CXX="distcc g++"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm tcl${tcl_version}-src.tar.gz
+rm -f tcl${tcl_version}-src.tar.gz &
 # TODO
 # rm -rf tcl${tcl_version}
 popd > /dev/null
@@ -138,7 +141,7 @@ if [ $(grep -c -e 'command not found' ${OPENSHIFT_TMP_DIR}/rhc.stderr.log) -gt 0
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" \
      > /dev/null 2>&1
 fi
-rm -f ${OPENSHIFT_TMP_DIR}/rhc.stderr.log
+rm -f ${OPENSHIFT_TMP_DIR}/rhc.stderr.log &
 
 query_string="server=${OPENSHIFT_APP_DNS}&installed=rhc"
 wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
@@ -170,7 +173,9 @@ mv ${OPENSHIFT_LOG_DIR}/rhc.setup.log ${OPENSHIFT_LOG_DIR}/install/
 
 ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps
 ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps | grep uuid | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-export HOME=${env_home_backup}
+# export HOME=${env_home_backup}
+
+wait
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
