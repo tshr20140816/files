@@ -102,7 +102,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 17 ]; then
+if [ $# -ne 19 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -122,7 +122,7 @@ if [ $# -ne 17 ]; then
     echo "arg16 : distcc server account 2"
     echo "arg17 : distcc server password 2"
     echo "arg18 : hidrive account"
-    echo "arg18 : hidrive password"
+    echo "arg19 : hidrive password"
     exit
 fi
 
@@ -143,6 +143,8 @@ distcc_server_account=${14}
 distcc_server_password=${15}
 distcc_server_account_2=${16}
 distcc_server_password_2=${17}
+hidrive_account=${18}
+hidrive_password=${19}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -164,6 +166,8 @@ echo "${distcc_server_account}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_acc
 echo "${distcc_server_password}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password
 echo "${distcc_server_account_2}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_account_2
 echo "${distcc_server_password_2}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password_2
+echo "${hidrive_account}" > ${OPENSHIFT_DATA_DIR}/params/hidrive_account
+echo "${hidrive_password}" > ${OPENSHIFT_DATA_DIR}/params/hidrive_password
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
