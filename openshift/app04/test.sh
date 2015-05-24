@@ -38,3 +38,4 @@ httpd -v
 httpd -V
 apachectl -V
 rsync --help
+printenv
