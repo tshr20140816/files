@@ -2,6 +2,7 @@
 CalDavZAP_0.12.1.zip http://www.inf-it.com/CalDavZAP_0.12.1.zip
 baikal-flat-0.2.7.zip http://baikal-server.com/get/baikal-flat-0.2.7.zip
 cacti-0.8.8c.tar.gz http://www.cacti.net/downloads/cacti-0.8.8c.tar.gz
+cadaver-0.23.3.tar.gz http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz
 ccache-3.2.2.tar.xz http://samba.org/ftp/ccache/ccache-3.2.2.tar.xz
 delegate9.9.13.tar.gz http://www.delegate.org/anonftp/DeleGate/delegate9.9.13.tar.gz
 distcc-3.1.tar.bz2 https://distcc.googlecode.com/files/distcc-3.1.tar.bz2
