@@ -121,6 +121,8 @@ if [ $# -ne 17 ]; then
     echo "arg15 : distcc server password"
     echo "arg16 : distcc server account 2"
     echo "arg17 : distcc server password 2"
+    echo "arg18 : hidrive account"
+    echo "arg18 : hidrive password"
     exit
 fi
 
