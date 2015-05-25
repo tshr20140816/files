@@ -124,12 +124,14 @@ do
      > ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log 2>&1
     rbenv rehash
     pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-    zip -9m ${gem}.gem.rbenv.log.zip ${gem}.gem.rbenv.log
-    mv ${gem}.gem.rbenv.log.zip ./install/
+    ( zip -9m ${gem}.gem.rbenv.log.zip ${gem}.gem.rbenv.log;
+      mv ${gem}.gem.rbenv.log.zip ./install/;
+    ) &
     popd > /dev/null
 done
 
 rbenv exec gem list | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+wait
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
