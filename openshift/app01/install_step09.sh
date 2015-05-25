@@ -63,6 +63,7 @@ popd > /dev/null
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
+rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 rm -rf ${OPENSHIFT_TMP_DIR}/php-${php_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/php
 
@@ -114,11 +115,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) php make" | tee -a ${OPENSHIFT_LOG_DIR}/insta
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 # j2 is limit (-l3 --load-average=3)
 # time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-# time make -j6 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 time make -j12 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) php make test" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make test *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
-# time make test
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
