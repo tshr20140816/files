@@ -27,8 +27,9 @@ do
                 wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
             done < ${file_name}.log
             if [ "${file_name}" != "install" ]; then
-                zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log
-                rm -f ${file_name}.log
+                ( zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log;
+                  rm -f ${file_name}.log;
+                ) &
             fi
         done
         popd > /dev/null
