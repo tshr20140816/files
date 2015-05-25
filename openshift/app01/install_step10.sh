@@ -53,8 +53,10 @@ if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     tar Jxf ${file_name}
     rm -f ${file_name}
     popd > /dev/null
-    unset CC
-    unset CXX
+    # unset CC
+    # unset CXX
+    export CC="distcc gcc"
+    export CXX="distcc g++"
 else
     pushd ${OPENSHIFT_TMP_DIR} > /dev/null
     rm -f ccache.tar.xz
