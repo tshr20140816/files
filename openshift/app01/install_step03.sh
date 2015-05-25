@@ -104,41 +104,6 @@ rm ${OPENSHIFT_TMP_DIR}/parallel-latest.tar.bz2
 ${OPENSHIFT_DATA_DIR}/parallel/bin/parallel -v | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 fi
 
-if [ 1 -eq 0 ]; then
-# ***** lynx *****
-
-rm -rf ${OPENSHIFT_TMP_DIR}/lynx
-rm -rf ${OPENSHIFT_DATA_DIR}/lynx
-mkdir -p ${OPENSHIFT_TMP_DIR}/lynx
-
-pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/lynx${lynx_version}.tar.gz ./
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz lynx${lynx_version}.tar.gz --strip-components=1
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR}lynx > /dev/null
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_lynx.log
-./configure \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --prefix=${OPENSHIFT_DATA_DIR}/lynx 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
-time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) lynx make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_lynx.log
-make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_lynx.log
-mv ${OPENSHIFT_LOG_DIR}/install_lynx.log ${OPENSHIFT_LOG_DIR}/install/
-popd > /dev/null
-
-rm -rf ${OPENSHIFT_TMP_DIR}/lynx
-fi
-
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
