@@ -16,23 +16,7 @@ B00S66Q06I
 B00KGNUY3E
 B00S66PWIA
 
-https://developers.openshift.com/en/managing-remote-connection.html
-http://docs.openshift.com/online/user_guide/ssh_keys.html
-https://code.google.com/p/distcc/
-
 http://blogs.technet.com/b/microsoft_surface/archive/2014/11/26/surface-pro-3-64gb.aspx
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-for gem in bundler rack passenger
-do
-  rm -f ${gem}.html
-  wget https://rubygems.org/gems/${gem} -O ${gem}.html
-  version=$(grep -e canonical ${gem}.html | sed -r -e 's|^.*versions/(.+)".*$|\1|g')
-  rm -f ${gem}-${version}.gem
-  wget https://rubygems.org/downloads/${gem}-${version}.gem -O ${gem}-${version}.gem
-  rm -f ${gem}.html
-done
-popd > /dev/null
 
 cd /tmp
 wget https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
