@@ -109,7 +109,7 @@ if [ $# -ne 19 ]; then
     echo "arg3 : openshift email address"
     echo "arg4 : openshift email password"
     echo "arg5 : delegate email account (mailaccount/none)"
-    echo "arg6 : delegate email password"
+    # echo "arg6 : delegate email password"
     echo "arg7 : delegate pop server"
     echo "arg8 : another server check (yes/no)"
     echo "arg9 : web beacon server https://xxx/"
@@ -131,7 +131,7 @@ redmine_email_password=${2}
 openshift_email_address=${3}
 openshift_email_password=${4}
 delegate_email_account=${5}
-delegate_email_password=${6}
+# delegate_email_password=${6}
 delegate_pop_server=${7}
 another_server_check=${8}
 web_beacon_server=${9}
@@ -154,7 +154,7 @@ echo "${redmine_email_password}" > ${OPENSHIFT_DATA_DIR}/params/redmine_email_pa
 echo "${openshift_email_address}" > ${OPENSHIFT_DATA_DIR}/params/openshift_email_address
 echo "${openshift_email_password}" > ${OPENSHIFT_DATA_DIR}/params/openshift_email_password
 echo "${delegate_email_account}" > ${OPENSHIFT_DATA_DIR}/params/delegate_email_account
-echo "${delegate_email_password}" > ${OPENSHIFT_DATA_DIR}/params/delegate_email_password
+# echo "${delegate_email_password}" > ${OPENSHIFT_DATA_DIR}/params/delegate_email_password
 echo "${delegate_pop_server}" > ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server
 echo "${another_server_check}" > ${OPENSHIFT_DATA_DIR}/params/another_server_check
 echo "${web_beacon_server}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_server
