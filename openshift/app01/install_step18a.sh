@@ -63,7 +63,7 @@ fi
 
 pushd ${1}
 export HOME=${OPENSHIFT_DATA_DIR}
-. ${OPENSHIFT_DATA_DIR}/cadaver/bin/cadaver https://webdav.hidrive.strato.com/ << __HEREDOC_2__
+${OPENSHIFT_DATA_DIR}/cadaver/bin/./cadaver https://webdav.hidrive.strato.com/ << __HEREDOC_2__
 cd ${2}
 put ${3}
 quit
