@@ -33,9 +33,23 @@ set -x
 
 cd /tmp
 
-whereis httpd
-httpd -v
-httpd -V
-apachectl -V
-rsync --help
-printenv
+cat << '__HEREDOC__' > cadaver_put.sh
+#!/bin/bash
+
+if [ $# -ne 3 ]; then
+    echo "NG"
+    exit 1
+fi
+
+pushd ${1}
+export HOME=${OPENSHIFT_DATA_DIR}
+exec ${OPENSHIFT_DATA_DIR}/cadaver/bin/cadaver https://webdav.hidrive.strato.com/ << '__HEREDOC_2__'
+cd ${2}
+put ${3}
+quit
+__HEREDOC_2__
+popd
+exit 0
+__HEREDOC__
+
+cat cadaver_put.sh
