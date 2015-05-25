@@ -146,7 +146,6 @@ touch ${OPENSHIFT_DATA_DIR}/apache/logs/rewrite_log
 ln -s ${OPENSHIFT_DATA_DIR}/apache/logs/rewrite_log rewrite_log
 touch ${OPENSHIFT_MYSQL_DIR}/stdout.err
 ln -s ${OPENSHIFT_MYSQL_DIR}/stdout.err mysql_stdout_err.log
-
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
