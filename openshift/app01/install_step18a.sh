@@ -53,6 +53,26 @@ sed -i -e "s|__HIDRIVE_PASSWORD__|${hidrive_password}|g" .netrc
 chmod 600 .netrc
 popd > /dev/null
 
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/scripts/cadaver_put.sh
+#!/bin/bash
+
+if [ $# -ne 3 ]; then
+    echo "NG"
+    exit 1
+fi
+
+pushd ${1}
+export HOME=${OPENSHIFT_DATA_DIR}
+. ${OPENSHIFT_DATA_DIR}/cadaver/bin/cadaver https://webdav.hidrive.strato.com/ << __HEREDOC_2__
+cd ${2}
+put ${3}
+quit
+__HEREDOC_2__
+popd
+exit 0
+__HEREDOC__
+chmod +x ${OPENSHIFT_DATA_DIR}/scripts/cadaver_put.sh
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
