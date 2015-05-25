@@ -431,21 +431,10 @@ popd > /dev/null
 
 # ***** logrotate *****
 
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_monthly.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_monthly.log
-fi
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_weekly.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_weekly.log
-fi
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_daily.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_daily.log
-fi
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_hourly.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_hourly.log
-fi
-if [ ! -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log ]; then
-    touch ${OPENSHIFT_LOG_DIR}/cron_minutely.log
-fi
+for file_name in cron_monthly cron_weekly cron_daily cron_hourly cron_minutely
+do
+    [ -e ${OPENSHIFT_LOG_DIR}/${file_name}.log ] || touch ${OPENSHIFT_LOG_DIR}/${file_name}.log
+done
 
 rm -rf ${OPENSHIFT_DATA_DIR}/logrotate
 mkdir ${OPENSHIFT_DATA_DIR}/logrotate
