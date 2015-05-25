@@ -605,6 +605,20 @@ if [ -f production.log.$(date --date '2 days ago' +%Y%m%d) ]; then
     set +x
 fi
 popd > /dev/null
+pushd ${OPENSHIFT_LOG_DIR}/backup/ > /dev/null
+log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
+remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
+for file in *log.${weekday}.xz
+do
+    ${OPENSHIFT_DATA_DIR}/scripts/./cadaver_put.sh ${OPENSHIFT_LOG_DIR}/backup/ ${remote_dir} ${file} | tee ${log_file_name}
+    if [ $(grep -c -e succeeded ${log_file_name}) -eq 1 ]; then
+        echo "OK ${file}"
+        rm ${file}
+    else
+        echo "NG ${file}"
+    fi
+done
+popd > /dev/null
 __HEREDOC__
 chmod +x bakup_log_files.sh &
 echo bakup_log_files.sh >> jobs.allow
