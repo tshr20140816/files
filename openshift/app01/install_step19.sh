@@ -53,11 +53,15 @@ do
     [ -f ${OPENSHIFT_TMP_DIR}/stop ] && exit || sleep 1s
     if [ ${day} != $(date +%d) ]; then
         day=$(date +%d)
+        file_name=${OPENSHIFT_APP_DNS}.memory_usage.log.$(date +%w).xz
         mkdir ${OPENSHIFT_LOG_DIR}/backup 2> /dev/null
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         xz -z9ef memory_usage.log
-        mv -f memory_usage.log.xz backup/memory_usage.log.$(date +%w).xz
+        mv -f memory_usage.log.xz backup/${file_name}
         popd > /dev/null
+        log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
+        remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
+        ${OPENSHIFT_DATA_DIR}/scripts/./cadaver_put.sh ${OPENSHIFT_LOG_DIR}/backup/ ${remote_dir} ${file_name} | tee ${log_file_name}
     fi
 done
 __HEREDOC__
@@ -583,7 +587,7 @@ for file in *log.${weekday}
 do
     set -x
     xz -z9ef ${file}
-    mv -f ${file}.xz ${OPENSHIFT_LOG_DIR}/backup/
+    mv -f ${file}.xz ${OPENSHIFT_LOG_DIR}/backup/${OPENSHIFT_APP_DNS}.${file}.xz
     set +x
 done
 popd > /dev/null
@@ -592,7 +596,7 @@ for file in *log.${weekday}
 do
     set -x
     xz -z9ef ${file}
-    mv -f ${file}.xz ${OPENSHIFT_LOG_DIR}/backup/
+    mv -f ${file}.xz ${OPENSHIFT_LOG_DIR}/backup/${OPENSHIFT_APP_DNS}.${file}.xz
     set +x
 done
 popd > /dev/null
@@ -601,7 +605,7 @@ if [ -f production.log.$(date --date '2 days ago' +%Y%m%d) ]; then
     set -x
     mv -f production.log.$(date --date '2 days ago' +%Y%m%d) production.log.${weekday}
     xz -z9ef production.log.${weekday}
-    mv -f production.log.${weekday} ${OPENSHIFT_LOG_DIR}/backup/
+    mv -f production.log.${weekday} ${OPENSHIFT_LOG_DIR}/backup/${OPENSHIFT_APP_DNS}.${file}.xz
     set +x
 fi
 popd > /dev/null
