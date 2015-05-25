@@ -41,6 +41,11 @@ popd > /dev/null
 rm -f ${OPENSHIFT_TMP_DIR}/cadaver-${cadaver_version}.tar.gz
 rm -rf ${OPENSHIFT_TMP_DIR}/cadaver-${cadaver_version}
 
+# *** setup ***
+
+# * .netrc *
+# for automatic login
+
 hidrive_account=$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
 hidrive_password=$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_password)
 
@@ -52,6 +57,8 @@ sed -i -e "s|__HIDRIVE_ACCOUNT__|${hidrive_account}|g" .netrc
 sed -i -e "s|__HIDRIVE_PASSWORD__|${hidrive_password}|g" .netrc
 chmod 600 .netrc
 popd > /dev/null
+
+# * webdav upload script *
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/scripts/cadaver_put.sh
 #!/bin/bash
