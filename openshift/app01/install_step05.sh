@@ -68,8 +68,8 @@ gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc setup" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
 pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
+yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee user_fqdn.txt
 cat user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 while read LINE
@@ -86,7 +86,6 @@ done < user_fqdn.txt
 # rm -f user_fqdn.txt
 
 yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account_2} -p ${distcc_server_password_2}
-pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee user_fqdn_2.txt
 cat user_fqdn.txt_2.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 while read LINE
