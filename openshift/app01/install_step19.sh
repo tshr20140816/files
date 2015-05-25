@@ -875,23 +875,6 @@ __HEREDOC__
 chmod +x icalendar.sh &
 echo icalendar.sh >> jobs.allow
 
-# * delegate *
-
-cat << '__HEREDOC__' > delegate.sh
-#!/bin/bash
-
-export TZ=JST-9
-date +%Y/%m/%d" "%H:%M:%S
-delegate_email_account=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_account)
-delegate_email_password=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_email_password)
-delegate_pop_server=$(cat ${OPENSHIFT_DATA_DIR}/params/delegate_pop_server)
-curl -LI --basic -u ${delegate_email_account}:${delegate_email_password} \
-https://${OPENSHIFT_DIY_IP}:30080/mail/+pop.${delegate_email_account}.${delegate_pop_server}/
-__HEREDOC__
-if [ ! ${delegate_email_account} = 'none' ]; then
-chmod +x delegate.sh &
-# echo delegate.sh >> jobs.allow
-fi
 popd > /dev/null
 
 # *** minutely ***
