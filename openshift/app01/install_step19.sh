@@ -513,12 +513,28 @@ chmod +x logrotate.sh
 
 cat << '__HEREDOC__' > mysql_backup.sh
 #!/bin/bash
+
+pushd ${OPENSHIFT_DATA_DIR}
+
+dump_file_name=${OPENSHIFT_APP_DNS}.mysql_dump_$(date +%a).xz
+
 mysqldump \
 --host=${OPENSHIFT_MYSQL_DB_HOST} \
 --port=${OPENSHIFT_MYSQL_DB_PORT} \
 --user=${OPENSHIFT_MYSQL_DB_USERNAME} \
 --password=${OPENSHIFT_MYSQL_DB_PASSWORD} \
--x --all-databases --events | xz > ${OPENSHIFT_DATA_DIR}/mysql_dump_$(date +%a).xz
+-x --all-databases --events | xz > ${dump_file_name}
+
+log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
+remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
+./scripts/cadaver_put.sh ${OPENSHIFT_DATA_DIR} ${remote_dir} ${dump_file_name} | tee ${log_file_name}
+if [ $(grep -c -e succeeded ${log_file_name}) -eq 1 ]; then
+    echo "OK"
+    rm ${dump_file_name}
+else
+    echo "NG"
+fi
+popd
 __HEREDOC__
 chmod +x mysql_backup.sh
 echo mysql_backup.sh >> jobs.allow
