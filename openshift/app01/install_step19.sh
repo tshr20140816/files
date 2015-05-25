@@ -931,6 +931,7 @@ do
     fi
 done
 
+wait
 popd > /dev/null
 __HEREDOC__
 chmod +x minutely_jobs.sh &
