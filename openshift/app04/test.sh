@@ -16,3 +16,4 @@ cd $OPENSHIFT_DATA_DIR
 
 ls -la .ssh
 
+cat known_hosts
