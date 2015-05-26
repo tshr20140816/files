@@ -95,7 +95,7 @@ echo $(date)
 
 echo $(date)
 
-make -j6
+make -j6 > /dev/null
 
 echo $(date)
 
