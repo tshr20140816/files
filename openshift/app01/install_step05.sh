@@ -9,6 +9,7 @@ function010
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ssh setup" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
+mkdir ${OPENSHIFT_TMP_DIR}/.ssh
 pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
 ssh -V
 ssh-keygen -t rsa -f id_rsa -P ''
@@ -22,13 +23,14 @@ Host *
   Protocol 2
   PasswordAuthentication no
   ConnectionAttempts 5
-#  ControlMaster auto
+  ControlMaster auto
+  # ControlPath too long
 #  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
-# ssh -O exit REMOTE
-#  ControlPersist yes
-#  ControlPersist 3600s
+  ControlPath __OPENSHIFT_TMP_DIR__.ssh/master-%r@%h:%p
+  ControlPersist 90m
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
+sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
 popd > /dev/null
 
 # mkdir ${OPENSHIFT_DATA_DIR}/bin
