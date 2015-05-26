@@ -92,3 +92,5 @@ echo $(date)
 echo $(date)
 
 make -j12
+
+echo $(date)
