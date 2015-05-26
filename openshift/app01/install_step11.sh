@@ -27,6 +27,7 @@ export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
 export MAKEOPTS="-j6"
 # 32MB
 export RUBY_GC_MALLOC_LIMIT=33554432
+
 # *** install ***
 
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --help | tee -a ${OPENSHIFT_LOG_DIR}/install.log
