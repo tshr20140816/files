@@ -28,13 +28,17 @@ Host *
   ControlMaster auto
   # ControlPath too long
   # ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
-  ControlPath /tmp/master-%r@%h:%p
+  ControlPath /tmp/.ssh/master-%r@%h:%p
 # ssh -O exit REMOTE
 #  ControlPersist yes
   ControlPersist 60s
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 
+mkdir -pf /tmp/.ssh
+
 ssh -24n -F config 55630afc5973caf283000214@v1-20150216.rhcloud.com pwd
+
+ls -la /tmp/.ssh
 
 ps auwx | grep ssh
