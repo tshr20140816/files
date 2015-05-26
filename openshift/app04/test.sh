@@ -35,7 +35,7 @@ Host *
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 
-mkdir -pf /tmp/.ssh
+mkdir -p /tmp/.ssh 2>/dev/null
 
 ssh -24n -F config 55630afc5973caf283000214@v1-20150216.rhcloud.com pwd
 
