@@ -31,7 +31,7 @@ Host *
   ControlPath /tmp/.ssh/master-%r@%h:%p
 # ssh -O exit REMOTE
 #  ControlPersist yes
-  ControlPersist 60s
+  ControlPersist 2m
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 
