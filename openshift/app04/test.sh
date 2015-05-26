@@ -96,7 +96,7 @@ echo "***** configure *****" >> /tmp/distcc.log
 --enable-mbregex \
 --enable-sockets \
 --disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php
+--with-gettext=${OPENSHIFT_DATA_DIR}/php > /dev/null
 
 echo $(date)
 
