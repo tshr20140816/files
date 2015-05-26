@@ -33,3 +33,15 @@ ssh -24n -F config 555895dbfcf9337761000009@b3-20150430.rhcloud.com pwd
 ps auwx | grep ssh
 
 ls -la $OPENSHIFT_DATA_DIR
+rm -rf $OPENSHIFT_DATA_DIR/distcc
+
+cd /tmp
+rm -f distcc-3.1.tar.bz2
+rm -rf distcc-3.1
+wget https://distcc.googlecode.com/files/distcc-3.1.tar.bz2
+
+tar jxf distcc-3.1.tar.bz2
+cd distcc-3.1
+./configure --prefix=$OPENSHIFT_DATA_DIR/distcc
+make -j4
+make install
