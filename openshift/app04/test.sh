@@ -70,6 +70,8 @@ tar Jxf php-${php_version}.tar.xz
 cd php-${php_version}
 echo $(date)
 
+echo "***** configure *****" >> /tmp/distcc.log
+
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
@@ -98,8 +100,12 @@ echo $(date)
 
 echo $(date)
 
+echo "***** make *****" >> /tmp/distcc.log
+
 # make -j12 > /dev/null
 make -j9 > /dev/null
+
+echo "***** maked *****" >> /tmp/distcc.log
 
 echo $(date)
 
