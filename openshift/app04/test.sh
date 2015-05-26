@@ -6,6 +6,14 @@ set -x
 
 cd /tmp
 
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+export HOME=${OPENSHIFT_DATA_DIR}
+
+rhc apps
+
+exit
+
 export HOME=$OPENSHIFT_DATA_DIR
 cd .ssh
 cat << '__HEREDOC__' > config
