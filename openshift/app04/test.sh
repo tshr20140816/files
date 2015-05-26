@@ -97,3 +97,5 @@ make -j12
 echo $(date)
 
 cat /tmp/distcc.log
+
+ps auwx | grep ssh
