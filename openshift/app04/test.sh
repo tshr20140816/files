@@ -6,14 +6,6 @@ set -x
 
 cd /tmp
 
-export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-export HOME=${OPENSHIFT_DATA_DIR}
-
-rhc apps
-
-exit
-
 export HOME=$OPENSHIFT_DATA_DIR
 cd .ssh
 cat << '__HEREDOC__' > config
@@ -55,12 +47,13 @@ export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 # export DISTCC_LOG=/dev/null
 export DISTCC_LOG=/tmp/distcc.log
+cat /tmp/distcc.log
 rm -f /tmp/distcc.log
 export CC="distcc gcc"
 export CXX="distcc g++"
 export CFLAGS="-O2 -march=x86-64 -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
-export DISTCC_HOSTS="55630afc5973caf283000214@v1-20150216.rhcloud.com/2:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start,cpp 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/2:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start,cpp 55630c675973caf283000251@v3-20150216.rhcloud.com/2:/var/lib/openshift/55630c675973caf283000251/app-root/data/distcc/bin/distccd_start,cpp 555894314382ec8df40000e1@b1-20150430.rhcloud.com/2:/var/lib/openshift/555894314382ec8df40000e1/app-root/data/distcc/bin/distccd_start,cpp 555895235973ca539500007e@b2-20150430.rhcloud.com/2:/var/lib/openshift/555895235973ca539500007e/app-root/data/distcc/bin/distccd_start,cpp 555895dbfcf9337761000009@b3-20150430.rhcloud.com/2:/var/lib/openshift/555895dbfcf9337761000009/app-root/data/distcc/bin/distccd_start,cpp"
+export DISTCC_HOSTS="55630afc5973caf283000214@v1-20150216.rhcloud.com/2:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start,cpp 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/2:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start,cpp 55630c675973caf283000251@v3-20150216.rhcloud.com/2:/var/lib/openshift/55630c675973caf283000251/app-root/data/distcc/bin/distccd_start,cpp 555894314382ec8df40000e1@b1-20150430.rhcloud.com/2:/var/lib/openshift/555894314382ec8df40000e1/app-root/data/distcc/bin/distccd_start,cpp 555895235973ca539500007e@b2-20150430.rhcloud.com/2:/var/lib/openshift/555895235973ca539500007e/app-root/data/distcc/bin/distccd_start,cpp 555895dbfcf9337761000009@b3-20150430.rhcloud.com/2:/var/lib/openshift/555895dbfcf9337761000009/app-root/data/distcc/bin/distccd_start,cpp 555f3483500446724c000127@b7-20150522.rhcloud.com/2:/var/lib/openshift/555f3483500446724c000127/app-root/data/distcc/bin/distccd_start,cpp 555f387de0b8cd419e0000cc@b8-20150522.rhcloud.com/2:/var/lib/openshift/555f387de0b8cd419e0000cc/app-root/data/distcc/bin/distccd_start,cpp 555f34eae0b8cd8b2400001e@b9-20150522.rhcloud.com/2:/var/lib/openshift/555f34eae0b8cd8b2400001e/app-root/data/distcc/bin/distccd_start,cpp"
 # export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
 export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/1:|g")
@@ -105,10 +98,11 @@ echo $(date)
 
 echo $(date)
 
-make -j12 > /dev/null
+# make -j12 > /dev/null
+make -j9 > /dev/null
 
 echo $(date)
 
 ps auwx | grep ssh
 
-cat /tmp/distcc.log
+wc -l /tmp/distcc.log
