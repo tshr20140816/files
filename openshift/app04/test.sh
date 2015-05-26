@@ -6,8 +6,8 @@ set -x
 
 cd /tmp
 
-export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+# export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+# export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
 
 # rhc apps
@@ -20,8 +20,8 @@ Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
-  LogLevel QUIET
-#  LogLevel DEBUG3
+#  LogLevel QUIET
+  LogLevel DEBUG3
   Protocol 2
   PasswordAuthentication no
   ConnectionAttempts 5
@@ -35,4 +35,4 @@ sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 
 ssh -24n -F config 55630afc5973caf283000214@v1-20150216.rhcloud.com pwd
 
-ps auwx | grep ssh
+# ps auwx | grep ssh
