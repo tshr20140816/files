@@ -20,14 +20,14 @@ Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
-#  LogLevel QUIET
-  LogLevel DEBUG3
+  LogLevel QUIET
+#  LogLevel DEBUG3
   Protocol 2
   PasswordAuthentication no
   ConnectionAttempts 5
   ControlMaster auto
   # ControlPath too long
-  # ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
+#  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
   ControlPath /tmp/.ssh/master-%r@%h:%p
 # ssh -O exit REMOTE
 #  ControlPersist yes
