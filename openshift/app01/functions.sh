@@ -38,6 +38,7 @@ function010() {
     if [ -e ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt ]; then
         tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt)"
         export DISTCC_HOSTS="${tmp_string}"
+        export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
         export CC="distcc gcc"
         export CXX="distcc g++"
     fi
