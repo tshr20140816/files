@@ -13,6 +13,9 @@ mkdir ${OPENSHIFT_TMP_DIR}/.ssh
 pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
 ssh -V
 ssh-keygen -t rsa -f id_rsa -P ''
+
+# *** config ***
+
 cat << '__HEREDOC__' > config
 Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
@@ -32,6 +35,8 @@ __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
 popd > /dev/null
+
+# *** distcc-ssh ***
 
 # mkdir ${OPENSHIFT_DATA_DIR}/bin
 pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
