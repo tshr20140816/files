@@ -32,16 +32,63 @@ ssh -24n -F config 555895235973ca539500007e@b2-20150430.rhcloud.com pwd
 ssh -24n -F config 555895dbfcf9337761000009@b3-20150430.rhcloud.com pwd
 ps auwx | grep ssh
 
-ls -la $OPENSHIFT_DATA_DIR
-rm -rf $OPENSHIFT_DATA_DIR/distcc
+mkdir ${OPENSHIFT_DATA_DIR}/bin 2>/dev/null
+pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
+cat << '__HEREDOC__' > distcc-ssh
+#!/bin/bash
 
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+exec /usr/bin/ssh -F /tmp/.ssh/config $@
+__HEREDOC__
+chmod +x distcc-ssh
+popd > /dev/null
+
+export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+export DISTCC_LOG=/dev/null
+export CC="distcc gcc"
+export CXX="distcc g++"
+export CFLAGS="-O2 -march=x86-64 -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+export DISTCC_HOSTS="55630afc5973caf283000214@v1-20150216.rhcloud.com/2:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start,cpp 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/2:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start,cpp 55630c675973caf283000251@v3-20150216.rhcloud.com/2:/var/lib/openshift/55630c675973caf283000251/app-root/data/distcc/bin/distccd_start,cpp 555894314382ec8df40000e1@b1-20150430.rhcloud.com/2:/var/lib/openshift/555894314382ec8df40000e1/app-root/data/distcc/bin/distccd_start,cpp 555895235973ca539500007e@b2-20150430.rhcloud.com/2:/var/lib/openshift/555895235973ca539500007e/app-root/data/distcc/bin/distccd_start,cpp 555895dbfcf9337761000009@b3-20150430.rhcloud.com/2:/var/lib/openshift/555895dbfcf9337761000009/app-root/data/distcc/bin/distccd_start,cpp"
+export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
+export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
+
+php_version=5.6.9
 cd /tmp
-rm -f distcc-3.1.tar.bz2
-rm -rf distcc-3.1
-wget https://distcc.googlecode.com/files/distcc-3.1.tar.bz2
+rm -f php-${php_version}.tar.xz
+rm -rf php-${php_version}
+wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+tar Jxf php-${php_version}.tar.xz
+cd php-${php_version}
+echo $(date)
 
-tar jxf distcc-3.1.tar.bz2
-cd distcc-3.1
-./configure --prefix=$OPENSHIFT_DATA_DIR/distcc
-make -j4
-make install
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/php \
+--mandir=${OPENSHIFT_TMP_DIR}/man \
+--docdir=${OPENSHIFT_TMP_DIR}/doc \
+--with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+--with-mysql \
+--with-pdo-mysql \
+--without-sqlite3 \
+--without-pdo-sqlite \
+--without-pear \
+--with-curl \
+--with-libdir=lib64 \
+--with-bz2 \
+--with-iconv \
+--with-openssl \
+--with-zlib \
+--with-gd \
+--enable-exif \
+--enable-ftp \
+--enable-xml \
+--enable-mbstring \
+--enable-mbregex \
+--enable-sockets \
+--disable-ipv6 \
+--with-gettext=${OPENSHIFT_DATA_DIR}/php
+
+echo $(date)
+
+make -j12
