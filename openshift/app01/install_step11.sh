@@ -23,6 +23,7 @@ export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 
 tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/1:|g")
 export DISTCC_HOSTS="${tmp_string}"
+export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
 export MAKEOPTS="-j6"
 # 32MB
 export RUBY_GC_MALLOC_LIMIT=33554432
