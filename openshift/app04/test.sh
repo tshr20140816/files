@@ -45,7 +45,8 @@ popd > /dev/null
 
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-export DISTCC_LOG=/dev/null
+# export DISTCC_LOG=/dev/null
+export DISTCC_LOG=/tmp/distcc.log
 export CC="distcc gcc"
 export CXX="distcc g++"
 export CFLAGS="-O2 -march=x86-64 -fomit-frame-pointer -s"
@@ -94,3 +95,5 @@ echo $(date)
 make -j12
 
 echo $(date)
+
+cat /tmp/distcc.log
