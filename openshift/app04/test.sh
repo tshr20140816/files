@@ -6,6 +6,8 @@ set -x
 
 cd /tmp
 
+oo-cgroup-read memory.failcnt
+
 export HOME=$OPENSHIFT_DATA_DIR
 cd .ssh
 cat << '__HEREDOC__' > config
@@ -112,3 +114,5 @@ echo $(date)
 ps auwx | grep ssh
 
 wc -l /tmp/distcc.log
+
+oo-cgroup-read memory.failcnt
