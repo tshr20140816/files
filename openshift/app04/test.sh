@@ -92,7 +92,7 @@ echo $(date)
 
 echo $(date)
 
-make -j12
+make -j6
 
 echo $(date)
 
