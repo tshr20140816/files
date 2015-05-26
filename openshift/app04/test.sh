@@ -20,8 +20,8 @@ Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
-  LogLevel QUIET
-#  LogLevel DEBUG3
+#  LogLevel QUIET
+  LogLevel DEBUG3
   Protocol 2
   PasswordAuthentication no
   ConnectionAttempts 5
