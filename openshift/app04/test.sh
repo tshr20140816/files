@@ -32,4 +32,4 @@ ssh -24n -F config 555895235973ca539500007e@b2-20150430.rhcloud.com pwd
 ssh -24n -F config 555895dbfcf9337761000009@b3-20150430.rhcloud.com pwd
 ps auwx | grep ssh
 
-ls $OPENSHIFT_DATA_DIR
+ls -la $OPENSHIFT_DATA_DIR
