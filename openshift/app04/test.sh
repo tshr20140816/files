@@ -26,7 +26,9 @@ Host *
   PasswordAuthentication no
   ConnectionAttempts 5
   ControlMaster auto
-  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
+  # ControlPath too long
+  # ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
+  ControlPath /tmp/master-%r@%h:%p
 # ssh -O exit REMOTE
 #  ControlPersist yes
   ControlPersist 60s
