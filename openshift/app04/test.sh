@@ -12,5 +12,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 # rhc apps
 
+cd $OPENSHIFT_DATA_DIR
+
 ls -la .ssh
 
