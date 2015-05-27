@@ -109,6 +109,8 @@ echo "***** configure *****" >> /tmp/distcc.log
 
 echo $(date)
 
+oo-cgroup-read memory.failcnt
+
 echo "***** make *****" >> /tmp/distcc.log
 
 # make -j12 > /dev/null
