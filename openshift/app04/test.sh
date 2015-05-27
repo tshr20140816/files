@@ -52,7 +52,7 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
-cat /tmp/distcc.log
+tail -n 100 /tmp/distcc.log
 wc -l /tmp/distcc.log
 rm -f /tmp/distcc.log
 
