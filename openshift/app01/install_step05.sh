@@ -31,7 +31,7 @@ Host *
   # ControlPath too long
 #  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
   ControlPath __OPENSHIFT_TMP_DIR__.ssh/master-%r@%h:%p
-  ControlPersist 60s
+  ControlPersist 10s
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
