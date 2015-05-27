@@ -6,6 +6,8 @@ set -x
 
 cd /tmp
 
+where clang
+
 oo-cgroup-read memory.failcnt
 
 export HOME=$OPENSHIFT_DATA_DIR
