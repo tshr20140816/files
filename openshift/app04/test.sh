@@ -12,7 +12,7 @@ gcc --version
 
 cd /tmp
 
-whereis clang
+# whereis clang
 whereis python
 
 oo-cgroup-read memory.failcnt
