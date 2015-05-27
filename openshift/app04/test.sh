@@ -65,7 +65,7 @@ ssh -24MN -F config 555f34eae0b8cd8b2400001e@b9-20150522.rhcloud.com &
 ssh -24MN -F config 555781ad4382ece1eb00005e@b4-20150514.rhcloud.com &
 ssh -24MN -F config 555782f44382ecdc6d00003b@b5-20150514.rhcloud.com &
 ssh -24MN -F config 5557844c4382ecd6b00000f8@b6-20150514.rhcloud.com &
-ps auwx | grep ssh
+# ps auwx | grep ssh
 
 mkdir ${OPENSHIFT_DATA_DIR}/bin 2>/dev/null
 pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
