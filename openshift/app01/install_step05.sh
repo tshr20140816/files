@@ -24,6 +24,7 @@ Host *
   LogLevel QUIET
 #  LogLevel DEBUG3
   Protocol 2
+  Ciphers arcfour
   PasswordAuthentication no
   ConnectionAttempts 5
   ControlMaster auto
