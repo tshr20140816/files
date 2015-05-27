@@ -45,7 +45,7 @@ Host *
   Ciphers arcfour
   PasswordAuthentication no
   ConnectionAttempts 5
-  ControlMaster auto
+#  ControlMaster auto
   ControlPath /tmp/.ssh/master-%r@%h:%p
   ControlPersist 1800s
 __HEREDOC__
