@@ -55,7 +55,7 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
-tail -n 100 /tmp/distcc.log
+grep -e ERROR /tmp/distcc.log
 wc -l /tmp/distcc.log
 rm -f /tmp/distcc.log
 
