@@ -83,8 +83,8 @@ export CC="distcc gcc"
 export CXX="distcc g++"
 export CFLAGS="-O2 -march=x86-64 -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
-export MAKEOPTS="-j 20"
-export DISTCC_HOSTS="localhost/2 55630afc5973caf283000214@v1-20150216.rhcloud.com/2:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start,cpp 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/2:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start,cpp 55630c675973caf283000251@v3-20150216.rhcloud.com/2:/var/lib/openshift/55630c675973caf283000251/app-root/data/distcc/bin/distccd_start,cpp 555894314382ec8df40000e1@b1-20150430.rhcloud.com/2:/var/lib/openshift/555894314382ec8df40000e1/app-root/data/distcc/bin/distccd_start,cpp 555895235973ca539500007e@b2-20150430.rhcloud.com/2:/var/lib/openshift/555895235973ca539500007e/app-root/data/distcc/bin/distccd_start,cpp 555895dbfcf9337761000009@b3-20150430.rhcloud.com/2:/var/lib/openshift/555895dbfcf9337761000009/app-root/data/distcc/bin/distccd_start,cpp 555f3483500446724c000127@b7-20150522.rhcloud.com/2:/var/lib/openshift/555f3483500446724c000127/app-root/data/distcc/bin/distccd_start,cpp 555f387de0b8cd419e0000cc@b8-20150522.rhcloud.com/2:/var/lib/openshift/555f387de0b8cd419e0000cc/app-root/data/distcc/bin/distccd_start,cpp 555f34eae0b8cd8b2400001e@b9-20150522.rhcloud.com/2:/var/lib/openshift/555f34eae0b8cd8b2400001e/app-root/data/distcc/bin/distccd_start,cpp 555781ad4382ece1eb00005e@b4-20150514.rhcloud.com/2:/var/lib/openshift/555781ad4382ece1eb00005e/app-root/data/distcc/bin/distccd_start,cpp 555782f44382ecdc6d00003b@b5-20150514.rhcloud.com/2:/var/lib/openshift/555782f44382ecdc6d00003b/app-root/data/distcc/bin/distccd_start,cpp 5557844c4382ecd6b00000f8@b6-20150514.rhcloud.com/2:/var/lib/openshift/5557844c4382ecd6b00000f8/app-root/data/distcc/bin/distccd_start,cpp"
+export MAKEOPTS="-j 24"
+export DISTCC_HOSTS="55630afc5973caf283000214@v1-20150216.rhcloud.com/2:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start,cpp 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/2:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start,cpp 55630c675973caf283000251@v3-20150216.rhcloud.com/2:/var/lib/openshift/55630c675973caf283000251/app-root/data/distcc/bin/distccd_start,cpp 555894314382ec8df40000e1@b1-20150430.rhcloud.com/2:/var/lib/openshift/555894314382ec8df40000e1/app-root/data/distcc/bin/distccd_start,cpp 555895235973ca539500007e@b2-20150430.rhcloud.com/2:/var/lib/openshift/555895235973ca539500007e/app-root/data/distcc/bin/distccd_start,cpp 555895dbfcf9337761000009@b3-20150430.rhcloud.com/2:/var/lib/openshift/555895dbfcf9337761000009/app-root/data/distcc/bin/distccd_start,cpp 555f3483500446724c000127@b7-20150522.rhcloud.com/2:/var/lib/openshift/555f3483500446724c000127/app-root/data/distcc/bin/distccd_start,cpp 555f387de0b8cd419e0000cc@b8-20150522.rhcloud.com/2:/var/lib/openshift/555f387de0b8cd419e0000cc/app-root/data/distcc/bin/distccd_start,cpp 555f34eae0b8cd8b2400001e@b9-20150522.rhcloud.com/2:/var/lib/openshift/555f34eae0b8cd8b2400001e/app-root/data/distcc/bin/distccd_start,cpp 555781ad4382ece1eb00005e@b4-20150514.rhcloud.com/2:/var/lib/openshift/555781ad4382ece1eb00005e/app-root/data/distcc/bin/distccd_start,cpp 555782f44382ecdc6d00003b@b5-20150514.rhcloud.com/2:/var/lib/openshift/555782f44382ecdc6d00003b/app-root/data/distcc/bin/distccd_start,cpp 5557844c4382ecd6b00000f8@b6-20150514.rhcloud.com/2:/var/lib/openshift/5557844c4382ecd6b00000f8/app-root/data/distcc/bin/distccd_start,cpp"
 # export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
 export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 # tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/1:|g")
@@ -93,41 +93,27 @@ export DISTCC_HOSTS="${tmp_string}"
 # export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
 
 php_version=5.6.9
+apache_version=2.2.29
 cd /tmp
 rm -f php-${php_version}.tar.xz*
 rm -rf php-${php_version}
-wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
-tar Jxf php-${php_version}.tar.xz
-cd php-${php_version}
+
+rm -f httpd-${apache_version}.tar.bz2
+rm -rf httpd-${apache_version}
+
+wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
+tar jxf httpd-${apache_version}.tar.bz2
+cd httpd-${apache_version}
+
 echo $(date)
 
 echo "***** configure *****" >> /tmp/distcc.log
 
 ./configure \
---prefix=${OPENSHIFT_DATA_DIR}/php \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---docdir=${OPENSHIFT_TMP_DIR}/doc \
---with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
---with-mysql \
---with-pdo-mysql \
---without-sqlite3 \
---without-pdo-sqlite \
---without-pear \
---with-curl \
---with-libdir=lib64 \
---with-bz2 \
---with-iconv \
---with-openssl \
---with-zlib \
---with-gd \
---enable-exif \
---enable-ftp \
---enable-xml \
---enable-mbstring \
---enable-mbregex \
---enable-sockets \
---disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php > /dev/null
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --enable-mods-shared='all proxy'
 
 rm -f /tmp/distcc.log
 echo $(date)
