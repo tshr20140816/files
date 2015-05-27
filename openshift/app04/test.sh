@@ -53,20 +53,20 @@ Host *
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 
-ssh -24n -F config 555781ad4382ece1eb00005e@b4-20150514.rhcloud.com ls -lang app-root/data/distcc/bin
+# ssh -24n -F config 555781ad4382ece1eb00005e@b4-20150514.rhcloud.com ls -lang app-root/data/distcc/bin
 
-ssh -24MN -F config 55630afc5973caf283000214@v1-20150216.rhcloud.com &
-ssh -24MN -F config 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com &
-ssh -24MN -F config 55630c675973caf283000251@v3-20150216.rhcloud.com &
-ssh -24MN -F config 555894314382ec8df40000e1@b1-20150430.rhcloud.com &
-ssh -24MN -F config 555895235973ca539500007e@b2-20150430.rhcloud.com &
-ssh -24MN -F config 555895dbfcf9337761000009@b3-20150430.rhcloud.com &
-ssh -24MN -F config 555f3483500446724c000127@b7-20150522.rhcloud.com &
-ssh -24MN -F config 555f387de0b8cd419e0000cc@b8-20150522.rhcloud.com &
-ssh -24MN -F config 555f34eae0b8cd8b2400001e@b9-20150522.rhcloud.com &
-ssh -24MN -F config 555781ad4382ece1eb00005e@b4-20150514.rhcloud.com &
-ssh -24MN -F config 555782f44382ecdc6d00003b@b5-20150514.rhcloud.com &
-ssh -24MN -F config 5557844c4382ecd6b00000f8@b6-20150514.rhcloud.com &
+# ssh -24MN -F config 55630afc5973caf283000214@v1-20150216.rhcloud.com &
+# ssh -24MN -F config 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com &
+# ssh -24MN -F config 55630c675973caf283000251@v3-20150216.rhcloud.com &
+# ssh -24MN -F config 555894314382ec8df40000e1@b1-20150430.rhcloud.com &
+# ssh -24MN -F config 555895235973ca539500007e@b2-20150430.rhcloud.com &
+# ssh -24MN -F config 555895dbfcf9337761000009@b3-20150430.rhcloud.com &
+# ssh -24MN -F config 555f3483500446724c000127@b7-20150522.rhcloud.com &
+# ssh -24MN -F config 555f387de0b8cd419e0000cc@b8-20150522.rhcloud.com &
+# ssh -24MN -F config 555f34eae0b8cd8b2400001e@b9-20150522.rhcloud.com &
+# ssh -24MN -F config 555781ad4382ece1eb00005e@b4-20150514.rhcloud.com &
+# ssh -24MN -F config 555782f44382ecdc6d00003b@b5-20150514.rhcloud.com &
+# ssh -24MN -F config 5557844c4382ecd6b00000f8@b6-20150514.rhcloud.com &
 # ps auwx | grep ssh
 
 mkdir ${OPENSHIFT_DATA_DIR}/bin 2>/dev/null
