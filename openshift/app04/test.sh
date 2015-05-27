@@ -11,7 +11,7 @@ set -x
 # rm -f $OPENSHIFT_LOG_DIR/cron_minutely.log
 # touch $OPENSHIFT_LOG_DIR/cron_minutely.log
 
-gcc --help
+# gcc --help
 gcc --version
 
 cd /tmp
