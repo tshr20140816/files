@@ -9,6 +9,8 @@ set -x
 
 # gcc --help
 gcc --version
+gcc -march=native -Q --help=target
+gcc -march=ivybridge -Q --help=target
 
 cd /tmp
 
