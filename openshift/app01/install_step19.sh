@@ -536,33 +536,33 @@ chmod +x mysql_backup.sh
 echo mysql_backup.sh >> jobs.allow
 ./mysql_backup.sh &
 
-# * another server list update *
-
-cat << '__HEREDOC__' > another_server_list_update.sh
-#!/bin/bash
-
-export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-eval "$(rbenv init -)"
-
-env_home_backup=${HOME}
-export HOME=${OPENSHIFT_DATA_DIR}
-
-${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
- | grep uuid | grep -v ${OPENSHIFT_APP_DNS} \
- | awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
-
-export HOME=${env_home_backup}
-
-perl -pi -e 's/http/https/g' ${OPENSHIFT_DATA_DIR}/another_server_list.txt
-
-cp ${OPENSHIFT_DATA_DIR}/another_server_list.txt ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-__HEREDOC__
-chmod +x another_server_list_update.sh
-echo another_server_list_update.sh >> jobs.allow
-./another_server_list_update.sh &
+# # * another server list update *
+# 
+# cat << '__HEREDOC__' > another_server_list_update.sh
+# #!/bin/bash
+# 
+# export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+# export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+# export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+# export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+# eval "$(rbenv init -)"
+# 
+# env_home_backup=${HOME}
+# export HOME=${OPENSHIFT_DATA_DIR}
+# 
+# ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
+#  | grep uuid | grep -v ${OPENSHIFT_APP_DNS} \
+#  | awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
+# 
+# export HOME=${env_home_backup}
+# 
+# perl -pi -e 's/http/https/g' ${OPENSHIFT_DATA_DIR}/another_server_list.txt
+# 
+# cp ${OPENSHIFT_DATA_DIR}/another_server_list.txt ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+# __HEREDOC__
+# chmod +x another_server_list_update.sh
+# echo another_server_list_update.sh >> jobs.allow
+# ./another_server_list_update.sh &
 
 # * backup log files *
 
