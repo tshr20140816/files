@@ -21,6 +21,52 @@ web_beacon_server_user=${2}
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
+# ***** fio *****
+
+# *** install ***
+
+fio_version=2.2.8
+
+rm -rf ${OPENSHIFT_TMP_DIR}/fio-${fio_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/fio
+rm -f ${OPENSHIFT_TMP_DIR}/fio-${fio_version}.tar.bz2
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://brick.kernel.dk/snaps/fio-${fio_version}.tar.bz2
+tar jxf fio-${fio_version}.tar.bz2
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR}/fio-${fio_version} > /dev/null
+./configure --help
+./configure
+time make -j$(grep -c -e processor /proc/cpuinfo)
+sed -i -E "s|^prefix .+$|prefix = ${OPENSHIFT_DATA_DIR}fio|g" Makefile
+make install
+popd > /dev/null
+
+rm ${OPENSHIFT_TMP_DIR}/fio-${fio_version}.tar.bz2
+
+# *** run ***
+
+rm -rf ${OPENSHIFT_DATA_DIR}/work
+pushd ${OPENSHIFT_DATA_DIR}fio > /dev/null
+for rwtype in read write randread randwrite
+do
+    mkdir ${OPENSHIFT_DATA_DIR}/work
+
+    ./bin/fio -rw=${rwtype} -bs=4k -size=10m -numjobs=10 -runtime=60 \
+    -direct=1 -invalidate=1 \
+    -iodepth=32 -iodepth_batch=32 -group_reporting -name=${rwtype} -directory=${OPENSHIFT_DATA_DIR}/work \
+     | tee ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log
+
+    aggrb=$(grep -e aggrb ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log | awk '{print $3}' | tr -d KB/s,)
+    query_string="server=${OPENSHIFT_APP_DNS}&fio=${rwtype}&${aggrb}&uuid=${USER}"
+    wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}
+
+    mv ${OPENSHIFT_LOG_DIR}/fio_${rwtype}.log ${OPENSHIFT_LOG_DIR}/install/
+    rm -rf ${OPENSHIFT_DATA_DIR}/work
+done
+popd > /dev/null
+
 # ***** distcc *****
 
 distcc_version=3.1
