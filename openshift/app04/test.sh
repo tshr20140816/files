@@ -114,6 +114,7 @@ echo "***** configure *****" >> /tmp/distcc.log
 --disable-ipv6 \
 --with-gettext=${OPENSHIFT_DATA_DIR}/php > /dev/null
 
+rm -f /tmp/distcc.log
 echo $(date)
 
 oo-cgroup-read memory.failcnt
