@@ -67,9 +67,9 @@ export DISTCC_HOSTS="${tmp_string}"
 
 php_version=5.6.9
 cd /tmp
-rm -f php-${php_version}.tar.xz
+# rm -f php-${php_version}.tar.xz
 rm -rf php-${php_version}
-wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+# wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 cd php-${php_version}
 echo $(date)
