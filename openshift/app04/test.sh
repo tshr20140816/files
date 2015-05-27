@@ -4,10 +4,6 @@
 
 set -x
 
-# 555781ad4382ece1eb00005e@b4-20150514.rhcloud.com
-# 555782f44382ecdc6d00003b@b5-20150514.rhcloud.com
-# 5557844c4382ecd6b00000f8@b6-20150514.rhcloud.com
-
 # rm -f $OPENSHIFT_LOG_DIR/cron_minutely.log
 # touch $OPENSHIFT_LOG_DIR/cron_minutely.log
 
