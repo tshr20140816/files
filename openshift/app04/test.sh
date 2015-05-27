@@ -12,6 +12,21 @@ gcc --version
 
 cd /tmp
 
+rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
+mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
+export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
+gpg --list-keys
+echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
+
+cadaver_version=0.23.3
+
+rm -f cadaver-${cadaver_version}.tar.gz
+rm -f cadaver-${cadaver_version}.tar.gz.asc
+wget http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz
+wget http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz.asc
+gpg --recv-keys $(gpg --verify cadaver-${cadaver_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+gpg --verify cadaver-${cadaver_version}.tar.gz.asc 2>&1
+
 # whereis clang
 whereis python
 
