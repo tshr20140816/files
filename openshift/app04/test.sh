@@ -89,7 +89,7 @@ export DISTCC_HOSTS="localhost/1 55630afc5973caf283000214@v1-20150216.rhcloud.co
 # export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
 export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/1:|g")
-tmp_string=$(echo ${tmp_string} | sed -e "s|,cpp||g")
+tmp_string=$(echo ${tmp_string} | sed -e "s|,cpp|,lzo|g")
 export DISTCC_HOSTS="${tmp_string}"
 # export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
 
