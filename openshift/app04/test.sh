@@ -6,7 +6,7 @@ set -x
 
 cd /tmp
 
-where clang
+whereis clang
 
 oo-cgroup-read memory.failcnt
 
