@@ -149,7 +149,7 @@ echo "***** maked *****" >> ${OPENSHIFT_LOG_DIR}/distcc.log
 
 echo $(date)
 
-# ps auwx | grep ssh
+ps auwx | grep ssh
 
 # wc -l /tmp/distcc.log
 
