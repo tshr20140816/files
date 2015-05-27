@@ -74,7 +74,7 @@ pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
 cat << '__HEREDOC__' > distcc-ssh
 #!/bin/bash
 
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 exec /usr/bin/ssh -24 -F /tmp/.ssh/config $@
 __HEREDOC__
 chmod +x distcc-ssh
@@ -85,6 +85,7 @@ tail -n 100 ${OPENSHIFT_LOG_DIR}/distcc.log
 wc -l ${OPENSHIFT_LOG_DIR}/distcc.log
 rm -f /tmp/distcc.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
+rm -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/b*
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/c*
