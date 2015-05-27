@@ -8,6 +8,7 @@ set -x
 # touch $OPENSHIFT_LOG_DIR/cron_minutely.log
 
 gcc --help
+gcc --version
 
 cd /tmp
 
