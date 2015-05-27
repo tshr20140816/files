@@ -107,7 +107,7 @@ echo $(date)
 echo "***** make *****" >> /tmp/distcc.log
 
 # make -j12 > /dev/null
-make -j18 > /dev/null
+make -j10 > /dev/null
 
 echo "***** maked *****" >> /tmp/distcc.log
 
