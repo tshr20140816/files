@@ -128,7 +128,7 @@ echo "***** configure *****" >> /tmp/distcc.log
  --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --enable-mods-shared='all proxy'
+ --enable-mods-shared='all proxy' > /dev/null
 
 rm -f /tmp/distcc.log
 echo $(date)
