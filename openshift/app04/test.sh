@@ -80,10 +80,11 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
-grep -e ERROR /tmp/distcc.log
-tail -n 100 /tmp/distcc.log
-wc -l /tmp/distcc.log
+grep -e ERROR ${OPENSHIFT_LOG_DIR}/distcc.log
+tail -n 100 ${OPENSHIFT_LOG_DIR}/distcc.log
+wc -l ${OPENSHIFT_LOG_DIR}/distcc.log
 rm -f /tmp/distcc.log
+rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
 
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/b*
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/c*
@@ -95,7 +96,7 @@ echo $(date)
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 # export DISTCC_LOG=/dev/null
-export DISTCC_LOG=/tmp/distcc.log
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export CC="distcc gcc"
 export CXX="distcc g++"
 export CFLAGS="-O2 -march=x86-64 -fomit-frame-pointer -s"
