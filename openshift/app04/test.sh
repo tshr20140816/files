@@ -48,8 +48,8 @@ Host *
   PasswordAuthentication no
   ConnectionAttempts 5
 #  ControlMaster auto
-  ControlPath /tmp/.ssh/master-%r@%h:%p
-  ControlPersist 10s
+#  ControlPath /tmp/.ssh/master-%r@%h:%p
+#  ControlPersist 10s
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 
