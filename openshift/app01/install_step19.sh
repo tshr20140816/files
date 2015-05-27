@@ -154,48 +154,48 @@ fi
 __HEREDOC__
 chmod +x my_server_check.sh &
 
-# *** another server check ***
-
-cat << '__HEREDOC__' > another_server_check.sh
-#!/bin/bash
-
-export TZ=JST-9
-date +%Y/%m/%d" "%H:%M:%S
-
-another_server_check=$(cat ${OPENSHIFT_DATA_DIR}/params/another_server_check)
-if [ "${another_server_check}" != "yes" ]; then
-    exit
-fi
-
-while read LINE
-do
-    target_app_name=$(echo $LINE | awk '{print $1}')
-    target_url=$(echo $LINE | awk '{print $2}')
-    http_status=$(curl -LI ${target_url}?server=${OPENSHIFT_APP_DNS} -o /dev/null -w '%{http_code}\n' -s)
-    echo http_status ${http_status} ${target_url}
-    if [ ${http_status} -eq 503 ]; then
-        echo app restart ${target_url}
-        curl --digest -u $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user):$(date +%Y%m%d%H) \
-         -F "subject=SERVER RESTART" \
-         -F "body=${target_app_name} FROM ${OPENSHIFT_APP_DNS}" \
-         $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)sendadminmail
-
-        export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-        export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-        export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-        export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-        eval "$(rbenv init -)"
-
-        env_home_backup=${HOME}
-        export HOME=${OPENSHIFT_DATA_DIR}
-        rhc env set OPENSHIFT_MYSQL_DEFAULT_STORAGE_ENGINE=INNODB -a ${target_app_name}
-        rhc env set OPENSHIFT_MYSQL_TIMEZONE='+09:00' -a ${target_app_name}
-        ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name}
-        export HOME=${env_home_backup}
-    fi
-done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
-__HEREDOC__
-chmod +x another_server_check.sh &
+# # *** another server check ***
+# 
+# cat << '__HEREDOC__' > another_server_check.sh
+# #!/bin/bash
+# 
+# export TZ=JST-9
+# date +%Y/%m/%d" "%H:%M:%S
+# 
+# another_server_check=$(cat ${OPENSHIFT_DATA_DIR}/params/another_server_check)
+# if [ "${another_server_check}" != "yes" ]; then
+#     exit
+# fi
+# 
+# while read LINE
+# do
+#     target_app_name=$(echo $LINE | awk '{print $1}')
+#     target_url=$(echo $LINE | awk '{print $2}')
+#     http_status=$(curl -LI ${target_url}?server=${OPENSHIFT_APP_DNS} -o /dev/null -w '%{http_code}\n' -s)
+#     echo http_status ${http_status} ${target_url}
+#     if [ ${http_status} -eq 503 ]; then
+#         echo app restart ${target_url}
+#         curl --digest -u $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user):$(date +%Y%m%d%H) \
+#          -F "subject=SERVER RESTART" \
+#          -F "body=${target_app_name} FROM ${OPENSHIFT_APP_DNS}" \
+#          $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)sendadminmail
+# 
+#         export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+#         export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+#         export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+#         export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+#         eval "$(rbenv init -)"
+# 
+#         env_home_backup=${HOME}
+#         export HOME=${OPENSHIFT_DATA_DIR}
+#         rhc env set OPENSHIFT_MYSQL_DEFAULT_STORAGE_ENGINE=INNODB -a ${target_app_name}
+#         rhc env set OPENSHIFT_MYSQL_TIMEZONE='+09:00' -a ${target_app_name}
+#         ${OPENSHIFT_DATA_DIR}.gem/bin/rhc app restart -a ${target_app_name}
+#         export HOME=${env_home_backup}
+#     fi
+# done < ${OPENSHIFT_DATA_DIR}/another_server_list.txt
+# __HEREDOC__
+# chmod +x another_server_check.sh &
 
 # *** web beacon ***
 
