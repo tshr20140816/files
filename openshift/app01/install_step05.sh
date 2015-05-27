@@ -30,7 +30,7 @@ Host *
   # ControlPath too long
 #  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
   ControlPath __OPENSHIFT_TMP_DIR__.ssh/master-%r@%h:%p
-  ControlPersist 5s
+  ControlPersist 60s
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
@@ -84,7 +84,7 @@ cat user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 while read LINE
 do
     user_fqdn=$(echo "${LINE}")
-    ssh -24n -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -24Mn -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
     distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start "
     # distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo "
@@ -100,7 +100,7 @@ cat user_fqdn.txt_2.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 while read LINE
 do
     user_fqdn=$(echo "${LINE}")
-    ssh -24n -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -24Mn -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
     distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start "
     # distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo "
