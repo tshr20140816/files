@@ -68,6 +68,9 @@ grep -e ERROR /tmp/distcc.log
 wc -l /tmp/distcc.log
 rm -f /tmp/distcc.log
 
+rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/b*
+rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/c*
+
 oo-cgroup-read memory.failcnt
 
 echo $(date)
