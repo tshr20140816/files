@@ -56,6 +56,8 @@ rm -f /tmp/distcc.log
 
 oo-cgroup-read memory.failcnt
 
+echo $(date)
+
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 # export DISTCC_LOG=/dev/null
