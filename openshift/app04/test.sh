@@ -126,7 +126,7 @@ cd httpd-${apache_version}
 
 echo $(date)
 
-echo "***** configure *****" >> /tmp/distcc.log
+echo "***** configure *****" >> ${OPENSHIFT_LOG_DIR}/distcc.log
 
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/apache \
@@ -134,17 +134,17 @@ echo "***** configure *****" >> /tmp/distcc.log
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --enable-mods-shared='all proxy' > /dev/null
 
-rm -f /tmp/distcc.log
+rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
 echo $(date)
 
 oo-cgroup-read memory.failcnt
 
-echo "***** make *****" >> /tmp/distcc.log
+echo "***** make *****" >> ${OPENSHIFT_LOG_DIR}/distcc.log
 
 # make -j12 > /dev/null
 make ${MAKEOPTS} > /dev/null
 
-echo "***** maked *****" >> /tmp/distcc.log
+echo "***** maked *****" >> ${OPENSHIFT_LOG_DIR}/distcc.log
 
 echo $(date)
 
