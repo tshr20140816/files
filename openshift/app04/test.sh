@@ -141,8 +141,8 @@ echo "***** maked *****" >> /tmp/distcc.log
 
 echo $(date)
 
-ps auwx | grep ssh
+# ps auwx | grep ssh
 
-wc -l /tmp/distcc.log
+# wc -l /tmp/distcc.log
 
 oo-cgroup-read memory.failcnt
