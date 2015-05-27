@@ -36,6 +36,8 @@ Host *
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 
+ssh -24n -F config 555781ad4382ece1eb00005e@b4-20150514.rhcloud.com ls -lang app-root/data/distcc/bin
+
 ssh -24MN -F config 55630afc5973caf283000214@v1-20150216.rhcloud.com &
 ssh -24MN -F config 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com &
 ssh -24MN -F config 55630c675973caf283000251@v3-20150216.rhcloud.com &
