@@ -152,4 +152,4 @@ echo $(date)
 
 # wc -l /tmp/distcc.log
 
-oo-cgroup-read memory.failcnt
+# oo-cgroup-read memory.failcnt
