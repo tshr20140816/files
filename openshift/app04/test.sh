@@ -64,6 +64,7 @@ tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/2:|/1:|g")
 tmp_string=$(echo ${tmp_string} | sed -e "s|,cpp||g")
 export DISTCC_HOSTS="${tmp_string}"
 # export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
+export MAKEOPTS="-j10"
 
 php_version=5.6.9
 cd /tmp
@@ -107,7 +108,7 @@ echo $(date)
 echo "***** make *****" >> /tmp/distcc.log
 
 # make -j12 > /dev/null
-make -j10 > /dev/null
+make ${MAKEOPTS} > /dev/null
 
 echo "***** maked *****" >> /tmp/distcc.log
 
