@@ -42,7 +42,7 @@ cat << '__HEREDOC__' > distcc-ssh
 #!/bin/bash
 
 # echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
-exec /usr/bin/ssh -F /tmp/.ssh/config $@
+exec /usr/bin/ssh -24n -F /tmp/.ssh/config $@
 __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
