@@ -26,11 +26,11 @@ Host *
   Protocol 2
   PasswordAuthentication no
   ConnectionAttempts 5
-  # ControlMaster auto
+  ControlMaster auto
   # ControlPath too long
 #  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
-#  ControlPath __OPENSHIFT_TMP_DIR__.ssh/master-%r@%h:%p
-#  ControlPersist 90m
+  ControlPath __OPENSHIFT_TMP_DIR__.ssh/master-%r@%h:%p
+  ControlPersist 5s
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
