@@ -40,6 +40,7 @@ export DISTCC_LOG=/dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache-${ccache_version}.tar.xz ./
+echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar Jxf ccache-${ccache_version}.tar.xz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version} > /dev/null
