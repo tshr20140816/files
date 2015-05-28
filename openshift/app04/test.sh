@@ -32,7 +32,7 @@ ps auwx | grep ssh | grep -v grep
 
 date
 
-ssh -24MN -F config 555894314382ec8df40000e1@b1-20150430.rhcloud.com &
+ssh -24MNn -F config 555894314382ec8df40000e1@b1-20150430.rhcloud.com &
 
 date
 
