@@ -9,6 +9,7 @@ set -x
 
 whereis ld
 whereis yacc
+whereis byacc
 whereis bison
 ls -al /usr/bin/ld
 #ld --version
@@ -59,5 +60,5 @@ tar zxf binutils-2.25.tar.gz
 cd binutils-2.25/gold
 date
 ./configure --help
-./configure
+./configure --enable-gold=yes --enable-threads --enable-targets
 make -j2
