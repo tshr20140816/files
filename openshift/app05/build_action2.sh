@@ -70,7 +70,7 @@ export DISTCC_HOSTS="${tmp_string}"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 
-export CFLAGS="-O2 -march=x86-64 -pipe -fomit-frame-pointer -s"
+export CFLAGS="-O2 -march=core2 -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 export HOME=${OPENSHIFT_DATA_DIR}
