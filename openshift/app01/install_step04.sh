@@ -8,6 +8,7 @@ function010
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/distcc-${distcc_version}.tar.bz2 ./
+echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 tar jxf distcc-${distcc_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
