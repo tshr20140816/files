@@ -195,41 +195,71 @@ popd > /dev/null
 
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 
-# ***** tcl *****
+# # ***** tcl *****
+# 
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) tcl"
+# 
+# pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+# 
+# rm -rf tcl${tcl_version}
+# rm -f tcl${tcl_version}-src.tar.gz
+# 
+# cp ${OPENSHIFT_DATA_DIR}/files/tcl${tcl_version}-src.tar.gz ./
+# if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
+#     wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
+# fi
+# tar xfz tcl${tcl_version}-src.tar.gz
+# 
+# pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
+# ./configure \
+#  --mandir=${tmp_dir}/man \
+#  --disable-symbols \
+#  --prefix=${data_dir}/tcl
+# 
+# # 3機がけ前提 1機あたり2プロセス
+# # time make -j2 -l3
+# time make -j6
+# popd > /dev/null
+# ccache -s
+# rm -f ${app_uuid}_maked_tcl${tcl_version}.tar.xz
+# time tar Jcf ${app_uuid}_maked_tcl${tcl_version}.tar.xz tcl${tcl_version}
+# mv -f ${app_uuid}_maked_tcl${tcl_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+# rm -rf tcl${tcl_version}
+# rm -f tcl${tcl_version}-src.tar.gz
+# popd > /dev/null
+# 
+# memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) tcl"
+# ***** cadaver *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
-rm -rf tcl${tcl_version}
-rm -f tcl${tcl_version}-src.tar.gz
+rm -f cadaver-${cadaver_version}.tar.gz
+rm -rf cadaver-${cadaver_version}
 
-cp ${OPENSHIFT_DATA_DIR}/files/tcl${tcl_version}-src.tar.gz ./
-if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
-    wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
-fi
-tar xfz tcl${tcl_version}-src.tar.gz
+cp ${OPENSHIFT_DATA_DIR}/files/cadaver-${cadaver_version}.tar.gz ./
 
-pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
+tar zxf cadaver-${cadaver_version}.tar.gz
+
+pushd ${OPENSHIFT_TMP_DIR}/cadaver-${cadaver_version} > /dev/null
 ./configure \
  --mandir=${tmp_dir}/man \
- --disable-symbols \
- --prefix=${data_dir}/tcl
+ --docdir=${tmp_dir}/doc \
+ --with-ssl=openssl \
+ --prefix=${data_dir}/cadaver
 
-# 3機がけ前提 1機あたり2プロセス
-# time make -j2 -l3
 time make -j6
 popd > /dev/null
 ccache -s
-rm -f ${app_uuid}_maked_tcl${tcl_version}.tar.xz
-time tar Jcf ${app_uuid}_maked_tcl${tcl_version}.tar.xz tcl${tcl_version}
-mv -f ${app_uuid}_maked_tcl${tcl_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-rm -rf tcl${tcl_version}
-rm -f tcl${tcl_version}-src.tar.gz
+rm -f ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz
+time tar Jcf ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz cadaver-${cadaver_version}
+mv -f ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf cadaver-${cadaver_version}
+rm -f cadaver-${cadaver_version}.tar.gz
 popd > /dev/null
-
-memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
-echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
 # ***** delegate *****
 
