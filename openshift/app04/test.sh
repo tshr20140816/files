@@ -55,4 +55,4 @@ rm -rf binutils-2.25
 wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.gz
 tar zxf binutils-2.25.tar.gz
 cd binutils-2.25
-ls -lang
+ls -lang gold
