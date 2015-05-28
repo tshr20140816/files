@@ -61,7 +61,7 @@ cd binutils-2.25
 date
 ./configure --help
 # ./configure --enable-gold=yes --enable-threads --enable-targets
-./configure
+./configure --enable-gold=yes --enable-ld=no
 date
-make -j2
+make -j4
 date
