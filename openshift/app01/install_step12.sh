@@ -185,6 +185,7 @@ cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
 bundle config build.activerecord --with-cflags="-O2 -march=core2 -fomit-frame-pointer -s" --local
 bundle config build.rails --with-cflags="-O2 -march=core2 -fomit-frame-pointer -s" --local
 bundle config build.rake --with-cflags="-O2 -march=core2 -fomit-frame-pointer -s" --local
+bundle config build.mysql2 --with-cflags="-O2 -march=core2 -fomit-frame-pointer -s" --local
 bundle config --local 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 mkdir .bundle
 cat << '__HEREDOC__' > .bundle/config
