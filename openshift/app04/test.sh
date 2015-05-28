@@ -32,7 +32,7 @@ ps auwx | grep ssh | grep -v grep
 
 date
 
-ssh -24MNn -F /tmp/.ssh/config 555894314382ec8df40000e1@b1-20150430.rhcloud.com &
+nohup ssh -24MNn -F /tmp/.ssh/config 555894314382ec8df40000e1@b1-20150430.rhcloud.com &
 
 sleep 5s
 
