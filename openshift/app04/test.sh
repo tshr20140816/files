@@ -48,5 +48,3 @@ date
 ps auwx | grep ssh | grep -v grep
 
 date
-
-ps auwx
