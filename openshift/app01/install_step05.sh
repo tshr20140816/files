@@ -112,6 +112,7 @@ done < user_fqdn_2.txt
 # rm -f user_fqdn_2.txt
 popd > /dev/null
 cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo " " | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
