@@ -39,7 +39,7 @@ ps auwx | grep ssh | grep -v grep
 
 date
 
-ssh -24MNn -F /tmp/.ssh/config 555894314382ec8df40000e1@b1-20150430.rhcloud.com
+# ssh -24MNn -F /tmp/.ssh/config 555894314382ec8df40000e1@b1-20150430.rhcloud.com
 
 sleep 5s
 
@@ -48,3 +48,9 @@ date
 ps auwx | grep ssh | grep -v grep
 
 date
+
+cd /tmp
+wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.gz
+tar zxf binutils-2.25.tar.gz
+cd binutils-2.25
+ls -lang
