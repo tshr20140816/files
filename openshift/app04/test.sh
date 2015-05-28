@@ -12,7 +12,7 @@ ls -al /usr/bin/ld
 #ld --version
 #ld --help
 
-cat /usr/libexec/openshift/cartridges/cron/bin/cron_runjobs.sh
+# cat /usr/libexec/openshift/cartridges/cron/bin/cron_runjobs.sh
 
 cd /tmp
 
