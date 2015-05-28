@@ -113,7 +113,8 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
 # *** bundler rack passenger ***
 
 rbenv exec gem --version | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-rbenv exec gem env | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# rbenv exec gem env | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+rbenv exec gem env
 
 for gem in bundler rack passenger
 do
