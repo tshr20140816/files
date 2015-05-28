@@ -6,6 +6,8 @@ function010
 
 # ***** apache *****
 
+rm -f ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}.tar.bz2
+rm -f ${OPENSHIFT_TMP_DIR}/${OPENSHIFT_APP_UUID}_maked_httpd-${apache_version}.tar.bz2
 rm -rf ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
