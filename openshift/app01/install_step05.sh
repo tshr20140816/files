@@ -74,7 +74,7 @@ gem help install
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=x86-64 -fomit-frame-pointer -s\"
+gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=core2 -fomit-frame-pointer -s\"
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc setup" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
