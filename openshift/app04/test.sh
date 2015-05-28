@@ -52,7 +52,7 @@ date
 cd /tmp
 rm -f binutils-2.25.tar.gz
 rm -rf binutils-2.25
-wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.gz
+wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.gz > /dev/null
 tar zxf binutils-2.25.tar.gz
 cd binutils-2.25/gold
 date
