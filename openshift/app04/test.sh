@@ -4,10 +4,8 @@
 
 set -x
 
-rm -f $OPENSHIFT_LOG_DIR/cron_minutely.log
+# rm -f $OPENSHIFT_LOG_DIR/cron_minutely.log
 # touch $OPENSHIFT_LOG_DIR/cron_minutely.log
-
-exit
 
 cd /tmp
 
