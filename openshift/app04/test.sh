@@ -50,6 +50,8 @@ ps auwx | grep ssh | grep -v grep
 date
 
 cd /tmp
+rm -f binutils-2.25.tar.gz
+rm -rf binutils-2.25
 wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.gz
 tar zxf binutils-2.25.tar.gz
 cd binutils-2.25
