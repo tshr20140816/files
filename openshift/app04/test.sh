@@ -34,7 +34,7 @@ Host *
   ConnectionAttempts 5
   ControlMaster auto
   ControlPath /tmp/.ssh/master-%r@%h:%p
-  ControlPersist 60m
+  ControlPersist yes
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 
@@ -42,7 +42,7 @@ ps auwx | grep ssh | grep -v grep
 
 date
 
-# nohup ssh -24MNn -F /tmp/.ssh/config 555894314382ec8df40000e1@b1-20150430.rhcloud.com &
+nohup ssh -24MNn -F /tmp/.ssh/config 555894314382ec8df40000e1@b1-20150430.rhcloud.com &
 ssh -O check -F /tmp/.ssh/config 555894314382ec8df40000e1@b1-20150430.rhcloud.com
 sleep 5s
 
