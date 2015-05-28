@@ -8,8 +8,9 @@ set -x
 # touch $OPENSHIFT_LOG_DIR/cron_minutely.log
 
 whereis ld
-ld --version
-ld --help
+ls -al /usr/bin/ld
+#ld --version
+#ld --help
 
 cat /usr/libexec/openshift/cartridges/cron/bin/cron_runjobs.sh
 
