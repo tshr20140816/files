@@ -63,7 +63,7 @@ do
         remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
         ${OPENSHIFT_DATA_DIR}/scripts/./cadaver_put.sh ${OPENSHIFT_LOG_DIR}/backup/ ${remote_dir} ${file_name} | tee ${log_file_name}
         if [ $(grep -c -e succeeded ${log_file_name}) -eq 1 ]; then
-            rm ${file_name}
+            rm -f ${OPENSHIFT_LOG_DIR}/backup/${file_name}
         fi
     fi
 done
