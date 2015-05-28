@@ -7,6 +7,8 @@ set -x
 # rm -f $OPENSHIFT_LOG_DIR/cron_minutely.log
 # touch $OPENSHIFT_LOG_DIR/cron_minutely.log
 
+whereis ld
+
 cat /usr/libexec/openshift/cartridges/cron/bin/cron_runjobs.sh
 
 cd /tmp
