@@ -995,4 +995,6 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 ./install_script_check.sh
 popd > /dev/null
 
+echo "tail -f ~/app-root/logs/install.log"
+
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
