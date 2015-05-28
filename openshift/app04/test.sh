@@ -59,5 +59,3 @@ date
 ./configure --help
 ./configure
 make -j2
-
-
