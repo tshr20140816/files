@@ -48,6 +48,7 @@ pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
 cat << '__HEREDOC__' > distcc-ssh
 #!/bin/bash
 
+export TZ=JST-9
 export HOME=${OPENSHIFT_DATA_DIR}
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 exec /usr/bin/ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config $@
