@@ -109,7 +109,7 @@ do
     # distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo "
     # distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,cpp "
     echo -n "${distcc_hosts_string}" >> ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
-done < tee ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt
+done < ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt
 popd > /dev/null
 cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo " " | tee -a ${OPENSHIFT_LOG_DIR}/install.log
