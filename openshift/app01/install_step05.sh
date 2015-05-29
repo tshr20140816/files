@@ -102,7 +102,7 @@ cat tee ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt | tee -a ${OPENSHIFT_LOG_DI
 while read LINE
 do
     user_fqdn=$(echo "${LINE}")
-    ssh -24Mn -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
     distcc_hosts_string="${user_fqdn}/4:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start "
