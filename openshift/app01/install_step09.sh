@@ -6,11 +6,11 @@ function010 restart
 
 export HOME=${OPENSHIFT_DATA_DIR}
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
-while read LINE
+for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
 do
-    user_fqdn=$(echo "${LINE}")
+    user_fqdn=$(echo "${line}")
     ssh -n -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-done < ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt
+done
 
 # ***** memcached *****
 
