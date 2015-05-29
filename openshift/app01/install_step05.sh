@@ -87,7 +87,7 @@ rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | t
 cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
 do
-    user_fqdn=$(echo "${LINE}")
+    user_fqdn=$(echo "${line}")
     ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
@@ -102,7 +102,7 @@ rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | t
 cat tee ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt)
 do
-    user_fqdn=$(echo "${LINE}")
+    user_fqdn=$(echo "${line}")
     ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
