@@ -25,7 +25,7 @@ Host *
   LogLevel QUIET
 #  LogLevel DEBUG3
   Protocol 2
-  Ciphers arcfour
+  Ciphers arcfour,arcfour128,arcfour256
   AddressFamily inet
   PasswordAuthentication no
   ConnectionAttempts 5
