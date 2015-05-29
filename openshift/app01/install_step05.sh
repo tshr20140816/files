@@ -20,6 +20,7 @@ cat << '__HEREDOC__' > config
 Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
   StrictHostKeyChecking no
+#  BatchMode yes
   UserKnownHostsFile /dev/null
   LogLevel QUIET
 #  LogLevel DEBUG3
