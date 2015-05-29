@@ -4,6 +4,23 @@ source functions.sh
 function010
 [ $? -eq 0 ] || exit
 
+# ***** ssh master connection kill *****
+
+while read LINE
+do
+    user_fqdn=$(echo "${LINE}")
+    ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+done < ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt
+while read LINE
+do
+    user_fqdn=$(echo "${LINE}")
+    ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+done < ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt
+
 # ***** shell syntax check *****
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
