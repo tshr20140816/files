@@ -37,9 +37,9 @@ Host *
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
-popd > /dev/null
 
 cat config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+popd > /dev/null
 
 # *** distcc-ssh ***
 
