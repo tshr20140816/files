@@ -27,7 +27,8 @@ Host *
   Protocol 2
   Ciphers arcfour,arcfour128,arcfour256
   AddressFamily inet
-  PreferredAuthentications publickey,gssapi-with-mic,hostbased,keyboard-interactive,password
+#  PreferredAuthentications publickey,gssapi-with-mic,hostbased,keyboard-interactive,password
+  PreferredAuthentications publickey
   PasswordAuthentication no
   ConnectionAttempts 5
   ControlMaster auto
