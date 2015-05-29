@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source functions.sh
-function010 restart
+function010
 [ $? -eq 0 ] || exit
 
 # ***** Baikal *****
