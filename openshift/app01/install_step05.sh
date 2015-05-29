@@ -25,6 +25,7 @@ Host *
 #  LogLevel DEBUG3
   Protocol 2
   Ciphers arcfour
+  AddressFamily inet
   PasswordAuthentication no
   ConnectionAttempts 5
   ControlMaster auto
