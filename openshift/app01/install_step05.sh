@@ -13,6 +13,8 @@ mkdir ${OPENSHIFT_TMP_DIR}/.ssh
 pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
 ssh -V
 ssh-keygen -t rsa -f id_rsa -P ''
+chmod 600 id_rsa
+chmod 600 id_rsa.pub
 
 # *** config ***
 
