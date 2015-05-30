@@ -149,6 +149,21 @@ __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
 
+# *** distcc-ssh ***
+
+mkdir ${OPENSHIFT_DATA_DIR}/bin
+pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
+cat << '__HEREDOC__' > distcc-ssh
+#!/bin/bash
+
+export TZ=JST-9
+export HOME=${OPENSHIFT_DATA_DIR}
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+exec ${OPENSHIFT_DATA_DIR}/openssh/bin/ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config $@
+__HEREDOC__
+chmod +x distcc-ssh
+popd > /dev/null
+
 # ***** Tcl *****
 
 tcl_version=8.6.3
