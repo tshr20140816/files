@@ -103,7 +103,7 @@ wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_versi
 wget http://www.psc.edu/index.php/hpn-ssh-patches/hpn-14-kitchen-sink-patches/finish/24-hpn-14-kitchen-sink-patches/102-openssh-6-3p1-hpnssh14v2-kitchen-sink-patch \
  -O openssh-6.3p1-hpnssh14v2.diff.gz
 tar zxf openssh-${openssh_version}.tar.gz
-tar zxf openssh-6.3p1-hpnssh14v2.diff.gz
+gzip -d openssh-6.3p1-hpnssh14v2.diff.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 patch < ../openssh-6.3p1-hpnssh14v2.diff
