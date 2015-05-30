@@ -123,19 +123,31 @@ time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
 
-cat << __HEREDOC__ >> ${OPENSHIFT_DATA_DIR}/openssh/etc/ssh_config
-
-IdentityFile ${OPENSHIFT_DATA_DIR}.ssh/id_rsa
-StrictHostKeyChecking no
-UserKnownHostsFile /dev/null
-LogLevel QUIET
-__HEREDOC__
-
 cat << __HEREDOC__ > ${OPENSHIFT_DATA_DIR}/.ssh/config
 Host *
-ControlMaster auto
-ControlPath /tmp/.ssh_tmp/master-%r@%h:%p
+  IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
+  StrictHostKeyChecking no
+#  BatchMode yes
+  UserKnownHostsFile /dev/null
+  LogLevel QUIET
+#  LogLevel DEBUG3
+  Protocol 2
+  Ciphers arcfour256,arcfour128
+  AddressFamily inet
+#  PreferredAuthentications publickey,gssapi-with-mic,hostbased,keyboard-interactive,password
+  PreferredAuthentications publickey
+  PasswordAuthentication no
+  GSSAPIAuthentication no
+  ConnectionAttempts 5
+  ControlMaster auto
+  # ControlPath too long
+#  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
+  ControlPath __OPENSHIFT_TMP_DIR__.ssh/master-%r@%h:%p
+  ControlPersist 30m
+  ServerAliveInterval 60
 __HEREDOC__
+sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
+sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
 
 # ***** Tcl *****
 
