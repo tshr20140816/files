@@ -112,7 +112,13 @@ patch < ../openssh-6.3p1-hpnssh14v2.diff
  --prefix=${OPENSHIFT_DATA_DIR}/openssh \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --disable-etc-default-login \
+ --disable-utmp \
+ --disable-utmpx \
+ --disable-wtmp \
+ --disable-wtmpx \
+ --with-lastlog=${OPENSHIFT_LOG_DIR}/ssh_lastlog.log
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
