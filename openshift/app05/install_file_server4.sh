@@ -164,6 +164,30 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
+# ***** xz *****
+
+xz_version=5.2.1
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f xz-${xz_version}.tar.xz
+rm -rf xz-${xz_version}
+wget http://tukaani.org/xz/xz-${xz_version}.tar.xz
+tar Jxf xz-${xz_version}.tar.xz
+pushd  xz-${xz_version} > /dev/null
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/xz \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --disable-doc
+
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
+rm -f xz-${xz_version}.tar.xz
+rm -rf xz-${xz_version}
+popd > /dev/null
+
 # ***** Tcl *****
 
 tcl_version=8.6.3
