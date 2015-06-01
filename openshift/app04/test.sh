@@ -24,7 +24,7 @@ ${OPENSHIFT_DATA_DIR}/xz/bin/xz --long-help
 
 tar jxf httpd-${apache_version}.tar.bz2
 
-for i in $(seq 10)
+for i in $(seq 5)
 do
 rm -f test.tar.xz
 time tar Jcf test.tar.xz httpd-${apache_version} 2>&1
