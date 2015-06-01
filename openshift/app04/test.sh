@@ -29,5 +29,5 @@ rm -f test.tar.xz
 time tar Jcf test.tar.xz httpd-${apache_version} 2>&1
 
 rm -f test.tar.xz
-time tar cf - httpd-${apache_version} | ${OPENSHIFT_DATA_DIR}/xz/bin/xz --threads=2 > test.tar.xz
+time tar cf - httpd-${apache_version} | ${OPENSHIFT_DATA_DIR}/xz/bin/xz --threads=3 > test.tar.xz
 done
