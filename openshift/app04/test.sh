@@ -29,5 +29,5 @@ rm -f test.tar.xz
 time tar Jcf test.tar.xz httpd-${apache_version} 2>&1
 
 rm -f test.tar.xz
-time tar cf test.tar.xz --use-compress-prog="${OPENSHIFT_DATA_DIR}/xz/bin/xz -T4" httpd-${apache_version} 2>&1
+time tar cf - httpd-${apache_version} | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -T4 > test.tar.xz
 done
