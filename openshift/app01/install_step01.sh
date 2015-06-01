@@ -70,6 +70,7 @@ tcl_version 8.6.3
 ttrss_version 1.15.3
 webalizer_version 2.23-08
 wordpress_version 4.2.2-ja
+xz_version 5.2.1
 __HEREDOC__
 
 # pigz_version 2.3.3
@@ -399,6 +400,17 @@ if [ "${mirror_server}" != "none" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm -f cadaver-${cadaver_version}.tar.gz
     fi
+
+   # xz
+   wget -t1 ${mirror_server}/xz-${xz_version}.tar.xz
+   wget http://tukaani.org/xz/xz-${xz_version}.tar.xz.sig
+   gpg --recv-keys $(gpg --verify xz-${xz_version}.tar.xz.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+   if [ $(gpg --verify xz-5.2.1.tar.xz.sig 2>&1 | grep -c "Good signature from") != 1 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) xz pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) xz pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm -f xz-${xz_version}.tar.xz
+   fi
+   rm -f xz-${xz_version}.tar.xz.sig
 
     # *** gem ***
     for gem in bundler rack passenger
@@ -859,6 +871,15 @@ do
         wget http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz
     fi
     [ -f cadaver-${cadaver_version}.tar.gz ] || files_exists=0
+
+    # *** xz ***
+    if [ ! -f xz-${xz_version}.tar.xz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing xz-${xz_version}.tar.xz" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) xz wget" >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://tukaani.org/xz/xz-${xz_version}.tar.xz
+    fi
+    [ -f xz-${xz_version}.tar.xz ] || files_exists=0
 
     # *** gem ***
     for gem in bundler rack passenger
