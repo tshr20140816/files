@@ -498,6 +498,7 @@ require valid-user
 
 # IndexOptions +FancyIndexing
 
+# Force https
 RewriteEngine on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
