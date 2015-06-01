@@ -29,4 +29,4 @@ wget http://tukaani.org/xz/xz-5.2.1.tar.xz
 wget http://tukaani.org/xz/xz-5.2.1.tar.xz.sig
 
 gpg --recv-keys $(gpg --verify xz-5.2.1.tar.xz.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-gpg --verify pcre-${pcre_version}.tar.bz2.sig 2>&1
+gpg --verify xz-5.2.1.tar.xz.sig 2>&1
