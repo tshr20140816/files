@@ -30,7 +30,7 @@ if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
 else
     cp ${OPENSHIFT_DATA_DIR}/download_files/delegate${delegate_version}.tar.gz ./
     echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    tar xfz delegate${delegate_version}.tar.gz
+    tar zxf delegate${delegate_version}.tar.gz
 fi
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
