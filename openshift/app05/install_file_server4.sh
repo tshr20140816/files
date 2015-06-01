@@ -84,7 +84,7 @@ gzip -d openssh-6.3p1-hpnssh14v2.diff.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 patch < ../openssh-6.3p1-hpnssh14v2.diff
-./configure --help
+# ./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/openssh \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
@@ -171,7 +171,7 @@ tcl_version=8.6.3
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
-tar xfz tcl${tcl_version}-src.tar.gz
+tar zxf tcl${tcl_version}-src.tar.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 ./configure --help
@@ -189,7 +189,7 @@ expect_version=5.45
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
-tar xfz expect${expect_version}.tar.gz
+tar zxf expect${expect_version}.tar.gz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
