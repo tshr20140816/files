@@ -14,11 +14,10 @@ cd /tmp
 rm -f test.txt
 string_data="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_!&="
 string_data="${string_data}${string_data}${string_data}${string_data}${string_data}"
-# 65 * 4 = 260
 set +x
 for i in $(seq 50000)
 do
-    random=$(((RANDOM % 260) + 1 ))
+    random=$(((RANDOM % 330) + 1 ))
     tmp_str="${string_data:${random}:1}${string_data:0:$((random - 0))}${string_data:$((random + 1))}"
     string_data=${tmp_str}
 done
