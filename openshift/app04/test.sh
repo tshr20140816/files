@@ -11,8 +11,4 @@ set -x
 
 cd /tmp
 
-string_data=$(cat test.txt)
-p_data=${string_data:32:1}${string_data:44:1}${string_data:190:1}
-echo ${p_data} > p_data.txt
-
-post_data='dummytext=&act=post&name=tenv&dai=bundler&msg=1.1.1&email=&site=&col=1&pwd=xxx&pre=0'
+post_data='dummytext=&act=post&name=tenv&dai=bundler&msg=1.1.1&email=&site=&col=1&pwd=$(cat p_data.txt)&pre=0'
