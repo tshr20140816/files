@@ -67,18 +67,13 @@ export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
 export DISTCC_HOSTS="${tmp_string}"
 
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 
 export CFLAGS="-O2 -march=core2 -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 export HOME=${OPENSHIFT_DATA_DIR}
-
-if [ -f ${OPENSHIFT_DATA_DIR}/xz/bin/xz ]; then
-    export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
-    # export TAR_OPTIONS="--use-compress-program=${OPENSHIFT_DATA_DIR}/xz/bin/xz"
-fi
 
 # 統計情報クリア
 ccache -z
@@ -144,6 +139,11 @@ time make -j6
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
+# if [ -f ${OPENSHIFT_DATA_DIR}/xz/bin/xz ]; then
+#     time tar cf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz --use-compress-prog=xz libmemcached-${libmemcached_version}
+# else
+#     time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
+# fi
 time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
 mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf libmemcached-${libmemcached_version}
@@ -193,6 +193,11 @@ export PATH="${path_old}"
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./.rbenv/ -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
+# if [ -f ${OPENSHIFT_DATA_DIR}/xz/bin/xz ]; then
+#     time tar cf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz --use-compress-prog=xz ./.rbenv
+# else
+#     time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
+# fi
 time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 popd > /dev/null
