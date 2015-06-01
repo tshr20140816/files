@@ -21,8 +21,11 @@ wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
 
 tar jxf httpd-${apache_version}.tar.bz2
 
+for i in $(seq 10)
+do
 rm -f test.tar.xz
 time tar Jcf test.tar.xz httpd-${apache_version} 2>&1
 
 rm -f test.tar.xz
 time tar cf test.tar.xz --use-compress-prog=${OPENSHIFT_DATA_DIR}/xz/bin/xz httpd-${apache_version} 2>&1
+done
