@@ -11,7 +11,7 @@ mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/wordpress-${wordpress_version}.tar.gz ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) wordpress tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz wordpress-${wordpress_version}.tar.gz --strip-components=1
+tar zxf wordpress-${wordpress_version}.tar.gz --strip-components=1
 popd > /dev/null
 
 # create database
