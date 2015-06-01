@@ -12,13 +12,18 @@ set -x
 cd /tmp
 
 rm -f test.txt
-string_data="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_!&=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_!&="
-# 130
+string_data="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_!&="
+string_data="${string_data}${string_data}${string_data}${string_data}${string_data}"
+# 65 * 4 = 260
 for i in $(seq 10)
 do
-    random=$(((RANDOM % 132) + 1 ))
-    tmp_str=${string_data:${random}:1}
+    echo ${string_data}
+    random=$(((RANDOM % 260) + 1 ))
+    echo ${random}
+    tmp_str="${string_data:0:${random}}${string_data:${random}}"
     echo ${tmp_str}
+    string_data=${tmp_str}
 done
+echo ${string_data}
 
 post_data='dummytext=&act=post&name=tenv&dai=bundler&msg=1.1.1&email=&site=&col=1&pwd=xxx&pre=0'
