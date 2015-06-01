@@ -207,7 +207,7 @@ rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 # if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
 #     wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
 # fi
-# tar xfz tcl${tcl_version}-src.tar.gz
+# tar zxf tcl${tcl_version}-src.tar.gz
 # 
 # pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 # ./configure \
@@ -273,7 +273,7 @@ cp ${OPENSHIFT_DATA_DIR}/files/delegate${delegate_version}.tar.gz ./
 if [ ! -f delegate${delegate_version}.tar.gz ]; then
     wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
 fi
-tar xfz delegate${delegate_version}.tar.gz
+tar zxf delegate${delegate_version}.tar.gz
 
 # CC="ccache gcc"
 # ccache gcc -DMKMKMK -DDEFCC=\"ccache gcc\" -I../gen -I../include -O2 -march=native -pipe -fomit-frame-pointer -s -Llib mkmkmk.c -o mkmkmk.exe
