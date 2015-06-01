@@ -4,17 +4,28 @@
 
 set -x
 
-rm -f $OPENSHIFT_LOG_DIR/cron_minutely.log
-touch $OPENSHIFT_LOG_DIR/cron_minutely.log
+# rm -f $OPENSHIFT_LOG_DIR/cron_minutely.log
+# touch $OPENSHIFT_LOG_DIR/cron_minutely.log
 
 # cat /usr/libexec/openshift/cartridges/cron/bin/cron_runjobs.sh
 
 cd /tmp
 
-rm -f index.html
+xz_version=5.2.1
 
-url='http://lib20110701.bbs.fc2.com/'
+rm -f xz-${xz_version}.tar.xz
+rm -rf xz-${xz_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/xz
 
-post_data="dummytext=&act=post&name=tenv&dai=bundler&msg=1.1.1&email=&site=&col=1&pwd=$(cat p_data.txt)&pre=0"
+wget http://tukaani.org/xz/xz-${xz_version}.tar.xz
 
-# wget --post-data="${post_data}" ${url} -O -
+tar Jxf xz-${xz_version}.tar.xz
+cd xz-${xz_version}
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/xz \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --disable-doc
+time make -j4
+make install
