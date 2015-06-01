@@ -13,7 +13,7 @@ rm -rf ${OPENSHIFT_DATA_DIR}/mrtg
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/mrtg-${mrtg_version}.tar.gz ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz mrtg-${mrtg_version}.tar.gz
+tar zxf mrtg-${mrtg_version}.tar.gz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/mrtg-${mrtg_version} > /dev/null
