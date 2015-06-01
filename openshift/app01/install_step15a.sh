@@ -33,7 +33,7 @@ else
     cp -f ${OPENSHIFT_DATA_DIR}/download_files/tcl${tcl_version}-src.tar.gz ./
 
     echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    tar xfz tcl${tcl_version}-src.tar.gz
+    tar zxf tcl${tcl_version}-src.tar.gz
 fi
 popd > /dev/null
 
@@ -82,7 +82,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/expect${expect_version}.tar.gz ./
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar xfz expect${expect_version}.tar.gz
+tar zxf expect${expect_version}.tar.gz
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
