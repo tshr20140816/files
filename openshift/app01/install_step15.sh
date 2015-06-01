@@ -11,7 +11,7 @@ mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/cacti-${cacti_version}.tar.gz ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Cacti tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time tar xfz cacti-${cacti_version}.tar.gz --strip-components=1
+time tar zxf cacti-${cacti_version}.tar.gz --strip-components=1
 # cp ${OPENSHIFT_DATA_DIR}/download_files/security.patch ./
 # patch -p1 -N < security.patch
 popd > /dev/null
