@@ -38,5 +38,5 @@ rm -f test.tar.xz
 time tar cf - httpd-${apache_version} | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --threads=3 > test.tar.xz
 
 rm -f test.tar.xz
-time tar cf - httpd-${apache_version} | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --threads=2 --memlimit=256MiB > test.tar.xz
+time tar cf - httpd-${apache_version} | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB > test.tar.xz
 done
