@@ -19,13 +19,15 @@ rm -f test.tar.xz
 
 wget -q http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
 
+${OPENSHIFT_DATA_DIR}/xz/bin/xz --help
+
 tar jxf httpd-${apache_version}.tar.bz2
 
-for i in $(seq 3)
+for i in $(seq 2)
 do
 rm -f test.tar.xz
 time tar Jcf test.tar.xz httpd-${apache_version} 2>&1
 
 rm -f test.tar.xz
-time tar cf test.tar.xz --use-compress-prog=${OPENSHIFT_DATA_DIR}/xz/bin/xz httpd-${apache_version} 2>&1
+time tar cf test.tar.xz --use-compress-prog="${OPENSHIFT_DATA_DIR}/xz/bin/xz -T4" httpd-${apache_version} 2>&1
 done
