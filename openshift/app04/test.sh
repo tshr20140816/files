@@ -11,9 +11,12 @@ set -x
 
 cd /tmp
 
-rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
-rm -f xz-5.2.1.tar.xz
-rm -f xz-5.2.1.tar.xz.sig
-rm -rf xz-5.2.1
+rm -f test.txt
+echo "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_!&=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_!&="
+# 132
+for i in $(seq 10)
+do
+    echo $i
+done
 
 post_data='dummytext=&act=post&name=tenv&dai=bundler&msg=1.1.1&email=&site=&col=1&pwd=xxx&pre=0'
