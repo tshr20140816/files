@@ -21,7 +21,7 @@ wget -q http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
 
 tar jxf httpd-${apache_version}.tar.bz2
 
-for i in $(seq 10)
+for i in $(seq 3)
 do
 rm -f test.tar.xz
 time tar Jcf test.tar.xz httpd-${apache_version} 2>&1
