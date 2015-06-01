@@ -17,7 +17,7 @@ rm -f httpd-${apache_version}.tar.bz2
 rm -rf httpd-${apache_version}
 rm -f test.tar.xz
 
-wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
+wget -q http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
 
 tar jxf httpd-${apache_version}.tar.bz2
 
