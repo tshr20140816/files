@@ -11,17 +11,8 @@ set -x
 
 cd /tmp
 
-rm -f test.txt
-string_data="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_!&="
-string_data="${string_data}${string_data}${string_data}${string_data}${string_data}"
-set +x
-for i in $(seq 50000)
-do
-    random=$(((RANDOM % 330) + 1 ))
-    tmp_str="${string_data:${random}:1}${string_data:0:$((random - 0))}${string_data:$((random + 1))}"
-    string_data=${tmp_str}
-done
-set -x
-echo ${string_data} > test.txt
+string_data=$(cat test.txt)
+p_data=${string_data:32:1}${string_data:44:1}${string_data:190:1}
+echo ${p_data} > p_data.txt
 
 post_data='dummytext=&act=post&name=tenv&dai=bundler&msg=1.1.1&email=&site=&col=1&pwd=xxx&pre=0'
