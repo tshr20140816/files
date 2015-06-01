@@ -29,3 +29,19 @@ cd xz-${xz_version}
  --disable-doc
 time make -j4
 make install
+
+apache_version=2.2.29
+
+rm -f httpd-${apache_version}.tar.bz2
+rm -rf httpd-${apache_version}
+rm -f test.tar.xz
+
+wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
+
+tar jxf httpd-${apache_version}.tar.bz2
+
+rm -f test.tar.xz
+time tar Jcf test.tar.xz httpd-${apache_version} 2>&1
+
+rm -f test.tar.xz
+time tar cf test.tar.xz --use-compress-prog=${OPENSHIFT_DATA_DIR}/xz/bin/xz httpd-${apache_version} 2>&1
