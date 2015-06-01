@@ -23,11 +23,11 @@ ${OPENSHIFT_DATA_DIR}/xz/bin/xz --help
 
 tar jxf httpd-${apache_version}.tar.bz2
 
-for i in $(seq 2)
+for i in $(seq 5)
 do
 rm -f test.tar.xz
 time tar Jcf test.tar.xz httpd-${apache_version} 2>&1
 
 rm -f test.tar.xz
-time tar cf - httpd-${apache_version} | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -T4 > test.tar.xz
+time tar cf - httpd-${apache_version} | ${OPENSHIFT_DATA_DIR}/xz/bin/xz --threads=2 > test.tar.xz
 done
