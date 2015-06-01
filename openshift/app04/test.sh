@@ -20,7 +20,7 @@ do
     echo ${string_data}
     random=$(((RANDOM % 260) + 1 ))
     echo ${random}
-    tmp_str="${string_data:${random}:1}${string_data:0:$((random - 1))}${string_data:$((random + 1))}"
+    tmp_str="${string_data:${random}:1}${string_data:0:$((random - 0))}${string_data:$((random + 1))}"
     echo ${tmp_str}
     string_data=${tmp_str}
 done
