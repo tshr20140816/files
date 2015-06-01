@@ -65,7 +65,7 @@ rm -rf ${OPENSHIFT_TMP_DIR}/superpi
 mkdir ${OPENSHIFT_TMP_DIR}/superpi
 pushd ${OPENSHIFT_TMP_DIR}/superpi > /dev/null
 wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
-tar xfz super_pi-jp.tar.gz
+tar zxf super_pi-jp.tar.gz
 ./super_pi 20 | tee ${OPENSHIFT_LOG_DIR}/super_pi.log
 
 sec=$(grep -e Total ${OPENSHIFT_LOG_DIR}/super_pi.log | awk '{print $4}' | tr -d \()
