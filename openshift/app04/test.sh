@@ -19,6 +19,8 @@ rm -f test.tar.xz
 
 wget -q http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
 
+${OPENSHIFT_DATA_DIR}/xz/bin/xz -vv --info-memory
+
 ${OPENSHIFT_DATA_DIR}/xz/bin/xz --help
 ${OPENSHIFT_DATA_DIR}/xz/bin/xz --long-help
 
