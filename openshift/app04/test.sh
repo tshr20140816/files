@@ -15,12 +15,14 @@ rm -f test.txt
 string_data="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_!&="
 string_data="${string_data}${string_data}${string_data}${string_data}${string_data}"
 # 65 * 4 = 260
-for i in $(seq 10000)
+set +x
+for i in $(seq 50000)
 do
     random=$(((RANDOM % 260) + 1 ))
     tmp_str="${string_data:${random}:1}${string_data:0:$((random - 0))}${string_data:$((random + 1))}"
     string_data=${tmp_str}
 done
-echo ${string_data}
+set -x
+echo ${string_data} > test.txt
 
 post_data='dummytext=&act=post&name=tenv&dai=bundler&msg=1.1.1&email=&site=&col=1&pwd=xxx&pre=0'
