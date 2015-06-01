@@ -4,12 +4,8 @@ http://grafana.org/
 http://www.gnu.org/software/parallel/
 https://blog.openshift.com/12-tips-for-hosting-wordpress-on-openshift/
 
-バックアップファイルはscpで別サーバに
 RUBY_GC_MALLOC_LIMIT
-http://www.yafc-ftp.com/
-https://hidrive.strato.com/
 http://vertex.air-nifty.com/blog/2007/04/tomcat_cadaver__bf88.html
-https://webdav.hidrive.strato.com/
 
 https://iperf.fr/
 
