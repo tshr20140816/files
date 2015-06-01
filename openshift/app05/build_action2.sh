@@ -75,6 +75,10 @@ export CXXFLAGS="${CFLAGS}"
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
+if [ -f ${OPENSHIFT_DATA_DIR}/xz/bin/xz ]; then
+    export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
+fi
+
 # 統計情報クリア
 ccache -z
 
