@@ -16,6 +16,7 @@ cd /tmp
 rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
 mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
+chmod 700 ${GNUPGHOME}
 gpg --list-keys
 echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 
