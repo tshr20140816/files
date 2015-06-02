@@ -22,7 +22,7 @@ do
             while read LINE
             do
                 i=$((i+1))
-                log_String=$(echo ${LINE} | tr " " "_" | perl -MURI::Escape -lne 'print uri_escape($_)')
+                log_String=$(echo ${LINE} | tr " " "_" | tr "+" "x" | perl -MURI::Escape -lne 'print uri_escape($_)')
                 query_string="server=${OPENSHIFT_APP_DNS}&file=${file_name}&log=${i}_${log_String}"
                 wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
             done < ${file_name}.log
