@@ -34,6 +34,7 @@ do
             fi
         done
         wait
+        rm -f dummy*
         popd > /dev/null
         echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
         exit
