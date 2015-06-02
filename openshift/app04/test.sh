@@ -20,3 +20,4 @@ rm -f test.tar.xz
 gcc -march=native -Q --help=target
 
 ls -lang
+ls -lang ${OPENSHIFT_DATA_DIR}
