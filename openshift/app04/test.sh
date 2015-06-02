@@ -11,11 +11,13 @@ set -x
 
 cd /tmp
 
-apache_version=2.2.29
-
-rm -f httpd-${apache_version}.tar.bz2
-rm -rf httpd-${apache_version}
-rm -f test.tar.xz
+rm -rf binutils-2.25
+rm -rf bison-3.0
+rm -f cadaver_put.sh
+rm -rf distcc-3.1
+rm -f monitor_resourse.sh
+rm -f test.txt
+rm -rf xz-5.2.1
 
 gcc -march=native -Q --help=target
 
