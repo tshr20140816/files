@@ -883,7 +883,8 @@ weekday=$(date +%w)
 
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
-for shell_name in another_server_check beacon keep_process memcached_status mrtg passenger_status process_status
+# for shell_name in another_server_check beacon keep_process memcached_status mrtg passenger_status process_status
+for shell_name in beacon keep_process memcached_status mrtg passenger_status process_status
 do
     touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
     ./${shell_name}.sh >>${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1 &
