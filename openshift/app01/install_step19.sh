@@ -429,61 +429,61 @@ __HEREDOC__
 
 popd > /dev/null
 
-# ***** logrotate *****
-
-for file_name in cron_monthly cron_weekly cron_daily cron_hourly cron_minutely
-do
-    [ -e ${OPENSHIFT_LOG_DIR}/${file_name}.log ] || touch ${OPENSHIFT_LOG_DIR}/${file_name}.log
-done
-
-rm -rf ${OPENSHIFT_DATA_DIR}/logrotate
-mkdir ${OPENSHIFT_DATA_DIR}/logrotate
-pushd ${OPENSHIFT_DATA_DIR}/logrotate > /dev/null
-cat << '__HEREDOC__' > logrotate.conf
-compresscmd /usr/bin/xz
-uncompresscmd /usr/bin/unxz
-compressext .xz
-
-compress
-create
-daily
-missingok
-notifempty
-noolddir
-rotate 7
-__OPENSHIFT_LOG_DIR__production.log {
-  daily
-  missingok
-  notifempty
-  copytruncate
-  compress
-  noolddir
-  rotate 7
-}
-__OPENSHIFT_LOG_DIR__cron_minutely.log {
-  daily
-  missingok
-  notifempty
-  copytruncate
-  compress
-  noolddir
-  rotate 7
-}
-__OPENSHIFT_LOG_DIR__update_feeds.sh.log {
-  daily
-  missingok
-  notifempty
-  copytruncate
-  compress
-  noolddir
-  rotate 7
-}
-__HEREDOC__
-perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' logrotate.conf
-perl -pi -e "s/__REDMINE_VERSION__/${redmine_version}/g" logrotate.conf
-perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' logrotate.conf
-cat logrotate.conf
-popd > /dev/null
+# # ***** logrotate *****
+#
+# for file_name in cron_monthly cron_weekly cron_daily cron_hourly cron_minutely
+# do
+#     [ -e ${OPENSHIFT_LOG_DIR}/${file_name}.log ] || touch ${OPENSHIFT_LOG_DIR}/${file_name}.log
+# done
+#
+# rm -rf ${OPENSHIFT_DATA_DIR}/logrotate
+# mkdir ${OPENSHIFT_DATA_DIR}/logrotate
+# pushd ${OPENSHIFT_DATA_DIR}/logrotate > /dev/null
+# cat << '__HEREDOC__' > logrotate.conf
+# compresscmd /usr/bin/xz
+# uncompresscmd /usr/bin/unxz
+# compressext .xz
+#
+# compress
+# create
+# daily
+# missingok
+# notifempty
+# noolddir
+# rotate 7
+# __OPENSHIFT_LOG_DIR__production.log {
+#   daily
+#   missingok
+#   notifempty
+#   copytruncate
+#   compress
+#   noolddir
+#   rotate 7
+# }
+# __OPENSHIFT_LOG_DIR__cron_minutely.log {
+#   daily
+#   missingok
+#   notifempty
+#   copytruncate
+#   compress
+#   noolddir
+#   rotate 7
+# }
+# __OPENSHIFT_LOG_DIR__update_feeds.sh.log {
+#   daily
+#   missingok
+#   notifempty
+#   copytruncate
+#   compress
+#   noolddir
+#   rotate 7
+# }
+# __HEREDOC__
+# perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' logrotate.conf
+# perl -pi -e "s/__REDMINE_VERSION__/${redmine_version}/g" logrotate.conf
+# perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' logrotate.conf
+# cat logrotate.conf
+# popd > /dev/null
 
 # ***** cron *****
 
@@ -880,12 +880,15 @@ export TZ=JST-9
 date +%Y/%m/%d" "%H:%M:%S
 hour=$((10#$(date +%H)))
 weekday=$(date +%w)
+url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server))dummy"
 
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
 # for shell_name in another_server_check beacon keep_process memcached_status mrtg passenger_status process_status
 for shell_name in beacon keep_process memcached_status mrtg passenger_status process_status
 do
+    query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}"
+    wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
     touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
     ./${shell_name}.sh >>${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1 &
     ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
@@ -898,6 +901,8 @@ done
 for shell_name in redmine_repository_check update_feeds
 do
     if [ ${hour} -ne 1 ]; then
+        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}"
+        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
         touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
         ./${shell_name}.sh >> ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1 &
         ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
