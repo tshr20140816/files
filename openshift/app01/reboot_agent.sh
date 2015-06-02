@@ -29,7 +29,7 @@ do
             if [ "${file_name}" != "install" ]; then
                 ( zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log;
                   rm -f ${file_name}.log;
-                  mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ./backup/
+                  mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ./backup/;
                 ) &
             fi
         done
