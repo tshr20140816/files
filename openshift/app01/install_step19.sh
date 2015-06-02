@@ -72,18 +72,18 @@ chmod +x memory_usage_logging.sh &
 
 # ***** cron scripts *****
 
-# *** logrotate ***
-
-cat << '__HEREDOC__' > logrotate.sh
-#!/bin/bash
-
-export TZ=JST-9
-date +%Y/%m/%d" "%H:%M:%S
-
-cd ${OPENSHIFT_DATA_DIR}/logrotate
-logrotate logrotate.conf -s logrotate.status
-__HEREDOC__
-chmod +x logrotate.sh &
+# # *** logrotate ***
+# 
+# cat << '__HEREDOC__' > logrotate.sh
+# #!/bin/bash
+#
+# export TZ=JST-9
+# date +%Y/%m/%d" "%H:%M:%S
+#
+# cd ${OPENSHIFT_DATA_DIR}/logrotate
+# logrotate logrotate.conf -s logrotate.status
+# __HEREDOC__
+# chmod +x logrotate.sh &
 
 # *** redmine repository check ***
 
@@ -494,16 +494,16 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/daily > /dev/null
 rm -f ./*
 touch jobs.deny
 
-# * logrotate *
-
-cat << '__HEREDOC__' > logrotate.sh
-#!/bin/bash
-/usr/sbin/logrotate -v -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf
-__HEREDOC__
-chmod +x logrotate.sh
-# echo logrotate.sh >> jobs.allow
-./logrotate.sh
-./logrotate.sh &
+# # * logrotate *
+#
+# cat << '__HEREDOC__' > logrotate.sh
+# #!/bin/bash
+# /usr/sbin/logrotate -v -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf
+# __HEREDOC__
+# chmod +x logrotate.sh
+# # echo logrotate.sh >> jobs.allow
+# ./logrotate.sh
+# ./logrotate.sh &
 
 # * mysql_backup *
 
