@@ -29,11 +29,12 @@ do
             if [ "${file_name}" != "install" ]; then
                 ( zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log;
                   rm -f ${file_name}.log;
+                  mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ./backup/
                 ) &
             fi
         done
-        popd > /dev/null
         wait
+        popd > /dev/null
         echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
         exit
     fi
