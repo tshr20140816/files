@@ -14,6 +14,8 @@ do
     # ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 done
 
+mv -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log ${OPENSHIFT_LOG_DIR}/install
+
 # ***** shell syntax check *****
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
