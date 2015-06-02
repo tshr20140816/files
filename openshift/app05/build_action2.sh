@@ -61,6 +61,9 @@ export CCACHE_MAXSIZE=300M
 # export CCACHE_PREFIX="distcc"
 
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
 # export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_LOG=/dev/null
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
@@ -68,7 +71,6 @@ tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
 export DISTCC_HOSTS="${tmp_string}"
 export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 
-export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 
 export CFLAGS="-O2 -march=core2 -pipe -fomit-frame-pointer -s"
@@ -140,11 +142,6 @@ time make -j6
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
-# if [ -f ${OPENSHIFT_DATA_DIR}/xz/bin/xz ]; then
-#     time tar cf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz --use-compress-prog=xz libmemcached-${libmemcached_version}
-# else
-#     time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
-# fi
 # time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
 time tar cf - libmemcached-${libmemcached_version} \
  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
@@ -197,11 +194,6 @@ export PATH="${path_old}"
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./.rbenv/ -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
-# if [ -f ${OPENSHIFT_DATA_DIR}/xz/bin/xz ]; then
-#     time tar cf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz --use-compress-prog=xz ./.rbenv
-# else
-#     time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
-# fi
 # time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 time tar cf - ./.rbenv \
  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
