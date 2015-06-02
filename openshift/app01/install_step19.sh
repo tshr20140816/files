@@ -35,7 +35,6 @@ cat << '__HEREDOC__' > memory_usage_logging.sh
 #!/bin/bash
 
 export TZ=JST-9
-day='00'
 while :
 do
     dt=$(date +%Y/%m/%d" "%H:%M:%S)
@@ -51,8 +50,9 @@ do
         [ ${usage_in_bytes} -gt $((size * (10**6))) ] && touch ${filename} || rm -f ${filename}
     done
     [ -f ${OPENSHIFT_TMP_DIR}/stop ] && exit || sleep 1s
+    day=$(head -n 1 ${OPENSHIFT_LOG_DIR}/memory_usage.log)
+    day=${day:8:2}
     if [ ${day} != $(date +%d) ]; then
-        day=$(date +%d)
         file_name=${OPENSHIFT_APP_DNS}.memory_usage.log.$(date +%w).xz
         mkdir ${OPENSHIFT_LOG_DIR}/backup 2> /dev/null
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
