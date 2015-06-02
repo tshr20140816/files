@@ -29,6 +29,7 @@ popd > /dev/null
 # openssh_version 6.8p1 → 6.3p1
 # tcl_version 8.6.3
 # expect_version 5.45
+# xz_version 5.2.1
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
