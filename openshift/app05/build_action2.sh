@@ -66,6 +66,7 @@ export DISTCC_LOG=/dev/null
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
 export DISTCC_HOSTS="${tmp_string}"
+export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 
 export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:${OPENSHIFT_DATA_DIR}/.gem/bin:${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
@@ -144,7 +145,10 @@ rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
 # else
 #     time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
 # fi
-time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
+# time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
+time tar cf - libmemcached-${libmemcached_version} \
+ | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+ > ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
 mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf libmemcached-${libmemcached_version}
 rm -f libmemcached-${libmemcached_version}.tar.gz
@@ -198,47 +202,14 @@ rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 # else
 #     time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 # fi
-time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
+# time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
+time tar cf - ./.rbenv \
+ | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+ > ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 popd > /dev/null
 
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
-
-# # ***** tcl *****
-# 
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) tcl"
-# 
-# pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-# 
-# rm -rf tcl${tcl_version}
-# rm -f tcl${tcl_version}-src.tar.gz
-# 
-# cp ${OPENSHIFT_DATA_DIR}/files/tcl${tcl_version}-src.tar.gz ./
-# if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
-#     wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
-# fi
-# tar zxf tcl${tcl_version}-src.tar.gz
-# 
-# pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
-# ./configure \
-#  --mandir=${tmp_dir}/man \
-#  --disable-symbols \
-#  --prefix=${data_dir}/tcl
-# 
-# # 3機がけ前提 1機あたり2プロセス
-# # time make -j2 -l3
-# time make -j6
-# popd > /dev/null
-# ccache -s
-# rm -f ${app_uuid}_maked_tcl${tcl_version}.tar.xz
-# time tar Jcf ${app_uuid}_maked_tcl${tcl_version}.tar.xz tcl${tcl_version}
-# mv -f ${app_uuid}_maked_tcl${tcl_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-# rm -rf tcl${tcl_version}
-# rm -f tcl${tcl_version}-src.tar.gz
-# popd > /dev/null
-# 
-# memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
-# echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
 # ***** cadaver *****
 
@@ -264,7 +235,10 @@ time make -j6
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz
-time tar Jcf ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz cadaver-${cadaver_version}
+# time tar Jcf ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz cadaver-${cadaver_version}
+time tar cf - cadaver-${cadaver_version} \
+ | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+ > ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz
 mv -f ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf cadaver-${cadaver_version}
 rm -f cadaver-${cadaver_version}.tar.gz
@@ -317,6 +291,9 @@ export CXX="ccache g++"
 
 rm -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
+time tar cf - delegate${delegate_version} \
+ | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+ > ${app_uuid}_maked_delegate${delegate_version}.tar.xz
 mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf delegate${delegate_version}
 rm -f delegate${delegate_version}.tar.gz
