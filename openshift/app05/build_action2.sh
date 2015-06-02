@@ -142,10 +142,10 @@ time make -j6
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
-# time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
-time tar cf - libmemcached-${libmemcached_version} \
- | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
- > ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
+time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
+# time tar cf - libmemcached-${libmemcached_version} \
+#  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+#  > ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
 mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf libmemcached-${libmemcached_version}
 rm -f libmemcached-${libmemcached_version}.tar.gz
@@ -194,10 +194,10 @@ export PATH="${path_old}"
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./.rbenv/ -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
-# time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
-time tar cf - ./.rbenv \
- | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
- > ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
+time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
+# time tar cf - ./.rbenv \
+#  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+#  > ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 popd > /dev/null
 
@@ -227,10 +227,10 @@ time make -j6
 popd > /dev/null
 ccache -s
 rm -f ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz
-# time tar Jcf ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz cadaver-${cadaver_version}
-time tar cf - cadaver-${cadaver_version} \
- | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
- > ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz
+time tar Jcf ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz cadaver-${cadaver_version}
+# time tar cf - cadaver-${cadaver_version} \
+#  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+#  > ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz
 mv -f ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf cadaver-${cadaver_version}
 rm -f cadaver-${cadaver_version}.tar.gz
@@ -283,9 +283,9 @@ export CXX="ccache g++"
 
 rm -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
-time tar cf - delegate${delegate_version} \
- | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
- > ${app_uuid}_maked_delegate${delegate_version}.tar.xz
+# time tar cf - delegate${delegate_version} \
+#  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+#  > ${app_uuid}_maked_delegate${delegate_version}.tar.xz
 mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf delegate${delegate_version}
 rm -f delegate${delegate_version}.tar.gz
