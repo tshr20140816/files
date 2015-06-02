@@ -43,8 +43,6 @@ function010() {
         export CXX="distcc g++"
     fi
     if [ -e ${OPENSHIFT_DATA_DIR}/.ssh/config ]; then
-        # export DISTCC_SSH="ssh -v -F ${OPENSHIFT_DATA_DIR}/.ssh/config -i ${OPENSHIFT_DATA_DIR}/.ssh/id_rsa"
-        # export DISTCC_SSH="/usr/bin/ssh -v -x -F ${OPENSHIFT_DATA_DIR}/.ssh/config"
         export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
     fi
     # NG : distcc & -march=native
