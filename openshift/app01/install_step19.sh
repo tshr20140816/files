@@ -890,7 +890,7 @@ do
     query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}"
     wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
     touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
-    ./${shell_name}.sh >>${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1 &
+    ./${shell_name}.sh >>${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1
     ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
 done
 
@@ -904,7 +904,7 @@ do
         query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}"
         wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
         touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
-        ./${shell_name}.sh >> ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1 &
+        ./${shell_name}.sh >> ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1
         ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
     fi
 done
