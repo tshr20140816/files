@@ -11,9 +11,10 @@ set -x
 
 cd /tmp
 
-rm -f gcc-5.1.1-1.fc22.x86_64.rpm
+# rm -f gcc-5.1.1-1.fc22.x86_64.rpm
+rm -f glibc-2.14.1.tar.xz
 
-export LD_LIBRARY_PATH="/tmp/gcc/usr/lib"
+# export LD_LIBRARY_PATH="/tmp/gcc/usr/lib"
 /tmp/gcc/usr/bin/gcc --version
 /tmp/gcc/usr/bin/gcc --help
 
