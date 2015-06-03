@@ -35,6 +35,8 @@ cat << '__HEREDOC__' > memory_usage_logging.sh
 #!/bin/bash
 
 export TZ=JST-9
+url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
+shell_name=$(basename "${0}")
 while :
 do
     dt=$(date +%Y/%m/%d" "%H:%M:%S)
@@ -53,18 +55,26 @@ do
     day=$(head -n 1 ${OPENSHIFT_LOG_DIR}/memory_usage.log)
     day=${day:8:2}
     if [ ${day} != $(date +%d) ]; then
+        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}&check_point=param&day=${day}&date=$(date +%d)"
+        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
         file_name=${OPENSHIFT_APP_DNS}.memory_usage.log.$(date +%w).xz
         mkdir ${OPENSHIFT_LOG_DIR}/backup 2> /dev/null
+        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}&check_point=xz"
+        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         xz -z9ef memory_usage.log
         mv -f memory_usage.log.xz backup/${file_name}
         popd > /dev/null
+        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}&check_point=cadaver"
+        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
         log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
         remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
         ${OPENSHIFT_DATA_DIR}/scripts/./cadaver_put.sh ${OPENSHIFT_LOG_DIR}/backup/ ${remote_dir} ${file_name} | tee ${log_file_name}
         if [ $(grep -c -e succeeded ${log_file_name}) -eq 1 ]; then
             rm -f ${OPENSHIFT_LOG_DIR}/backup/${file_name}
         fi
+        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}&check_point=done"
+        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
     fi
 done
 __HEREDOC__
