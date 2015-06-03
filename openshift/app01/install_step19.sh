@@ -246,6 +246,16 @@ elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
     ./delegated -r +=P30080
 fi
 
+# redmine
+# export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
+process_count=$(find ${OPENSHIFT_DATA_DIR}/.gem/gems/ \
+-name passenger-status -type f \
+| xargs -i ruby {} --verbose \
+| grep Processes | awk '{print $NF}')
+if [ ${process_count} = 0 ]; then
+    wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
+fi
+
 # memory usage logging
 is_alive=$(ps awhx | grep memory_usage_logging.sh | grep -v grep | grep -c ${OPENSHIFT_DIY_IP})
 if [ ${is_alive} -gt 0 ]; then
@@ -257,16 +267,6 @@ if [ ${is_alive} -gt 0 ]; then
 elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
     echo START memory_usage_logging.sh
     ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh ${OPENSHIFT_DIY_IP}
-fi
-
-# redmine
-# export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
-process_count=$(find ${OPENSHIFT_DATA_DIR}/.gem/gems/ \
--name passenger-status -type f \
-| xargs -i ruby {} --verbose \
-| grep Processes | awk '{print $NF}')
-if [ ${process_count} = 0 ]; then
-    wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
 fi
 __HEREDOC__
 chmod +x keep_process.sh &
