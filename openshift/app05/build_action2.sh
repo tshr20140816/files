@@ -83,6 +83,8 @@ export HOME=${OPENSHIFT_DATA_DIR}
 # 統計情報クリア
 ccache -z
 
+ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
+
 # ***** apache *****
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache"
@@ -117,6 +119,8 @@ mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 ${OPENSHIFT_DATA_DIR}/fi
 rm -rf httpd-${apache_version}
 rm -f httpd-${apache_version}.tar.bz2
 popd > /dev/null
+
+ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
 # ***** libmemcached *****
 
@@ -153,6 +157,8 @@ rm -rf libmemcached-${libmemcached_version}
 rm -f libmemcached-${libmemcached_version}.tar.gz
 
 popd > /dev/null
+
+ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
 # ***** ruby (rbenv) *****
 
@@ -205,6 +211,8 @@ popd > /dev/null
 
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 
+ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
+
 # ***** cadaver *****
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate"
@@ -237,6 +245,8 @@ mv -f ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz ${OPENSHIFT_DATA_DIR}/
 rm -rf cadaver-${cadaver_version}
 rm -f cadaver-${cadaver_version}.tar.gz
 popd > /dev/null
+
+ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
 # ***** delegate *****
 
@@ -280,8 +290,8 @@ pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
 unlink cc
 unlink gcc
 popd > /dev/null
-export CC="ccache gcc"
-export CXX="ccache g++"
+export CC="ccache distcc gcc"
+export CXX="ccache distcc g++"
 
 rm -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
@@ -292,6 +302,8 @@ mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}
 rm -rf delegate${delegate_version}
 rm -f delegate${delegate_version}.tar.gz
 popd > /dev/null
+
+ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
 rm -f ${OPENSHIFT_TMP_DIR}/build_now
 
