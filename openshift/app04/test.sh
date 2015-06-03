@@ -21,6 +21,8 @@ export CCACHE_MAXSIZE=300M
 mkdir ${OPENSHIFT_TMP_DIR}/ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 
+ccache -s
+
 tree ${OPENSHIFT_DATA_DIR}/ccache/bin
 
 cd /tmp
