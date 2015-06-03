@@ -38,6 +38,7 @@ rm -f glibc-2.14.1.tar.xz
 # printenv | grep LIB
 
 cd glibc-2.14.1
+rm -rf build
 mkdir build
 cd build
 make clean
