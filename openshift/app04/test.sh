@@ -28,7 +28,7 @@ tree ${OPENSHIFT_DATA_DIR}/ccache/bin
 cd /tmp
 
 # rm -f gcc-5.1.1-1.fc22.x86_64.rpm
-rm -f glibc-2.14.1.tar.xz
+# rm -f glibc-2.14.1.tar.xz
 
 # export LD_LIBRARY_PATH="/tmp/gcc/usr/lib"
 /tmp/gcc/usr/bin/gcc --version
