@@ -23,7 +23,7 @@ export LD_LIBRARY_PATH="/tmp/gcc/usr/lib"
 cd glibc-2.14.1
 mkdir build
 cd build
-../configure
+../configure --prefix=${OPENSHIFT_DATA_DIR}/lib
 time make -j4
 
 find /tmp -name libc.so* -print
