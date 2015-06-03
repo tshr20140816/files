@@ -12,3 +12,15 @@ set -x
 cd /tmp
 
 head --help
+
+libmemcached_version=1.0.18
+
+wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
+
+tar zxf libmemcached-${libmemcached_version}.tar.gz
+
+time tar cf - libmemcached-${libmemcached_version} \
+ | xz -f \
+ > ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
+
+ls -lang
