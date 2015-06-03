@@ -13,17 +13,5 @@ cd /tmp
 
 head --help
 ${OPENSHIFT_DATA_DIR}/xz/bin/xz --help
+gcc --help
 
-rm -f *.xz
-
-libmemcached_version=1.0.18
-
-# wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
-
-# tar zxf libmemcached-${libmemcached_version}.tar.gz
-
-time tar cf - libmemcached-${libmemcached_version} \
- | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f  --memlimit=256MiB \
- > test.tar.xz
-
-ls -lang
