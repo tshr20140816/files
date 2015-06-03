@@ -44,6 +44,9 @@ echo >> infrastructure.txt
 echo "\$ bash --version" >> infrastructure.txt
 bash --version | tee -a infrastructure.txt
 echo >> infrastructure.txt
+echo "\$ gcc --version" >> infrastructure.txt
+gcc --version | tee -a infrastructure.txt
+echo >> infrastructure.txt
 echo "\$ gcc -march=native -Q --help=target" >> infrastructure.txt
 gcc -march=native -Q --help=target | tee -a infrastructure.txt
 echo >> infrastructure.txt
