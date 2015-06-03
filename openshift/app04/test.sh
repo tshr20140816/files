@@ -11,9 +11,14 @@ set -x
 
 cd /tmp
 
-head --help
-${OPENSHIFT_DATA_DIR}/xz/bin/xz --help
 gcc --version
 
 gcc -march=native -Q --help=target
 gcc -march=core2 -Q --help=target
+
+wget https://ftp.gnu.org/gnu/gcc/gcc-4.6.4/gcc-4.6.4.tar.bz2
+
+tar jxf gcc-4.6.4.tar.bz2
+
+cd gcc-4.6.4
+./configure
