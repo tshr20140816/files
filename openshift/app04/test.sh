@@ -2,6 +2,8 @@
 
 # echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
 
+#
+
 set -x
 
 rm -f $OPENSHIFT_LOG_DIR/cron_minutely.log.*
