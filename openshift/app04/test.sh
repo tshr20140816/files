@@ -24,6 +24,7 @@ rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 mkdir ${OPENSHIFT_TMP_DIR}/ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 
+quota -s
 ccache -s
 
 tree ${OPENSHIFT_DATA_DIR}/ccache/bin
@@ -36,8 +37,6 @@ cd /tmp
 # export LD_LIBRARY_PATH="/tmp/gcc/usr/lib"
 /tmp/gcc/usr/bin/gcc --version
 /tmp/gcc/usr/bin/gcc --help
-
-quota -s
 
 # printenv
 # printenv | grep LIB
