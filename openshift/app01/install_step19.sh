@@ -534,6 +534,7 @@ mysqldump \
 --password=${OPENSHIFT_MYSQL_DB_PASSWORD} \
 -x --all-databases --events | xz > ${dump_file_name}
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) START mysql_backup.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
 log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
 remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
 ./scripts/cadaver_put.sh ${OPENSHIFT_DATA_DIR} ${remote_dir} ${dump_file_name} | tee ${log_file_name}
@@ -543,6 +544,8 @@ if [ $(grep -c -e succeeded ${log_file_name}) -eq 1 ]; then
 else
     echo "NG"
 fi
+cat ${log_file_name} | tr -d "\b" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH mysql_backup.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
 popd
 __HEREDOC__
 chmod +x mysql_backup.sh
@@ -619,6 +622,7 @@ log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
 remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
 for file in *log.${weekday}.xz
 do
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) START bakup_log_files.sh ${file}" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
     ${OPENSHIFT_DATA_DIR}/scripts/./cadaver_put.sh ${OPENSHIFT_LOG_DIR}/backup/ ${remote_dir} ${file} | tee ${log_file_name}
     if [ $(grep -c -e succeeded ${log_file_name}) -eq 1 ]; then
         echo "OK ${file}"
@@ -626,6 +630,8 @@ do
     else
         echo "NG ${file}"
     fi
+    cat ${log_file_name} | tr -d "\b" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH bakup_log_files.sh ${file}" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
 done
 popd > /dev/null
 __HEREDOC__
