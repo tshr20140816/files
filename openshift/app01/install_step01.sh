@@ -140,8 +140,8 @@ web_beacon_server_user=${10}
 mirror_server=${11}
 build_server_password=${12}
 schedule_server=${13}
-distcc_server_account=${14}
-distcc_server_password=${15}
+distcc_server_account_1=${14}
+distcc_server_password_1=${15}
 distcc_server_account_2=${16}
 distcc_server_password_2=${17}
 hidrive_account=${18}
@@ -163,8 +163,8 @@ echo "${web_beacon_server_user}" > ${OPENSHIFT_DATA_DIR}/params/web_beacon_serve
 echo "${mirror_server}" > ${OPENSHIFT_DATA_DIR}/params/mirror_server
 echo "${schedule_server}" > ${OPENSHIFT_DATA_DIR}/params/schedule_server
 echo "${build_server_password}" > ${OPENSHIFT_DATA_DIR}/params/build_server_password
-echo "${distcc_server_account}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_account
-echo "${distcc_server_password}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password
+echo "${distcc_server_account_1}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_account_1
+echo "${distcc_server_password_1}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password_1
 echo "${distcc_server_account_2}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_account_2
 echo "${distcc_server_password_2}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password_2
 echo "${hidrive_account}" > ${OPENSHIFT_DATA_DIR}/params/hidrive_account
