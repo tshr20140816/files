@@ -13,6 +13,8 @@ rm -rf gcc
 rm -f cc*
 rm -f test.tar.xz
 
-
-ls -lang
-
+wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.bz2
+tar jxf binutils-2.25.tar.bz2
+cd binutils-2.25
+./configure --help
+./configure
