@@ -24,6 +24,8 @@ cd glibc-2.14.1
 ./configure
 time make -j4
 
+find /tmp -name libc.so* -print
+
 # wget http://ftp.gnu.org/gnu/glibc/glibc-2.14.1.tar.xz
 # wget ftp://195.220.108.108/linux/fedora/linux/releases/22/Everything/x86_64/os/Packages/g/gcc-5.1.1-1.fc22.x86_64.rpm
 
