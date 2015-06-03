@@ -1,3 +1,5 @@
+cat cadaver.log | tr -d "\b" > 1.txt
+
 B00FR70ZNI
 
 http://grafana.org/
