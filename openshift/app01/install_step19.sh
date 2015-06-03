@@ -69,10 +69,13 @@ do
         wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
         log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
         remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) START memory_usage_logging.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
         ${OPENSHIFT_DATA_DIR}/scripts/./cadaver_put.sh ${OPENSHIFT_LOG_DIR}/backup/ ${remote_dir} ${file_name} | tee ${log_file_name}
         if [ $(grep -c -e succeeded ${log_file_name}) -eq 1 ]; then
             rm -f ${OPENSHIFT_LOG_DIR}/backup/${file_name}
         fi
+        cat ${log_file_name} | tr -d "\b" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH memory_usage_logging.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
         query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}&check_point=done"
         wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
     fi
