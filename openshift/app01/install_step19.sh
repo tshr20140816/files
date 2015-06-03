@@ -880,11 +880,11 @@ export TZ=JST-9
 date +%Y/%m/%d" "%H:%M:%S
 hour=$((10#$(date +%H)))
 weekday=$(date +%w)
-url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server))dummy"
+url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
 
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
-# for shell_name in another_server_check beacon keep_process memcached_status mrtg passenger_status process_status
+# for shell_name in another_server_check beacon memcached_status mrtg passenger_status process_status keep_process
 for shell_name in beacon keep_process memcached_status mrtg passenger_status process_status
 do
     query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}"
