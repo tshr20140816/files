@@ -17,8 +17,14 @@ export LD_LIBRARY_PATH="/tmp/gcc/usr/lib"
 /tmp/gcc/usr/bin/gcc --version
 /tmp/gcc/usr/bin/gcc --help
 
-printenv
-printenv | grep LIB
+# printenv
+# printenv | grep LIB
+
+wget http://ftp.gnu.org/gnu/glibc/glibc-2.14.1.tar.xz
+
+tar Jxf glibc-2.14.1.tar.xz
+
+tree glibc-2.14.1
 
 # wget ftp://195.220.108.108/linux/fedora/linux/releases/22/Everything/x86_64/os/Packages/g/gcc-5.1.1-1.fc22.x86_64.rpm
 
