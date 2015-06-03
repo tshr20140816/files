@@ -49,8 +49,9 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 # 環境変数
 
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-export CC="ccache distcc gcc"
-export CXX="ccache distcc g++"
+export CC="ccache gcc"
+export CXX="ccache g++"
+export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 # ログ多すぎ
@@ -290,8 +291,8 @@ pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
 unlink cc
 unlink gcc
 popd > /dev/null
-export CC="ccache distcc gcc"
-export CXX="ccache distcc g++"
+export CC="ccache gcc"
+export CXX="ccache g++"
 
 rm -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
