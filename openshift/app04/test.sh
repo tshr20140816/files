@@ -12,6 +12,7 @@ set -x
 cd /tmp
 
 head --help
+${OPENSHIFT_DATA_DIR}/xz/bin/xz --help
 
 rm -f *.xz
 
