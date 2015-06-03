@@ -22,7 +22,7 @@ libmemcached_version=1.0.18
 # tar zxf libmemcached-${libmemcached_version}.tar.gz
 
 time tar cf - libmemcached-${libmemcached_version} \
- | xz -f  --memlimit=256MiB \
+ | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f  --memlimit=256MiB \
  > test.tar.xz
 
 ls -lang
