@@ -55,18 +55,15 @@ do
     day=$(head -n 1 ${OPENSHIFT_LOG_DIR}/memory_usage.log)
     day=${day:8:2}
     if [ ${day} != $(date +%d) ]; then
-        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}&check_point=param&day=${day}&date=$(date +%d)"
-        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
+        function030 "cron=minutely&shell_name=${shell_name}&check_point=param&day=${day}&date=$(date +%d)"
         file_name=${OPENSHIFT_APP_DNS}.memory_usage.log.$(date +%w).xz
         mkdir ${OPENSHIFT_LOG_DIR}/backup 2> /dev/null
-        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}&check_point=xz"
-        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
+        function030 "cron=minutely&shell_name=${shell_name}&check_point=xz"
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         xz -z9ef memory_usage.log
         mv -f memory_usage.log.xz backup/${file_name}
         popd > /dev/null
-        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}&check_point=cadaver"
-        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
+        function030 "cron=minutely&shell_name=${shell_name}&check_point=cadaver"
         log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
         remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
         echo "$(date +%Y/%m/%d" "%H:%M:%S) START memory_usage_logging.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
@@ -76,8 +73,7 @@ do
         fi
         cat ${log_file_name} | tr -d "\b" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH memory_usage_logging.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
-        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}&check_point=done"
-        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
+        function030 "cron=minutely&shell_name=${shell_name}&check_point=done"
     fi
 done
 __HEREDOC__
@@ -903,11 +899,20 @@ url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
 
 pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
-# for shell_name in another_server_check beacon memcached_status mrtg passenger_status process_status keep_process
-for shell_name in beacon keep_process memcached_status mrtg passenger_status process_status
+for shell_name in redmine_repository_check update_feeds
 do
-    query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}"
-    wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
+    if [ ${hour} -ne 1 ]; then
+        function030 "cron=minutely&shell_name=${shell_name}"
+        touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
+        ./${shell_name}.sh >> ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1
+        ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
+    fi
+done
+
+# for shell_name in another_server_check beacon memcached_status mrtg passenger_status process_status keep_process
+for shell_name in beacon memcached_status mrtg passenger_status process_status keep_process
+do
+    function030 "cron=minutely&shell_name=${shell_name}"
     touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
     ./${shell_name}.sh >>${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1
     ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
@@ -916,17 +921,6 @@ done
 # ./cacti_poller.sh >>${OPENSHIFT_LOG_DIR}/cacti_poller.sh.log 2>&1 &
 # ./logrotate.sh >>${OPENSHIFT_LOG_DIR}/logrotate.sh.log 2>&1 &
 # ./my_server_check.sh >>${OPENSHIFT_LOG_DIR}/my_server_check.sh.log 2>&1 &
-
-for shell_name in redmine_repository_check update_feeds
-do
-    if [ ${hour} -ne 1 ]; then
-        query_string="server=${OPENSHIFT_APP_DNS}&cron=minutely&shell_name=${shell_name}"
-        wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
-        touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
-        ./${shell_name}.sh >> ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1
-        ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
-    fi
-done
 
 popd > /dev/null
 __HEREDOC__
