@@ -154,3 +154,10 @@ function020() {
         done
     done
 }
+
+# ${1} : query string
+function030() {
+    [ $# -ne 1 ] && return
+    url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?server=${OPENSHIFT_APP_DNS}&"
+    wget --spider -b -q -o /dev/null "${url}?${1}" > /dev/null 2>&1
+}
