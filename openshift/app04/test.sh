@@ -13,5 +13,5 @@ cd /tmp
 
 head --help
 ${OPENSHIFT_DATA_DIR}/xz/bin/xz --help
-gcc --help
+gcc --version
 
