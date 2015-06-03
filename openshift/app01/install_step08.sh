@@ -31,7 +31,8 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) webalizer make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_webalizer.log
-time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_webalizer.log
+# time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_webalizer.log
+time make -j12 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_webalizer.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) webalizer make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_webalizer.log
