@@ -44,7 +44,7 @@ mkdir build
 cd build
 make clean
 ../configure --prefix=${OPENSHIFT_DATA_DIR}/lib
-time make -j4
+time make -j4 > /dev/null
 
 find /tmp -name libc.so* -print
 
