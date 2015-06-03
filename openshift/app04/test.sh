@@ -15,3 +15,5 @@ head --help
 ${OPENSHIFT_DATA_DIR}/xz/bin/xz --help
 gcc --version
 
+gcc -march=native -Q --help=target
+gcc -march=core2 -Q --help=target
