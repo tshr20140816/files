@@ -83,6 +83,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 # 統計情報クリア
 ccache -z
+ccache -p
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
