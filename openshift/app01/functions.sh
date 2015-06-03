@@ -48,7 +48,10 @@ function010() {
     # NG : distcc & -march=native
     # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
     # -march=ivybridge E5-2670 v2
-    export CFLAGS="-O2 -march=core2 -fomit-frame-pointer -s"
+    # export CFLAGS="-O2 -march=core2 -fomit-frame-pointer -s"
+    export CFLAGS="-O2 -march=core2 -maes -mavx -mcx16 -mpclmul -mpopcnt -msahf"
+    export CFLAGS="${CFLAGS} -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mtune=generic"
+    export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
     export CXXFLAGS="${CFLAGS}"
 
     # shellcheck disable=SC2034
