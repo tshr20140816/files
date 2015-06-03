@@ -11,13 +11,8 @@ set -x
 
 cd /tmp
 
-gcc --version
+rm -f gcc-4.6.4.tar.bz2
 
-gcc -march=native -Q --help=target
-gcc -march=core2 -Q --help=target
+wget ftp://195.220.108.108/linux/fedora/linux/releases/22/Everything/x86_64/os/Packages/g/gcc-5.1.1-1.fc22.x86_64.rpm
 
-# wget https://ftp.gnu.org/gnu/gcc/gcc-4.6.4/gcc-4.6.4.tar.bz2
-
-# tar jxf gcc-4.6.4.tar.bz2
-
-rm -rf gcc-4.6.4
+ls -lang
