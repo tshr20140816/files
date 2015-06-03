@@ -37,6 +37,8 @@ cd /tmp
 /tmp/gcc/usr/bin/gcc --version
 /tmp/gcc/usr/bin/gcc --help
 
+quota -s
+
 # printenv
 # printenv | grep LIB
 
