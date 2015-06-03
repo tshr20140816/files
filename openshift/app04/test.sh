@@ -21,7 +21,9 @@ export LD_LIBRARY_PATH="/tmp/gcc/usr/lib"
 # printenv | grep LIB
 
 cd glibc-2.14.1
-./configure
+mkdir build
+cd build
+../configure
 time make -j4
 
 find /tmp -name libc.so* -print
