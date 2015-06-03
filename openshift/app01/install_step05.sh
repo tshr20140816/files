@@ -67,11 +67,6 @@ popd > /dev/null
 
 # *** env ***
 
-distcc_server_account=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_account)
-distcc_server_password=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_password)
-distcc_server_account_2=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_account_2)
-distcc_server_password_2=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_password_2)
-
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
@@ -89,12 +84,14 @@ gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc setup" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
-yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
-rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt
-# cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-
-yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account_2} -p ${distcc_server_password_2}
-rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee -a ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt
+rm -f ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt
+for index in 1 2
+do
+    distcc_server_account=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_account_${index})
+    distcc_server_password=$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_server_password_${index})
+    yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
+    rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee -a ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt
+done
 cat tee ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
@@ -111,24 +108,6 @@ do
     echo -n "${distcc_hosts_string}" >> ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
 done
 
-# yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account_2} -p ${distcc_server_password_2}
-# rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt
-# cat tee ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-# for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt)
-# do
-#     user_fqdn=$(echo "${line}")
-#     # tee だと止まる
-#     # ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1| tee -a ${OPENSHIFT_LOG_DIR}/install.log
-#     ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 >> ${OPENSHIFT_LOG_DIR}/install.log
-#     ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-#     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
-#     distcc_hosts_string="${user_fqdn}/4:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start "
-#     # distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,lzo "
-#     # distcc_hosts_string="${user_fqdn}/2:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start,cpp "
-#     echo -n "${distcc_hosts_string}" >> ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt
-# done
-# cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt >> ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt
-# rm -f ${OPENSHIFT_DATA_DIR}/params/user_fqdn_2.txt
 popd > /dev/null
 cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo " " | tee -a ${OPENSHIFT_LOG_DIR}/install.log
