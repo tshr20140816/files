@@ -17,9 +17,9 @@ rm -f *.xz
 
 libmemcached_version=1.0.18
 
-wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
+# wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
 
-tar zxf libmemcached-${libmemcached_version}.tar.gz
+# tar zxf libmemcached-${libmemcached_version}.tar.gz
 
 time tar cf - libmemcached-${libmemcached_version} \
  | xz -f  --memlimit=256MiB \
