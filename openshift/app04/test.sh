@@ -18,6 +18,7 @@ export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 # export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 
+rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 mkdir ${OPENSHIFT_TMP_DIR}/ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 
