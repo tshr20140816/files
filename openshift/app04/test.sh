@@ -11,8 +11,15 @@ set -x
 
 cd /tmp
 
-rm -f gcc-4.6.4.tar.bz2
+rm -f libmemcached-1.0.18.tar.gz
+rm -rf libmemcached-1.0.18
 
-wget ftp://195.220.108.108/linux/fedora/linux/releases/22/Everything/x86_64/os/Packages/g/gcc-5.1.1-1.fc22.x86_64.rpm
+# wget ftp://195.220.108.108/linux/fedora/linux/releases/22/Everything/x86_64/os/Packages/g/gcc-5.1.1-1.fc22.x86_64.rpm
+
+mkdir gcc
+cd gcc
+mv ../gcc-5.1.1-1.fc22.x86_64.rpm ./
+
+rpm2cpio mod-spdy-beta_current_x86_64.rpm | cpio -idmv
 
 ls -lang
