@@ -229,15 +229,14 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -f ${OPENSHIFT_TMP_DIR}/rhc_setup.txt
 
 pushd  ${OPENSHIFT_TMP_DIR} > /dev/null
-rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > user_fqdn.txt
+rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > ${OPENSHIFT_DATA_DIR}/user_fqdn.txt
 while read LINE
 do
     user_fqdn=$(echo "${LINE}")
     ${OPENSHIFT_DATA_DIR}/openssh/bin/ssh -fMN -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn}
     user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
     distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/4:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
-done < user_fqdn.txt
-rm -f user_fqdn.txt
+done < ${OPENSHIFT_DATA_DIR}/user_fqdn.txt
 popd > /dev/null
 distcc_hosts_string="${distcc_hosts_string:1}"
 echo "${distcc_hosts_string}" > ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt
