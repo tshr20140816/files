@@ -182,22 +182,23 @@ rbenv rehash
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 mv Gemfile Gemfile.$(date '+%Y%m%d')
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
-bundle config build.activerecord --with-cflags="-O2 -march=core2 -fomit-frame-pointer -s" --local
-bundle config build.rails --with-cflags="-O2 -march=core2 -fomit-frame-pointer -s" --local
-bundle config build.rake --with-cflags="-O2 -march=core2 -fomit-frame-pointer -s" --local
-bundle config build.mysql2 --with-cflags="-O2 -march=core2 -fomit-frame-pointer -s" --local
+bundle config build.activerecord --with-cflags="${CFLAGS}" --local
+bundle config build.rails --with-cflags="${CFLAGS}" --local
+bundle config build.rake --with-cflags="${CFLAGS}" --local
+bundle config build.mysql2 --with-cflags="${CFLAGS}" --local
 bundle config --local 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 mkdir .bundle
 cat << '__HEREDOC__' > .bundle/config
 ---
-BUNDLE_BUILD__ACTIVERECORD: --with-cflags='-O2 -march=core2 -fomit-frame-pointer -s'
-BUNDLE_BUILD__RAILS: --with-cflags='-O2 -march=core2 -fomit-frame-pointer -s'
-BUNDLE_BUILD__RAKE: --with-cflags='-O2 -march=core2 -fomit-frame-pointer -s'
-BUNDLE_BUILD__MYSQL2: --with-cflags='-O2 -march=core2 -fomit-frame-pointer -s'
-BUNDLE_BUILD__JQUERY_RAILS: --with-cflags='-O2 -march=core2 -fomit-frame-pointer -s'
-BUNDLE_BUILD__CODERAY: --with-cflags='-O2 -march=core2 -fomit-frame-pointer -s'
-BUNDLE_BUILD__REQUEST_STORE: --with-cflags='-O2 -march=core2 -fomit-frame-pointer -s'
+BUNDLE_BUILD__ACTIVERECORD: --with-cflags='__CFLAGS__'
+BUNDLE_BUILD__RAILS: --with-cflags='__CFLAGS__'
+BUNDLE_BUILD__RAKE: --with-cflags='__CFLAGS__'
+BUNDLE_BUILD__MYSQL2: --with-cflags='__CFLAGS__'
+BUNDLE_BUILD__JQUERY_RAILS: --with-cflags='__CFLAGS__'
+BUNDLE_BUILD__CODERAY: --with-cflags='__CFLAGS__'
+BUNDLE_BUILD__REQUEST_STORE: --with-cflags='__CFLAGS__'
 __HEREDOC__
+sed -i -e "s|__CFLAGS__|${CFLAGS}|g" .bundle/config
 pushd ${OPENSHIFT_DATA_DIR}/distcc/bin > /dev/null
 ln -s distcc cc
 ln -s distcc gcc
