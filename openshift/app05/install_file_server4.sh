@@ -3,6 +3,8 @@
 # rhc setup --server openshift.redhat.com --create-token -l mail_address -p password
 # rhc app create xxx php-5.4 cron-1.4 --server openshift.redhat.com
 
+# cd /tmp && wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/install_file_server4.sh && chmod +x install_file_server4.sh && ./install_file_server4.sh | tee ${OPENSHIFT_LOG_DIR}/install.log
+
 set -x
 
 export TZ=JST-9
