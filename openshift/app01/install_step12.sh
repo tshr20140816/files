@@ -30,7 +30,7 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name request_handler.rb -type f -pr
 #  | xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', rand(15000..20000))/g"
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
  | grep -e lib/phusion_passenger/request_handler.rb \
- | xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', 15777/g"
+ | xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', 15777)/g"
 
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
  | grep -e lib/phusion_passenger/request_handler.rb \
