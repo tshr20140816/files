@@ -89,7 +89,7 @@ ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff_*
 
 if [ -f ${OPENSHIFT_DATA_DIR}/user_fqdn.txt ]; then
-    for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
+    for line in $(cat ${OPENSHIFT_DATA_DIR}/user_fqdn.txt)
     do
         user_fqdn=$(echo "${line}")
         ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1
