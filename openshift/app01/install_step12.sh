@@ -25,9 +25,12 @@ ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --snippet > ${OP
 # 15000 - 35530
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name request_handler.rb -type f -print0 \
  | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
+# find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
+#  | grep -e lib/phusion_passenger/request_handler.rb \
+#  | xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', rand(15000..20000))/g"
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
  | grep -e lib/phusion_passenger/request_handler.rb \
- | xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', rand(15000..20000))/g"
+ | xargs perl -pi -e "s/new\(\'127.0.0.1\', 0\)/new(\'${OPENSHIFT_DIY_IP}\', 15777/g"
 
 find ${OPENSHIFT_DATA_DIR} -name request_handler.rb -type f \
  | grep -e lib/phusion_passenger/request_handler.rb \
