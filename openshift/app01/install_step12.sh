@@ -179,6 +179,8 @@ rbenv rehash
 
 # *** bundle ***
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine bundle install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version} > /dev/null
 mv Gemfile Gemfile.$(date '+%Y%m%d')
 cp ${OPENSHIFT_DATA_DIR}/download_files/Gemfile_redmine_custom ./Gemfile
@@ -219,6 +221,8 @@ bundle show | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cat .bundle/config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** rake ***
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine rake" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 time RAILS_ENV=production bundle exec rake generate_secret_token 2>&1 \
  | tee ${OPENSHIFT_LOG_DIR}/generate_secret_token.rake.log
