@@ -5,7 +5,7 @@
 if [ $# -ne 3 ]; then
     exit
 fi
-    
+
 export app_uuid=${1}
 export data_dir=${2}
 export tmp_dir=${3}
