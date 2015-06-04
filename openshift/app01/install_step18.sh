@@ -96,6 +96,7 @@ if [ $# -ne 3 ]; then
     exit 1
 fi
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) START ${3}"
 pushd ${1}
 export HOME=${OPENSHIFT_DATA_DIR}
 ${OPENSHIFT_DATA_DIR}/cadaver/bin/./cadaver https://webdav.hidrive.strato.com/ << __HEREDOC_2__
@@ -104,6 +105,7 @@ put ${3}
 quit
 __HEREDOC_2__
 popd
+echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH ${3}"
 exit 0
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/scripts/cadaver_put.sh
