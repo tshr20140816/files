@@ -198,9 +198,21 @@ BUNDLE_BUILD__JQUERY_RAILS: --with-cflags='-O2 -march=core2 -fomit-frame-pointer
 BUNDLE_BUILD__CODERAY: --with-cflags='-O2 -march=core2 -fomit-frame-pointer -s'
 BUNDLE_BUILD__REQUEST_STORE: --with-cflags='-O2 -march=core2 -fomit-frame-pointer -s'
 __HEREDOC__
+pushd ${OPENSHIFT_DATA_DIR}/distcc/bin > /dev/null
+ln -s distcc cc
+ln -s distcc gcc
+ln -s distcc c++
+ln -s distcc g++
+popd > /dev/null
 time bundle install --path vendor/bundle --without test development --verbose \
  --jobs $(grep -c -e processor /proc/cpuinfo) --retry 5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
+pushd ${OPENSHIFT_DATA_DIR}/distcc/bin > /dev/null
+unlink cc
+unlink gcc
+unlink c++
+unlink g++
+popd > /dev/null
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
 bundle show | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cat .bundle/config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
