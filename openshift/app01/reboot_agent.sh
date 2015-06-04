@@ -27,13 +27,11 @@ do
                 wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
             done < ${file_name}.log
             if [ "${file_name}" != "install" ]; then
-                ( zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log;
-                  rm -f ${file_name}.log;
-                  mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ./backup/;
-                ) &
+                zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log
+                rm -f ${file_name}.log
+                mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ./install/
             fi
         done
-        wait
         rm -f dummy*
         popd > /dev/null
         echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
