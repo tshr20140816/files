@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# distcc のサーバは3機従えておく 1機あたり2～4のプロセスを与える
+# distcc のサーバは3機従えておく
 
 if [ $# -ne 3 ]; then
     exit
@@ -83,7 +83,19 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ccache -z
 ccache -p
 
+# ssh 接続確認
+
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
+rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff_*
+
+if [ -f ${OPENSHIFT_DATA_DIR}/user_fqdn.txt ]; then
+    for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
+    do
+        user_fqdn=$(echo "${line}")
+        ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1
+        ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1
+    done
+fi
 
 # ***** apache *****
 
