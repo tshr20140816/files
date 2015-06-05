@@ -85,7 +85,7 @@ cd binutils-2.25
 #./configure --help
 # ./configure --enable-gold=yes --disable-libquadmath --disable-libstdcxx > /dev/null
 ./configure --disable-libquadmath --disable-libstdcxx > /dev/null
-time make -j4 > /dev/null
+time make -j5 > /dev/null
 
 ls -lang
 
