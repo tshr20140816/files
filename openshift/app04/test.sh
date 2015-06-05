@@ -6,6 +6,7 @@ set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
+rm -f cc*.s
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
@@ -76,8 +77,8 @@ Host *
   ControlPersist 30m
   ServerAliveInterval 60
 __HEREDOC__
-sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
-sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
+sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" ${OPENSHIFT_DATA_DIR}/.ssh/config
+sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" ${OPENSHIFT_DATA_DIR}/.ssh/config
 
 ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config 55630afc5973caf283000214@v1-20150216.rhcloud.com pwd 2>&1
 ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config 55630afc5973caf283000214@v1-20150216.rhcloud.com 2>&1
