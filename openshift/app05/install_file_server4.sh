@@ -106,7 +106,8 @@ popd > /dev/null
 
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
 mkdir ${OPENSHIFT_TMP_DIR}/.ssh
-cat << __HEREDOC__ > ${OPENSHIFT_DATA_DIR}/.ssh/config
+pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
+cat << __HEREDOC__ > config
 Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
   StrictHostKeyChecking no
@@ -131,6 +132,7 @@ Host *
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
+popd > /dev/null
 
 # *** distcc-ssh ***
 
