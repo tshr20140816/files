@@ -14,11 +14,8 @@ ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
 cd /tmp
 
-logger --help
-logger "TEST"
-
-mkdir ${OPENSHIFT_DATA_DIR}/.ssh
-mkdir ${OPENSHIFT_TMP_DIR}/.ssh
+mkdir ${OPENSHIFT_DATA_DIR}/.ssh 2>/dev/null
+mkdir ${OPENSHIFT_TMP_DIR}/.ssh 2>/dev/null
 cat << __HEREDOC__ > ${OPENSHIFT_DATA_DIR}/.ssh/config
 Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
@@ -45,7 +42,7 @@ __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" ${OPENSHIFT_DATA_DIR}/.ssh/config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" ${OPENSHIFT_DATA_DIR}/.ssh/config
 
-mkdir ${OPENSHIFT_DATA_DIR}/bin
+mkdir ${OPENSHIFT_DATA_DIR}/bin 2>/dev/null
 pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
 cat << '__HEREDOC__' > distcc-ssh
 #!/bin/bash
