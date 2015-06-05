@@ -102,7 +102,9 @@ cd binutils-2.25
 ./configure --disable-libquadmath --disable-libstdcxx > /dev/null
 time make -j6 > /dev/null
 
-ls -lang
+ccache -s
+
+# ls -lang
 
 cd gold
 
