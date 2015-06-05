@@ -416,7 +416,7 @@ if [ "${mirror_server}" != "none" ]; then
    rm -f xz-${xz_version}.tar.xz.sig
 
     # *** gem ***
-    for gem in bundler rack passenger
+    for gem in bundler rack passenger logglier
     do
         rm -f ${gem}.html
         wget https://rubygems.org/gems/${gem} -O ${gem}.html
@@ -885,7 +885,7 @@ do
     [ -f xz-${xz_version}.tar.xz ] || files_exists=0
 
     # *** gem ***
-    for gem in bundler rack passenger
+    for gem in bundler rack passenger logglier
     do
         rm -f ${gem}.html
         wget https://rubygems.org/gems/${gem} -O ${gem}.html
