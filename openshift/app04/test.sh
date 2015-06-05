@@ -96,7 +96,7 @@ rm -rf bison-3.0.4
 tar Jxf bison-3.0.4.tar.xz
 cd bison-3.0.4
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/bison
-time make -j3
+time make -j4
 rm -rf ${OPENSHIFT_DATA_DIR}/bison
 make install
 cd ..
