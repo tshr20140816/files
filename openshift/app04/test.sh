@@ -6,7 +6,7 @@ set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
-rm -f cc*.s
+rm -f ${OPENSHIFT_TMP_DIR}/cc*.s
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
