@@ -22,9 +22,9 @@ mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 cd /tmp
 
 # wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.bz2
-# tar jxf binutils-2.25.tar.bz2
+rm -rf binutils-2.25
+tar jxf binutils-2.25.tar.bz2
 cd binutils-2.25
-make clean
 # ./configure --help
 ./configure
 make -j4
