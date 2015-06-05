@@ -114,7 +114,7 @@ cd binutils-2.25
 time make -j6
 cd gold
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/gold
-time make -j2
+time make
 make install
 cd ../..
 rm -rf binutils-2.25
