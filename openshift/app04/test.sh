@@ -98,7 +98,7 @@ cd bison-3.0.4
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/bison
 time make -j3
 rm -rf ${OPENSHIFT_DATA_DIR}/bison
-maku install
+make install
 cd ..
 rm -rf bison-3.0.4
 
