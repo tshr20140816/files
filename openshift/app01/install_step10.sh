@@ -116,6 +116,13 @@ rbenv exec gem --version | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # rbenv exec gem env | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 rbenv exec gem env
 
+pushd ${OPENSHIFT_DATA_DIR}/distcc/bin > /dev/null
+ln -s distcc cc
+ln -s distcc gcc
+ln -s distcc c++
+ln -s distcc g++
+popd > /dev/null
+
 for gem in bundler rack passenger
 do
     gemfile=$(ls ${OPENSHIFT_DATA_DIR}/download_files/${gem}-*.gem)
@@ -130,6 +137,13 @@ do
     ) &
     popd > /dev/null
 done
+
+pushd ${OPENSHIFT_DATA_DIR}/distcc/bin > /dev/null
+unlink cc
+unlink gcc
+unlink c++
+unlink g++
+popd > /dev/null
 
 rbenv exec gem list | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 wait
