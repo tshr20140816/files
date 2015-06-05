@@ -105,6 +105,7 @@ make install
 popd > /dev/null
 
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
+mkdir ${OPENSHIFT_TMP_DIR}/.ssh
 cat << __HEREDOC__ > ${OPENSHIFT_DATA_DIR}/.ssh/config
 Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
