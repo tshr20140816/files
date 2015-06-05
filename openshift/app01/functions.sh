@@ -162,5 +162,5 @@ function030() {
     wget --spider -b -q -o /dev/null "${url}${1}" > /dev/null 2>&1
     curl -H "content-type:application/x-www-form-urlencoded" \
      -d '{"message":"${1}", "from":"${OPENSHIFT_APP_DNS}"}' \
-     http://logs-01.loggly.com/inputs/$(cat ${OPENSHIFT_DATA_DIR}/params/loggly_token)/tag/http/
+     http://logs-01.loggly.com/inputs/$(cat ${OPENSHIFT_DATA_DIR}/params/loggly_token)/tag/test/
 }
