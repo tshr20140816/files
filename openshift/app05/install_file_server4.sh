@@ -407,7 +407,7 @@ cat << '__HEREDOC__' > gem.sh
 export TZ=JST-9
 pushd ${OPENSHIFT_DATA_DIR}/files/ > /dev/null
 
-for gem in bundler rack passenger
+for gem in bundler rack passenger logglier
 do
     rm -f ${gem}.html
     # --no-check-certificate
