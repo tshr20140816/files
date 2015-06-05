@@ -7,6 +7,8 @@ set -x
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 
+cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt
+
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 # export CC="ccache gcc"
 # export CXX="ccache g++"
