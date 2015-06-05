@@ -49,6 +49,11 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 # 環境変数
 
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
+
 export CC="ccache gcc"
 export CXX="ccache g++"
 export CCACHE_PREFIX=distcc
@@ -59,10 +64,6 @@ export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 
-export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
 # export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_LOG=/dev/null
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
