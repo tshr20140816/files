@@ -67,7 +67,6 @@ export DISTCC_HOSTS="${distcc_hosts_string}"
 # export DISTCC_LOG=/dev/null
 export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-mkdir ${OPENSHIFT_DATA_DIR}.distcc 2>/dev/null
 export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 
 export HOME=${OPENSHIFT_DATA_DIR}
