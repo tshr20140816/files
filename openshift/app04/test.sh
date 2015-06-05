@@ -34,7 +34,9 @@ tar jxf binutils-2.25.tar.bz2
 cd binutils-2.25
 # ./configure --help
 ./configure
-time make -j4 > /dev/null
+time make -j4
+
+tree
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 unlink cc
