@@ -35,7 +35,7 @@ rm -rf binutils-2.25
 tar jxf binutils-2.25.tar.bz2
 cd binutils-2.25
 ./configure --help
-./configure
+./configure --enable-gold
 time make -j4
 
 ccache -s
