@@ -1,4 +1,4 @@
-cat cadaver.log | tr -d "\b" > 1.txt
+https://github.com/accursoft/Haskell-Cloud
 
 B00FR70ZNI
 
