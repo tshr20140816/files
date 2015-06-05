@@ -16,6 +16,8 @@ export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 # export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 
+ccache -z
+
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 ln -s ccache cc
 ln -s ccache gcc
@@ -35,6 +37,8 @@ cd binutils-2.25
 # ./configure --help
 ./configure
 time make -j4
+
+ccache -s
 
 tree
 
