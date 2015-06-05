@@ -14,9 +14,8 @@ ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
 cd /tmp
 
-wget https://www.loggly.com/install/configure-linux.sh
-
-cat configure-linux.sh
+logger --help
+logger "TEST"
 
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
 mkdir ${OPENSHIFT_TMP_DIR}/.ssh
