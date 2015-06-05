@@ -58,11 +58,22 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 
 cd ${OPENSHIFT_DATA_DIR}/distcc/bin 
-ln -s distcc cc
-ln -s distcc gcc
+unlink cc
+unlink gcc
+
+cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
+ln -s ccache cc
+ln -s ccache gcc
+
+export CCACHE_PREFIX=distcc
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_MAXSIZE=300M
 
 distcc_hosts_string="55630afc5973caf283000214@v1-20150216.rhcloud.com/4:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start"
 distcc_hosts_string="${distcc_hosts_string} 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/4:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start"
@@ -95,6 +106,6 @@ cd gold
 
 time make -j3
 
-cd ${OPENSHIFT_DATA_DIR}/distcc/bin 
+cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 unlink cc
 unlink gcc
