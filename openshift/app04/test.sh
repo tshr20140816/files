@@ -58,7 +58,7 @@ cat << __HEREDOC__ > ${OPENSHIFT_DATA_DIR}/.ssh/config
 Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
   StrictHostKeyChecking no
-#  BatchMode yes
+  BatchMode yes
   UserKnownHostsFile /dev/null
   LogLevel QUIET
 #  LogLevel DEBUG3
@@ -80,5 +80,5 @@ __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" ${OPENSHIFT_DATA_DIR}/.ssh/config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" ${OPENSHIFT_DATA_DIR}/.ssh/config
 
-ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config 55630afc5973caf283000214@v1-20150216.rhcloud.com pwd 2>&1
-ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config 55630afc5973caf283000214@v1-20150216.rhcloud.com 2>&1
+ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com pwd 2>&1
+ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com 2>&1
