@@ -34,7 +34,7 @@ ls -lang
 rm -rf binutils-2.25
 tar jxf binutils-2.25.tar.bz2
 cd binutils-2.25
-# ./configure --help
+./configure --help
 ./configure
 time make -j4
 
