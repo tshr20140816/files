@@ -7,7 +7,7 @@ set -x
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 
-ls -lang ${OPENSHIFT_DATA_DIR}
+ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 # export CC="ccache gcc"
