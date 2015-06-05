@@ -107,7 +107,7 @@ cd gold
 
 ./configure
 
-time make -j3
+time make
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 unlink cc
