@@ -17,6 +17,7 @@ export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 # export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 
+ccache -s
 ccache -z
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
