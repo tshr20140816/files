@@ -37,7 +37,7 @@ rm -rf binutils-2.25
 tar jxf binutils-2.25.tar.bz2
 cd binutils-2.25
 ./configure --help
-./configure --enable-gold --disable-libquadmath --disable-libstdcxx
+./configure --enable-gold=yes --disable-libquadmath --disable-libstdcxx
 time make -j3
 
 ccache -s
