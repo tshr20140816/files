@@ -87,6 +87,10 @@ export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
+ccache -s
+ccache --zero-stats
+ccache --print-config
+
 cd /tmp
 
 [ -f ./binutils-2.25.tar.bz2 ] || wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.bz2
