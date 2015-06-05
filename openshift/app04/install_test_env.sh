@@ -23,7 +23,7 @@ cat << '__HEREDOC__' > exec_bash_script.sh
 # 5min wait
 last_run=${OPENSHIFT_DATA_DIR}/cron_minutely_last_run
 [ ! -f ${last_run} ] && touch ${last_run}
-[[ $(find ${last_run} -mmin +4) ]] || exit
+[[ $(find ${last_run} -mmin +2) ]] || exit
 touch ${last_run}
 
 export TZ=JST-9
