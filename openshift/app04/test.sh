@@ -96,7 +96,9 @@ rm -rf bison-3.0.4
 tar Jxf bison-3.0.4.tar.xz
 cd bison-3.0.4
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/bison
+oo-cgroup-read memory.failcnt
 time make -j4
+oo-cgroup-read memory.failcnt
 rm -rf ${OPENSHIFT_DATA_DIR}/bison
 make install
 cd ..
@@ -112,10 +114,14 @@ rm -rf binutils-2.25
 tar jxf binutils-2.25.tar.bz2
 cd binutils-2.25
 ./configure
+oo-cgroup-read memory.failcnt
 time make -j6
+oo-cgroup-read memory.failcnt
 cd gold
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/gold
+oo-cgroup-read memory.failcnt
 time make
+oo-cgroup-read memory.failcnt
 rm -rf ${OPENSHIFT_DATA_DIR}/gold
 make install
 cd ../..
