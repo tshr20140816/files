@@ -93,7 +93,7 @@ cd gold
 
 ./configure
 
-time make -j4
+time make -j3
 
 cd ${OPENSHIFT_DATA_DIR}/distcc/bin 
 unlink cc
