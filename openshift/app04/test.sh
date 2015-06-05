@@ -21,6 +21,8 @@ mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 
 cd /tmp
 
+ls -lang
+
 # wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.bz2
 rm -rf binutils-2.25
 tar jxf binutils-2.25.tar.bz2
