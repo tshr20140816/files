@@ -97,6 +97,7 @@ tar Jxf bison-3.0.4.tar.xz
 cd bison-3.0.4
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/bison
 time make -j3
+rm -rf ${OPENSHIFT_DATA_DIR}/bison
 maku install
 cd ..
 rm -rf bison-3.0.4
@@ -115,6 +116,7 @@ time make -j6
 cd gold
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/gold
 time make
+rm -rf ${OPENSHIFT_DATA_DIR}/gold
 make install
 cd ../..
 rm -rf binutils-2.25
