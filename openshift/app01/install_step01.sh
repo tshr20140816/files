@@ -103,7 +103,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 
 # ***** args *****
 
-if [ $# -ne 19 ]; then
+if [ $# -ne 20 ]; then
     set +x
     echo "arg1 : redmine email address"
     echo "arg2 : redmine email password"
@@ -124,6 +124,7 @@ if [ $# -ne 19 ]; then
     echo "arg17 : distcc server password 2"
     echo "arg18 : hidrive account"
     echo "arg19 : hidrive password"
+    echo "arg20 : loggly token"
     exit
 fi
 
@@ -146,6 +147,7 @@ distcc_server_account_2=${16}
 distcc_server_password_2=${17}
 hidrive_account=${18}
 hidrive_password=${19}
+loggly_token=${20}
 
 rm -rf ${OPENSHIFT_DATA_DIR}/params
 mkdir ${OPENSHIFT_DATA_DIR}/params
@@ -169,6 +171,7 @@ echo "${distcc_server_account_2}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_a
 echo "${distcc_server_password_2}" > ${OPENSHIFT_DATA_DIR}/params/distcc_server_password_2
 echo "${hidrive_account}" > ${OPENSHIFT_DATA_DIR}/params/hidrive_account
 echo "${hidrive_password}" > ${OPENSHIFT_DATA_DIR}/params/hidrive_password
+echo "${loggly_token}" > ${OPENSHIFT_DATA_DIR}/params/loggly_token
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
