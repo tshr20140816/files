@@ -83,8 +83,9 @@ rm -rf binutils-2.25
 tar jxf binutils-2.25.tar.bz2
 cd binutils-2.25
 #./configure --help
-./configure --enable-gold=yes --disable-libquadmath --disable-libstdcxx > /dev/null
-time make -j6 > /dev/null
+# ./configure --enable-gold=yes --disable-libquadmath --disable-libstdcxx > /dev/null
+./configure --disable-libquadmath --disable-libstdcxx > /dev/null
+time make -j4 > /dev/null
 
 ls -lang
 
