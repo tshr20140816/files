@@ -4,16 +4,21 @@
 
 set -x
 
-rm -f $OPENSHIFT_LOG_DIR/cron_minutely.log.*
+rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
+rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-export CC="ccache gcc"
-export CXX="ccache g++"
+# export CC="ccache gcc"
+# export CXX="ccache g++"
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 # export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
+
+cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
+ln -s ccache cc
+ln -s ccache gcc
 
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 mkdir ${OPENSHIFT_TMP_DIR}/ccache
@@ -30,3 +35,7 @@ cd binutils-2.25
 # ./configure --help
 ./configure
 make -j4
+
+cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
+unlink cc
+unlink gcc
