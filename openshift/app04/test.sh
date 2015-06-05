@@ -10,47 +10,7 @@ rm -f ${OPENSHIFT_TMP_DIR}/cc*.s
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
-export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-# export CC="ccache gcc"
-# export CXX="ccache g++"
-export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
-export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
-# export CCACHE_LOGFILE=/dev/null
-export CCACHE_MAXSIZE=300M
-
-ccache -s
-ccache -z
-
-cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
-ln -s ccache cc
-ln -s ccache gcc
-
-rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
-mkdir ${OPENSHIFT_TMP_DIR}/ccache
-mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
-
 cd /tmp
-
-ls -lang
-
-# [ -f ./binutils-2.25.tar.bz2 ] || wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.bz2
-# rm -rf binutils-2.25
-# tar jxf binutils-2.25.tar.bz2
-# cd binutils-2.25
-# ./configure --help
-# ./configure --enable-gold=yes --disable-libquadmath --disable-libstdcxx > /dev/null
-# time make -j4 > /dev/null
-
-# ccache -s
-
-find binutils-2.25 -name ld.* -print
-
-# tree
-
-cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
-unlink cc
-unlink gcc
 
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
 mkdir ${OPENSHIFT_TMP_DIR}/.ssh
@@ -80,5 +40,49 @@ __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" ${OPENSHIFT_DATA_DIR}/.ssh/config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" ${OPENSHIFT_DATA_DIR}/.ssh/config
 
-ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com pwd 2>&1
-ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com 2>&1
+mkdir ${OPENSHIFT_DATA_DIR}/bin
+pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
+cat << '__HEREDOC__' > distcc-ssh
+#!/bin/bash
+
+export TZ=JST-9
+export HOME=${OPENSHIFT_DATA_DIR}
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+exec ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config $@
+__HEREDOC__
+chmod +x distcc-ssh
+popd > /dev/null
+
+export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+
+cd ${OPENSHIFT_DATA_DIR}/distcc/bin 
+ln -s distcc cc
+ln -s distcc gcc
+
+distcc_hosts_string="55630afc5973caf283000214@v1-20150216.rhcloud.com/4:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start"
+distcc_hosts_string="${distcc_hosts_string} 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/4:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start"
+distcc_hosts_string="${distcc_hosts_string} 55630c675973caf283000251@v3-20150216.rhcloud.com/4:/var/lib/openshift/55630c675973caf283000251/app-root/data/distcc/bin/distccd_start"
+export DISTCC_HOSTS="${distcc_hosts_string}"
+
+export DISTCC_LOG=/dev/null
+export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+mkdir ${OPENSHIFT_DATA_DIR}.distcc
+export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
+
+export HOME=${OPENSHIFT_DATA_DIR}
+
+cd /tmp
+
+[ -f ./binutils-2.25.tar.bz2 ] || wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.bz2
+rm -rf binutils-2.25
+tar jxf binutils-2.25.tar.bz2
+cd binutils-2.25
+#./configure --help
+./configure --enable-gold=yes --disable-libquadmath --disable-libstdcxx > /dev/null
+time make -j12 > /dev/null
+
+ls -lang
+
+cd ${OPENSHIFT_DATA_DIR}/distcc/bin 
+unlink cc
+unlink gcc
