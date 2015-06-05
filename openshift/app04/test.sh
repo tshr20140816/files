@@ -109,6 +109,8 @@ cd gold
 
 time make
 
+ccache -s
+
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 unlink cc
 unlink gcc
