@@ -40,7 +40,7 @@ time make -j4
 
 ccache -s
 
-tree
+# tree
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 unlink cc
