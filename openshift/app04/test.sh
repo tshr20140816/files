@@ -58,10 +58,6 @@ popd > /dev/null
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 
-cd ${OPENSHIFT_DATA_DIR}/distcc/bin 
-unlink cc
-unlink gcc
-
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 ln -s ccache cc
 ln -s ccache gcc
