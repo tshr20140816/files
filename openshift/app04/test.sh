@@ -89,6 +89,12 @@ time make -j4 > /dev/null
 
 ls -lang
 
+cd gold
+
+./configure
+
+time make -j4
+
 cd ${OPENSHIFT_DATA_DIR}/distcc/bin 
 unlink cc
 unlink gcc
