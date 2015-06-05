@@ -51,6 +51,7 @@ done < ${OPENSHIFT_DATA_DIR}/version_list
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/openssh/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
 
@@ -179,8 +180,6 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby"
 rm -rf ${OPENSHIFT_DATA_DIR}.gem
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 
-export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
-
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f rbenv-installer
 wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
@@ -188,10 +187,7 @@ bash rbenv-installer
 rm rbenv-installer
 popd > /dev/null
 
-path_old="$PATH"
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
 
 # https://github.com/sstephenson/ruby-build#special-environment-variables
@@ -206,10 +202,6 @@ unset CONFIGURE_OPTS
 unset MAKE_OPTS
 
 ccache --show-stats
-
-unset RBENV_ROOT
-unset GEM_HOME
-export PATH="${path_old}"
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./.rbenv/ -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
