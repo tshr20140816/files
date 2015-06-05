@@ -121,7 +121,7 @@ do
     gemfile=$(ls ${OPENSHIFT_DATA_DIR}/download_files/${gem}-*.gem)
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ${gemfile} install"
     time rbenv exec gem install --local ${gemfile} --no-rdoc --no-ri --debug \
-     -V -- --with-cflags=\"-O2 -pipe -march=core2 -fomit-frame-pointer -s\" \
+     -V -- --with-cflags=\"${CFLAGS}\" \
      > ${OPENSHIFT_LOG_DIR}/${gem}.gem.rbenv.log 2>&1
     rbenv rehash
     pushd ${OPENSHIFT_LOG_DIR} > /dev/null
