@@ -80,9 +80,8 @@ export CXXFLAGS="${CFLAGS}"
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
-# 統計情報クリア
-ccache -z
-ccache -p
+ccache --zero-stats
+ccache --print-config
 
 # ssh 接続確認
 
@@ -123,7 +122,7 @@ pushd httpd-${apache_version} > /dev/null
 # time make -j$(grep -c -e processor /proc/cpuinfo)
 time make -j12
 popd > /dev/null
-ccache -s
+ccache --show-stats
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
 time tar jcf ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 httpd-${apache_version}
 mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 ${OPENSHIFT_DATA_DIR}/files/
@@ -159,7 +158,7 @@ pushd libmemcached-${libmemcached_version} > /dev/null
 # time make -j$(grep -c -e processor /proc/cpuinfo)
 time make -j6
 popd > /dev/null
-ccache -s
+ccache --show-stats
 rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
 # time tar cf - libmemcached-${libmemcached_version} \
@@ -206,7 +205,7 @@ unset RUBY_CFLAGS
 unset CONFIGURE_OPTS
 unset MAKE_OPTS
 
-ccache -s
+ccache --show-stats
 
 unset RBENV_ROOT
 unset GEM_HOME
@@ -248,7 +247,7 @@ pushd ${OPENSHIFT_TMP_DIR}/cadaver-${cadaver_version} > /dev/null
 
 time make -j6
 popd > /dev/null
-ccache -s
+ccache --show-stats
 rm -f ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_cadaver-${cadaver_version}.tar.xz cadaver-${cadaver_version}
 # time tar cf - cadaver-${cadaver_version} \
@@ -298,7 +297,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -rf ./delegate${delegate_version}
 mv delegate${delegate_version}_backup delegate${delegate_version}
 popd > /dev/null
-ccache -s
+ccache --show-stats
 pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
 unlink cc
 unlink gcc
