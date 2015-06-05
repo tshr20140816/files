@@ -90,24 +90,38 @@ ccache --print-config
 
 cd /tmp
 
-[ -f ./binutils-2.25.tar.bz2 ] || wget http://ftp.gnu.org/gnu/binutils/binutils-2.25.tar.bz2
-rm -rf binutils-2.25
-tar jxf binutils-2.25.tar.bz2
-cd binutils-2.25
-#./configure --help
-# ./configure --enable-gold=yes --disable-libquadmath --disable-libstdcxx > /dev/null
-./configure --disable-libquadmath --disable-libstdcxx > /dev/null
-time make -j6 > /dev/null
+#!/bin/bash
+
+cd /tmp
+
+rm -rf bison-3.0.4
+
+[ -f bison-3.0.4.tar.xz ] || wget http://ftp.jaist.ac.jp/pub/GNU/bison/bison-3.0.4.tar.xz
+tar Jxf bison-3.0.4.tar.xz
+cd bison-3.0.4
+./configure --prefix=${OPENSHIFT_DATA_DIR}/bison
+time make
+maku install
+cd ..
+rm -rf bison-3.0.4
 
 ccache -s
 
-# ls -lang
+export PATH=$PATH:${OPENSHIFT_DATA_DIR}/bison/bin
 
-cd gold
+rm -rf binutils-2.25
 
+[ -f binutils-2.25.tar.bz2 ] || wget http://ftp.jaist.ac.jp/pub/GNU/binutils/binutils-2.25.tar.bz2
+tar jxf binutils-2.25.tar.bz2
+cd binutils-2.25
 ./configure
-
 time make
+cd gold
+./configure --prefix=${OPENSHIFT_DATA_DIR}/gold
+time make
+make install
+cd ../..
+rm -rf binutils-2.25
 
 ccache -s
 
