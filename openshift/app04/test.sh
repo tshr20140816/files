@@ -90,17 +90,13 @@ ccache --print-config
 
 cd /tmp
 
-#!/bin/bash
-
-cd /tmp
-
 rm -rf bison-3.0.4
 
 [ -f bison-3.0.4.tar.xz ] || wget http://ftp.jaist.ac.jp/pub/GNU/bison/bison-3.0.4.tar.xz
 tar Jxf bison-3.0.4.tar.xz
 cd bison-3.0.4
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/bison
-time make
+time make -j3
 maku install
 cd ..
 rm -rf bison-3.0.4
@@ -115,10 +111,10 @@ rm -rf binutils-2.25
 tar jxf binutils-2.25.tar.bz2
 cd binutils-2.25
 ./configure
-time make
+time make -j6
 cd gold
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/gold
-time make
+time make -j2
 make install
 cd ../..
 rm -rf binutils-2.25
