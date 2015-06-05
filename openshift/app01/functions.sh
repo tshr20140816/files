@@ -159,5 +159,8 @@ function020() {
 function030() {
     [ $# -ne 1 ] && return
     url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?server=${OPENSHIFT_APP_DNS}&"
-    wget --spider -b -q -o /dev/null "${url}?${1}" > /dev/null 2>&1
+    wget --spider -b -q -o /dev/null "${url}${1}" > /dev/null 2>&1
+    curl -H "content-type:application/x-www-form-urlencoded" \
+     -d '{"message":"${1}", "from":"${OPENSHIFT_APP_DNS}"}' \
+     http://logs-01.loggly.com/inputs/$(cat ${OPENSHIFT_DATA_DIR}/params/loggly_token)/tag/http/
 }
