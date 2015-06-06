@@ -34,6 +34,8 @@ pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 cat << '__HEREDOC__' > memory_usage_logging.sh
 #!/bin/bash
 
+source ${OPENSHIFT_DATA_DIR}/github/openshift/app01/functions.sh
+
 export TZ=JST-9
 url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
 shell_name=$(basename "${0}")
