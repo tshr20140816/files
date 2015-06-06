@@ -40,7 +40,7 @@ find ${OPENSHIFT_DATA_DIR}/ -name "*" -type f -print0 \
 wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
 do
-    strip ${file_name}
+    strip --strip-all ${file_name}
     file ${file_name}
 done
 
