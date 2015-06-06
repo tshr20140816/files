@@ -212,7 +212,7 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*" -type f -print0 \
  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
 do
-    strip ${file_name}
+    strip --strip-all ${file_name}
     file ${file_name}
 done
 rm -f ${OPENSHIFT_TMP_DIR}/strip_starget.txt
