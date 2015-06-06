@@ -41,9 +41,9 @@ wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt | tee -a ${OPENSHIFT_LOG_DIR}/insta
 cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
 do
-    strip --strip-all ${file_name}
-    file ${file_name}
+    strip --strip-all ${file_name} &
 done
+wait
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
