@@ -205,6 +205,17 @@ ccache --show-stats
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./.rbenv/ -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
+find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*" -type f -print0 \
+ | xargs -0i file {} \
+ | grep -e "not stripped" \
+ | awk -F':' '{printf $1"\n"}' \
+ | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
+do
+    strip ${file_name}
+    file ${file_name}
+done
+rm -f ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 # time tar cf - ./.rbenv \
