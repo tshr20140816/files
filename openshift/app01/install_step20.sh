@@ -29,6 +29,20 @@ popd > /dev/null
 
 rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
 
+# ***** strip *****
+
+find ${OPENSHIFT_DATA_DIR}/ -name "*" -type f -print0 \
+ | xargs -0i file {} \
+ | grep -e "not stripped" \
+ | awk -F':' '{printf $1"\n"}' \
+ | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+
+for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
+do
+    strip ${file_name}
+    file ${file_name}
+done
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
