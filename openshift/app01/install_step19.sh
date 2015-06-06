@@ -277,7 +277,7 @@ if [ ${is_alive} -gt 0 ]; then
     fi
 elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
     echo START memory_usage_logging.sh
-    ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh ${OPENSHIFT_DIY_IP}
+    nohup ${OPENSHIFT_DATA_DIR}/scripts/memory_usage_logging.sh ${OPENSHIFT_DIY_IP} &
 fi
 __HEREDOC__
 chmod +x keep_process.sh &
