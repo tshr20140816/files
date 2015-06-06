@@ -1,4 +1,6 @@
 https://github.com/accursoft/Haskell-Cloud
+http://stackoverflow.com/questions/3476093/replacing-ld-with-gold-any-experience
+https://code.google.com/p/chromium/wiki/LinuxFasterBuilds#Linking_using_gold
 
 B00FR70ZNI
 
