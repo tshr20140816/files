@@ -34,7 +34,7 @@ pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 cat << '__HEREDOC__' > memory_usage_logging.sh
 #!/bin/bash
 
-source ${OPENSHIFT_DATA_DIR}/github/openshift/app01/functions.sh
+# source ${OPENSHIFT_DATA_DIR}/github/openshift/app01/functions.sh
 
 export TZ=JST-9
 url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy"
@@ -57,15 +57,15 @@ do
     day=$(head -n 1 ${OPENSHIFT_LOG_DIR}/memory_usage.log)
     day=${day:8:2}
     if [ ${day} != $(date +%d) ]; then
-        function030 "cron=minutely&shell_name=${shell_name}&check_point=param&day=${day}&date=$(date +%d)"
+        # function030 "cron=minutely&shell_name=${shell_name}&check_point=param&day=${day}&date=$(date +%d)"
         file_name=${OPENSHIFT_APP_DNS}.memory_usage.log.$(date +%w).xz
         mkdir ${OPENSHIFT_LOG_DIR}/backup 2> /dev/null
-        function030 "cron=minutely&shell_name=${shell_name}&check_point=xz"
+        # function030 "cron=minutely&shell_name=${shell_name}&check_point=xz"
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         xz -z9ef memory_usage.log
         mv -f memory_usage.log.xz backup/${file_name}
         popd > /dev/null
-        function030 "cron=minutely&shell_name=${shell_name}&check_point=cadaver"
+        # function030 "cron=minutely&shell_name=${shell_name}&check_point=cadaver"
         log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
         remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
         echo "$(date +%Y/%m/%d" "%H:%M:%S) START memory_usage_logging.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
@@ -75,7 +75,7 @@ do
         fi
         cat ${log_file_name} | tr -d "\b" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH memory_usage_logging.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
-        function030 "cron=minutely&shell_name=${shell_name}&check_point=done"
+        # function030 "cron=minutely&shell_name=${shell_name}&check_point=done"
     fi
 done
 __HEREDOC__
