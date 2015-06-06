@@ -116,7 +116,9 @@ oo-cgroup-read memory.failcnt
 cd gold
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/gold
 oo-cgroup-read memory.failcnt
+quota -s
 time make
+quota -s
 oo-cgroup-read memory.failcnt
 rm -rf ${OPENSHIFT_DATA_DIR}/gold
 make install
