@@ -37,7 +37,7 @@ find ${OPENSHIFT_DATA_DIR}/ -name "*" -type f -print0 \
  | grep -v -e "delegated" \
  | awk -F':' '{printf $1"\n"}' \
  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-
+wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
 do
     strip ${file_name}
