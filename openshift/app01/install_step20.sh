@@ -34,6 +34,7 @@ rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
 find ${OPENSHIFT_DATA_DIR}/ -name "*" -type f -print0 \
  | xargs -0i file {} \
  | grep -e "not stripped" \
+ | grep -v -e "delegated" \
  | awk -F':' '{printf $1"\n"}' \
  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 
