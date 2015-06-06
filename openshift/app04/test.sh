@@ -113,6 +113,7 @@ cd binutils-2.25
 oo-cgroup-read memory.failcnt
 time make -j6 > /dev/null
 oo-cgroup-read memory.failcnt
+ccache -s
 cd gold
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/gold
 oo-cgroup-read memory.failcnt
