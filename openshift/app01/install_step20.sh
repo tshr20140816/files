@@ -38,6 +38,7 @@ find ${OPENSHIFT_DATA_DIR}/ -name "*" -type f -print0 \
  | awk -F':' '{printf $1"\n"}' \
  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
 do
     strip --strip-all ${file_name}
