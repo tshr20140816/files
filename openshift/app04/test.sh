@@ -10,7 +10,7 @@ rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 rm -f ${OPENSHIFT_TMP_DIR}/cc*.s
 
-ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
+rm -f  ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
 cd /tmp
 
@@ -86,47 +86,7 @@ ccache --print-config
 
 cd /tmp
 
-rm -rf bison-3.0.4
-
-[ -f bison-3.0.4.tar.xz ] || wget http://ftp.jaist.ac.jp/pub/GNU/bison/bison-3.0.4.tar.xz
-tar Jxf bison-3.0.4.tar.xz
-cd bison-3.0.4
-./configure --prefix=${OPENSHIFT_DATA_DIR}/bison
-oo-cgroup-read memory.failcnt
-time make -j4 > /dev/null
-oo-cgroup-read memory.failcnt
-rm -rf ${OPENSHIFT_DATA_DIR}/bison
-make install > /dev/null
-cd ..
-rm -rf bison-3.0.4
-
-ccache -s
-
-export PATH=$PATH:${OPENSHIFT_DATA_DIR}/bison/bin
-
-rm -rf binutils-2.25
-
-[ -f binutils-2.25.tar.bz2 ] || wget http://ftp.jaist.ac.jp/pub/GNU/binutils/binutils-2.25.tar.bz2
-tar jxf binutils-2.25.tar.bz2
-cd binutils-2.25
-./configure > /dev/null
-oo-cgroup-read memory.failcnt
-time make -j6 > /dev/null
-oo-cgroup-read memory.failcnt
-ccache -s
-cd gold
-./configure --prefix=${OPENSHIFT_DATA_DIR}/gold
-oo-cgroup-read memory.failcnt
-quota -s
-time make
-quota -s
-oo-cgroup-read memory.failcnt
-rm -rf ${OPENSHIFT_DATA_DIR}/gold
-make install
-cd ../..
-rm -rf binutils-2.25
-
-ccache -s
+find / -name libphp5.so -print 2>/dev/null
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 unlink cc
