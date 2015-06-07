@@ -55,6 +55,8 @@ export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
 
+# ld.gold があればそれを使う
+# https://github.com/accursoft/Haskell-Cloud/blob/master/.openshift/build
 if [ -f ${OPENSHIFT_DATA_DIR}/files/ld.gold ]; then
     rm -rf ${OPENSHIFT_TMP_DIR}/bin
     mkdir ${OPENSHIFT_TMP_DIR}/bin
