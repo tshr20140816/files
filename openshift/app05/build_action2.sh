@@ -134,6 +134,23 @@ pushd httpd-${apache_version} > /dev/null
 # time make -j$(grep -c -e processor /proc/cpuinfo)
 time make -j12
 popd > /dev/null
+
+# *** strip ***
+
+find ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}/ -name "*" -type f -print0 \
+ | xargs -0i file {} \
+ | grep -e "not stripped" \
+ | grep -v -e "delegated" \
+ | awk -F':' '{printf $1"\n"}' \
+ | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
+do
+    strip --strip-all ${file_name} &
+done
+wait
+
 ccache --show-stats
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
 time tar jcf ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 httpd-${apache_version}
