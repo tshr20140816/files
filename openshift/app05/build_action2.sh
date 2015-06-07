@@ -2,8 +2,8 @@
 
 # distcc のサーバは3機従えておく
 
-[ $# -ne 3 ] && exit
-[ ! -f ${OPENSHIFT_DATA_DIR}/version_list ] && exit
+[ $# -eq 3 ] || exit
+[ -f ${OPENSHIFT_DATA_DIR}/version_list ] || exit
 
 export app_uuid=${1}
 export data_dir=${2}
@@ -114,9 +114,7 @@ rm -rf httpd-${apache_version}
 rm -f httpd-${apache_version}.tar.bz2
 
 cp ${OPENSHIFT_DATA_DIR}/files/httpd-${apache_version}.tar.bz2 ./
-if [ ! -f httpd-${apache_version}.tar.bz2 ]; then
-    wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
-fi
+[ -f httpd-${apache_version}.tar.bz2 ] || wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
 tar jxf httpd-${apache_version}.tar.bz2
 pushd httpd-${apache_version} > /dev/null
 ./configure \
