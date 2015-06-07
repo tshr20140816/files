@@ -146,3 +146,7 @@ if [ ${build_server_password} != 'none' ]; then
     wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
 fi
 popd > /dev/null
+
+cd /tmp
+
+find --help
