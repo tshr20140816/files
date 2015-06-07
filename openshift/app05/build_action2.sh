@@ -143,7 +143,7 @@ do
     (strip --strip-all ${file_name}; file ${file_name}) &
 done
 wait
-# cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -P 3 -0i strip --strip-all {}
+# cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -P3 -0i strip --strip-all {}
 
 ccache --show-stats
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
