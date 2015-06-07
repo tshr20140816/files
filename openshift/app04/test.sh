@@ -96,15 +96,10 @@ ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
-tmpstring=$(cat testdata.txt)
-tmpstring="${tmpstring:41:1}${tmpstring:34:1}${tmpstring:44:1}${tmpstring:67:1}${tmpstring:13:1}"
-echo ${tmpstring} > aa.txt
-cat aa.txt
+build_server_password=$(cat aa.txt)
 
 # cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 100 | head -n 1 > testdata.txt
 # cat testdata.txt
-
-exit
 
 # ***** build request *****
 
