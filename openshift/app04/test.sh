@@ -95,7 +95,7 @@ unlink gcc
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
-cat /tmp/p_data.txt
+cat ${OPENSHIFT_DATA_DIR}/password_text.txt
 
 exit
 
