@@ -2,17 +2,12 @@
 
 # distcc のサーバは3機従えておく
 
-if [ $# -ne 3 ]; then
-    exit
-fi
+[ $# -ne 3 ] && exit
+[ ! -f ${OPENSHIFT_DATA_DIR}/version_list ] && exit
 
 export app_uuid=${1}
 export data_dir=${2}
 export tmp_dir=${3}
-
-if [ ! -f ${OPENSHIFT_DATA_DIR}/version_list ]; then
-    exit
-fi
 
 set -x
 
@@ -21,7 +16,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) start"
 # 多重起動チェック
 while :
 do
-    if [ -e ${OPENSHIFT_TMP_DIR}/build_now ]; then
+    if [ -f ${OPENSHIFT_TMP_DIR}/build_now ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) waitting"
         sleep 60s
         find ${OPENSHIFT_TMP_DIR} -name 'build_now' -type f -mmin +60 -print0 | xargs -0i rm -f {}
