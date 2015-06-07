@@ -139,7 +139,7 @@ sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
 sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
 sed -i -e "s|__CADAVER_VERSION__|${cadaver_version}|g" build_request.xml
 
-mirror_server="https://files3-20150207.rhcloud.com/"
+mirror_server="https://files3-20150207.rhcloud.com/files/"
 
 if [ ${build_server_password} != 'none' ]; then
     wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
