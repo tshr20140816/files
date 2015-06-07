@@ -53,6 +53,8 @@ pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
+rm -rf ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
+rm -f distcc-${distcc_version}.tar.bz2
 
 mkdir ${OPENSHIFT_DATA_DIR}.distcc
 
@@ -73,6 +75,8 @@ pushd ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version} > /dev/null
 make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
+rm -rf ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version}
+rm -f ccache-${ccache_version}.tar.xz
 
 # ***** openssh *****
 
@@ -149,6 +153,10 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
+rm -rf openssh-${openssh_version}
+rm -f openssh-${openssh_version}.tar.gz
+rm -f openssh-*.diff.gz
+
 # ***** xz *****
 
 xz_version=5.2.1
@@ -169,8 +177,8 @@ pushd  xz-${xz_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
-rm -f xz-${xz_version}.tar.xz
 rm -rf xz-${xz_version}
+rm -f xz-${xz_version}.tar.xz
 popd > /dev/null
 
 # ***** Tcl *****
@@ -190,6 +198,8 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 time make -j2 -l3
 make install
 popd > /dev/null
+rm -rf ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}
+rm -f tcl${tcl_version}-src.tar.gz
 
 # ***** Expect *****
 
