@@ -229,12 +229,13 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*.so" -type f -print0 \
  | awk -F':' '{printf $1"\n"}' \
  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
-do
-    (strip --strip-all ${file_name}; file ${file_name}) &
-done
-wait
+# cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+# for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
+# do
+#     (strip --strip-all ${file_name}; file ${file_name}) &
+# done
+# wait
+cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rtli -n1 -P4 strip --strip-all {}
 
 ccache --show-stats
 
