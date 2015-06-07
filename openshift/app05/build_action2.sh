@@ -130,7 +130,7 @@ popd > /dev/null
 
 # *** strip ***
 
-find ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}/ -name "*" -type f -print0 \
+find ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}/ -name "*o" -type f -print0 \
  | xargs -0i file {} \
  | grep -e "not stripped" \
  | grep -v -e "delegated" \
