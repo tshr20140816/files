@@ -125,7 +125,8 @@ Host *
 #  PreferredAuthentications publickey,gssapi-with-mic,hostbased,keyboard-interactive,password
   PreferredAuthentications publickey
   PasswordAuthentication no
-  GSSAPIAuthentication no
+  # Unsupported option "gssapiauthentication"
+#  GSSAPIAuthentication no
   ConnectionAttempts 5
   ControlMaster auto
   # ControlPath too long
