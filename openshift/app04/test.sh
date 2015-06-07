@@ -95,6 +95,8 @@ unlink gcc
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
+cat p_data.txt
+
 exit
 
 # ***** build request *****
