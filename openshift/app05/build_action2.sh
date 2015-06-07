@@ -55,8 +55,17 @@ export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
 
-export CC="ccache gcc"
-export CXX="ccache g++"
+if [ -f ${OPENSHIFT_DATA_DIR}/files/ld.gold ]; then
+    rm -rf ${OPENSHIFT_TMP_DIR}/bin
+    mkdir ${OPENSHIFT_TMP_DIR}/bin
+    cp ${OPENSHIFT_DATA_DIR}/files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/ld
+    chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld
+    export CC="ccache gcc -B${OPENSHIFT_TMP_DIR}/bin/"
+    export CXX="ccache g++ -B${OPENSHIFT_TMP_DIR}/bin/"
+else
+    export CC="ccache gcc"
+    export CXX="ccache g++"
+fi
 export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
