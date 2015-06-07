@@ -223,7 +223,7 @@ unset RUBY_CFLAGS
 unset CONFIGURE_OPTS
 unset MAKE_OPTS
 
-find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*" -type f -print0 \
+find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*.so" -type f -print0 \
  | xargs -0i file {} \
  | grep -e "not stripped" \
  | awk -F':' '{printf $1"\n"}' \
