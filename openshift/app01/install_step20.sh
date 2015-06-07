@@ -48,7 +48,7 @@ echo "strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
 # done
 # wait
 # cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0i -P4 strip --strip-all {}
-cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rt -i -n1 -P2 strip --strip-all {}
+cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rtli -n1 -P2 strip --strip-all {}
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
