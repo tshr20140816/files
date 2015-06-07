@@ -24,6 +24,8 @@ find ${OPENSHIFT_DATA_DIR} -name *.sh -type f -print0 | xargs -0i bash -n {} \
 find ${OPENSHIFT_REPO_DIR}/.openshift/cron/ -name *.sh -type f -print0 | xargs -0i bash -n {} \
  >> ${OPENSHIFT_LOG_DIR}/shell_syntax_error.log 2>&1
 popd > /dev/null
+echo "shell syntax error count : $(wc -l ${OPENSHIFT_LOG_DIR}/shell_syntax_error.txt)" \
+ | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** delete files *****
 
@@ -37,14 +39,16 @@ find ${OPENSHIFT_DATA_DIR}/ -name "*" -type f -print0 \
  | grep -v -e "delegated" \
  | awk -F':' '{printf $1"\n"}' \
  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
+ | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 # for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
 # do
 #     strip --strip-all ${file_name}
 # done
 # wait
-cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -P3 -0i strip --strip-all {}
+# cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0i -P4 strip --strip-all {}
+cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0i strip --strip-all {}
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
