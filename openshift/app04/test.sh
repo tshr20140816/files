@@ -92,7 +92,8 @@ cd ${OPENSHIFT_DATA_DIR}/ccache/bin
 unlink cc
 unlink gcc
 
-ls -lang
+ls -lang /tmp
+ls -lang ${OPENSHIFT_DATA_DIR}
 
 exit
 
