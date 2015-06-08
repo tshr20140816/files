@@ -27,6 +27,8 @@ done
 
 touch ${OPENSHIFT_TMP_DIR}/build_now
 
+lsof -i
+
 memory_fail_count=$(oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}')
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
