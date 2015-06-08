@@ -283,6 +283,7 @@ wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rti -L1 -n1 -P4 strip --strip-all {}
 time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0ti -L1 strip --strip-all {}
 time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0t -P 1 -L 1 strip --strip-all
+time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0t -P 1 -n 1 strip --strip-all
 
 ccache --show-stats
 
