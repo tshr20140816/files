@@ -262,12 +262,10 @@ export CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man -
 # 3機がけ前提 1機あたり4プロセス
 # export MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)"
 export MAKE_OPTS="-j 12"
-export LD="ld.gold"
 time rbenv install -v ${ruby_version}
 unset RUBY_CFLAGS
 unset CONFIGURE_OPTS
 unset MAKE_OPTS
-unset LD
 
 pushd ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/x86_64-linux/ > /dev/null
 time find ./ \
