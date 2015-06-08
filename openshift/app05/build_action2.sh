@@ -119,6 +119,7 @@ __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
 cat config
+cat ${OPENSHIFT_DATA_DIR}/bin/distcc-ssh
 popd > /dev/null
 
 # ssh 接続確認
