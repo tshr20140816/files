@@ -189,7 +189,6 @@ tcl_version=8.6.3
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
 tar zxf tcl${tcl_version}-src.tar.gz
-popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 ./configure --help
 ./configure \
@@ -199,8 +198,9 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 time make -j2 -l3
 make install
 popd > /dev/null
-rm -rf ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}
+rm -rf tcl${tcl_version}
 rm -f tcl${tcl_version}-src.tar.gz
+popd > /dev/null
 
 # ***** Expect *****
 
