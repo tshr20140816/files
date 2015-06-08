@@ -125,6 +125,7 @@ popd > /dev/null
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff_*
 
+ssh -V
 if [ -f ${OPENSHIFT_DATA_DIR}/user_fqdn.txt ]; then
     for line in $(cat ${OPENSHIFT_DATA_DIR}/user_fqdn.txt)
     do
