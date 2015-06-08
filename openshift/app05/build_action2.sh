@@ -269,25 +269,6 @@ unset CONFIGURE_OPTS
 unset MAKE_OPTS
 unset LD
 
-# time find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*.so" -type f -print0 \
-# time find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/x86_64-linux/ \
-#  -name "*.so" -type f -print0 \
-#  | xargs -0i file {} \
-#  | grep -e "not stripped" \
-#  | awk -F':' '{printf $1"\n"}' \
-#  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-# wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-# cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-# for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
-# do
-#     (strip --strip-all ${file_name}; file ${file_name}) &
-# done
-# wait
-# time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rti -L1 -n1 -P4 strip --strip-all {}
-# time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -i -L1 strip --strip-all --preserve-dates --verbose {}
-# time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 1 strip --strip-all --preserve-dates --verbose
-# time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all --preserve-dates --verbose
-
 pushd ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/x86_64-linux/ > /dev/null
 time find ./ \
  -name "*.so" -type f -print0 \
@@ -296,7 +277,7 @@ time find ./ \
  | awk -F':' '{printf $1"\n"}' \
  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 10 strip --strip-all --preserve-dates --verbose
+time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 30 strip --strip-all
 popd > /dev/null
 
 ccache --show-stats
