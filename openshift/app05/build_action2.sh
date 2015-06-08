@@ -130,6 +130,7 @@ if [ -f ${OPENSHIFT_DATA_DIR}/user_fqdn.txt ]; then
     for line in $(cat ${OPENSHIFT_DATA_DIR}/user_fqdn.txt)
     do
         user_fqdn=$(echo "${line}")
+        ssh -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1
         ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1
         ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1
     done
