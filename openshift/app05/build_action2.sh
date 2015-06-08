@@ -126,6 +126,7 @@ popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff_*
+rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/*
 
 ssh -V
 ${OPENSHIFT_DATA_DIR}/openssh/bin/ssh -V
