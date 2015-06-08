@@ -150,6 +150,7 @@ cp ${OPENSHIFT_DATA_DIR}/files/httpd-${apache_version}.tar.bz2 ./
 tar jxf httpd-${apache_version}.tar.bz2
 pushd httpd-${apache_version} > /dev/null
 ./configure --help
+# --enable-mods-shared='all proxy ssl mem_cache file_cache disk_cache'
 ./configure \
  --prefix=${data_dir}/apache \
  --mandir=${tmp_dir}/man \
