@@ -33,7 +33,8 @@ rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
 
 # ***** strip *****
 
-find ${OPENSHIFT_DATA_DIR}/ -name "*" -mindepth 2 -type f -print0 \
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+find ./ -name "*" -mindepth 2 -type f -print0 \
  | xargs -0i file {} \
  | grep -e "not stripped" \
  | grep -v -e "delegated" \
@@ -47,8 +48,8 @@ echo "strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
 #     strip --strip-all ${file_name}
 # done
 # wait
-# cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0i -P4 strip --strip-all {}
-cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rtli -n1 -P2 strip --strip-all {}
+time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all
+popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
