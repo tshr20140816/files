@@ -153,5 +153,8 @@ delegate_version=9.9.13
 
 wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
 
+tar xvf delegate${delegate_version}.tar.gz
+cat delegate${delegate_version}/Makefile
+
 rm -rf delegate${delegate_version}
-rm delegate${delegate_version}.tar.gz
+rm -f delegate*
