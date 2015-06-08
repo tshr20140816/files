@@ -59,6 +59,7 @@ if [ -f ${OPENSHIFT_DATA_DIR}/files/ld.gold ]; then
     chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld
     export CC="ccache gcc -B${OPENSHIFT_TMP_DIR}/bin/"
     export CXX="ccache g++ -B${OPENSHIFT_TMP_DIR}/bin/"
+    export LD=ld.gold
 else
     export CC="ccache gcc"
     export CXX="ccache g++"
@@ -206,7 +207,6 @@ if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
 fi
 tar zxf libmemcached-${libmemcached_version}.tar.gz
 pushd libmemcached-${libmemcached_version} > /dev/null
-cat configure
 ./configure --help
 ./configure \
  --prefix=${data_dir}/libmemcached \
