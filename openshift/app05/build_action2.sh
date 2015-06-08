@@ -253,7 +253,7 @@ unset RUBY_CFLAGS
 unset CONFIGURE_OPTS
 unset MAKE_OPTS
 
-find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*.so" -type f -print0 \
+time find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*.so" -type f -print0 \
  | xargs -0i file {} \
  | grep -e "not stripped" \
  | awk -F':' '{printf $1"\n"}' \
@@ -265,7 +265,7 @@ wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 #     (strip --strip-all ${file_name}; file ${file_name}) &
 # done
 # wait
-cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rtli -n1 -P4 strip --strip-all {}
+time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rtli -n1 -P strip --strip-all {}
 
 ccache --show-stats
 
