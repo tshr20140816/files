@@ -271,7 +271,7 @@ wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 #     (strip --strip-all ${file_name}; file ${file_name}) &
 # done
 # wait
-time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rtli -n1 -P strip --strip-all {}
+time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rtLi -n1 -P strip --strip-all {}
 
 ccache --show-stats
 
