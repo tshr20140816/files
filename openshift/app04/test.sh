@@ -145,14 +145,3 @@ if [ ${build_server_password} != 'none' ]; then
     wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
 fi
 popd > /dev/null
-
-cd /tmp
-
-wget http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.6.tar.gz
-
-tar zxf ruby-2.1.6.tar.gz
-cd ruby-2.1.6
-./configure --help
-cd ..
-rm -rf ruby-2.1.6
-rm -f ruby-2.1.6.tar.gz
