@@ -155,6 +155,7 @@ wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
 
 tar zxf delegate${delegate_version}.tar.gz
 cat delegate${delegate_version}/Makefile
+cat delegate${delegate_version}/src/Makefile
 
 rm -rf delegate${delegate_version}
 rm -f delegate*
