@@ -381,6 +381,12 @@ popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
+for line in $(cat ${OPENSHIFT_DATA_DIR}/user_fqdn.txt)
+do
+    user_fqdn=$(echo "${line}")
+    ssh -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1
+done
+
 rm -f ${OPENSHIFT_TMP_DIR}/build_now
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) finish"
