@@ -107,7 +107,6 @@ Host *
   PreferredAuthentications publickey
   PasswordAuthentication no
   # Unsupported option "gssapiauthentication"
-#  GSSAPIAuthentication no
   ConnectionAttempts 5
   ControlMaster auto
   # ControlPath too long
