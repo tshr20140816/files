@@ -213,13 +213,14 @@ pushd libmemcached-${libmemcached_version} > /dev/null
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc \
  --disable-sasl \
- --enable-jobserver=6
+ --enable-jobserver=12
 
 cat config.log
 
 # 3機がけ前提 1機あたり2プロセス
 # time make -j$(grep -c -e processor /proc/cpuinfo)
-time make -j6
+# time make -j6
+time make
 popd > /dev/null
 ccache --show-stats
 rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
@@ -278,7 +279,7 @@ wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 # done
 # wait
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rti -L1 -n1 -P4 strip --strip-all {}
-time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0i -P4 strip --strip-all {}
+time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0ti strip --strip-all {}
 
 ccache --show-stats
 
