@@ -215,7 +215,7 @@ pushd libmemcached-${libmemcached_version} > /dev/null
  --disable-sasl \
  --enable-jobserver=12
 
-cat config.log
+# cat config.log
 
 # 3機がけ前提 1機あたり2プロセス
 # time make -j$(grep -c -e processor /proc/cpuinfo)
