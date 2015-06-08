@@ -283,9 +283,9 @@ wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 # done
 # wait
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -0rti -L1 -n1 -P4 strip --strip-all {}
-time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -ti -L1 strip --strip-all --preserve-dates --verbose {}
-time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 1 -L 1 strip --strip-all --preserve-dates --verbose
-time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 1 -n 1 strip --strip-all --preserve-dates --verbose
+# time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -i -L1 strip --strip-all --preserve-dates --verbose {}
+time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 1 strip --strip-all --preserve-dates --verbose
+time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all --preserve-dates --verbose
 
 ccache --show-stats
 
