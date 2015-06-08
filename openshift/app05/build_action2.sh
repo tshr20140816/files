@@ -149,6 +149,7 @@ cp ${OPENSHIFT_DATA_DIR}/files/httpd-${apache_version}.tar.bz2 ./
 [ -f httpd-${apache_version}.tar.bz2 ] || wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
 tar jxf httpd-${apache_version}.tar.bz2
 pushd httpd-${apache_version} > /dev/null
+./configure --help
 ./configure \
  --prefix=${data_dir}/apache \
  --mandir=${tmp_dir}/man \
