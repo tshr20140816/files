@@ -490,6 +490,8 @@ require valid-user
     deny from all
 </Files>
 
+AddType "text/plain; charset=UTF-8" .log
+
 # IndexOptions +FancyIndexing
 
 # Force https
