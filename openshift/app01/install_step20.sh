@@ -33,7 +33,7 @@ rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
 
 # ***** strip *****
 
-find ${OPENSHIFT_DATA_DIR}/ -name "*" -type f -print0 \
+find ${OPENSHIFT_DATA_DIR}/ -name "*" -mindepth 2 -type f -print0 \
  | xargs -0i file {} \
  | grep -e "not stripped" \
  | grep -v -e "delegated" \
