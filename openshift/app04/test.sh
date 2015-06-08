@@ -153,6 +153,5 @@ delegate_version=9.9.13
 
 wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
 
-tar zxf delegate${delegate_version}.tar.gz
-
-find ./delegate${delegate_version} -name *.gif -print | xargs -t -n 1 file
+rm -rf delegate${delegate_version}
+rm delegate${delegate_version}.tar.gz
