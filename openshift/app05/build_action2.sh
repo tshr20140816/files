@@ -266,7 +266,9 @@ unset CONFIGURE_OPTS
 unset MAKE_OPTS
 unset LD
 
-time find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*.so" -type f -print0 \
+# time find ${OPENSHIFT_DATA_DIR}/.rbenv/ -name "*.so" -type f -print0 \
+time find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/x86_64-linux/ \
+ -name "*.so" -type f -print0 \
  | xargs -0i file {} \
  | grep -e "not stripped" \
  | awk -F':' '{printf $1"\n"}' \
