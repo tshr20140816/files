@@ -148,8 +148,3 @@ fi
 popd > /dev/null
 
 cd /tmp
-
-delegate_version=9.9.13
-
-rm -rf delegate${delegate_version}
-rm -f delegate*
