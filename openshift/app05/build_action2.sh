@@ -211,7 +211,9 @@ cat configure
 ./configure \
  --prefix=${data_dir}/libmemcached \
  --mandir=${tmp_dir}/man \
- --docdir=${tmp_dir}/doc
+ --docdir=${tmp_dir}/doc \
+ --disable-sasl \
+ --enable-jobserver=6
 
 cat config.log
 
