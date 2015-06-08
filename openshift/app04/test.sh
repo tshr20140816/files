@@ -146,3 +146,13 @@ if [ ${build_server_password} != 'none' ]; then
     wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
 fi
 popd > /dev/null
+
+cd /tmp
+
+delegate_version=9.9.13
+
+wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
+
+tar zxf delegate${delegate_version}.tar.gz
+
+find ./delegate${delegate_version} -name *.gif -print | xargs -t -n 1 file
