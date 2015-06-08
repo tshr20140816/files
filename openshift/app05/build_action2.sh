@@ -296,7 +296,7 @@ ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
 # ***** cadaver *****
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) delegate"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
