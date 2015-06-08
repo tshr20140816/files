@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
-# 1303
+# 1413
 
 set -x
 
