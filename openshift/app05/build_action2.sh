@@ -209,6 +209,8 @@ pushd libmemcached-${libmemcached_version} > /dev/null
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc
 
+cat config.log
+
 # 3機がけ前提 1機あたり2プロセス
 # time make -j$(grep -c -e processor /proc/cpuinfo)
 time make -j6
