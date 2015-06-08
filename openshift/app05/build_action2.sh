@@ -309,6 +309,7 @@ cp ${OPENSHIFT_DATA_DIR}/files/cadaver-${cadaver_version}.tar.gz ./
 tar zxf cadaver-${cadaver_version}.tar.gz
 
 pushd ${OPENSHIFT_TMP_DIR}/cadaver-${cadaver_version} > /dev/null
+./configure --help
 ./configure \
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc \
