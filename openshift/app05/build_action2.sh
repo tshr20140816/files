@@ -204,6 +204,7 @@ if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
 fi
 tar zxf libmemcached-${libmemcached_version}.tar.gz
 pushd libmemcached-${libmemcached_version} > /dev/null
+./configure --help
 ./configure \
  --prefix=${data_dir}/libmemcached \
  --mandir=${tmp_dir}/man \
