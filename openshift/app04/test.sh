@@ -61,6 +61,8 @@ popd > /dev/null
 
 tree ${OPENSHIFT_DATA_DIR}/expect
 
+tree ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}
+
 exit
 
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh 2>/dev/null
