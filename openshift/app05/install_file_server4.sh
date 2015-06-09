@@ -215,9 +215,6 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
- --prefix=${OPENSHIFT_DATA_DIR}/tcl
-./configure \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
  --prefix=${OPENSHIFT_DATA_DIR}/tcl \
  --with-tcl=${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix
