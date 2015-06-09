@@ -51,7 +51,8 @@ pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --prefix=${OPENSHIFT_DATA_DIR}/expect \
- --with-tclconfig=${OPENSHIFT_DATA_DIR}/tcl/lib/
+ --with-tclconfig=${OPENSHIFT_DATA_DIR}/tcl/lib/ \
+ --with-tclinclude${OPENSHIFT_DATA_DIR}/tcl/include/
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 rm -rf expect${expect_version}
