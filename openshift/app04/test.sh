@@ -21,8 +21,8 @@ tcl_version=8.6.3
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 [ -f tcl${tcl_version}-src.tar.gz ] || wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
-tar zxf tcl${tcl_version}-src.tar.gz
 rm -rf tcl${tcl_version}
+tar zxf tcl${tcl_version}-src.tar.gz
 pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 ./configure --help
 ./configure \
@@ -42,8 +42,8 @@ expect_version=5.45
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 [ -f expect${expect_version}.tar.gz ] || wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
-tar zxf expect${expect_version}.tar.gz
 rm -rf expect${expect_version}
+tar zxf expect${expect_version}.tar.gz
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
