@@ -15,15 +15,6 @@ rm -f  ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
 cd /tmp
 
-rm -f gcc-4.6.4.tar.gz
-
-[ -f gcc-core-4.6.4.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.6.4/gcc-core-4.6.4.tar.bz2
-tar jtvf gcc-core-4.6.4.tar.bz2 | wc -l
-
-${OPENSHIFT_DATA_DIR}/tcl/bin/expect -v
-
-quota -s
-
 exit
 
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh 2>/dev/null
@@ -98,7 +89,15 @@ ccache --print-config
 
 cd /tmp
 
-find / -name libphp5.so -print 2>/dev/null
+gcc_version=4.6.4
+
+[ -f gcc-core-${gcc_version}.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-${gcc_version}/gcc-core-${gcc_version}.tar.bz2
+tar jxf gcc-core-${gcc_version}.tar.bz2
+quota -s
+cd gcc-core-${gcc_version}
+./configure --help
+./configure
+time make -j6
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 unlink cc
