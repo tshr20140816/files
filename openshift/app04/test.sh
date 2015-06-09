@@ -117,7 +117,7 @@ tar jxf mpfr-${mpfr_version}.tar.bz2
 tree mpfr-${mpfr_version}
 cd mpfr-${mpfr_version}
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local > /dev/null
 time make -j12 > /dev/null
 make install > /dev/null
 cd ..
