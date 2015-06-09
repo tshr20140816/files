@@ -61,9 +61,9 @@ popd > /dev/null
 
 rm -rf ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}
 
-strip -s ${OPENSHIFT_DATA_DIR}/tcl/bin/except
-${OPENSHIFT_DATA_DIR}/tcl/bin/except --version
-${OPENSHIFT_DATA_DIR}/tcl/bin/except --help
+strip -s ${OPENSHIFT_DATA_DIR}/tcl/bin/expect
+${OPENSHIFT_DATA_DIR}/tcl/bin/expect --version
+${OPENSHIFT_DATA_DIR}/tcl/bin/expect --help
 
 exit
 
