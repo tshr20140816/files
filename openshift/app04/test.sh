@@ -30,7 +30,7 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
  --disable-symbols \
  --prefix=${OPENSHIFT_DATA_DIR}/tcl > /dev/null
 time make -j2 -l3 > /dev/null
-# make install
+make install
 popd > /dev/null
 # rm -rf tcl${tcl_version}
 # rm -f tcl${tcl_version}-src.tar.gz
@@ -50,7 +50,7 @@ pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 ./configure --help
 ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
- --prefix=${OPENSHIFT_DATA_DIR}/expect \
+ --prefix=${OPENSHIFT_DATA_DIR}/tcl \
  --with-tcl=${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
@@ -59,9 +59,7 @@ rm -rf expect${expect_version}
 popd > /dev/null
 popd > /dev/null
 
-tree ${OPENSHIFT_DATA_DIR}/expect
-
-tree ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}
+tree ${OPENSHIFT_DATA_DIR}/tcl
 
 exit
 
