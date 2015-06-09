@@ -83,6 +83,8 @@ ccache -s
 ccache --zero-stats
 ccache --print-config
 
+mkdir -p ${OPENSHIFT_DATA_DIR}/local
+
 cd /tmp
 
 rm -rf gcc-${gcc_version}
@@ -93,8 +95,24 @@ gmp_version=4.3.1
 tar Jxf gmp-${gmp_version}.tar.xz
 cd gmp-${gmp_version}
 ./configure --help
-./configure
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local
 time make -j6
+make install
+cd ..
+rm -rf gmp-${gmp_version}
+cd /tmp
+
+mpfr_version=2.3.1
+
+[ -f mpfr-${mpfr_version}.tar.bz2 ] || wget http://mpfr.loria.fr/mpfr-${mpfr_version}/mpfr-${mpfr_version}.tar.bz2
+tar jxf mpfr-${mpfr_version}.tar.bz2
+cd mpfr-${mpfr_version}
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local
+time make -j6
+make install
+cd ..
+rm -rf mpfr-${mpfr_version}
 
 cd /tmp
 
