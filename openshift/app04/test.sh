@@ -18,7 +18,7 @@ cd /tmp
 rm -f gcc-4.6.4.tar.gz
 
 [ -f gcc-core-4.6.4.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.6.4/gcc-core-4.6.4.tar.bz2
-tar ztvf gcc-core-4.6.4.tar.bz2 | wc -l
+tar jtvf gcc-core-4.6.4.tar.bz2 | wc -l
 
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -v
 
