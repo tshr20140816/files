@@ -90,7 +90,8 @@ gcc_version=4.6.4
 [ -f gcc-core-${gcc_version}.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-${gcc_version}/gcc-core-${gcc_version}.tar.bz2
 tar jxf gcc-core-${gcc_version}.tar.bz2
 quota -s
-cd gcc-core-${gcc_version}
+ls -lang
+cd gcc-${gcc_version}
 ./configure --help
 ./configure
 time make -j6
