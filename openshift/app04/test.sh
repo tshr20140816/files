@@ -28,7 +28,7 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 ./configure \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
  --disable-symbols \
- --prefix=${OPENSHIFT_DATA_DIR}/tcl
+ --prefix=${OPENSHIFT_DATA_DIR}/tcl > /dev/null
 time make -j2 -l3 > /dev/null
 # make install
 popd > /dev/null
