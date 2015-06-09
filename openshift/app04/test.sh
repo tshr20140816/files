@@ -88,8 +88,6 @@ mkdir -p ${OPENSHIFT_DATA_DIR}/local
 
 cd /tmp
 
-rm -rf gcc-${gcc_version}
-
 gmp_version=4.3.1
 
 [ -f gmp-${gmp_version}.tar.xz ] || https://gmplib.org/download/gmp/gmp-${gmp_version}.tar.xz
@@ -101,6 +99,7 @@ time make -j6
 make install
 cd ..
 rm -rf gmp-${gmp_version}
+
 cd /tmp
 
 mpfr_version=2.3.1
@@ -114,6 +113,20 @@ time make -j6
 make install
 cd ..
 rm -rf mpfr-${mpfr_version}
+
+cd /tmp
+
+mpc_version=0.8
+
+[ -f mpc-${mpc_version}.tar.gz ] || wget http://www.multiprecision.org/mpc/download/mpc-${mpc_version}.tar.gz
+tar zxf mpc-${mpc_version}.tar.gz
+cd mpc-${mpc_version}
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local
+time make -j6
+make install
+cd ..
+rm -rf mpc-${mpc_version}
 
 cd /tmp
 
