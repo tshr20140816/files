@@ -193,6 +193,7 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 ./configure --help
 ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
  --disable-symbols \
  --prefix=${OPENSHIFT_DATA_DIR}/tcl
 time make -j2 -l3
