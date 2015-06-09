@@ -20,54 +20,9 @@ rm -f gcc-4.6.4.tar.gz
 [ -f gcc-core-4.6.4.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.6.4/gcc-core-4.6.4.tar.bz2
 tar ztvf gcc-core-4.6.4.tar.bz2 | wc -l
 
-# ***** Tcl *****
-
-tcl_version=8.6.3
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-[ -f tcl${tcl_version}-src.tar.gz ] || wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
-rm -rf tcl${tcl_version}
-tar zxf tcl${tcl_version}-src.tar.gz
-pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
-./configure --help
-./configure \
---mandir=${OPENSHIFT_TMP_DIR}/man \
- --disable-symbols \
- --prefix=${OPENSHIFT_DATA_DIR}/tcl > /dev/null
-time make -j2 -l3 > /dev/null
-make install > /dev/null
-popd > /dev/null
-# rm -rf tcl${tcl_version}
-# rm -f tcl${tcl_version}-src.tar.gz
-popd > /dev/null
-
-tree ${OPENSHIFT_TMP_DIR}/tcl
-
-# ***** Expect *****
-
-expect_version=5.45
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-[ -f expect${expect_version}.tar.gz ] || wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
-rm -rf expect${expect_version}
-tar zxf expect${expect_version}.tar.gz
-pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
-./configure --help
-./configure \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --prefix=${OPENSHIFT_DATA_DIR}/tcl \
- --with-tcl=${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
-time make -j$(grep -c -e processor /proc/cpuinfo) > /dev/null
-make install
-rm -rf expect${expect_version}
-# rm -f expect${expect_version}.tar.gz
-popd > /dev/null
-popd > /dev/null
-
-rm -rf ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}
-
-strip -s ${OPENSHIFT_DATA_DIR}/tcl/bin/expect
 ${OPENSHIFT_DATA_DIR}/tcl/bin/expect -v
+
+quota -s
 
 exit
 
