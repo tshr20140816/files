@@ -13,10 +13,6 @@ rm -f ${OPENSHIFT_TMP_DIR}/cc*.s
 
 rm -f  ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
-cd /tmp
-
-exit
-
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh 2>/dev/null
 mkdir ${OPENSHIFT_TMP_DIR}/.ssh 2>/dev/null
 cat << __HEREDOC__ > ${OPENSHIFT_DATA_DIR}/.ssh/config
