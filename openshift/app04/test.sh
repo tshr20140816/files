@@ -99,9 +99,9 @@ gmp_version=4.3.1
 tar jxf gmp-${gmp_version}.tar.bz2
 cd gmp-${gmp_version}
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local
-time make -j6
-make install
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local > /dev/null
+time make -j12
+make install > /dev/null
 cd ..
 rm -rf gmp-${gmp_version}
 
@@ -114,8 +114,8 @@ tar jxf mpfr-${mpfr_version}.tar.bz2
 cd mpfr-${mpfr_version}
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/local
-time make -j6
-make install
+time make -j12
+make install > /dev/null
 cd ..
 rm -rf mpfr-${mpfr_version}
 
