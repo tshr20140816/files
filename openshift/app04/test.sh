@@ -22,21 +22,21 @@ tcl_version=8.6.3
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 [ -f tcl${tcl_version}-src.tar.gz ] || wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
 rm -rf tcl${tcl_version}
-tar zxfv tcl${tcl_version}-src.tar.gz
-# pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
-# ./configure --help
-# ./configure \
-# --mandir=${OPENSHIFT_TMP_DIR}/man \
-#  --disable-symbols \
-#  --prefix=${OPENSHIFT_DATA_DIR}/tcl
-# time make -j2 -l3 > /dev/null
+tar zxf tcl${tcl_version}-src.tar.gz
+pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
+./configure --help
+./configure \
+--mandir=${OPENSHIFT_TMP_DIR}/man \
+ --disable-symbols \
+ --prefix=${OPENSHIFT_DATA_DIR}/tcl
+time make -j2 -l3 > /dev/null
 # make install
-# popd > /dev/null
+popd > /dev/null
 # rm -rf tcl${tcl_version}
 # rm -f tcl${tcl_version}-src.tar.gz
 popd > /dev/null
 
-tree ${OPENSHIFT_DATA_DIR}/tcl
+tree ${OPENSHIFT_TMP_DIR}/tcl
 
 # ***** Expect *****
 
