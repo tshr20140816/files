@@ -153,6 +153,8 @@ unlink gcc
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
+tree ${OPENSHIFT_DATA_DIR}/local
+
 exit
 
 cd /tmp
