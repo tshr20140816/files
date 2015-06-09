@@ -85,6 +85,19 @@ ccache --print-config
 
 cd /tmp
 
+rm -rf gcc-${gcc_version}
+
+gmp_version=4.3.1
+
+[ -f gmp-${gmp_version}.tar.xz ] || https://gmplib.org/download/gmp/gmp-${gmp_version}.tar.xz
+tar Jxf gmp-${gmp_version}.tar.xz
+cd gmp-${gmp_version}
+./configure --help
+./configure
+time make -j6
+
+cd /tmp
+
 gcc_version=4.6.4
 
 [ -f gcc-core-${gcc_version}.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-${gcc_version}/gcc-core-${gcc_version}.tar.bz2
