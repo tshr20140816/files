@@ -15,8 +15,7 @@ rm -f  ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
 cd /tmp
 
-[ -f gcc-4.6.4.tar.gz ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.6.4/gcc-4.6.4.tar.gz
-tar ztvf gcc-4.6.4.tar.gz | wc -l
+rm -f gcc-4.6.4.tar.gz
 
 [ -f gcc-core-4.6.4.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.6.4/gcc-core-4.6.4.tar.bz2
 tar ztvf gcc-core-4.6.4.tar.bz2 | wc -l
