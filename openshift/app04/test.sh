@@ -87,6 +87,7 @@ ccache --zero-stats
 ccache --print-config
 
 mkdir -p ${OPENSHIFT_DATA_DIR}/local
+tree ${OPENSHIFT_DATA_DIR}/local
 
 cd /tmp
 
