@@ -199,7 +199,7 @@ pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
 time make -j2 -l3
 make install
 popd > /dev/null
-rm -rf tcl${tcl_version}
+# rm -rf tcl${tcl_version}
 rm -f tcl${tcl_version}-src.tar.gz
 popd > /dev/null
 
@@ -215,7 +215,12 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 ./configure \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
- --prefix=${OPENSHIFT_DATA_DIR}/expect
+ --prefix=${OPENSHIFT_DATA_DIR}/tcl
+./configure \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --prefix=${OPENSHIFT_DATA_DIR}/tcl \
+ --with-tcl=${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
