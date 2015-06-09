@@ -88,6 +88,8 @@ mkdir -p ${OPENSHIFT_DATA_DIR}/local
 
 cd /tmp
 
+rm -rf gcc-4.6.4
+
 gmp_version=4.3.1
 
 [ -f gmp-${gmp_version}.tar.xz ] || https://gmplib.org/download/gmp/gmp-${gmp_version}.tar.xz
