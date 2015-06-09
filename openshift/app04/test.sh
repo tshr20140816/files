@@ -59,8 +59,7 @@ rm -rf expect${expect_version}
 popd > /dev/null
 popd > /dev/null
 
-${OPENSHIFT_DATA_DIR}/expect/bin/expect --version
-${OPENSHIFT_DATA_DIR}/expect/bin/expect --help
+tree ${OPENSHIFT_DATA_DIR}/expect
 
 exit
 
