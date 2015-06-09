@@ -15,7 +15,42 @@ rm -f  ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
 cd /tmp
 
-rm -rf ${OPENSHIFT_DATA_DIR}/tcl
+# ***** Tcl *****
+
+tcl_version=8.6.3
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
+tar zxf tcl${tcl_version}-src.tar.gz
+pushd ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}/unix > /dev/null
+./configure --help
+./configure \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --disable-symbols \
+ --prefix=${OPENSHIFT_DATA_DIR}/tcl
+time make -j2 -l3
+make install
+popd > /dev/null
+rm -rf tcl${tcl_version}
+rm -f tcl${tcl_version}-src.tar.gz
+popd > /dev/null
+
+# ***** Expect *****
+
+expect_version=5.45
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
+tar zxf expect${expect_version}.tar.gz
+popd > /dev/null
+
+pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
+./configure \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --prefix=${OPENSHIFT_DATA_DIR}/expect
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
 
 exit
 
