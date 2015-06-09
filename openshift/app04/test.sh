@@ -95,7 +95,7 @@ rm -rf gcc-4.6.4
 
 gmp_version=4.3.1
 
-[ -f gmp-${gmp_version}.tar.bz2 ] || http://ftp.gnu.org/gnu/gmp/gmp-${gmp_version}.tar.bz2
+[ -f gmp-${gmp_version}.tar.bz2 ] || http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-${gmp_version}.tar.bz2
 tar jxf gmp-${gmp_version}.tar.bz2
 cd gmp-${gmp_version}
 ./configure --help
