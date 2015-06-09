@@ -18,6 +18,9 @@ cd /tmp
 [ -f gcc-4.6.4.tar.gz ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.6.4/gcc-4.6.4.tar.gz
 tar ztvf gcc-4.6.4.tar.gz | wc -l
 
+[ -f gcc-core-4.6.4.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.6.4/gcc-core-4.6.4.tar.bz2
+tar ztvf gcc-core-4.6.4.tar.bz2 | wc -l
+
 # ***** Tcl *****
 
 tcl_version=8.6.3
@@ -65,8 +68,7 @@ popd > /dev/null
 rm -rf ${OPENSHIFT_TMP_DIR}/tcl${tcl_version}
 
 strip -s ${OPENSHIFT_DATA_DIR}/tcl/bin/expect
-${OPENSHIFT_DATA_DIR}/tcl/bin/expect --version
-${OPENSHIFT_DATA_DIR}/tcl/bin/expect --help
+${OPENSHIFT_DATA_DIR}/tcl/bin/expect exp_version
 
 exit
 
