@@ -92,8 +92,8 @@ rm -rf gcc-4.6.4
 
 gmp_version=4.3.1
 
-[ -f gmp-${gmp_version}.tar.xz ] || https://gmplib.org/download/gmp/gmp-${gmp_version}.tar.xz
-tar Jxf gmp-${gmp_version}.tar.xz
+[ -f gmp-${gmp_version}.tar.bz2 ] || http://ftp.gnu.org/gnu/gmp/gmp-${gmp_version}.tar.bz2
+tar jxf gmp-${gmp_version}.tar.bz2
 cd gmp-${gmp_version}
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/local
