@@ -15,6 +15,9 @@ rm -f  ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
 cd /tmp
 
+wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.6.4/gcc-4.6.4.tar.gz
+tar ztvf gcc-4.6.4.tar.gz | wc -l
+
 # ***** Tcl *****
 
 tcl_version=8.6.3
