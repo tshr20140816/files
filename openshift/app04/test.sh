@@ -36,6 +36,8 @@ rm -rf tcl${tcl_version}
 rm -f tcl${tcl_version}-src.tar.gz
 popd > /dev/null
 
+tree ${OPENSHIFT_DATA_DIR}/tcl
+
 # ***** Expect *****
 
 expect_version=5.45
