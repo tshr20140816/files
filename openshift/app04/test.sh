@@ -55,7 +55,7 @@ pushd ${OPENSHIFT_TMP_DIR}/expect${expect_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 rm -rf expect${expect_version}
-rm -f expect${expect_version}.tar.gz
+# rm -f expect${expect_version}.tar.gz
 popd > /dev/null
 popd > /dev/null
 
