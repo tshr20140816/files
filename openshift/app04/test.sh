@@ -9,8 +9,6 @@ echo "$(date)"
 
 set -x
 
-lzip --help
-
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
