@@ -106,6 +106,7 @@ cd gmp-${gmp_version}
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/local> /dev/null
 time make -j12 > /dev/null
+tree ./
 make install > /dev/null
 tree ./
 # cd ..
