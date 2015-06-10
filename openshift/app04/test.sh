@@ -103,9 +103,10 @@ tar jxf gmp-${gmp_version}.tar.bz2
 tree gmp-${gmp_version}
 cd gmp-${gmp_version}
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local > /dev/null
+./configure  ABI=32 --prefix=${OPENSHIFT_DATA_DIR}/local> /dev/null
 time make -j12 > /dev/null
 make install > /dev/null
+tree ./
 # cd ..
 # rm -rf gmp-${gmp_version}
 
@@ -122,6 +123,7 @@ cd mpfr-${mpfr_version}
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/local > /dev/null
 time make -j12 > /dev/null
 make install > /dev/null
+tree ./
 # cd ..
 # rm -rf mpfr-${mpfr_version}
 
@@ -156,7 +158,10 @@ cd gcc-${gcc_version}
 ./configure \
  --with-mpfr-include=/tmp/mpfr-${mpfr_version} \
  --with-mpc-include=/tmp/mpc-${mpc_version}/src \
- --with-gmp-include=/tmp/gmp-${gmp_version}
+ --with-gmp-include=/tmp/gmp-${gmp_version} \
+ --with-mpc-lib=${OPENSHIFT_DATA_DIR}/local/lib \
+ --with-mpfr-lib=${OPENSHIFT_DATA_DIR}/local/lib \
+ --with-gmp-lib=${OPENSHIFT_DATA_DIR}/local/lib
 time make -j6
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
