@@ -146,6 +146,11 @@ make install > /dev/null
 # rm -rf mpc-${mpc_version}
 
 cd /tmp
+rm -rf gmp-${gmp_version}
+rm -rf mpfr-${mpfr_version}
+rm -rf mpc-${mpc_version}
+
+cd /tmp
 
 gcc_version=4.6.4
 
@@ -167,6 +172,8 @@ cd gcc-${gcc_version}
  --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
  --with-gmp=${OPENSHIFT_DATA_DIR}/local
 time make -j6
+
+quota -s
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 unlink cc
