@@ -59,21 +59,21 @@ popd > /dev/null
 # SysBench
 # http://downloads.mysql.com/source/sysbench-0.4.12.5.tar.gz
 
-# ***** super pi *****
-
-rm -rf ${OPENSHIFT_TMP_DIR}/superpi
-mkdir ${OPENSHIFT_TMP_DIR}/superpi
-pushd ${OPENSHIFT_TMP_DIR}/superpi > /dev/null
-wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
-tar zxf super_pi-jp.tar.gz
-./super_pi 20 | tee ${OPENSHIFT_LOG_DIR}/super_pi.log
-
-sec=$(grep -e Total ${OPENSHIFT_LOG_DIR}/super_pi.log | awk '{print $4}' | tr -d \()
-query_string="server=${OPENSHIFT_APP_DNS}&super_pi=${sec}s&uuid=${USER}"
-wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
-mv ${OPENSHIFT_LOG_DIR}/super_pi.log ${OPENSHIFT_LOG_DIR}/install/
-popd > /dev/null
-rm -rf ${OPENSHIFT_TMP_DIR}/superpi
+# # ***** super pi *****
+# 
+# rm -rf ${OPENSHIFT_TMP_DIR}/superpi
+# mkdir ${OPENSHIFT_TMP_DIR}/superpi
+# pushd ${OPENSHIFT_TMP_DIR}/superpi > /dev/null
+# wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
+# tar zxf super_pi-jp.tar.gz
+# ./super_pi 20 | tee ${OPENSHIFT_LOG_DIR}/super_pi.log
+# 
+# sec=$(grep -e Total ${OPENSHIFT_LOG_DIR}/super_pi.log | awk '{print $4}' | tr -d \()
+# query_string="server=${OPENSHIFT_APP_DNS}&super_pi=${sec}s&uuid=${USER}"
+# wget --spider $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string} > /dev/null 2>&1
+# mv ${OPENSHIFT_LOG_DIR}/super_pi.log ${OPENSHIFT_LOG_DIR}/install/
+# popd > /dev/null
+# rm -rf ${OPENSHIFT_TMP_DIR}/superpi
 
 if [ 1 -eq 0 ]; then
 # ***** GNU Parallel *****
