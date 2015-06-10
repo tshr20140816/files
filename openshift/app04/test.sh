@@ -148,8 +148,9 @@ cd mpc-${mpc_version}
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/local \
  --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
- --with-gmp=${OPENSHIFT_DATA_DIR}/local > /dev/null
-time make -j12
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local \
+ --disable-dependency-tracking > /dev/null
+time make -j12 > /dev/null
 make install > /dev/null
 # cd ..
 # rm -rf mpc-${mpc_version}
