@@ -183,7 +183,7 @@ cd gcc-${gcc_version}
 #  --with-mpc-lib=${OPENSHIFT_DATA_DIR}/local/lib \
 #  --with-mpfr-lib=${OPENSHIFT_DATA_DIR}/local/lib \
 #  --with-gmp-lib=${OPENSHIFT_DATA_DIR}/local/lib
-./configure \
+time ./configure \
  --with-mpc=${OPENSHIFT_DATA_DIR}/local/ \
  --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
  --with-gmp=${OPENSHIFT_DATA_DIR}/local \
