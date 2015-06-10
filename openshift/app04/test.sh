@@ -194,7 +194,7 @@ time ./configure \
  --disable-libquadmath \
  --disable-libquadmath-support > /dev/null
 echo "$(date)"
-time make -j12 > /dev/null
+time make -j12
 echo "$(date)"
 
 quota -s
