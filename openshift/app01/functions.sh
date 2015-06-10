@@ -5,6 +5,8 @@ function010() {
 
     export TZ=JST-9
 
+    # ***** skip *****
+    
     pushd ${OPENSHIFT_DATA_DIR}/install_check_point > /dev/null
     if [ -f "$(basename "${0}").ok" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Skip $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -12,7 +14,10 @@ function010() {
     fi
     popd > /dev/null
 
+    # 元に戻したい場合がでたときのため
     export env_home_backup=${HOME}
+
+    # ***** ccache *****
 
     if [ -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
         ccache_exists=$(printenv | grep ^PATH= | grep ccache | wc -l)
@@ -25,6 +30,9 @@ function010() {
             export CCACHE_MAXSIZE=300M
         fi
     fi
+
+    # ***** distcc *****
+
     if [ -e ${OPENSHIFT_DATA_DIR}/distcc ]; then
         distcc_exists=$(printenv | grep ^PATH= | grep distcc | wc -l)
         if [ ${distcc_exists} -eq 0 ]; then
@@ -35,6 +43,9 @@ function010() {
             echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/distcc.log
         fi
     fi
+
+    # ***** distcc hosts *****
+
     if [ -e ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt ]; then
         tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt)"
         export DISTCC_HOSTS="${tmp_string}"
@@ -42,9 +53,24 @@ function010() {
         export CC="distcc gcc"
         export CXX="distcc g++"
     fi
+
+    # ***** distcc ssh *****
+
     if [ -e ${OPENSHIFT_DATA_DIR}/.ssh/config ]; then
         export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
     fi
+
+    # ***** ld.gold *****
+
+    if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ]; then
+        mkdir ${OPENSHIFT_TMP_DIR}/bin
+        cp ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/
+        chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld.gold
+        export LD=ld.gold
+    fi
+
+    # ***** CFLAGS CXXFLAGS *****
+
     # NG : distcc & -march=native
     # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
     # -march=ivybridge E5-2670 v2
@@ -53,6 +79,8 @@ function010() {
     export CFLAGS="${CFLAGS} -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mtune=generic"
     export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
     export CXXFLAGS="${CFLAGS}"
+
+    # ***** memory.failcnt *****
 
     # shellcheck disable=SC2034
     processor_count="$(grep -c -e processor /proc/cpuinfo)"
@@ -63,13 +91,17 @@ function010() {
     #     query_string="${query_string}&ccache_hit_direct=${ccache_hit_direct}"
     # fi
     wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
-    
+
+    # ***** version information *****
+
     while read LINE
     do
         local product=$(echo "${LINE}" | awk '{print $1}')
         local version=$(echo "${LINE}" | awk '{print $2}')
         eval "${product}"="${version}"
     done < ${OPENSHIFT_DATA_DIR}/version_list
+
+    # ***** stop and restart action *****
 
     if [ $# -gt 0 ]; then
         if [ "${1}" = "restart" -o "${1}" = "stop" ]; then
