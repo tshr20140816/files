@@ -11,6 +11,8 @@ set -x
 
 wc -l ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 
+df -ih
+
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
@@ -197,6 +199,7 @@ echo "$(date)"
 time make -j12
 echo "$(date)"
 
+df -ih
 quota -s
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
