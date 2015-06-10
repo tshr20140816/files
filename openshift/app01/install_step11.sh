@@ -28,6 +28,13 @@ export MAKEOPTS="-j6"
 # 32MB
 export RUBY_GC_MALLOC_LIMIT=33554432
 
+if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ]; then
+    mkdir ${OPENSHIFT_TMP_DIR}/bin
+    cp -f ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/
+    chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld.gold
+    export LD=ld.gold
+fi
+
 # *** install ***
 
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --help | tee -a ${OPENSHIFT_LOG_DIR}/install.log
