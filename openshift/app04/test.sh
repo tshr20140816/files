@@ -127,7 +127,8 @@ rm -rf mpfr-*
 tar jxf mpfr-${mpfr_version}.tar.bz2
 cd mpfr-${mpfr_version}
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local > /dev/null
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local \
+ --disable-maintainer-mode > /dev/null
 time make -j12 > /dev/null
 make install > /dev/null
 # cd ..
