@@ -120,7 +120,7 @@ rm -rf gmp-${gmp_version}
 tar jxf gmp-${gmp_version}.tar.bz2
 cd gmp-${gmp_version}
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local> /dev/null
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local > /dev/null
 # cat config.log
 time make -j12 > /dev/null
 make install > /dev/null
