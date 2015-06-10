@@ -9,6 +9,8 @@ echo "$(date)"
 
 set -x
 
+wc -l ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
