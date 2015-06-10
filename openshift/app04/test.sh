@@ -83,7 +83,7 @@ export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
-export CCACHE_MAXSIZE=150M
+export CCACHE_MAXSIZE=200M
 
 distcc_hosts_string="55630afc5973caf283000214@v1-20150216.rhcloud.com/4:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start"
 distcc_hosts_string="${distcc_hosts_string} 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/4:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start"
@@ -106,98 +106,6 @@ tree ${OPENSHIFT_DATA_DIR}/local
 
 cd /tmp
 
-rm -rf gcc-4.6.4
-rm -rf gmp-*
-rm -rf mpfr-*
-rm -rf mpc-*
-
-if [ 1 -eq 0 ]; then
-# gmp_version=4.3.1
-gmp_version=4.3.2
-
-rm -rf gmp-${gmp_version}
-[ -f gmp-${gmp_version}.tar.bz2 ] || wget http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-${gmp_version}.tar.bz2
-tar jxf gmp-${gmp_version}.tar.bz2
-cd gmp-${gmp_version}
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local > /dev/null
-# cat config.log
-time make -j12 > /dev/null
-make install > /dev/null
-# cd ..
-# rm -rf gmp-${gmp_version}
-
-cd /tmp
-
-# mpfr_version=2.3.1
-mpfr_version=2.3.2
-
-rm -rf mpfr-${mpfr_version}
-[ -f mpfr-${mpfr_version}.tar.bz2 ] || wget http://mpfr.loria.fr/mpfr-${mpfr_version}/mpfr-${mpfr_version}.tar.bz2
-tar jxf mpfr-${mpfr_version}.tar.bz2
-cd mpfr-${mpfr_version}
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local \
- --disable-maintainer-mode \
- --disable-dependency-tracking > /dev/null
-time make -j12 > /dev/null
-make install > /dev/null
-# cd ..
-# rm -rf mpfr-${mpfr_version}
-
-cd /tmp
-
-# mpc_version=0.8
-mpc_version=0.8.2
-
-rm -rf mpc-${mpc_version}
-[ -f mpc-${mpc_version}.tar.gz ] || wget http://www.multiprecision.org/mpc/download/mpc-${mpc_version}.tar.gz
-tar zxf mpc-${mpc_version}.tar.gz
-cd mpc-${mpc_version}
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local \
- --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
- --with-gmp=${OPENSHIFT_DATA_DIR}/local \
- --disable-dependency-tracking > /dev/null
-time make -j12 > /dev/null
-make install > /dev/null
-# cd ..
-# rm -rf mpc-${mpc_version}
-
-cd /tmp
-rm -rf gmp-${gmp_version}
-rm -rf mpfr-${mpfr_version}
-rm -rf mpc-${mpc_version}
-fi
-
-cd /tmp
-
-gcc_version=4.6.4
-
-rm -rf gcc-${gcc_version}
-[ -f gcc-core-${gcc_version}.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-${gcc_version}/gcc-core-${gcc_version}.tar.bz2
-tar jxf gcc-core-${gcc_version}.tar.bz2
-quota -s
-ls -lang
-cd gcc-${gcc_version}
-./configure --help
-# ./configure \
-#  --with-mpfr-include=/tmp/mpfr-${mpfr_version} \
-#  --with-mpc-include=/tmp/mpc-${mpc_version}/src \
-#  --with-gmp-include=/tmp/gmp-${gmp_version} \
-#  --with-mpc-lib=${OPENSHIFT_DATA_DIR}/local/lib \
-#  --with-mpfr-lib=${OPENSHIFT_DATA_DIR}/local/lib \
-#  --with-gmp-lib=${OPENSHIFT_DATA_DIR}/local/lib
-echo "$(date)"
-time ./configure \
- --with-mpc=${OPENSHIFT_DATA_DIR}/local/ \
- --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
- --with-gmp=${OPENSHIFT_DATA_DIR}/local \
- --disable-libquadmath \
- --disable-libquadmath-support > /dev/null
-echo "$(date)"
-time make -j12
-echo "$(date)"
 
 df -ih
 quota -s
