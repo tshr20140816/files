@@ -158,13 +158,17 @@ quota -s
 ls -lang
 cd gcc-${gcc_version}
 ./configure --help
+# ./configure \
+#  --with-mpfr-include=/tmp/mpfr-${mpfr_version} \
+#  --with-mpc-include=/tmp/mpc-${mpc_version}/src \
+#  --with-gmp-include=/tmp/gmp-${gmp_version} \
+#  --with-mpc-lib=${OPENSHIFT_DATA_DIR}/local/lib \
+#  --with-mpfr-lib=${OPENSHIFT_DATA_DIR}/local/lib \
+#  --with-gmp-lib=${OPENSHIFT_DATA_DIR}/local/lib
 ./configure \
- --with-mpfr-include=/tmp/mpfr-${mpfr_version} \
- --with-mpc-include=/tmp/mpc-${mpc_version}/src \
- --with-gmp-include=/tmp/gmp-${gmp_version} \
- --with-mpc-lib=${OPENSHIFT_DATA_DIR}/local/lib \
- --with-mpfr-lib=${OPENSHIFT_DATA_DIR}/local/lib \
- --with-gmp-lib=${OPENSHIFT_DATA_DIR}/local/lib
+ --with-mpc=${OPENSHIFT_DATA_DIR}/local/ \
+ --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local
 time make -j6
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
