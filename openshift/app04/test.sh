@@ -135,7 +135,9 @@ tar zxf mpc-${mpc_version}.tar.gz
 tree mpc-${mpc_version}
 cd mpc-${mpc_version}
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local \
+ --with-mpfr-include=/tmp/mpfr-${mpfr_version} \
+ --with-gmp-include=/tmp/gmp-${gmp_version}
 time make -j6
 make install
 # cd ..
@@ -153,7 +155,7 @@ cd gcc-${gcc_version}
 ./configure --help
 ./configure \
  --with-mpfr-include=/tmp/mpfr-${mpfr_version} \
- --with-mpc-include=/tmp/mpc-${mpc_version} \
+ --with-mpc-include=/tmp/mpc-${mpc_version}/src \
  --with-gmp-include=/tmp/gmp-${gmp_version}
 time make -j6
 
