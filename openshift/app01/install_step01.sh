@@ -249,6 +249,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip &
     # phpicalendar
     wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2 &
+    # ld.gold
+    wget -t1 ${mirror_server}/ld.gold &
     wait
 
     # apache
