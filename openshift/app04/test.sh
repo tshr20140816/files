@@ -61,7 +61,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 # export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
 export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}/local/lib"
 export INCLUDE="${OPENSHIFT_DATA_DIR}/local/include"
-export ABI=32
+# export ABI=32
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 ln -s ccache cc
@@ -141,8 +141,8 @@ tree mpc-${mpc_version}
 cd mpc-${mpc_version}
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/local \
- --with-mpfr-include=/tmp/mpfr-${mpfr_version} \
- --with-gmp-include=/tmp/gmp-${gmp_version}
+ --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local
 time make -j6
 make install
 # cd ..
