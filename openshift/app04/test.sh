@@ -98,7 +98,6 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ccache -s
 ccache --zero-stats
 ccache --print-config
-ccache -C
 
 mkdir -p ${OPENSHIFT_DATA_DIR}/local
 tree ${OPENSHIFT_DATA_DIR}/local
@@ -195,7 +194,7 @@ time ./configure \
  --disable-libquadmath \
  --disable-libquadmath-support
 echo "$(date)"
-time make -j6
+time make -j12
 echo "$(date)"
 
 quota -s
