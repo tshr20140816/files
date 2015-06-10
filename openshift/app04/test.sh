@@ -56,12 +56,16 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
+mkdir /tmp/bin
+strip -s ld.gold
+cp /tmp/ld.gold /tmp/bin/
+export LD=ld.gold
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+export PATH="${OPENSHIFT_TMP_DIR}/bin:$PATH"
 # export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
 export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}/local/lib"
-export INCLUDE="${OPENSHIFT_DATA_DIR}/local/include"
-# export ABI=32
+# export INCLUDE="${OPENSHIFT_DATA_DIR}/local/include"
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 ln -s ccache cc
