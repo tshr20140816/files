@@ -61,6 +61,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 # export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
 export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}/local/lib"
 export INCLUDE="${OPENSHIFT_DATA_DIR}/local/include"
+export ABI=32
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 ln -s ccache cc
@@ -103,7 +104,7 @@ tar jxf gmp-${gmp_version}.tar.bz2
 tree gmp-${gmp_version}
 cd gmp-${gmp_version}
 ./configure --help
-./configure  ABI=32 --prefix=${OPENSHIFT_DATA_DIR}/local> /dev/null
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local> /dev/null
 time make -j12 > /dev/null
 make install > /dev/null
 tree ./
