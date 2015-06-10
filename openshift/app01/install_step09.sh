@@ -73,6 +73,13 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) php tar" | tee -a ${OPENSHIFT_LOG_DIR}/instal
 tar Jxf php-${php_version}.tar.xz
 popd > /dev/null
 
+if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ]; then
+    mkdir ${OPENSHIFT_TMP_DIR}/bin
+    cp ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/
+    chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld.gold
+    export LD=ld.gold
+fi
+
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 
 # if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
