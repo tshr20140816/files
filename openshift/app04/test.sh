@@ -94,7 +94,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ccache -s
 ccache --zero-stats
 ccache --print-config
-# ccache -C
+ccache -C
 
 mkdir -p ${OPENSHIFT_DATA_DIR}/local
 tree ${OPENSHIFT_DATA_DIR}/local
@@ -102,7 +102,11 @@ tree ${OPENSHIFT_DATA_DIR}/local
 cd /tmp
 
 rm -rf gcc-4.6.4
+rm -rf gmp-*
+rm -rf mpfr-*
+rm -rf mpc-*
 
+if [ 1 -eq 0 ]; then
 # gmp_version=4.3.1
 gmp_version=4.3.2
 
@@ -159,6 +163,7 @@ cd /tmp
 rm -rf gmp-${gmp_version}
 rm -rf mpfr-${mpfr_version}
 rm -rf mpc-${mpc_version}
+fi
 
 cd /tmp
 
