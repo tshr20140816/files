@@ -483,12 +483,12 @@ for i in $(seq 0 9)
 do
     files_exists=1
 
-    # *** super pi ***
-    if [ ! -f super_pi-jp.tar.gz ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) super pi wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz &
-    fi
-    [ -f super_pi-jp.tar.gz ] || files_exists=0
+    # # *** super pi ***
+    # if [ ! -f super_pi-jp.tar.gz ]; then
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) super pi wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz &
+    # fi
+    # [ -f super_pi-jp.tar.gz ] || files_exists=0
 
     # *** spdy ***
     if [ ! -f mod-spdy-beta_current_x86_64.rpm ]; then
