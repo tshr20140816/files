@@ -94,7 +94,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ccache -s
 ccache --zero-stats
 ccache --print-config
-ccache -C
+# ccache -C
 
 mkdir -p ${OPENSHIFT_DATA_DIR}/local
 tree ${OPENSHIFT_DATA_DIR}/local
