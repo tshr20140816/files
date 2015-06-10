@@ -136,9 +136,9 @@ cd mpc-${mpc_version}
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/local \
  --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
- --with-gmp=${OPENSHIFT_DATA_DIR}/local
-time make -j6
-make install
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local > /dev/null
+time make -j12
+make install > /dev/null
 # cd ..
 # rm -rf mpc-${mpc_version}
 
