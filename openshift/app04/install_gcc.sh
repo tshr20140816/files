@@ -57,6 +57,8 @@ cd /tmp
 rm -rf gmp-${gmp_version}
 rm -rf mpfr-${mpfr_version}
 rm -rf mpc-${mpc_version}
+rm -rf man
+rm -rf info
 
 gcc_version=4.6.4
 
