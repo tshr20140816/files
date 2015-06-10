@@ -15,7 +15,7 @@ cd gmp-${gmp_version}
  --mandir=/tmp/man \
  --infodir=/tmp/info \
  --prefix=${OPENSHIFT_DATA_DIR}/local
-time make
+time make -j4
 make install
 
 cd /tmp
@@ -31,7 +31,7 @@ cd mpfr-${mpfr_version}
  --prefix=${OPENSHIFT_DATA_DIR}/local \
  --disable-maintainer-mode \
  --disable-dependency-tracking
-time make
+time make -j4
 make install
 
 cd /tmp
@@ -49,7 +49,7 @@ cd mpc-${mpc_version}
  --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
  --with-gmp=${OPENSHIFT_DATA_DIR}/local \
  --disable-dependency-tracking
-time make
+time make -j4
 make install
 
 cd /tmp
