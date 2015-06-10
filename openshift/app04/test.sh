@@ -106,6 +106,39 @@ tree ${OPENSHIFT_DATA_DIR}/local
 
 cd /tmp
 
+[ -f php-5.6.9.tar.xz ] || wget http://jp1.php.net/get/php-5.6.9.tar.xz/from/this/mirror -O php-5.6.9.tar.xz
+
+tar Jxf php-5.6.9.tar.xz
+cd php-5.6.9
+
+cat Makefile
+
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/php \
+--mandir=${OPENSHIFT_TMP_DIR}/man \
+--docdir=${OPENSHIFT_TMP_DIR}/doc \
+--with-mysql \
+--with-pdo-mysql \
+--without-sqlite3 \
+--without-pdo-sqlite \
+--without-pear \
+--with-curl \
+--with-libdir=lib64 \
+--with-bz2 \
+--with-iconv \
+--with-openssl \
+--with-zlib \
+--with-gd \
+--enable-exif \
+--enable-ftp \
+--enable-xml \
+--enable-mbstring \
+--enable-mbregex \
+--enable-sockets \
+--disable-ipv6 \
+--with-gettext=${OPENSHIFT_DATA_DIR}/php
+
+cat Makefile
 
 df -ih
 quota -s
