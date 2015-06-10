@@ -192,9 +192,9 @@ time ./configure \
  --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
  --with-gmp=${OPENSHIFT_DATA_DIR}/local \
  --disable-libquadmath \
- --disable-libquadmath-support
+ --disable-libquadmath-support > /dev/null
 echo "$(date)"
-time make -j12
+time make -j12 > /dev/null
 echo "$(date)"
 
 quota -s
