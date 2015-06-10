@@ -176,7 +176,9 @@ cd gcc-${gcc_version}
 ./configure \
  --with-mpc=${OPENSHIFT_DATA_DIR}/local/ \
  --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
- --with-gmp=${OPENSHIFT_DATA_DIR}/local
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local \
+ --disable-libquadmath \
+ --disable-libquadmath-support
 time make -j6
 
 quota -s
