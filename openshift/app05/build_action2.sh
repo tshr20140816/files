@@ -153,6 +153,8 @@ rm -f php-${php_version}.tar.xz
 cp ${OPENSHIFT_DATA_DIR}/files/php-${php_version}.tar.xz ./
 tar Jxf php-${php_version}.tar.xz
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
+file /tmp/php-5.6.9/libtool
+cat /tmp/php-5.6.9/libtool
 ./configure --help
 ./configure \
 --prefix=${data_dir}/php \
