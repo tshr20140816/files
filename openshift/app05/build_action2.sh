@@ -342,50 +342,56 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -rf delegate${delegate_version}
 rm -f delegate${delegate_version}.tar.gz
 
-cp ${OPENSHIFT_DATA_DIR}/files/delegate${delegate_version}.tar.gz ./
-if [ ! -f delegate${delegate_version}.tar.gz ]; then
-    wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
+if [ -f ${OPENSHIFT_DATA_DIR}/files/maked_delegate${delegate_version}.tar.xz ]; then
+    pushd ${OPENSHIFT_DATA_DIR}/files > /dev/null
+    cp -f maked_delegate${delegate_version}.tar.xz ${app_uuid}_maked_delegate${delegate_version}.tar.xz
+    popd > /dev/null
+else
+    cp ${OPENSHIFT_DATA_DIR}/files/delegate${delegate_version}.tar.gz ./
+    if [ ! -f delegate${delegate_version}.tar.gz ]; then
+        wget http://www.delegate.org/anonftp/DeleGate/delegate${delegate_version}.tar.gz
+    fi
+    tar zxf delegate${delegate_version}.tar.gz
+
+    # CC="ccache gcc"
+    # ccache gcc -DMKMKMK -DDEFCC=\"ccache gcc\" -I../gen -I../include -O2 -march=native -pipe -fomit-frame-pointer -s -Llib mkmkmk.c -o mkmkmk.exe
+    # gcc: gcc": No such file or directory
+    # <command-line>: warning: missing terminating " character
+    pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
+    ln -s ccache cc
+    ln -s ccache gcc
+    popd > /dev/null
+    unset CC
+    unset CXX
+
+    pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
+    time make -j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local
+    mkdir -p ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}_backup/src/builtin/icons/ysato
+    cp src/delegated ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}_backup/src/
+    cp src/builtin/icons/ysato/*.gif ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}_backup/src/builtin/icons/ysato/
+    popd > /dev/null
+    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+    rm -rf ./delegate${delegate_version}
+    mv delegate${delegate_version}_backup delegate${delegate_version}
+    popd > /dev/null
+    ccache --show-stats
+    pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
+    unlink cc
+    unlink gcc
+    popd > /dev/null
+    export CC="ccache gcc"
+    export CXX="ccache g++"
+
+    rm -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz
+    time tar Jcf ${app_uuid}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
+    # time tar cf - delegate${delegate_version} \
+    #  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+    #  > ${app_uuid}_maked_delegate${delegate_version}.tar.xz
+    cp -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/maked_delegate${delegate_version}.tar.xz
+    mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+    rm -rf delegate${delegate_version}
+    rm -f delegate${delegate_version}.tar.gz
 fi
-tar zxf delegate${delegate_version}.tar.gz
-
-# CC="ccache gcc"
-# ccache gcc -DMKMKMK -DDEFCC=\"ccache gcc\" -I../gen -I../include -O2 -march=native -pipe -fomit-frame-pointer -s -Llib mkmkmk.c -o mkmkmk.exe
-# gcc: gcc": No such file or directory
-# <command-line>: warning: missing terminating " character
-    
-pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
-ln -s ccache cc
-ln -s ccache gcc
-popd > /dev/null
-unset CC
-unset CXX
-
-pushd ${OPENSHIFT_TMP_DIR}/delegate${delegate_version} > /dev/null
-time make -j$(grep -c -e processor /proc/cpuinfo) ADMIN=user@rhcloud.local
-mkdir -p ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}_backup/src/builtin/icons/ysato
-cp src/delegated ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}_backup/src/
-cp src/builtin/icons/ysato/*.gif ${OPENSHIFT_TMP_DIR}/delegate${delegate_version}_backup/src/builtin/icons/ysato/
-popd > /dev/null
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -rf ./delegate${delegate_version}
-mv delegate${delegate_version}_backup delegate${delegate_version}
-popd > /dev/null
-ccache --show-stats
-pushd ${OPENSHIFT_DATA_DIR}/ccache/bin > /dev/null
-unlink cc
-unlink gcc
-popd > /dev/null
-export CC="ccache gcc"
-export CXX="ccache g++"
-
-rm -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz
-time tar Jcf ${app_uuid}_maked_delegate${delegate_version}.tar.xz delegate${delegate_version}
-# time tar cf - delegate${delegate_version} \
-#  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
-#  > ${app_uuid}_maked_delegate${delegate_version}.tar.xz
-mv -f ${app_uuid}_maked_delegate${delegate_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-rm -rf delegate${delegate_version}
-rm -f delegate${delegate_version}.tar.gz
 popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
