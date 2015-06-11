@@ -19,7 +19,7 @@ do
     if [ -f ${OPENSHIFT_TMP_DIR}/build_now ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) waitting"
         sleep 60s
-        find ${OPENSHIFT_TMP_DIR} -name 'build_now' -type f -mmin +60 -print0 | xargs -0i rm -f {}
+        find ${OPENSHIFT_TMP_DIR} -name 'build_now' -type f -mmin +6 -print0 | xargs -0i rm -f {}
     else
         break
     fi
@@ -181,7 +181,7 @@ cat /tmp/php-5.6.9/libtool
 --disable-ipv6 \
 --with-gettext=${data_dir}/php
 
-time make -j12
+time make -j6
 popd > /dev/null
 popd > /dev/null
 
