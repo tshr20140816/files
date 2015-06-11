@@ -159,11 +159,12 @@ fi
 
 # kokokara
 
-mkdir -p ${OPENSHIFT_DATA_DIR}/local
+# mkdir -p ${OPENSHIFT_DATA_DIR}/local
 tree ${OPENSHIFT_DATA_DIR}/local
 
 cd /tmp
 
+if [ 1 -eq 0 ]; then
 gmp_version=4.3.2
 
 [ -f gmp-${gmp_version}.tar.bz2 ] || wget http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-${gmp_version}.tar.bz2
@@ -217,6 +218,7 @@ rm -rf mpfr-${mpfr_version}
 rm -rf mpc-${mpc_version}
 rm -rf man
 rm -rf info
+fi
 
 gcc_version=4.6.4
 
