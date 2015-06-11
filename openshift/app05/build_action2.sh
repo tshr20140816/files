@@ -90,6 +90,7 @@ export CXXFLAGS="${CFLAGS}"
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
+ccache -s
 ccache --zero-stats
 ccache --print-config
 
