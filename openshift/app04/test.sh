@@ -101,57 +101,7 @@ ccache -s
 ccache --zero-stats
 ccache --print-config
 
-mkdir -p ${OPENSHIFT_DATA_DIR}/local
-tree ${OPENSHIFT_DATA_DIR}/local
-
-cd /tmp
-
-[ -f php-5.6.9.tar.xz ] || wget http://jp1.php.net/get/php-5.6.9.tar.xz/from/this/mirror -O php-5.6.9.tar.xz
-
-tar Jxf php-5.6.9.tar.xz
-cd php-5.6.9
-
-cat Makefile
-
-./configure \
---prefix=${OPENSHIFT_DATA_DIR}/php \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---docdir=${OPENSHIFT_TMP_DIR}/doc \
---with-mysql \
---with-pdo-mysql \
---without-sqlite3 \
---without-pdo-sqlite \
---without-pear \
---with-curl \
---with-libdir=lib64 \
---with-bz2 \
---with-iconv \
---with-openssl \
---with-zlib \
---with-gd \
---enable-exif \
---enable-ftp \
---enable-xml \
---enable-mbstring \
---enable-mbregex \
---enable-sockets \
---disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php
-
-cat Makefile
-
-df -ih
-quota -s
-
-cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
-unlink cc
-unlink gcc
-
-ls -lang /tmp
-ls -lang ${OPENSHIFT_DATA_DIR}
-
-exit
-
+if [ 1 -eq 0 ]; then
 cd /tmp
 build_server_password=$(cat aa.txt)
 
@@ -202,3 +152,88 @@ if [ ${build_server_password} != 'none' ]; then
     wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
 fi
 popd > /dev/null
+fi
+
+# kokokara
+
+mkdir -p ${OPENSHIFT_DATA_DIR}/local
+tree ${OPENSHIFT_DATA_DIR}/local
+
+cd /tmp
+
+gmp_version=4.3.2
+
+[ -f gmp-${gmp_version}.tar.bz2 ] || wget http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-${gmp_version}.tar.bz2
+tar jxf gmp-${gmp_version}.tar.bz2
+cd gmp-${gmp_version}
+./configure \
+ --mandir=/tmp/man \
+ --infodir=/tmp/info \
+ --prefix=${OPENSHIFT_DATA_DIR}/local
+time make -j12
+make install
+
+cd /tmp
+
+mpfr_version=2.3.2
+
+[ -f mpfr-${mpfr_version}.tar.bz2 ] || wget http://mpfr.loria.fr/mpfr-${mpfr_version}/mpfr-${mpfr_version}.tar.bz2
+tar jxf mpfr-${mpfr_version}.tar.bz2
+cd mpfr-${mpfr_version}
+./configure  \
+ --mandir=/tmp/man \
+ --infodir=/tmp/info \
+ --prefix=${OPENSHIFT_DATA_DIR}/local \
+ --disable-maintainer-mode \
+ --disable-dependency-tracking
+time make -j12
+make install
+
+cd /tmp
+
+mpc_version=0.8.2
+
+rm -rf mpc-${mpc_version}
+[ -f mpc-${mpc_version}.tar.gz ] || wget http://www.multiprecision.org/mpc/download/mpc-${mpc_version}.tar.gz
+tar zxf mpc-${mpc_version}.tar.gz
+cd mpc-${mpc_version}
+./configure  \
+ --mandir=/tmp/man \
+ --infodir=/tmp/info \
+ --prefix=${OPENSHIFT_DATA_DIR}/local \
+ --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local \
+ --disable-dependency-tracking
+time make -j12
+make install
+
+cd /tmp
+
+rm -rf gmp-${gmp_version}
+rm -rf mpfr-${mpfr_version}
+rm -rf mpc-${mpc_version}
+rm -rf man
+rm -rf info
+
+gcc_version=4.6.4
+
+[ -f gcc-core-${gcc_version}.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-${gcc_version}/gcc-core-${gcc_version}.tar.bz2
+tar jxf gcc-core-${gcc_version}.tar.bz2
+cd gcc-${gcc_version}
+time ./configure \
+ --with-mpc=${OPENSHIFT_DATA_DIR}/local/ \
+ --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local \
+ --disable-libquadmath \
+ --disable-libquadmath-support
+time make
+
+df -ih
+quota -s
+
+cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
+unlink cc
+unlink gcc
+
+ls -lang /tmp
+ls -lang ${OPENSHIFT_DATA_DIR}
