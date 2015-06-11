@@ -13,6 +13,9 @@ wc -l ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 
 df -ih
 
+rm -f ${OPENSHIFT_TMP_DIR}/php-5.6.9.tar.xz
+rm -rf ${OPENSHIFT_TMP_DIR}/php-5.6.9
+
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
