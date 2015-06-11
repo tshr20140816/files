@@ -165,5 +165,17 @@ fi
 
 cd /tmp
 
+rm -rf gcc*
+rm -rf gmp*
+rm -rf mpc*
+rm -rf mpfr*
+
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
+
+wget http://ftpmirror.gnu.org/libtool/libtool-2.4.6.tar.gz
+tar zxf libtool-2.4.6.tar.gz
+cd libtool-2.4.6
+./configure --help
+./configure
+time make
