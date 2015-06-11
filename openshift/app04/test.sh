@@ -163,9 +163,6 @@ fi
 
 # kokokara
 
-# mkdir -p ${OPENSHIFT_DATA_DIR}/local
-tree ${OPENSHIFT_DATA_DIR}/local
-
 cd /tmp
 
 ls -lang /tmp
