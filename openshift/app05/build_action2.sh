@@ -182,7 +182,7 @@ cat /tmp/php-5.6.9/libtool
 --disable-ipv6 \
 --with-gettext=${data_dir}/php
 
-time make -j6
+time make -j12
 popd > /dev/null
 popd > /dev/null
 
