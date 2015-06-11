@@ -105,7 +105,7 @@ ccache --zero-stats
 ccache --print-config
 ccache -C
 
-if [ 1 -eq 0 ]; then
+if [ 1 -eq 1 ]; then
 cd /tmp
 build_server_password=$(cat aa.txt)
 
@@ -120,6 +120,7 @@ libmemcached_version=1.0.18
 delegate_version=9.9.13
 tcl_version=8.6.3
 cadaver_version=0.23.3
+php_version=5.6.9
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > build_request.xml
@@ -136,6 +137,7 @@ cat << '__HEREDOC__' > build_request.xml
     <item app="delegate" version="__DELEGATE_VERSION__" />
     <item app="tcl" version="__TCL_VERSION__" />
     <item app="cadaver" version="__CADAVER_VERSION__" />
+    <item app="php" version="__PHP_VERSION__" />
   </items>
 </root>
 __HEREDOC__
@@ -149,6 +151,7 @@ sed -i -e "s|__LIBMEMCACHED_VERSION__|${libmemcached_version}|g" build_request.x
 sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
 sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
 sed -i -e "s|__CADAVER_VERSION__|${cadaver_version}|g" build_request.xml
+sed -i -e "s|__PHP_VERSION__|${php_version}|g" build_request.xml
 
 mirror_server="https://files3-20150207.rhcloud.com/files/"
 
