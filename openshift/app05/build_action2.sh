@@ -142,6 +142,47 @@ if [ -f ${OPENSHIFT_DATA_DIR}/user_fqdn.txt ]; then
     done
 fi
 
+# ***** php & libphp5.so *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache"
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf php-${php_version}
+rm -f php-${php_version}.tar.xz
+cp ${OPENSHIFT_DATA_DIR}/files/php-${php_version}.tar.xz ./
+tar Jxf php-${php_version}.tar.xz
+pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
+./configure --help
+./configure \
+--prefix=${data_dir}/php \
+--mandir=${tmp_dir}/man \
+--docdir=${tmp_dir}/doc \
+--with-mysql \
+--with-pdo-mysql \
+--without-sqlite3 \
+--without-pdo-sqlite \
+--without-pear \
+--with-curl \
+--with-libdir=lib64 \
+--with-bz2 \
+--with-iconv \
+--with-openssl \
+--with-zlib \
+--with-gd \
+--enable-exif \
+--enable-ftp \
+--enable-xml \
+--enable-mbstring \
+--enable-mbregex \
+--enable-sockets \
+--disable-ipv6 \
+--with-gettext=${data_dir}/php
+
+time make -j12
+popd > /dev/null
+popd > /dev/null
+
 # ***** apache *****
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache"
