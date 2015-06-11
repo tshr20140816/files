@@ -105,7 +105,7 @@ ccache --zero-stats
 ccache --print-config
 ccache -C
 
-if [ 1 -eq 1 ]; then
+if [ 1 -eq 0 ]; then
 cd /tmp
 build_server_password=$(cat aa.txt)
 
