@@ -144,7 +144,7 @@ fi
 
 # ***** php & libphp5.so *****
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) apache"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) php"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
