@@ -4,6 +4,11 @@ export TZ=JST-9
 
 set -x
 
+export CFLAGS="-Os -march=core2 -maes -mavx -mcx16 -mpclmul -mpopcnt -msahf"
+export CFLAGS="${CFLAGS} -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mtune=generic"
+export CFLAGS="${CFLAGS} -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
 cd /tmp
 
 gmp_version=4.3.2
