@@ -181,7 +181,8 @@ cat /tmp/php-5.6.9/libtool
 --enable-sockets \
 --disable-ipv6 \
 --with-gettext=${data_dir}/php
-
+file /tmp/php-5.6.9/libtool
+cat /tmp/php-5.6.9/libtool
 time make -j12
 popd > /dev/null
 popd > /dev/null
