@@ -181,7 +181,9 @@ php_version=5.6.10
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
 rm -rf php-${php_version}
-[ -f php-${php_version}.tar.xz ] || wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+rm -f php-${php_version}.tar.xz
+wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+# [ -f php-${php_version}.tar.xz ] || wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 ./configure --help
