@@ -13,9 +13,6 @@ wc -l ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 
 df -ih
 
-rm -f ${OPENSHIFT_TMP_DIR}/php-5.6.9.tar.xz
-rm -rf ${OPENSHIFT_TMP_DIR}/php-5.6.9
-
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
@@ -180,8 +177,8 @@ php_version=5.6.10
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
 rm -rf php-${php_version}
-rm -f php-${php_version}.tar.xz
-wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+# rm -f php-${php_version}.tar.xz
+# wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 # [ -f php-${php_version}.tar.xz ] || wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
@@ -212,7 +209,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --enable-sockets \
  --disable-ipv6 \
  --with-gettext=${OPENSHIFT_DATA_DIR}/php > /dev/null
-time make -j12 > /dev/null
+time make -j6 > /dev/null
 popd > /dev/null
 popd > /dev/null
 
