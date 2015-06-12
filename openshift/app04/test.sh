@@ -164,6 +164,9 @@ cd /tmp
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
+bison --help
+re2c --help
+
 cd /tmp
 
 ccache -s
