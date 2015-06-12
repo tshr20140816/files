@@ -168,42 +168,9 @@ ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
-rm -rf expect5.45
-rm -rf libtool-2.4.6
 
-# ***** apache for libphp5.so *****
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) apache for libphp5.so"
-
-apache_version=2.2.29
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-
-rm -rf httpd-${apache_version}
-rm -rf ${OPENSHIFT_DATA_DIR}/apache
-
-[ -f httpd-${apache_version}.tar.bz2 ] || wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
-tar jxf httpd-${apache_version}.tar.bz2
-pushd httpd-${apache_version} > /dev/null
-./configure --help
-# --enable-mods-shared='all proxy ssl mem_cache file_cache disk_cache'
-# ./configure \
-#  --prefix=${OPENSHIFT_DATA_DIR}/apache \
-#  --infodir=${OPENSHIFT_TMP_DIR}/info \
-#  --mandir=${OPENSHIFT_TMP_DIR}/man \
-#  --docdir=${OPENSHIFT_TMP_DIR}/doc \
-#  --enable-mods-shared='all proxy'
-./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/apache \
- --infodir=${OPENSHIFT_TMP_DIR}/info \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc
-time make -j12
-make install
-popd > /dev/null
-
-ccache -C
 ccache -s
+oo-cgroup-read memory.failcnt
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php for libphp5.so"
 
@@ -243,7 +210,10 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --enable-mbregex \
  --enable-sockets \
  --disable-ipv6 \
- --with-gettext=${OPENSHIFT_DATA_DIR}/php
-time make -j12
+ --with-gettext=${OPENSHIFT_DATA_DIR}/php > /dev/null
+time make -j12 > /dev/null
 popd > /dev/null
 popd > /dev/null
+
+ccache -s
+oo-cgroup-read memory.failcnt
