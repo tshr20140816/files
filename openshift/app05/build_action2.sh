@@ -213,7 +213,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --enable-sockets \
  --disable-ipv6 \
  --with-gettext=${OPENSHIFT_DATA_DIR}/php
-time make -j6
+time make -j12
 find ./ -name libphp5.so -print
 popd > /dev/null
 popd > /dev/null
