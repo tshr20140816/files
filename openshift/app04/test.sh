@@ -193,6 +193,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --with-pdo-mysql \
  --without-sqlite3 \
  --without-pdo-sqlite \
+ --without-cdb \
  --without-pear \
  --with-curl \
  --with-libdir=lib64 \
