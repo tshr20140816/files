@@ -143,7 +143,7 @@ if [ -f ${OPENSHIFT_DATA_DIR}/user_fqdn.txt ]; then
     done
 fi
 
-# ***** apache *****
+# ***** apache for libphp5.so *****
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache for libphp5.so"
 
@@ -159,12 +159,17 @@ tar jxf httpd-${apache_version}.tar.bz2
 pushd httpd-${apache_version} > /dev/null
 ./configure --help
 # --enable-mods-shared='all proxy ssl mem_cache file_cache disk_cache'
+# ./configure \
+#  --prefix=${OPENSHIFT_DATA_DIR}/apache \
+#  --infodir=${OPENSHIFT_TMP_DIR}/info \
+#  --mandir=${OPENSHIFT_TMP_DIR}/man \
+#  --docdir=${OPENSHIFT_TMP_DIR}/doc \
+#  --enable-mods-shared='all proxy'
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --enable-mods-shared='all proxy'
+ --docdir=${OPENSHIFT_TMP_DIR}/doc
 time make -j12
 make install
 popd > /dev/null
