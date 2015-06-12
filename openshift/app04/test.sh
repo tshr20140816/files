@@ -168,4 +168,5 @@ cd /tmp
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
-find / -name libtool -print 2>/dev/null
+# find / -name libtool -print 2>/dev/null
+file /usr/share/libtool
