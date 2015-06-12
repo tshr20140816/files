@@ -171,7 +171,7 @@ popd > /dev/null
 
 # ***** libphp5.so *****
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) php"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) php for libphp5.so"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
