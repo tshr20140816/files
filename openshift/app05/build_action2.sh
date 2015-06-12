@@ -159,7 +159,6 @@ tar jxf httpd-${apache_version}.tar.bz2
 pushd httpd-${apache_version} > /dev/null
 ./configure --help
 # --enable-mods-shared='all proxy ssl mem_cache file_cache disk_cache'
-./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
