@@ -82,11 +82,11 @@ cd ${OPENSHIFT_DATA_DIR}/ccache/bin
 ln -s ccache cc
 ln -s ccache gcc
 
-export CCACHE_PREFIX=distcc
+# export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
-export CCACHE_MAXSIZE=50M
+export CCACHE_MAXSIZE=300M
 
 distcc_hosts_string="55630afc5973caf283000214@v1-20150216.rhcloud.com/4:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start"
 distcc_hosts_string="${distcc_hosts_string} 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/4:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start"
@@ -103,9 +103,8 @@ export HOME=${OPENSHIFT_DATA_DIR}
 ccache -s
 ccache --zero-stats
 ccache --print-config
-ccache -C
 
-if [ 1 -eq 1 ]; then
+if [ 1 -eq 0 ]; then
 cd /tmp
 build_server_password=$(cat aa.txt)
 
@@ -168,5 +167,79 @@ cd /tmp
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
-# find / -name libtool -print 2>/dev/null
-ls -lang /usr/share/libtool
+cd /tmp
+rm -rf expect5.45
+rm -rf libtool-2.4.6
+
+# ***** apache for libphp5.so *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache for libphp5.so"
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf httpd-${apache_version}
+rm -rf ${OPENSHIFT_DATA_DIR}/apache
+
+[ -f httpd-${apache_version}.tar.bz2 ] || wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
+tar jxf httpd-${apache_version}.tar.bz2
+pushd httpd-${apache_version} > /dev/null
+./configure --help
+# --enable-mods-shared='all proxy ssl mem_cache file_cache disk_cache'
+# ./configure \
+#  --prefix=${OPENSHIFT_DATA_DIR}/apache \
+#  --infodir=${OPENSHIFT_TMP_DIR}/info \
+#  --mandir=${OPENSHIFT_TMP_DIR}/man \
+#  --docdir=${OPENSHIFT_TMP_DIR}/doc \
+#  --enable-mods-shared='all proxy'
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc
+time make -j12
+make install
+popd > /dev/null
+
+ccache -C
+ccache -s
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) php for libphp5.so"
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf php-${php_version}
+rm -f php-${php_version}.tar.xz
+cp ${OPENSHIFT_DATA_DIR}/files/php-${php_version}.tar.xz ./
+[ -f php-${php_version}.tar.xz ] || wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+tar Jxf php-${php_version}.tar.xz
+pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
+./configure --help
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/php \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+ --with-mysql \
+ --with-pdo-mysql \
+ --without-sqlite3 \
+ --without-pdo-sqlite \
+ --without-pear \
+ --with-curl \
+ --with-libdir=lib64 \
+ --with-bz2 \
+ --with-iconv \
+ --with-openssl \
+ --with-zlib \
+ --with-gd \
+ --enable-exif \
+ --enable-ftp \
+ --enable-xml \
+ --enable-mbstring \
+ --enable-mbregex \
+ --enable-sockets \
+ --disable-ipv6 \
+ --with-gettext=${OPENSHIFT_DATA_DIR}/php
+time make -j12
+popd > /dev/null
+popd > /dev/null
