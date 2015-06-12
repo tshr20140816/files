@@ -145,7 +145,7 @@ fi
 
 # ***** apache *****
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) apache"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache for libphp5.so"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
@@ -166,7 +166,6 @@ pushd httpd-${apache_version} > /dev/null
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --enable-mods-shared='all proxy'
-
 time make -j12
 make install
 popd > /dev/null
