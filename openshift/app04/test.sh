@@ -175,6 +175,8 @@ rm -rf libtool-2.4.6
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache for libphp5.so"
 
+apache_version=2.2.29
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
 rm -rf httpd-${apache_version}
@@ -204,6 +206,8 @@ ccache -C
 ccache -s
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php for libphp5.so"
+
+php_version=5.6.10
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
