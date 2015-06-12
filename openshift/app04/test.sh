@@ -180,6 +180,8 @@ oo-cgroup-read memory.failcnt
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php for libphp5.so"
 
+install_dir=$(cat /dev/urandom | tr -dc 'a-z' | fold -w 10 | head -n 1)
+
 php_version=5.6.10
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -192,7 +194,7 @@ tar Jxf php-${php_version}.tar.xz
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 ./configure --help
 ./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/php \
+ --prefix=${OPENSHIFT_DATA_DIR}/${install_dir} \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
@@ -217,7 +219,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --enable-mbregex \
  --enable-sockets \
  --disable-ipv6 \
- --with-gettext=${OPENSHIFT_DATA_DIR}/php \
+ --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
  --with-zend-vm=GOTO > /dev/null
 echo "$(date)"
 time make -j4 > /dev/null
