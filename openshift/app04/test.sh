@@ -175,7 +175,7 @@ re2c --help
 cd /tmp
 
 ccache -s
-# export CCACHE_READONLY=true
+export CCACHE_READONLY=true
 oo-cgroup-read memory.failcnt
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php for libphp5.so"
