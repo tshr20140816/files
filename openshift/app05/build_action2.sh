@@ -143,7 +143,35 @@ if [ -f ${OPENSHIFT_DATA_DIR}/user_fqdn.txt ]; then
     done
 fi
 
-# ***** php & libphp5.so *****
+# ***** apache *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) apache"
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf httpd-${apache_version}
+rm -f httpd-${apache_version}.tar.bz2
+rm -rf ${OPENSHIFT_DATA_DIR}/apache
+
+cp ${OPENSHIFT_DATA_DIR}/files/httpd-${apache_version}.tar.bz2 ./
+[ -f httpd-${apache_version}.tar.bz2 ] || wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
+tar jxf httpd-${apache_version}.tar.bz2
+pushd httpd-${apache_version} > /dev/null
+./configure --help
+# --enable-mods-shared='all proxy ssl mem_cache file_cache disk_cache'
+./configure --help
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --enable-mods-shared='all proxy'
+
+time make -j12
+make install
+popd > /dev/null
+
+# ***** libphp5.so *****
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php"
 
@@ -152,38 +180,38 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -rf php-${php_version}
 rm -f php-${php_version}.tar.xz
 cp ${OPENSHIFT_DATA_DIR}/files/php-${php_version}.tar.xz ./
+[ -f php-${php_version}.tar.xz ] || wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
-file /tmp/php-5.6.9/libtool
-cat /tmp/php-5.6.9/libtool
 ./configure --help
 ./configure \
---prefix=${data_dir}/php \
---mandir=${tmp_dir}/man \
---docdir=${tmp_dir}/doc \
---with-mysql \
---with-pdo-mysql \
---without-sqlite3 \
---without-pdo-sqlite \
---without-pear \
---with-curl \
---with-libdir=lib64 \
---with-bz2 \
---with-iconv \
---with-openssl \
---with-zlib \
---with-gd \
---enable-exif \
---enable-ftp \
---enable-xml \
---enable-mbstring \
---enable-mbregex \
---enable-sockets \
---disable-ipv6 \
---with-gettext=${data_dir}/php
-file /tmp/php-5.6.9/libtool
-cat /tmp/php-5.6.9/libtool
+ --prefix=${OPENSHIFT_DATA_DIR}/php \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+ --with-mysql \
+ --with-pdo-mysql \
+ --without-sqlite3 \
+ --without-pdo-sqlite \
+ --without-pear \
+ --with-curl \
+ --with-libdir=lib64 \
+ --with-bz2 \
+ --with-iconv \
+ --with-openssl \
+ --with-zlib \
+ --with-gd \
+ --enable-exif \
+ --enable-ftp \
+ --enable-xml \
+ --enable-mbstring \
+ --enable-mbregex \
+ --enable-sockets \
+ --disable-ipv6 \
+ --with-gettext=${OPENSHIFT_DATA_DIR}/php
 time make -j12
+find ./ -name libphp5.so -name
 popd > /dev/null
 popd > /dev/null
 
