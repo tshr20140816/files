@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
-# 0714
+# 0727
 
 export TZ=JST-9
 
