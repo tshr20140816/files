@@ -169,8 +169,9 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
+ccache -C
 ccache -s
-export CCACHE_READONLY=true
+# export CCACHE_READONLY=true
 oo-cgroup-read memory.failcnt
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php for libphp5.so"
@@ -180,8 +181,6 @@ php_version=5.6.10
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
 rm -rf php-${php_version}
-rm -f php-${php_version}.tar.xz
-cp ${OPENSHIFT_DATA_DIR}/files/php-${php_version}.tar.xz ./
 [ -f php-${php_version}.tar.xz ] || wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
