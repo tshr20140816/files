@@ -34,6 +34,8 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) Memory Fail Count : ${memory_fail_count}"
 
 # 作成済みファイルがあった場合削除
 rm -f ${OPENSHIFT_DATA_DIR}/files/${app_uuid}_maked_*
+rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
+rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
 
 # makeターゲットのバージョン取得
 while read LINE
@@ -69,13 +71,13 @@ fi
 export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
-# ログ多すぎ
-# export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
-export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
+# ログ多すぎ
+export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+# export CCACHE_LOGFILE=/dev/null
 
-# export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
-export DISTCC_LOG=/dev/null
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
+# export DISTCC_LOG=/dev/null
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
 export DISTCC_HOSTS="${tmp_string}"
