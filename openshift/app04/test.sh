@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # echo "$(date)" > ${OPENSHIFT_LOG_DIR}/test.log
-# 1302
+# 1605
 
 export TZ=JST-9
 
@@ -169,7 +169,6 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-ccache -C
 ccache -s
 # export CCACHE_READONLY=true
 oo-cgroup-read memory.failcnt
