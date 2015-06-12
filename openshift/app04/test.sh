@@ -222,7 +222,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
  --with-zend-vm=GOTO > /dev/null
 echo "$(date)"
-time make -j4 > /dev/null
+time make -j8 > /dev/null
 popd > /dev/null
 popd > /dev/null
 
