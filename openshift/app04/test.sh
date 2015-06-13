@@ -174,6 +174,7 @@ re2c --help
 
 cd /tmp
 
+${OPENSHIFT_DATA_DIR}/bison/bin/bison --version
 ${OPENSHIFT_DATA_DIR}/bison/bin/bison --help
 export YACC=${OPENSHIFT_DATA_DIR}/bison/bin/bison
 
