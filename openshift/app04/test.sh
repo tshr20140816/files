@@ -174,6 +174,9 @@ re2c --help
 
 cd /tmp
 
+${OPENSHIFT_DATA_DIR}/bison/bin/bison --help
+export YACC=${OPENSHIFT_DATA_DIR}/bison/bin/bison
+
 ccache -s
 # export CCACHE_READONLY=true
 oo-cgroup-read memory.failcnt
