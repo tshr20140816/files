@@ -79,7 +79,7 @@ cd ${OPENSHIFT_DATA_DIR}/ccache/bin
 ln -s ccache cc
 ln -s ccache gcc
 
-# export CCACHE_PREFIX=distcc
+export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
@@ -171,8 +171,16 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-rm -rf gcc-4.6.3-2.fu2012.src.rpm
-find / -name libc* -print 2> /dev/null
+wget http://ftp.gnu.org/gnu/glibc/glibc-2.12.2.tar.xz
+tar Jxf glibc-2.12.2.tar.xz
+cd glibc-2.12.2
+mkdir work
+cd work
+../configure --prefix=${OPENSHIFT_DATA_DIR}/local \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --infodir=${OPENSHIFT_TMP_DIR}/info
+time make -j12
 
 cd /tmp
 
