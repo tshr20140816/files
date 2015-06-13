@@ -121,7 +121,7 @@ libmemcached_version=1.0.18
 delegate_version=9.9.13
 tcl_version=8.6.3
 cadaver_version=0.23.3
-php_version=5.6.9
+php_version=5.6.10
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > build_request.xml
@@ -181,7 +181,9 @@ rm re2c-0.13.6.tar.gz
 
 ${OPENSHIFT_DATA_DIR}/bison/bin/bison --version
 ${OPENSHIFT_DATA_DIR}/bison/bin/bison --help
-export YACC=${OPENSHIFT_DATA_DIR}/bison/bin/bison
+
+# export YACC=${OPENSHIFT_DATA_DIR}/bison/bin/bison
+export PATH="${OPENSHIFT_DATA_DIR}/bison/bin:$PATH"
 
 ccache -s
 # export CCACHE_READONLY=true
