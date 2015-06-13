@@ -172,7 +172,7 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 cd /tmp
 
 rm -rf gcc-4.6.3-2.fu2012.src.rpm
-find / -name libc* -print 2 > /dev/null
+find / -name libc* -print 2> /dev/null
 
 cd /tmp
 
