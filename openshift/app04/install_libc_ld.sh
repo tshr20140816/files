@@ -17,7 +17,7 @@ glibc_version=2.12.2
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
-wget http://ftp.gnu.org/gnu/glibc/glibc-${glibc_version}.tar.xz
+wget http://ftp.jaist.ac.jp/pub/GNU/glibc/glibc-${glibc_version}.tar.xz
 tar Jxf glibc-${glibc_version}.tar.xz
 mkdir glibc-${glibc_version}/work
 pushd glibc-${glibc_version}/work
@@ -43,7 +43,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 
 # *** bison ***
 
-wget http://ftp.gnu.org/gnu/bison/bison-${bison_version}.tar.xz
+wget http://ftp.jaist.ac.jp/pub/GNU/bison/bison-${bison_version}.tar.xz
 tar Jxf bison-${bison_version}.tar.xz
 pushd bison-${bison_version}
 ./configure --prefix=${OPENSHIFT_TMP_DIR}/local
@@ -60,7 +60,7 @@ export PATH=${OPENSHIFT_TMP_DIR}/local/bin:$PATH
 
 # ***  ld.gold ***
 
-wget http://ftp.gnu.org/gnu/binutils/binutils-${binutils_version}.tar.gz
+wget http://ftp.jaist.ac.jp/pub/GNU/binutils/binutils-${binutils_version}.tar.gz
 tar zxf binutils-${binutils_version}.tar.gz
 pushd binutils-${binutils_version} > /dev/null
 ./configure
