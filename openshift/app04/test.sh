@@ -171,8 +171,8 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-wget ftp://195.220.108.108/linux/sourceforge/f/fu/fuduntu/sources/gcc-4.6.3-2.fu2012.src.rpm
-rpm2cpio gcc-4.6.3-2.fu2012.src.rpm | cpio --list
+rm -rf gcc-4.6.3-2.fu2012.src.rpm
+find / -name libc* -print 2 > /dev/null
 
 cd /tmp
 
