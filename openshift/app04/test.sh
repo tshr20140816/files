@@ -181,7 +181,7 @@ cd work
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --infodir=${OPENSHIFT_TMP_DIR}/info
-time make -j12
+# time make -j12
 
 cd /tmp
 
