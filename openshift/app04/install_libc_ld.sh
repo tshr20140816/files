@@ -69,7 +69,7 @@ pushd binutils-${binutils_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 pushd gold > /dev/null
 ./configure --prefix=${OPENSHIFT_TMP_DIR}/local
-time make -j2
+time make
 make install
 popd > /dev/null
 popd > /dev/null
