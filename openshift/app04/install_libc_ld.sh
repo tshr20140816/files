@@ -63,11 +63,13 @@ export PATH=${OPENSHIFT_TMP_DIR}/local/bin:$PATH
 wget http://ftp.jaist.ac.jp/pub/GNU/binutils/binutils-${binutils_version}.tar.gz
 tar zxf binutils-${binutils_version}.tar.gz
 pushd binutils-${binutils_version} > /dev/null
-./configure
+./configure \
+ --disable-libquadmath \
+ --disable-libquadmath-support
 time make -j$(grep -c -e processor /proc/cpuinfo)
 pushd gold > /dev/null
 ./configure --prefix=${OPENSHIFT_TMP_DIR}/local
-time make -j$(grep -c -e processor /proc/cpuinfo)
+time make -j2
 make install
 popd > /dev/null
 popd > /dev/null
