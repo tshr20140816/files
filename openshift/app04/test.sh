@@ -169,8 +169,10 @@ cd /tmp
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
-bison --help
-re2c --help
+cd /tmp
+
+wget ftp://195.220.108.108/linux/sourceforge/f/fu/fuduntu/sources/gcc-4.6.3-2.fu2012.src.rpm
+rpm2cpio gcc-4.6.3-2.fu2012.src.rpm | cpio --list
 
 cd /tmp
 
