@@ -171,7 +171,8 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-wget http://ftp.gnu.org/gnu/glibc/glibc-2.12.2.tar.xz
+rm -rf glibc-2.12.2
+# wget http://ftp.gnu.org/gnu/glibc/glibc-2.12.2.tar.xz
 tar Jxf glibc-2.12.2.tar.xz
 cd glibc-2.12.2
 mkdir work
