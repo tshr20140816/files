@@ -174,6 +174,11 @@ re2c --help
 
 cd /tmp
 
+wget http://downloads.sourceforge.net/project/re2c/re2c/0.13.6/re2c-0.13.6.tar.gz
+tar zxf re2c-0.13.6.tar.gz
+rm -rf re2c-0.13.6
+rm re2c-0.13.6.tar.gz
+
 ${OPENSHIFT_DATA_DIR}/bison/bin/bison --version
 ${OPENSHIFT_DATA_DIR}/bison/bin/bison --help
 export YACC=${OPENSHIFT_DATA_DIR}/bison/bin/bison
