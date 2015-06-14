@@ -101,9 +101,10 @@ export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
-export CFLAGS="-O2 -march=core2 -maes -mavx -mcx16 -mpclmul -mpopcnt -msahf"
-export CFLAGS="${CFLAGS} -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mtune=generic"
-export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
+# export CFLAGS="-O2 -march=core2 -maes -mavx -mcx16 -mpclmul -mpopcnt -msahf"
+# export CFLAGS="${CFLAGS} -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mtune=generic"
+# export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
+ export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 ccache -s
