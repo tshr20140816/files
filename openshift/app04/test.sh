@@ -212,11 +212,11 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --enable-sockets \
  --disable-ipv6 \
  --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
- --with-zend-vm=GOTO > /dev/null
+ --with-zend-vm=GOTO > /tmp/php_install.log
 # --with-libdir=lib64 
 # --enable-mbregex
 echo "$(date)"
-time make -j4 > /dev/null
+time make -j4 >> /tmp/php_install.log
 popd > /dev/null
 popd > /dev/null
 
