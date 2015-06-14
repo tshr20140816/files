@@ -80,7 +80,8 @@ ln -s ccache gcc
 # export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
-export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_LOGFILE=/dev/null
+# export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=300M
 
 distcc_hosts_string="55630afc5973caf283000214@v1-20150216.rhcloud.com/4:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start"
