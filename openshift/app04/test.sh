@@ -220,7 +220,23 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 # --with-libdir=lib64 
 # --enable-mbregex
 echo "$(date)"
-time make -j4 >> /tmp/php_install.log
+# time make -j4 >> /tmp/php_install.log
+time make -j4 >> /tmp/php_install.log &
+pid=$!
+timer=90
+while [ $timer -gt 0 ]
+do
+    if ps -p $! >/dev/null 2>&1; then
+        sleep 10
+        timer=$(($timer - 1))
+        continue
+    else
+        break
+    fi
+done
+if [ $timer -le 0 ] ; then
+    echo "# TEST" >> ${OPENSHIFT_DATA_DIR}/test.sh
+fi
 popd > /dev/null
 popd > /dev/null
 
