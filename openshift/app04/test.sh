@@ -76,6 +76,10 @@ export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/local/lib"
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 ln -s ccache cc
 ln -s ccache gcc
+unlink cc
+unlink gcc
+export CC="ccache gcc"
+export CXX="ccache g++"
 
 # export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
