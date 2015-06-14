@@ -215,6 +215,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --enable-mbstring \
  --enable-sockets \
  --disable-ipv6 \
+ --disable-phar \
  --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
  --with-zend-vm=GOTO > ${OPENSHIFT_LOG_DIR}/php_install.log
 # --with-libdir=lib64 
