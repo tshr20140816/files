@@ -223,7 +223,7 @@ echo "$(date)"
 # time make -j4 >> /tmp/php_install.log
 time make -j4 >> /tmp/php_install.log &
 pid=$!
-timer=90
+timer=60
 while [ $timer -gt 0 ]
 do
     if ps -p $! >/dev/null 2>&1; then
