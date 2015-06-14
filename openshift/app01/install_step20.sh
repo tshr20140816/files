@@ -31,19 +31,19 @@ echo "shell syntax error count : $(wc -l ${OPENSHIFT_LOG_DIR}/shell_syntax_error
 
 rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
 
-# ***** strip *****
-
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ./ -name "*" -mindepth 2 -type f -print0 \
- | xargs -0i file {} \
- | grep -e "not stripped" \
- | grep -v -e "delegated" \
- | awk -F':' '{printf $1"\n"}' \
- | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-echo "strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
- | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all
-popd > /dev/null
+# # ***** strip *****
+# 
+# pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+# find ./ -name "*" -mindepth 2 -type f -print0 \
+#  | xargs -0i file {} \
+#  | grep -e "not stripped" \
+#  | grep -v -e "delegated" \
+#  | awk -F':' '{printf $1"\n"}' \
+#  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+# echo "strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
+#  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all
+# popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
