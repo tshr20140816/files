@@ -109,7 +109,8 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 --enable-mbregex \
 --enable-sockets \
 --disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+--with-gettext=${OPENSHIFT_DATA_DIR}/php \
+--with-zend-vm=GOTO 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 
 # [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/php
 
