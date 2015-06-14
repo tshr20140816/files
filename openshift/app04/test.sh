@@ -13,6 +13,7 @@ wc -l ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 
 df -ih
 
+rm -f /tmp/php_install.log
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
@@ -216,12 +217,12 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --enable-sockets \
  --disable-ipv6 \
  --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
- --with-zend-vm=GOTO > /tmp/php_install.log
+ --with-zend-vm=GOTO > ${OPENSHIFT_LOG_DIR}/php_install.log
 # --with-libdir=lib64 
 # --enable-mbregex
 echo "$(date)"
 # time make -j4 >> /tmp/php_install.log
-time make -j4 >> /tmp/php_install.log &
+time make -j4 >> ${OPENSHIFT_LOG_DIR}/php_install.log &
 pid=$!
 timer=60
 while [ $timer -gt 0 ]
