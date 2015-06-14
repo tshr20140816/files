@@ -199,7 +199,6 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --without-cdb \
  --without-pear \
  --with-curl \
- --with-libdir=lib64 \
  --with-bz2 \
  --with-iconv \
  --with-openssl \
@@ -209,11 +208,12 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --enable-ftp \
  --enable-xml \
  --enable-mbstring \
- --enable-mbregex \
  --enable-sockets \
  --disable-ipv6 \
  --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
  --with-zend-vm=GOTO > /dev/null
+# --with-libdir=lib64 
+# --enable-mbregex
 echo "$(date)"
 time make -j4 > /dev/null
 popd > /dev/null
