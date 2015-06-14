@@ -64,22 +64,20 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
-mkdir /tmp/bin
-strip -s /tmp/ld.gold
-cp /tmp/ld.gold /tmp/bin/
 export LD=ld.gold
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
-export PATH="${OPENSHIFT_TMP_DIR}/bin:$PATH"
+export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
 # export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
-export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}/local/lib"
+# export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}/local/lib"
+export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/local/lib"
 # export INCLUDE="${OPENSHIFT_DATA_DIR}/local/include"
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 ln -s ccache cc
 ln -s ccache gcc
 
-export CCACHE_PREFIX=distcc
+# export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
@@ -169,38 +167,11 @@ cd /tmp
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
-cd /tmp
-
-rm -rf glibc-2.12.2
-# wget http://ftp.gnu.org/gnu/glibc/glibc-2.12.2.tar.xz
-tar Jxf glibc-2.12.2.tar.xz
-cd glibc-2.12.2
-mkdir work
-cd work
-../configure --prefix=${OPENSHIFT_DATA_DIR}/local \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --infodir=${OPENSHIFT_TMP_DIR}/info
-# time make -j12
-
-cd /tmp
-
-wget http://downloads.sourceforge.net/project/re2c/re2c/0.13.6/re2c-0.13.6.tar.gz
-tar zxf re2c-0.13.6.tar.gz
-rm -rf re2c-0.13.6
-rm re2c-0.13.6.tar.gz
-
-${OPENSHIFT_DATA_DIR}/bison/bin/bison --version
-${OPENSHIFT_DATA_DIR}/bison/bin/bison --help
-
-# export YACC=${OPENSHIFT_DATA_DIR}/bison/bin/bison
-export PATH="${OPENSHIFT_DATA_DIR}/bison/bin:$PATH"
-
 ccache -s
 # export CCACHE_READONLY=true
 oo-cgroup-read memory.failcnt
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) php for libphp5.so"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) php"
 
 install_dir=$(cat /dev/urandom | tr -dc 'a-z' | fold -w 10 | head -n 1)
 
