@@ -204,7 +204,7 @@ time make
 make install
 fi
 
-if [ 1 -eq 1 ]; then
+if [ 1 -eq 0 ]; then
 cd /tmp
 rm -rf /tmp/libxml2
 [ -f libxml2-2.7.6.tar.gz ] || wget ftp://xmlsoft.org/libxml2/libxml2-2.7.6.tar.gz
