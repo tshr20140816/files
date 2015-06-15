@@ -281,7 +281,7 @@ echo "$(date)"
 # time make -j4 >> /tmp/php_install.log
 time make -j4 >> ${OPENSHIFT_LOG_DIR}/php_install.log &
 pid=$!
-timer=54
+timer=48
 while [ $timer -gt 0 ]
 do
     if ps -p $! >/dev/null 2>&1; then
