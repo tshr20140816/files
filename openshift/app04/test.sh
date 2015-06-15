@@ -245,3 +245,4 @@ popd > /dev/null
 
 ccache -s
 oo-cgroup-read memory.failcnt
+wait
