@@ -224,7 +224,7 @@ time make > /dev/null
 make install
 tree /tmp/libxml2
 fi
-
+tree /tmp/libxml2
 cd /tmp
 
 ccache -s
