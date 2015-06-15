@@ -274,6 +274,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --disable-phar \
  --disable-inifile \
  --disable-flatfile \
+ --disable-sockets \
  --with-libxml-dir=/tmp/libxml2 \
  --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
  --with-zend-vm=GOTO > ${OPENSHIFT_LOG_DIR}/php_install.log
