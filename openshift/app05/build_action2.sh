@@ -56,18 +56,28 @@ export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
 
 # ld.gold があればそれを使う
 # https://github.com/accursoft/Haskell-Cloud/blob/master/.openshift/build
+# if [ -f ${OPENSHIFT_DATA_DIR}/files/ld.gold ]; then
+#     rm -rf ${OPENSHIFT_TMP_DIR}/bin
+#     mkdir ${OPENSHIFT_TMP_DIR}/bin
+#     cp ${OPENSHIFT_DATA_DIR}/files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/ld
+#     chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld
+#     export CC="ccache gcc -B${OPENSHIFT_TMP_DIR}/bin/"
+#     export CXX="ccache g++ -B${OPENSHIFT_TMP_DIR}/bin/"
+#     export LD=ld.gold
+# else
+#     export CC="ccache gcc"
+#     export CXX="ccache g++"
+# fi
 if [ -f ${OPENSHIFT_DATA_DIR}/files/ld.gold ]; then
     rm -rf ${OPENSHIFT_TMP_DIR}/bin
     mkdir ${OPENSHIFT_TMP_DIR}/bin
-    cp ${OPENSHIFT_DATA_DIR}/files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/ld
-    chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld
-    export CC="ccache gcc -B${OPENSHIFT_TMP_DIR}/bin/"
-    export CXX="ccache g++ -B${OPENSHIFT_TMP_DIR}/bin/"
+    cp ${OPENSHIFT_DATA_DIR}/files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/
+    chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld.gold
+    export PATH="${OPENSHIFT_TMP_DIR}/bin:$PATH"
     export LD=ld.gold
-else
-    export CC="ccache gcc"
-    export CXX="ccache g++"
 fi
+export CC="ccache gcc"
+export CXX="ccache g++"
 export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
