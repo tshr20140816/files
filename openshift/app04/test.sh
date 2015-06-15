@@ -193,7 +193,7 @@ rm -rf re2c-0.14.3
 tar zxf re2c-0.14.3.tar.gz
 cd re2c-0.14.3
 ./configure --help
-./configure --prefix=/tmp/re2c
+./configure --prefix=/tmp/re2c --disable-dependency-tracking
 time make
 make install
 
