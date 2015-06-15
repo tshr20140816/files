@@ -68,6 +68,7 @@ export LD=ld.gold
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
+export PATH="${OPENSHIFT_TMP_DIR}/bison/bin:$PATH"
 # export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
 # export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}/local/lib"
 export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/local/lib"
