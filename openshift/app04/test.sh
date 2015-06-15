@@ -109,7 +109,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 # export CFLAGS="${CFLAGS} -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mtune=generic"
 # export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
 
-export CFLAGS="-I/tmp/local/include -I/tmp/libxml2/include"
+export CFLAGS="-I/tmp/local/include -I/tmp/libxml2/include/libxml2"
 export CFLAGS="${CFLAGS} -O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
@@ -224,7 +224,7 @@ time make > /dev/null
 make install
 tree /tmp/libxml2
 fi
-tree /tmp/libxml2
+
 cd /tmp
 
 ccache -s
