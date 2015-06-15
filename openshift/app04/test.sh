@@ -187,6 +187,7 @@ time make
 make install
 fi
 
+if [ 1 -eq 0 ]; then
 cd /tmp
 [ -f re2c-0.14.3.tar.gz ] || wget http://downloads.sourceforge.net/project/re2c/re2c/0.14.3/re2c-0.14.3.tar.gz
 rm -rf re2c-0.14.3
@@ -196,6 +197,7 @@ cd re2c-0.14.3
 ./configure --prefix=/tmp/re2c --disable-dependency-tracking
 time make
 make install
+fi
 
 cd /tmp
 
