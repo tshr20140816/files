@@ -218,8 +218,9 @@ cd libxml2-2.7.6
  --mandir=/tmp/man \
  --docdir=/tmp/doc \
  --enable-rebuild-docs=no \
- --enable-ipv6=no
-time make install
+ --enable-ipv6=no > /dev/null
+time make > /dev/null
+make install
 
 tree /tmp/libxml2
 cd /tmp
