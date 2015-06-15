@@ -205,6 +205,15 @@ fi
 
 cd /tmp
 
+[ -f libxml2-2.7.6.tar.gz ] || wget ftp://xmlsoft.org/libxml2/libxml2-2.7.6.tar.gz
+rm -rf libxml2-2.7.6
+tar zxf libxml2-2.7.6.tar.gz
+cd libxml2-2.7.6
+./configure --help
+./configure --prefix=/tmp/libxml2
+
+cd /tmp
+
 ccache -s
 # export CCACHE_READONLY=true
 oo-cgroup-read memory.failcnt
