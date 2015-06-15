@@ -205,6 +205,7 @@ fi
 
 cd /tmp
 
+rm -rf /tmp/libxml2
 [ -f libxml2-2.7.6.tar.gz ] || wget ftp://xmlsoft.org/libxml2/libxml2-2.7.6.tar.gz
 rm -rf libxml2-2.7.6
 tar zxf libxml2-2.7.6.tar.gz
@@ -212,7 +213,12 @@ cd libxml2-2.7.6
 ./configure --help
 ./configure --prefix=/tmp/libxml2 \
  --with-debug=off \
- --disable-dependency-tracking
+ --disable-dependency-tracking \
+ --infodir=/tmp/info \
+ --mandir=/tmp/man \
+ --docdir=/tmp/doc \
+ --enable-rebuild-docs=no \
+ --enable-ipv6=no
 time make install
 
 tree /tmp/libxml2
