@@ -178,6 +178,7 @@ cd /tmp
 rm -rf bison-2.7.1
 tar Jxf bison-2.7.1.tar.xz
 cd bison-2.7.1
+./configure --help
 ./configure --prefix=/tmp/bison
 time make
 make install
