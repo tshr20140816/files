@@ -210,8 +210,11 @@ rm -rf libxml2-2.7.6
 tar zxf libxml2-2.7.6.tar.gz
 cd libxml2-2.7.6
 ./configure --help
-./configure --prefix=/tmp/libxml2
+./configure --prefix=/tmp/libxml2 \
+ --with-debug=off 
+time make install
 
+tree /tmp/libxml2
 cd /tmp
 
 ccache -s
