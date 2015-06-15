@@ -279,7 +279,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 # --enable-mbregex
 echo "$(date)"
 # time make -j4 >> /tmp/php_install.log
-time make -j4 >> ${OPENSHIFT_LOG_DIR}/php_install.log &
+time make -j8 >> ${OPENSHIFT_LOG_DIR}/php_install.log &
 pid=$!
 timer=48
 while [ $timer -gt 0 ]
