@@ -211,7 +211,8 @@ tar zxf libxml2-2.7.6.tar.gz
 cd libxml2-2.7.6
 ./configure --help
 ./configure --prefix=/tmp/libxml2 \
- --with-debug=off 
+ --with-debug=off \
+ --disable-dependency-tracking
 time make install
 
 tree /tmp/libxml2
