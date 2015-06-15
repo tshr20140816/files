@@ -76,6 +76,7 @@ export PATH="${OPENSHIFT_TMP_DIR}/re2c/bin:$PATH"
 # export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}/local/lib"
 export LD_LIBRARY_PATH="/tmp/local/lib:/tmp/libxml2/lib"
 # export INCLUDE="${OPENSHIFT_DATA_DIR}/local/include"
+export LD_FLAGS="-L/tmp/local/lib -L/tmp/libxml2/lib"
 
 cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
 ln -s ccache cc
