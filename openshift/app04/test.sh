@@ -180,7 +180,7 @@ rm -rf bison-2.7.1
 tar Jxf bison-2.7.1.tar.xz
 cd bison-2.7.1
 ./configure --help
-./configure --prefix=/tmp/bison
+./configure --prefix=/tmp/bison --disable-dependency-tracking --disable-largefile
 time make
 make install
 
