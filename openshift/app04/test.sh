@@ -173,6 +173,15 @@ cd /tmp
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
+cd /tmp
+[ -f bison-2.7.1.tar.xz ] || wget http://ftp.jaist.ac.jp/pub/GNU/bison/bison-2.7.1.tar.xz
+rm -rf bison-2.7.1
+tar Jxf bison-2.7.1.tar.xz
+cd bison-2.7.1
+./configure --prefix=/tmp/bison
+time make
+make install
+
 ccache -s
 # export CCACHE_READONLY=true
 oo-cgroup-read memory.failcnt
