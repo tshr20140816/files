@@ -9,6 +9,7 @@ echo "$(date)"
 
 set -x
 
+wc -l ${OPENSHIFT_LOG_DIR}/php_install.log
 wc -l ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 
 df -ih
