@@ -174,6 +174,7 @@ cd /tmp
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
+if [ 1 -eq 0 ]; then
 cd /tmp
 [ -f bison-2.7.1.tar.xz ] || wget http://ftp.jaist.ac.jp/pub/GNU/bison/bison-2.7.1.tar.xz
 rm -rf bison-2.7.1
@@ -183,6 +184,7 @@ cd bison-2.7.1
 ./configure --prefix=/tmp/bison --disable-dependency-tracking --disable-largefile
 time make
 make install
+fi
 
 ccache -s
 # export CCACHE_READONLY=true
