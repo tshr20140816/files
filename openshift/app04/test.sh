@@ -69,6 +69,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
 export PATH="${OPENSHIFT_TMP_DIR}/bison/bin:$PATH"
+export PATH="${OPENSHIFT_TMP_DIR}/re2c/bin:$PATH"
 # export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
 # export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}/local/lib"
 export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/local/lib"
@@ -185,6 +186,15 @@ cd bison-2.7.1
 time make
 make install
 fi
+
+cd /tmp
+[ -f re2c-0.14.3.tar.gz ] || wget http://downloads.sourceforge.net/project/re2c/re2c/0.14.3/re2c-0.14.3.tar.gz
+rm -rf re2c-0.14.3
+tar zxf re2c-0.14.3.tar.gz
+./configure --help
+./configure --prefix=/tmp/re2c
+time make
+make install
 
 ccache -s
 # export CCACHE_READONLY=true
