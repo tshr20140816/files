@@ -594,7 +594,8 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing php-${php_version}.tar.xz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) php wget" >> ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+        # wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+        wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
     fi
     [ -f php-${php_version}.tar.xz ] || files_exists=0
 
