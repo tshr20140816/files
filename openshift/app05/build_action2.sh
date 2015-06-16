@@ -69,12 +69,12 @@ export PATH="${OPENSHIFT_DATA_DIR}/xz/bin:$PATH"
 #     export CXX="ccache g++"
 # fi
 if [ -f ${OPENSHIFT_DATA_DIR}/files/ld.gold ]; then
-    rm -rf ${OPENSHIFT_TMP_DIR}/bin
-    mkdir ${OPENSHIFT_TMP_DIR}/bin
-    cp ${OPENSHIFT_DATA_DIR}/files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/
-    chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld.gold
-    export PATH="${OPENSHIFT_TMP_DIR}/bin:$PATH"
-    export GCC_EXEC_PREFIX="${OPENSHIFT_TMP_DIR}/bin"
+    rm -rf ${OPENSHIFT_TMP_DIR}/local
+    mkdir -p ${OPENSHIFT_TMP_DIR}/local/bin
+    cp ${OPENSHIFT_DATA_DIR}/files/ld.gold ${OPENSHIFT_TMP_DIR}/local/bin/
+    chmod +x ${OPENSHIFT_TMP_DIR}/local/bin/ld.gold
+    export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
+    export GCC_EXEC_PREFIX="${OPENSHIFT_TMP_DIR}/local/bin"
     export LD=ld.gold
 fi
 export CC="ccache gcc"
