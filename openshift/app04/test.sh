@@ -67,7 +67,7 @@ chmod +x distcc-ssh
 popd > /dev/null
 
 export LD=ld.gold
-export GCC_EXEC_PREFIX="${OPENSHIFT_TMP_DIR}/local/bin"
+# export GCC_EXEC_PREFIX="${OPENSHIFT_TMP_DIR}/local/bin"
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
