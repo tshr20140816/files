@@ -74,6 +74,7 @@ if [ -f ${OPENSHIFT_DATA_DIR}/files/ld.gold ]; then
     cp ${OPENSHIFT_DATA_DIR}/files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/
     chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld.gold
     export PATH="${OPENSHIFT_TMP_DIR}/bin:$PATH"
+    export GCC_EXEC_PREFIX="${OPENSHIFT_TMP_DIR}/bin"
     export LD=ld.gold
 fi
 export CC="ccache gcc"
