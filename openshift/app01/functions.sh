@@ -63,10 +63,11 @@ function010() {
     # ***** ld.gold *****
 
     if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ]; then
-        mkdir ${OPENSHIFT_TMP_DIR}/bin
-        cp ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ${OPENSHIFT_TMP_DIR}/bin/
-        chmod +x ${OPENSHIFT_TMP_DIR}/bin/ld.gold
+        mkdir -p ${OPENSHIFT_TMP_DIR}/local/bin
+        cp ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ${OPENSHIFT_TMP_DIR}/local/bin/
+        chmod +x ${OPENSHIFT_TMP_DIR}/local/bin/ld.gold
         export LD=ld.gold
+        export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
     fi
 
     # ***** CFLAGS CXXFLAGS *****
