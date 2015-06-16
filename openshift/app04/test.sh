@@ -116,6 +116,8 @@ export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 ccache -s
+rm -rf /tmp/ccache
+mkdir /tmp/ccache
 ccache --zero-stats
 ccache --print-config
 
