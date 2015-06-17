@@ -66,6 +66,8 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
+tree ${OPENSHIFT_TMP_DIR}/local
+
 export LD=ld.gold
 # export GCC_EXEC_PREFIX="${OPENSHIFT_TMP_DIR}/local/bin"
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
