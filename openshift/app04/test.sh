@@ -12,7 +12,7 @@ set -x
 # find / -name "libxml*" -print 2>/dev/null
 # strip --help
 
-ls -d /tmp/cc* | grep -v ccache$
+ls -d /tmp/cc* | grep -v ccache$ | xargs rm
 
 tree /tmp/local/lib
 
