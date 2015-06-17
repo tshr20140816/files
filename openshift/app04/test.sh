@@ -12,6 +12,8 @@ set -x
 # find / -name "libxml*" -print 2>/dev/null
 # strip --help
 
+ls -d /tmp/cc* | grep -v ccache$
+
 wc -l ${OPENSHIFT_LOG_DIR}/php_install.log
 wc -l ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 
@@ -201,8 +203,6 @@ fi
 
 cd /tmp
 
-ls -d /tmp/cc* | grep -v ccache$
-ls -ld /tmp/cc*
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
