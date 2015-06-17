@@ -291,9 +291,6 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --without-pdo-sqlite \
  --without-cdb \
  --without-pear \
- --without-openssl \
- --without-kerberos \
- --without-system-ciphers \
  --enable-exif \
  --enable-ftp \
  --enable-xml \
@@ -308,7 +305,9 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --with-zend-vm=GOTO > ${OPENSHIFT_LOG_DIR}/php_install.log
 # --with-libdir=lib64 
 # --with-bz2
-# --enable-mbregex
+# --without-openssl
+# --without-kerberos
+# --without-system-ciphers
 echo "$(date)"
 # time make -j4 >> /tmp/php_install.log
 # time make -j8 >> ${OPENSHIFT_LOG_DIR}/php_install.log &
