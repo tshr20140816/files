@@ -14,6 +14,8 @@ set -x
 
 ls -d /tmp/cc* | grep -v ccache$
 
+tree /tmp/local/lib
+
 wc -l ${OPENSHIFT_LOG_DIR}/php_install.log
 wc -l ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 
