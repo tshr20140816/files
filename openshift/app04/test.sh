@@ -10,6 +10,7 @@ echo "$(date)"
 set -x
 
 # find / -name "libxml*" -print 2>/dev/null
+strip --help
 
 wc -l ${OPENSHIFT_LOG_DIR}/php_install.log
 wc -l ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
