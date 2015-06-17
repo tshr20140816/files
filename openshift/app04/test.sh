@@ -67,7 +67,7 @@ chmod +x distcc-ssh
 popd > /dev/null
 
 whereis gcc
-tree ${OPENSHIFT_TMP_DIR}/local
+# tree ${OPENSHIFT_TMP_DIR}/local
 
 export LD=ld.gold
 # export GCC_EXEC_PREFIX="${OPENSHIFT_TMP_DIR}/local/bin"
