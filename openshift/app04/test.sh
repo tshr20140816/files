@@ -201,7 +201,7 @@ fi
 
 cd /tmp
 
-ls -d /tmp/cc*
+ls -d /tmp/cc* | grep -v ccache$
 ls -ld /tmp/cc*
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
