@@ -304,6 +304,7 @@ pid=$!
 timer=42
 while [ $timer -gt 0 ]
 do
+    echo "$(date)"
     if ps -p $! >/dev/null 2>&1; then
         sleep 10
         timer=$(($timer - 1))
