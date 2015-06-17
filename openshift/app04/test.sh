@@ -66,6 +66,7 @@ __HEREDOC__
 chmod +x distcc-ssh
 popd > /dev/null
 
+whereis gcc
 tree ${OPENSHIFT_TMP_DIR}/local
 
 export LD=ld.gold
@@ -120,6 +121,11 @@ export CXXFLAGS="${CFLAGS}"
 ccache -s
 ccache --zero-stats
 ccache --print-config
+
+# cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/local/bin/gcc
+# #!/bin/bash
+# 
+# __HEREDOC__
 
 if [ 1 -eq 0 ]; then
 cd /tmp
