@@ -122,10 +122,14 @@ ccache -s
 ccache --zero-stats
 ccache --print-config
 
-# cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/local/bin/gcc
-# #!/bin/bash
-# 
-# __HEREDOC__
+rm -f ${OPENSHIFT_LOG_DIR}/gcc.log
+mkdir -p ${OPENSHIFT_TMP_DIR}/local2/bin
+cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
+#!/bin/bash
+export TZ=JST-9
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/gcc.log
+/usr/bin/gcc $@
+__HEREDOC__
 
 if [ 1 -eq 0 ]; then
 cd /tmp
