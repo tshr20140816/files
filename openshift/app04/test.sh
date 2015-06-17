@@ -130,6 +130,8 @@ export TZ=JST-9
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/gcc.log
 /usr/bin/gcc $@
 __HEREDOC__
+chmod +x ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
+export PATH="${OPENSHIFT_TMP_DIR}/local2/bin:$PATH"
 
 if [ 1 -eq 0 ]; then
 cd /tmp
