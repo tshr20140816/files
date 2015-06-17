@@ -125,7 +125,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 # export CFLAGS="-I/tmp/local/include -I/tmp/libxml2/include/libxml2"
 # export CFLAGS="${CFLAGS} -O2 -march=native -pipe -fomit-frame-pointer -s"
-export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CFLAGS="-O3 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 export LIBS="-L/tmp/local/lib"
 
