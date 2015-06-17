@@ -282,21 +282,22 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
  --with-mysql \
  --with-pdo-mysql \
- --without-sqlite3 \
- --without-pdo-sqlite \
- --without-cdb \
- --without-pear \
  --with-curl \
- --with-bz2 \
  --with-iconv \
  --with-openssl \
  --with-zlib \
  --with-gd \
+ --without-sqlite3 \
+ --without-pdo-sqlite \
+ --without-cdb \
+ --without-pear \
+ --without-openssl \
+ --without-kerberos \
+ --without-system-ciphers \
  --enable-exif \
  --enable-ftp \
  --enable-xml \
  --enable-mbstring \
- --enable-sockets \
  --disable-ipv6 \
  --disable-phar \
  --disable-inifile \
@@ -306,6 +307,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
  --with-zend-vm=GOTO > ${OPENSHIFT_LOG_DIR}/php_install.log
 # --with-libdir=lib64 
+# --with-bz2
 # --enable-mbregex
 echo "$(date)"
 # time make -j4 >> /tmp/php_install.log
