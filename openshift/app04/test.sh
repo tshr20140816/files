@@ -93,8 +93,8 @@ export CXX="ccache g++"
 
 # export CCACHE_PREFIX=distcc
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-# rm -rf ${OPENSHIFT_TMP_DIR}/ccache
-# mkdir ${OPENSHIFT_TMP_DIR}/ccache
+rm -rf ${OPENSHIFT_TMP_DIR}/ccache
+mkdir ${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
@@ -102,7 +102,7 @@ export CCACHE_LOGFILE=/dev/null
 # export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
-# export CCACHE_DIRECT=false
+export CCACHE_DIRECT=false
 
 distcc_hosts_string="55630afc5973caf283000214@v1-20150216.rhcloud.com/4:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start"
 distcc_hosts_string="${distcc_hosts_string} 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/4:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start"
