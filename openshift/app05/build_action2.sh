@@ -71,11 +71,11 @@ export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_MAXSIZE=300M
 # ログ多すぎ
-export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
-# export CCACHE_LOGFILE=/dev/null
+# export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_LOGFILE=/dev/null
 
-export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
-# export DISTCC_LOG=/dev/null
+# export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
+export DISTCC_LOG=/dev/null
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
 export DISTCC_HOSTS="${tmp_string}"
