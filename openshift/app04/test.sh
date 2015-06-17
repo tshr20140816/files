@@ -201,6 +201,8 @@ fi
 
 cd /tmp
 
+ls -d /tmp/cc*
+ls -ld /tmp/cc*
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
