@@ -25,7 +25,6 @@ rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
-rm -f ${OPENSHIFT_TMP_DIR}/cc*.s
 rm -f ${OPENSHIFT_TMP_DIR}/distcc_server_stderr_*
 
 rm -f  ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
