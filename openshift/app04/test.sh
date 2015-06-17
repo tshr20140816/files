@@ -125,7 +125,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 # export CFLAGS="-I/tmp/local/include -I/tmp/libxml2/include/libxml2"
 # export CFLAGS="${CFLAGS} -O2 -march=native -pipe -fomit-frame-pointer -s"
-export CFLAGS="-O3 -march=native -pipe -fomit-frame-pointer -s"
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 export LIBS="-L/tmp/local/lib"
 
@@ -302,6 +302,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --disable-inifile \
  --disable-flatfile \
  --disable-sockets \
+ --disable-mysqlnd-compression-support \
  --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
  --with-zend-vm=GOTO > ${OPENSHIFT_LOG_DIR}/php_install.log
 # --with-libdir=lib64 
