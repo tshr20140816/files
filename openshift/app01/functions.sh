@@ -76,9 +76,11 @@ function010() {
     # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
     # -march=ivybridge E5-2670 v2
     # export CFLAGS="-O2 -march=core2 -fomit-frame-pointer -s"
-    export CFLAGS="-O2 -march=core2 -maes -mavx -mcx16 -mpclmul -mpopcnt -msahf"
-    export CFLAGS="${CFLAGS} -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mtune=generic"
-    export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
+    # export CFLAGS="-O2 -march=core2 -maes -mavx -mcx16 -mpclmul -mpopcnt -msahf"
+    # export CFLAGS="${CFLAGS} -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mtune=generic"
+    # export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
+    cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
+    export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
     export CXXFLAGS="${CFLAGS}"
 
     # ***** memory.failcnt *****
