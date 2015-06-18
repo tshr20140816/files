@@ -7,8 +7,6 @@ export TZ=JST-9
 
 echo "$(date)"
 
-set -x
-
 gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p'
 
 CC="gcc"
@@ -29,6 +27,8 @@ for native in ${NATIVE} ; do
         fi
 done
 echo
+
+set -x
 
 # find / -name "libxml*" -print 2>/dev/null
 # strip --help
