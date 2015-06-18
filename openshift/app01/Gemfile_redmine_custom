@@ -21,11 +21,7 @@ gem "request_store", "1.0.5"
 gem "mime-types"
 gem "rbpdf", "~> 1.18.5"
 gem "i18n", "~> 0.6.11"
-
-# # Optional gem for LDAP authentication
-# group :ldap do
-#   gem "net-ldap", "~> 0.3.1"
-# end
+gem "net-ldap", "~> 0.3.1"
 
 # Optional gem for OpenID authentication
 group :openid do
