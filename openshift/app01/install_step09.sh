@@ -12,51 +12,52 @@ do
     ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 done
 
-# ***** memcached *****
-
-rm -rf ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version}
-rm -rf ${OPENSHIFT_DATA_DIR}/memcached
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/memcached-${memcached_version}.tar.gz ./
-echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached tar" >> ${OPENSHIFT_LOG_DIR}/install.log
-tar zxf memcached-${memcached_version}.tar.gz
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version} > /dev/null
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached.log
-./configure \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---prefix=${OPENSHIFT_DATA_DIR}/memcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached.log
-# time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
-time make -j12 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached.log
-make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
-mv ${OPENSHIFT_LOG_DIR}/install_memcached.log ${OPENSHIFT_LOG_DIR}/install/
-popd > /dev/null
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm memcached-${memcached_version}.tar.gz
-rm -rf memcached-${memcached_version}
-popd > /dev/null
-
-query_string="server=${OPENSHIFT_APP_DNS}&installed=memcached"
-wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
-
-# *** memcached-tool ***
-
-mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
-pushd ${OPENSHIFT_DATA_DIR}/local/bin > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
-chmod +x memcached-tool
-popd > /dev/null
+# apache インストールの前で実施(時間短縮のため)
+# # ***** memcached *****
+# 
+# rm -rf ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version}
+# rm -rf ${OPENSHIFT_DATA_DIR}/memcached
+# 
+# pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+# cp -f ${OPENSHIFT_DATA_DIR}/download_files/memcached-${memcached_version}.tar.gz ./
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached tar" >> ${OPENSHIFT_LOG_DIR}/install.log
+# tar zxf memcached-${memcached_version}.tar.gz
+# popd > /dev/null
+# 
+# pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version} > /dev/null
+# 
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached.log
+# ./configure \
+# --mandir=${OPENSHIFT_TMP_DIR}/man \
+# --prefix=${OPENSHIFT_DATA_DIR}/memcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
+# 
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached.log
+# # time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
+# time make -j12 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
+# 
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_memcached.log
+# make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
+# mv ${OPENSHIFT_LOG_DIR}/install_memcached.log ${OPENSHIFT_LOG_DIR}/install/
+# popd > /dev/null
+# 
+# pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+# rm memcached-${memcached_version}.tar.gz
+# rm -rf memcached-${memcached_version}
+# popd > /dev/null
+# 
+# query_string="server=${OPENSHIFT_APP_DNS}&installed=memcached"
+# wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
+# 
+# # *** memcached-tool ***
+# 
+# mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
+# pushd ${OPENSHIFT_DATA_DIR}/local/bin > /dev/null
+# cp -f ${OPENSHIFT_DATA_DIR}/download_files/memcached-tool ./
+# chmod +x memcached-tool
+# popd > /dev/null
 
 # ***** php *****
 
