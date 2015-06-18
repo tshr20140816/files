@@ -222,9 +222,8 @@ ln -s distcc gcc
 ln -s distcc c++
 ln -s distcc g++
 popd > /dev/null
-bundle install --help
-time bundle install --path vendor/bundle --without test development --verbose \
- --jobs $(grep -c -e processor /proc/cpuinfo) --retry 5 \
+time bundle install --no-color --path vendor/bundle --without=test development --verbose \
+ --jobs=$(grep -c -e processor /proc/cpuinfo) --retry=5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 pushd ${OPENSHIFT_DATA_DIR}/distcc/bin > /dev/null
 unlink cc
