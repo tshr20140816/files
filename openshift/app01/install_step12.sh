@@ -180,6 +180,9 @@ eval "$(rbenv init -)"
 rbenv local ${ruby_version}
 rbenv rehash
 
+tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/4:|/1:|g")
+export DISTCC_HOSTS="${tmp_string}"
+
 # ***** debug code ******
 
 mkdir -p ${OPENSHIFT_TMP_DIR}/local2/bin
@@ -222,8 +225,11 @@ ln -s distcc gcc
 ln -s distcc c++
 ln -s distcc g++
 popd > /dev/null
+# time bundle install --no-color --path vendor/bundle --without=test development --verbose \
+#  --jobs=$(grep -c -e processor /proc/cpuinfo) --retry=5 \
+#  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 time bundle install --no-color --path vendor/bundle --without=test development --verbose \
- --jobs=$(grep -c -e processor /proc/cpuinfo) --retry=5 \
+ --jobs=6 --retry=5 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 pushd ${OPENSHIFT_DATA_DIR}/distcc/bin > /dev/null
 unlink cc
