@@ -73,6 +73,18 @@ gem --version
 gem environment
 gem help install
 
+# ***** debug code ******
+
+mkdir -p ${OPENSHIFT_TMP_DIR}/local2/bin
+cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
+#!/bin/bash
+export TZ=JST-9
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/gcc_rhc.log
+/usr/bin/gcc $@
+__HEREDOC__
+chmod +x ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
+export PATH="${OPENSHIFT_TMP_DIR}/local2/bin:$PATH"
+
 # *** install ***
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
