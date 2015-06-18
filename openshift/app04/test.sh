@@ -9,6 +9,8 @@ echo "$(date)"
 
 set -x
 
+gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p'
+
 CC="gcc"
 OPT="-march=native"
 NATIVE=$(echo | ${CC} -E -v ${OPT} - 2>&1 | grep cc1)
