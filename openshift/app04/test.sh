@@ -26,6 +26,7 @@ for native in ${NATIVE} ; do
                 echo -n "${native} "
         fi
 done
+echo
 
 # find / -name "libxml*" -print 2>/dev/null
 # strip --help
