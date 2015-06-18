@@ -125,15 +125,19 @@ export HOME=${OPENSHIFT_DATA_DIR}
 # export CFLAGS="-O2 -march=core2 -maes -mavx -mcx16 -mpclmul -mpopcnt -msahf"
 # export CFLAGS="${CFLAGS} -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mssse3 -mtune=generic"
 # export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
-export CFLAGS="-O2 -march=core2 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx"
-export CFLAGS="${CFLAGS} --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=25600 -mtune=generic"
-export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
+# export CFLAGS="-O2 -march=core2 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx"
+# export CFLAGS="${CFLAGS} --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=25600 -mtune=generic"
+# export CFLAGS="${CFLAGS} -pipe -fomit-frame-pointer -s"
 
 # export CFLAGS="-I/tmp/local/include -I/tmp/libxml2/include/libxml2"
 # export CFLAGS="${CFLAGS} -O2 -march=native -pipe -fomit-frame-pointer -s"
 # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
-export CXXFLAGS="${CFLAGS}"
+# export CXXFLAGS="${CFLAGS}"
 # export LIBS="-L/tmp/local/lib"
+
+cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
+export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
 
 ccache -s
 ccache --zero-stats
