@@ -22,10 +22,10 @@ gem "mime-types"
 gem "rbpdf", "~> 1.18.5"
 gem "i18n", "~> 0.6.11"
 
-# Optional gem for LDAP authentication
-group :ldap do
-  gem "net-ldap", "~> 0.3.1"
-end
+# # Optional gem for LDAP authentication
+# group :ldap do
+#   gem "net-ldap", "~> 0.3.1"
+# end
 
 # Optional gem for OpenID authentication
 group :openid do
