@@ -180,6 +180,18 @@ eval "$(rbenv init -)"
 rbenv local ${ruby_version}
 rbenv rehash
 
+# ***** debug code ******
+
+mkdir -p ${OPENSHIFT_TMP_DIR}/local2/bin
+cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
+#!/bin/bash
+export TZ=JST-9
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${OPENSHIFT_LOG_DIR}/gcc.log
+/usr/bin/gcc $@
+__HEREDOC__
+chmod +x ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
+export PATH="${OPENSHIFT_TMP_DIR}/local2/bin:$PATH"
+
 # *** bundle ***
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine bundle install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
