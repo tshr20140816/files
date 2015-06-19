@@ -327,6 +327,10 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
  --with-mysql \
  --with-pdo-mysql \
+ --without-sqlite3 \
+ --without-pdo-sqlite \
+ --without-cdb \
+ --without-pear \
  --disable-ipv6 \
  --disable-phar \
  --disable-inifile \
