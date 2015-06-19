@@ -313,12 +313,19 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 #  --disable-mysqlnd-compression-support \
 #  --with-gettext=${OPENSHIFT_DATA_DIR}/${install_dir} \
 #  --with-zend-vm=GOTO > ${OPENSHIFT_LOG_DIR}/php_install.log
+# ./configure \
+#  --prefix=${OPENSHIFT_DATA_DIR}/${install_dir} \
+#  --mandir=${OPENSHIFT_TMP_DIR}/man \
+#  --docdir=${OPENSHIFT_TMP_DIR}/doc \
+#  --infodir=${OPENSHIFT_TMP_DIR}/info \
+#  --disable-all > ${OPENSHIFT_LOG_DIR}/php_install.log
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/${install_dir} \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
- --disable-all > ${OPENSHIFT_LOG_DIR}/php_install.log
+ --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+ > ${OPENSHIFT_LOG_DIR}/php_install.log
  
 # --with-libdir=lib64 
 # --with-bz2
