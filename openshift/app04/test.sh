@@ -325,6 +325,12 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
  --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+ --disable-ipv6 \
+ --disable-phar \
+ --disable-inifile \
+ --disable-flatfile \
+ --disable-sockets \
+ --disable-mysqlnd-compression-support \
  > ${OPENSHIFT_LOG_DIR}/php_install.log
  
 # --with-libdir=lib64 
