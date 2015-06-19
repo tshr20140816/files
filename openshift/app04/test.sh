@@ -327,7 +327,6 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
  --with-mysql \
  --with-pdo-mysql \
- --enable-exif \
  --enable-ftp \
  --enable-xml \
  --enable-mbstring \
