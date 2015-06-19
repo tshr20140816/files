@@ -318,7 +318,7 @@ pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
- --disable=all > ${OPENSHIFT_LOG_DIR}/php_install.log
+ --disable-all > ${OPENSHIFT_LOG_DIR}/php_install.log
  
 # --with-libdir=lib64 
 # --with-bz2
