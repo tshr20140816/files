@@ -29,12 +29,25 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-[ -f autossh-1.4e.tgz ] || wget http://www.harding.motd.ca/autossh/autossh-1.4e.tgz
+rm -rf autossh
 
-rm -rf autossh-1.4e
-tar zxf autossh-1.4e.tgz
+ruby_version=2.1.6
 
-cd autossh-1.4e
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/autossh > /dev/null
-time make -j4
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+
+[ -f rbenv-installer ] || wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
+bash rbenv-installer
+
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+
+time \
+     CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc" \
+     RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
+     MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
+     rbenv install -v ${ruby_version}
+ 
+rbenv global ${ruby_version}
+rbenv rehash
+ruby -v
