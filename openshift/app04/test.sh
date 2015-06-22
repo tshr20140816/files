@@ -35,3 +35,5 @@ tar zxf autossh-1.4e.tgz
 
 cd autossh-1.4e
 ./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/autossh
+time make -j4
