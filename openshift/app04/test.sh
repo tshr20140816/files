@@ -34,6 +34,7 @@ rm -rf autossh
 
 ruby_version=2.1.6
 
+export HOME=${OPENSHIFT_DATA_DIR}
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 
 [ -f rbenv-installer ] || wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
@@ -56,7 +57,7 @@ ruby -v
 # find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
 #  | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
- | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
+ | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_PHP_IP}/g"
 
 for gem in bundler rack passenger
 do
