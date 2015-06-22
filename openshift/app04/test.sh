@@ -24,6 +24,27 @@ cd /tmp
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
+export LD=ld.gold
+mkdir -p /tmp/local/bin
+cp /tmp/ld.gold /tmp/local/bin/
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+export PATH="/tmp/local/bin:$PATH"
+
+cd ${OPENSHIFT_DATA_DIR}/ccache/bin 
+unlink cc
+unlink gcc
+
+export CC="ccache gcc"
+export CXX="ccache g++"
+
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
+mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
+export CCACHE_LOGFILE=/dev/null
+export CCACHE_MAXSIZE=300M
+export CCACHE_NLEVELS=3
+
 cd /tmp
 
 rm -rf ${OPENSHIFT_DATA_DIR}/.rbenv
