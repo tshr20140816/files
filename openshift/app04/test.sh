@@ -13,14 +13,6 @@ rm -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 rm -f ${OPENSHIFT_TMP_DIR}/distcc_server_stderr_*
 ls -d /tmp/cc* | grep -v ccache$ | xargs rm -f
 
-cd ${OPENSHIFT_DATA_DIR}
-rm -rf xz
-rm -rf bison
-rm -rf expect
-rm -rf tcl
-rm -rf gold
-rm -rf openssh
-
 set -x
 
 ls -lang /tmp
@@ -28,10 +20,9 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-rm -rf libxml2-2.7.6*
-rm -rf php-5.6.10*
-rm -rf bison*
-rm -rf re2c*
+rm -rf libxml2
+rm -rf local
+rm -rf local2
 
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
