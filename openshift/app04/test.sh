@@ -2,7 +2,7 @@
 
 export TZ=JST-9
 
-tail -n 10000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
+tail -n 50000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 
 echo "$(date)"
 
@@ -30,7 +30,8 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-rm -rf autossh
+rm -rf ${OPENSHIFT_DATA_DIR}/.rbenv
+rm -rf ${OPENSHIFT_DATA_DIR}/.gem
 
 ruby_version=2.1.6
 
@@ -54,15 +55,16 @@ rbenv global ${ruby_version}
 rbenv rehash
 ruby -v
 
+echo ${OPENSHIFT_PHP_IP}
 # find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
 #  | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
  | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_PHP_IP}/g"
 
-for gem in bundler rack passenger
-do
-    time rbenv exec gem install ${gem} --no-rdoc --no-ri --debug
-    rbenv rehash
-done
+# for gem in bundler rack passenger
+# do
+#     time rbenv exec gem install ${gem} --no-rdoc --no-ri --debug
+#     rbenv rehash
+# done
 
 rbenv exec gem list
