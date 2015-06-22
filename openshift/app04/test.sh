@@ -21,11 +21,6 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-rm -rf httpd-2.2.29
-rm -rf man
-rm -rf info
-rm -rf doc
-
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
