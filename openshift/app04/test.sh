@@ -14,7 +14,7 @@ ls -d /tmp/cc* | grep -v ccache$ | xargs rm -f
 set -x
 
 ls -lang /tmp
-ls -lang $(OPENSHIFT_DATA_DIR)
+ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
@@ -24,7 +24,7 @@ rm -rf bison*
 rm -rf re2c*
 
 ls -lang /tmp
-ls -lang $(OPENSHIFT_DATA_DIR)
+ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
