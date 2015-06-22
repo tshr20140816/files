@@ -15,7 +15,7 @@ echo "${cflag_data}"
 # find / -name "libxml*" -print 2>/dev/null
 # strip --help
 
-ls -d /tmp/cc* | grep -v ccache$ | xargs rm
+ls -d /tmp/cc* | grep -v ccache$ | xargs rm -f
 
 # tree /tmp/local/lib
 
@@ -213,6 +213,8 @@ fi
 # kokokara
 
 cd /tmp
+
+[ -f autossh-1.4e.tgz ] || wget http://www.harding.motd.ca/autossh/autossh-1.4e.tgz
 
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
