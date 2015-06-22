@@ -20,9 +20,10 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-rm -rf libxml2
-rm -rf local
-rm -rf local2
+rm -rf httpd-2.2.29
+rm -rf man
+rm -rf info
+rm -rf doc
 
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
@@ -51,3 +52,17 @@ time \
 rbenv global ${ruby_version}
 rbenv rehash
 ruby -v
+
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+ | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+ | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
+
+for gem in bundler rack passenger
+do
+    time rbenv exec gem install ${gem} --no-rdoc --no-ri --debug \
+     -V -- --with-cflags=\"${CFLAGS}\"
+    rbenv rehash
+done
+
+rbenv exec gem list
