@@ -44,17 +44,17 @@ export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 
 time \
-     CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc" \
-     RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
-     MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
-     rbenv install -v ${ruby_version}
- 
+ CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc" \
+ RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
+ MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
+ rbenv install -v ${ruby_version}
+
 rbenv global ${ruby_version}
 rbenv rehash
 ruby -v
 
-find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
- | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
+# find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+#  | xargs -0i cp -f {} ${OPENSHIFT_TMP_DIR}
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
  | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_DIY_IP}/g"
 
