@@ -2,7 +2,7 @@
 
 export TZ=JST-9
 
-tail -n 50000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
+tail -n 10000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 
 echo "$(date)"
 echo ${OPENSHIFT_PHP_IP}
