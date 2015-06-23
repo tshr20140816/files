@@ -78,10 +78,10 @@ echo ${OPENSHIFT_PHP_IP}
 find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
  | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_PHP_IP}/g"
 
-# for gem in bundler rack passenger
-# do
-#     time rbenv exec gem install ${gem} --no-rdoc --no-ri --debug
-#     rbenv rehash
-# done
+for gem in bundler rack passenger
+do
+    time rbenv exec gem install ${gem} --no-rdoc --no-ri --debug
+    rbenv rehash
+done
 
 rbenv exec gem list
