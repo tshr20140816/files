@@ -71,9 +71,13 @@ export RUBY_GC_MALLOC_LIMIT=33554432
 
 # *** install ***
 
+mv -f ${OPENSHIFT_DATA_DIR}/tesh.sh ${OPENSHIFT_DATA_DIR}/test.sh.a
+
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
  --languages ruby \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
+
+mv -f ${OPENSHIFT_DATA_DIR}/tesh.sh.a ${OPENSHIFT_DATA_DIR}/test.sh
 
 ccache -s
