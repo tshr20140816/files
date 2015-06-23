@@ -221,6 +221,8 @@ echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 
 if [ "${mirror_server}" != "none" ]; then
 
+    # ccache passenger-install-apache2-module
+    wget -t1 ${mirror_server}/ccache_passenger-install-apache2-module.tar.xz &
     # ipa font
     wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip &
     # webalizer
@@ -443,7 +445,6 @@ if [ "${mirror_server}" != "none" ]; then
         fi
         rm -f ${gem}.html
     done
-
 fi
 
 # ***** build request *****
