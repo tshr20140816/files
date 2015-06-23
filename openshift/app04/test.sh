@@ -44,9 +44,21 @@ mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
+export CCACHE_PREFIX=distcc
 
 ccache -s
 ccache --zero-stats
+
+export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+
+distcc_hosts_string="55630afc5973caf283000214@v1-20150216.rhcloud.com/1:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start"
+distcc_hosts_string="${distcc_hosts_string} 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/1:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start"
+distcc_hosts_string="${distcc_hosts_string} 55630c675973caf283000251@v3-20150216.rhcloud.com/1:/var/lib/openshift/55630c675973caf283000251/app-root/data/distcc/bin/distccd_start"
+export DISTCC_HOSTS="${distcc_hosts_string}"
+
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
+export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 
 export LD=ld.gold
 rm -rf /tmp/local
