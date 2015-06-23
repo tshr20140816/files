@@ -25,6 +25,10 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
+rm -f monitor_resourse.sh
+wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_resourse.sh
+./monitor_resourse.sh &
+
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 # export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 # export CFLAGS="-O2 -march=native"
