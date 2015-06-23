@@ -28,8 +28,8 @@ cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-O2 -march=native"
 export CXXFLAGS="${CFLAGS}"
 
-# export EXTRA_CFLAGS="${CFLAGS}"
-# export EXTRA_CXXFLAGS="${CXXFLAGS}"
+export EXTRA_CFLAGS="${CFLAGS}"
+export EXTRA_CXXFLAGS="${CXXFLAGS}"
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
