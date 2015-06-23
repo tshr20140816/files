@@ -25,7 +25,8 @@ cd /tmp
 
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 # export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
-export CFLAGS="-O2 -march=native"
+# export CFLAGS="-O2 -march=native"
+export CFLAGS="-O2 -march=core2"
 export CXXFLAGS="${CFLAGS}"
 
 export EXTRA_CFLAGS="${CFLAGS}"
