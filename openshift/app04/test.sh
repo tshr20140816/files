@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 1311
+
 export TZ=JST-9
 
 tail -n 10000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
