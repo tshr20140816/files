@@ -71,6 +71,7 @@ export RUBY_GC_MALLOC_LIMIT=33554432
 
 # *** install ***
 
+rm -f ${OPENSHIFT_DATA_DIR}/tesh.sh.old
 mv -f ${OPENSHIFT_DATA_DIR}/tesh.sh ${OPENSHIFT_DATA_DIR}/test.sh.a
 
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
