@@ -21,22 +21,53 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-ls -lang /tmp
-ls -lang ${OPENSHIFT_DATA_DIR}
-
-export LD=ld.gold
-mkdir -p /tmp/local/bin
-cp -f /tmp/ld.gold /tmp/local/bin/
-# export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-export PATH="/tmp/local/bin:$PATH"
-
 cd /tmp
 
-export HOME=${OPENSHIFT_DATA_DIR}
-export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+ccache -s
 
+export HOME=${OPENSHIFT_DATA_DIR}
+
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+export CC="ccache gcc"
+export CXX="ccache g++"
+
+rm -rf ${OPENSHIFT_TMP_DIR}/ccache
+mkdir ${OPENSHIFT_TMP_DIR}/ccache
+
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
+mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
+export CCACHE_LOGFILE=/dev/null
+export CCACHE_MAXSIZE=300M
+export CCACHE_NLEVELS=3
+
+export LD=ld.gold
+rm -rf /tmp/local
+mkdir -p /tmp/local/bin
+cp -f /tmp/ld.gold /tmp/local/bin/
+export PATH="/tmp/local/bin:$PATH"
+
+# *** env ***
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)" 
+export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 
-whereis rbenv
+tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/4:|/1:|g")
+export DISTCC_HOSTS="${tmp_string}"
+export MAKEOPTS="-j6"
+# 32MB
+export RUBY_GC_MALLOC_LIMIT=33554432
+
+# *** install ***
+
+time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
+ --auto \
+ --languages ruby \
+ --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
+
+ccache -s
