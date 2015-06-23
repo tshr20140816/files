@@ -38,6 +38,7 @@ export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
 
 ccache -s
+ccache --zero-stats
 
 export LD=ld.gold
 rm -rf /tmp/local
