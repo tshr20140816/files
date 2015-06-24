@@ -20,7 +20,7 @@ ls -d /tmp/cc* | grep -v ccache$ | xargs rm -f
 
 set -x
 
-gcc -O2 -Q --help=optimize
+gcc -O2 -Q --help=optimize | grep -e enable
 
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
