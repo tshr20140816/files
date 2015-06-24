@@ -21,12 +21,22 @@ export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 # export HTTPD=${OPENSHIFT_DATA_DIR}/apache/bin/httpd
 # export BINDIR=${OPENSHIFT_DATA_DIR}/apache
 
-tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/4:|/1:|g")
-export DISTCC_HOSTS="${tmp_string}"
-export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
-export MAKEOPTS="-j6"
-# 32MB
-export RUBY_GC_MALLOC_LIMIT=33554432
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_passenger-install-apache2-module.tar.xz ./
+if [ -f ccache_passenger-install-apache2-module.tar.xz ]; then
+    rm -rf ccache
+    tar Jxf ccache_passenger-install-apache2-module.tar.xz
+    export CC="ccache gcc"
+    export CXX="ccache g++"
+else
+    tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/4:|/1:|g")
+    export DISTCC_HOSTS="${tmp_string}"
+    export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
+    export MAKEOPTS="-j6"
+    # 32MB
+    export RUBY_GC_MALLOC_LIMIT=33554432
+fi
+popd > /dev/null
 
 # *** install ***
 
