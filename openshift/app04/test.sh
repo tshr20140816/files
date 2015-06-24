@@ -30,8 +30,10 @@ wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_re
 chmod +x monitor_resourse.sh
 ./monitor_resourse.sh &
 
+touch ${OPENSHIFT_LOG_DIR}/ccache.log
 touch ${OPENSHIFT_LOG_DIR}/distcc.log
 touch ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
+tail -f ${OPENSHIFT_LOG_DIR}/ccache.log &
 tail -f ${OPENSHIFT_LOG_DIR}/distcc.log &
 tail -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log &
 
@@ -56,7 +58,7 @@ mkdir ${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
-export CCACHE_LOGFILE=/dev/null
+export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
 export CCACHE_PREFIX=distcc
