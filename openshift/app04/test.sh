@@ -59,9 +59,9 @@ ccache --zero-stats
 
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 
-distcc_hosts_string="55630afc5973caf283000214@v1-20150216.rhcloud.com/1:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start"
-distcc_hosts_string="${distcc_hosts_string} 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/1:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start"
-distcc_hosts_string="${distcc_hosts_string} 55630c675973caf283000251@v3-20150216.rhcloud.com/1:/var/lib/openshift/55630c675973caf283000251/app-root/data/distcc/bin/distccd_start"
+distcc_hosts_string="55630afc5973caf283000214@v1-20150216.rhcloud.com/4:/var/lib/openshift/55630afc5973caf283000214/app-root/data/distcc/bin/distccd_start"
+distcc_hosts_string="${distcc_hosts_string} 55630b63e0b8cd7ed000007f@v2-20150216.rhcloud.com/4:/var/lib/openshift/55630b63e0b8cd7ed000007f/app-root/data/distcc/bin/distccd_start"
+distcc_hosts_string="${distcc_hosts_string} 55630c675973caf283000251@v3-20150216.rhcloud.com/4:/var/lib/openshift/55630c675973caf283000251/app-root/data/distcc/bin/distccd_start"
 export DISTCC_HOSTS="${distcc_hosts_string}"
 
 export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
@@ -85,7 +85,7 @@ export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 
 tmp_string=$(echo ${DISTCC_HOSTS} | sed -e "s|/4:|/1:|g")
 export DISTCC_HOSTS="${tmp_string}"
-export MAKEOPTS="-j2"
+export MAKEOPTS="-j12"
 # 32MB
 # export RUBY_GC_MALLOC_LIMIT=33554432
 export RUBY_GC_MALLOC_LIMIT=16000000
