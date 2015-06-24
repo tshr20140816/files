@@ -46,7 +46,7 @@ pid_4=$!
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 # export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 # export CFLAGS="-O2 -march=native"
-export CFLAGS="-Wno-deprecated -march=core2 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx -mtune=generic -s"
+export CFLAGS="-Wno-deprecated -Os -march=core2 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx -mtune=generic -s"
 export CFLAGS="${CFLAGS} -fthread-jumps -fdefer-pop"
 export CXXFLAGS="${CFLAGS}"
 
