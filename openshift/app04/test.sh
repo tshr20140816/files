@@ -68,7 +68,7 @@ mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
-export CCACHE_PREFIX=distcc
+# export CCACHE_PREFIX=distcc
 
 ccache -s
 ccache --zero-stats
