@@ -11,10 +11,6 @@ cat ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 echo "$(date)"
 echo ${OPENSHIFT_PHP_IP}
 
-tree ${OPENSHIFT_DATA_DIR}/.gem
-
-exit
-
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
@@ -113,6 +109,8 @@ export MAKEOPTS="-j 1"
 # 32MB
 # export RUBY_GC_MALLOC_LIMIT=33554432
 # export RUBY_GC_MALLOC_LIMIT=16000000
+
+export TRACE=1
 
 # *** install ***
 
