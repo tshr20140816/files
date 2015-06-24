@@ -50,8 +50,8 @@ export CFLAGS="-Wno-deprecated -march=core2 -mcx16 -msahf -maes -mpclmul -mpopcn
 export CFLAGS="${CFLAGS} -fthread-jumps -fdefer-pop"
 export CXXFLAGS="${CFLAGS}"
 
-export EXTRA_CFLAGS="${CFLAGS}"
-export EXTRA_CXXFLAGS="${CXXFLAGS}"
+# export EXTRA_CFLAGS="${CFLAGS}"
+# export EXTRA_CXXFLAGS="${CXXFLAGS}"
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
@@ -60,8 +60,8 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-# rm -rf ${OPENSHIFT_TMP_DIR}/ccache
-# mkdir ${OPENSHIFT_TMP_DIR}/ccache
+rm -rf ${OPENSHIFT_TMP_DIR}/ccache
+mkdir ${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
