@@ -39,7 +39,7 @@ pid_1=$!
 touch ${OPENSHIFT_LOG_DIR}/ccache.log
 touch ${OPENSHIFT_LOG_DIR}/distcc.log
 touch ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
-tail -f ${OPENSHIFT_LOG_DIR}/ccache.log &
+tail -f ${OPENSHIFT_LOG_DIR}/ccache.log | grep -v Config &
 pid_2=$!
 tail -f ${OPENSHIFT_LOG_DIR}/distcc.log &
 pid_3=$!
