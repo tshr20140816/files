@@ -27,6 +27,7 @@ cd /tmp
 
 rm -f monitor_resourse.sh
 wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_resourse.sh
+chmod +x monitor_resourse.sh
 ./monitor_resourse.sh &
 
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
