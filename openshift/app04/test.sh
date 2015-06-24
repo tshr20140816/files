@@ -38,7 +38,7 @@ tail -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log &
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 # export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 # export CFLAGS="-O2 -march=native"
-export CFLAGS="-O1 -march=core2 -Wno-deprecated"
+export CFLAGS="-O2 -march=core2 -mavx -mtune=generic -Wno-deprecated"
 export CXXFLAGS="${CFLAGS}"
 
 export EXTRA_CFLAGS="${CFLAGS}"
@@ -51,6 +51,8 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+rm -rf ${OPENSHIFT_TMP_DIR}/ccache
+mkdir ${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
