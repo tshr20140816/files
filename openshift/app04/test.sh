@@ -112,8 +112,7 @@ echo "# TEST" >> ${OPENSHIFT_DATA_DIR}/test.sh
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
  --languages ruby \
- --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
- --trace
+ --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
 
 ccache -s
 
