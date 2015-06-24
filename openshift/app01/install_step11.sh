@@ -26,6 +26,7 @@ cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_passenger-install-apache2-modu
 if [ -f ccache_passenger-install-apache2-module.tar.xz ]; then
     rm -rf ccache
     tar Jxf ccache_passenger-install-apache2-module.tar.xz
+    ccache -s
     export CC="ccache gcc"
     export CXX="ccache g++"
 else
@@ -55,6 +56,14 @@ time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --languages ruby \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+if [ -f ccache_passenger-install-apache2-module.tar.xz ]; then
+    ccache -s
+    rm -f ccache_passenger-install-apache2-module.tar.xz
+    rm -rf ${CCACHE_DIR}
+    mkdir -p ${CCACHE_DIR}
+fi
+popd > /dev/null
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
