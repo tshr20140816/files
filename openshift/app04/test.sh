@@ -79,6 +79,7 @@ export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
 export DISTCC_IO_TIMEOUT=1200
 
 cat ${OPENSHIFT_DATA_DIR}/bin/distcc-ssh
+cat ${OPENSHIFT_DATA_DIR}/.ssh/config
 
 export LD=ld.gold
 rm -rf /tmp/local
