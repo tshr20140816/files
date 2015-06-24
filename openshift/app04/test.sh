@@ -40,7 +40,7 @@ tail -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log &
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 # export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 # export CFLAGS="-O2 -march=native"
-export CFLAGS="-O2 -march=core2 -mavx -mtune=generic -Wno-deprecated"
+export CFLAGS="-march=core2 -mavx -mtune=generic -Wno-deprecated"
 export CXXFLAGS="${CFLAGS}"
 
 export EXTRA_CFLAGS="${CFLAGS}"
