@@ -112,7 +112,7 @@ export MAKEOPTS="-j 1"
 
 # *** install ***
 
-echo "# TEST" >> ${OPENSHIFT_DATA_DIR}/test.sh
+# echo "# TEST" >> ${OPENSHIFT_DATA_DIR}/test.sh
 
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
