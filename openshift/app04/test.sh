@@ -42,8 +42,10 @@ export EXTRA_CXXFLAGS="${CXXFLAGS}"
 export HOME=${OPENSHIFT_DATA_DIR}
 
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-export CC="ccache gcc"
-export CXX="ccache g++"
+# export CC="ccache gcc"
+# export CXX="ccache g++"
+export CC="distcc gcc"
+export CXX="distcc g++"
 
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
