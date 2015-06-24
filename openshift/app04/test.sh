@@ -27,6 +27,8 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
+tar Jcf ccache_passenger-install-apache2-module.tar.xz ccache
+
 rm -f monitor_resourse.sh
 wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_resourse.sh
 chmod +x monitor_resourse.sh
