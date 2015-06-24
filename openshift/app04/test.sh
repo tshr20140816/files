@@ -72,6 +72,7 @@ export DISTCC_HOSTS="${distcc_hosts_string}"
 export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/bin/distcc-ssh"
+export DISTCC_IO_TIMEOUT=1200
 
 export LD=ld.gold
 rm -rf /tmp/local
