@@ -51,6 +51,8 @@ pid_4=$!
 pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/passenger-*
 sed -i -e 's|make -j2|make -j6|g' build/common_library.rb
 sed -i -e 's|cflags = "#{EXTRA_CFLAGS} -w"|cflags = "-O2 -w"|g' build/common_library.rb
+grep -e make build/common_library.rb
+grep -e cflags build/common_library.rb
 popd
 
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
@@ -59,7 +61,7 @@ cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-Wno-deprecated -Os -march=core2 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx -mtune=generic -s"
 export CFLAGS="${CFLAGS} -fthread-jumps -fdefer-pop"
 
-export CFLAGS="-Wno-deprecated"
+export CFLAGS="-Wno-deprecated -s"
 export CXXFLAGS="${CFLAGS}"
 
 export EXTRA_CFLAGS="${CFLAGS}"
