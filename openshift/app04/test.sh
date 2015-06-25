@@ -48,13 +48,18 @@ pid_3=$!
 tail -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log &
 pid_4=$!
 
+pushd ${OPENSHIFT_DATA_DIR}/.gem/passenger-* > /dev/null
+sed -i -e 's|make -j2|make -j6|g' common_library.rb
+sed -i -e 's|cflags = "#{EXTRA_CFLAGS} -w"|cflags = "-O2 -w"|g' common_library.rb
+popd > /dev/null
+
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 # export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 # export CFLAGS="-O2 -march=native"
 export CFLAGS="-Wno-deprecated -Os -march=core2 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx -mtune=generic -s"
 export CFLAGS="${CFLAGS} -fthread-jumps -fdefer-pop"
 
-export CFLAGS="-Wno-deprecated -Os"
+export CFLAGS="-Wno-deprecated"
 export CXXFLAGS="${CFLAGS}"
 
 export EXTRA_CFLAGS="${CFLAGS}"
