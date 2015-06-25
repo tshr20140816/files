@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.06.26 fio_version 2.2.8 → 2.2.9
 # 2015.06.13 cacti_version 0.8.8c → 0.8.8d
 # 2015.06.12 php_version 5.6.9 → 5.6.10
 # 2015.05.16 memcached_version 1.4.22 → 1.4.24
@@ -55,7 +56,7 @@ ccache_version 3.2.2
 distcc_version 3.1
 delegate_version 9.9.13
 expect_version 5.45
-fio_version 2.2.8
+fio_version 2.2.9
 ipafont_version 00303
 libmemcached_version 1.0.18
 lynx_version 2.8.7
