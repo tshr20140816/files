@@ -61,7 +61,7 @@ cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-Wno-deprecated -Os -march=core2 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx -mtune=generic -s"
 export CFLAGS="${CFLAGS} -fthread-jumps -fdefer-pop"
 
-export CFLAGS="-Wno-deprecated -s"
+export CFLAGS="-Wno-deprecated -O1"
 export CXXFLAGS="${CFLAGS}"
 
 export EXTRA_CFLAGS="${CFLAGS}"
@@ -126,7 +126,7 @@ export TRACE=1
 
 # *** install ***
 
-# echo "# TEST" >> ${OPENSHIFT_DATA_DIR}/test.sh
+echo "# TEST" >> ${OPENSHIFT_DATA_DIR}/test.sh
 
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-config --help-all
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
