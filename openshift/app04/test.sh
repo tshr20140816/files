@@ -11,6 +11,8 @@ cat ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 echo "$(date)"
 echo ${OPENSHIFT_PHP_IP}
 
+tree ${OPENSHIFT_DATA_DIR}.gem
+
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log.*
 rm -f ${OPENSHIFT_LOG_DIR}/ccache.log
 rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
