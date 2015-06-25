@@ -65,15 +65,15 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-rm -rf ${OPENSHIFT_TMP_DIR}/ccache
-mkdir ${OPENSHIFT_TMP_DIR}/ccache
+# rm -rf ${OPENSHIFT_TMP_DIR}/ccache
+# mkdir ${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
-# export CCACHE_PREFIX=distcc
+export CCACHE_PREFIX=distcc
 
 ccache -s
 ccache --zero-stats
