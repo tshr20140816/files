@@ -12,18 +12,25 @@ set -x
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
-cd /tmp
-rm -f ccGfPr09.s
-rm -f distcc_1af7ff60.ii
-rm -f distcc_b4f80226.ii
-rm -f distcc_server_stderr_b144bc50.txt
-rm -rf man
-cd $OPENSHIFT_DATA_DIR
-rm -rf apache
-rm -rf .gem
-rm -rf .rbenv
-tree .pki
-tree .subversion
+cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
+export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
 
-ls -lang /tmp
-ls -lang ${OPENSHIFT_DATA_DIR}
+cd $OPENSHIFT_DATA_DIR
+rm -rf .pki
+rm -rf .subversion
+
+cd /tmp
+wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
+
+tar jxf httpd-2.2.29.tar.bz2
+cd httpd-2.2.29
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --enable-mods-shared='all proxy'
+
+time make -j4
+
+make install
