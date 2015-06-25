@@ -125,6 +125,8 @@ time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
 
 ccache -s
+ccache -s
+ccache -s
 
 kill ${pid_1}
 kill ${pid_2}
