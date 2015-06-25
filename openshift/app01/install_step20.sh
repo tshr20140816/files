@@ -49,7 +49,7 @@ find ./ -name "*" -mindepth 2 -type f -print0 \
  | grep -e "not stripped" \
  | grep -v -e "delegated" \
  | awk -F':' '{printf $1"\n"}' \
- | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+ > ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 echo "strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all
