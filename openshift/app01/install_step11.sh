@@ -10,6 +10,18 @@ rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 # ***** passenger-install-apache2-module *****
 # https://github.com/phusion/passenger/blob/master/bin/passenger-install-apache2-module
 
+# *** log ***
+
+export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache_passenger-install-apache2-module.log
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc_passenger-install-apache2-module.log
+
+touch ${CCACHE_LOGFILE}
+touch ${DISTCC_LOG}
+tail -f ${CCACHE_LOGFILE} &
+pid_CCACHE_LOGFILE=$!
+tail -f ${DISTCC_LOG} &
+pid_DISTCC_LOG=$!
+
 # *** patch ***
 
 pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/passenger-* > /dev/null
@@ -64,6 +76,9 @@ time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --languages ruby \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
 
+kill ${pid_CCACHE_LOGFILE}
+kill ${pid_DISTCC_LOG}
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 if [ -f ccache_passenger-install-apache2-module.tar.xz ]; then
     ccache -s
@@ -72,6 +87,7 @@ if [ -f ccache_passenger-install-apache2-module.tar.xz ]; then
     mkdir -p ${CCACHE_DIR}
 fi
 popd > /dev/null
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
