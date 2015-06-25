@@ -156,6 +156,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export CC="ccache gcc"
 export CXX="ccache g++"
 
+export CCACHE_COMPILERCHECK=none
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 # rm -rf ${OPENSHIFT_TMP_DIR}/ccache
 # mkdir ${OPENSHIFT_TMP_DIR}/ccache
