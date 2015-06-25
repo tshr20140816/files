@@ -126,7 +126,7 @@ export TRACE=1
 
 # echo "# TEST" >> ${OPENSHIFT_DATA_DIR}/test.sh
 
-${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-config --help
+${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-config --help-all
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
  --languages ruby \
