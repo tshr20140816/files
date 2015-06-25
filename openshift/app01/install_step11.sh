@@ -12,7 +12,7 @@ rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
 # *** patch ***
 
-pushd ${OPENSHIFT_DATA_DIR}/.gem/passenger-* > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/passenger-* > /dev/null
 sed -i -e 's|make -j2|make -j6|g' common_library.rb
 # sed -i -e 's|make |time make |g' common_library.rb
 sed -i -e 's|cflags = "#{EXTRA_CFLAGS} -w"|cflags = "-O2 -w"|g' common_library.rb
