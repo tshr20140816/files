@@ -52,7 +52,7 @@ cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-Wno-deprecated -Os -march=core2 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx -mtune=generic -s"
 export CFLAGS="${CFLAGS} -fthread-jumps -fdefer-pop"
 
-export CFLAGS="-Wno-deprecated"
+export CFLAGS="-Wno-deprecated -Os"
 export CXXFLAGS="${CFLAGS}"
 
 export EXTRA_CFLAGS="${CFLAGS}"
