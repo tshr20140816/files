@@ -69,3 +69,46 @@ do
     rbenv rehash
 done
 fi
+
+cd /tmp
+
+export HOME=${OPENSHIFT_DATA_DIR}
+
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+export CC="ccache gcc"
+export CXX="ccache g++"
+export CCACHE_COMPILERCHECK=none
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
+mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
+export CCACHE_LOGFILE=/dev/null
+export CCACHE_MAXSIZE=300M
+export CCACHE_NLEVELS=3
+ccache -s
+ccache --zero-stats
+
+export LD=ld.gold
+rm -rf /tmp/local
+mkdir -p /tmp/local/bin
+cp -f /tmp/ld.gold /tmp/local/bin/
+export PATH="/tmp/local/bin:$PATH"
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)" 
+export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
+
+rbenv global 2.1.6
+rbenv rehash
+
+time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
+ --auto \
+ --languages ruby \
+ --apxs2-path ${OPENSHIFT_DATA_DIR}/apache/bin/apxs
+
+ccache -s
+
+tar Jcf ccache_passenger-install-apache2-module.tar.xz ccache
