@@ -70,6 +70,7 @@ do
 done
 fi
 
+if [ 1 -eq 0 ]; then
 cd /tmp
 
 export HOME=${OPENSHIFT_DATA_DIR}
@@ -112,3 +113,13 @@ time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
 ccache -s
 
 tar Jcf ccache_passenger-install-apache2-module.tar.xz ccache
+fi
+
+tree ${OPENSHIFT_DATA_DIR}/.gem/gems
+
+pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/bundler-* > /dev/null
+rm -rf man
+rm -rf lib/bundler/man
+popd > /dev/null
+
+tree ${OPENSHIFT_DATA_DIR}/.gem/gems
