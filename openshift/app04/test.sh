@@ -55,13 +55,6 @@ time \
 
 tree ${OPENSHIFT_DATA_DIR}/.rbenv
 tree ${OPENSHIFT_DATA_DIR}/.gem
-fi
-
-export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
-export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-eval "$(rbenv init -)"
 
 rbenv global 2.1.6
 rbenv rehash
@@ -75,3 +68,4 @@ do
      -V -- --with-cflags=\"${CFLAGS}\"
     rbenv rehash
 done
+fi
