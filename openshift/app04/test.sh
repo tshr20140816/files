@@ -115,10 +115,10 @@ ccache -s
 tar Jcf ccache_passenger-install-apache2-module.tar.xz ccache
 fi
 
-tree ${OPENSHIFT_DATA_DIR}/.gem/gems
+tree ${OPENSHIFT_DATA_DIR}/.gem
 
 pushd ${OPENSHIFT_DATA_DIR}/.gem > /dev/null
-rm -rfv *.md
+rm -rf ./*.md
 popd > /dev/null
 
-tree ${OPENSHIFT_DATA_DIR}/.gem/gems
+tree ${OPENSHIFT_DATA_DIR}/.gem
