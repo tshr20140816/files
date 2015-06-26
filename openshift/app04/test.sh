@@ -31,4 +31,31 @@ cd httpd-2.2.29
 time make -j4
 make install
 fi
-tree ${OPENSHIFT_DATA_DIR}/apache
+
+cd $OPENSHIFT_DATA_DIR
+rm -rf apache/manual
+
+cd /tmp
+
+rm -rf ccache
+mkdir ccache
+
+rm rbenv-installer
+wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
+bash rbenv-installer
+rm rbenv-installer
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+
+time \
+ CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc" \
+ RUBY_CONFIGURE_OPTS="--with-out-ext=tk,tk/*" \
+ MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)" \
+ rbenv install -v 2.1.6
+
+tree ${OPENSHIFT_DATA_DIR}/.rbenv
+tree ${OPENSHIFT_DATA_DIR}/.gem
