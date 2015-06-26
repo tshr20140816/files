@@ -30,15 +30,15 @@ echo "shell syntax error count : $(wc -l ${OPENSHIFT_LOG_DIR}/shell_syntax_error
 # ***** delete files *****
 
 rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
-# pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/bundler-* > /dev/null
-# rm -rf man
-# rm -rf lib/bundler/man
-# popd > /dev/null
-# pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/passenger-* > /dev/null
-# rm -rf doc
-# rm -rf man
-# rm -f download_cache/nginx*
-# popd > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/bundler-* > /dev/null
+rm -rf man
+rm -rf lib/bundler/man
+popd > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/passenger-* > /dev/null
+rm -rf doc
+rm -rf man
+rm -f download_cache/nginx*
+popd > /dev/null
 # find ${OPENSHIFT_DATA_DIR}/.gem -name '*.md' -type f -print0 | xargs -0i rm -f {}
 
 # ***** strip *****
