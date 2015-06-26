@@ -71,7 +71,7 @@ find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
 
 for gem in bundler rack passenger
 do
-    time rbenv exec gem install ${gemfile} --no-rdoc --no-ri --debug \
+    time rbenv exec gem install ${gem} --no-rdoc --no-ri --debug \
      -V -- --with-cflags=\"${CFLAGS}\"
     rbenv rehash
 done
