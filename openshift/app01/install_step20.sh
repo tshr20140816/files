@@ -40,6 +40,9 @@ rm -rf man
 rm -f download_cache/nginx*
 popd > /dev/null
 # find ${OPENSHIFT_DATA_DIR}/.gem -name '*.md' -type f -print0 | xargs -0i rm -f {}
+pushd ${OPENSHIFT_DATA_DIR}/.gem > /dev/null
+rm -rfv *.md
+popd > /dev/null
 
 # ***** strip *****
 
