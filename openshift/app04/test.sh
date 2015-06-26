@@ -30,16 +30,12 @@ cd httpd-2.2.29
 
 time make -j4
 make install
-fi
-
 cd $OPENSHIFT_DATA_DIR
 rm -rf apache/manual
+fi
 
+if [ 1 -eq 0 ]; then
 cd /tmp
-
-rm -rf ccache
-mkdir ccache
-
 rm rbenv-installer
 wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
 bash rbenv-installer
@@ -59,3 +55,23 @@ time \
 
 tree ${OPENSHIFT_DATA_DIR}/.rbenv
 tree ${OPENSHIFT_DATA_DIR}/.gem
+fi
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)"
+
+rbenv global 2.1.6
+rbenv rehash
+
+find ${OPENSHIFT_DATA_DIR}/.rbenv/versions/ -name resolv.rb -type f -print0 \
+ | xargs -0 perl -pi -e "s/0\.0\.0\.0/${OPENSHIFT_PHP_IP}/g"
+
+for gem in bundler rack passenger
+do
+    time rbenv exec gem install ${gemfile} --no-rdoc --no-ri --debug \
+     -V -- --with-cflags=\"${CFLAGS}\"
+    rbenv rehash
+done
