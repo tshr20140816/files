@@ -117,9 +117,8 @@ fi
 
 tree ${OPENSHIFT_DATA_DIR}/.gem/gems
 
-pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/bundler-* > /dev/null
-rm -rf man
-rm -rf lib/bundler/man
+pushd ${OPENSHIFT_DATA_DIR}/.gem > /dev/null
+rm -rfv *.md
 popd > /dev/null
 
 tree ${OPENSHIFT_DATA_DIR}/.gem/gems
