@@ -117,8 +117,6 @@ fi
 
 tree ${OPENSHIFT_DATA_DIR}/.gem
 
-pushd ${OPENSHIFT_DATA_DIR}/.gem > /dev/null
-rm -rf ./*.md
-popd > /dev/null
+find ${OPENSHIFT_DATA_DIR}/.gem -name '*.md' -type f -print0 | xargs -0i -t -P 4 -n 3 rm -f {}
 
 tree ${OPENSHIFT_DATA_DIR}/.gem
