@@ -117,6 +117,11 @@ popd > /dev/null
 unset CC
 unset CXX
 
+# ドキュメント削除
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+rm -rf apache/manual
+popd > /dev/null
+
 tree ${OPENSHIFT_DATA_DIR}/apache/modules
 # mod_actions.so
 # mod_alias.so
