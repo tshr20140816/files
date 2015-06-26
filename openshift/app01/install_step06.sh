@@ -117,6 +117,66 @@ popd > /dev/null
 unset CC
 unset CXX
 
+tree ${OPENSHIFT_DATA_DIR}/apache/modules
+# mod_actions.so
+# mod_alias.so
+# mod_asis.so
+# mod_auth_basic.so
+# mod_auth_digest.so
+# mod_authn_anon.so
+# mod_authn_dbd.so
+# mod_authn_dbm.so
+# mod_authn_default.so
+# mod_authn_file.so
+# mod_authz_dbm.so
+# mod_authz_default.so
+# mod_authz_groupfile.so
+# mod_authz_host.so
+# mod_authz_owner.so
+# mod_authz_user.so
+# mod_autoindex.so
+# mod_cern_meta.so
+# mod_cgi.so
+# mod_dav_fs.so
+# mod_dav.so
+# mod_dbd.so
+# mod_deflate.so
+# mod_dir.so
+# mod_dumpio.so
+# mod_env.so
+# mod_expires.so
+# mod_ext_filter.so
+# mod_filter.so
+# mod_headers.so
+# mod_ident.so
+# mod_imagemap.so
+# mod_include.so
+# mod_info.so
+# mod_log_config.so
+# mod_log_forensic.so
+# mod_logio.so
+# mod_mime_magic.so
+# mod_mime.so
+# mod_negotiation.so
+# mod_proxy_ajp.so
+# mod_proxy_balancer.so
+# mod_proxy_connect.so
+# mod_proxy_ftp.so
+# mod_proxy_http.so
+# mod_proxy_scgi.so
+# mod_proxy.so
+# mod_reqtimeout.so
+# mod_rewrite.so
+# mod_setenvif.so
+# mod_speling.so
+# mod_status.so
+# mod_substitute.so
+# mod_unique_id.so
+# mod_userdir.so
+# mod_usertrack.so
+# mod_version.so
+# mod_vhost_alias.so
+
 # *** spdy ***
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache spdy" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
