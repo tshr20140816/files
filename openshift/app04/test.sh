@@ -12,6 +12,8 @@ set -x
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
+exit
+
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
