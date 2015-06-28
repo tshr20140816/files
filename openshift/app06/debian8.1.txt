@@ -1,0 +1,4 @@
+cl401sn
+i586
+
+apt-get remove aptitude-common
