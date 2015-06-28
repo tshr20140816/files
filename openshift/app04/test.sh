@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 1507
+# 1508
 
 export TZ=JST-9
 
