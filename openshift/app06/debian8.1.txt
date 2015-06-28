@@ -10,6 +10,8 @@ ntp : ntp1.jst.mfeed.ad.jp
 Partition Mount Option : noatime
 
 apt-get update
-apt-get install telnetd sudo
+apt-get install telnetd sudo vim
 adduser user
-apt-get remove aptitude-common
+visudo
+
+sudo update-alternatives --config editor
