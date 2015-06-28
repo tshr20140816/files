@@ -22,6 +22,10 @@ apt-get source linux
 apt-get build-dep linux
 apt-get install libncurses5-dev
 
+make menuconfig
+Pentium-III/Celeron
+
+
 gcc -march=native -E -v
 Using built-in specs.
 COLLECT_GCC=gcc
