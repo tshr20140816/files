@@ -20,7 +20,7 @@ apt-get install gcc
 apt-get install build-essential fakeroot
 apt-get source linux
 apt-get build-dep linux
-
+apt-get install libncurses5-dev
 
 gcc -march=native -E -v
 Using built-in specs.
