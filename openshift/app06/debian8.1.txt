@@ -17,6 +17,7 @@ visudo
 sudo update-alternatives --config editor
 
 apt-get install gcc
+apt-get build-dep linux
 
 gcc -march=native -E -v
 Using built-in specs.
