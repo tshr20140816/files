@@ -25,6 +25,7 @@ apt-get install libncurses5-dev
 make menuconfig
 Pentium-III/Celeron
 
+http://www.itmedia.co.jp/enterprise/articles/0708/21/news018_2.html
 
 gcc -march=native -E -v
 Using built-in specs.
