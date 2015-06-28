@@ -6,7 +6,7 @@ Language : English
 Country : Japan
 local : en_US.UTF-8
 Keyboard : Japanese
-usb-storage : unchecked
+ntp : ntp1.jst.mfeed.ad.jp
 
 apt-get update
 apt-get install telnetd
