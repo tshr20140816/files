@@ -1,4 +1,13 @@
 cl401sn
 i586
 
+Expert Install
+Language : English
+Country : Japan
+local : en_US.UTF-8
+Keyboard : Japanese
+usb-storage : unchecked
+
+apt-get update
+apt-get install telnetd
 apt-get remove aptitude-common
