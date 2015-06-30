@@ -18,7 +18,7 @@ export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
 
-tar Jcf ccache_php.tar.xz /tmp/ccache/
+tar Jcf ccache_php.tar.xz ccache
 
 ls -lang /tmp
 
