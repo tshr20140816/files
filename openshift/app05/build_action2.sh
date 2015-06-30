@@ -162,6 +162,7 @@ pushd httpd-${apache_version} > /dev/null
  --prefix=${data_dir}/apache \
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc \
+ --disable-userdir \
  --enable-mods-shared='all proxy'
 
 # 3機がけ前提 1機あたり4プロセス
