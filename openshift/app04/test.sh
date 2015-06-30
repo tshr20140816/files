@@ -16,6 +16,14 @@ cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+cd /tmp
+
+tar Jcf ccache_php.tar.xz /tmp/ccache/
+
+ls -lang /tmp
+
+exit
+
 if [ 1 -eq 0 ]; then
 cd /tmp
 wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
