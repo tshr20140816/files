@@ -68,7 +68,7 @@ export PATH="/tmp/local/bin:$PATH"
 php_version=5.6.10
 rm -rf php-${php_version}
 # rm -f php-${php_version}.tar.xz
-# wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 
 cd php-${php_version}
