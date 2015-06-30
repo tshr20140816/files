@@ -43,8 +43,6 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 export CCACHE_COMPILERCHECK=none
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-rm -rf ${CCACHE_DIR}
-mkdir ${CCACHE_DIR}
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
@@ -54,15 +52,49 @@ export CCACHE_NLEVELS=3
 ccache -s
 ccache --zero-stats
 
+wget https://files3-20150207.rhcloud.com/files/ld.gold
 export LD=ld.gold
-rm -rf /tmp/local
-mkdir -p /tmp/local/bin
+# rm -rf /tmp/local
+# mkdir -p /tmp/local/bin
 cp -f /tmp/ld.gold /tmp/local/bin/
 export PATH="/tmp/local/bin:$PATH"
 
-rm -rf httpd-2.2.29
 php_version=5.6.10
-wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+rm -f php-${php_version}.tar.xz
+# wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+tar Jxf php-${php_version}.tar.xz
 
+cd php-${php_version}
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/php \
+--mandir=${OPENSHIFT_TMP_DIR}/man \
+--docdir=${OPENSHIFT_TMP_DIR}/doc \
+--infodir=${OPENSHIFT_TMP_DIR}/info \
+--with-mysql \
+--with-pdo-mysql \
+--without-sqlite3 \
+--without-pdo-sqlite \
+--without-cdb \
+--without-pear \
+--with-curl \
+--with-libdir=lib64 \
+--with-bz2 \
+--with-iconv \
+--with-openssl \
+--with-zlib \
+--with-gd \
+--enable-exif \
+--enable-ftp \
+--enable-xml \
+--enable-mbstring \
+--enable-mbregex \
+--enable-sockets \
+--disable-ipv6 \
+--with-zend-vm=GOTO
 
+time make -j2
+
+tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
 ccache -s
+
+ls /tmp
