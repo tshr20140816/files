@@ -31,6 +31,7 @@ function010() {
             export CCACHE_LOGFILE=/dev/null
             export CCACHE_NLEVELS=3
             export CCACHE_MAXSIZE=300M
+            export CCACHE_READONLY=true
         fi
     fi
 
