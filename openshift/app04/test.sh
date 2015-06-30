@@ -60,4 +60,9 @@ mkdir -p /tmp/local/bin
 cp -f /tmp/ld.gold /tmp/local/bin/
 export PATH="/tmp/local/bin:$PATH"
 
+rm -rf httpd-2.2.29
+php_version=5.6.10
+wget http://jp1.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+
+
 ccache -s
