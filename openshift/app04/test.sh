@@ -18,6 +18,10 @@ export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
 
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+ccache --zero-stats
+rm -f ccache_php.tar.xz
 tar Jcf ccache_php.tar.xz ccache
 
 ls -lang /tmp
