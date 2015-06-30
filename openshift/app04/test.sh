@@ -52,8 +52,8 @@ mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
-# export CCACHE_SLOPPINESS=time_macros,include_file_mtime
-export CCACHE_SLOPPINESS=include_file_mtime
+# export CCACHE_SLOPPINESS=time_macros,include_file_mtime,file_macro
+export CCACHE_SLOPPINESS=file_macro
 export CCACHE_READONLY=true
 ccache -s
 ccache --zero-stats
