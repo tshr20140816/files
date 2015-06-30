@@ -52,7 +52,7 @@ export CCACHE_NLEVELS=3
 ccache -s
 ccache --zero-stats
 
-wget https://files3-20150207.rhcloud.com/files/ld.gold
+# wget https://files3-20150207.rhcloud.com/files/ld.gold
 export LD=ld.gold
 # rm -rf /tmp/local
 # mkdir -p /tmp/local/bin
@@ -60,8 +60,9 @@ cp -f /tmp/ld.gold /tmp/local/bin/
 export PATH="/tmp/local/bin:$PATH"
 
 php_version=5.6.10
-rm -f php-${php_version}.tar.xz
-wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+rm -rf php-${php_version}
+# rm -f php-${php_version}.tar.xz
+# wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 
 cd php-${php_version}
