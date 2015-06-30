@@ -224,6 +224,8 @@ if [ "${mirror_server}" != "none" ]; then
 
     # ccache passenger-install-apache2-module
     wget -t1 ${mirror_server}/ccache_passenger-install-apache2-module.tar.xz &
+    # ccache php
+    wget -t1 ${mirror_server}/ccache_php.tar.xz &
     # ipa font
     wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip &
     # webalizer
