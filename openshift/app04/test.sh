@@ -43,8 +43,8 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 export CCACHE_COMPILERCHECK=none
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-rm -rf ${CCACHE_DIR}
-mkdir ${CCACHE_DIR}
+# rm -rf ${CCACHE_DIR}
+# mkdir ${CCACHE_DIR}
 # tar Jxf ccache_php.tar.xz
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
