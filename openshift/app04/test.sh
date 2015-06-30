@@ -53,7 +53,7 @@ export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
 # export CCACHE_SLOPPINESS=time_macros,include_file_mtime
-export CCACHE_SLOPPINESS=time_macros
+export CCACHE_SLOPPINESS=include_file_mtime
 export CCACHE_READONLY=true
 ccache -s
 ccache --zero-stats
