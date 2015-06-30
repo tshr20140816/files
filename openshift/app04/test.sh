@@ -101,7 +101,7 @@ cd php-${php_version}
 
 time make -j4
 
-tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
+# tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
 ccache -s
 
 ls /tmp
