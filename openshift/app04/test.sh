@@ -16,18 +16,6 @@ cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-cd /tmp
-
-export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-ccache --zero-stats
-rm -f ccache_php.tar.xz
-tar Jcf ccache_php.tar.xz ccache
-
-ls -lang /tmp
-
-exit
-
 if [ 1 -eq 0 ]; then
 cd /tmp
 wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
@@ -83,6 +71,7 @@ cd php-${php_version}
 --mandir=${OPENSHIFT_TMP_DIR}/man \
 --docdir=${OPENSHIFT_TMP_DIR}/doc \
 --infodir=${OPENSHIFT_TMP_DIR}/info \
+--with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
 --without-sqlite3 \
@@ -103,9 +92,10 @@ cd php-${php_version}
 --enable-mbregex \
 --enable-sockets \
 --disable-ipv6 \
+--with-gettext=${OPENSHIFT_DATA_DIR}/php \
 --with-zend-vm=GOTO
 
-time make -j2
+time make -j4
 
 tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
 ccache -s
