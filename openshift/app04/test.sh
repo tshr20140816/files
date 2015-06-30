@@ -43,12 +43,16 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 export CCACHE_COMPILERCHECK=none
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+rm -rf ${CCACHE_DIR}
+tar Jxf ccache_php.tar.xz
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
+export CCACHE_SLOPPINESS=time_macros
+export CCACHE_READONLY=true
 ccache -s
 ccache --zero-stats
 
