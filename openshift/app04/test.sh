@@ -53,8 +53,8 @@ export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
 # export CCACHE_SLOPPINESS=time_macros,include_file_mtime,file_macro
-export CCACHE_SLOPPINESS=pch_defines,time_macros
-export CCACHE_READONLY=true
+# export CCACHE_SLOPPINESS=pch_defines,time_macros
+# export CCACHE_READONLY=true
 ccache -s
 ccache --zero-stats
 
@@ -74,6 +74,9 @@ tar Jxf php-${php_version}.tar.xz
 cd php-${php_version}
 if [ 1 -eq 1 ]; then
 ./configure \
+--build=x86_64-unknown-linux-gnu \
+--host=x86_64-unknown-linux-gnu \
+--target=x86_64-unknown-linux-gnu \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
 --docdir=${OPENSHIFT_TMP_DIR}/doc \
@@ -125,7 +128,7 @@ else
 --with-gettext=${OPENSHIFT_DATA_DIR}/php \
 --with-zend-vm=GOTO
 fi
-time make -j8 > /dev/null
+time make -j2 > /dev/null
 
 # tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
 ccache -s
