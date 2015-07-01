@@ -73,6 +73,7 @@ tar Jxf php-${php_version}.tar.xz
 
 cd php-${php_version}
 if [ 1 -eq 1 ]; then
+# --prefix=`pwd`
 ./configure \
 --build=x86_64-unknown-linux-gnu \
 --host=x86_64-unknown-linux-gnu \
