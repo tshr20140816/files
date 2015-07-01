@@ -9,6 +9,7 @@ echo ${OPENSHIFT_PHP_IP}
 
 set -x
 
+mv ccache_php.tar.xz ccache_php.tar.xz.20150701
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
@@ -44,8 +45,8 @@ export CXX="ccache g++"
 export CCACHE_COMPILERCHECK=none
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 rm -rf ${CCACHE_DIR}
-# mkdir ${CCACHE_DIR}
-tar Jxf ccache_php.tar.xz
+mkdir ${CCACHE_DIR}
+# tar Jxf ccache_php.tar.xz
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
@@ -54,7 +55,7 @@ export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
 # export CCACHE_SLOPPINESS=time_macros,include_file_mtime,file_macro
 export CCACHE_SLOPPINESS=pch_defines,time_macros
-export CCACHE_READONLY=true
+# export CCACHE_READONLY=true
 ccache -s
 ccache --zero-stats
 
@@ -71,13 +72,14 @@ rm -rf php-${php_version}
 wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 
+# --with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+# --with-gettext=${OPENSHIFT_DATA_DIR}/php \
 cd php-${php_version}
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
 --docdir=${OPENSHIFT_TMP_DIR}/doc \
 --infodir=${OPENSHIFT_TMP_DIR}/info \
---with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
 --without-sqlite3 \
@@ -98,7 +100,6 @@ cd php-${php_version}
 --enable-mbregex \
 --enable-sockets \
 --disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php \
 --with-zend-vm=GOTO
 
 time make -j4
