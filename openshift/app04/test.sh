@@ -72,7 +72,7 @@ wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${
 tar Jxf php-${php_version}.tar.xz
 
 cd php-${php_version}
-if [ 1 -eq 0 ]; then
+if [ 1 -eq 1 ]; then
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
