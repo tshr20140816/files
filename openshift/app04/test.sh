@@ -102,7 +102,7 @@ cd php-${php_version}
 --disable-ipv6 \
 --with-zend-vm=GOTO
 
-time make -j4
+time make -j2
 
 # tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
 ccache -s
