@@ -32,6 +32,7 @@ function010() {
             export CCACHE_NLEVELS=3
             export CCACHE_MAXSIZE=300M
             export CCACHE_READONLY=true
+            export CCACHE_COMPILERCHECK=none
         fi
     fi
 
