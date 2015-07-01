@@ -125,7 +125,7 @@ else
 --with-gettext=${OPENSHIFT_DATA_DIR}/php \
 --with-zend-vm=GOTO
 fi
-time make -j2
+time make -j2 > /dev/null
 
 # tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
 ccache -s
