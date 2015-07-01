@@ -252,43 +252,56 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby"
 rm -rf ${OPENSHIFT_DATA_DIR}.gem
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm -f rbenv-installer
-wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
-bash rbenv-installer
-rm rbenv-installer
-popd > /dev/null
+if [ -f ${OPENSHIFT_DATA_DIR}/files/maked_ruby_${ruby_version}_rbenv.tar.xz ]; then
+    pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+    cp -f ./files/maked_ruby_${ruby_version}_rbenv.tar.xz ./
+    tar Jxf maked_ruby_${ruby_version}_rbenv.tar.xz
+    rm -f maked_ruby_${ruby_version}_rbenv.tar.xz
+    popd > /dev/null
+else
+    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+    rm -f rbenv-installer
+    wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
+    bash rbenv-installer
+    rm rbenv-installer
+    popd > /dev/null
 
-export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-eval "$(rbenv init -)"
+    export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+    eval "$(rbenv init -)"
 
-# https://github.com/sstephenson/ruby-build#special-environment-variables
-export RUBY_CFLAGS="${CFLAGS}"
-export CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc --infodir=${OPENSHIFT_TMP_DIR}/info"
-# 3機がけ前提 1機あたり4プロセス
-# export MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)"
-export MAKE_OPTS="-j 12"
-time rbenv install -v ${ruby_version}
-unset RUBY_CFLAGS
-unset CONFIGURE_OPTS
-unset MAKE_OPTS
+    # https://github.com/sstephenson/ruby-build#special-environment-variables
+    export RUBY_CFLAGS="${CFLAGS}"
+    export CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/man --docdir=${OPENSHIFT_TMP_DIR}/doc --infodir=${OPENSHIFT_TMP_DIR}/info"
+    # 3機がけ前提 1機あたり4プロセス
+    # export MAKE_OPTS="-j $(grep -c -e processor /proc/cpuinfo)"
+    export MAKE_OPTS="-j 12"
+    time rbenv install -v ${ruby_version}
+    unset RUBY_CFLAGS
+    unset CONFIGURE_OPTS
+    unset MAKE_OPTS
 
-pushd ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/x86_64-linux/ > /dev/null
-time find ./ \
- -name "*.so" -type f -print0 \
- | xargs -0i file {} \
- | grep -e "not stripped" \
- | awk -F':' '{printf $1"\n"}' \
- | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 30 strip --strip-all
-popd > /dev/null
+    pushd ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/x86_64-linux/ > /dev/null
+    time find ./ \
+     -name "*.so" -type f -print0 \
+     | xargs -0i file {} \
+     | grep -e "not stripped" \
+     | awk -F':' '{printf $1"\n"}' \
+     | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+    wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+    time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 30 strip --strip-all
+    rm -f ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+    popd > /dev/null
 
-ccache --show-stats
+    ccache --show-stats
+
+    pushd ${OPENSHIFT_DATA_DIR}
+    time tar Jcf maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
+    mv maked_ruby_${ruby_version}_rbenv.tar.xz ./files/
+    popd > /dev/null
+fi
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./.rbenv/ -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
-rm -f ${OPENSHIFT_TMP_DIR}/strip_starget.txt
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 # time tar cf - ./.rbenv \
