@@ -9,7 +9,6 @@ echo ${OPENSHIFT_PHP_IP}
 
 set -x
 
-mv ccache_php.tar.xz ccache_php.tar.xz.20150701
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
@@ -44,8 +43,8 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 export CCACHE_COMPILERCHECK=none
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-rm -rf ${CCACHE_DIR}
-mkdir ${CCACHE_DIR}
+# rm -rf ${CCACHE_DIR}
+# mkdir ${CCACHE_DIR}
 # tar Jxf ccache_php.tar.xz
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
 rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
@@ -104,7 +103,7 @@ cd php-${php_version}
 
 time make -j2
 
-# tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
+tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
 ccache -s
 
 ls /tmp
