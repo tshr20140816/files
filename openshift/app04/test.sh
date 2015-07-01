@@ -72,6 +72,7 @@ wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${
 tar Jxf php-${php_version}.tar.xz
 
 cd php-${php_version}
+if [ 1 -eq 0 ]; then
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
@@ -100,7 +101,30 @@ cd php-${php_version}
 --disable-ipv6 \
 --with-gettext=${OPENSHIFT_DATA_DIR}/php \
 --with-zend-vm=GOTO
-
+else
+./configure \
+--prefix=${OPENSHIFT_DATA_DIR}/php \
+--mandir=${OPENSHIFT_TMP_DIR}/man \
+--docdir=${OPENSHIFT_TMP_DIR}/doc \
+--infodir=${OPENSHIFT_TMP_DIR}/info \
+--with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+--with-mysql \
+--with-pdo-mysql \
+--without-sqlite3 \
+--without-pdo-sqlite \
+--without-cdb \
+--without-pear \
+--with-libdir=lib64 \
+--with-iconv \
+--with-zlib \
+--with-gd \
+--enable-xml \
+--enable-mbstring \
+--enable-mbregex \
+--disable-ipv6 \
+--with-gettext=${OPENSHIFT_DATA_DIR}/php \
+--with-zend-vm=GOTO
+fi
 time make -j2
 
 # tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
