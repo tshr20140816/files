@@ -130,6 +130,8 @@ else
 fi
 time make -j2 > /dev/null
 
+grep -r ${OPENSHIFT_APP_UUID} ./
+
 # tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
 ccache -s
 
