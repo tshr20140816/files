@@ -38,6 +38,28 @@ popd > /dev/null
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+# ***** apache *****
+
+apache_version=2.2.29
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://ftp.riken.jp/net/apache//httpd/httpd-${apache_version}.tar.bz2
+tar jxf httpd-${apache_version}.tar.bz2
+pushd ${OPENSHIFT_TMP_DIR}/httpd-${apache_version} > /dev/null
+./configure  --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --disable-imagemap \
+ --disable-status \
+ --disable-userdir \
+ --enable-mods-shared='all proxy'
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
+rm -rf httpd-${apache_version}
+rm -f httpd-${apache_version}.tar.bz2
+popd > /dev/null
+
 # ***** distcc *****
 
 distcc_version=3.1
@@ -45,7 +67,6 @@ distcc_version=3.1
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
 tar jxf distcc-${distcc_version}.tar.bz2
-popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
@@ -54,8 +75,9 @@ pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
-rm -rf ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
+rm -rf distcc-${distcc_version}
 rm -f distcc-${distcc_version}.tar.bz2
+popd > /dev/null
 
 mkdir ${OPENSHIFT_DATA_DIR}.distcc
 
