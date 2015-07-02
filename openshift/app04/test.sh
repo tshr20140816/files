@@ -29,6 +29,8 @@ export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
 
+ccache -s
+
 cd /tmp
 rm -f libmemcached-${libmemcached_version}.tar.gz
 rm -rf libmemcached-${libmemcached_version}
