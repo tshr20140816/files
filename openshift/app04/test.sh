@@ -36,7 +36,7 @@ cd $OPENSHIFT_DATA_DIR
 rm -rf apache/manual
 fi
 
-cd ${OPENSHIFT_DATA_DIR}
+cd /tmp
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
@@ -68,8 +68,10 @@ cp -f /tmp/ld.gold /tmp/local/bin/
 export PATH="/tmp/local/bin:$PATH"
 
 php_version=5.6.10
+rm -f ${OPENSHIFT_DATA_DIR}/php-${php_version}.tar.xz
+rm -rf ${OPENSHIFT_DATA_DIR}/php-${php_version}
 rm -rf php-${php_version}
-# rm -f php-${php_version}.tar.xz
+rm -f php-${php_version}.tar.xz
 wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
 
@@ -79,11 +81,11 @@ if [ 1 -eq 1 ]; then
 --build=x86_64-unknown-linux-gnu \
 --host=x86_64-unknown-linux-gnu \
 --target=x86_64-unknown-linux-gnu \
---prefix=../php \
+--prefix=/var/lib/openshift/abc123456789abc123456789/app-root/data/php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
 --docdir=${OPENSHIFT_TMP_DIR}/doc \
 --infodir=${OPENSHIFT_TMP_DIR}/info \
---with-apxs2=../apache/bin/apxs \
+--with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
 --without-sqlite3 \
@@ -104,7 +106,7 @@ if [ 1 -eq 1 ]; then
 --enable-mbregex \
 --enable-sockets \
 --disable-ipv6 \
---with-gettext=../php \
+--with-gettext=/var/lib/openshift/abc123456789abc123456789/app-root/data/php \
 --with-zend-vm=GOTO
 else
 ./configure \
