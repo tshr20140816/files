@@ -272,9 +272,9 @@ else
     pushd php-${php_version} > /dev/null
     ./configure \
      --prefix=${data_dir}/php \
-     --mandir=${data_dir}/man \
-     --docdir=${data_dir}/doc \
-     --infodir=${data_dir}/info \
+     --mandir=${tmp_dir}/man \
+     --docdir=${tmp_dir}/doc \
+     --infodir=${tmp_dir}/info \
      --with-apxs2=${OPENSHIFT_TMP_DIR}/apache/bin/apxs \
      --with-mysql \
      --with-pdo-mysql \
