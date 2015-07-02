@@ -19,8 +19,6 @@ export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
-rm -rf httpd-2.2.29
-rm -f httpd-2.2.29.tar.bz2
 rm -f libmemcached-${libmemcached_version}.tar.gz
 rm -rf libmemcached-${libmemcached_version}
 libmemcached_version=1.0.18
@@ -34,7 +32,7 @@ cd libmemcached-${libmemcached_version}
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --disable-sasl \
- --enable-jobserver=4 > /dev/null
+ --enable-jobserver=3 > /dev/null
 
 time make
 
