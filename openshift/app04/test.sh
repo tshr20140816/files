@@ -23,8 +23,8 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 export CCACHE_COMPILERCHECK=none
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-rm -rf ${CCACHE_DIR}
-mkdir ${CCACHE_DIR}
+# rm -rf ${CCACHE_DIR}
+# mkdir ${CCACHE_DIR}
 export CCACHE_LOGFILE=/dev/null
 export CCACHE_MAXSIZE=300M
 export CCACHE_NLEVELS=3
