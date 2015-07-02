@@ -172,29 +172,23 @@ pushd httpd-${apache_version} > /dev/null
 time make -j12
 popd > /dev/null
 
-# # *** strip ***
-# 
-# find ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}/ -name "*o" -type f -print0 \
-#  | xargs -0i file {} \
-#  | grep -e "not stripped" \
-#  | grep -v -e "delegated" \
-#  | awk -F':' '{printf $1"\n"}' \
-#  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-# wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-# cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-# for file_name in $(cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt)
-# do
-#     (strip --strip-all ${file_name}; file ${file_name}) &
-# done
-# wait
-# # cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -P3 -0i strip --strip-all {}
+# *** strip ***
+
+find ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}/ -name "*o" -type f -print0 \
+ | xargs -0i file {} \
+ | grep -e "not stripped" \
+ | grep -v -e "delegated" \
+ | awk -F':' '{printf $1"\n"}' \
+ | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
 
 ccache --show-stats
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
+# xz としたいが圧縮に時間が掛かってボトルネックとなるので bz2 とする
 time tar jcf ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 httpd-${apache_version}
 mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 ${OPENSHIFT_DATA_DIR}/files/
-# time tar Jcf ${app_uuid}_maked_httpd-${apache_version}.tar.xz httpd-${apache_version}
-# mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf httpd-${apache_version}
 rm -f httpd-${apache_version}.tar.bz2
 popd > /dev/null
