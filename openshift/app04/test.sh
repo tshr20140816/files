@@ -9,6 +9,8 @@ echo ${OPENSHIFT_PHP_IP}
 
 set -x
 
+find / -name apxs -print 2>/dev/null
+
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
