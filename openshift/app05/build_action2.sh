@@ -25,6 +25,8 @@ do
     fi
 done
 
+quota -s > ${OPENSHIFT_LOG_DIR}/quota.txt
+
 touch ${OPENSHIFT_TMP_DIR}/build_now
 
 lsof -i
