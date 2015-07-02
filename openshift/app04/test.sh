@@ -18,35 +18,31 @@ cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-export CC="ccache gcc"
-export CXX="ccache g++"
-export CCACHE_COMPILERCHECK=none
-export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-# rm -rf ${CCACHE_DIR}
-# mkdir ${CCACHE_DIR}
-export CCACHE_LOGFILE=/dev/null
-export CCACHE_MAXSIZE=300M
-export CCACHE_NLEVELS=3
-
-ccache -s
-
 cd /tmp
 rm -f libmemcached-${libmemcached_version}.tar.gz
 rm -rf libmemcached-${libmemcached_version}
-libmemcached_version=1.0.18
-wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
+openssh_version=6.6p1
 
-tar zxf libmemcached-${libmemcached_version}.tar.gz
-cd libmemcached-${libmemcached_version}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
+wget http://downloads.sourceforge.net/project/hpnssh/HPN-SSH%2014.5%206.6p1/openssh-6.6p1-hpnssh14v5.diff.gz
+tar zxf openssh-${openssh_version}.tar.gz
+gzip -d openssh-6.6p1-hpnssh14v5.diff.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
+patch -p1 < ../openssh-6.6p1-hpnssh14v5.diff
 ./configure --help
 ./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/libmemcached \
+ --prefix=${OPENSHIFT_DATA_DIR}/openssh \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --disable-sasl \
- --enable-jobserver=3 > /dev/null
+ --disable-etc-default-login \
+ --disable-utmp \
+ --disable-utmpx \
+ --disable-wtmp \
+ --disable-wtmpx \
+ --with-lastlog=${OPENSHIFT_LOG_DIR}/ssh_lastlog.log
+time make -j$(grep -c -e processor /proc/cpuinfo)
 
-time make > /dev/null
-
-grep -r ${OPENSHIFT_APP_UUID} ./
+popd > /dev/null
