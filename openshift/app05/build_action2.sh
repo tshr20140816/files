@@ -221,6 +221,8 @@ pushd libmemcached-${libmemcached_version} > /dev/null
  --prefix=${data_dir}/libmemcached \
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc \
+ --infodir=${tmp_dir}/info \
+ --disable-dependency-tracking \
  --disable-sasl \
  --enable-jobserver=12
 
