@@ -29,7 +29,8 @@ popd > /dev/null
 
 # distcc_version 3.1
 # ccache_version 3.2.2
-# openssh_version 6.8p1 → 6.3p1
+# openssh_version 6.8p1 → 6.3p1 → 6.4p1
+#  http://togakushi.bitbucket.org/build/html/OpenSSH_AdventCalendar2014/17.html
 # tcl_version 8.6.3
 # expect_version 5.45
 # xz_version 5.2.1
@@ -81,7 +82,8 @@ rm -f ccache-${ccache_version}.tar.xz
 # ***** openssh *****
 
 # openssh_version=6.8p1
-openssh_version=6.3p1
+# openssh_version=6.3p1
+openssh_version=6.4p1
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}.tar.gz
@@ -91,8 +93,8 @@ tar zxf openssh-${openssh_version}.tar.gz
 gzip -d openssh-6.3p1-hpnssh14v2.diff.gz
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
-patch < ../openssh-6.3p1-hpnssh14v2.diff
-# ./configure --help
+patch -p1 < ../openssh-6.3p1-hpnssh14v2.diff
+./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/openssh \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
@@ -115,7 +117,7 @@ cat << __HEREDOC__ > config
 Host *
   IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
   StrictHostKeyChecking no
-#  BatchMode yes
+  BatchMode yes
   UserKnownHostsFile /dev/null
   LogLevel QUIET
 #  LogLevel DEBUG3
