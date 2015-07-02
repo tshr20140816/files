@@ -303,6 +303,7 @@ else
 
     rm -f php-${php_version}.tar.xz
     popd > /dev/null
+    popd > /dev/null
 fi
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
@@ -314,6 +315,7 @@ rm -rf php-${php_version}
 popd > /dev/null
 
 unlink apache
+popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
