@@ -18,8 +18,9 @@ cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-if [ 1 -eq 0 ]; then
 cd /tmp
+rm -rf httpd-2.2.29
+rm -f httpd-2.2.29.tar.bz2
 wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
 
 tar jxf httpd-2.2.29.tar.bz2
@@ -31,113 +32,5 @@ cd httpd-2.2.29
  --enable-mods-shared='all proxy'
 
 time make -j4
-make install
-cd $OPENSHIFT_DATA_DIR
-rm -rf apache/manual
-fi
-
-cd /tmp
-
-export HOME=${OPENSHIFT_DATA_DIR}
-
-export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
-export CC="ccache gcc"
-export CXX="ccache g++"
-export CCACHE_COMPILERCHECK=none
-export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-rm -rf ${CCACHE_DIR}
-# mkdir ${CCACHE_DIR}
-tar Jxf ccache_php.tar.xz
-export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
-rm -rf ${OPENSHIFT_TMP_DIR}/tmp_ccache
-mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
-export CCACHE_LOGFILE=/dev/null
-export CCACHE_MAXSIZE=300M
-export CCACHE_NLEVELS=3
-# export CCACHE_SLOPPINESS=time_macros,include_file_mtime,file_macro
-# export CCACHE_SLOPPINESS=pch_defines,time_macros
-# export CCACHE_READONLY=true
-ccache -s
-ccache --zero-stats
-
-# wget https://files3-20150207.rhcloud.com/files/ld.gold
-export LD=ld.gold
-# rm -rf /tmp/local
-# mkdir -p /tmp/local/bin
-cp -f /tmp/ld.gold /tmp/local/bin/
-export PATH="/tmp/local/bin:$PATH"
-
-php_version=5.6.10
-rm -rf php-${php_version}
-rm -f php-${php_version}.tar.xz
-wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
-tar Jxf php-${php_version}.tar.xz
-
-unlink apache
-ln -s ${OPENSHIFT_DATA_DIR}/apache/ apache
-
-cd php-${php_version}
-if [ 1 -eq 1 ]; then
-./configure \
---build=x86_64-unknown-linux-gnu \
---host=x86_64-unknown-linux-gnu \
---target=x86_64-unknown-linux-gnu \
---prefix=/var/lib/openshift/abc123456789abc123456789/app-root/data/php \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---docdir=${OPENSHIFT_TMP_DIR}/doc \
---infodir=${OPENSHIFT_TMP_DIR}/info \
---with-apxs2=${OPENSHIFT_TMP_DIR}/apache/bin/apxs \
---with-mysql \
---with-pdo-mysql \
---without-sqlite3 \
---without-pdo-sqlite \
---without-cdb \
---without-pear \
---with-curl \
---with-libdir=lib64 \
---with-bz2 \
---with-iconv \
---with-openssl \
---with-zlib \
---with-gd \
---enable-exif \
---enable-ftp \
---enable-xml \
---enable-mbstring \
---enable-mbregex \
---enable-sockets \
---disable-ipv6 \
---with-gettext=/var/lib/openshift/abc123456789abc123456789/app-root/data/php \
---with-zend-vm=GOTO
-else
-./configure \
---prefix=${OPENSHIFT_DATA_DIR}/php \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---docdir=${OPENSHIFT_TMP_DIR}/doc \
---infodir=${OPENSHIFT_TMP_DIR}/info \
---with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
---with-mysql \
---with-pdo-mysql \
---without-sqlite3 \
---without-pdo-sqlite \
---without-cdb \
---without-pear \
---with-libdir=lib64 \
---with-iconv \
---with-zlib \
---with-gd \
---enable-xml \
---enable-mbstring \
---enable-mbregex \
---disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php \
---with-zend-vm=GOTO
-fi
-time make -j2 > /dev/null
 
 grep -r ${OPENSHIFT_APP_UUID} ./
-
-# tar Jcf ccache_php.tar.xz ${CCACHE_DIR}
-ccache -s
-
-ls /tmp
