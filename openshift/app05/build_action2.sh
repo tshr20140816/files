@@ -90,7 +90,7 @@ export CXXFLAGS="${CFLAGS}"
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
-ccache -s
+ccache --show-stats
 ccache --zero-stats
 ccache --print-config
 
@@ -296,7 +296,7 @@ else
     time make -j12
     ccache --show-stats
     popd > /dev/null
-    tar Jxf maked_php_${php_version}.tar.xz ./php_${php_version}
+    tar Jcf maked_php_${php_version}.tar.xz ./php_${php_version}
     mv maked_php_${php_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 
     rm -f php-${php_version}.tar.xz
@@ -490,5 +490,7 @@ do
 done
 
 rm -f ${OPENSHIFT_TMP_DIR}/build_now
+
+quota -s > ${OPENSHIFT_LOG_DIR}/quota.txt
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) finish"
