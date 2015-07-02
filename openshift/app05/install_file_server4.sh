@@ -121,6 +121,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 # patch -p1 < ../openssh-6.3p1-hpnssh14v2.diff
 patch -p1 < ../openssh-6.6p1-hpnssh14v5.diff
+rm ../openssh-6.6p1-hpnssh14v5.diff
 ./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/openssh \
