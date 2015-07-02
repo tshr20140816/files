@@ -104,6 +104,7 @@ patch -p1 < ../openssh-6.6p1-hpnssh14v5.diff
  --infodir=${OPENSHIFT_TMP_DIR}/info \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --disable-largefile \
  --disable-etc-default-login \
  --disable-utmp \
  --disable-utmpx \
