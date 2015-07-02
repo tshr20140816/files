@@ -21,16 +21,21 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 rm -rf httpd-2.2.29
 rm -f httpd-2.2.29.tar.bz2
-wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
+rm -f libmemcached-${libmemcached_version}.tar.gz
+rm -rf libmemcached-${libmemcached_version}
+libmemcached_version=1.0.18
+wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
 
-tar jxf httpd-2.2.29.tar.bz2
-cd httpd-2.2.29
+tar zxf libmemcached-${libmemcached_version}.tar.gz
+cd libmemcached-${libmemcached_version}
+./configure --help
 ./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --prefix=${OPENSHIFT_DATA_DIR}/libmemcached \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --enable-mods-shared='all proxy'
+ --disable-sasl \
+ --enable-jobserver=4 > /dev/null
 
-time make -j4
+time make
 
 grep -r ${OPENSHIFT_APP_UUID} ./
