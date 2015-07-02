@@ -26,7 +26,7 @@ wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
 tar jxf httpd-2.2.29.tar.bz2
 cd httpd-2.2.29
 ./configure \
- --prefix=/var/lib/openshift/abc123456789abc123456789/app-root/data/apache \
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --enable-mods-shared='all proxy'
