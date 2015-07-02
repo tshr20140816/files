@@ -34,7 +34,7 @@ cd $OPENSHIFT_DATA_DIR
 rm -rf apache/manual
 fi
 
-cd /tmp
+cd ${OPENSHIFT_DATA_DIR}
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
@@ -73,16 +73,15 @@ tar Jxf php-${php_version}.tar.xz
 
 cd php-${php_version}
 if [ 1 -eq 1 ]; then
-# --prefix=`pwd`
 ./configure \
 --build=x86_64-unknown-linux-gnu \
 --host=x86_64-unknown-linux-gnu \
 --target=x86_64-unknown-linux-gnu \
---prefix=${OPENSHIFT_DATA_DIR}/php \
+--prefix=../php \
 --mandir=${OPENSHIFT_TMP_DIR}/man \
 --docdir=${OPENSHIFT_TMP_DIR}/doc \
 --infodir=${OPENSHIFT_TMP_DIR}/info \
---with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+--with-apxs2=../apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
 --without-sqlite3 \
@@ -103,7 +102,7 @@ if [ 1 -eq 1 ]; then
 --enable-mbregex \
 --enable-sockets \
 --disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php \
+--with-gettext=../php \
 --with-zend-vm=GOTO
 else
 ./configure \
