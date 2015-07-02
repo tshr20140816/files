@@ -47,6 +47,6 @@ cd libmemcached-${libmemcached_version}
  --disable-sasl \
  --enable-jobserver=3 > /dev/null
 
-time make
+time make -j2 > /dev/null
 
 grep -r ${OPENSHIFT_APP_UUID} ./
