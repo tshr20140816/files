@@ -18,6 +18,17 @@ cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
 export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+export CC="ccache gcc"
+export CXX="ccache g++"
+export CCACHE_COMPILERCHECK=none
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+rm -rf ${CCACHE_DIR}
+mkdir ${CCACHE_DIR}
+export CCACHE_LOGFILE=/dev/null
+export CCACHE_MAXSIZE=300M
+export CCACHE_NLEVELS=3
+
 cd /tmp
 rm -f libmemcached-${libmemcached_version}.tar.gz
 rm -rf libmemcached-${libmemcached_version}
