@@ -68,12 +68,13 @@ cp -f /tmp/ld.gold /tmp/local/bin/
 export PATH="/tmp/local/bin:$PATH"
 
 php_version=5.6.10
-rm -f ${OPENSHIFT_DATA_DIR}/php-${php_version}.tar.xz
-rm -rf ${OPENSHIFT_DATA_DIR}/php-${php_version}
 rm -rf php-${php_version}
 rm -f php-${php_version}.tar.xz
 wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar Jxf php-${php_version}.tar.xz
+
+unlink apache
+ln -s ${OPENSHIFT_DATA_DIR}/apache/ apache
 
 cd php-${php_version}
 if [ 1 -eq 1 ]; then
@@ -85,7 +86,7 @@ if [ 1 -eq 1 ]; then
 --mandir=${OPENSHIFT_TMP_DIR}/man \
 --docdir=${OPENSHIFT_TMP_DIR}/doc \
 --infodir=${OPENSHIFT_TMP_DIR}/info \
---with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
+--with-apxs2=${OPENSHIFT_TMP_DIR}/apache/bin/apxs \
 --with-mysql \
 --with-pdo-mysql \
 --without-sqlite3 \
