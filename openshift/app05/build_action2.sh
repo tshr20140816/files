@@ -247,6 +247,80 @@ popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
+# ***** php *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) php"
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+unlink apache 2>/dev/null
+ln -s ${OPENSHIFT_DATA_DIR}/apache/ apache
+
+rm -rf php-${php_version}
+
+if [ -f ${OPENSHIFT_DATA_DIR}/files/maked_php_${php_version}.tar.xz ]; then
+    tar Jxf maked_php_${php_version}.tar.xz
+    rm maked_php_${php_version}.tar.xz
+else
+    rm -f php-${php_version}.tar.xz
+
+    cp ${OPENSHIFT_DATA_DIR}/files/php-${php_version}.tar.xz ./
+    if [ ! -f php-${php_version}.tar.xz ]; then
+        wget http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+    fi
+    tar Jxf php-${php_version}.tar.xz
+    pushd php-${php_version} > /dev/null
+    ./configure \
+     --prefix=${data_dir}/php \
+     --mandir=${data_dir}/man \
+     --docdir=${data_dir}/doc \
+     --infodir=${data_dir}/info \
+     --with-apxs2=${OPENSHIFT_TMP_DIR}/apache/bin/apxs \
+     --with-mysql \
+     --with-pdo-mysql \
+     --without-sqlite3 \
+     --without-pdo-sqlite \
+     --without-cdb \
+     --without-pear \
+     --with-curl \
+     --with-libdir=lib64 \
+     --with-bz2 \
+     --with-iconv \
+     --with-openssl \
+     --with-zlib \
+     --with-gd \
+     --enable-exif \
+     --enable-ftp \
+     --enable-xml \
+     --enable-mbstring \
+     --enable-mbregex \
+     --enable-sockets \
+     --disable-ipv6 \
+     --with-gettext=${data_dir}/php \
+     --with-zend-vm=GOTO
+
+    time make -j12
+    ccache --show-stats
+    popd > /dev/null
+    tar Jxf maked_php_${php_version}.tar.xz ./php_${php_version}
+    mv maked_php_${php_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+
+    rm -f php-${php_version}.tar.xz
+    popd > /dev/null
+fi
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+find ./php-${php_version} -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
+rm -f ${app_uuid}_maked_php_${php_version}.tar.xz
+time tar Jcf ${app_uuid}_maked_php_${php_version}.tar.xz ./php-${php_version}
+mv -f ${app_uuid}_maked_php_${php_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf php-${php_version}
+popd > /dev/null
+
+unlink apache
+
+ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
+
 # ***** ruby (rbenv) *****
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ruby"
