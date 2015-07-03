@@ -10,18 +10,12 @@ echo ${OPENSHIFT_PHP_IP}
 set -x
 
 cd /tmp
-rm -f httpd-2.2.29.tar.bz2
 
-ls -lang /tmp
-ls -lang ${OPENSHIFT_DATA_DIR}
-
-cd ${OPENSHIFT_DATA_DIR}/apache2/bin
-cp httpd httpd.org
-./httpd -v
-file httpd
-strip --strip-all httpd
-file httpd
-./httpd -v
+if [ -d apache ]; then
+    echo "TRUE"
+else
+    echo "FALSE"
+fi
 
 exit
 
