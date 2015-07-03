@@ -174,18 +174,6 @@ pushd httpd-${apache_version} > /dev/null
 time make -j12
 popd > /dev/null
 
-# *** strip ***
-
-find ${OPENSHIFT_TMP_DIR}/httpd-${apache_version}/ -name "*o" -type f -print0 \
- | xargs -0i file {} \
- | grep -e "not stripped" \
- | grep -v -e "delegated" \
- | awk -F':' '{printf $1"\n"}' \
- | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
-
 ccache --show-stats
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
 # xz としたいが圧縮に時間が掛かってボトルネックとなるので bz2 とする
@@ -193,52 +181,6 @@ time tar jcf ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 httpd-${apache_ve
 mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 ${OPENSHIFT_DATA_DIR}/files/
 rm -rf httpd-${apache_version}
 rm -f httpd-${apache_version}.tar.bz2
-popd > /dev/null
-
-ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
-
-# ***** libmemcached *****
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached"
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-
-rm -rf libmemcached-${libmemcached_version}
-rm -f libmemcached-${libmemcached_version}.tar.gz
-
-cp ${OPENSHIFT_DATA_DIR}/files/libmemcached-${libmemcached_version}.tar.gz ./
-if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
-    wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
-fi
-tar zxf libmemcached-${libmemcached_version}.tar.gz
-pushd libmemcached-${libmemcached_version} > /dev/null
-./configure --help
-./configure \
- --prefix=${data_dir}/libmemcached \
- --mandir=${tmp_dir}/man \
- --docdir=${tmp_dir}/doc \
- --infodir=${tmp_dir}/info \
- --disable-dependency-tracking \
- --disable-sasl \
- --enable-jobserver=12
-
-# cat config.log
-
-# 3機がけ前提 1機あたり2プロセス
-# time make -j$(grep -c -e processor /proc/cpuinfo)
-# time make -j6
-time make
-popd > /dev/null
-ccache --show-stats
-rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
-time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
-# time tar cf - libmemcached-${libmemcached_version} \
-#  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
-#  > ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
-mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-rm -rf libmemcached-${libmemcached_version}
-rm -f libmemcached-${libmemcached_version}.tar.gz
-
 popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
@@ -315,6 +257,52 @@ rm -rf php-${php_version}
 popd > /dev/null
 
 unlink apache
+popd > /dev/null
+
+ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
+
+# ***** libmemcached *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached"
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+
+rm -rf libmemcached-${libmemcached_version}
+rm -f libmemcached-${libmemcached_version}.tar.gz
+
+cp ${OPENSHIFT_DATA_DIR}/files/libmemcached-${libmemcached_version}.tar.gz ./
+if [ ! -f libmemcached-${libmemcached_version}.tar.gz ]; then
+    wget https://launchpad.net/libmemcached/1.0/${libmemcached_version}/+download/libmemcached-${libmemcached_version}.tar.gz
+fi
+tar zxf libmemcached-${libmemcached_version}.tar.gz
+pushd libmemcached-${libmemcached_version} > /dev/null
+./configure --help
+./configure \
+ --prefix=${data_dir}/libmemcached \
+ --mandir=${tmp_dir}/man \
+ --docdir=${tmp_dir}/doc \
+ --infodir=${tmp_dir}/info \
+ --disable-dependency-tracking \
+ --disable-sasl \
+ --enable-jobserver=12
+
+# cat config.log
+
+# 3機がけ前提 1機あたり2プロセス
+# time make -j$(grep -c -e processor /proc/cpuinfo)
+# time make -j6
+time make
+popd > /dev/null
+ccache --show-stats
+rm -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
+time tar Jcf ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz libmemcached-${libmemcached_version}
+# time tar cf - libmemcached-${libmemcached_version} \
+#  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
+#  > ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz
+mv -f ${app_uuid}_maked_libmemcached-${libmemcached_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf libmemcached-${libmemcached_version}
+rm -f libmemcached-${libmemcached_version}.tar.gz
+
 popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
