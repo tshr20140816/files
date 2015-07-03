@@ -69,71 +69,96 @@ rm -rf ${OPENSHIFT_TMP_DIR}/php-${php_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/php
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-if [ -f ccache_php.tar.xz ]; then
-    rm -rf ccache
-    tar Jxf ccache_php.tar.xz
-    ccache -s
-    export CC="ccache gcc"
-    export CXX="ccache g++"
-    export CCACHE_PREFIX=distcc
-fi
-popd > /dev/null
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/php-${php_version}.tar.xz ./
-echo "$(date +%Y/%m/%d" "%H:%M:%S) php tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar Jxf php-${php_version}.tar.xz
+unlink apache
+ln -s ${OPENSHIFT_DATA_DIR}/apache apache
+
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+    file_name=${OPENSHIFT_APP_UUID}_maked_php-${php_version}.tar.xz
+    url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
+    while :
+    do
+        if [ $(wget -nv --spider --timeout 60 -t 1 ${url} 2>&1 | grep -c '200 OK') -eq 1 ]; then
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) php maked wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            break
+        else
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) php maked waiting" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            sleep 10s
+        fi
+    done
+    wget $(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) php maked tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    tar Jxf ${file_name}
+    rm ${file_name}
+else
+    cp -f ${OPENSHIFT_DATA_DIR}/download_files/ccache_php.tar.xz ./
+    if [ -f ccache_php.tar.xz ]; then
+        rm -rf ccache
+        tar Jxf ccache_php.tar.xz
+        ccache -s
+        export CC="ccache gcc"
+        export CXX="ccache g++"
+        export CCACHE_PREFIX=distcc
+    fi
+
+    cp -f ${OPENSHIFT_DATA_DIR}/download_files/php-${php_version}.tar.xz ./
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) php tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    tar Jxf php-${php_version}.tar.xz
+    rm php-${php_version}.tar.xz
+fi
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR}/php-${php_version} > /dev/null
 
-# if [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ]; then
-#     config_cache_option="CONFIG_SITE=${OPENSHIFT_DATA_DIR}/config_cache/php"
-# else
-#     config_cache_option='--config-cache'
-# fi
+# *** configure make install ***
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) php configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
-./configure \
---prefix=${OPENSHIFT_DATA_DIR}/php \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---docdir=${OPENSHIFT_TMP_DIR}/doc \
---infodir=${OPENSHIFT_TMP_DIR}/info \
---with-apxs2=${OPENSHIFT_DATA_DIR}/apache/bin/apxs \
---with-mysql \
---with-pdo-mysql \
---without-sqlite3 \
---without-pdo-sqlite \
---without-cdb \
---without-pear \
---with-curl \
---with-libdir=lib64 \
---with-bz2 \
---with-iconv \
---with-openssl \
---with-zlib \
---with-gd \
---enable-exif \
---enable-ftp \
---enable-xml \
---enable-mbstring \
---enable-mbregex \
---enable-sockets \
---disable-ipv6 \
---with-gettext=${OPENSHIFT_DATA_DIR}/php \
---with-zend-vm=GOTO 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+    export CC="ccache gcc"
+    export CXX="ccache g++"
+else
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) php configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
+    ./configure \
+     --prefix=${OPENSHIFT_DATA_DIR}/php \
+     --mandir=${OPENSHIFT_TMP_DIR}/man \
+     --docdir=${OPENSHIFT_TMP_DIR}/doc \
+     --infodir=${OPENSHIFT_TMP_DIR}/info \
+     --with-apxs2=${OPENSHIFT_TMP_DIR}/apache/bin/apxs \
+     --with-mysql \
+     --with-pdo-mysql \
+     --without-sqlite3 \
+     --without-pdo-sqlite \
+     --without-cdb \
+     --without-pear \
+     --with-curl \
+     --with-libdir=lib64 \
+     --with-bz2 \
+     --with-iconv \
+     --with-openssl \
+     --with-zlib \
+     --with-gd \
+     --enable-exif \
+     --enable-ftp \
+     --enable-xml \
+     --enable-mbstring \
+     --enable-mbregex \
+     --enable-sockets \
+     --disable-ipv6 \
+     --with-gettext=${OPENSHIFT_DATA_DIR}/php \
+     --with-zend-vm=GOTO 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 
-# [ -f ${OPENSHIFT_DATA_DIR}/config_cache/php ] || mv config.cache ${OPENSHIFT_DATA_DIR}/config_cache/php
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) php make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
+    # j2 is limit (-l3 --load-average=3)
+    # time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+    time make -j12 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+    ccache --show-stats
+fi
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) php make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
-# j2 is limit (-l3 --load-average=3)
-# time make -j2 -l3 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-time make -j12 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_php.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+
 export HOME=${env_home_backup}
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php make conf" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini
@@ -141,8 +166,6 @@ cp php.ini-production ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-production
 cp php.ini-development ${OPENSHIFT_DATA_DIR}/php/lib/php.ini-development
 mv ${OPENSHIFT_LOG_DIR}/install_php.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
-
-ccache -s
 
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
