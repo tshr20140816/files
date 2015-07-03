@@ -120,7 +120,7 @@ unset CXX
 # ドキュメント削除
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 rm -rf apache/manual
-rm -rf apache/lib/*.a
+# rm -rf apache/lib/*.a
 popd > /dev/null
 
 # strip
