@@ -9,7 +9,11 @@ echo ${OPENSHIFT_PHP_IP}
 
 set -x
 
+cd /tmp
 rm -f ruby-build.20150626092624.123468.log
+rm -rf libmemcached-1.0.18
+rm -rf openssh-6.6p1
+rm -rf httpd-2.2.29
 
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
