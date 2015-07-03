@@ -18,6 +18,14 @@ rm -f httpd-2.2.29.tar.bz2
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
+cd ${OPENSHIFT_DATA_DIR}/apache2/bin
+cp apachectl apachectl.org
+./apachectl -v
+file apachectl
+strip --strip-all
+file apachectl
+./apachectl -v
+
 exit
 
 cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
