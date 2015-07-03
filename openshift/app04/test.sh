@@ -16,12 +16,12 @@ ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd ${OPENSHIFT_DATA_DIR}/apache2/bin
-cp apachectl apachectl.org
-./apachectl -v
-file apachectl
-strip --strip-all apachectl
-file apachectl
-./apachectl -v
+cp httpd httpd.org
+./httpd -v
+file httpd
+strip --strip-all httpd
+file httpd
+./httpd -v
 
 exit
 
