@@ -4,6 +4,7 @@ source functions.sh
 function010
 [ $? -eq 0 ] || exit
 
+# 時間短縮のため php インストールの直前ではなくここで行う
 # ***** memcached *****
 
 rm -rf ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version}
