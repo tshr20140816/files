@@ -10,10 +10,7 @@ echo ${OPENSHIFT_PHP_IP}
 set -x
 
 cd /tmp
-rm -f ruby-build.20150626092624.123468.log
-rm -rf libmemcached-1.0.18
-rm -rf openssh-6.6p1
-rm -rf httpd-2.2.29
+rm -f httpd-2.2.29.tar.bz2
 
 ls -lang /tmp
 ls -lang ${OPENSHIFT_DATA_DIR}
@@ -22,7 +19,7 @@ cd ${OPENSHIFT_DATA_DIR}/apache2/bin
 cp apachectl apachectl.org
 ./apachectl -v
 file apachectl
-strip --strip-all
+strip --strip-all apachectl
 file apachectl
 ./apachectl -v
 
