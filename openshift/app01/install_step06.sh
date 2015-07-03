@@ -123,10 +123,8 @@ rm -rf apache/manual
 popd > /dev/null
 
 # strip
-pushd ${OPENSHIFT_DATA_DIR}/apache/lib > /dev/null
-strip --strip-debug ./modules/*.so
-popd > /dev/null
-pushd ${OPENSHIFT_DATA_DIR}/apache/modules > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
+strip --strip-debug ./lib/*.so
 strip --strip-debug ./modules/*.so
 popd > /dev/null
 
