@@ -266,6 +266,7 @@ ln -s ${OPENSHIFT_DATA_DIR}/apache/ apache
 rm -rf php-${php_version}
 
 if [ -f ${OPENSHIFT_DATA_DIR}/files/maked_php-${php_version}.tar.xz ]; then
+    cp ${OPENSHIFT_DATA_DIR}/files/maked_php-${php_version}.tar.xz ./
     tar Jxf maked_php-${php_version}.tar.xz
     rm maked_php-${php_version}.tar.xz
 else
