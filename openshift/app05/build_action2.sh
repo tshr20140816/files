@@ -309,21 +309,17 @@ else
     time make -j12
     ccache --show-stats
     popd > /dev/null
-    tar Jcf maked_php-${php_version}.tar.xz ./php-${php_version}
+    tar Jcf maked_php-${php_version}.tar.xz php-${php_version}
     mv maked_php-${php_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 
     rm -f php-${php_version}.tar.xz
-    popd > /dev/null
-    popd > /dev/null
 fi
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 find ./php-${php_version} -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
 rm -f ${app_uuid}_maked_php-${php_version}.tar.xz
-time tar Jcf ${app_uuid}_maked_php-${php_version}.tar.xz ./php-${php_version}
+time tar Jcf ${app_uuid}_maked_php-${php_version}.tar.xz php-${php_version}
 mv -f ${app_uuid}_maked_php-${php_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf php-${php_version}
-popd > /dev/null
 
 unlink apache
 popd > /dev/null
