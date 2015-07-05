@@ -1,5 +1,6 @@
 1.15.3.tar.gz https://github.com/gothfox/Tiny-Tiny-RSS/archive/1.15.3.tar.gz
 autossh-1.4e.tgz http://www.harding.motd.ca/autossh/autossh-1.4e.tgz
+axel-2.4.tar.bz2 http://downloads.sourceforge.net/project/axel2/axel-2.4/axel-2.4.tar.bz2
 CalDavZAP_0.12.1.zip http://www.inf-it.com/CalDavZAP_0.12.1.zip
 baikal-flat-0.2.7.zip http://baikal-server.com/get/baikal-flat-0.2.7.zip
 cacti-0.8.8d.tar.gz http://www.cacti.net/downloads/cacti-0.8.8d.tar.gz
