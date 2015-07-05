@@ -220,17 +220,17 @@ else
     unset CONFIGURE_OPTS
     unset MAKE_OPTS
 
-    pushd ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/x86_64-linux/ > /dev/null
-    time find ./ \
-     -name "*.so" -type f -print0 \
-     | xargs -0i file {} \
-     | grep -e "not stripped" \
-     | awk -F':' '{printf $1"\n"}' \
-     | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-    wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-    time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 30 strip --strip-all
-    rm -f ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-    popd > /dev/null
+    # pushd ${OPENSHIFT_DATA_DIR}/.rbenv/versions/${ruby_version}/lib/ruby/2.1.0/x86_64-linux/ > /dev/null
+    # time find ./ \
+    #  -name "*.so" -type f -print0 \
+    #  | xargs -0i file {} \
+    #  | grep -e "not stripped" \
+    #  | awk -F':' '{printf $1"\n"}' \
+    #  | tee ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+    # wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+    # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 30 strip --strip-all
+    # rm -f ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+    # popd > /dev/null
 
     ccache --show-stats
 
