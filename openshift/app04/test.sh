@@ -11,36 +11,13 @@ set -x
 
 cd /tmp
 
-if [ -d apache ]; then
-    echo "TRUE"
-else
-    echo "FALSE"
-fi
+wget https://files4-20150524.rhcloud.com/files/5599764d4382ec427c0001d9_maked_ruby_2.1.6_rbenv.tar.xz
+wget https://files4-20150524.rhcloud.com/files/5599764d4382ec427c0001d9_maked_php-5.6.10.tar.xz
 
-exit
+ls -lang
 
-cflag_data=$(gcc -march=native -E -v - </dev/null 2>&1 | sed -n 's/.* -v - //p')
-export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
-export CXXFLAGS="${CFLAGS}"
+rm -rf php-5.6.10
 
-cd /tmp
+tar Jxf 5599764d4382ec427c0001d9_maked_php-5.6.10.tar.xz
 
-wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
-
-tar jxf httpd-2.2.29.tar.bz2
-cd httpd-2.2.29
-./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/apache2 \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --enable-mods-shared='all proxy'
-
-time make -j4
-make install
-cd $OPENSHIFT_DATA_DIR
-rm -rf ./apache2/manual
-
-cd apache2
-./bin/apachectl -v
-
-tree ./
+tree php-5.6.10
