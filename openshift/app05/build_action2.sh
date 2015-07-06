@@ -279,7 +279,7 @@ else
     tar Jxf php-${php_version}.tar.xz
     pushd php-${php_version} > /dev/null
     ./configure \
-     --prefix=${data_dir}/php \
+     --prefix=${OPENSHIFT_DATA_DIR}/php \
      --mandir=${tmp_dir}/man \
      --docdir=${tmp_dir}/doc \
      --infodir=${tmp_dir}/info \
@@ -316,11 +316,7 @@ else
     rm -f php-${php_version}.tar.xz
 fi
 
-pwd
-ls -lang
 find ./php-${php_version} -name '*' -type f -print0 | xargs -0i sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
-pwd
-ls -lang
 rm -f ${app_uuid}_maked_php-${php_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_php-${php_version}.tar.xz php-${php_version}
 mv -f ${app_uuid}_maked_php-${php_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
