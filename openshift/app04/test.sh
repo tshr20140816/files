@@ -11,4 +11,4 @@ cd /tmp
 
 ls -lang
 
-find ./php-5.6.10 -name '*' -type f | grep -e openshift
+find ./php-5.6.10 -name '*' -type f | grep -e openshift 2>&1
