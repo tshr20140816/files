@@ -304,7 +304,7 @@ else
      --enable-mbregex \
      --enable-sockets \
      --disable-ipv6 \
-     --with-gettext=${data_dir}/php \
+     --with-gettext=${OPENSHIFT_DATA_DIR}/php \
      --with-zend-vm=GOTO
 
     time make -j12
