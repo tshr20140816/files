@@ -11,6 +11,8 @@ cd /tmp
 
 ls -lang
 
+build_server_password=$(cat aa.txt)
+
 # ***** build request *****
 
 apache_version=2.2.29
