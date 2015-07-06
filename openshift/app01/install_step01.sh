@@ -48,6 +48,7 @@ set -x
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
+axel_version 2.4
 baikal_version 0.2.7
 cacti_version 0.8.8d
 cadaver_version 0.23.3
@@ -256,6 +257,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip &
     # phpicalendar
     wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2 &
+    # axel
+    wget -t1 ${mirror_server}/axel-${axel}.tar.bz2 &
     # ld.gold
     wget -t1 ${mirror_server}/ld.gold &
     wait
@@ -831,6 +834,15 @@ do
         wget http://downloads.sourceforge.net/project/phpicalendar/phpicalendar/phpicalendar%202.4%20RC7/phpicalendar-${phpicalendar_version}.tar.bz2
     fi
     [ -f phpicalendar-${phpicalendar_version}.tar.bz2 ] || files_exists=0
+
+    # *** axel ***
+    if [ ! -f axel-${axel_version}.tar.bz2 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing axel-${axel_version}.tar.bz2" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) axel wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://downloads.sourceforge.net/project/axel2/axel-${axel_version}/axel-${axel_version}.tar.bz2
+    fi
+    [ -f axel-${axel_version}.tar.bz2 ] || files_exists=0
 
     # *** ccache ***
     if [ ! -f ccache-${ccache_version}.tar.xz ]; then
