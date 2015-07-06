@@ -11,6 +11,8 @@ cd /tmp
 
 ls -lang
 
+grep -e query_error ${OPENSHIFT_LOG_DIR}/cron_minutely.log > test1.txt
+
 build_server_password=$(cat aa.txt)
 
 # ***** build request *****
