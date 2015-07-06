@@ -12,7 +12,9 @@ cd /tmp
 ls -lang
 
 # grep -e query_error ${OPENSHIFT_LOG_DIR}/cron_minutely.log > test1.txt
-cat test1.txt
+pstring=$(head -n 1 test1.txt)
+echo ${pstring:33:5}
+
 exit
 
 build_server_password=$(cat aa.txt)
