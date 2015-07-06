@@ -167,6 +167,8 @@ pushd httpd-${apache_version} > /dev/null
  --disable-imagemap \
  --disable-status \
  --disable-userdir \
+ --disable-include \
+ --disable-authz-groupfile \
  --enable-mods-shared='all proxy'
 
 # 3機がけ前提 1機あたり4プロセス
