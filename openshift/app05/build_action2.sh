@@ -25,9 +25,6 @@ do
     fi
 done
 
-rm ${OPENSHIFT_DATA_DIR}/files/maked_php*
-rm ${OPENSHIFT_DATA_DIR}/files/maked_ruby*
-
 quota -s > ${OPENSHIFT_LOG_DIR}/quota.txt
 
 touch ${OPENSHIFT_TMP_DIR}/build_now
