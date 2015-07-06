@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 1642
+
 export TZ=JST-9
 
 echo "$(date)"
