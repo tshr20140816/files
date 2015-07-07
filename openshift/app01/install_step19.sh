@@ -114,14 +114,14 @@ if [ $((minute % 5)) -eq 2 ]; then
     if [ ${usage_in_bytes} -gt 400000000 ]; then
         dt=$(date +%Y/%m/%d" "%H:%M:%S)
         echo ${dt} skip ... memory use ${usage_in_bytes} bytes \
-        >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+         >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
         exit
     fi
 
     if [ -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt ]; then
         dt=$(date +%Y/%m/%d" "%H:%M:%S)
         echo ${dt} skip ... file exists ${OPENSHIFT_TMP_DIR}redmine_repository_check.txt \
-        >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+         >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
         exit
     fi
 
@@ -137,7 +137,7 @@ if [ $((minute % 5)) -eq 2 ]; then
     bundle exec rake redmine:fetch_changesets RAILS_ENV=production
     rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
     echo $(date +%Y/%m/%d" "%H:%M:%S) finish ${dt} \
-    >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+     >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
 fi
 __HEREDOC__
 chmod +x redmine_repository_check.sh &
@@ -260,9 +260,9 @@ fi
 # redmine
 # export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 process_count=$(find ${OPENSHIFT_DATA_DIR}/.gem/gems/ \
--name passenger-status -type f \
-| xargs -i ruby {} --verbose \
-| grep Processes | awk '{print $NF}')
+ -name passenger-status -type f \
+ | xargs -i ruby {} --verbose \
+ | grep Processes | awk '{print $NF}')
 if [ ${process_count} = 0 ]; then
     wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
 fi
@@ -334,7 +334,7 @@ rbenv rehash
 # export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
 echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/passenger_status.txt
 find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f \
-| xargs -i ruby {} --verbose >> ${OPENSHIFT_TMP_DIR}/passenger_status.txt
+ | xargs -i ruby {} --verbose >> ${OPENSHIFT_TMP_DIR}/passenger_status.txt
 cp -f ${OPENSHIFT_TMP_DIR}/passenger_status.txt passenger_status.txt
 __HEREDOC__
 sed -i -e "s|__RUBY_VERSION__|${ruby_version}|g" passenger_status.sh
@@ -526,11 +526,11 @@ pushd ${OPENSHIFT_DATA_DIR}
 dump_file_name=${OPENSHIFT_APP_DNS}.mysql_dump_$(date +%a).xz
 
 mysqldump \
---host=${OPENSHIFT_MYSQL_DB_HOST} \
---port=${OPENSHIFT_MYSQL_DB_PORT} \
---user=${OPENSHIFT_MYSQL_DB_USERNAME} \
---password=${OPENSHIFT_MYSQL_DB_PASSWORD} \
--x --all-databases --events | xz > ${dump_file_name}
+ --host=${OPENSHIFT_MYSQL_DB_HOST} \
+ --port=${OPENSHIFT_MYSQL_DB_PORT} \
+ --user=${OPENSHIFT_MYSQL_DB_USERNAME} \
+ --password=${OPENSHIFT_MYSQL_DB_PASSWORD} \
+ -x --all-databases --events | xz > ${dump_file_name}
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) START mysql_backup.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
 log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
@@ -688,13 +688,13 @@ __HEREDOC_2__
 )
 
 mysql ${connection_string} \
---html < ${OPENSHIFT_DATA_DIR}/scripts/record_count_top_30_sql.txt \
-> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/record_count_top_30_${hh}.html
+ --html < ${OPENSHIFT_DATA_DIR}/scripts/record_count_top_30_sql.txt \
+ > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/record_count_top_30_${hh}.html
 
 mysql ${connection_string} \
---html \
---execute="SHOW GLOBAL STATUS" \
-> ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/mysql_global_status_${hh}.html
+ --html \
+ --execute="SHOW GLOBAL STATUS" \
+ > ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/mysql_global_status_${hh}.html
 __HEREDOC__
 chmod +x record_count_top_30.sh &
 echo record_count_top_30.sh >> jobs.allow
