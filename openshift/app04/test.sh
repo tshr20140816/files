@@ -13,15 +13,13 @@ cd /tmp
 
 ls -lang
 
-rm openssh-6.8p1.tar.gz
-rm -rf openssh-6.8p1
-rm -rf openssh-6.6*
+rm -rf openssh-*
 
 wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.7p1.tar.gz
 wget http://downloads.sourceforge.net/project/hpnssh/HPN-SSH%2014.5%206.6p1/openssh-6.6p1-hpnssh14v5.diff.gz
 
 tar zxf openssh-6.7p1.tar.gz
-gzip -d openssh-6.7p1-hpnssh14v5.diff.gz
+gzip -d openssh-6.6p1-hpnssh14v5.diff.gz
 cd openssh-6.7p1
 patch -p1 < ../openssh-6.6p1-hpnssh14v5.diff
 
