@@ -306,6 +306,7 @@ else
      --enable-mbregex \
      --enable-sockets \
      --disable-ipv6 \
+     --disable-debug \
      --with-gettext=${OPENSHIFT_DATA_DIR}/php \
      --with-zend-vm=GOTO
 
