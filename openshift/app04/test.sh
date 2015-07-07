@@ -13,6 +13,16 @@ cd /tmp
 
 ls -lang
 
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.8p1.tar.gz
+wget http://downloads.sourceforge.net/project/hpnssh/HPN-SSH%2014.5%206.6p1/openssh-6.6p1-hpnssh14v5.diff.gz
+
+tar zxf openssh-6.8p1.tar.gz
+gzip -d openssh-6.6p1-hpnssh14v5.diff.gz
+cd openssh-6.8p1
+patch -p1 < ../openssh-6.6p1-hpnssh14v5.diff
+
+exit
+
 pstring=$(head -n 1 test1.txt)
 build_server_password=${pstring:25:5}
 
