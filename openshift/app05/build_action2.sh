@@ -292,6 +292,7 @@ else
      --without-pdo-sqlite \
      --without-cdb \
      --without-pear \
+     --without-gdbm \
      --with-curl \
      --with-libdir=lib64 \
      --with-bz2 \
