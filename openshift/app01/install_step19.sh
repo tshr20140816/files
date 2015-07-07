@@ -633,6 +633,7 @@ do
 done
 popd > /dev/null
 __HEREDOC__
+sed -i -e "s|__REDMINE_VERSION__|${redmine_version}|g" bakup_log_files.sh
 chmod +x bakup_log_files.sh &
 echo bakup_log_files.sh >> jobs.allow
 
