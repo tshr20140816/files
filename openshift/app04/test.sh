@@ -13,16 +13,7 @@ cd /tmp
 
 ls -lang
 
-rm -rf openssh-*
-
-wget http://jp2.php.net/get/php-5.6.10.tar.xz/from/this/mirror -O php-5.6.10.tar.xz
-
-tar Jxf php-5.6.10.tar.xz
-
-cd php-5.6.10
-./configure --help
-
-exit
+rm -rf php-*
 
 pstring=$(head -n 1 test1.txt)
 build_server_password=${pstring:25:5}
