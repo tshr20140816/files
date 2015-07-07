@@ -15,13 +15,12 @@ ls -lang
 
 rm -rf openssh-*
 
-wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.7p1.tar.gz
-wget http://downloads.sourceforge.net/project/hpnssh/HPN-SSH%2014.5%206.6p1/openssh-6.6p1-hpnssh14v5.diff.gz
+wget http://jp2.php.net/get/php-5.6.10.tar.xz/from/this/mirror -O php-5.6.10.tar.xz
 
-tar zxf openssh-6.7p1.tar.gz
-gzip -d openssh-6.6p1-hpnssh14v5.diff.gz
-cd openssh-6.7p1
-patch -p1 < ../openssh-6.6p1-hpnssh14v5.diff
+tar Jxf php-5.6.10.tar.xz
+
+cd php-5.6.10
+./configure --help
 
 exit
 
