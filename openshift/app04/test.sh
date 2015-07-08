@@ -16,6 +16,7 @@ ls -lang
 rm ss.*
 
 oo-snapshot > ss.dmp
+ls -lang ss.dmp
 xz -8 ss.dmp
 
 ls -lang
