@@ -11,6 +11,7 @@ set -x
 
 cd /tmp
 
+xz --version
 xz --help
 
 ls -lang
