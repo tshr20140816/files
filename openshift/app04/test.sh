@@ -23,7 +23,8 @@ ls -lang ss.dmp
 time xz -8 ss.dmp
 ls -lang ss.dmp.xz
 time xz -d ss.dmp.xz
-time xz -9e ss.dmp
+# time xz -9e ss.dmp
+time xz -e ss.dmp
 ls -lang ss.dmp.xz
 
 ls -lang
