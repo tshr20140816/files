@@ -31,8 +31,8 @@ rbenv -v | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # *** ruby ***
 
-if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
-# if [ "none" != "none" ]; then
+# if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
+if [ "none" != "none" ]; then
     export CC="ccache gcc"
     export CXX="ccache g++"
     pushd ${OPENSHIFT_DATA_DIR} > /dev/null
