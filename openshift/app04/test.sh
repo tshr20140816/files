@@ -14,6 +14,7 @@ cd /tmp
 ls -lang
 
 oo-snapshot > ss.dmp | xz -9
+oo-snapshot > ss.dmp
 
 ls -lang
 
