@@ -11,6 +11,8 @@ set -x
 
 cd /tmp
 
+xz --help
+
 ls -lang
 
 rm ss.*
