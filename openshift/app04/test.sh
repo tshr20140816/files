@@ -16,14 +16,14 @@ xz --help
 
 ls -lang
 
-rm ss.dmp
-xz -d ss.dmp.xz
+rm ss.dmp*
 
-# oo-snapshot > ss.dmp
+oo-snapshot > ss.dmp
 ls -lang ss.dmp
-rm ss.dmp.xz
-time xz -8 ss.dmp
+time xz -8f ss.dmp
 ls -lang ss.dmp.xz
+rm ss.dmp.xz
+
 time xz -d ss.dmp.xz
 # time xz -9e ss.dmp
 rm ss.dmp.xz
