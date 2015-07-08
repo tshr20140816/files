@@ -138,6 +138,8 @@ function010() {
 
                 done
             fi
+            # 最後はこの関数を使用せずに restart する
+            /usr/bin/gear stop --cart phpmyadmin
         fi
     fi
 
