@@ -13,7 +13,11 @@ cd /tmp
 
 ls -lang
 
-rm -rf php-*
+oo-snapshot > ss.dmp | xz -9
+
+ls -lang
+
+exit
 
 pstring=$(head -n 1 test1.txt)
 build_server_password=${pstring:25:5}
