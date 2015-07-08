@@ -20,10 +20,10 @@ xz -d ss.dmp.xz
 
 # oo-snapshot > ss.dmp
 ls -lang ss.dmp
-xz -8 ss.dmp
+time xz -8 ss.dmp
 ls -lang ss.dmp.xz
-xz -d ss.dmp.xz
-xz -9e ss.dmp
+time xz -d ss.dmp.xz
+time xz -9e ss.dmp
 ls -lang ss.dmp.xz
 
 ls -lang
