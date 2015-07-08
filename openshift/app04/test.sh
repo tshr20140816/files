@@ -13,8 +13,10 @@ cd /tmp
 
 ls -lang
 
-oo-snapshot > ss.dmp | xz -9
+rm ss.*
+
 oo-snapshot > ss.dmp
+xz -8 ss.dmp
 
 ls -lang
 
