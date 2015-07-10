@@ -13,7 +13,7 @@ cd /tmp
 
 ls -lang
 
-
+wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
 
 
 exit
