@@ -13,10 +13,8 @@ cd /tmp
 
 ls -lang
 
+rm -f super_pi-jp.tar.gz
 wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
-
-
-exit
 
 pstring=$(head -n 1 test1.txt)
 build_server_password=${pstring:25:5}
@@ -29,7 +27,7 @@ libmemcached_version=1.0.18
 delegate_version=9.9.13
 tcl_version=8.6.3
 cadaver_version=0.23.3
-php_version=5.6.10
+php_version=5.6.11
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cat << '__HEREDOC__' > build_request.xml
