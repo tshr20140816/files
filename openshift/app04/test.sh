@@ -14,7 +14,7 @@ cd /tmp
 ls -lang
 
 rm -f super_pi-jp.tar.gz
-wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
+# wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
 
 pstring=$(head -n 1 test1.txt)
 build_server_password=${pstring:25:5}
