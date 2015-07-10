@@ -11,26 +11,10 @@ set -x
 
 cd /tmp
 
-xz --version
-xz --help
-
 ls -lang
 
-rm ss.dmp*
 
-oo-snapshot > ss.dmp
-ls -lang ss.dmp
-time xz -8f ss.dmp
-ls -lang ss.dmp.xz
-rm ss.dmp.xz
 
-time xz -d ss.dmp.xz
-# time xz -9e ss.dmp
-rm ss.dmp.xz
-time xz -e ss.dmp
-ls -lang ss.dmp.xz
-
-ls -lang
 
 exit
 
