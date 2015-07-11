@@ -13,6 +13,10 @@ cd /tmp
 
 ls -lang
 
+wget --help
+
+exit
+
 pstring=$(head -n 1 test1.txt)
 build_server_password=${pstring:25:5}
 
