@@ -280,6 +280,7 @@ else
     fi
     tar Jxf php-${php_version}.tar.xz
     pushd php-${php_version} > /dev/null
+    ./configure -help
     ./configure \
      --prefix=${OPENSHIFT_DATA_DIR}/php \
      --mandir=${tmp_dir}/man \
