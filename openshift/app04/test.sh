@@ -15,7 +15,9 @@ ls -lang
 
 wget --help
 
-du -h *
+cd /
+
+du -hsx * | sort -rh
 
 exit
 
