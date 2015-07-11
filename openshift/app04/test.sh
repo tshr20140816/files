@@ -13,9 +13,10 @@ cd /tmp
 
 ls -lang
 
-wget --help
+du -hsx * | sort -rh
 
-cd /
+cd ~
+pwd
 
 du -hsx * | sort -rh
 
