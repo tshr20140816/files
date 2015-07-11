@@ -15,6 +15,8 @@ ls -lang
 
 wget --help
 
+du -h *
+
 exit
 
 pstring=$(head -n 1 test1.txt)
