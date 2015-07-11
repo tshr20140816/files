@@ -10,6 +10,10 @@ curl --digest -u $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user):$(da
  -F "url=https://${OPENSHIFT_APP_DNS}/" \
  $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)createwebcroninformation
 
+curl --digest -u $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user):$(date +%Y%m%d%H) \
+ -F "url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)" \
+ $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)createwebcroninformation
+
 # ***** infrastructure info *****
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/ > /dev/null
