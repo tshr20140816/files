@@ -20,6 +20,8 @@ pwd
 
 du -hsx * | sort -rh
 
+du --help
+
 exit
 
 pstring=$(head -n 1 test1.txt)
