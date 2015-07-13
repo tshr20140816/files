@@ -16,6 +16,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
 
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --snippet > ${OPENSHIFT_TMP_DIR}/passenger.conf
+cat ${OPENSHIFT_TMP_DIR}/passenger.conf
 
 # *** passenger patch ***
 
