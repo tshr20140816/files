@@ -79,6 +79,8 @@ mysql --help | tee -a infrastructure.txt
 
 popd > /dev/null
 
+cp ${OPENSHIFT_DATA_DIR}/php/lib/php.ini ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+
 # ***** action hooks *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks > /dev/null
