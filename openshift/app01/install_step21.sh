@@ -18,6 +18,8 @@ curl --digest -u $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user):$(da
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/ > /dev/null
 
+cp ../../conf/httpd.conf ./
+
 echo "\$ hostname" > infrastructure.txt
 hostname | tee -a infrastructure.txt
 echo >> infrastructure.txt
