@@ -1,3 +1,16 @@
+deb http://security.debian.org/ jessie/updates main contrib non-free
+deb-src http://security.debian.org/ jessie/updates main contrib non-free
+
+deb http://ftp.jp.debian.org/debian/ jessie main contrib non-free
+deb-src http://ftp.jp.debian.org/debian/ jessie main contrib non-free
+
+deb http://ftp.jp.debian.org/debian jessie-updates main contrib
+deb-src http://ftp.jp.debian.org/debian jessie-updates main contrib
+
+http://alpha-netzilla.blogspot.jp/2011/01/fsck.html
+tune2fs -c 0 $デバイス名
+tune2fs -i 0 $デバイス名
+
 http://goods.honda.co.jp/shop/g/gAS120H/
 
 autossh
