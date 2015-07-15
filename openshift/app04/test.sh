@@ -13,16 +13,17 @@ cd /tmp
 
 ls -lang
 
-# wget http://downloads.sourceforge.net/project/fuse/fuse-2.X/2.9.4/fuse-2.9.4.tar.gz
+wget http://downloads.sourceforge.net/project/shfs/shfs/shfs-0.35/shfs-0.35.tar.gz
 rm -rf fuse-2.9.4
-tar zxf fuse-2.9.4.tar.gz
-cd fuse-2.9.4
+tar zxf shfs-0.35.tar.gz
+cd shfs-0.35
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/fuse --disable-util
+./configure --prefix=${OPENSHIFT_DATA_DIR}/shfs
 time make -j4
 make install
 
-tree ${OPENSHIFT_DATA_DIR}/fuse
+tree ${OPENSHIFT_DATA_DIR}/shfs
+# tree ${OPENSHIFT_DATA_DIR}/fuse
 exit
 
 pstring=$(head -n 1 test1.txt)
