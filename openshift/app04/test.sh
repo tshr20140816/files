@@ -16,6 +16,15 @@ ls -lang
 rm -rf shfs-0.35
 
 mount --help
+
+wget http://noedler.de/projekte/wdfs/wdfs-1.4.2.tar.gz
+tar zxf wdfs-1.4.2.tar.gz
+cd wdfs-1.4.2
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/wdfs
+time make -j4
+make install
+
 exit
 
 pstring=$(head -n 1 test1.txt)
