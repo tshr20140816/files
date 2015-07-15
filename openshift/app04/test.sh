@@ -13,11 +13,12 @@ cd /tmp
 
 ls -lang
 
-wget http://downloads.sourceforge.net/project/fuse/fuse-2.X/2.9.4/fuse-2.9.4.tar.gz
+# wget http://downloads.sourceforge.net/project/fuse/fuse-2.X/2.9.4/fuse-2.9.4.tar.gz
+rm -rf fuse-2.9.4
 tar zxf fuse-2.9.4.tar.gz
 cd fuse-2.9.4
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/fuse
+./configure --prefix=${OPENSHIFT_DATA_DIR}/fuse --exec-prefix=${OPENSHIFT_DATA_DIR}/fuse
 time make
 make install
 
