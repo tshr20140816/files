@@ -19,7 +19,7 @@ tar zxf fuse-2.9.4.tar.gz
 cd fuse-2.9.4
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/fuse --disable-util
-time make
+time make -j4
 make install
 
 tree ${OPENSHIFT_DATA_DIR}/fuse
