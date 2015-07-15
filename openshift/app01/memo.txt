@@ -12,6 +12,7 @@ tune2fs -c 0 $デバイス名
 tune2fs -i 0 $デバイス名
 
 http://goods.honda.co.jp/shop/g/gAS120H/
+http://kame-no.com/debian/07.php
 
 autossh
 https://registrationcenter.intel.com/secureautogen.aspx?productid=2302&pass=yes
