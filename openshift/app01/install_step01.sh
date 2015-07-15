@@ -199,10 +199,12 @@ pushd ${OPENSHIFT_DATA_DIR}/github > /dev/null
 git init
 git remote add origin https://github.com/tshr20140816/files.git
 git pull origin master
-rm -rf ${OPENSHIFT_DATA_DIR}/config_cache
-mkdir ${OPENSHIFT_DATA_DIR}/config_cache
-cp openshift/app01/config_cache/* ${OPENSHIFT_DATA_DIR}/config_cache/
-chmod 666 ${OPENSHIFT_DATA_DIR}/config_cache/*
+rm -rf openshift/app02
+rm -rf openshift/app03
+rm -rf openshift/app04
+rm -rf openshift/app05
+rm -rf openshift/app06
+rm -f openshift/*
 popd > /dev/null
 
 # ***** download files *****
