@@ -13,17 +13,9 @@ cd /tmp
 
 ls -lang
 
-wget http://downloads.sourceforge.net/project/shfs/shfs/shfs-0.35/shfs-0.35.tar.gz
-rm -rf fuse-2.9.4
-tar zxf shfs-0.35.tar.gz
-cd shfs-0.35
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/shfs
-time make -j4
-make install
+rm -rf shfs-0.35
 
-tree ${OPENSHIFT_DATA_DIR}/shfs
-# tree ${OPENSHIFT_DATA_DIR}/fuse
+mount --help
 exit
 
 pstring=$(head -n 1 test1.txt)
