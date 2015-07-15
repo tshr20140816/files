@@ -25,7 +25,7 @@ rm -rf wdfs-1.4.2
 tar zxf wdfs-1.4.2.tar.gz
 cd wdfs-1.4.2
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/wdfs
+./configure --prefix=${OPENSHIFT_DATA_DIR}/wdfs --mandir=/tmp/man
 time make -j4
 make install
 
