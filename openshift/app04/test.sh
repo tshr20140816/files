@@ -13,14 +13,13 @@ cd /tmp
 
 ls -lang
 
-du -hsx * | sort -rh
-
-cd ~
-pwd
-
-du -hsx * | sort -rh
-
-du --help
+wget http://downloads.sourceforge.net/project/fuse/fuse-2.X/2.9.4/fuse-2.9.4.tar.gz
+tar zxf fuse-2.9.4.tar.gz
+cd fuse-2.9.4
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/fuse
+time make
+make install
 
 exit
 
