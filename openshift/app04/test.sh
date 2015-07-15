@@ -18,7 +18,7 @@ rm -rf fuse-2.9.4
 tar zxf fuse-2.9.4.tar.gz
 cd fuse-2.9.4
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/fuse --sbindir=${OPENSHIFT_DATA_DIR}/fuse/sbin
+./configure --prefix=${OPENSHIFT_DATA_DIR}/fuse --disable-util
 time make
 make install
 
