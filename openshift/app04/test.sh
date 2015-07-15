@@ -17,15 +17,8 @@ rm -rf shfs-0.35
 
 mount --help
 
-wget http://www.webdav.org/neon/neon-0.30.1.tar.gz
-rm -rf neon-0.30.1
-tar zxf neon-0.30.1.tar.gz
-cd neon-0.30.1
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/neon
-time make -j4
-make install
-exit
+export PATH="${OPENSHIFT_DATA_DIR}/fuse/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/neon/bin:$PATH"
 
 rm -rf wdfs-1.4.2
 tar zxf wdfs-1.4.2.tar.gz
