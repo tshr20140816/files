@@ -19,7 +19,7 @@ mount --help
 
 tree ${OPENSHIFT_DATA_DIR}/fuse
 tree ${OPENSHIFT_DATA_DIR}/neon
-export PKG_CONFIG_PATH="${OPENSHIFT_DATA_DIR}/fuse:${OPENSHIFT_DATA_DIR}/neon"
+export PKG_CONFIG_PATH="${OPENSHIFT_DATA_DIR}/fuse/lib/pkgconfig:${OPENSHIFT_DATA_DIR}/neon/lib/pkgconfig"
 
 rm -rf wdfs-1.4.2
 tar zxf wdfs-1.4.2.tar.gz
