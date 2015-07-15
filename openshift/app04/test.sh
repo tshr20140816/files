@@ -17,6 +17,8 @@ rm -rf shfs-0.35
 
 mount --help
 
+tree ${OPENSHIFT_DATA_DIR}/fuse
+tree ${OPENSHIFT_DATA_DIR}/neon
 export PATH="${OPENSHIFT_DATA_DIR}/fuse/bin:$PATH"
 export PATH="${OPENSHIFT_DATA_DIR}/neon/bin:$PATH"
 
