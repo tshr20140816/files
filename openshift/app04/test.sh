@@ -18,10 +18,11 @@ rm -rf fuse-2.9.4
 tar zxf fuse-2.9.4.tar.gz
 cd fuse-2.9.4
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/fuse --disable-util
+./configure --prefix=${OPENSHIFT_DATA_DIR}/fuse --sbindir=${OPENSHIFT_DATA_DIR}/fuse/sbin
 time make
 make install
 
+tree ${OPENSHIFT_DATA_DIR}/fuse
 exit
 
 pstring=$(head -n 1 test1.txt)
