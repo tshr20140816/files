@@ -16,6 +16,7 @@ visudo
 USER ALL=(ALL) NOPASSWD:ALL
 
 sudo update-alternatives --config editor
+/usr/bin/vim.basic
 
 apt-get install gcc
 apt-get install build-essential fakeroot
