@@ -21,7 +21,7 @@ sudo update-alternatives --config editor
 apt-get install lxde
 
 apt-get install gcc
-apt-get install build-essential fakeroot
+apt-get install build-essential fakeroot kernel-package
 apt-get source linux
 apt-get build-dep linux
 apt-get install libncurses5-dev
