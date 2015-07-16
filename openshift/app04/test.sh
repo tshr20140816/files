@@ -13,6 +13,7 @@ cd /tmp
 
 ls -lang
 
+rm 5599764d4382ec427*
 rm -rf shfs-0.35
 
 mount --help
