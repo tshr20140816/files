@@ -13,23 +13,8 @@ cd /tmp
 
 ls -lang
 
-rm 5599764d4382ec427*
-rm -rf shfs-0.35
-
-mount --help
-
-tree ${OPENSHIFT_DATA_DIR}/fuse
-tree ${OPENSHIFT_DATA_DIR}/neon
-export PKG_CONFIG_PATH="${OPENSHIFT_DATA_DIR}/fuse/lib/pkgconfig:${OPENSHIFT_DATA_DIR}/neon/lib/pkgconfig"
-
-rm -rf wdfs-1.4.2
-wget http://pkgs.fedoraproject.org/repo/pkgs/wdfs/wdfs-1.4.2.tar.gz/628bb44194d04c1cf8aacc446ed0a230/wdfs-1.4.2.tar.gz
-tar zxf wdfs-1.4.2.tar.gz
-cd wdfs-1.4.2
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/wdfs --mandir=/tmp/man
-time make
-make install
+whereis shfs
+whereis sshfs
 
 exit
 
