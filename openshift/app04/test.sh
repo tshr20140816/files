@@ -16,11 +16,25 @@ rm -rf crosstool-0.43
 
 ls -lang
 
-wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.21.0.tar.bz2
+wget http://ftp.gnu.org/pub/gnu/gperf/gperf-3.0.4.tar.gz
+tar zxf gperf-3.0.4.tar.gz
+cd gperf-3.0.4
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/gnu
+time make -j4
+make install
+
+tree ${OPENSHIFT_DATA_DIR}/gnu
+
+cd /tmp
+
+rm -rf crosstool-ng-1.21.0
+
+# wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.21.0.tar.bz2
 tar jxf crosstool-ng-1.21.0.tar.bz2
 cd crosstool-ng-1.21.0
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/crosstool-ng
+./configure --prefix=${OPENSHIFT_DATA_DIR}/crosstool-ng --with-gperf=${OPENSHIFT_DATA_DIR}/gnu/bin
 time make -j4
 make install
 tree ${OPENSHIFT_DATA_DIR}/crosstool-ng
