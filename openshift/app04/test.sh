@@ -13,8 +13,9 @@ cd /tmp
 
 ls -lang
 
-whereis shfs
-whereis sshfs
+wget http://kegel.com/crosstool/crosstool-0.43.tar.gz
+tar zxf crosstool-0.43.tar.gz
+ls -lang crosstool-0.43/
 
 exit
 
