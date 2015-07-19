@@ -11,12 +11,19 @@ set -x
 
 cd /tmp
 
+rm crosstool-0.43.tar.gz
+rm -rf crosstool-0.43
+
 ls -lang
 
-wget http://kegel.com/crosstool/crosstool-0.43.tar.gz
-tar zxf crosstool-0.43.tar.gz
-ls -lang crosstool-0.43/
-
+wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.21.0.tar.bz2
+tar jxf crosstool-ng-1.21.0.tar.bz2
+cd crosstool-ng-1.21.0
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/crosstool-ng
+time make -j4
+make install
+tree ${OPENSHIFT_DATA_DIR}/crosstool-ng
 exit
 
 pstring=$(head -n 1 test1.txt)
