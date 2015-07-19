@@ -11,6 +11,10 @@ set -x
 
 cd /tmp
 
+gcc -march=native -E -v
+
+exit
+
 rm crosstool-0.43.tar.gz
 rm -rf crosstool-0.43
 
