@@ -7,6 +7,7 @@ set -x
 # - #HandleLidSwitch=suspend
 # + HandleLidSwitch=ignore
 
+# setterm -blank 0 -powersave off -powerdown 0
 
 mkdir -p /usr/src
 cd /usr/src
