@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 mkdir -p /usr/src
 cd /usr/src
 
