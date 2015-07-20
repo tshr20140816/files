@@ -2,6 +2,12 @@
 
 set -x
 
+# /etc/systemd/logind.conf
+# 
+# - #HandleLidSwitch=suspend
+# + HandleLidSwitch=ignore
+
+
 mkdir -p /usr/src
 cd /usr/src
 
