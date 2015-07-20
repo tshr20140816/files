@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.07.20 cacti_version 0.8.8e → 0.8.8f
 # 2015.07.13 cacti_version 0.8.8d → 0.8.8e
 # 2015.07.11 php_version 5.6.10 → 5.6.11
 # 2015.07.08 redmine_version 2.6.5 → 2.6.6
@@ -53,7 +54,7 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apache_version 2.2.29
 axel_version 2.4
 baikal_version 0.2.7
-cacti_version 0.8.8e
+cacti_version 0.8.8f
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
 ccache_version 3.2.2
