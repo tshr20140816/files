@@ -9,9 +9,9 @@ apt-get update
 apt-get install telnetd sudo vim ntp
 
 # apt-get install gcc
-apt-get install build-essential fakeroot kernel-package libncurses5-dev
-apt-get source linux
-apt-get build-dep linux
+time apt-get install build-essential fakeroot kernel-package libncurses5-dev
+time apt-get source linux
+time apt-get build-dep linux
 
 ls -lang /boot/config*
 
