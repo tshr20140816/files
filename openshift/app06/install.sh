@@ -4,7 +4,7 @@ mkdir -p /usr/src
 cd /usr/src
 
 apt-get update
-apt-get install telnetd sudo vim
+apt-get install telnetd sudo vim ntp
 
 # apt-get install gcc
 apt-get install build-essential fakeroot kernel-package libncurses5-dev
