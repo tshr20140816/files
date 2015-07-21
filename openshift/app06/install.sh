@@ -6,6 +6,7 @@ set -x
 # 
 # - #HandleLidSwitch=suspend
 # + HandleLidSwitch=ignore
+sed -i -e "s|#HandleLidSwitch=suspend|HandleLidSwitch=ignore|g" /etc/systemd/logind.conf
 
 # setterm -blank 0 -powersave off -powerdown 0
 
