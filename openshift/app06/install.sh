@@ -9,14 +9,12 @@ set -x
 
 # setterm -blank 0 -powersave off -powerdown 0
 
-mkdir -p /usr/src
-cd /usr/src
-
 apt-get update
 apt-get install telnetd sudo vim ntp
 
 # apt-get install gcc
 time apt-get install build-essential fakeroot kernel-package libncurses5-dev
+cd /usr/src
 time apt-get source linux
 time apt-get build-dep linux
 
