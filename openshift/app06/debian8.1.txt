@@ -2,6 +2,7 @@ http://d.hatena.ne.jp/cupnes/20110226/1298713968
 http://blog.livedoor.jp/hide_system/archives/51883553.html
 http://people.centos.org/tru/devtools-2/6/x86_64/RPMS/
 http://memo.saitodev.com/home/linux_centos/rpmbuild/
+http://kakakikikeke.blogspot.jp/2012/06/rpm.html
 
 cl401sn
 i586
