@@ -24,7 +24,8 @@ time apt-get build-dep linux
 ls -lang /boot/config*
 
 exit
-cp /boot/config- ./.config
+# cp /boot/config-* ./.config
+cp /boot/config-$(uname -r) ./.config
 make menuconfig
 # Pentium-III/Celeron
 # http://www.itmedia.co.jp/enterprise/articles/0708/21/news018_2.html
