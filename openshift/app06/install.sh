@@ -29,7 +29,7 @@ make menuconfig
 # http://www.itmedia.co.jp/enterprise/articles/0708/21/news018_2.html
 # http://d.hatena.ne.jp/cupnes/20110226/1298713968
 
-export CONCURRENCY_LEVEL=1
+export CONCURRENCY_LEVEL=2
 export CFLAGS="-march=native -O2"
 export CXXFLAGS="$CFLAGS"
 
