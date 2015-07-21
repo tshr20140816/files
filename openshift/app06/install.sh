@@ -10,6 +10,7 @@ set -x
 # setterm -blank 0 -powersave off -powerdown 0
 
 apt-get update
+apt-get upgrade
 apt-get install telnetd sudo vim ntp
 
 # apt-get install gcc
