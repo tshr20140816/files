@@ -4,6 +4,7 @@ http://people.centos.org/tru/devtools-2/6/x86_64/RPMS/
 http://memo.saitodev.com/home/linux_centos/rpmbuild/
 http://kakakikikeke.blogspot.jp/2012/06/rpm.html
 rpm -ivh --prefix=/usr/local/java jre-7u5-linux-i586.rpm
+cat /proc/version
 
 cl401sn
 i586
