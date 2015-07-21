@@ -2,6 +2,7 @@
 
 set -x
 
+# systemd-logind
 # /etc/systemd/logind.conf
 # 
 # - #HandleLidSwitch=suspend
