@@ -4,7 +4,10 @@ http://people.centos.org/tru/devtools-2/6/x86_64/RPMS/
 http://memo.saitodev.com/home/linux_centos/rpmbuild/
 http://kakakikikeke.blogspot.jp/2012/06/rpm.html
 rpm -ivh --prefix=/usr/local/java jre-7u5-linux-i586.rpm
+# カーネルをビルドしたgccのバージョン
 cat /proc/version
+
+# setterm -blank 0 -powersave off -powerdown 0
 
 cl401sn
 i586
