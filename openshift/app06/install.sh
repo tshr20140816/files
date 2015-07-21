@@ -2,18 +2,14 @@
 
 set -x
 
-# systemd-logind
-# /etc/systemd/logind.conf
-# 
-# - #HandleLidSwitch=suspend
-# + HandleLidSwitch=ignore
-sed -i -e "s|#HandleLidSwitch=suspend|HandleLidSwitch=ignore|g" /etc/systemd/logind.conf
-
-# setterm -blank 0 -powersave off -powerdown 0
-
 apt-get update
 apt-get upgrade
 apt-get install telnetd sudo vim ntp
+
+sed -i -e "s|#HandleLidSwitch=suspend|HandleLidSwitch=ignore|g" /etc/systemd/logind.conf
+
+apt-get install distcc openssh-client
+
 
 # apt-get install gcc
 time apt-get install build-essential fakeroot kernel-package libncurses5-dev
