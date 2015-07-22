@@ -32,4 +32,4 @@ export CFLAGS="-march=native -O2"
 export CXXFLAGS="$CFLAGS"
 
 make-kpkg clean
-time make-kpkg --initrd --revision=$(date '+%Y%m%d%H') kernel_image kernel_headers modules_image
+time make-kpkg --rootcmd fakeroot --initrd --revision=$(date '+%Y%m%d%H') kernel_image kernel_headers modules_image
