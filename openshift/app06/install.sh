@@ -8,8 +8,9 @@ apt-get install telnetd sudo vim ntp
 
 sed -i -e "s|#HandleLidSwitch=suspend|HandleLidSwitch=ignore|g" /etc/systemd/logind.conf
 
-apt-get install distcc openssh-client
+apt-get install distcc openssh-client rhc
 
+rhc setup --server openshift.redhat.com --create-token -l ${openshift_account} -p ${openshift_password}
 
 # apt-get install gcc
 time apt-get install build-essential fakeroot kernel-package libncurses5-dev
