@@ -9,6 +9,19 @@ cat /proc/version
 
 # setterm -blank 0 -powersave off -powerdown 0
 
+cd  /tmp
+rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > /tmp/user_fqdn.txt
+while read LINE
+do
+    user_fqdn=$(echo "${LINE}")
+    ssh -fMN -F ~/.ssh/config ${user_fqdn}
+    user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
+    distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/4:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
+done < ${OPENSHIFT_DATA_DIR}/user_fqdn.txt
+distcc_hosts_string="${distcc_hosts_string:1}"
+echo "${distcc_hosts_string}" > /tmp/distcc_hosts.txt
+
+
 cl401sn
 i586
 
