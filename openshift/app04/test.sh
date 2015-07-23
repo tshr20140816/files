@@ -6,7 +6,15 @@ cd /tmp
 
 quota -s
 
-rpm --help
+wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
+tar zxf rpm-4.8.0.tar.bz2
+cd rpm-4.8.0
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/rpm
+time make -j4
+make install
+
+# rpm --help
 
 # wget http://ftp-srv2.kddilabs.jp/Linux/packages/fedora/releases/21/Server/x86_64/os/Packages/g/gcc-4.9.2-1.fc21.x86_64.rpm
 
