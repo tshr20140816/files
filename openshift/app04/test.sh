@@ -4,6 +4,11 @@ set -x
 
 cd /tmp
 
+
+find / -name sechash.h -print 2>/dev/null
+
+exit
+
 quota -s
 
 wget https://ftp.mozilla.org/pub/mozilla.org/mozilla.org/security/nss/releases/NSS_3_19_2_RTM/src/nss-3.19.2-with-nspr-4.10.8.tar.gz
