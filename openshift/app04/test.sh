@@ -11,7 +11,7 @@ ls -lang
 cd nss-3.19.2/cmd
 make -j4
 cd ..
-tree
+# tree
 exit
 
 # find / -name sechash.h -print 2>/dev/null
