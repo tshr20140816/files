@@ -18,7 +18,8 @@ cd /tmp
 
 # wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
 
-export CPPFLAGS="-I/tmp/nss/usr/include/nss3 -I/usr/include/nspr4 -L/tmp/nss/usr/lib64"
+export LDFLAGS="-L/tmp/nss/usr/lib64"
+export CPPFLAGS="-I/tmp/nss/usr/include/nss3 -I/usr/include/nspr4"
 
 # tar jxf rpm-4.8.0.tar.bz2
 cd rpm-4.8.0
