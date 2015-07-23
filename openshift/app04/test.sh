@@ -12,7 +12,7 @@ ls -lang
 
 /tmp/rpm/bin/rpm --version
 /tmp/rpm/bin/rpm --help
-/tmp/rpm/bin/rpm -ivh --nosignature --nodigest --relocate=/usr/bin=${OPENSHIFT_DATA_DIR}/gcc --badreloc --prefix=${OPENSHIFT_DATA_DIR}/gcc gcc-4.9.2-1.fc21.x86_64.rpm
+/tmp/rpm/bin/rpm -ivh --nosignature --nodigest --relocate=/usr/bin=${OPENSHIFT_DATA_DIR}/gcc --badreloc gcc-4.9.2-1.fc21.x86_64.rpm
 
 exit
 
