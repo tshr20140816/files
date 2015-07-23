@@ -6,15 +6,16 @@ cd /tmp
 
 quota -s
 
-find / -name nspr.h -print 2>/dev/null
-
-exit
+# find / -name nspr.h -print 2>/dev/null
 
 # wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
-tar jxf rpm-4.8.0.tar.bz2
+# tar jxf rpm-4.8.0.tar.bz2
+
+CPPFLAGS="-I/usr/include/nspr4"
+
 cd rpm-4.8.0
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/rpm
+./configure --prefix=${OPENSHIFT_DATA_DIR}/rpm --disable-largefile
 time make -j4
 make install
 
