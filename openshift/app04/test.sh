@@ -4,31 +4,22 @@ set -x
 
 cd /tmp
 
+ls -lang
 
-find / -name sechash.h -print 2>/dev/null
+# find / -name sechash.h -print 2>/dev/null
 
-exit
+# wget https://ftp.mozilla.org/pub/mozilla.org/mozilla.org/security/nss/releases/NSS_3_19_2_RTM/src/nss-3.19.2-with-nspr-4.10.8.tar.gz
 
-quota -s
-
-wget https://ftp.mozilla.org/pub/mozilla.org/mozilla.org/security/nss/releases/NSS_3_19_2_RTM/src/nss-3.19.2-with-nspr-4.10.8.tar.gz
-
-tar zxf nss-3.19.2-with-nspr-4.10.8.tar.gz
-cd nss-3.19.2-with-nspr-4.10.8
-./configure --help
-tree ./
-exit
-
-# find / -name nspr.h -print 2>/dev/null
-find / -name nss.h -print 2>/dev/null
-find / -name sechash.h -print 2>/dev/null
-
-exit
+# tar zxf nss-3.19.2-with-nspr-4.10.8.tar.gz
+# cd nss-3.19.2-with-nspr-4.10.8
+# ./configure --help
+# tree ./
+# exit
 
 # wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
 # tar jxf rpm-4.8.0.tar.bz2
 
-export CPPFLAGS="-I/usr/include/nspr4"
+export CPPFLAGS="-I/usr/include/nspr4 -I/tmp/nss-3.19.2/nss/lib/cryptohi/"
 
 cd rpm-4.8.0
 ./configure --help
