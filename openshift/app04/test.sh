@@ -19,7 +19,7 @@ ls -lang
 # wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
 # tar jxf rpm-4.8.0.tar.bz2
 
-export CPPFLAGS="-I/usr/include/nspr4 -I/tmp/nss-3.19.2/nss/lib/cryptohi/"
+export CPPFLAGS="-I/usr/include/nspr4 -I/tmp/nss-3.19.2/nss/lib/cryptohi"
 
 cd rpm-4.8.0
 ./configure --help
