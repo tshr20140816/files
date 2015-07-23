@@ -10,11 +10,11 @@ ls -lang
 
 # wget http://ftp-srv2.kddilabs.jp/Linux/packages/fedora/releases/21/Server/x86_64/os/Packages/g/gcc-4.9.2-1.fc21.x86_64.rpm
 
-rpm --version
-/tmp/rpm/bin/rpm --version
-/tmp/rpm/bin/rpm --help
-/tmp/rpm/bin/rpm -ivh --nosignature --nodigest --relocate=/usr/bin=${OPENSHIFT_DATA_DIR}/gcc --badreloc gcc-4.9.2-1.fc21.x86_64.rpm
-
+mkdir gcc
+mv gcc-4.9.2-1.fc21.x86_64.rpm gcc/
+cd gcc
+rpm2cpio gcc-4.9.2-1.fc21.x86_64.rpm | cpio -idmv
+tree ./
 exit
 
 mkdir rpm
