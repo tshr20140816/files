@@ -8,7 +8,7 @@ cd /tmp
 
 ls -lang
 
-export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/tmp/gcc/usr/lib"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/tmp/gcc/lib64"
 
 /tmp/gcc/usr/bin/gcc --version
 /tmp/gcc/usr/bin/gcc --help
