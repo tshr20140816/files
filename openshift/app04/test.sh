@@ -9,6 +9,12 @@ cd /tmp
 ls -lang
 
 rm -rf nss-3.19.2
+rm nss-3.19.2.tar.gz
+
+wget http://ftp-srv2.kddilabs.jp/Linux/packages/CentOS/6.6/os/x86_64/Packages/nss-3.16.1-14.el6.x86_64.rpm
+rpm2cpio nss-3.16.1-14.el6.x86_64.rpm
+
+exit
 
 # wget https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_3_19_2_RTM/src/nss-3.19.2.tar.gz
 
