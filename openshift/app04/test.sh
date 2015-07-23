@@ -11,6 +11,15 @@ ls -lang
 /tmp/gcc/usr/bin/gcc --version
 /tmp/gcc/usr/bin/gcc --help
 
+cd gcc
+wget http://ftp-srv2.kddilabs.jp/Linux/packages/fedora/releases/21/Server/x86_64/os/Packages/g/glibc-2.20-5.fc21.x86_64.rpm
+rpm2cpio glibc-2.20-5.fc21.x86_64.rpm | cpio -idmv
+tree ./
+
+cd /tmp
+/tmp/gcc/usr/bin/gcc --version
+/tmp/gcc/usr/bin/gcc --help
+
 exit
 
 # wget http://ftp-srv2.kddilabs.jp/Linux/packages/fedora/releases/21/Server/x86_64/os/Packages/g/gcc-4.9.2-1.fc21.x86_64.rpm
