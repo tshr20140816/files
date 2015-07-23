@@ -15,6 +15,8 @@ rm -rf nss-3.19.2
 tar zxf nss-3.19.2.tar.gz
 cd nss-3.19.2
 export NSPR_INCLUDE_DIR=/usr/include/nspr4
+export USE_64=1
+pwd
 make
 
 exit
