@@ -11,7 +11,7 @@ quota -s
 # wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
 # tar jxf rpm-4.8.0.tar.bz2
 
-CPPFLAGS="-I/usr/include/nspr4"
+export CPPFLAGS="-I/usr/include/nspr4"
 
 cd rpm-4.8.0
 ./configure --help
