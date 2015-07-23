@@ -8,15 +8,21 @@ cd /tmp
 
 ls -lang
 
-rm -rf rpm-4.8.0
-rm -rf usr
-rm -rf etc
+# mkdir nss
+# cd nss
+# wget http://ftp-srv2.kddilabs.jp/Linux/packages/CentOS/6.6/os/x86_64/Packages/nss-devel-3.16.1-14.el6.x86_64.rpm
+# rpm2cpio nss-devel-3.16.1-14.el6.x86_64.rpm | cpio -idmv
+# tree ./
 
-mkdir nss
-cd nss
-wget http://ftp-srv2.kddilabs.jp/Linux/packages/CentOS/6.6/os/x86_64/Packages/nss-devel-3.16.1-14.el6.x86_64.rpm
-rpm2cpio nss-devel-3.16.1-14.el6.x86_64.rpm | cpio -idmv
-tree ./
+cd /tmp
+
+export CPPFLAGS="-I/usr/include/nspr4 -I/tmp/nss/usr/include"
+
+tar jxf rpm-4.8.0.tar.bz2
+cd rpm-4.8.0
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/rpm --disable-largefile
+time make -j4
 
 exit
 
