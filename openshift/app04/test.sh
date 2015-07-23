@@ -18,9 +18,9 @@ cd /tmp
 
 wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
 
-export CPPFLAGS="-I/usr/include/nspr4 -I/tmp/nss/usr/include/nss3"
+export CPPFLAGS="-I/tmp/nss/usr/include/nss3 -I/usr/include/nspr4"
 
-tar jxf rpm-4.8.0.tar.bz2
+# tar jxf rpm-4.8.0.tar.bz2
 cd rpm-4.8.0
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/rpm --disable-largefile
