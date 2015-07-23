@@ -8,8 +8,12 @@ cd /tmp
 
 ls -lang
 
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/tmp/gcc/usr/lib"
+
 /tmp/gcc/usr/bin/gcc --version
 /tmp/gcc/usr/bin/gcc --help
+
+exit
 
 cd gcc
 wget http://ftp-srv2.kddilabs.jp/Linux/packages/fedora/releases/21/Server/x86_64/os/Packages/g/glibc-2.20-5.fc21.x86_64.rpm
