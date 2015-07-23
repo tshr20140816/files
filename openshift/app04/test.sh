@@ -8,6 +8,7 @@ quota -s
 
 # find / -name nspr.h -print 2>/dev/null
 find / -name nss.h -print 2>/dev/null
+find / -name sechash.h -print 2>/dev/null
 
 exit
 
