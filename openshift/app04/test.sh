@@ -6,7 +6,7 @@ cd /tmp
 
 ls -lang
 
-cd nss-3.19.2
+cd nss-3.19.2/nspr
 ./configure --help
 exit
 
