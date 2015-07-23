@@ -8,10 +8,16 @@ cd /tmp
 
 ls -lang
 
-cd nss-3.19.2/cmd
-make -j4
-cd ..
-# tree
+rm -rf nss-3.19.2
+rm nss-3.19.2-with-nspr-4.10.8.tar.gz
+
+wget https://ftp.mozilla.org/pub/mozilla.org/security/nss/releases/NSS_3_19_2_RTM/src/nss-3.19.2.tar.gz
+
+tar zxf nss-3.19.2.tar.gz
+cd nss-3.19.2
+export NSPR_INCLUDE_DIR=/usr/include/nspr
+make
+
 exit
 
 # find / -name sechash.h -print 2>/dev/null
