@@ -6,8 +6,9 @@ cd /tmp
 
 ls -lang
 
-cd nss-3.19.2/nspr
-./configure --help
+cd nss-3.19.2
+make -j4
+tree
 exit
 
 # find / -name sechash.h -print 2>/dev/null
