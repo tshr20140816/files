@@ -8,6 +8,13 @@ cd /tmp
 
 ls -lang
 
+mkdir rpm
+cd rpm
+wget http://ftp-srv2.kddilabs.jp/Linux/packages/CentOS/6.6/os/x86_64/Packages/rpm-4.8.0-37.el6.x86_64.rpm
+rpm2cpio rpm-4.8.0-37.el6.x86_64.rpm | cpio -idmv
+tree ./
+exit
+
 # mkdir nss
 # cd nss
 # wget http://ftp-srv2.kddilabs.jp/Linux/packages/CentOS/6.6/os/x86_64/Packages/nss-devel-3.16.1-14.el6.x86_64.rpm
