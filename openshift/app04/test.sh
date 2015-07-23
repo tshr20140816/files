@@ -16,7 +16,7 @@ ls -lang
 
 cd /tmp
 
-export CPPFLAGS="-I/usr/include/nspr4 -I/tmp/nss/usr/include"
+export CPPFLAGS="-I/usr/include/nspr4 -I/tmp/nss/usr/include/nss3"
 
 tar jxf rpm-4.8.0.tar.bz2
 cd rpm-4.8.0
