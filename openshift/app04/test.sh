@@ -6,6 +6,10 @@ cd /tmp
 
 quota -s
 
+find / -name nspr.h -print 2>/dev/null
+
+exit
+
 # wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
 tar jxf rpm-4.8.0.tar.bz2
 cd rpm-4.8.0
