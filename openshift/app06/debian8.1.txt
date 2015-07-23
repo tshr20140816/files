@@ -9,6 +9,10 @@ cat /proc/version
 
 # setterm -blank 0 -powersave off -powerdown 0
 
+ipv6
+file-system
+
+
 cd  /tmp
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > /tmp/user_fqdn.txt
 while read LINE
