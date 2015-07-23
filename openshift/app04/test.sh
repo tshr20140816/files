@@ -6,8 +6,8 @@ cd /tmp
 
 quota -s
 
-wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
-tar zxf rpm-4.8.0.tar.bz2
+# wget http://rpm.org/releases/rpm-4.8.x/rpm-4.8.0.tar.bz2
+tar jxf rpm-4.8.0.tar.bz2
 cd rpm-4.8.0
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/rpm
