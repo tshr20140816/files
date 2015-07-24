@@ -6,11 +6,6 @@ set -x
 
 cd /tmp
 
-rm -rf gcc nss rpm*
-rm -rf ${OPENSHIFT_DATA_DIR}/fuse
-
-ls -lang
-
-ls -lang ${OPENSHIFT_DATA_DIR}
+ls -lang ${OPENSHIFT_LOG_DIR}
 
 quota -s
