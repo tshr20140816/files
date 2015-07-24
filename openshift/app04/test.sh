@@ -6,13 +6,10 @@ set -x
 
 cd /tmp
 
-ls -lang ${OPENSHIFT_LOG_DIR}
+wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2
+tar zxf gcc-4.9.3.tar.bz2
 
-cd ${OPENSHIFT_LOG_DIR}
-
-rm cron_minutely.log-*
-rm distcc*
-rm php_*
-rm ccache*
+cd gcc*
+rm -rf libjava
 
 quota -s
