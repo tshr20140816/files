@@ -49,3 +49,5 @@ cd work
 ../configure
 time make
 make install
+
+apt-get install smbclient lxde scim scim-anthy sysv-rc-conf wakeonlan wpasupplicant firmware-b43-installer b43-fwcutter
