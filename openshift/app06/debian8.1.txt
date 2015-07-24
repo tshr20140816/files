@@ -11,7 +11,25 @@ cat /proc/version
 # setterm -blank 0 -powersave off -powerdown 0
 
 ipv6
-file-system
+
+Amateur Radio Support → x
+File Systems → M
+Partition Types → x
+Device Drivers → M
+Prompt for development and/or incomplete code/drivers → x
+Cpuset support → x
+Symmetric multi-processing support → x
+High Memory Support → ...
+Preemption Model → Preemptible Kernel
+Preempt the Big Kernel Lock → o
+Timer Frequency → 1000
+Kernel Hacking → x
+
+deb http://ftp.jp.debian.org/debian jessie-updates main contrib
+deb http://ftp.jp.debian.org/debian jessie-backports main contrib non-free
+
+deb http://ftp.jp.debian.org/debian squeeze-lts main contrib non-free
+deb-src http://ftp.jp.debian.org/debian squeeze-lts main contrib non-free
 
 
 cd  /tmp
