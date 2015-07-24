@@ -44,7 +44,7 @@ export CFLAGS="-march=native -O2"
 export CXXFLAGS="$CFLAGS"
 cd /usr/src
 time apt-get source libc6
-cd libc*
+cd glibc*
 mkdir work
 cd work
 ../configure --disable-sanity-checks
