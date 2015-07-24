@@ -47,7 +47,7 @@ time apt-get source libc6
 cd libc*
 mkdir work
 cd work
-../configure
+../configure --disable-sanity-checks
 time make
 make install
 
