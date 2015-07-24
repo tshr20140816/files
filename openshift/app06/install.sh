@@ -34,3 +34,18 @@ export CXXFLAGS="$CFLAGS"
 
 make-kpkg clean
 time make-kpkg --rootcmd fakeroot --initrd --revision=$(date '+%Y%m%d%H') kernel_image kernel_headers modules_image
+
+cd ..
+ls -la
+# dpkg -i ...
+
+export CFLAGS="-march=native -O2"
+export CXXFLAGS="$CFLAGS"
+cd /usr/src
+time apt-get source libc6
+cd libc*
+mkdir work
+cd work
+../configure
+time make
+make install
