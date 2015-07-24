@@ -39,6 +39,7 @@ cd ..
 ls -la
 # dpkg -i ...
 
+apt-get install gawk
 export CFLAGS="-march=native -O2"
 export CXXFLAGS="$CFLAGS"
 cd /usr/src
