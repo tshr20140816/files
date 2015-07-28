@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.07.28 wordpress_version 4.2.2-ja → 4.2.3-ja
 # 2015.07.20 cacti_version 0.8.8e → 0.8.8f
 # 2015.07.13 cacti_version 0.8.8d → 0.8.8e
 # 2015.07.11 php_version 5.6.10 → 5.6.11
@@ -77,7 +78,7 @@ ruby_version 2.1.6
 tcl_version 8.6.3
 ttrss_version 1.15.3
 webalizer_version 2.23-08
-wordpress_version 4.2.2-ja
+wordpress_version 4.2.3-ja
 xz_version 5.2.1
 __HEREDOC__
 
