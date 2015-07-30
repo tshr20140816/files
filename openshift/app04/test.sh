@@ -8,7 +8,7 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 
 rm -rf /tmp/gomi
-# rm -rf gcc
+rm -rf gcc
 rm -rf gmp*
 rm -rf mpfr*
 rm -rf mpc*
