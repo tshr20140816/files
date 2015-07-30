@@ -54,5 +54,7 @@ fi
 
 cd /tmp
 
+time tar Jcf tmp_gcc.tar.xz gcc
+
 quota -s
 ls -lang
