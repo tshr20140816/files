@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# 1414
-
 set -x
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
