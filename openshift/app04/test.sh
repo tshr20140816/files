@@ -9,8 +9,16 @@ export CXXFLAGS="${CFLAGS}"
 
 ls -lang ${OPENSHIFT_DATA_DIR}
 
-# wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
-# wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
+cd ${OPENSHIFT_DATA_DIR}
+
+rm -rf openssh-6.9p1
+rm openssh-6.9p1.tar.gz
+rm hpn-V_6_9_P1.tar.gz
+
+cd /tmp
+
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
+wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
 
 rm -rf openssh-6.9p1
 
