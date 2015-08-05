@@ -10,7 +10,7 @@ delegate9.9.13.tar.gz http://www.delegate.org/anonftp/DeleGate/delegate9.9.13.ta
 distcc-3.1.tar.bz2 https://distcc.googlecode.com/files/distcc-3.1.tar.bz2
 expect5.45.tar.gz http://downloads.sourceforge.net/project/expect/Expect/5.45/expect5.45.tar.gz
 fio-2.2.9.tar.bz2 http://brick.kernel.dk/snaps/fio-2.2.9.tar.bz2
-httpd-2.2.29.tar.bz2 http://ftp.riken.jp/net/apache//httpd/httpd-2.2.29.tar.bz2
+httpd-2.2.31.tar.bz2 http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2
 ipagp00303.zip http://ipafont.ipa.go.jp/ipafont/ipagp00303.php
 libmemcached-1.0.18.tar.gz https://launchpad.net/libmemcached/1.0/1.0.18/+download/libmemcached-1.0.18.tar.gz
 logrotate-3.8.8.tar.gz https://fedorahosted.org/releases/l/o/logrotate/logrotate-3.8.8.tar.gz
