@@ -5,15 +5,32 @@ set -x
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
-wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
+ls -lang ${OPENSHIFT_DATA_DIR}
+
+# wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
+# wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
+
+rm -rf openssh-6.9p1
+
+ls -lang
 
 tar zxf openssh-6.9p1.tar.gz
 tar zxf hpn-V_6_9_P1.tar.gz -C ./openssh-6.9p1
 
 cd openssh-6.9p1
 ./configure --help
-./configure
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/openssh \
+ --infodir=${OPENSHIFT_TMP_DIR}/gomi \
+ --mandir=${OPENSHIFT_TMP_DIR}/gomi \
+ --docdir=${OPENSHIFT_TMP_DIR}/gomi \
+ --disable-largefile \
+ --disable-etc-default-login \
+ --disable-utmp \
+ --disable-utmpx \
+ --disable-wtmp \
+ --disable-wtmpx \
+ --with-lastlog=${OPENSHIFT_LOG_DIR}/ssh_lastlog.log
 time make -j4
 
 exit
