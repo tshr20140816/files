@@ -5,6 +5,19 @@ set -x
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
+wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
+
+tar zxf openssh-6.9p1.tar.gz
+tar zxf hpn-V_6_9_P1.tar.gz -C ./openssh-6.9p1
+
+cd openssh-6.9p1
+./configure --help
+./configure
+time make -j4
+
+exit
+
 cd /tmp
 
 rm -rf /tmp/gomi
