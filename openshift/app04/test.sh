@@ -11,14 +11,10 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 
 cd ${OPENSHIFT_DATA_DIR}
 
-rm -rf openssh-6.9p1
-rm openssh-6.9p1.tar.gz
-rm hpn-V_6_9_P1.tar.gz
-
 cd /tmp
 
-wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
-wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
+# wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
+# wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
 
 rm -rf openssh-6.9p1
 
@@ -42,6 +38,10 @@ cd openssh-6.9p1
  --disable-wtmpx \
  --with-lastlog=${OPENSHIFT_LOG_DIR}/ssh_lastlog.log
 time make -j4
+make install
+
+cd ${OPENSHIFT_DATA_DIR}/openssh
+tree ./
 
 exit
 
