@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.08.05 apache_version 2.2.29 → 2.2.31
 # 2015.07.28 wordpress_version 4.2.2-ja → 4.2.3-ja
 # 2015.07.20 cacti_version 0.8.8e → 0.8.8f
 # 2015.07.13 cacti_version 0.8.8d → 0.8.8e
@@ -52,7 +53,7 @@ set -x
 # 2014.09.23 first
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
-apache_version 2.2.29
+apache_version 2.2.31
 axel_version 2.4
 baikal_version 0.2.7
 cacti_version 0.8.8f
