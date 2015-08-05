@@ -5,7 +5,7 @@
 set -x
 
 cd ${OPENSHIFT_DATA_DIR}/openssh
-./bin/ssh --version
+./bin/ssh -V
 
 exit
 
