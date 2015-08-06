@@ -18,7 +18,7 @@ cd ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-# wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
 # wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
 
 rm -rf openssh-6.9p1
