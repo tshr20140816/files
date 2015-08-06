@@ -28,9 +28,10 @@ wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
 ls -lang
 
 tar zxvf openssh-6.9p1.tar.gz
-tar zxvf hpn-V_6_9_P1.tar.gz -C ./openssh-6.9p1
+tar zxvf hpn-V_6_9_P1.tar.gz
+mv -f openssh-portable-hpn-V_6_9_P1/* openssh-6.9p1/
 
-cd openssh-6.9p1
+cd openssh-6.9p1/
 ls -lang
 ./configure --help
 ./configure \
