@@ -25,8 +25,8 @@ rm -rf openssh-6.9p1
 
 ls -lang
 
-tar zxf openssh-6.9p1.tar.gz
-tar zxf hpn-V_6_9_P1.tar.gz -C ./openssh-6.9p1
+tar zxvf openssh-6.9p1.tar.gz
+tar zxvf hpn-V_6_9_P1.tar.gz -C ./openssh-6.9p1
 
 cd openssh-6.9p1
 ./configure --help
