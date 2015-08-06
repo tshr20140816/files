@@ -4,10 +4,10 @@
 
 set -x
 
-cd ${OPENSHIFT_DATA_DIR}/openssh
-./bin/ssh -V
+# cd ${OPENSHIFT_DATA_DIR}/openssh
+# ./bin/ssh -V
 
-exit
+# exit
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
