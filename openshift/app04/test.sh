@@ -18,10 +18,12 @@ cd ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
-wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
-# wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
-
+rm -f openssh-6.9p1.tar.gz
+rm -f hpn-V_6_9_P1.tar.gz
 rm -rf openssh-6.9p1
+
+wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
+wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
 
 ls -lang
 
@@ -29,6 +31,7 @@ tar zxvf openssh-6.9p1.tar.gz
 tar zxvf hpn-V_6_9_P1.tar.gz -C ./openssh-6.9p1
 
 cd openssh-6.9p1
+ls -lang
 ./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/openssh \
