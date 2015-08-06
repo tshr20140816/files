@@ -29,5 +29,5 @@ phpicalendar-2.4_20100615.tar.bz2 http://downloads.sourceforge.net/project/phpic
 redmine-2.6.6.tar.gz http://www.redmine.org/releases/redmine-2.6.6.tar.gz
 tcl8.6.3-src.tar.gz http://prdownloads.sourceforge.net/tcl/tcl8.6.3-src.tar.gz
 webalizer-2.23-08-src.tar.bz2 ftp://ftp.mrunix.net/pub/webalizer/webalizer-2.23-08-src.tar.bz2
-wordpress-4.2.3-ja.tar.gz https://ja.wordpress.org/wordpress-4.2.3-ja.tar.gz
+wordpress-4.2.4-ja.tar.gz https://ja.wordpress.org/wordpress-4.2.4-ja.tar.gz
 xz-5.2.1.tar.xz http://tukaani.org/xz/xz-5.2.1.tar.xz
