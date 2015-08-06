@@ -18,6 +18,7 @@ cd ${OPENSHIFT_DATA_DIR}
 
 cd /tmp
 
+rm -rf ${OPENSHIFT_DATA_DIR}/openssh
 rm -f openssh-6.9p1.tar.gz
 rm -f hpn-V_6_9_P1.tar.gz
 rm -rf openssh-6.9p1
@@ -51,6 +52,9 @@ make install
 
 cd ${OPENSHIFT_DATA_DIR}/openssh
 tree ./
+
+cd ${OPENSHIFT_DATA_DIR}/openssh
+./bin/ssh -V
 
 exit
 
