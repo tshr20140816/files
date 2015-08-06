@@ -29,7 +29,7 @@ ls -lang
 
 tar zxf openssh-6.9p1.tar.gz
 tar zxf hpn-V_6_9_P1.tar.gz
-cp -f openssh-portable-hpn-V_6_9_P1/* openssh-6.9p1/
+cp -rf openssh-portable-hpn-V_6_9_P1/* openssh-6.9p1/
 
 cd openssh-6.9p1/
 ls -lang
