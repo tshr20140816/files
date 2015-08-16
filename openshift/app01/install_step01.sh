@@ -62,7 +62,7 @@ baikal_version 0.2.7
 cacti_version 0.8.8f
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
-ccache_version 3.2.2
+ccache_version 3.2.3
 distcc_version 3.1
 delegate_version 9.9.13
 expect_version 5.45
