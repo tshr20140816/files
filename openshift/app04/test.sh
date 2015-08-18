@@ -10,7 +10,13 @@ rm -f jessie*.txt
 
 wget https://packages.debian.org/jessie-backports/allpackages?format=txt.gz -O jessie_backports.txt
 
+wc -l jessie_backports.txt
+
 head jessie_backports.txt
+
+cat jessie_backports.txt | grep -v "virtual package" > jessie_backports.txt
+
+wc -l jessie_backports.txt
 
 tail -n +3 jessie_backports.txt
 
