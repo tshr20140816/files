@@ -9,10 +9,11 @@ cd /tmp
 rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
 mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
-chmod 700 ${GNUPGHOME}
+# chmod 700 ${GNUPGHOME}
 ls -la ${GNUPGHOME}
 gpg --list-keys
 echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
+chmod 600 ${GNUPGHOME}/gpg.conf
 
 # rm -f cadaver*
 # wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz
