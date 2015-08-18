@@ -8,9 +8,11 @@ cd /tmp
 
 rm -f jessie_kernel.txt
 
-wget https://packages.debian.org/jessie/kernel/ -O jessie_kernel.txt
+wget https://packages.debian.org/jessie-backports/allpackages?format=txt.gz -O jessie_backports.txt
 
-cat jessie_kernel.txt
+head jessie_backports.txt
+
+tail -n +3 jessie_backports.txt
 
 exit
 
