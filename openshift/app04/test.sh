@@ -8,7 +8,9 @@ cd /tmp
 
 rm -f jessie*.txt
 
-wget https://packages.debian.org/jessie-backports/allpackages?format=txt.gz -O jessie_backports.txt
+wget https://packages.debian.org/jessie-backports/allpackages?format=txt.gz -O jessie_backports.txt.gz
+
+gunzip jessie_backports.txt.gz
 
 wc -l jessie_backports.txt
 
