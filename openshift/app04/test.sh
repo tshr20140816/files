@@ -29,6 +29,12 @@ wc -l jessie_backports.txt
 
 cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 100 | head -n 1 > aa.txt
 cat aa.txt
+cat aa.txt | cut -c13 > a2.txt
+cat aa.txt | cut -c9 >> a2.txt
+cat aa.txt | cut -c68 >> a2.txt
+cat aa.txt | cut -c2 >> a2.txt
+cat aa.txt | cut -c1 >> a2.txt
+cat a2.txt
 
 ls -lang
 
