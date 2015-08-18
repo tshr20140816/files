@@ -6,6 +6,16 @@ set -x
 
 cd /tmp
 
+rm -f jessie_kernel.txt
+
+wget https://packages.debian.org/jessie/kernel/ -O jessie_kernel.txt
+
+cat jessie_kernel.txt
+
+exit
+
+cd /tmp
+
 rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
 mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
