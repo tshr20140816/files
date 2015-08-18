@@ -224,11 +224,13 @@ pushd ${OPENSHIFT_DATA_DIR}/download_files > /dev/null
 
 # * gpg *
 
-rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
-mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
+rm -rf ${GNUPGHOME}
+mkdir ${GNUPGHOME}
+chmod 700 ${GNUPGHOME}
 gpg --list-keys
 echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
+chmod 600 ${GNUPGHOME}/gpg.conf
 
 # * まずミラーサーバよりダウンロード *
 
@@ -420,7 +422,7 @@ if [ "${mirror_server}" != "none" ]; then
     # cadaver
     wget -t1 ${mirror_server}/cadaver-${cadaver_version}.tar.gz
     wget http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz.asc
-    gpg --recv-keys $(gpg --verify cadaver-${cadaver_version}.tar.gz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    gpg --recv-keys $(gpg --verify cadaver-${cadaver_version}.tar.gz.asc 2>&1 | grep "DSA key ID" | awk '{print $NF}')
     if [ $(gpg --verify cadaver-${cadaver_version}.tar.gz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
