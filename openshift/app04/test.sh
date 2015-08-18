@@ -23,7 +23,9 @@ grep -v "virtual package" jessie_backports.txt > jessie_backports2.txt
 
 wc -l jessie_backports2.txt
 
-tail -n +3 jessie_backports2.txt
+tail -n +5 jessie_backports2.txt > jessie_backports.txt
+
+wc -l jessie_backports.txt
 
 exit
 
