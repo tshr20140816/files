@@ -271,7 +271,7 @@ if [ "${mirror_server}" != "none" ]; then
     # phpicalendar
     wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2 &
     # axel
-    wget -t1 ${mirror_server}/axel-${axel_vesrion}.tar.bz2 &
+    wget -t1 ${mirror_server}/axel-${axel_version}.tar.bz2 &
     # ld.gold
     wget -t1 ${mirror_server}/ld.gold &
     wait
