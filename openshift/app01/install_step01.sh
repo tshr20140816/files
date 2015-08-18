@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.08.19 ruby_version 2.1.6 → 2.1.7
 # 2015.08.17 ccache_version 3.2.2 → 3.2.3
 # 2015.08.07 php_version 5.6.11 → 5.6.12
 # 2015.08.06 wordpress_version 4.2.3-ja → 4.2.4-ja
@@ -78,7 +79,7 @@ openssh_version 6.8p1
 php_version 5.6.12
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.6
-ruby_version 2.1.6
+ruby_version 2.1.7
 tcl_version 8.6.3
 ttrss_version 1.15.3
 webalizer_version 2.23-08
