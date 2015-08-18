@@ -22,6 +22,8 @@ gpg --import KEYS
 
 gpg --verify cadaver-0.23.3.tar.gz.asc
 
+cat cadaver-0.23.3.tar.gz.asc
+
 exit
 
 # cd ${OPENSHIFT_DATA_DIR}/openssh
