@@ -17,7 +17,9 @@ wc -l jessie_backports.txt
 head jessie_backports.txt
 
 # cat jessie_backports.txt | grep -v "virtual package" > jessie_backports.txt
-cat jessie_backports.txt | grep -v "virtual package"
+# cat jessie_backports.txt | grep -v "virtual package"
+# grep -v "virtual package" jessie_backports.txt > jessie_backports.txt
+grep -v "virtual package" jessie_backports.txt
 
 wc -l jessie_backports.txt
 
