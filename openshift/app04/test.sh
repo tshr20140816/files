@@ -4,6 +4,17 @@
 
 set -x
 
+cd /tmp
+
+rm -f cadaver*
+
+wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz
+wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz.asc
+
+gpg --verify cadaver-0.23.3.tar.gz.asc
+
+exit
+
 # cd ${OPENSHIFT_DATA_DIR}/openssh
 # ./bin/ssh -V
 
