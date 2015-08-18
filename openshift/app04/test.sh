@@ -14,6 +14,8 @@ ls -la ${GNUPGHOME}
 gpg --list-keys
 echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 
+gpg --import KEYS
+
 # rm -f cadaver*
 # wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz
 # wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz.asc
