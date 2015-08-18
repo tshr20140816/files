@@ -6,7 +6,7 @@ set -x
 
 cd /tmp
 
-rm -f jessie_kernel.txt
+rm -f jessie*.txt
 
 wget https://packages.debian.org/jessie-backports/allpackages?format=txt.gz -O jessie_backports.txt
 
