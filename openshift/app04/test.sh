@@ -20,6 +20,10 @@ echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 
 gpg --verify cadaver-0.23.3.tar.gz.asc 2>&1
 
+gpg --recv-keys 0E44CF0C
+
+gpg --verify cadaver-0.23.3.tar.gz.asc 2>&1
+
 cat cadaver-0.23.3.tar.gz.asc
 
 exit
