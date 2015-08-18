@@ -9,13 +9,13 @@ cd /tmp
 rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
 mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
+ls -lang ${GNUPGHOME}
 gpg --list-keys
 echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
 
-rm -f cadaver*
-
-wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz
-wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz.asc
+# rm -f cadaver*
+# wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz
+# wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz.asc
 
 gpg --verify cadaver-0.23.3.tar.gz.asc
 
