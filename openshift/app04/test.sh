@@ -27,6 +27,9 @@ tail -n +5 jessie_backports2.txt > jessie_backports.txt
 
 wc -l jessie_backports.txt
 
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1 > aa.txt
+cat aa.txt
+
 ls -lang
 
 exit
