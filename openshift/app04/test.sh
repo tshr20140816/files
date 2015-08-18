@@ -27,6 +27,8 @@ tail -n +5 jessie_backports2.txt > jessie_backports.txt
 
 wc -l jessie_backports.txt
 
+ls -lang
+
 exit
 
 cd /tmp
