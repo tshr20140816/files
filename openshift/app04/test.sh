@@ -6,9 +6,20 @@ set -x
 
 cd /tmp
 
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 200 | head -n 1 > aa.txt
+# cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 200 | head -n 1 > aa.txt
 
 cat aa.txt
+p=$(cat aa.txt | cut -c40)
+p1=${p1}${p}
+p=$(cat aa.txt | cut -c10)
+p1=${p1}${p}
+p=$(cat aa.txt | cut -c12)
+p1=${p1}${p}
+p=$(cat aa.txt | cut -c43)
+p1=${p1}${p}
+p=$(cat aa.txt | cut -c53)
+p1=${p1}${p}
+echo ${p1}
 
 exit
 
@@ -91,13 +102,7 @@ tail -n +5 jessie_backports2.txt > jessie_backports.txt
 wc -l jessie_backports.txt
 
 # cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 100 | head -n 1 > aa.txt
-cat aa.txt
-cat aa.txt | cut -c13 > a2.txt
-cat aa.txt | cut -c9 >> a2.txt
-cat aa.txt | cut -c68 >> a2.txt
-cat aa.txt | cut -c2 >> a2.txt
-cat aa.txt | cut -c1 >> a2.txt
-cat a2.txt
+
 
 ls -lang
 
