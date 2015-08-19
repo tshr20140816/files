@@ -11,6 +11,9 @@ cd /tmp
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+rm -rf /tmp/gcc
+rm -rf /tmp/gomi
+
 # wget http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-4.3.2.tar.bz2
 tar jxf gmp-4.3.2.tar.bz2
 cd gmp-4.3.2
