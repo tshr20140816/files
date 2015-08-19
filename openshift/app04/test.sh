@@ -6,6 +6,8 @@ set -x
 
 quota -s
 
+rm -rf /tmp/gcc-4.4.7
+
 cd /tmp
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
@@ -63,10 +65,11 @@ cd /tmp
 ls -lang
 
 cd gcc-4.4.7
+make clean
 ./configure --help
 ./configure --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc --prefix=/tmp/gcc4 \
  --infodir=/tmp/gomi --mandir=/tmp/gomi
-time make -j2
+nohup make -j2 > makelog.log
 make install
 rm -rf /tmp/gcc-4.4.7
 
