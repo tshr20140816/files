@@ -364,6 +364,7 @@ pushd libmemcached-${libmemcached_version} > /dev/null
  --disable-sasl \
  --enable-jobserver=12
 
+wait
 # cat config.log
 
 # 3機がけ前提 1機あたり2プロセス
