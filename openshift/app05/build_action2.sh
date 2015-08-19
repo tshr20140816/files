@@ -254,10 +254,9 @@ time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 #  | ${OPENSHIFT_DATA_DIR}/xz/bin/xz -f --memlimit=256MiB \
 #  > ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/files/
+rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 } &
 popd > /dev/null
-
-rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
@@ -364,7 +363,6 @@ pushd libmemcached-${libmemcached_version} > /dev/null
  --disable-sasl \
  --enable-jobserver=12
 
-wait
 # cat config.log
 
 # 3機がけ前提 1機あたり2プロセス
@@ -490,6 +488,8 @@ do
     user_fqdn=$(echo "${line}")
     ssh -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1
 done
+
+wait
 
 rm -f ${OPENSHIFT_TMP_DIR}/build_now
 
