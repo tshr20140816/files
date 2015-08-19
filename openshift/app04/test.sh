@@ -19,13 +19,9 @@ p=$(cat aa.txt | cut -c43)
 p1=${p1}${p}
 p=$(cat aa.txt | cut -c53)
 p1=${p1}${p}
-echo ${p1}
+echo ${p1} > p1.txt
 
-exit
-
-cd /tmp
-
-build_server_password=$(head -n 1 a2.txt)
+build_server_password=$(head -n 1 p1.txt)
 
 # ***** build request *****
 
