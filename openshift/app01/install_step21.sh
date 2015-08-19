@@ -73,6 +73,8 @@ ruby -v | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ python -V" >> infrastructure.txt
 python -V | tee -a infrastructure.txt
+echo "\$ ssh -V" >> infrastructure.txt
+ssh -V | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ mysql --help" >> infrastructure.txt
 mysql --help | tee -a infrastructure.txt
