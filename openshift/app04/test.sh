@@ -59,13 +59,12 @@ cd /tmp
 # wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.4.7/gcc-core-4.4.7.tar.bz2
 # wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.4.7/gcc-g++-4.4.7.tar.bz2
 
-# tar jxf gcc-core-4.4.7.tar.bz2
-# tar jxf gcc-g++-4.4.7.tar.bz2
+tar jxf gcc-core-4.4.7.tar.bz2
+tar jxf gcc-g++-4.4.7.tar.bz2
 
 ls -lang
 
 cd gcc-4.4.7
-make clean
 ./configure --help
 ./configure --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc --prefix=/tmp/gcc4 \
  --infodir=/tmp/gomi --mandir=/tmp/gomi
