@@ -52,7 +52,6 @@ tar jxf gcc-core-4.4.7.tar.bz2
 tar jxf gcc-g++-4.4.7.tar.bz2
 
 cd gcc-4.4.7
-make clean
 ./configure --help
 ./configure --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc --prefix=/tmp/gcc \
  --infodir=/tmp/gomi --mandir=/tmp/gomi
