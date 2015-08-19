@@ -312,7 +312,8 @@ else
      --with-gettext=${OPENSHIFT_DATA_DIR}/php \
      --with-zend-vm=GOTO
 
-    time make -j12
+    # time make -j12
+    time make
     ccache --show-stats
     popd > /dev/null
     tar Jcf maked_php-${php_version}.tar.xz php-${php_version}
