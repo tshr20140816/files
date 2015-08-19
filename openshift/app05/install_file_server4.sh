@@ -120,6 +120,7 @@ tar zxf openssh-${openssh_version}.tar.gz
 # gzip -d openssh-6.3p1-hpnssh14v2.diff.gz
 # gzip -d openssh-6.6p1-hpnssh14v5.diff.gz
 tar zxf hpn-V_6_9_P1.tar.gz
+cp -rf openssh-portable-hpn-V_6_9_P1/* openssh-6.9p1/
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 # patch -p1 < ../openssh-6.3p1-hpnssh14v2.diff
