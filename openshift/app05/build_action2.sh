@@ -178,14 +178,14 @@ time make -j12
 popd > /dev/null
 
 ccache --show-stats
-{
+
 rm -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2
 # xz としたいが圧縮に時間が掛かってボトルネックとなるので bz2 とする
 time tar jcf ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 httpd-${apache_version}
 mv -f ${app_uuid}_maked_httpd-${apache_version}.tar.bz2 ${OPENSHIFT_DATA_DIR}/files/
 rm -rf httpd-${apache_version}
 rm -f httpd-${apache_version}.tar.bz2
-} &
+
 popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
