@@ -55,7 +55,7 @@ cd gcc-4.4.7
 ./configure --help
 ./configure --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc --prefix=/tmp/gcc \
  --infodir=/tmp/gomi --mandir=/tmp/gomi
-nohup make -j2
+make -j2
 make install
 rm -rf /tmp/gcc-4.4.7
 
