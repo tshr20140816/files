@@ -11,6 +11,7 @@ cd /tmp
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
+if [ 0 -eq 1 ]; then
 rm -rf /tmp/gcc
 rm -rf /tmp/gomi
 
@@ -47,6 +48,7 @@ cd mpc-1.0.3
 time make -j4with-mpfr
 make install
 rm -rf /tmp/mpc-1.0.3
+fi
 
 cd /tmp
 
@@ -60,7 +62,13 @@ ls -lang
 
 cd gcc-4.4.7
 ./configure --help
-./configure --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc
+./configure --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc --prefix=/tmp/gcc4 \
+ --infodir=/tmp/gomi --mandir=/tmp/gomi
+time make -j2
+make install
+rm -rf /tmp/gcc-4.4.7
+
+tree /tmp/gcc4
 
 quota -s
 exit
