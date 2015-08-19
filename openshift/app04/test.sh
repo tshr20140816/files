@@ -56,8 +56,8 @@ fi
 
 cd /tmp
 
-# wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.4.7/gcc-core-4.4.7.tar.bz2
-# wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.4.7/gcc-g++-4.4.7.tar.bz2
+wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.4.7/gcc-core-4.4.7.tar.bz2
+wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.4.7/gcc-g++-4.4.7.tar.bz2
 
 tar jxf gcc-core-4.4.7.tar.bz2
 tar jxf gcc-g++-4.4.7.tar.bz2
