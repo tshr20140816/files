@@ -531,6 +531,8 @@ require valid-user
 
 AddType "text/plain; charset=UTF-8" .log
 
+AddDefaultCharset utf-8
+
 # IndexOptions +FancyIndexing
 
 # Force https
