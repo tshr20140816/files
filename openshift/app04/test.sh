@@ -4,6 +4,22 @@
 
 set -x
 
+quota -s
+
+cd /tmp
+
+wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.4.7/gcc-4.4.7.tar.bz2
+
+tar jxf gcc-4.4.7.tar.bz2
+
+quota -s
+
+cd gcc-4.4.7
+./configure --help
+./configure
+
+exit
+
 cd /tmp
 
 build_server_password=$(head -n 1 p1.txt)
