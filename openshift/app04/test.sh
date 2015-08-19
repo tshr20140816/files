@@ -19,6 +19,7 @@ cd gmp-4.3.2
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j4
 make install
+rm -rf /tmp/gmp-4.3.2
 
 cd /tmp
 
@@ -30,6 +31,7 @@ cd mpfr-2.4.2
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j4
 make install
+rm -rf /tmp/mpfr-2.4.2
 
 cd /tmp
 
@@ -41,6 +43,7 @@ cd mpc-1.0.3
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j4with-mpfr
 make install
+rm -rf /tmp/mpc-1.0.3
 
 cd /tmp
 
