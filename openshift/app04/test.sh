@@ -6,21 +6,6 @@ set -x
 
 cd /tmp
 
-# cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 200 | head -n 1 > aa.txt
-
-cat aa.txt
-p=$(cat aa.txt | cut -c40)
-p1=${p1}${p}
-p=$(cat aa.txt | cut -c10)
-p1=${p1}${p}
-p=$(cat aa.txt | cut -c12)
-p1=${p1}${p}
-p=$(cat aa.txt | cut -c43)
-p1=${p1}${p}
-p=$(cat aa.txt | cut -c53)
-p1=${p1}${p}
-echo ${p1} > p1.txt
-
 build_server_password=$(head -n 1 p1.txt)
 
 # ***** build request *****
@@ -65,7 +50,7 @@ sed -i -e "s|__CADAVER_VERSION__|${cadaver_version}|g" build_request.xml
 sed -i -e "s|__PHP_VERSION__|${php_version}|g" build_request.xml
 
 mirror_server="https://files4-20150524.rhcloud.com/files/"
-mirror_server="https://files3-20150207.rhcloud.com/files/"
+# mirror_server="https://files3-20150207.rhcloud.com/files/"
 
 if [ ${build_server_password} != 'none' ]; then
     wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
