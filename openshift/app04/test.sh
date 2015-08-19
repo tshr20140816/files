@@ -11,7 +11,7 @@ cd /tmp
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-wget http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-4.3.2.tar.bz2
+# wget http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-4.3.2.tar.bz2
 tar jxf gmp-4.3.2.tar.bz2
 cd gmp-4.3.2
 ./configure --help
@@ -22,7 +22,7 @@ make install
 
 cd /tmp
 
-wget http://ftp.jaist.ac.jp/pub/GNU/mpfr/mpfr-2.4.2.tar.xz
+# wget http://ftp.jaist.ac.jp/pub/GNU/mpfr/mpfr-2.4.2.tar.xz
 tar Jxf mpfr-2.4.2.tar.xz
 cd mpfr-2.4.2
 ./configure --help
@@ -33,7 +33,7 @@ make install
 
 cd /tmp
 
-wget http://ftp.jaist.ac.jp/pub/GNU/mpc/mpc-1.0.3.tar.gz
+# wget http://ftp.jaist.ac.jp/pub/GNU/mpc/mpc-1.0.3.tar.gz
 tar zxf mpc-1.0.3.tar.gz
 cd mpc-1.0.3
 ./configure --help
