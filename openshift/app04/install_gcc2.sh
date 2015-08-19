@@ -54,7 +54,7 @@ tar jxf gcc-g++-4.4.7.tar.bz2
 cd gcc-4.4.7
 ./configure --help
 ./configure --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc --prefix=/tmp/gcc \
- --infodir=/tmp/gomi --mandir=/tmp/gomi
+ --infodir=/tmp/gomi --mandir=/tmp/gomi --disable-multilib
 time make
 make install
 rm -rf /tmp/gcc-4.4.7
