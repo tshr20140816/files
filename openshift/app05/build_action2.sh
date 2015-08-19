@@ -382,6 +382,8 @@ rm -f libmemcached-${libmemcached_version}.tar.gz
 
 popd > /dev/null
 
+wait
+
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
 # ***** cadaver *****
