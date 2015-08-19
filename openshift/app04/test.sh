@@ -6,6 +6,10 @@ set -x
 
 quota -s
 
+ps auwx
+
+exit
+
 rm -rf /tmp/gcc-4.4.7
 
 cd /tmp
