@@ -8,8 +8,13 @@ quota -s
 
 cd /tmp
 
-rm -f gcc-4.4.7.tar.bz2
-rm -rf gcc-4.4.7
+http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.4.7/gcc-core-4.4.7.tar.bz2
+http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.4.7/gcc-g++-4.4.7.tar.bz2
+
+tar jxf gcc-core-4.4.7.tar.bz2
+tar jxf gcc-g++-4.4.7.tar.bz2
+
+ls -lang
 
 quota -s
 exit
