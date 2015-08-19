@@ -45,7 +45,7 @@ cd mpc-1.0.3
 ./configure --help
 ./configure --prefix=/tmp/gcc --disable-shared --enable-static --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
-time make -j4with-mpfr
+time make -j4
 make install
 rm -rf /tmp/mpc-1.0.3
 fi
