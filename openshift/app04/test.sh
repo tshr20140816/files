@@ -6,7 +6,7 @@ set -x
 
 cd /tmp
 
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 100 | head -n 1 > aa.txt
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 200 | head -n 1 > aa.txt
 
 cat aa.txt
 
