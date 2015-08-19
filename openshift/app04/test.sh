@@ -11,7 +11,9 @@ cd /tmp
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-if [ 1 -eq 1 ]; then
+tree /tmp/gcc
+
+if [ 0 -eq 1 ]; then
 rm -rf /tmp/gcc
 rm -rf /tmp/gomi
 
@@ -49,8 +51,6 @@ time make -j4
 make install
 rm -rf /tmp/mpc-1.0.3
 fi
-
-exit
 
 cd /tmp
 
