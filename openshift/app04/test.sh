@@ -166,31 +166,6 @@ ls -lang
 
 exit
 
-cd /tmp
-
-rm -rf ${OPENSHIFT_DATA_DIR}/.gnupg
-mkdir ${OPENSHIFT_DATA_DIR}/.gnupg
-export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
-chmod 700 ${GNUPGHOME}
-ls -la ${GNUPGHOME}
-gpg --list-keys
-echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
-chmod 600 ${GNUPGHOME}/gpg.conf
-
-# rm -f cadaver*
-# wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz
-# wget http://www.webdav.org/cadaver/cadaver-0.23.3.tar.gz.asc
-
-gpg --verify cadaver-0.23.3.tar.gz.asc 2>&1
-
-gpg --recv-keys 0E44CF0C
-
-gpg --verify cadaver-0.23.3.tar.gz.asc 2>&1
-
-cat cadaver-0.23.3.tar.gz.asc
-
-exit
-
 # cd ${OPENSHIFT_DATA_DIR}/openssh
 # ./bin/ssh -V
 
