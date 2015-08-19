@@ -13,6 +13,21 @@ set -x
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) start"
 
+cd ${OPENSHIFT_DATA_DIR}/files
+rm -f passenger-5.0.10.gem
+rm -f passenger-5.0.11.gem
+rm -f passenger-5.0.13.gem
+rm -f passenger-5.0.14.gem
+rm -f bundler-1.10.4.gem
+rm -f bundler-1.10.5.gem
+rm -f php-5.6.10.tar.xz
+rm -f php-5.6.11.tar.xz
+rm -f wordpress-4.2.3-ja.tar.gz
+rm -f *_maked_*
+
+cd ${OPENSHIFT_LOG_DIR}
+rm -f cron_minutely.log-*
+
 # 多重起動チェック
 while :
 do
