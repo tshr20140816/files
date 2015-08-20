@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # rhc app create xxx diy-0.1 cron-1.4 --server openshift.redhat.com
-# wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/install_distcc.sh
+# wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/install_distcc.sh
 # chmod +x install_distcc.sh
 
 set -x
@@ -21,6 +21,7 @@ web_beacon_server_user=${2}
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
+if [ 0 -eq 1 ]; then
 # ***** fio *****
 
 # *** install ***
@@ -66,6 +67,7 @@ do
     rm -rf ${OPENSHIFT_DATA_DIR}/work
 done
 popd > /dev/null
+fi
 
 # ***** distcc *****
 
