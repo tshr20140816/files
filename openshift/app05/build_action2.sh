@@ -247,7 +247,7 @@ fi
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./.rbenv/ -name '*' -type f -print0 | xargs -0i -t -n 1 sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
-{
+
 rm -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 # time tar cf - ./.rbenv \
@@ -255,7 +255,7 @@ time tar Jcf ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ./.rbenv
 #  > ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz
 mv -f ${app_uuid}_maked_ruby_${ruby_version}_rbenv.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf ${OPENSHIFT_DATA_DIR}.rbenv
-} &
+
 popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
@@ -326,14 +326,14 @@ else
 fi
 
 find ./php-${php_version} -name '*' -type f -print0 | xargs -0i -t -n 1 sed -i -e "s|${OPENSHIFT_DATA_DIR}|${data_dir}|g" {}
-{
+
 rm -f ${app_uuid}_maked_php-${php_version}.tar.xz
 time tar Jcf ${app_uuid}_maked_php-${php_version}.tar.xz php-${php_version}
 mv -f ${app_uuid}_maked_php-${php_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
 rm -rf php-${php_version}
 
 unlink apache
-} &
+
 popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
