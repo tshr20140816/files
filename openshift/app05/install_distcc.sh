@@ -96,6 +96,10 @@ export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 export DISTCC_LOG=/dev/null
 
+# export PATH="${OPENSHIFT_TMP_DIR}/gcc/bin:$PATH"
+# export CC=gcc-493
+# export CXX=gcc-493
+
 exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
 chmod 755 ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd_start
