@@ -110,7 +110,7 @@ Host *
   LogLevel QUIET
 #  LogLevel DEBUG3
   Protocol 2
-  Ciphers arcfour256,arcfour128
+  Ciphers arcfour256,arcfour128,aes128-ctr
   AddressFamily inet
   PreferredAuthentications publickey
   PasswordAuthentication no
