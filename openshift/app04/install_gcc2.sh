@@ -52,7 +52,7 @@ mkdir work
 cd work
 ../configure --help
 ../configure --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc --prefix=/tmp/gcc \
- --infodir=/tmp/gomi --mandir=/tmp/gomi --enable-multilib --enable-stage1-languages=c,c++ \
+ --infodir=/tmp/gomi --mandir=/tmp/gomi --disable-multilib --enable-stage1-languages=c,c++ \
  --enable-stage1-checking=c,c++ target=x86_64-unknown-linux-gnu \
  --disable-shared --enable-static \
  --program-suffix=-493 \
