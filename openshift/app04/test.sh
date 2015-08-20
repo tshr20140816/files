@@ -12,3 +12,19 @@ export CC=gcc-493
 export CXX=gcc-493
 
 gcc-493 --version
+
+mkdir lynx
+cd lynx
+
+wget https://files3-20150207.rhcloud.com/files/lynx2.8.7.tar.gz
+
+tar zxf lynx2.8.7.tar.gz --strip-components=1
+
+./configure --help
+./configure
+
+time make -j4
+
+cd /tmp
+
+rm -rf lynx
