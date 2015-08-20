@@ -18,6 +18,7 @@ fi
 
 web_beacon_server=${1}
 web_beacon_server_user=${2}
+# url_gcc493_tar_xz=${3}
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
@@ -69,6 +70,13 @@ do
 done
 popd > /dev/null
 fi
+
+# ***** gcc 4.9.3 *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+# wget ${url_gcc493_tar_xz}
+# tar Jxf gcc493.tar.xz
+popd > /dev/null
 
 # ***** distcc *****
 
