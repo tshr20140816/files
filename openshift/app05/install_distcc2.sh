@@ -70,3 +70,5 @@ chmod 755 ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd_start
 
 curl --digest -u ${web_beacon_server_user}:$(date +%Y%m%d%H) -F "url=https://${OPENSHIFT_APP_DNS}/" \
  ${web_beacon_server}createwebcroninformation
+
+quota -s
