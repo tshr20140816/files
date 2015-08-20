@@ -12,6 +12,7 @@ if [ $# -ne 2 ]; then
     set +x
     echo "arg1 : web_beacon_server https://xxx/"
     echo "arg2 : web beacon server user (digest auth)"
+    echo "arg3 : url for gcc493.tar.xz"
     exit
 fi
 
@@ -97,6 +98,7 @@ export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 export DISTCC_LOG=/dev/null
 
 # export PATH="${OPENSHIFT_TMP_DIR}/gcc/bin:$PATH"
+# export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/gcc/lib64:$LD_LIBRARY_PATH"
 # export CC=gcc-493
 # export CXX=gcc-493
 
