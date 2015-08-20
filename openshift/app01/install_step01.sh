@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.08.20 wordpress_version 4.2.4-ja → 4.3-ja
 # 2015.08.19 tcl_version 8.6.3 → 8.6.4
 # 2015.08.19 ruby_version 2.1.6 → 2.1.7
 # 2015.08.17 ccache_version 3.2.2 → 3.2.3
@@ -84,7 +85,7 @@ ruby_version 2.1.7
 tcl_version 8.6.4
 ttrss_version 1.15.3
 webalizer_version 2.23-08
-wordpress_version 4.2.4-ja
+wordpress_version 4.3-ja
 xz_version 5.2.1
 __HEREDOC__
 
