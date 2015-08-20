@@ -62,3 +62,5 @@ rm -rf /tmp/gcc-4.9.3
 
 cd /tmp
 tree /tmp/gcc
+
+# http://ameblo.jp/sora8492/entry-11838796776.html
