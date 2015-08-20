@@ -54,6 +54,7 @@ cd work
 ../configure --with-gmp=/tmp/gcc --with-mpfr=/tmp/gcc --prefix=/tmp/gcc \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --enable-multilib --enable-stage1-languages=c,c++ \
  --enable-stage1-checking=c,c++ target=x86_64-unknown-linux-gnu \
+ --disable-shared --enable-static \
  --disable-libjava --disable-libgo --disable-libgfortran --enable-languages=c,c++
 time make -j2
 make install
