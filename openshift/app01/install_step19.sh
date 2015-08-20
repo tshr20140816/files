@@ -905,7 +905,7 @@ pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 for shell_name in redmine_repository_check update_feeds
 do
     if [ ${hour} -ne 1 ]; then
-        function030 "cron=minutely&shell_name=${shell_name}"
+        # function030 "cron=minutely&shell_name=${shell_name}"
         touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
         ./${shell_name}.sh >> ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1
         ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
@@ -915,7 +915,7 @@ done
 # for shell_name in another_server_check beacon memcached_status mrtg passenger_status process_status keep_process
 for shell_name in beacon memcached_status mrtg passenger_status process_status keep_process
 do
-    function030 "cron=minutely&shell_name=${shell_name}"
+    # function030 "cron=minutely&shell_name=${shell_name}"
     touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
     ./${shell_name}.sh >>${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} 2>&1
     ln -s -f ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday} ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log
