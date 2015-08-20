@@ -61,7 +61,8 @@ ruby --version
 # export PASSENGER_TEMP_DIR=${OPENSHIFT_DATA_DIR}/tmp
 # too long unix socket path (max: 107bytes)
 # export PASSENGER_TEMP_DIR=${OPENSHIFT_TMP_DIR}/PassengerTempDir
-find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -i ruby {} --verbose
+# find ${OPENSHIFT_DATA_DIR}/.gem/gems/ -name passenger-status -type f | xargs -i ruby {} --verbose
+${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-status --verbose
 
 # ***** restart *****
 
