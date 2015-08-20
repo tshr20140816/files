@@ -76,8 +76,9 @@ export CCACHE_MAXSIZE=300M
 # export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_LOGFILE=/dev/null
 
-# export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
-export DISTCC_LOG=/dev/null
+rm -f ${OPENSHIFT_LOG_DIR}/distcc.log
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
+# export DISTCC_LOG=/dev/null
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
 export DISTCC_HOSTS="${tmp_string}"
