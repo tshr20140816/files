@@ -12,7 +12,7 @@ if [ $# -ne 3 ]; then
     set +x
     echo "arg1 : web_beacon_server https://xxx/"
     echo "arg2 : web beacon server user (digest auth)"
-    echo "arg3 : url for gcc493.tar.xz"
+    echo "arg3 : url for gcc493.tar.xz https://xxx/gcc493.tar.xz"
     exit
 fi
 
