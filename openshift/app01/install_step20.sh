@@ -24,6 +24,7 @@ find ${OPENSHIFT_DATA_DIR} -name *.sh -type f -print0 | xargs -0i bash -n {} \
 find ${OPENSHIFT_REPO_DIR}/.openshift/cron/ -name *.sh -type f -print0 | xargs -0i bash -n {} \
  >> ${OPENSHIFT_LOG_DIR}/shell_syntax_error.log 2>&1
 popd > /dev/null
+touch ${OPENSHIFT_LOG_DIR}/shell_syntax_error.txt
 echo "shell syntax error count : $(wc -l ${OPENSHIFT_LOG_DIR}/shell_syntax_error.txt)" \
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
