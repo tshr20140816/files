@@ -25,7 +25,7 @@ export CXXFLAGS="${CFLAGS}"
 
 # *** install ***
 
-fio_version=2.2.8
+fio_version=2.2.9
 
 rm -rf ${OPENSHIFT_TMP_DIR}/fio-${fio_version}
 rm -rf ${OPENSHIFT_DATA_DIR}/fio
