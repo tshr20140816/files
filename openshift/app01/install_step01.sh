@@ -327,10 +327,11 @@ if [ "${mirror_server}" != "none" ]; then
     # redmine
     wget -t1 ${mirror_server}/redmine-${redmine_version}.tar.gz
     tarball_md5=$(md5sum redmine-${redmine_version}.tar.gz | cut -d ' ' -f 1)
-    redmine_md5=$(curl http://www.redmine.org/projects/redmine/wiki/Download -s \
-     | grep -e md5 \
-     | grep -e "redmine-${redmine_version}.tar.gz" \
-     | awk '{print substr(substr($0, index($0, "md5: ")), 6, 32)}')
+    # redmine_md5=$(curl http://www.redmine.org/projects/redmine/wiki/Download -s \
+    #  | grep -e md5 \
+    #  | grep -e "redmine-${redmine_version}.tar.gz" \
+    #  | awk '{print substr(substr($0, index($0, "md5: ")), 6, 32)}')
+    redmine_md5=$(curl -Ls https://www.redmine.org/releases/redmine-${redmine_version}.tar.gz.md5 | cut -d ' ' -f 1)
     if [ "${tarball_md5}" != "${redmine_md5}" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
@@ -587,7 +588,14 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing redmine-${redmine_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://www.redmine.org/releases/redmine-${redmine_version}.tar.gz
+        wget https://www.redmine.org/releases/redmine-${redmine_version}.tar.gz
+        tarball_md5=$(md5sum redmine-${redmine_version}.tar.gz | cut -d ' ' -f 1)
+        redmine_md5=$(curl -Ls https://www.redmine.org/releases/redmine-${redmine_version}.tar.gz.md5 | cut -d ' ' -f 1)
+        if [ "${tarball_md5}" != "${redmine_md5}" ]; then
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) redmine md5 unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+            rm redmine-${redmine_version}.tar.gz
+        fi
     fi
     [ -f redmine-${redmine_version}.tar.gz ] || files_exists=0
 
