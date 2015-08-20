@@ -9,6 +9,7 @@ set -x
 export TZ=JST-9
 
 if [ $# -ne 2 ]; then
+# if [ $# -ne 3 ]; then
     set +x
     echo "arg1 : web_beacon_server https://xxx/"
     echo "arg2 : web beacon server user (digest auth)"
