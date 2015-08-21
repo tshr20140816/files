@@ -38,17 +38,3 @@ time make-kpkg --rootcmd fakeroot --initrd --revision=$(date '+%Y%m%d%H') kernel
 cd ..
 ls -la
 # dpkg -i ...
-
-apt-get install gawk
-export CFLAGS="-march=native -O2"
-export CXXFLAGS="$CFLAGS"
-cd /usr/src
-time apt-get source libc6
-cd glibc*
-mkdir work
-cd work
-../configure --disable-sanity-checks
-time make
-make install
-
-apt-get install smbclient lxde scim scim-anthy sysv-rc-conf wakeonlan wpasupplicant firmware-b43-installer b43-fwcutter
