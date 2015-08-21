@@ -8,8 +8,10 @@ sed -i -e "s|#HandleLidSwitch=suspend|HandleLidSwitch=ignore|g" /etc/systemd/log
 
 apt-get install distcc openssh-client rhc
 
+cd ~
+mkdir .ssh
 cd ~/.ssh
-mv config config.org
+# mv config config.org
 cat << __HEREDOC__ > config
 Host *
   IdentityFile ~/.ssh/id_rsa
