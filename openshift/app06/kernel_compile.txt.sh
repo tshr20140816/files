@@ -32,6 +32,8 @@ __HEREDOC__
 rhc setup --server openshift.redhat.com --create-token -l ${openshift_account} -p ${openshift_password}
 # ★ アカウント分繰り返す
 # ★ ~/distcc_hosts.txt を作る
+# ${user_fqdn}/4:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start
+# セパレータはスペース
 
 rm -f /var/log/distcc.log
 export DISTCC_LOG=/var/log/distcc.log
