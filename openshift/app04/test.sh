@@ -15,18 +15,17 @@ export CXXFLAGS="${CFLAGS}"
 
 gcc-493 --version
 
-mkdir lynx
-cd lynx
+wget https://files3-20150207.rhcloud.com/files/httpd-2.2.31.tar.bz2
 
-wget https://files3-20150207.rhcloud.com/files/lynx2.8.7.tar.gz
+tar jxf httpd-2.2.31.tar.bz2
 
-tar zxf lynx2.8.7.tar.gz --strip-components=1
+cd httpd-2.2.31
 
 ./configure --help
-./configure
+time ./configure
 
 time make -j4
 
 cd /tmp
 
-rm -rf lynx
+rm -rf httpd-2.2.31
