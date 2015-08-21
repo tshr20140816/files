@@ -66,12 +66,13 @@ ls -lang /boot/config*
 # cp /boot/config-* ./.config
 cp /boot/config-$(uname -r) ./.config
 make menuconfig
-# Pentium-III/Celeron
+# Pentium-4
 # http://www.itmedia.co.jp/enterprise/articles/0708/21/news018_2.html
 # http://d.hatena.ne.jp/cupnes/20110226/1298713968
 
-export CONCURRENCY_LEVEL=2
-export CFLAGS="-march=native -O2"
+export CONCURRENCY_LEVEL=3
+# export CFLAGS="-march=native -O2"
+export CFLAGS="-march=pentium4 -O2"
 export CXXFLAGS="$CFLAGS"
 
 make-kpkg clean
