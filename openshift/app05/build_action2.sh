@@ -166,6 +166,7 @@ pushd httpd-${apache_version} > /dev/null
  --prefix=${data_dir}/apache \
  --mandir=${tmp_dir}/man \
  --docdir=${tmp_dir}/doc \
+ --infodir=${tmp_dir}/info \
  --disable-imagemap \
  --disable-status \
  --disable-userdir \
