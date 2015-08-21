@@ -26,7 +26,12 @@ pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
- --mandir=${OPENSHIFT_TMP_DIR}/man
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --disable-Werror
 time make -j$(grep -c -e processor /proc/cpuinfo)
 
 popd > /dev/null
+
+cd /tmp
+rm -f distcc-${distcc_version}.tar.bz2*
+rm -rf distcc-${distcc_version}
