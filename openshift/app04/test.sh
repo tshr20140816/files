@@ -22,7 +22,17 @@ tar jxf httpd-2.2.31.tar.bz2
 cd httpd-2.2.31
 
 ./configure --help
-time ./configure
+time ./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --infodir=${OPENSHIFT_TMP_DIR}/info \
+ --disable-imagemap \
+ --disable-status \
+ --disable-userdir \
+ --disable-include \
+ --disable-authz-groupfile \
+ --enable-mods-shared='all proxy'
 
 time make -j4
 
