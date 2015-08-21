@@ -15,6 +15,7 @@ export CXXFLAGS="${CFLAGS}"
 
 gcc-493 --version
 
+rm -f httpd-2.2.31.tar.bz2*
 wget https://files3-20150207.rhcloud.com/files/httpd-2.2.31.tar.bz2
 
 tar jxf httpd-2.2.31.tar.bz2
