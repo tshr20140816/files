@@ -15,29 +15,18 @@ export CXXFLAGS="${CFLAGS}"
 
 gcc-493 --version
 
-rm -f httpd-2.2.31.tar.bz2*
-wget https://files3-20150207.rhcloud.com/files/httpd-2.2.31.tar.bz2
+distcc_version=3.1
 
-tar jxf httpd-2.2.31.tar.bz2
-
-cd httpd-2.2.31
-
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
+tar jxf distcc-${distcc_version}.tar.bz2
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 ./configure --help
-time ./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/apache \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/distcc \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
- --disable-imagemap \
- --disable-status \
- --disable-userdir \
- --disable-include \
- --disable-authz-groupfile \
- --enable-mods-shared='all proxy'
+ --mandir=${OPENSHIFT_TMP_DIR}/man
+time make -j$(grep -c -e processor /proc/cpuinfo)
 
-time make -j4
-
-cd /tmp
-
-rm -rf httpd-2.2.31
-rm -f httpd-2.2.31.tar.bz2
+popd > /dev/null
