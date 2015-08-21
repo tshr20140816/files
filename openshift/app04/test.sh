@@ -40,3 +40,4 @@ time make -j4
 cd /tmp
 
 rm -rf httpd-2.2.31
+rm -f httpd-2.2.31.tar.bz2
