@@ -259,13 +259,13 @@ perl -pi -e 's/(^ *ErrorLog.+$)/# $1/g' conf/httpd.conf
 cat << '__HEREDOC__' > conf/custom.conf
 # spdy
 
-LoadModule ssl_module modules/mod_ssl_with_npn.so
-LoadModule spdy_module modules/mod_spdy.so
-<IfModule spdy_module>
-    SpdyEnabled on
-    #SpdyMaxThreadsPerProcess 30
-    #SpdyMaxStreamsPerConnection 100
-</IfModule>
+# LoadModule ssl_module modules/mod_ssl_with_npn.so
+# LoadModule spdy_module modules/mod_spdy.so
+# <IfModule spdy_module>
+#     SpdyEnabled on
+#     #SpdyMaxThreadsPerProcess 30
+#     #SpdyMaxStreamsPerConnection 100
+# </IfModule>
 
 # tune
 
