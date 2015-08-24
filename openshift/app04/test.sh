@@ -2,7 +2,17 @@
 
 set -x
 
-rm hoge.txt
+cd /tmp
+
+wget http://mirror.centos.org/centos/6.7/os/x86_64/Packages/glibc-devel-2.12-1.166.el6.i686.rpm
+
+rpm -ivh --prefix=/tmp/lib32 glibc-devel-2.12-1.166.el6.i686.rpm
+
+tree /tmp/lib32
+
+rm glibc-devel-2.12-1.166.el6.i686.rpm
+
+exit
 
 quota -s
 
