@@ -138,6 +138,7 @@ cat << '__HEREDOC__' >> conf/custom.conf
     Allow from all
 </Directory>
 __HEREDOC__
+sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" conf/custom.conf
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configtest" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 ./bin/apachectl configtest | tee -a ${OPENSHIFT_LOG_DIR}/install.log
