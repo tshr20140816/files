@@ -14,14 +14,15 @@ quota -s
 
 cd /tmp
 
-export PATH="${OPENSHIFT_TMP_DIR}/gcc/bin:$PATH"
-export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/gcc/lib64:$LD_LIBRARY_PATH"
-export CC=gcc-493
-export CXX=gcc-493
-export CFLAGS="-m32 -O2 -march=native -fomit-frame-pointer -s -pipe"
+# export PATH="${OPENSHIFT_TMP_DIR}/gcc/bin:$PATH"
+# export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/gcc/lib64:$LD_LIBRARY_PATH"
+# export CC=gcc-493
+# export CXX=gcc-493
+# export CFLAGS="-m32 -O2 -march=native -fomit-frame-pointer -s -pipe"
+export CFLAGS="-m32"
 export CXXFLAGS="${CFLAGS}"
 
-gcc-493 --version
+# gcc-493 --version
 
 distcc_version=3.1
 
