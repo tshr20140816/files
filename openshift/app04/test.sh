@@ -3,15 +3,18 @@
 set -x
 
 cd /tmp
+mkdir work
+cd work
 
 wget http://mirror.centos.org/centos/6.7/os/x86_64/Packages/glibc-devel-2.12-1.166.el6.i686.rpm
 
-rpm -ivh --prefix=/tmp/lib32 glibc-devel-2.12-1.166.el6.i686.rpm
+# rpm -ivh --prefix=/tmp/lib32 glibc-devel-2.12-1.166.el6.i686.rpm
+rpm2cpio glibc-devel-2.12-1.166.el6.i686.rpm | cpio -idmv
 
-tree /tmp/lib32
+tree /tmp/work
 
 rm glibc-devel-2.12-1.166.el6.i686.rpm
-rm -rf /tmp/lib32
+rm -rf /tmp/work
 
 exit
 
