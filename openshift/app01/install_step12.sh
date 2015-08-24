@@ -293,7 +293,7 @@ cat ${OPENSHIFT_TMP_DIR}/passenger.conf >> ${OPENSHIFT_DATA_DIR}/apache/conf/cus
 
 cat << '__HEREDOC__' >> ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 
-PassengerLogLevel 7
+# PassengerLogLevel 7
 PassengerLogFile __OPENSHIFT_LOG_DIR__passenger.log
 
 RailsBaseURI /redmine
