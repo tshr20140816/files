@@ -2,13 +2,7 @@
 
 set -x
 
-python -V
-
-ssh -V 2>&1 | tee hoge.txt
-
-cat hoge.txt
-
-# exit
+rm hoge.txt
 
 quota -s
 
