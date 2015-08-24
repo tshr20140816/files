@@ -2,6 +2,10 @@
 
 set -x
 
+ssh -V
+
+exit
+
 quota -s
 
 cd /tmp
