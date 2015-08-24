@@ -14,9 +14,7 @@ rpm2cpio glibc-devel-2.12-1.166.el6.i686.rpm | cpio -idmv
 tree /tmp/work
 
 rm glibc-devel-2.12-1.166.el6.i686.rpm
-rm -rf /tmp/work
-
-exit
+# rm -rf /tmp/work
 
 quota -s
 
@@ -24,6 +22,7 @@ cd /tmp
 
 # export PATH="${OPENSHIFT_TMP_DIR}/gcc/bin:$PATH"
 # export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/gcc/lib64:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/tmp/work/usr/lib:$LD_LIBRARY_PATH"
 # export CC=gcc-493
 # export CXX=gcc-493
 # export CFLAGS="-m32 -O2 -march=native -fomit-frame-pointer -s -pipe"
@@ -47,10 +46,11 @@ pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
  --without-avahi \
  --disable-Werror
 cat config.log
-# time make -j$(grep -c -e processor /proc/cpuinfo)
+time make -j$(grep -c -e processor /proc/cpuinfo)
 
 popd > /dev/null
 
 cd /tmp
 rm -f distcc-${distcc_version}.tar.bz2*
 rm -rf distcc-${distcc_version}
+rm -rf /tmp/work
