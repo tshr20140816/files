@@ -2,7 +2,11 @@
 
 set -x
 
-ssh -V 2>&1
+python -V
+
+ssh -V 2>&1 | tee hoge.txt
+
+cat hoge.txt
 
 exit
 
