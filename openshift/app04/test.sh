@@ -11,6 +11,7 @@ rpm -ivh --prefix=/tmp/lib32 glibc-devel-2.12-1.166.el6.i686.rpm
 tree /tmp/lib32
 
 rm glibc-devel-2.12-1.166.el6.i686.rpm
+rm -rf /tmp/lib32
 
 exit
 
