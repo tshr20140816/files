@@ -2,7 +2,7 @@
 
 set -x
 
-ssh -V
+ssh -V 2>&1
 
 exit
 
