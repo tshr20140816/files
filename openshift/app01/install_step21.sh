@@ -73,10 +73,10 @@ echo "\$ ruby -v" >> infrastructure.txt
 ruby -v | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ python -V" >> infrastructure.txt
-python -V | tee -a infrastructure.txt
+python -V 2>&1 | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ ssh -V" >> infrastructure.txt
-ssh -V | tee -a infrastructure.txt
+ssh -V 2>&1 | tee -a infrastructure.txt
 echo >> infrastructure.txt
 echo "\$ mysql --help" >> infrastructure.txt
 mysql --help | tee -a infrastructure.txt
