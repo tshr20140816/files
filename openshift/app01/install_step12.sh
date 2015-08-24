@@ -292,6 +292,10 @@ echo >> ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 cat ${OPENSHIFT_TMP_DIR}/passenger.conf >> ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 
 cat << '__HEREDOC__' >> ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
+
+PassengerLogLevel 7
+PassengerLogFile __OPENSHIFT_LOG_DIR__passenger.log
+
 RailsBaseURI /redmine
 PassengerBaseURI /redmine
 # PassengerTempDir __OPENSHIFT_DATA_DIR__tmp
@@ -319,6 +323,7 @@ __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 perl -pi -e 's/__OPENSHIFT_APP_DNS__/$ENV{OPENSHIFT_APP_DNS}/g' ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 perl -pi -e 's/__OPENSHIFT_TMP_DIR__/$ENV{OPENSHIFT_TMP_DIR}/g' ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
+perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' ${OPENSHIFT_DATA_DIR}/apache/conf/custom.conf
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configtest" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl configtest | tee -a ${OPENSHIFT_LOG_DIR}/install.log
