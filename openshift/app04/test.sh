@@ -32,6 +32,7 @@ pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --without-avahi \
  --disable-Werror
+cat config.log
 time make -j$(grep -c -e processor /proc/cpuinfo)
 
 popd > /dev/null
