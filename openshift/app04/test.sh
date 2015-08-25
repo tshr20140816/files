@@ -2,29 +2,6 @@
 
 set -x
 
-ld --help
-ld --version
-
-exit
-
-cd /tmp
-
-wget http://ftpmirror.gnu.org/binutils/binutils-2.25.1.tar.bz2
-ls -lkg --full-time binutils-2.25.1.tar.bz2
-ls --help
-tar jxf binutils-2.25.1.tar.bz2
-
-cd binutils-2.25.1
-./configure --help
-cd gold
-./configure --help
-cd /tmp
-
-rm -rf binutils-2.25.1
-rm -f binutils-2.25.1.tar.bz2
-
-exit
-
 cd /tmp
 mkdir work
 cd work
@@ -59,35 +36,29 @@ export LD_LIBRARY_PATH="/tmp/work/usr/lib:$LD_LIBRARY_PATH"
 export CFLAGS="-m32"
 export CXXFLAGS="${CFLAGS}"
 # export LD=ld.gold
-export PATH="/tmp/work/usr/bin:$PATH"
-export CC="gcc -m32"
-export LD="gcc -m32"
-export AS="gcc -c -m32"
-export LDFLAGS="-L/tmp/work/usr/lib"
+# export PATH="/tmp/work/usr/bin:$PATH"
+# export CC="gcc -m32"
+# export LD="gcc -m32"
+# export AS="gcc -c -m32"
+# export LDFLAGS="-L/tmp/work/usr/lib"
 
 # gcc-493 --version
 
-distcc_version=3.1
-
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
-tar jxf distcc-${distcc_version}.tar.bz2
+wget https://files3-20150207.rhcloud.com/files/httpd-2.2.31.tar.bz2
+tar jxf httpd-2.2.31.tar.bz2
 popd > /dev/null
-pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
+cd /tmp
+cd httpd-2.2.31
 ./configure --help
 # cat configure
-./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/distcc \
- --infodir=${OPENSHIFT_TMP_DIR}/info \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --without-avahi \
- --disable-Werror
+./configure
 cat config.log
 time make -j$(grep -c -e processor /proc/cpuinfo)
 
 popd > /dev/null
 
 cd /tmp
-rm -f distcc-${distcc_version}.tar.bz2*
-rm -rf distcc-${distcc_version}
+rm -f httpd-2.2.31.tar.bz2
+rm -rf httpd-2.2.31
 rm -rf /tmp/work
