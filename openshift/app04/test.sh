@@ -5,7 +5,8 @@ set -x
 cd /tmp
 
 wget http://ftpmirror.gnu.org/binutils/binutils-2.25.1.tar.bz2
-
+ls -lh binutils-2.25.1.tar.bz2
+ls --help
 tar jxf binutils-2.25.1.tar.bz2
 
 cd binutils-2.25.1
