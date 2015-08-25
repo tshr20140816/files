@@ -11,6 +11,10 @@ wget http://mirror.centos.org/centos/6.7/os/x86_64/Packages/glibc-devel-2.12-1.1
 # rpm -ivh --prefix=/tmp/lib32 glibc-devel-2.12-1.166.el6.i686.rpm
 rpm2cpio glibc-devel-2.12-1.166.el6.i686.rpm | cpio -idmv
 
+mkdir /tmp/work/usr/bin
+wget https://files3-20150207.rhcloud.com/files/ld.gold
+mv ld.gold ./usr/bin/
+
 tree /tmp/work
 
 rm glibc-devel-2.12-1.166.el6.i686.rpm
@@ -28,6 +32,8 @@ export LD_LIBRARY_PATH="/tmp/work/usr/lib:$LD_LIBRARY_PATH"
 # export CFLAGS="-m32 -O2 -march=native -fomit-frame-pointer -s -pipe"
 export CFLAGS="-m32"
 export CXXFLAGS="${CFLAGS}"
+export LD=ld.gold
+export PATH="/tmp/work/usr/bin:$PATH"
 
 # gcc-493 --version
 
