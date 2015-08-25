@@ -56,8 +56,6 @@ cd httpd-2.2.31
 cat config.log
 time make -j$(grep -c -e processor /proc/cpuinfo)
 
-popd > /dev/null
-
 cd /tmp
 rm -f httpd-2.2.31.tar.bz2
 rm -rf httpd-2.2.31
