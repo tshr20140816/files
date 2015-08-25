@@ -13,6 +13,7 @@ cd binutils-2.25.1
 cd ..
 
 rm -rf binutils-2.25.1
+rm -f binutils-2.25.1.tar.bz2
 
 exit
 
