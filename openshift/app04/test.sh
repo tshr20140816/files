@@ -46,6 +46,7 @@ tar jxf distcc-${distcc_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 ./configure --help
+cat configure
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
