@@ -2,6 +2,11 @@
 
 set -x
 
+ld --help
+ld --version
+
+exit
+
 cd /tmp
 
 wget http://ftpmirror.gnu.org/binutils/binutils-2.25.1.tar.bz2
