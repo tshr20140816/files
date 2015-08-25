@@ -16,7 +16,7 @@ rpm2cpio glibc-devel-2.12-1.166.el6.i686.rpm | cpio -idmv
 # chmod +x ld.gold
 # mv ld.gold ./usr/bin/
 
-tree /tmp/work
+# tree /tmp/work
 
 rm glibc-devel-2.12-1.166.el6.i686.rpm
 # rm -rf /tmp/work
@@ -25,7 +25,7 @@ quota -s
 
 cd /tmp
 
-tree /tmp/gcc
+# tree /tmp/gcc
 
 # export PATH="${OPENSHIFT_TMP_DIR}/gcc/bin:$PATH"
 # export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/gcc/lib64:$LD_LIBRARY_PATH"
@@ -53,8 +53,9 @@ cd httpd-2.2.31
 ./configure --help
 # cat configure
 ./configure
+cd srclib/apr
 cat config.log
-time make -j$(grep -c -e processor /proc/cpuinfo)
+# time make -j$(grep -c -e processor /proc/cpuinfo)
 
 cd /tmp
 rm -f httpd-2.2.31.tar.bz2
