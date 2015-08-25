@@ -13,6 +13,7 @@ rpm2cpio glibc-devel-2.12-1.166.el6.i686.rpm | cpio -idmv
 
 mkdir /tmp/work/usr/bin
 wget https://files3-20150207.rhcloud.com/files/ld.gold
+chmod +x ld.gold
 mv ld.gold ./usr/bin/
 
 tree /tmp/work
