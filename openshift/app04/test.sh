@@ -25,6 +25,8 @@ quota -s
 
 cd /tmp
 
+tree /tmp/gcc
+
 # export PATH="${OPENSHIFT_TMP_DIR}/gcc/bin:$PATH"
 # export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/gcc/lib64:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH="/tmp/work/usr/lib:$LD_LIBRARY_PATH"
