@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 0852
+
 set -x
 
 cd ${OPENSHIFT_REPO_DIR}
