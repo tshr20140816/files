@@ -5,13 +5,15 @@ set -x
 cd /tmp
 
 wget http://ftpmirror.gnu.org/binutils/binutils-2.25.1.tar.bz2
-ls -lh binutils-2.25.1.tar.bz2
+ls -lkg --full-time binutils-2.25.1.tar.bz2
 ls --help
 tar jxf binutils-2.25.1.tar.bz2
 
 cd binutils-2.25.1
 ./configure --help
-cd ..
+cd gold
+./configure --help
+cd /tmp
 
 rm -rf binutils-2.25.1
 rm -f binutils-2.25.1.tar.bz2
