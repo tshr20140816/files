@@ -1,9 +1,14 @@
 <?php
 // https://packages.debian.org/sid/
 
-$xml = simplexml_load_file("https://packages.debian.org/sid/");
+$dom = new DOMDocument('1.0', 'UTF-8');
+$dom->preserveWhiteSpace = false;
+$dom->formatOutput = true;
+$dom->load("https://packages.debian.org/sid/");
+ 
+$xpath = new DOMXPath($dom);
+ 
+$result = $xpath->query("//a");
 
-echo $xml;
-
-var_dump((string) $xml->body->div->div->a); 
+var_dump($result);
 ?>
