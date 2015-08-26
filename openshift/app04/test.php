@@ -12,8 +12,9 @@ while( ! feof($fp)){
   if($start_flag && $buffer === '<h1>List of sections in "sid"</h1>'){
     break;
   }
-  if(preg_match("/ href=/", $buffer)){
+  if(preg_match('/ href="(.+?)"/', $buffer, $matchs)){
     echo $buffer;
+    echo $matchs[1];
   }
 }
 fclose($fp);
