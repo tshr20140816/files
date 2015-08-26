@@ -20,3 +20,7 @@ wget https://tenv-20150207.rhcloud.com/test.php
 
 cat test.php
 rm test.php
+
+cd ${OPENSHIFT_REPO_DIR}
+
+ls -lang
