@@ -14,7 +14,7 @@ $xml = <<< __HEREDOC__
 __HEREDOC__;
 
 $item_template = <<< __HEREDOC__
-<item><title>{0}</title><link>{1}</link><description /><pubDate /></item>
+<item><title>{0}</title><link /><description /><pubDate /></item>
 __HEREDOC__;
 
 header('Content-type: text/plain; charset=utf-8');
@@ -26,7 +26,7 @@ while( ! feof($fp)){
     list($version, $dummy) = explode(")", $version, 2);
     $version .= ")";
     echo $title . $version . "\n";
-    items[]
+    items[] = str_replace("{0}", $title . $version, $item_template);
   }
 }
 fclose($fp);
