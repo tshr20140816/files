@@ -17,7 +17,7 @@ $item_template = <<< __HEREDOC__
 <item><title>{0}</title><link /><description /><pubDate /></item>
 __HEREDOC__;
 
-header('Content-type: text/plain; charset=utf-8');
+header('Content-type: text/xml; charset=utf-8');
 $fp = gzopen("https://packages.debian.org/jessie-backports/allpackages?format=txt.gz", "r");
 while( ! feof($fp)){
   $buffer = fgets($fp) . "<br>";
@@ -30,4 +30,5 @@ while( ! feof($fp)){
   }
 }
 fclose($fp);
+echo str_replace("{0}", implode($items), $xml);
 ?>
