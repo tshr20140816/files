@@ -6,10 +6,6 @@
 
 set -x
 
-git --version
-
-exit
-
 cd ${OPENSHIFT_REPO_DIR}
 
 rm -f test.php
