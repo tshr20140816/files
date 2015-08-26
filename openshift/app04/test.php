@@ -13,8 +13,8 @@ while( ! feof($fp)){
     break;
   }
   if($start_flag && preg_match('/ href="(.+?)"/', $buffer, $matchs)){
-    echo $buffer;
-    echo $matchs[1];
+    # echo $buffer;
+    echo $matchs[1] . "\n";
   }
 }
 fclose($fp);
