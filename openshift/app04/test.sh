@@ -6,7 +6,7 @@
 
 set -x
 
-git -v
+git --version
 
 exit
 
