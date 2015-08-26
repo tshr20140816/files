@@ -31,7 +31,7 @@ header('Content-type: text/plain; charset=utf-8');
 foreach($section_list as &$section){
   echo "start " . $section . "\n";
   $items = array();
-  $fp = gzopen("https://packages.debian.org/" . $section_list . "/allpackages?format=txt.gz", "r");
+  $fp = gzopen("https://packages.debian.org/" . $section . "/allpackages?format=txt.gz", "r");
   while( ! feof($fp)){
     $buffer = fgets($fp);
     if(preg_match("/\(/", $buffer)){
