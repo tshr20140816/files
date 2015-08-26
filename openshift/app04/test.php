@@ -1,6 +1,7 @@
 <?php
 
 $xml = <<< __HEREDOC__
+<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
   <title>jessie-backports</title>
@@ -16,8 +17,7 @@ $item_template = <<< __HEREDOC__
 <item><title>{0}</title><link /><description /><pubDate /></item>
 __HEREDOC__;
 
-//header('Content-type: text/xml; charset=utf-8');
-header('Content-type: text/html; charset=utf-8');
+header('Content-type: text/xml; charset=utf-8');
 $fp = gzopen("https://packages.debian.org/jessie-backports/allpackages?format=txt.gz", "r");
 while( ! feof($fp)){
   $buffer = fgets($fp) . "<br>";
