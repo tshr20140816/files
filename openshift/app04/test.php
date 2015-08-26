@@ -4,7 +4,9 @@ $fp = gzopen("https://packages.debian.org/jessie-backports/allpackages?format=tx
 while( ! feof($fp)){
   $buffer = fgets($fp) . "<br>";
   if(preg_match("/\(/", $buffer)){
-    list($title, $version, $dummy) = explode(" ", $buffer, 3);
+    list($title, $version) = explode(" ", $buffer, 2);
+    list($version, $dummy) = explode(")", $version, 2);
+    $version .= ")";
     echo $title . $version . "\n";
   }
 }
