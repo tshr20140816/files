@@ -2,9 +2,13 @@
 
 # 1433
 
-ls -lang ${OPENSHIFT_LOG_DIR}
+# ls -lang ${OPENSHIFT_LOG_DIR}
 
 set -x
+
+git -v
+
+exit
 
 cd ${OPENSHIFT_REPO_DIR}
 
