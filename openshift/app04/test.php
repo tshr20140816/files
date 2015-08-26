@@ -30,6 +30,7 @@ header('Content-type: text/plain; charset=utf-8');
 
 foreach($section_list as &$section){
   echo "start " . $section . "\n";
+  $items = array();
   $fp = gzopen("https://packages.debian.org/" . $section_list . "/allpackages?format=txt.gz", "r");
   while( ! feof($fp)){
     $buffer = fgets($fp);
@@ -41,7 +42,7 @@ foreach($section_list as &$section){
       $items[] = str_replace("{0}", $title . $version, $item_template);
     }
   }
-  fclose($fp);
+  gzclose($fp);
   // echo str_replace("{0}", implode($items), $xml);
   $fp = fopen("./" . $section . ".xml", "w");
   $buffer = str_replace("{0}", $section, $xml);
