@@ -1,14 +1,14 @@
 <?php
 // https://packages.debian.org/sid/
 
-$dom = new DOMDocument('1.0', 'UTF-8');
-$dom->preserveWhiteSpace = false;
-$dom->formatOutput = true;
-$dom->load("https://packages.debian.org/sid/");
- 
-$xpath = new DOMXPath($dom);
- 
-$result = $xpath->query("//a");
-
-var_dump($result);
+header('Content-type: text/plain; charset=utf-8');
+$fp = fopen("https://packages.debian.org/sid/", "r");
+while( ! feof($fp)){
+  $buffer = fgets($fp);
+  if(preg_match("/ href=/", $buffer)){
+    // $buffer = preg_replace("<.+?>", "", $buffer);
+    echo $buffer;
+  }
+}
+fclose($fp);
 ?>
