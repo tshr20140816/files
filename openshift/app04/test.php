@@ -26,7 +26,7 @@ while( ! feof($fp)){
     list($version, $dummy) = explode(")", $version, 2);
     $version .= ")";
     echo $title . $version . "\n";
-    items[] = str_replace("{0}", $title . $version, $item_template);
+    $items[] = str_replace("{0}", $title . $version, $item_template);
   }
 }
 fclose($fp);
