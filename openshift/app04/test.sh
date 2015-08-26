@@ -2,6 +2,8 @@
 
 # 1107
 
+ls -lang ${OPENSHIFT_LOG_DIR}
+
 set -x
 
 cd ${OPENSHIFT_REPO_DIR}
