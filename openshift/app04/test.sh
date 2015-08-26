@@ -13,3 +13,10 @@ wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04
 
 php -l test.php
 cat test.php
+
+cd /tmp
+
+wget https://tenv-20150207.rhcloud.com/test.php
+
+cat test.php
+rm test.php
