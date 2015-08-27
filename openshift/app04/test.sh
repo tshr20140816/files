@@ -6,6 +6,14 @@
 
 set -x
 
+cd /tmp
+
+rm test.php
+wget https://tenv-20150207.rhcloud.com/test.php
+rm test.php
+
+exit
+
 cd ${OPENSHIFT_REPO_DIR}
 
 ls -lang
