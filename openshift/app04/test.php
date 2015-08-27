@@ -1,5 +1,6 @@
 <?php
 
+/*
 $xml = <<< __HEREDOC__
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -16,6 +17,7 @@ __HEREDOC__;
 $item_template = <<< __HEREDOC__
 <item><title>{0}</title><link /><description /><pubDate /></item>
 __HEREDOC__;
+*/
 
 $prefix="https://tshrapp3.appspot.com/pagerelay?param=";
 $start_flag = false;
@@ -38,11 +40,12 @@ while( ! feof($fp)){
 $sections[] = "/sid/";
 fclose($fp);
 
-/*
+$time = time();
+
 $mch = curl_multi_init();
 
 foreach($sections as &$section){
-  $url = "https://packages.debian.org" . $section;
+  $url = $prefix . "https://packages.debian.org" . $section;
   $ch = curl_init();
   curl_setopt_array($ch, array(
     CURLOPT_URL => $url,
@@ -55,11 +58,46 @@ do {
   $mrc = curl_multi_exec($mh, $active);
 } while ($mrc == CURLM_CALL_MULTI_PERFORM);
 
+if ( ! $running || $stat !== CURLM_OK) {
+    throw new RuntimeException('GURD. Please Retry.');
+}
 
+$results = array();
 
+do switch (curl_multi_select($mch, $TIMEOUT)) {
+  case -1:
+    do {
+        $stat = curl_multi_exec($mch, $running);
+    } while ($stat === CURLM_CALL_MULTI_PERFORM);
+    continue 2;
+  case 0:
+    continue 2;
+  default:
+    do{
+      $stat = curl_multi_exec($mch, $running);
+    } while ($stat === CURLM_CALL_MULTI_PERFORM);
+    
+    do if ($raised = curl_multi_info_read($mch, $remains)) {
+      $info = curl_getinfo($raised['handle']);
+      echo "{$info['url']}: {$info['http_code']}\n";
+      $response = curl_multi_getcontent($raised['handle']);
+      
+      if ($response === false) {
+        echo 'ERROR!!!', PHP_EOL;
+      } else {
+        // echo $response, PHP_EOL;
+        $results[] = array($info['url'], $response);
+      }
+      curl_multi_remove_handle($mch, $raised['handle']);
+      curl_close($raised['handle']);
+    } while ($remains);
+}
 curl_multi_close($mch);
-*/
 
+$time = time() - $time;
+
+echo var_dump($time);
+/*
 foreach($sections as &$section){
   $start_flag = false;
   $fp = fopen($prefix . "https://packages.debian.org" . $section, "r");
@@ -103,5 +141,5 @@ foreach($pages as &$page){
   fwrite($fp, $buffer);
   fclose($fp);
 }
-
+*/
 ?>
