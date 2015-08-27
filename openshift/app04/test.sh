@@ -10,7 +10,7 @@ cd ${OPENSHIFT_REPO_DIR}
 
 ls -lang
 
-exit
+# exit
 
 cd ${OPENSHIFT_REPO_DIR}
 
