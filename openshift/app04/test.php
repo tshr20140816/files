@@ -54,7 +54,7 @@ foreach($sections as &$section){
     }
     if(preg_match('/ href="(.+?)\/"/', $buffer, $matchs)){
       // echo "https://packages.debian.org" . $section . $matchs[1] . "/\n";
-      $pages[] = list(trim($section, "/"), $matchs[1]);
+      $pages[] = array(trim($section, "/"), $matchs[1]);
     }
   }
   fclose($fp);
