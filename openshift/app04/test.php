@@ -34,11 +34,8 @@ foreach($sections as &$section){
     if(trim($buffer) === '<div id="footer">'){
       break;
     }
-    if(preg_match('/ href="(.+?)"/', $buffer, $matchs)){
-      if(trim($match[1]) == "allpackages"){
-        break;
-      }
-      echo "https://packages.debian.org" . $section . $matchs[1] . "\n";
+    if(preg_match('/ href="(.+?)\/"/', $buffer, $matchs)){
+      echo "https://packages.debian.org" . $section . $matchs[1] . "/\n";
     }
   }
   fclose($fp);
