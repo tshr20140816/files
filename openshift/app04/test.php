@@ -29,11 +29,10 @@ while( ! feof($fp)){
     break;
   }
   if($start_flag && preg_match('/ href="(.+?)"/', $buffer, $matchs)){
-    // echo $buffer;
-    echo $matchs[1] . "\n";
     $items[] = str_replace("{0}", $matchs[1], $item_template);
   }
 }
+$items[] = str_replace("{0}", "/sid/, $item_template);
 fclose($fp);
 
 $fp = fopen("./packages.xml", "w");
