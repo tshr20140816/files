@@ -12,6 +12,8 @@ ls -lang
 
 cd ${OPENSHIFT_REPO_DIR}
 
+rm -f debian.*.xml
+
 rm -f test.php
 wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/test.php
 
