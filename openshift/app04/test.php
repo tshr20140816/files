@@ -1,5 +1,6 @@
 <?php
 
+/*
 $xml = <<< __HEREDOC__
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -16,7 +17,7 @@ __HEREDOC__;
 $item_template = <<< __HEREDOC__
 <item><title>{0}</title><link>https://packages.debian.org/{0}/</link><description /><pubDate /></item>
 __HEREDOC__;
-
+*/
 $start_flag = false;
 $fp = fopen("https://packages.debian.org/sid/", "r");
 while( ! feof($fp)){
@@ -63,6 +64,15 @@ foreach($pages as &$page){
   $section = $page[0];
   $genre = $page[1];
   echo $section . "/" . $genre;
+  $fp = fopen("https://packages.debian.org/" . $section . "/" . $genre . "/", "r");
+  while( ! feof($fp)){
+    $buffer = fgets($fp);
+    if(preg_match('/^<dt>.+dt>$/', $buffer)){
+      $buffer = preg_replace("/<.+?>/", "", $buffer);
+      echo $buffer;
+    }
+  }
+  fclose($fp);
 }
 
 /*
