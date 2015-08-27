@@ -14,7 +14,7 @@ $xml = <<< __HEREDOC__
 __HEREDOC__;
 
 $item_template = <<< __HEREDOC__
-<item><title>{0}</title><link>https://packages.debian.org/{0}/</link><description /><pubDate /></item>
+<item><title>{0}</title><link /><description /><pubDate /></item>
 __HEREDOC__;
 
 $prefix="https://tshrapp3.appspot.com/pagerelay?param=";
@@ -70,7 +70,7 @@ foreach($pages as &$page){
     if(preg_match('/^<dt>.+dt>$/', $buffer)){
       $buffer = preg_replace("/<.+?>/", "", $buffer);
       // echo $buffer;
-      $items[] = $buffer;
+      $items[] = str_replace("{0}", $buffer, $item_template);
     }
   }
   fclose($fp);
