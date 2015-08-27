@@ -1,15 +1,14 @@
 <?php
 
-/*
 $xml = <<< __HEREDOC__
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-  <title>debian package sections</title>
+  <title>debian package {0}</title>
   <link>https://packages.debian.org/</link>
-  <description>debian package sections</description>
+  <description>debian package {0}</description>
   <language>ja</language>
-  {0}
+  {1}
 </channel>
 </rss>
 __HEREDOC__;
@@ -17,7 +16,7 @@ __HEREDOC__;
 $item_template = <<< __HEREDOC__
 <item><title>{0}</title><link>https://packages.debian.org/{0}/</link><description /><pubDate /></item>
 __HEREDOC__;
-*/
+
 $prefix="https://tshrapp3.appspot.com/pagerelay?param=";
 $start_flag = false;
 $fp = fopen($prefix . "https://packages.debian.org/sid/", "r");
@@ -64,21 +63,23 @@ foreach($sections as &$section){
 foreach($pages as &$page){
   list($section, $genre) = $page;
   echo $section . "/" . $genre;
+  items = array();
   $fp = fopen($prefix . "https://packages.debian.org/" . $section . "/" . $genre . "/", "r");
   while( ! feof($fp)){
     $buffer = fgets($fp);
     if(preg_match('/^<dt>.+dt>$/', $buffer)){
       $buffer = preg_replace("/<.+?>/", "", $buffer);
       echo $buffer;
+      items[] = $buffer;
     }
   }
   fclose($fp);
+
+  $fp = fopen("./debian.package." . $section . "." . $genre . ".xml", "w");
+  $buffer = str_replace("{0}", $section . " " . $genre, $xml);
+  $buffer = str_replace("{1}", implode($items), $buffer);
+  fwrite($fp, $buffer);
+  fclose($fp);
 }
 
-/*
-$fp = fopen("./debian.package.sections.xml", "w");
-$buffer = str_replace("{0}", implode($items), $xml);
-fwrite($fp, $buffer);
-fclose($fp);
-*/
 ?>
