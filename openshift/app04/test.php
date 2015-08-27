@@ -1,5 +1,6 @@
 <?php
 
+/*
 $xml = <<< __HEREDOC__
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -16,6 +17,7 @@ __HEREDOC__;
 $item_template = <<< __HEREDOC__
 <item><title>{0}</title><link /><description /><pubDate /></item>
 __HEREDOC__;
+*/
 
 $prefix="https://tshrapp3.appspot.com/pagerelay?param=";
 $start_flag = false;
@@ -37,6 +39,20 @@ while( ! feof($fp)){
 }
 $sections[] = "/sid/";
 fclose($fp);
+
+/*
+$mch = curl_multi_init();
+
+foreach($sections as &$section){
+  $url = "https://packages.debian.org" . $section;
+  $ch = curl_init();
+  curl_setopt_array($ch, array(
+    CURLOPT_URL => $url,
+    CURLOPT_RETURNTRANSFER => true,
+  ));
+  curl_multi_add_handle($mch, $ch);
+}
+*/
 
 foreach($sections as &$section){
   $start_flag = false;
