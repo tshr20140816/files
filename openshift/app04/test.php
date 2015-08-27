@@ -18,8 +18,9 @@ $item_template = <<< __HEREDOC__
 <item><title>{0}</title><link>https://packages.debian.org/{0}/</link><description /><pubDate /></item>
 __HEREDOC__;
 */
+$prefix="https://tshrapp3.appspot.com/pagerelay?param=";
 $start_flag = false;
-$fp = fopen("https://packages.debian.org/sid/", "r");
+$fp = fopen($prefix . "https://packages.debian.org/sid/", "r");
 while( ! feof($fp)){
   $buffer = fgets($fp);
   if(trim($buffer) === '<div id="content">'){
@@ -40,7 +41,7 @@ fclose($fp);
 
 foreach($sections as &$section){
   $start_flag = false;
-  $fp = fopen("https://packages.debian.org" . $section, "r");
+  $fp = fopen($prefix . "https://packages.debian.org" . $section, "r");
   while( ! feof($fp)){
     $buffer = fgets($fp);
     if(preg_match('/<h1>List of sections in /', $buffer)){
@@ -63,7 +64,7 @@ foreach($sections as &$section){
 foreach($pages as &$page){
   list($section, $genre) = $page;
   echo $section . "/" . $genre;
-  $fp = fopen("https://tshrapp3.appspot.com/pagerelay?param=https://packages.debian.org/" . $section . "/" . $genre . "/", "r");
+  $fp = fopen($prefix . "https://packages.debian.org/" . $section . "/" . $genre . "/", "r");
   while( ! feof($fp)){
     $buffer = fgets($fp);
     if(preg_match('/^<dt>.+dt>$/', $buffer)){
