@@ -83,7 +83,7 @@ do switch (curl_multi_select($mch, $TIMEOUT)) {
       $response = curl_multi_getcontent($raised['handle']);
       
       if ($response === false) {
-        echo 'ERROR!!!', PHP_EOL;
+        echo 'ERROR ' . $info['url'] . PHP_EOL;
       } else {
         // echo $response, PHP_EOL;
         $results[] = array($info['url'], $response);
