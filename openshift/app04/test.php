@@ -1,5 +1,6 @@
 <?php
 
+$start_flag = false;
 $fp = fopen("https://packages.debian.org/sid/", "r");
 while( ! feof($fp)){
   $buffer = fgets($fp);
@@ -18,6 +19,7 @@ $sections[] = "/sid/";
 fclose($fp);
 
 foreach($sections as &$section){
+  $start_flag = false;
   $fp = fopen("https://packages.debian.org" . $section, "r");
   while( ! feof($fp)){
     $buffer = fgets($fp);
