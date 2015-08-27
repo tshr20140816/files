@@ -50,6 +50,14 @@ foreach($sections as &$section){
   ));
   curl_multi_add_handle($mch, $ch);
 }
+
+do {
+  $mrc = curl_multi_exec($mh, $active);
+} while ($mrc == CURLM_CALL_MULTI_PERFORM);
+
+
+
+curl_multi_close($mch);
 */
 
 foreach($sections as &$section){
