@@ -14,7 +14,7 @@ $xml = <<< __HEREDOC__
 __HEREDOC__;
 
 $item_template = <<< __HEREDOC__
-<item><title>{0}</title><link>https://packages.debian.org{0}/</link><description /><pubDate /></item>
+<item><title>{0}</title><link>https://packages.debian.org/{0}/</link><description /><pubDate /></item>
 __HEREDOC__;
 
 $start_flag = false;
@@ -53,7 +53,7 @@ foreach($sections as &$section){
     }
     if(preg_match('/ href="(.+?)\/"/', $buffer, $matchs)){
       // echo "https://packages.debian.org" . $section . $matchs[1] . "/\n";
-      $items[] = str_replace("{0}", $section . $matchs[1], $item_template);
+      $items[] = str_replace("{0}", ltrim($section, "/") . $matchs[1], $item_template);
     }
   }
   fclose($fp);
