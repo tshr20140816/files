@@ -27,7 +27,7 @@ foreach($sections as &$section){
       $start_flag = true;
       continue;
     } elseif($start_flag === false) {
-      break;
+      continue;
     }
     if(trim($buffer) === '<div id="footer">'){
       break;
