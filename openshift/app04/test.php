@@ -31,7 +31,7 @@ foreach($sections as &$section){
       break;
     }
     if($start_flag && preg_match('/ href="(.+?)"/', $buffer, $matchs)){
-      if($match[1] === "allpackages"){
+      if($match[1] == "allpackages"){
         break;
       }
       echo "https://packages.debian.org" . $section . $matchs[1] . "\n";
