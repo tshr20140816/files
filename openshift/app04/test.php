@@ -73,7 +73,7 @@ do switch (curl_multi_select($mch, $TIMEOUT)) {
   case 0:
     continue 2;
   default:
-    do{
+    do {
       $stat = curl_multi_exec($mch, $running);
     } while ($stat === CURLM_CALL_MULTI_PERFORM);
     
@@ -91,7 +91,7 @@ do switch (curl_multi_select($mch, $TIMEOUT)) {
       curl_multi_remove_handle($mch, $raised['handle']);
       curl_close($raised['handle']);
     } while ($remains);
-}
+} while ($running);
 curl_multi_close($mch);
 
 $time = time() - $time;
