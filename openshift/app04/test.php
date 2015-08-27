@@ -69,7 +69,7 @@ foreach($pages as &$page){
     $buffer = fgets($fp);
     if(preg_match('/^<dt>.+dt>$/', $buffer)){
       $buffer = preg_replace("/<.+?>/", "", $buffer);
-      echo $buffer;
+      // echo $buffer;
       $items[] = $buffer;
     }
   }
