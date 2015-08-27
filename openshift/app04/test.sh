@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 1350
+# 0850
 
 # ls -lang ${OPENSHIFT_LOG_DIR}
 
@@ -8,7 +8,7 @@ set -x
 
 cd ${OPENSHIFT_REPO_DIR}
 
-ls -lang
+# ls -lang
 
 cd ${OPENSHIFT_REPO_DIR}
 
@@ -29,4 +29,4 @@ rm test.php
 
 cd ${OPENSHIFT_REPO_DIR}
 
-ls -lang
+# ls -lang
