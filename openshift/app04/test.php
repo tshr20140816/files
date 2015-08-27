@@ -61,8 +61,7 @@ foreach($sections as &$section){
 }
 
 foreach($pages as &$page){
-  $section = $page[0];
-  $genre = $page[1];
+  list($section, $genre) = $page;
   echo $section . "/" . $genre;
   $fp = fopen("https://packages.debian.org/" . $section . "/" . $genre . "/", "r");
   while( ! feof($fp)){
