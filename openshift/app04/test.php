@@ -63,7 +63,7 @@ foreach($sections as &$section){
 foreach($pages as &$page){
   list($section, $genre) = $page;
   echo $section . "/" . $genre;
-  items = array();
+  $items = array();
   $fp = fopen($prefix . "https://packages.debian.org/" . $section . "/" . $genre . "/", "r");
   while( ! feof($fp)){
     $buffer = fgets($fp);
