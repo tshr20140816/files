@@ -9,6 +9,9 @@ set -x
 cd /tmp
 
 rm test.php
+wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/test.php
+php -l test.php
+rm test.php
 wget https://tenv-20150207.rhcloud.com/test.php
 rm test.php
 
