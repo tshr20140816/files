@@ -10,6 +10,8 @@ cd ${OPENSHIFT_REPO_DIR}
 
 ls -lang
 
+exit
+
 cd ${OPENSHIFT_REPO_DIR}
 
 rm -f debian.*.xml
