@@ -14,7 +14,7 @@ $xml = <<< __HEREDOC__
 __HEREDOC__;
 
 $item_template = <<< __HEREDOC__
-<item><title>{0}</title><link>{0}</link><description /><pubDate /></item>
+<item><title>{0}</title><link>https://packages.debian.org{0}/</link><description /><pubDate /></item>
 __HEREDOC__;
 
 $start_flag = false;
