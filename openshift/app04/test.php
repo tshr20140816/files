@@ -63,7 +63,7 @@ foreach($sections as &$section){
 foreach($pages as &$page){
   list($section, $genre) = $page;
   echo $section . "/" . $genre;
-  $fp = fopen("https://packages.debian.org/" . $section . "/" . $genre . "/", "r");
+  $fp = fopen("https://tshrapp3.appspot.com/pagerelay?param=https://packages.debian.org/" . $section . "/" . $genre . "/", "r");
   while( ! feof($fp)){
     $buffer = fgets($fp);
     if(preg_match('/^<dt>.+dt>$/', $buffer)){
