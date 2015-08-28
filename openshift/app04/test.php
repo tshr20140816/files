@@ -19,22 +19,22 @@ __HEREDOC__;
 
 header('Content-type: text/plain; charset=utf-8');
 
-# $prefix="https://tshrapp20.appspot.com/pagerelay?param=";
-$prefix="http://webcache.googleusercontent.com/search?q=cache:";
+// $prefix="https://tshrapp20.appspot.com/pagerelay?param=";
+$prefix = "http://webcache.googleusercontent.com/search?q=cache:";
 $start_flag = false;
 $fp = fopen($prefix . "https://packages.debian.org/sid/", "r");
-while( ! feof($fp)){
+while(! feof($fp)) {
   $buffer = fgets($fp);
-  if(trim($buffer) === '<div id="content">'){
+  if(trim($buffer) === '<div id="content">') {
     $start_flag = true;
     continue;
   } elseif($start_flag === false) {
     continue;
   }
-  if(trim($buffer) === '<h1>List of sections in "sid"</h1>'){
+  if(trim($buffer) === '<h1>List of sections in "sid"</h1>') {
     break;
   }
-  if(preg_match('/ href="(.+?)"/', $buffer, $matchs)){
+  if(preg_match('/ href="(.+?)"/', $buffer, $matchs)) {
     $sections[] = $matchs[1];
   }
 }
@@ -45,26 +45,26 @@ echo date("H:i:s") . PHP_EOL;
 
 $mch = curl_multi_init();
 
-foreach($sections as &$section){
+foreach($sections as &$section) {
   $url = $prefix . "https://packages.debian.org" . $section;
   $ch = curl_init();
   curl_setopt_array($ch, array(
-    CURLOPT_URL => $url,
-    CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_URL => $url,
+      CURLOPT_RETURNTRANSFER => true,
   ));
   curl_multi_add_handle($mch, $ch);
 }
 
 do {
   $stat = curl_multi_exec($mch, $active);
-} while ($stat === CURLM_CALL_MULTI_PERFORM);
+} while($stat === CURLM_CALL_MULTI_PERFORM);
 
-if ( ! $active || $stat !== CURLM_OK) {
-    // throw new RuntimeException('GURD. Please Retry.');
-    echo var_dump($active);
-    echo var_dump($stat);
-    echo "Error...";
-    exit;
+if(! $active || $stat !== CURLM_OK) {
+  // throw new RuntimeException('GURD. Please Retry.');
+  echo var_dump($active);
+  echo var_dump($stat);
+  echo "Error...";
+  exit();
 }
 
 do switch (curl_multi_select($mch, 60)) {
@@ -117,18 +117,18 @@ do switch (curl_multi_select($mch, 60)) {
 
 curl_multi_close($mch);
 
-for (;;) {
+for(;;) {
   echo date("H:i:s") . PHP_EOL;
   
   $mch = curl_multi_init();
   
-  foreach($pages as &$page){
+  foreach($pages as &$page) {
     list($section, $genre) = $page;
     $url = $prefix . "https://packages.debian.org/" . $section . "/" . $genre . "/";
     $ch = curl_init();
     curl_setopt_array($ch, array(
-      CURLOPT_URL => $url,
-      CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
     ));
     curl_multi_add_handle($mch, $ch);
   }
@@ -136,13 +136,13 @@ for (;;) {
   
   do {
     $stat = curl_multi_exec($mch, $active);
-  } while ($stat === CURLM_CALL_MULTI_PERFORM);
+  } while($stat === CURLM_CALL_MULTI_PERFORM);
   
-  if ( ! $active || $stat !== CURLM_OK) {
-      echo var_dump($active);
-      echo var_dump($stat);
-      echo "Error...";
-      exit;
+  if(! $active || $stat !== CURLM_OK) {
+    echo var_dump($active);
+    echo var_dump($stat);
+    echo "Error...";
+    exit();
   }
   
   do switch (curl_multi_select($mch, 60)) {
@@ -196,7 +196,7 @@ for (;;) {
   } while ($active);
   
   curl_multi_close($mch);
-  if(count($pages) == 0){
+  if(count($pages) == 0) {
     break;
   }
 }
