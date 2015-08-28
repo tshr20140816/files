@@ -93,6 +93,7 @@ do switch (curl_multi_select($mch, $TIMEOUT)) {
       } else {
         // echo $response, PHP_EOL;
         $results[] = array($info['url'], $response);
+        var_dump($response);
       }
       curl_multi_remove_handle($mch, $raised['handle']);
       curl_close($raised['handle']);
