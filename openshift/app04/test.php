@@ -23,7 +23,7 @@ header('Content-type: text/plain; charset=utf-8');
 $prefix = "http://webcache.googleusercontent.com/search?q=cache:";
 $start_flag = false;
 $fp = fopen($prefix . "https://packages.debian.org/sid/", "r");
-while(! feof($fp)) {
+while(!feof($fp)) {
   $buffer = fgets($fp);
   if(trim($buffer) === '<div id="content">') {
     $start_flag = true;
@@ -59,7 +59,7 @@ do {
   $stat = curl_multi_exec($mch, $active);
 } while($stat === CURLM_CALL_MULTI_PERFORM);
 
-if(! $active || $stat !== CURLM_OK) {
+if(!$active || $stat !== CURLM_OK) {
   // throw new RuntimeException('GURD. Please Retry.');
   echo var_dump($active);
   echo var_dump($stat);
@@ -138,7 +138,7 @@ for(;;) {
     $stat = curl_multi_exec($mch, $active);
   } while($stat === CURLM_CALL_MULTI_PERFORM);
   
-  if(! $active || $stat !== CURLM_OK) {
+  if(!$active || $stat !== CURLM_OK) {
     echo var_dump($active);
     echo var_dump($stat);
     echo "Error...";
