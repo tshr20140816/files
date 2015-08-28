@@ -60,7 +60,7 @@ do {
   $mrc = curl_multi_exec($mch, $active);
 } while ($mrc == CURLM_CALL_MULTI_PERFORM);
 
-if ( ! $running || $stat !== CURLM_OK) {
+if ( ! $active || $stat !== CURLM_OK) {
     // throw new RuntimeException('GURD. Please Retry.');
     echo var_dump($stat);
     echo "Error...";
@@ -72,14 +72,14 @@ $results = array();
 do switch (curl_multi_select($mch, $TIMEOUT)) {
   case -1:
     do {
-        $stat = curl_multi_exec($mch, $running);
+        $stat = curl_multi_exec($mch, $active);
     } while ($stat === CURLM_CALL_MULTI_PERFORM);
     continue 2;
   case 0:
     continue 2;
   default:
     do {
-      $stat = curl_multi_exec($mch, $running);
+      $stat = curl_multi_exec($mch, $active);
     } while ($stat === CURLM_CALL_MULTI_PERFORM);
     
     do if ($raised = curl_multi_info_read($mch, $remains)) {
@@ -96,7 +96,7 @@ do switch (curl_multi_select($mch, $TIMEOUT)) {
       curl_multi_remove_handle($mch, $raised['handle']);
       curl_close($raised['handle']);
     } while ($remains);
-} while ($running);
+} while ($active);
 curl_multi_close($mch);
 
 $time = time() - $time;
