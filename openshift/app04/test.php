@@ -1,5 +1,4 @@
 <?php
-
 $xml = <<< __HEREDOC__
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -19,7 +18,6 @@ __HEREDOC__;
 
 header('Content-type: text/plain; charset=utf-8');
 
-// $prefix="https://tshrapp20.appspot.com/pagerelay?param=";
 $prefix = "http://webcache.googleusercontent.com/search?q=cache:";
 $start_flag = false;
 $fp = fopen($prefix . "https://packages.debian.org/sid/", "r");
@@ -50,7 +48,7 @@ foreach($sections as &$section) {
   $ch = curl_init();
   curl_setopt_array($ch, array(
       CURLOPT_URL => $url,
-      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_RETURNTRANSFER => true 
   ));
   curl_multi_add_handle($mch, $ch);
 }
@@ -67,53 +65,60 @@ if(!$active || $stat !== CURLM_OK) {
   exit();
 }
 
-do switch (curl_multi_select($mch, 60)) {
-  case -1:
-    do {
+do {
+  switch(curl_multi_select($mch, 60)){
+    case -1:
+      do {
         $stat = curl_multi_exec($mch, $active);
-    } while ($stat === CURLM_CALL_MULTI_PERFORM);
-    continue 2;
-  case 0:
-    continue 2;
-  default:
-    do {
-      $stat = curl_multi_exec($mch, $active);
-    } while ($stat === CURLM_CALL_MULTI_PERFORM);
-    
-    do if ($raised = curl_multi_info_read($mch, $remains)) {
-      $info = curl_getinfo($raised['handle']);
-      $response = curl_multi_getcontent($raised['handle']);
-      // echo date("H:i:s") . "{$info['url']}: {$info['http_code']}\n";
-      echo date("H:i:s") . " " . $info['url'] . " " . $info['http_code'] . " " . strlen($response) . PHP_EOL;
+      } while($stat === CURLM_CALL_MULTI_PERFORM);
+      continue 2;
+    case 0:
+      continue 2;
+    default:
+      do {
+        $stat = curl_multi_exec($mch, $active);
+      } while($stat === CURLM_CALL_MULTI_PERFORM);
       
-      if ($response === false) {
-        echo 'ERROR ' . $info['url'] . PHP_EOL;
-      } else {
-        // echo $response, PHP_EOL;
-        // var_dump($response);
-        $tmp = explode("/", $info['url']);
-        $section = $tmp[count($tmp) - 2];
-        $start_flag = false;
-        $tmp = explode("\n", $response);
-        foreach($tmp as &$line){
-          if(preg_match('/<h1>List of sections in /', $line)){
-            $start_flag = true;
-            continue;
-          } elseif($start_flag === false) {
-            continue;
+      do {
+        if($raised = curl_multi_info_read($mch, $remains)) {
+          $info = curl_getinfo($raised['handle']);
+          $response = curl_multi_getcontent($raised['handle']);
+          // echo date("H:i:s") . "{$info['url']}: {$info['http_code']}\n";
+          echo date("H:i:s") . " " . $info['url'] . " " . $info['http_code'] . " " . strlen($response) . PHP_EOL;
+          
+          if($response === false) {
+            echo 'ERROR ' . $info['url'] . PHP_EOL;
+          } else {
+            // echo $response, PHP_EOL;
+            // var_dump($response);
+            $tmp = explode("/", $info['url']);
+            $section = $tmp[count($tmp) - 2];
+            $start_flag = false;
+            $tmp = explode("\n", $response);
+            foreach($tmp as &$line) {
+              if(preg_match('/<h1>List of sections in /', $line)) {
+                $start_flag = true;
+                continue;
+              } elseif($start_flag === false) {
+                continue;
+              }
+              if(trim($line) === '<div id="footer">') {
+                break;
+              }
+              if(preg_match('/ href="(.+?)\/"/', $line, $matchs)) {
+                $pages[] = array(
+                    trim($section, "/"),
+                    $matchs[1] 
+                );
+              }
+            }
           }
-          if(trim($line) === '<div id="footer">'){
-            break;
-          }
-          if(preg_match('/ href="(.+?)\/"/', $line, $matchs)){
-            $pages[] = array(trim($section, "/"), $matchs[1]);
-          }
+          curl_multi_remove_handle($mch, $raised['handle']);
+          curl_close($raised['handle']);
         }
-      }
-      curl_multi_remove_handle($mch, $raised['handle']);
-      curl_close($raised['handle']);
-    } while ($remains);
-} while ($active);
+      } while($remains);
+  }
+} while($active);
 
 curl_multi_close($mch);
 
@@ -128,7 +133,7 @@ for(;;) {
     $ch = curl_init();
     curl_setopt_array($ch, array(
         CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_RETURNTRANSFER => true 
     ));
     curl_multi_add_handle($mch, $ch);
   }
@@ -145,55 +150,62 @@ for(;;) {
     exit();
   }
   
-  do switch (curl_multi_select($mch, 60)) {
-    case -1:
-      do {
+  do {
+    switch(curl_multi_select($mch, 60)){
+      case -1:
+        do {
           $stat = curl_multi_exec($mch, $active);
-      } while ($stat === CURLM_CALL_MULTI_PERFORM);
-      continue 2;
-    case 0:
-      continue 2;
-    default:
-      do {
-        $stat = curl_multi_exec($mch, $active);
-      } while ($stat === CURLM_CALL_MULTI_PERFORM);
-      
-      do if ($raised = curl_multi_info_read($mch, $remains)) {
-        $info = curl_getinfo($raised['handle']);
-        // echo date("H:i:s") . " {$info['url']}: {$info['http_code']}\n";
-        $response = curl_multi_getcontent($raised['handle']);
-        echo date("H:i:s") . " " . $info['url'] . " " . $info['http_code'] . " " . strlen($response) . PHP_EOL;
+        } while($stat === CURLM_CALL_MULTI_PERFORM);
+        continue 2;
+      case 0:
+        continue 2;
+      default:
+        do {
+          $stat = curl_multi_exec($mch, $active);
+        } while($stat === CURLM_CALL_MULTI_PERFORM);
         
-        if ($response === false) {
-          echo 'ERROR unknown ' . $info['url'] . PHP_EOL;
-        } elseif (strlen($response) == 0) {
-          echo 'ERROR size 0 ' . $info['url'] . PHP_EOL;
-          $tmp = explode("/", $info['url']);
-          $pages[] = array($tmp[count($tmp) - 3], $tmp[count($tmp) - 2]);
-        } elseif ($info['http_code'] = "200") {
-          $tmp = explode("/", $info['url']);
-          $section = $tmp[count($tmp) - 3];
-          $genre = $tmp[count($tmp) - 2];
-          $items = array();
-          $tmp = explode("\n", $response);
-          echo count($tmp) . PHP_EOL;
-          foreach($tmp as &$line){
-            if(preg_match('/^<dt>.+dt>$/', $line)){
-              $buffer = preg_replace("/<.+?>/", "", $line);
-              // echo $buffer . PHP_EOL;
-              $items[] = str_replace("{0}", $buffer, $item_template);
+        do {
+          if($raised = curl_multi_info_read($mch, $remains)) {
+            $info = curl_getinfo($raised['handle']);
+            // echo date("H:i:s") . " {$info['url']}: {$info['http_code']}\n";
+            $response = curl_multi_getcontent($raised['handle']);
+            echo date("H:i:s") . " " . $info['url'] . " " . $info['http_code'] . " " . strlen($response) . PHP_EOL;
+            
+            if($response === false) {
+              echo 'ERROR unknown ' . $info['url'] . PHP_EOL;
+            } elseif(strlen($response) == 0) {
+              echo 'ERROR size 0 ' . $info['url'] . PHP_EOL;
+              $tmp = explode("/", $info['url']);
+              $pages[] = array(
+                  $tmp[count($tmp) - 3],
+                  $tmp[count($tmp) - 2] 
+              );
+            } elseif($info['http_code'] = "200") {
+              $tmp = explode("/", $info['url']);
+              $section = $tmp[count($tmp) - 3];
+              $genre = $tmp[count($tmp) - 2];
+              $items = array();
+              $tmp = explode("\n", $response);
+              echo count($tmp) . PHP_EOL;
+              foreach($tmp as &$line) {
+                if(preg_match('/^<dt>.+dt>$/', $line)) {
+                  $buffer = preg_replace("/<.+?>/", "", $line);
+                  // echo $buffer . PHP_EOL;
+                  $items[] = str_replace("{0}", $buffer, $item_template);
+                }
+              }
+              $fp = fopen("./debian.package." . $section . "." . $genre . ".xml", "w");
+              $buffer = str_replace("{0}", $section . " " . $genre, $xml);
+              $buffer = str_replace("{1}", implode($items), $buffer);
+              fwrite($fp, $buffer);
+              fclose($fp);
             }
+            curl_multi_remove_handle($mch, $raised['handle']);
+            curl_close($raised['handle']);
           }
-          $fp = fopen("./debian.package." . $section . "." . $genre . ".xml", "w");
-          $buffer = str_replace("{0}", $section . " " . $genre, $xml);
-          $buffer = str_replace("{1}", implode($items), $buffer);
-          fwrite($fp, $buffer);
-          fclose($fp);
-        }
-        curl_multi_remove_handle($mch, $raised['handle']);
-        curl_close($raised['handle']);
-      } while ($remains);
-  } while ($active);
+        } while($remains);
+    }
+  } while($active);
   
   curl_multi_close($mch);
   if(count($pages) == 0) {
