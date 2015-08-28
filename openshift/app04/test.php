@@ -125,7 +125,7 @@ $mch = curl_multi_init();
 
 foreach($pages as &$page){
   list($section, $genre) = $page;
-  $url = $prefix . "https://packages.debian.org" . $section . "/" . $genre . "/";
+  $url = $prefix . "https://packages.debian.org/" . $section . "/" . $genre . "/";
   $ch = curl_init();
   curl_setopt_array($ch, array(
     CURLOPT_URL => $url,
