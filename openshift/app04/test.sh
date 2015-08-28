@@ -29,4 +29,4 @@ rm test.php
 
 cd ${OPENSHIFT_REPO_DIR}
 
-# ls -lang
+ls -lang
