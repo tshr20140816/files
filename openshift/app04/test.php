@@ -162,7 +162,9 @@ do switch (curl_multi_select($mch, 60)) {
       echo date("H:i:s") . " " . $info['url'] . " " . $info['http_code'] . " " . strlen($response) . PHP_EOL;
       
       if ($response === false) {
-        echo 'ERROR ' . $info['url'] . PHP_EOL;
+        echo 'ERROR unknown ' . $info['url'] . PHP_EOL;
+      } elseif (strlen($response) == 0) {
+        echo 'ERROR size 0 ' . $info['url'] . PHP_EOL;
       } else {
         $tmp = explode("/", $info['url']);
         $section = $tmp[count($tmp) - 3];
