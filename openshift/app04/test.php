@@ -93,7 +93,24 @@ do switch (curl_multi_select($mch, $TIMEOUT)) {
       } else {
         // echo $response, PHP_EOL;
         $results[] = array($info['url'], $response);
-        var_dump($response);
+        // var_dump($response);
+        $tmp = explode("/", $info['url']);
+        $section = $tmp[count($tmp) - 2];
+        $start_flag = false;
+        foreach(explode("\n", $response) as &$line){
+          if(preg_match('/<h1>List of sections in /', $line)){
+            $start_flag = true;
+            continue;
+          } elseif($start_flag === false) {
+            continue;
+          }
+          if(trim($line) === '<div id="footer">'){
+            break;
+          }
+          if(preg_match('/ href="(.+?)\/"/', $line, $matchs)){
+            $pages[] = array(trim($section, "/"), $matchs[1]);
+          }
+        }
       }
       curl_multi_remove_handle($mch, $raised['handle']);
       curl_close($raised['handle']);
@@ -103,6 +120,7 @@ curl_multi_close($mch);
 
 $time = time() - $time;
 
+echo var_dump($pages);
 echo var_dump($time);
 /*
 foreach($sections as &$section){
