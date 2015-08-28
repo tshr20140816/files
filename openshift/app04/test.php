@@ -21,7 +21,7 @@ __HEREDOC__;
 header('Content-type: text/plain; charset=utf-8');
 
 # $prefix="https://tshrapp20.appspot.com/pagerelay?param=";
-$prefix="";
+$prefix="http://webcache.googleusercontent.com/search?q=cache:";
 $start_flag = false;
 $fp = fopen($prefix . "https://packages.debian.org/sid/", "r");
 while( ! feof($fp)){
