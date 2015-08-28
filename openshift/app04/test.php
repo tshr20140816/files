@@ -68,8 +68,6 @@ if ( ! $active || $stat !== CURLM_OK) {
     exit;
 }
 
-$results = array();
-
 do switch (curl_multi_select($mch, $TIMEOUT)) {
   case -1:
     do {
@@ -92,7 +90,6 @@ do switch (curl_multi_select($mch, $TIMEOUT)) {
         echo 'ERROR ' . $info['url'] . PHP_EOL;
       } else {
         // echo $response, PHP_EOL;
-        $results[] = array($info['url'], $response);
         // var_dump($response);
         $tmp = explode("/", $info['url']);
         $section = $tmp[count($tmp) - 2];
@@ -117,55 +114,82 @@ do switch (curl_multi_select($mch, $TIMEOUT)) {
       curl_close($raised['handle']);
     } while ($remains);
 } while ($active);
+
 curl_multi_close($mch);
 
 $time = time() - $time;
 
-echo var_dump($pages);
 echo var_dump($time);
-/*
-foreach($sections as &$section){
-  $start_flag = false;
-  $fp = fopen($prefix . "https://packages.debian.org" . $section, "r");
-  while( ! feof($fp)){
-    $buffer = fgets($fp);
-    if(preg_match('/<h1>List of sections in /', $buffer)){
-      $start_flag = true;
-      continue;
-    } elseif($start_flag === false) {
-      continue;
-    }
-    if(trim($buffer) === '<div id="footer">'){
-      break;
-    }
-    if(preg_match('/ href="(.+?)\/"/', $buffer, $matchs)){
-      // echo "https://packages.debian.org" . $section . $matchs[1] . "/\n";
-      $pages[] = array(trim($section, "/"), $matchs[1]);
-    }
-  }
-  fclose($fp);
-}
+
+$time = time();
+
+$mch = curl_multi_init();
 
 foreach($pages as &$page){
   list($section, $genre) = $page;
-  echo $section . "/" . $genre;
-  $items = array();
-  $fp = fopen($prefix . "https://packages.debian.org/" . $section . "/" . $genre . "/", "r");
-  while( ! feof($fp)){
-    $buffer = fgets($fp);
-    if(preg_match('/^<dt>.+dt>$/', $buffer)){
-      $buffer = preg_replace("/<.+?>/", "", $buffer);
-      // echo $buffer;
-      $items[] = str_replace("{0}", $buffer, $item_template);
-    }
-  }
-  fclose($fp);
-
-  $fp = fopen("./debian.package." . $section . "." . $genre . ".xml", "w");
-  $buffer = str_replace("{0}", $section . " " . $genre, $xml);
-  $buffer = str_replace("{1}", implode($items), $buffer);
-  fwrite($fp, $buffer);
-  fclose($fp);
+  $url = $prefix . "https://packages.debian.org" . $section . "/" . $genre . "/";
+  $ch = curl_init();
+  curl_setopt_array($ch, array(
+    CURLOPT_URL => $url,
+    CURLOPT_RETURNTRANSFER => true,
+  ));
+  curl_multi_add_handle($mch, $ch);
 }
-*/
+
+do {
+  $stat = curl_multi_exec($mch, $active);
+} while ($stat === CURLM_CALL_MULTI_PERFORM);
+
+if ( ! $active || $stat !== CURLM_OK) {
+    echo var_dump($active);
+    echo var_dump($stat);
+    echo "Error...";
+    exit;
+}
+
+do switch (curl_multi_select($mch, $TIMEOUT)) {
+  case -1:
+    do {
+        $stat = curl_multi_exec($mch, $active);
+    } while ($stat === CURLM_CALL_MULTI_PERFORM);
+    continue 2;
+  case 0:
+    continue 2;
+  default:
+    do {
+      $stat = curl_multi_exec($mch, $active);
+    } while ($stat === CURLM_CALL_MULTI_PERFORM);
+    
+    do if ($raised = curl_multi_info_read($mch, $remains)) {
+      $info = curl_getinfo($raised['handle']);
+      echo date("H:i:s") . " {$info['url']}: {$info['http_code']}\n";
+      $response = curl_multi_getcontent($raised['handle']);
+      
+      if ($response === false) {
+        echo 'ERROR ' . $info['url'] . PHP_EOL;
+      } else {
+        $tmp = explode("/", $info['url']);
+        $section = $tmp[count($tmp) - 3];
+        $genre = $tmp[count($tmp) - 2];
+        $items = array();
+        $tmp = explode("\n", $response);
+        foreach($tmp as &$line){
+          if(preg_match('/^<dt>.+dt>$/', $line)){
+            $buffer = preg_replace("/<.+?>/", "", $line);
+            // echo $buffer;
+            $items[] = str_replace("{0}", $buffer, $item_template);
+          }
+        }
+        $fp = fopen("./debian.package." . $section . "." . $genre . ".xml", "w");
+        $buffer = str_replace("{0}", $section . " " . $genre, $xml);
+        $buffer = str_replace("{1}", implode($items), $buffer);
+        fwrite($fp, $buffer);
+        fclose($fp);
+      }
+      curl_multi_remove_handle($mch, $raised['handle']);
+      curl_close($raised['handle']);
+    } while ($remains);
+} while ($active);
+
+curl_multi_close($mch);
 ?>
