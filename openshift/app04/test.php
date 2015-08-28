@@ -20,7 +20,7 @@ __HEREDOC__;
 */
 header('Content-type: text/plain; charset=utf-8');
 
-$prefix="https://tshrapp3.appspot.com/pagerelay?param=";
+$prefix="https://tshrapp20.appspot.com/pagerelay?param=";
 $start_flag = false;
 $fp = fopen($prefix . "https://packages.debian.org/sid/", "r");
 while( ! feof($fp)){
