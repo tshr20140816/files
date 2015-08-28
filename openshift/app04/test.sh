@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 1347
+# 1418
 
 # ls -lang ${OPENSHIFT_LOG_DIR}
 
