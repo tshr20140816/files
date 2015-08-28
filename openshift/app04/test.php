@@ -97,7 +97,8 @@ do switch (curl_multi_select($mch, $TIMEOUT)) {
         $tmp = explode("/", $info['url']);
         $section = $tmp[count($tmp) - 2];
         $start_flag = false;
-        foreach(explode("\n", $response) as &$line){
+        $tmp = explode("\n", $response);
+        foreach($tmp as &$line){
           if(preg_match('/<h1>List of sections in /', $line)){
             $start_flag = true;
             continue;
