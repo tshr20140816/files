@@ -81,8 +81,9 @@ do switch (curl_multi_select($mch, 60)) {
     
     do if ($raised = curl_multi_info_read($mch, $remains)) {
       $info = curl_getinfo($raised['handle']);
-      echo date("H:i:s") . "{$info['url']}: {$info['http_code']}\n";
       $response = curl_multi_getcontent($raised['handle']);
+      // echo date("H:i:s") . "{$info['url']}: {$info['http_code']}\n";
+      echo date("H:i:s") . " " . $info['url'] . " " . $info['http_code'] . " " . strlen($response) . PHP_EOL;
       
       if ($response === false) {
         echo 'ERROR ' . $info['url'] . PHP_EOL;
@@ -156,8 +157,9 @@ do switch (curl_multi_select($mch, 60)) {
     
     do if ($raised = curl_multi_info_read($mch, $remains)) {
       $info = curl_getinfo($raised['handle']);
-      echo date("H:i:s") . " {$info['url']}: {$info['http_code']}\n";
+      // echo date("H:i:s") . " {$info['url']}: {$info['http_code']}\n";
       $response = curl_multi_getcontent($raised['handle']);
+      echo date("H:i:s") . " " . $info['url'] . " " . $info['http_code'] . " " . strlen($response) . PHP_EOL;
       
       if ($response === false) {
         echo 'ERROR ' . $info['url'] . PHP_EOL;
