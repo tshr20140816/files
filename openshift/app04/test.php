@@ -66,7 +66,7 @@ if ( ! $active || $stat !== CURLM_OK) {
     exit;
 }
 
-do switch (curl_multi_select($mch)) {
+do switch (curl_multi_select($mch, 60)) {
   case -1:
     do {
         $stat = curl_multi_exec($mch, $active);
@@ -145,7 +145,7 @@ if ( ! $active || $stat !== CURLM_OK) {
     exit;
 }
 
-do switch (curl_multi_select($mch)) {
+do switch (curl_multi_select($mch, 60)) {
   case -1:
     do {
         $stat = curl_multi_exec($mch, $active);
