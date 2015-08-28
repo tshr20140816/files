@@ -57,7 +57,7 @@ foreach($sections as &$section){
 }
 
 do {
-  $mrc = curl_multi_exec($mh, $active);
+  $mrc = curl_multi_exec($mch, $active);
 } while ($mrc == CURLM_CALL_MULTI_PERFORM);
 
 if ( ! $running || $stat !== CURLM_OK) {
