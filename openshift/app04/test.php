@@ -170,7 +170,7 @@ for (;;) {
           echo 'ERROR size 0 ' . $info['url'] . PHP_EOL;
           $tmp = explode("/", $info['url']);
           $pages[] = array($tmp[count($tmp) - 3], $tmp[count($tmp) - 2]);
-        } else {
+        } elseif ($info['http_code'] = "200") {
           $tmp = explode("/", $info['url']);
           $section = $tmp[count($tmp) - 3];
           $genre = $tmp[count($tmp) - 2];
