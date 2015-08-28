@@ -10,7 +10,7 @@ cd ${OPENSHIFT_REPO_DIR}
 
 ls -lang
 
-php test.php >${OPENSHIFT_LOG_DIR}test.php.log 2>&1 &
+nohup php test.php >${OPENSHIFT_LOG_DIR}test.php.log 2>&1 &
 
 ls -lang
 
