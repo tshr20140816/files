@@ -1,6 +1,5 @@
 <?php
 
-/*
 $xml = <<< __HEREDOC__
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -17,7 +16,7 @@ __HEREDOC__;
 $item_template = <<< __HEREDOC__
 <item><title>{0}</title><link /><description /><pubDate /></item>
 __HEREDOC__;
-*/
+
 header('Content-type: text/plain; charset=utf-8');
 
 # $prefix="https://tshrapp20.appspot.com/pagerelay?param=";
@@ -42,7 +41,7 @@ while( ! feof($fp)){
 $sections[] = "/sid/";
 fclose($fp);
 
-echo date("H:i:s");
+echo date("H:i:s") . PHP_EOL;
 
 $mch = curl_multi_init();
 
@@ -119,7 +118,7 @@ do switch (curl_multi_select($mch, 60)) {
 curl_multi_close($mch);
 
 for (;;) {
-  echo date("H:i:s");
+  echo date("H:i:s") . PHP_EOL;
   
   $mch = curl_multi_init();
   
@@ -177,11 +176,11 @@ for (;;) {
           $genre = $tmp[count($tmp) - 2];
           $items = array();
           $tmp = explode("\n", $response);
-          echo count($tmp);
+          echo count($tmp) . PHP_EOL;
           foreach($tmp as &$line){
             if(preg_match('/^<dt>.+dt>$/', $line)){
               $buffer = preg_replace("/<.+?>/", "", $line);
-              echo $buffer;
+              // echo $buffer . PHP_EOL;
               $items[] = str_replace("{0}", $buffer, $item_template);
             }
           }
@@ -202,5 +201,5 @@ for (;;) {
   }
 }
 
-echo date("H:i:s");
+echo date("H:i:s") . PHP_EOL;
 ?>
