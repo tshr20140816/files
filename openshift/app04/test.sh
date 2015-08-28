@@ -8,7 +8,13 @@ set -x
 
 cd ${OPENSHIFT_REPO_DIR}
 
-# ls -lang
+ls -lang
+
+php test.php
+
+ls -lang
+
+exit
 
 cd ${OPENSHIFT_REPO_DIR}
 
