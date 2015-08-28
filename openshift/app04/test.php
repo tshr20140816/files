@@ -1,5 +1,6 @@
 <?php
 
+/*
 $xml = <<< __HEREDOC__
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -16,7 +17,7 @@ __HEREDOC__;
 $item_template = <<< __HEREDOC__
 <item><title>{0}</title><link /><description /><pubDate /></item>
 __HEREDOC__;
-
+*/
 header('Content-type: text/plain; charset=utf-8');
 
 $prefix="https://tshrapp3.appspot.com/pagerelay?param=";
@@ -116,80 +117,88 @@ do switch (curl_multi_select($mch, 60)) {
 
 curl_multi_close($mch);
 
-echo date("H:i:s");
-
-$mch = curl_multi_init();
-
-foreach($pages as &$page){
-  list($section, $genre) = $page;
-  $url = $prefix . "https://packages.debian.org/" . $section . "/" . $genre . "/";
-  $ch = curl_init();
-  curl_setopt_array($ch, array(
-    CURLOPT_URL => $url,
-    CURLOPT_RETURNTRANSFER => true,
-  ));
-  curl_multi_add_handle($mch, $ch);
-}
-
-do {
-  $stat = curl_multi_exec($mch, $active);
-} while ($stat === CURLM_CALL_MULTI_PERFORM);
-
-if ( ! $active || $stat !== CURLM_OK) {
-    echo var_dump($active);
-    echo var_dump($stat);
-    echo "Error...";
-    exit;
-}
-
-do switch (curl_multi_select($mch, 60)) {
-  case -1:
-    do {
+for (;;) {
+  echo date("H:i:s");
+  
+  $mch = curl_multi_init();
+  
+  foreach($pages as &$page){
+    list($section, $genre) = $page;
+    $url = $prefix . "https://packages.debian.org/" . $section . "/" . $genre . "/";
+    $ch = curl_init();
+    curl_setopt_array($ch, array(
+      CURLOPT_URL => $url,
+      CURLOPT_RETURNTRANSFER => true,
+    ));
+    curl_multi_add_handle($mch, $ch);
+  }
+  $pages = array();
+  
+  do {
+    $stat = curl_multi_exec($mch, $active);
+  } while ($stat === CURLM_CALL_MULTI_PERFORM);
+  
+  if ( ! $active || $stat !== CURLM_OK) {
+      echo var_dump($active);
+      echo var_dump($stat);
+      echo "Error...";
+      exit;
+  }
+  
+  do switch (curl_multi_select($mch, 60)) {
+    case -1:
+      do {
+          $stat = curl_multi_exec($mch, $active);
+      } while ($stat === CURLM_CALL_MULTI_PERFORM);
+      continue 2;
+    case 0:
+      continue 2;
+    default:
+      do {
         $stat = curl_multi_exec($mch, $active);
-    } while ($stat === CURLM_CALL_MULTI_PERFORM);
-    continue 2;
-  case 0:
-    continue 2;
-  default:
-    do {
-      $stat = curl_multi_exec($mch, $active);
-    } while ($stat === CURLM_CALL_MULTI_PERFORM);
-    
-    do if ($raised = curl_multi_info_read($mch, $remains)) {
-      $info = curl_getinfo($raised['handle']);
-      // echo date("H:i:s") . " {$info['url']}: {$info['http_code']}\n";
-      $response = curl_multi_getcontent($raised['handle']);
-      echo date("H:i:s") . " " . $info['url'] . " " . $info['http_code'] . " " . strlen($response) . PHP_EOL;
+      } while ($stat === CURLM_CALL_MULTI_PERFORM);
       
-      if ($response === false) {
-        echo 'ERROR unknown ' . $info['url'] . PHP_EOL;
-      } elseif (strlen($response) == 0) {
-        echo 'ERROR size 0 ' . $info['url'] . PHP_EOL;
-      } else {
-        $tmp = explode("/", $info['url']);
-        $section = $tmp[count($tmp) - 3];
-        $genre = $tmp[count($tmp) - 2];
-        $items = array();
-        $tmp = explode("\n", $response);
-        foreach($tmp as &$line){
-          if(preg_match('/^<dt>.+dt>$/', $line)){
-            $buffer = preg_replace("/<.+?>/", "", $line);
-            // echo $buffer;
-            $items[] = str_replace("{0}", $buffer, $item_template);
+      do if ($raised = curl_multi_info_read($mch, $remains)) {
+        $info = curl_getinfo($raised['handle']);
+        // echo date("H:i:s") . " {$info['url']}: {$info['http_code']}\n";
+        $response = curl_multi_getcontent($raised['handle']);
+        echo date("H:i:s") . " " . $info['url'] . " " . $info['http_code'] . " " . strlen($response) . PHP_EOL;
+        
+        if ($response === false) {
+          echo 'ERROR unknown ' . $info['url'] . PHP_EOL;
+        } elseif (strlen($response) == 0) {
+          echo 'ERROR size 0 ' . $info['url'] . PHP_EOL;
+          $tmp = explode("/", $info['url']);
+          $pages[] = array($tmp[count($tmp) - 3], $tmp[count($tmp) - 2]);
+        } else {
+          $tmp = explode("/", $info['url']);
+          $section = $tmp[count($tmp) - 3];
+          $genre = $tmp[count($tmp) - 2];
+          $items = array();
+          $tmp = explode("\n", $response);
+          foreach($tmp as &$line){
+            if(preg_match('/^<dt>.+dt>$/', $line)){
+              $buffer = preg_replace("/<.+?>/", "", $line);
+              // echo $buffer;
+              $items[] = str_replace("{0}", $buffer, $item_template);
+            }
           }
+          $fp = fopen("./debian.package." . $section . "." . $genre . ".xml", "w");
+          $buffer = str_replace("{0}", $section . " " . $genre, $xml);
+          $buffer = str_replace("{1}", implode($items), $buffer);
+          fwrite($fp, $buffer);
+          fclose($fp);
         }
-        $fp = fopen("./debian.package." . $section . "." . $genre . ".xml", "w");
-        $buffer = str_replace("{0}", $section . " " . $genre, $xml);
-        $buffer = str_replace("{1}", implode($items), $buffer);
-        fwrite($fp, $buffer);
-        fclose($fp);
-      }
-      curl_multi_remove_handle($mch, $raised['handle']);
-      curl_close($raised['handle']);
-    } while ($remains);
-} while ($active);
-
-curl_multi_close($mch);
+        curl_multi_remove_handle($mch, $raised['handle']);
+        curl_close($raised['handle']);
+      } while ($remains);
+  } while ($active);
+  
+  curl_multi_close($mch);
+  if(count($pages) == 0){
+    break;
+  }
+}
 
 echo date("H:i:s");
 ?>
