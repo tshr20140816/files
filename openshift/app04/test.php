@@ -62,6 +62,7 @@ do {
 
 if ( ! $running || $stat !== CURLM_OK) {
     // throw new RuntimeException('GURD. Please Retry.');
+    echo var_dump($stat);
     echo "Error...";
     exit;
 }
