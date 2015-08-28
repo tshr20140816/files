@@ -58,7 +58,7 @@ foreach($sections as &$section){
 
 do {
   $stat = curl_multi_exec($mch, $active);
-} while ($stat == CURLM_CALL_MULTI_PERFORM);
+} while ($stat === CURLM_CALL_MULTI_PERFORM);
 
 if ( ! $active || $stat !== CURLM_OK) {
     // throw new RuntimeException('GURD. Please Retry.');
