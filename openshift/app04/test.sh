@@ -2,7 +2,7 @@
 
 # 1426
 
-# ls -lang ${OPENSHIFT_LOG_DIR}
+ls -lang ${OPENSHIFT_LOG_DIR}
 
 set -x
 
