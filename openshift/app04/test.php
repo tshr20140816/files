@@ -177,10 +177,11 @@ for (;;) {
           $genre = $tmp[count($tmp) - 2];
           $items = array();
           $tmp = explode("\n", $response);
+          echo count($tmp);
           foreach($tmp as &$line){
             if(preg_match('/^<dt>.+dt>$/', $line)){
               $buffer = preg_replace("/<.+?>/", "", $line);
-              // echo $buffer;
+              echo $buffer;
               $items[] = str_replace("{0}", $buffer, $item_template);
             }
           }
