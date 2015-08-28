@@ -40,7 +40,7 @@ while( ! feof($fp)){
 $sections[] = "/sid/";
 fclose($fp);
 
-$time = time();
+echo date("H:i:s");
 
 $mch = curl_multi_init();
 
@@ -81,7 +81,7 @@ do switch (curl_multi_select($mch, 60)) {
     
     do if ($raised = curl_multi_info_read($mch, $remains)) {
       $info = curl_getinfo($raised['handle']);
-      echo "{$info['url']}: {$info['http_code']}\n";
+      echo date("H:i:s") . "{$info['url']}: {$info['http_code']}\n";
       $response = curl_multi_getcontent($raised['handle']);
       
       if ($response === false) {
@@ -115,11 +115,7 @@ do switch (curl_multi_select($mch, 60)) {
 
 curl_multi_close($mch);
 
-$time = time() - $time;
-
-echo var_dump($time);
-
-$time = time();
+echo date("H:i:s");
 
 $mch = curl_multi_init();
 
@@ -190,4 +186,6 @@ do switch (curl_multi_select($mch, 60)) {
 } while ($active);
 
 curl_multi_close($mch);
+
+echo date("H:i:s");
 ?>
