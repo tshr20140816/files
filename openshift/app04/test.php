@@ -61,7 +61,9 @@ do {
 } while ($mrc == CURLM_CALL_MULTI_PERFORM);
 
 if ( ! $running || $stat !== CURLM_OK) {
-    throw new RuntimeException('GURD. Please Retry.');
+    // throw new RuntimeException('GURD. Please Retry.');
+    echo "Error...";
+    exit;
 }
 
 $results = array();
