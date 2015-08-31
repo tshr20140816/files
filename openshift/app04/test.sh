@@ -2,9 +2,13 @@
 
 # 1426
 
-ls -lang ${OPENSHIFT_LOG_DIR}
+# ls -lang ${OPENSHIFT_LOG_DIR}
 
 set -x
+
+curl --version
+
+exit
 
 cd ${OPENSHIFT_REPO_DIR}
 
