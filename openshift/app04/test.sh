@@ -8,6 +8,9 @@ set -x
 
 quota -s
 
+ls -lang ${OPENSHIFT_REPO_DIR}
+ls -lang ${OPENSHIFT_LOG_DIR}
+
 exit
 
 cd ${OPENSHIFT_REPO_DIR}
