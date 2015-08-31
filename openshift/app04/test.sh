@@ -6,7 +6,7 @@
 
 set -x
 
-curl --version
+quota -s
 
 exit
 
