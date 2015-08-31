@@ -8,13 +8,8 @@ set -x
 
 quota -s
 
-cd ${OPENSHIFT_REPO_DIR}
-rm *.xml
-
-ls -lang ${OPENSHIFT_REPO_DIR}
-
 cd ${OPENSHIFT_LOG_DIR}
-rm cron_minutely.log-*
+rm php.log-*
 ls -lang ${OPENSHIFT_LOG_DIR}
 
 ls -lang /tmp
