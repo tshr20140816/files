@@ -11,6 +11,15 @@ quota -s
 ls -lang ${OPENSHIFT_REPO_DIR}
 ls -lang ${OPENSHIFT_LOG_DIR}
 
+cd /tmp
+wget https://files3-20150207.rhcloud.com/files/php-5.6.12.tar.xz
+tar Jxf php-5.6.12.tar.xz
+cd php-5.6.12
+./configure --help
+cd /tmp
+rm -rf php-5.6.12
+rm -f php-5.6.12.tar.xz
+
 exit
 
 cd ${OPENSHIFT_REPO_DIR}
