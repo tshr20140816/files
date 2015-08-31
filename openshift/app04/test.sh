@@ -8,14 +8,22 @@ set -x
 
 quota -s
 
+cd ${OPENSHIFT_REPO_DIR}
+rm *.xml
+
 ls -lang ${OPENSHIFT_REPO_DIR}
+
+cd ${OPENSHIFT_LOG_DIR}
+rm cron_minutely.log-*
 ls -lang ${OPENSHIFT_LOG_DIR}
+
+whereis curl
 
 cd /tmp
 wget https://files3-20150207.rhcloud.com/files/php-5.6.12.tar.xz
 tar Jxf php-5.6.12.tar.xz
 cd php-5.6.12
-./configure --help
+./configure --with-curl
 cd /tmp
 rm -rf php-5.6.12
 rm -f php-5.6.12.tar.xz
