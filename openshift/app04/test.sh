@@ -17,6 +17,8 @@ cd ${OPENSHIFT_LOG_DIR}
 rm cron_minutely.log-*
 ls -lang ${OPENSHIFT_LOG_DIR}
 
+ls -lang /tmp
+
 whereis curl
 
 cd /tmp
