@@ -4,6 +4,10 @@ set -x
 
 quota -s
 
+ls -lang ${OPENSHIFT_DATA_DIR}
+
+exit
+
 cd /tmp
 
 # rm -f squid-3.5.7.tar.xz
