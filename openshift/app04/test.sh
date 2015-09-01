@@ -29,7 +29,7 @@ rm -rf squid-3.5.7
 # wget http://www.squid-cache.org/Versions/v3/3.5/squid-3.5.7.tar.xz
 
 # tar Jxf squid-3.5.7.tar.xz
-if [ ! -f squid_src.tar.xz ]; then
+if [ -f squid_src.tar.xz ]; then
   tar Jxf squid_src.tar.xz
 else
   tar Jxf squid-3.5.7.tar.xz
