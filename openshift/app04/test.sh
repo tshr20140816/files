@@ -19,6 +19,7 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 
 ccache --show-stats
+ccache --zero-stats 
 
 cd /tmp
 
@@ -27,7 +28,12 @@ rm -rf squid-3.5.7
 
 # wget http://www.squid-cache.org/Versions/v3/3.5/squid-3.5.7.tar.xz
 
-tar Jxf squid-3.5.7.tar.xz
+# tar Jxf squid-3.5.7.tar.xz
+if [ ! -f squid_src.tar.xz ]; then
+  tar Jxf squid_src.tar.xz
+else
+  tar Jxf squid-3.5.7.tar.xz
+fi
 
 cd squid-3.5.7
 
@@ -36,28 +42,29 @@ export CXXFLAGS="${CFLAGS}"
 
 # ./configure --help
 
-cp ../config.site ./
+if [ ! -f squid_src.tar.xz ]; then
+ time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
+  --mandir=/tmp/gomi \
+  --infodir=/tmp/gomi \
+  --docdir=/tmp/gomi \
+  --disable-dependency-tracking \
+  --enable-shared \
+  --enable-static=no \
+  --enable-fast-install \
+  --disable-icap-client \
+  --disable-wccp \
+  --disable-wccpv2 \
+  --disable-snmp \
+  --disable-eui \
+  --disable-htcp \
+  --disable-devpoll \
+  --disable-ipv6 \
+  --disable-auto-locale
+fi
 
-time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
- --mandir=/tmp/gomi \
- --infodir=/tmp/gomi \
- --docdir=/tmp/gomi \
- --disable-dependency-tracking \
- --enable-shared \
- --enable-static=no \
- --enable-fast-install \
- --disable-icap-client \
- --disable-wccp \
- --disable-wccpv2 \
- --disable-snmp \
- --disable-eui \
- --disable-htcp \
- --disable-devpoll \
- --disable-ipv6 \
- --disable-auto-locale \
- --config-cache \
- -C
-
-cp config.cache /tmp/config.site
+cd ..
+if [ ! -f squid_src.tar.xz ]; then
+  tar Jcf squid_src.tar.xz squid-3.5.7
+fi
 
 time make -j4
