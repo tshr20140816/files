@@ -30,9 +30,9 @@ if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     tar Jxf ${file_name}
     rm -f ${file_name}
 else
-    cp -f ${OPENSHIFT_DATA_DIR}/download_files/httpd-${apache_version}.tar.bz2 ./
+    cp -f ${OPENSHIFT_DATA_DIR}/download_files/squid-${squid_version}.tar.xz ./
     echo "$(date +%Y/%m/%d" "%H:%M:%S) squid tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    tar jxf squid-${squid_version}.tar.bz2
+    tar jxf squid-${squid_version}.tar.xz
 fi
 popd > /dev/null
 
@@ -64,7 +64,7 @@ else
      --disable-devpoll \
      --disable-ipv6 \
      --disable-auto-locale 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_squid.log
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) squid make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_squid.log
     time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_squid.log
 fi
@@ -77,3 +77,16 @@ popd > /dev/null
 
 unset CC
 unset CXX
+
+# *** config ***
+
+
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f squid-${squid_version}.tar.xz
+rm -rf squid-${squid_version}
+popd > /dev/null
+
+touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
