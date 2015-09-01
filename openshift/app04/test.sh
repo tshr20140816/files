@@ -16,6 +16,8 @@ export CCACHE_COMPILERCHECK=none
 export CC="ccache gcc"
 export CXX="ccache g++"
 
+ccache --show-stats
+
 cd /tmp
 
 # rm -f squid-3.5.7.tar.xz
