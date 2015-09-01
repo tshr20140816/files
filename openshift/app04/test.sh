@@ -21,6 +21,8 @@ export CXX="ccache g++"
 ccache --show-stats
 ccache --zero-stats 
 
+exit
+
 cd /tmp
 
 # rm -f squid-3.5.7.tar.xz
