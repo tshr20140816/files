@@ -6,6 +6,18 @@ set -x
 
 quota -s
 
+cd /tmp
+
+mkdir ttrss
+cd ttrss
+wget https://files3-20150207.rhcloud.com/files/1.15.3.tar.gz
+tar zxf 1.15.3.tar.gz --strip-components=1
+cp include/functions.php ${OPENSHIFT_LOG_DIR}/functions.php.txt
+cd ..
+rm -rf ttrss
+rm 1.15.3.tar.gz
+exit
+
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
 export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
