@@ -44,7 +44,7 @@ export CXXFLAGS="${CFLAGS}"
 
 # ./configure --help
 
-if [ ! -f squid_src.tar.xz ]; then
+if [ ! -f /tmp/squid_src.tar.xz ]; then
  time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
   --mandir=/tmp/gomi \
   --infodir=/tmp/gomi \
