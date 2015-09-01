@@ -82,6 +82,7 @@ php_version 5.6.12
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.6
 ruby_version 2.1.7
+squid_version 3.5.7
 tcl_version 8.6.4
 ttrss_version 1.15.3
 webalizer_version 2.23-08
@@ -444,6 +445,16 @@ if [ "${mirror_server}" != "none" ]; then
    fi
    rm -f xz-${xz_version}.tar.xz.sig
 
+    # squid
+    wget -t1 ${mirror_server}/squid-${squid_version}.tar.xz
+    wget http://www.squid-cache.org/Versions/v3/3.5/squid-${squid_version}.tar.xz.asc
+    gpg --recv-keys $(gpg --verify squid-${squid_version}.tar.xz.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    if [ $(gpg --verify squid-${squid_version}.tar.xz.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) squid pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) squid pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm -f squid-${squid_version}.tar.xz
+    fi
+    
     # *** gem ***
     for gem in bundler rack passenger logglier
     do
@@ -931,6 +942,15 @@ do
         wget http://tukaani.org/xz/xz-${xz_version}.tar.xz
     fi
     [ -f xz-${xz_version}.tar.xz ] || files_exists=0
+
+    # *** ccache ***
+    if [ ! -f squid-${squid_version}.tar.xz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing squid-${squid_version}.tar.xz" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) squid wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://www.squid-cache.org/Versions/v3/3.5/squid-${squid_version}.tar.xz
+    fi
+    [ -f squid-${squid_version}.tar.xz ] || files_exists=0
 
     # *** gem ***
     for gem in bundler rack passenger logglier
