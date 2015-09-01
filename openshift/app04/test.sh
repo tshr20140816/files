@@ -26,7 +26,9 @@ cd /tmp
 # rm -f squid-3.5.7.tar.xz
 rm -rf squid-3.5.7
 
-wget http://www.squid-cache.org/Versions/v3/3.5/squid-3.5.7.tar.xz
+if [ ! -f squid-3.5.7.tar.xz ]; then
+    wget http://www.squid-cache.org/Versions/v3/3.5/squid-3.5.7.tar.xz
+fi
 
 # tar Jxf squid-3.5.7.tar.xz
 if [ -f squid_src.tar.xz ]; then
