@@ -34,6 +34,8 @@ export CXXFLAGS="${CFLAGS}"
 
 # ./configure --help
 
+cp ../config.site ./
+
 time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
  --mandir=/tmp/gomi \
  --infodir=/tmp/gomi \
