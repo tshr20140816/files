@@ -69,4 +69,6 @@ if [ ! -f squid_src.tar.xz ]; then
   tar Jcf squid_src.tar.xz squid-3.5.7
 fi
 
+cd squid-3.5.7
+
 time make -j4
