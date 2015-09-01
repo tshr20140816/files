@@ -50,8 +50,9 @@ time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
  --disable-htcp \
  --disable-devpoll \
  --disable-ipv6 \
- --disable-auto-locale
+ --disable-auto-locale \
+ --config-cache
 
-cp config.status /tmp/
+cp config.cache /tmp/config.status
 
 time make -j4
