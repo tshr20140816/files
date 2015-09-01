@@ -13,7 +13,8 @@ export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
 export CCACHE_NLEVELS=3
 export CCACHE_MAXSIZE=300M
 export CCACHE_COMPILERCHECK=none
-export CC="ccache cc"
+export CC="ccache gcc"
+export CXX="ccache g++"
 
 cd /tmp
 
