@@ -5,6 +5,14 @@ set -x
 quota -s
 
 export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+rm -rf ${CCACHE_TEMPDIR}
+mkdir -p ${CCACHE_TEMPDIR}
+export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_NLEVELS=3
+export CCACHE_MAXSIZE=300M
+export CCACHE_COMPILERCHECK=none
 
 cd /tmp
 
@@ -22,22 +30,22 @@ export CXXFLAGS="${CFLAGS}"
 
 ./configure --help
 
-time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
- --mandir=/tmp/gomi \
- --infodir=/tmp/gomi \
- --docdir=/tmp/gomi \
- --disable-dependency-tracking \
- --enable-shared \
- --enable-static=no \
- --enable-fast-install \
- --disable-icap-client \
- --disable-wccp \
- --disable-wccpv2 \
- --disable-snmp \
- --disable-eui \
- --disable-htcp \
- --disable-devpoll \
- --disable-ipv6 \
- --disable-auto-locale
+# time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
+#  --mandir=/tmp/gomi \
+#  --infodir=/tmp/gomi \
+#  --docdir=/tmp/gomi \
+#  --disable-dependency-tracking \
+#  --enable-shared \
+#  --enable-static=no \
+#  --enable-fast-install \
+#  --disable-icap-client \
+#  --disable-wccp \
+#  --disable-wccpv2 \
+#  --disable-snmp \
+#  --disable-eui \
+#  --disable-htcp \
+#  --disable-devpoll \
+#  --disable-ipv6 \
+#  --disable-auto-locale
 
-# time make -j4
+time make -j4
