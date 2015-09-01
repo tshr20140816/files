@@ -499,6 +499,7 @@ cat << '__HEREDOC__' > build_request.xml
     <item app="delegate" version="__DELEGATE_VERSION__" />
     <item app="tcl" version="__TCL_VERSION__" />
     <item app="cadaver" version="__CADAVER_VERSION__" />
+    <item app="squid" version="__SQUID_VERSION__" />
   </items>
 </root>
 __HEREDOC__
@@ -513,6 +514,7 @@ sed -i -e "s|__PHP_VERSION__|${php_version}|g" build_request.xml
 sed -i -e "s|__DELEGATE_VERSION__|${delegate_version}|g" build_request.xml
 sed -i -e "s|__TCL_VERSION__|${tcl_version}|g" build_request.xml
 sed -i -e "s|__CADAVER_VERSION__|${cadaver_version}|g" build_request.xml
+sed -i -e "s|__SQUID_VERSION__|${squid_version}|g" build_request.xml
 
 if [ ${build_server_password} != 'none' ]; then
     wget --post-file=build_request.xml ${mirror_server}build_action.php -O -
