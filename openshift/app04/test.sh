@@ -53,6 +53,6 @@ time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
  --disable-auto-locale \
  --config-cache
 
-cp config.cache /tmp/config.status
+cp config.cache /tmp/config.site
 
 time make -j4
