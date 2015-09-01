@@ -6,7 +6,8 @@ quota -s
 
 cd /tmp
 
-rm -f squid*
+rm -f squid-3.5.7.tar.xz
+rm -rf squid-3.5.7
 
 wget http://www.squid-cache.org/Versions/v3/3.5/squid-3.5.7.tar.xz
 
@@ -37,4 +38,4 @@ time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
  --disable-ipv6 \
  --disable-auto-locale
 
-time make -j4
+# time make -j4
