@@ -53,7 +53,8 @@ time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
  --disable-devpoll \
  --disable-ipv6 \
  --disable-auto-locale \
- --config-cache
+ --config-cache \
+ -C
 
 cp config.cache /tmp/config.site
 
