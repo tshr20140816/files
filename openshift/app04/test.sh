@@ -32,7 +32,7 @@ cd squid-3.5.7
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-./configure --help
+# ./configure --help
 
 time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
  --mandir=/tmp/gomi \
