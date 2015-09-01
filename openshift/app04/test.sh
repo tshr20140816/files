@@ -14,9 +14,12 @@ tar Jxf squid-3.5.7.tar.xz
 
 cd squid-3.5.7
 
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
 ./configure --help
 
-./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
+time ./configure --prefix=${OPENSHIFT_DATA_DIR}/squid \
  --mandir=/tmp/gomi \
  --infodir=/tmp/gomi \
  --docdir=/tmp/gomi \
@@ -33,3 +36,5 @@ cd squid-3.5.7
  --disable-devpoll \
  --disable-ipv6 \
  --disable-auto-locale
+
+time make -j4
