@@ -6,11 +6,9 @@ set -x
 
 quota -s
 
-lsof -i
-
-exit
-
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid --help
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33318 -k start
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33318 -k shutdown
 
 exit
 
