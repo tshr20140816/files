@@ -6,6 +6,10 @@ set -x
 
 quota -s
 
+lsof -i
+
+exit
+
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid --help
 
 exit
