@@ -7,7 +7,7 @@ set -x
 quota -s
 
 rm -f forcerun*
-for i in $(seq 0 9)
+for i in $(seq 0 30)
 do
 wget https://tshrapp10.appspot.com/forcerun?thread_id=83 -O /dev/null
 done
