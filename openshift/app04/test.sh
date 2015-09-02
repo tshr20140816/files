@@ -55,7 +55,7 @@ ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -kparse -f/tmp/squid.conf
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -f/tmp/squid.conf
 cat /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/cache.log
 
-curl http://www.google.com
+# curl http://www.google.com
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.google.com
 
 sleep 10s
