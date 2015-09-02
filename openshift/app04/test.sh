@@ -9,7 +9,7 @@ quota -s
 cd /tmp
 
 cat << '__HEREDOC__' > squid.conf
-acl myhost src __OPENSHIFT_PHP_IP__
+acl myhost src __OPENSHIFT_PHP_IP__/32
 
 acl SSL_ports port 443
 acl Safe_ports port 80
