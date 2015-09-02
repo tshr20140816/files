@@ -6,6 +6,12 @@ set -x
 
 quota -s
 
+wget https://tshrapp10.appspot.com/forcerun?thread_id=83
+wget https://tshrapp10.appspot.com/forcerun?thread_id=83
+wget https://tshrapp10.appspot.com/forcerun?thread_id=83
+
+exit
+
 # tree ${OPENSHIFT_DATA_DIR}/squid
 cp ${OPENSHIFT_DATA_DIR}/squid/etc/* ${OPENSHIFT_LOG_DIR}
 
