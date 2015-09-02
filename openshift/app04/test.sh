@@ -6,10 +6,7 @@ set -x
 
 quota -s
 
-for i in $(seq 0 30)
-do
-wget https://tshrapp10.appspot.com/forcerun?thread_id=83 -O /dev/null
-done
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid --help
 
 exit
 
