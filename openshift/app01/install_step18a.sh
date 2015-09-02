@@ -120,6 +120,7 @@ sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" squid.conf
 cat squid.conf
 popd > /dev/null
 
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -kparse -f${OPENSHIFT_DATA_DIR}/squid/etc/squid.conf
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -z
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
