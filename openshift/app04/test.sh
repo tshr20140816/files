@@ -27,7 +27,7 @@ http_access deny all
 
 http_port __OPENSHIFT_PHP_IP__:33128
 # dns_nameservers 8.8.8.8
-dns_nameservers 172.16.0.2
+dns_nameservers __OPENSHIFT_PHP_IP__ 8.8.8.8 172.16.0.2
 udp_incoming_address __OPENSHIFT_PHP_IP__
 cache_mem 64 MB
 
