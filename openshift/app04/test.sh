@@ -6,9 +6,11 @@ set -x
 
 quota -s
 
-wget https://tshrapp10.appspot.com/forcerun?thread_id=83
-wget https://tshrapp10.appspot.com/forcerun?thread_id=83
-wget https://tshrapp10.appspot.com/forcerun?thread_id=83
+rm -f forcerun*
+for i in $(seq 0 9)
+do
+wget https://tshrapp10.appspot.com/forcerun?thread_id=83 -O /dev/null
+done
 
 exit
 
