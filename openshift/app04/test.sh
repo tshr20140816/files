@@ -7,6 +7,7 @@ set -x
 quota -s
 
 ls -lang ${OPENSHIFT_DATA_DIR}/squid/var/run/
+tree ${OPENSHIFT_DATA_DIR}/squid/var/run/
 ps ax | grep squid
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -h
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k restart 2>&1
