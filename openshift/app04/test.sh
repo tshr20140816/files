@@ -63,6 +63,7 @@ curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.google.com
 sleep 10s
 
 cat /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/cache.log
+cat /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/access.log
 
 tree ${OPENSHIFT_DATA_DIR}/squid/var/run/
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -kshutdown
