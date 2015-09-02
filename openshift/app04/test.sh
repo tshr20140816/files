@@ -47,6 +47,7 @@ tree ${OPENSHIFT_DATA_DIR}/squid/var/run/
 ps ax | grep squid
 tree ${OPENSHIFT_DATA_DIR}/squid/var/logs/
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -h
+cat /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/cache.log
 rm /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/cache.log
 # ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k restart 2>&1
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -f/tmp/squid.conf
