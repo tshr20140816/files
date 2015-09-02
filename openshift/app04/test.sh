@@ -39,6 +39,7 @@ refresh_pattern .		0	20%	4320
 
 __HEREDOC__
 sed -i -e "s|__OPENSHIFT_PHP_IP__|${OPENSHIFT_PHP_IP}|g" squid.conf
+cat squid.conf
 
 ls -lang ${OPENSHIFT_DATA_DIR}/squid/var/run/
 tree ${OPENSHIFT_DATA_DIR}/squid/var/run/
