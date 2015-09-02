@@ -50,6 +50,7 @@ ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -h
 cat /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/cache.log
 rm /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/cache.log
 # ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k restart 2>&1
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -kparse -f/tmp/squid.conf
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -f/tmp/squid.conf
 cat /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/cache.log
 tree ${OPENSHIFT_DATA_DIR}/squid/var/run/
