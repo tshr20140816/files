@@ -80,7 +80,47 @@ unset CXX
 
 # *** config ***
 
+pushd ${OPENSHIFT_DATA_DIR}/var/etc > /dev/null
 
+cat << '__HEREDOC__' > squid.conf
+acl myhost src __OPENSHIFT_DIY_IP__/32
+
+acl SSL_ports port 443
+acl Safe_ports port 80
+acl Safe_ports port 21
+acl Safe_ports port 443
+acl Safe_ports port 1025-65535
+acl CONNECT method CONNECT
+http_access deny !Safe_ports
+http_access deny CONNECT !SSL_ports
+
+http_access allow myhost manager
+http_access deny manager
+
+http_access allow myhost
+http_access deny all
+
+http_port __OPENSHIFT_DIY_IP__:33128
+# dns_nameservers __OPENSHIFT_DIY_IP__ 8.8.8.8 172.16.0.2
+udp_incoming_address __OPENSHIFT_DIY_IP__
+cache_mem 64 MB
+# debug_options ALL,2
+
+cache_dir ufs __OPENSHIFT_DATA_DIR__/squid/var/cache/squid 100 16 256
+coredump_dir __OPENSHIFT_DATA_DIR__/squid/var/cache/squid
+
+refresh_pattern ^ftp:		1440	20%	10080
+refresh_pattern ^gopher:	1440	0%	1440
+refresh_pattern -i (/cgi-bin/|\?) 0	0%	0
+refresh_pattern .		0	20%	4320
+
+__HEREDOC__
+sed -i -e "s|__OPENSHIFT_DIY_IP__|${OPENSHIFT_DIY_IP}|g" squid.conf
+sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" squid.conf
+cat squid.conf
+popd > /dev/null
+
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -z
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f squid-${squid_version}.tar.xz
