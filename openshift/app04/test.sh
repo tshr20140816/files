@@ -27,7 +27,7 @@ http_access deny all
 
 http_port 33128
 
-ipv6=off
+ipv6 off
 dns_nameservers 8.8.8.8
 
 cache_dir ufs /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/cache/squid 100 16 256
