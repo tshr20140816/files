@@ -10,8 +10,10 @@ ls -lang ${OPENSHIFT_DATA_DIR}/squid/var/run/
 tree ${OPENSHIFT_DATA_DIR}/squid/var/run/
 ps ax | grep squid
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -h
-${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k restart 2>&1
-${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k shutdown 2>&1
+# ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k restart 2>&1
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128
+tree ${OPENSHIFT_DATA_DIR}/squid/var/run/
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k shutdown
 
 exit
 
