@@ -25,7 +25,7 @@ http_access allow myhost
 
 http_access deny all
 
-http_port 33128
+http_port __OPENSHIFT_PHP_IP__:33128
 dns_nameservers 8.8.8.8
 udp_incoming_address __OPENSHIFT_PHP_IP__
 cache_mem 64 MB
