@@ -29,6 +29,8 @@ http_port 33128
 
 dns_nameservers 8.8.8.8
 
+udp_incoming_address __OPENSHIFT_PHP_IP__
+
 cache_dir ufs /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/cache/squid 100 16 256
 coredump_dir /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/cache/squid
 
