@@ -41,6 +41,7 @@ sed -i -e "s|__OPENSHIFT_PHP_IP__|${OPENSHIFT_PHP_IP}|g" squid.conf
 ls -lang ${OPENSHIFT_DATA_DIR}/squid/var/run/
 tree ${OPENSHIFT_DATA_DIR}/squid/var/run/
 ps ax | grep squid
+tree ${OPENSHIFT_DATA_DIR}/squid/var/logs/
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -h
 # ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k restart 2>&1
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -f /tmp/squid.conf
