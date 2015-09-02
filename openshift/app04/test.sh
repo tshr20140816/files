@@ -1,12 +1,11 @@
 #!/bin/bash
 
-# 0809
+# 1015
 
 set -x
 
 quota -s
 
-rm -f forcerun*
 for i in $(seq 0 30)
 do
 wget https://tshrapp10.appspot.com/forcerun?thread_id=83 -O /dev/null
