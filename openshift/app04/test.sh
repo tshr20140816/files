@@ -7,8 +7,8 @@ set -x
 quota -s
 
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid --help
-${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33318 -k start
-${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33318 -k shutdown
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k start
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -a 33128 -k shutdown
 
 exit
 
