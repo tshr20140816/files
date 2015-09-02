@@ -53,6 +53,7 @@ rm /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/cac
 # ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -kparse -f/tmp/squid.conf
 # ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -z -f/tmp/squid.conf
 ${OPENSHIFT_DATA_DIR}/squid/sbin/squid -f/tmp/squid.conf
+${OPENSHIFT_DATA_DIR}/squid/sbin/squid -krestart -f/tmp/squid.conf
 cat /var/lib/openshift/554b6b37e0b8cda2a300005d/app-root/data//squid/var/logs/cache.log
 
 sleep 10s
