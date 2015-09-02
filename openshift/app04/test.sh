@@ -6,7 +6,8 @@ set -x
 
 quota -s
 
-tree ${OPENSHIFT_DATA_DIR}/squid
+# tree ${OPENSHIFT_DATA_DIR}/squid
+cp ${OPENSHIFT_DATA_DIR}/squid/etc/* ${OPENSHIFT_LOG_DIR}
 
 exit
 
