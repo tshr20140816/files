@@ -13,7 +13,7 @@ target_app=${2}
 target_version=${3}
 make_server=${4}
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) start $(basename "${0}")"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) start $(basename "${0}") ${target_app}"
 
 file_name=${target_uuid}_maked_${target_app}-${target_version}.tar.xz
 url=${make_server}/${file_name}
@@ -33,4 +33,4 @@ wget ${url}
 mv ${file_name} ${OPENSHIFT_DATA_DIR}/files/
 popd >/dev/null
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) finish $(basename "${0}")"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) finish $(basename "${0}") ${target_app}"
