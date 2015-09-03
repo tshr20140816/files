@@ -15,8 +15,12 @@ make_server=${4}
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) start $(basename "${0}") ${target_app}"
 
+wget --post-data="uuid=${target_uuid}&app=${target_app}&version=${target_version}" https://${make_server}/make_${target_app}.php
+
+sleep 30s
+
 file_name=${target_uuid}_maked_${target_app}-${target_version}.tar.xz
-url=${make_server}/${file_name}
+url=https://${make_server}/${file_name}
 while:
 do
     if [ $(wget -nv --spider --timeout 60 -t 1 ${url} 2>&1 | grep -c '200 OK') -eq 1 ]; then
