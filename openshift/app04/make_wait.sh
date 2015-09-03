@@ -29,7 +29,7 @@ do
 done
 pushd ${OPENSHIFT_TMP_DIR} >/dev/null
 rm -f ${file_name}
-wget $(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
+wget ${url}
 mv ${file_name} ${OPENSHIFT_DATA_DIR}/files/
 popd >/dev/null
 
