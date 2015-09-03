@@ -19,7 +19,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) start $(basename "${0}") ${target_app}"
 wget --post-data="uuid=${target_uuid}&app=${target_app}&version=${target_version}&password=${build_password}" \
  https://${make_server}/make_${target_app}.php -O -
 
-sleep 30s
+sleep 60s
 
 file_name=${target_uuid}_maked_${target_app}-${target_version}.tar.xz
 url=https://${make_server}/${file_name}
