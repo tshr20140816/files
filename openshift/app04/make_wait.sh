@@ -21,7 +21,7 @@ sleep 30s
 
 file_name=${target_uuid}_maked_${target_app}-${target_version}.tar.xz
 url=https://${make_server}/${file_name}
-while:
+while :
 do
     if [ $(wget -nv --spider --timeout 60 -t 1 ${url} 2>&1 | grep -c '200 OK') -eq 1 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) ${target_app} maked wget"
