@@ -4,7 +4,7 @@ export TZ=JST-9
 
 set -x
 
-if [ $# -ne 4 ]; then
+if [ $# -ne 5 ]; then
     exit
 fi
 
@@ -12,10 +12,12 @@ target_uuid=${1}
 target_app=${2}
 target_version=${3}
 make_server=${4}
+build_password=${5}
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) start $(basename "${0}") ${target_app}"
 
-wget --post-data="uuid=${target_uuid}&app=${target_app}&version=${target_version}" https://${make_server}/make_${target_app}.php
+wget --post-data="uuid=${target_uuid}&app=${target_app}&version=${target_version}&password=${build_password}" \
+ https://${make_server}/make_${target_app}.php
 
 sleep 30s
 
