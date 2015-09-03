@@ -17,7 +17,7 @@ build_password=${5}
 echo "$(date +%Y/%m/%d" "%H:%M:%S) start $(basename "${0}") ${target_app}"
 
 wget --post-data="uuid=${target_uuid}&app=${target_app}&version=${target_version}&password=${build_password}" \
- https://${make_server}/make_${target_app}.php
+ https://${make_server}/make_${target_app}.php -O -
 
 sleep 30s
 
