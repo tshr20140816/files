@@ -1,1 +1,2 @@
 http://qiita.com/mmktomato/items/8086cccfccc15660bf65
+https://blog.openshift.com/easy-full-text-search-with-sphinx/
