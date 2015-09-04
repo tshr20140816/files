@@ -6,6 +6,8 @@ function010
 
 # ***** sphinx *****
 
+# https://blog.openshift.com/easy-full-text-search-with-sphinx/
+
 rm -f ${OPENSHIFT_TMP_DIR}/sphinx-${sphinx_version}-release.tar.xz
 rm -f ${OPENSHIFT_TMP_DIR}/${OPENSHIFT_APP_UUID}_maked_sphinx-${sphinx_version}.tar.xz
 rm -rf ${OPENSHIFT_TMP_DIR}/sphinx-${sphinx_version}
