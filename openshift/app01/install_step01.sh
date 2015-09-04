@@ -82,6 +82,7 @@ php_version 5.6.12
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.6
 ruby_version 2.1.7
+sphinx_version 2.2.9
 squid_version 3.5.7
 tcl_version 8.6.4
 ttrss_version 1.15.3
@@ -276,6 +277,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/phpicalendar-${phpicalendar_version}.tar.bz2 &
     # axel
     wget -t1 ${mirror_server}/axel-${axel_version}.tar.bz2 &
+    # sphinx
+    wget -t1 ${mirror_server}/sphinx-${sphinx_version}-release.tar.gz &
     # ld.gold
     wget -t1 ${mirror_server}/ld.gold &
     wait
