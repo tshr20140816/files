@@ -539,6 +539,13 @@ do
     # *** spdy ***
     if [ ! -f mod-spdy-beta_current_x86_64.rpm ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) spdy wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://sphinxsearch.com/files/sphinx-${sphinx_version}-release.tar.gz &
+    fi
+    [ -f sphinx-${sphinx_version}-release.tar.gz ] || files_exists=0
+
+    # *** sphinx ***
+    if [ ! -f sphinx-${sphinx_version}-release.tar.gz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) spdy wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://dl-ssl.google.com/dl/linux/direct/mod-spdy-beta_current_x86_64.rpm &
     fi
     [ -f mod-spdy-beta_current_x86_64.rpm ] || files_exists=0
