@@ -3,3 +3,5 @@ https://blog.openshift.com/easy-full-text-search-with-sphinx/
 
 http://softwareupdate.vmware.com/cds/vmw-desktop/player/5.0.4/1945795/linux/core/VMware-Player-5.0.4-1945795.i386.bundle.tar
 https://dl.google.com/dl/android/studio/ide-zips/1.3.2.0/android-studio-ide-141.2178183-linux.zip
+
+https://discuss.gradle.org/t/dependency-problem/7326
