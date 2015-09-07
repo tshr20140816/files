@@ -340,65 +340,6 @@ popd > /dev/null
 
 ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
 
-# ***** squid *****
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) php"
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-
-rm -rf squid-${squid_version}
-
-if [ -f ${OPENSHIFT_DATA_DIR}/files/maked_squid-${squid_version}.tar.xz ]; then
-    cp ${OPENSHIFT_DATA_DIR}/files/maked_squid-${squid_version}.tar.xz ./
-    tar Jxf maked_squid-${squid_version}.tar.xz
-    rm maked_squid-${squid_version}.tar.xz
-else
-    rm -f squid-${squid_version}.tar.xz
-
-    cp ${OPENSHIFT_DATA_DIR}/files/squid-${squid_version} ./
-    if [ ! -f squid-${squid_version} ]; then
-        wget http://www.squid-cache.org/Versions/v3/3.5/squid-${squid_version}.tar.xz
-    fi
-    tar Jxf squid-${squid_version}.tar.xz
-    pushd squid-${squid_version} > /dev/null
-    ./configure -help
-    ./configure --prefix=${data_dir}/squid \
-     --mandir=${tmp_dir}/gomi \
-     --infodir=${tmp_dir}/gomi \
-     --docdir=${tmp_dir}/gomi \
-     --disable-dependency-tracking \
-     --enable-shared \
-     --enable-static=no \
-     --enable-fast-install \
-     --disable-icap-client \
-     --disable-wccp \
-     --disable-wccpv2 \
-     --disable-snmp \
-     --disable-eui \
-     --disable-htcp \
-     --disable-devpoll \
-     --disable-ipv6 \
-     --disable-auto-locale
-
-    # time make -j12
-    time make -j4
-    ccache --show-stats
-    popd > /dev/null
-    tar Jcf maked_squid-${squid_version}.tar.xz squid-${squid_version}
-    mv maked_squid-${squid_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-
-    rm -f squid-${squid_version}.tar.xz
-fi
-
-rm -f ${app_uuid}_maked_squid-${squid_version}.tar.xz
-time tar Jcf ${app_uuid}_maked_squid-${squid_version}.tar.xz squid-${squid_version}
-mv -f ${app_uuid}_maked_squid-${squid_version}.tar.xz ${OPENSHIFT_DATA_DIR}/files/
-rm -rf squid-${squid_version}
-
-popd > /dev/null
-
-ls -lang ${OPENSHIFT_DATA_DIR}/.distcc/lock
-
 # ***** libmemcached *****
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) libmemcached"
