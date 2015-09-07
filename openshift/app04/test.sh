@@ -6,12 +6,16 @@ quota -s
 
 cd /tmp
 
+export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+    
 sphinx_version=2.2.9
-# wget http://sphinxsearch.com/files/sphinx-${sphinx_version}-release.tar.gz
-# tar zxf sphinx-${sphinx_version}-release.tar.gz
+
+rm -rf sphinx-${sphinx_version}-release
 rm sphinx-${sphinx_version}-release.tar.gz*
 
-# ls -lang
+wget http://sphinxsearch.com/files/sphinx-${sphinx_version}-release.tar.gz
+tar zxf sphinx-${sphinx_version}-release.tar.gz
 
 cd sphinx-${sphinx_version}-release
 ./configure --help
