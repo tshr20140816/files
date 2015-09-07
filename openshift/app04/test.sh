@@ -22,4 +22,5 @@ cd sphinx-${sphinx_version}-release
      --disable-dependency-tracking \
      --disable-id64 \
      --with-mysql \
-     --without-syslog
+     --without-syslog \
+     --without-unixodbc
