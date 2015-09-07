@@ -155,7 +155,8 @@ Host *
   LogLevel QUIET
 #  LogLevel DEBUG3
   Protocol 2
-  Ciphers arcfour256,arcfour128
+#  Ciphers arcfour256,arcfour128
+  Ciphers aes128-ctr,aes192-ctr,aes256-ctr
   AddressFamily inet
 #  PreferredAuthentications publickey,gssapi-with-mic,hostbased,keyboard-interactive,password
   PreferredAuthentications publickey
