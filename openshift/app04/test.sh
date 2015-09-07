@@ -14,4 +14,12 @@ sphinx_version=2.2.9
 
 cd sphinx-${sphinx_version}-release
 ./configure --help
-./configure
+./configure \
+     --prefix=${OPENSHIFT_DATA_DIR}/sphinx \
+     --mandir=/tmp/gomi \
+     --infodir=/tmp/gomi \
+     --docdir=/tmp/gomi \
+     --disable-dependency-tracking \
+     --disable-id64 \
+     --with-mysql \
+     --without-syslog
