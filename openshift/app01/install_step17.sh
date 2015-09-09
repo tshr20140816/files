@@ -64,6 +64,7 @@ LOGDIR="__OPENSHIFT_LOG_DIR__"
 LOGFILE=${LOGDIR}/delegate_${PORT}.log[date+.%w]
 PROTOLOG=${LOGDIR}/delegate_${PORT}.${PROTO}.log[date+.%w]:%X
 ERRORLOG=${LOGDIR}/delegate_errors.log[date+.%w]
+MAXIMA=delegated:10
 MOUNT="/mail/* pop://__DELEGATE_POP_SERVER__:110/* noapop"
 # MOUNT="/-/builtin/* http://__OPENSHIFT_DIY_IP__:30080/delegate/builtin/*"
 FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
@@ -85,6 +86,28 @@ s/<\/TITLE>/<\/TITLE><\/HEAD>/g
 s/>V<\/A>/>V<\/A><\/HTML>/g
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt &
+
+cat << '__HEREDOC__' > P33128
+-P__OPENSHIFT_DIY_IP__:33128
+SERVER=http
+ADMIN=__ADMIN_MAILADDRESS__
+DGROOT=__OPENSHIFT_DATA_DIR__delegate
+LOGDIR="__OPENSHIFT_LOG_DIR__"
+LOGFILE=${LOGDIR}/delegate_${PORT}.log[date+.%w]
+PROTOLOG=${LOGDIR}/delegate_${PORT}.${PROTO}.log[date+.%w]:%X
+ERRORLOG=${LOGDIR}/delegate_errors.log[date+.%w]
+CACHEDIR=__OPENSHIFT_DATA_DIR__delegate/cache
+CACHE=do
+MAXIMA=delegated:10
+HTTPCONF=methods:GET,CONNECT
+HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
+DGSIGN="x.x.x/x.x.x"
+__HEREDOC__
+perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P30080
+perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P30080
+perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' P30080
+redmine_email_address=$(cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_address)
+sed -i -e "s|__ADMIN_MAILADDRESS__|${redmine_email_address}|g" P30080
 popd > /dev/null
 
 # *** apache conf ***
