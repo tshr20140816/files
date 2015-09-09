@@ -59,7 +59,8 @@ else
      --without-syslog 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_sphinx.log
     echo "$(date +%Y/%m/%d" "%H:%M:%S) sphinx make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_sphinx.log
-    time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_sphinx.log
+    # time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_sphinx.log
+    time make 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_sphinx.log
 fi
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) sphinx make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
