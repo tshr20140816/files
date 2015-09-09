@@ -9,7 +9,7 @@ cd /tmp
 export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
     
-sphinx_version=2.2.9
+sphinx_version=2.2.10
 
 rm -rf sphinx-${sphinx_version}-release
 rm sphinx-${sphinx_version}-release.tar.gz*
@@ -30,5 +30,12 @@ cd sphinx-${sphinx_version}-release
      --without-syslog \
      --without-unixodbc
      
-time make -j4
+time make
+make install
 
+cd /tmp
+
+rm -rf sphinx-${sphinx_version}-release
+rm -f sphinx-${sphinx_version}-release.tar.gz*
+
+tree ${OPENSHIFT_DATA_DIR}/sphinx
