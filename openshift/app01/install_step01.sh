@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.09.10 sphinx_version 2.2.9 → 2.2.10
 # 2015.09.05 php_version 5.6.12 → 5.6.13
 # 2015.08.20 wordpress_version 4.2.4-ja → 4.3-ja
 # 2015.08.19 tcl_version 8.6.3 → 8.6.4
@@ -83,7 +84,7 @@ php_version 5.6.13
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.6
 ruby_version 2.1.7
-sphinx_version 2.2.9
+sphinx_version 2.2.10
 tcl_version 8.6.4
 ttrss_version 1.15.3
 webalizer_version 2.23-08
