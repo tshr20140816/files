@@ -86,7 +86,6 @@ redmine_version 2.6.6
 ruby_version 2.1.7
 sphinx_version 2.2.10
 tcl_version 8.6.4
-ttrss_version 1.15.3
 webalizer_version 2.23-08
 wordpress_version 4.3-ja
 xz_version 5.2.1
@@ -250,8 +249,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/ipagp${ipafont_version}.zip &
     # webalizer
     wget -t1 ${mirror_server}/webalizer-${webalizer_version}-src.tar.bz2 &
-    # ttrss
-    wget -t1 ${mirror_server}/${ttrss_version}.tar.gz &
+    # # ttrss
+    # wget -t1 ${mirror_server}/${ttrss_version}.tar.gz &
     # cacti
     wget -t1 ${mirror_server}/cacti-${cacti_version}.tar.gz &
     # tcl
@@ -711,13 +710,17 @@ do
     [ -f wordpress-${wordpress_version}.tar.gz ] || files_exists=0
 
     # *** Tiny Tiny RSS ***
-    if [ ! -f ${ttrss_version}.tar.gz ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing ${ttrss_version}.tar.gz" \
-         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) Tiny Tiny RSS wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
+    # if [ ! -f ${ttrss_version}.tar.gz ]; then
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing ${ttrss_version}.tar.gz" \
+    #      | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) Tiny Tiny RSS wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
+    # fi
+    # [ -f ${ttrss_version}.tar.gz ] || files_exists=0
+    if [ ! -f ttrss_archive.zip ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) ttrss wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip
     fi
-    [ -f ${ttrss_version}.tar.gz ] || files_exists=0
 
     # *** cacti ***
     if [ ! -f cacti-${cacti_version}.tar.gz ]; then
