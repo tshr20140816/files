@@ -4,6 +4,10 @@ set -x
 
 quota -s
 
+cat ${OPENSHIFT_DATA_DIR}/sphinx/etc/*
+
+exit
+
 cd /tmp
 
 export CFLAGS="-O2 ${cflag_data} -pipe -fomit-frame-pointer -s"
