@@ -4,7 +4,17 @@ set -x
 
 quota -s
 
-cat ${OPENSHIFT_DATA_DIR}/sphinx/etc/*
+# cat ${OPENSHIFT_DATA_DIR}/sphinx/etc/*
+
+cd /tmp
+
+mkdir work
+cd work
+
+wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O archive.zip
+unzip archive.zip
+
+tree ./
 
 exit
 
