@@ -8,6 +8,17 @@ cd /tmp
 
 # cat ${OPENSHIFT_DATA_DIR}/sphinx/etc/*
 
+mkdir work
+cd work
+
+wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2
+tar jxf httpd-2.2.31.tar.bz2
+time tar zcf test.tar.gz httpd-2.2.31
+time tar jcf test.tar.bz2 httpd-2.2.31
+
+cd /tmp
+rm -rf work
+
 exit
 
 cd /tmp
