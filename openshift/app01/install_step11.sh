@@ -205,7 +205,11 @@ rm -rf $OPENSHIFT_DATA_DIR/libmemcached
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_password) != "none" ]; then
     file_name=${OPENSHIFT_APP_UUID}_maked_libmemcached-${libmemcached_version}.tar.xz
-    url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
+    if [ $(cat ${OPENSHIFT_DATA_DIR}/params/build_server_2) != 'none' ]; then
+        url=$(cat ${OPENSHIFT_DATA_DIR}/params/build_server_2)/${file_name}
+    else
+        url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)/${file_name}
+    fi
     while :
     do
         if [ $(wget -nv --spider --timeout 60 -t 1 ${url} 2>&1 | grep -c '200 OK') -eq 1 ]; then
