@@ -101,6 +101,7 @@ CACHE=do
 MAXIMA=delegated:10
 HTTPCONF=methods:GET,CONNECT
 HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
+HTTPCONF=cache:any
 DGSIGN="x.x.x/x.x.x"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P33128
