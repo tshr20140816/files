@@ -19,7 +19,8 @@ rm mysql-5.6.26.tar.gz
 
 cd mysql-5.6.26
 
-./configure --help
+ls -lang
+#./configure --help
 
 cd /tmp
 
