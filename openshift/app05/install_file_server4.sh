@@ -115,12 +115,15 @@ wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_versi
 # wget http://www.psc.edu/index.php/hpn-ssh-patches/hpn-14-kitchen-sink-patches/finish/24-hpn-14-kitchen-sink-patches/102-openssh-6-3p1-hpnssh14v2-kitchen-sink-patch \
 #  -O openssh-6.3p1-hpnssh14v2.diff.gz
 # wget http://downloads.sourceforge.net/project/hpnssh/HPN-SSH%2014.5%206.6p1/openssh-6.6p1-hpnssh14v5.diff.gz
-wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
+# wget https://github.com/rapier1/openssh-portable/archive/hpn-V_6_9_P1.tar.gz
+wget https://github.com/rapier1/openssh-portable/archive/hpn-6_9_P1.zip
 tar zxf openssh-${openssh_version}.tar.gz
 # gzip -d openssh-6.3p1-hpnssh14v2.diff.gz
 # gzip -d openssh-6.6p1-hpnssh14v5.diff.gz
-tar zxf hpn-V_6_9_P1.tar.gz
-cp -rf openssh-portable-hpn-V_6_9_P1/* openssh-6.9p1/
+# tar zxf hpn-V_6_9_P1.tar.gz
+unzip hpn-6_9_P1.zip
+# cp -rf openssh-portable-hpn-V_6_9_P1/* openssh-6.9p1/
+cp -rf openssh-portable-hpn-6_9_P1/* openssh-${openssh_version}/
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/openssh-${openssh_version} > /dev/null
 # patch -p1 < ../openssh-6.3p1-hpnssh14v2.diff
@@ -143,6 +146,12 @@ time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm openssh-${openssh_version}.tar.gz
+rm hpn-6_9_P1.zip
+rm -rf openssh-${openssh_version}
+popd > /dev/null
+
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
 mkdir ${OPENSHIFT_TMP_DIR}/.ssh
 pushd ${OPENSHIFT_DATA_DIR}/.ssh > /dev/null
@@ -156,7 +165,7 @@ Host *
 #  LogLevel DEBUG3
   Protocol 2
 #  Ciphers arcfour256,arcfour128
-  Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+  Ciphers arcfour256,arcfour128,aes128-ctr,aes192-ctr,aes256-ctr
   AddressFamily inet
 #  PreferredAuthentications publickey,gssapi-with-mic,hostbased,keyboard-interactive,password
   PreferredAuthentications publickey
