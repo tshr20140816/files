@@ -8,7 +8,17 @@ quota -s
 
 cd /tmp
 
+rm hpn-6_9_P1.zip*
+rm openssh-6.9p1.tar.gz*
+rm -rf local
+rm -rf gomi
+rm -rf man
+rm -rf openssh-portable-hpn-6_9_P1
+rm -rf openssh-6.9p1
+
 ls -lang
+
+ls -lang ${OPENSHIFT_DATA_DIR}
 
 exit
 
