@@ -26,6 +26,7 @@ rm -rf openssh-portable-hpn-6_9_P1
 
 # tree ./
 
+cd openssh-6.9p1
 ./configure --help
 time ./configure
 time make -j4
