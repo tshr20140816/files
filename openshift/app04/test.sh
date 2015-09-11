@@ -4,6 +4,14 @@ set -x
 
 quota -s
 
+cd /tmp
+
+wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.26.tar.gz/from/http://cdn.mysql.com/
+
+ls -lang
+
+exit
+
 # cat ${OPENSHIFT_DATA_DIR}/sphinx/etc/*
 
 cd /tmp
