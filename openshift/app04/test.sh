@@ -17,7 +17,8 @@ wget https://github.com/rapier1/openssh-portable/archive/hpn-6_9_P1.zip
 tar xfz openssh-6.9p1.tar.gz
 unzip hpn-6_9_P1.zip
 
-mv -rf openssh-portable-hpn-6_9_P1/* openssh-6.9p1/
+cp -rf openssh-portable-hpn-6_9_P1/* openssh-6.9p1/
+rm -rf openssh-portable-hpn-6_9_P1
 
 tree ./
 
