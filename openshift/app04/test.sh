@@ -6,58 +6,7 @@ quota -s
 
 cd /tmp
 
-rm index.html
-wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.26.tar.gz/from/http://cdn.mysql.com/ -O mysql-5.6.26.tar.gz
-
-ls -lang
-
-tar zxf mysql-5.6.26.tar.gz
-
-quota -s
-
-rm mysql-5.6.26.tar.gz
-
-cd mysql-5.6.26
-
-ls -lang
-#./configure --help
-
-cd /tmp
-
-rm -rf mysql-5.6.26
-
-exit
-
 # cat ${OPENSHIFT_DATA_DIR}/sphinx/etc/*
-
-cd /tmp
-
-mkdir work
-cd work
-
-wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
-wget https://github.com/rapier1/openssh-portable/archive/hpn-6_9_P1.zip
-
-tar xfz openssh-6.9p1.tar.gz
-unzip hpn-6_9_P1.zip
-
-# ls -lang openssh-6.9p1/
-
-cp -rf openssh-portable-hpn-6_9_P1/* openssh-6.9p1/
-rm -rf openssh-portable-hpn-6_9_P1
-
-# ls -lang openssh-6.9p1/
-
-# tree ./
-
-cd openssh-6.9p1
-./configure --help
-time ./configure
-time make -j4
-
-cd /tmp
-
-rm -rf work
 
 exit
 
