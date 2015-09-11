@@ -6,9 +6,24 @@ quota -s
 
 cd /tmp
 
-wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.26.tar.gz/from/http://cdn.mysql.com/
+rm index.html
+wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.26.tar.gz/from/http://cdn.mysql.com/ -O mysql-5.6.26.tar.gz
 
 ls -lang
+
+tar zxf mysql-5.6.26.tar.gz
+
+quota -s
+
+rm mysql-5.6.26.tar.gz
+
+cd mysql-5.6.26
+
+./configure --help
+
+cd /tmp
+
+rm -rf mysql-5.6.26
 
 exit
 
