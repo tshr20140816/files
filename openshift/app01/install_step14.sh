@@ -8,11 +8,10 @@ function010
 
 rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 
-mkdir ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
-pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/${ttrss_version}.tar.gz ./
-echo "$(date +%Y/%m/%d" "%H:%M:%S) Tiny Tiny RSS tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-time tar zxf ${ttrss_version}.tar.gz --strip-components=1
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs > /dev/null
+cp ${OPENSHIFT_DATA_DIR}/download_files/ttrss_archive.zip ./
+time unzip ttrss_archive.zip
+mv tt-rss.git tt-rss
 popd > /dev/null
 
 # *** create database ***
@@ -63,8 +62,8 @@ php -l config.php
 # echo zlib.output_compression off > .htaccess
 popd > /dev/null
 
-pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss > /dev/null
-rm ${ttrss_version}.tar.gz
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs > /dev/null
+rm ttrss_archive.zip
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
