@@ -8,22 +8,8 @@ quota -s
 
 cd /tmp
 
-rm hpn-6_9_P1.zip*
-rm openssh-6.9p1.tar.gz*
-rm -rf local
-rm -rf gomi
-rm -rf man
-rm -rf openssh-portable-hpn-6_9_P1
-rm -rf openssh-6.9p1
-
-ls -lang
-
-ls -lang ${OPENSHIFT_DATA_DIR}
-
-exit
-
-
 mkdir work
+cd work
 
 wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
 wget https://github.com/rapier1/openssh-portable/archive/hpn-6_9_P1.zip
@@ -31,7 +17,11 @@ wget https://github.com/rapier1/openssh-portable/archive/hpn-6_9_P1.zip
 tar xfz openssh-6.9p1.tar.gz
 unzip hpn-6_9_P1.zip
 
+mv -rf openssh-portable-hpn-6_9_P1/* openssh-6.9p1/
+
 tree ./
+
+cd /tmp
 
 rm -rf work
 
