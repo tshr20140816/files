@@ -8,6 +8,11 @@ quota -s
 
 cd /tmp
 
+ls -lang
+
+exit
+
+
 mkdir work
 
 wget http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.9p1.tar.gz
