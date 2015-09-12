@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.09.12 fio_version 2.2.9 → 2.2.10
 # 2015.09.10 sphinx_version 2.2.9 → 2.2.10
 # 2015.09.05 php_version 5.6.12 → 5.6.13
 # 2015.08.20 wordpress_version 4.2.4-ja → 4.3-ja
@@ -71,7 +72,7 @@ ccache_version 3.2.3
 distcc_version 3.1
 delegate_version 9.9.13
 expect_version 5.45
-fio_version 2.2.9
+fio_version 2.2.10
 ipafont_version 00303
 libmemcached_version 1.0.18
 lynx_version 2.8.7
