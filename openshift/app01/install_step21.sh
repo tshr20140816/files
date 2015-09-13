@@ -138,6 +138,8 @@ ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful \
 pushd ${OPENSHIFT_DATA_DIR}/delegate
 ./delegated -r +=P30080 \
  >> ${OPENSHIFT_LOG_DIR}/start.log 2>&1
+./delegated -r +=P33128 \
+ >> ${OPENSHIFT_LOG_DIR}/start.log 2>&1
 popd > /dev/null
 
 # *** memcached ***
