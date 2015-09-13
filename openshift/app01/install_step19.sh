@@ -324,10 +324,10 @@ date +%Y/%m/%d" "%H:%M:%S
 minute=$((10#$(date +%M)))
 
 if [ $((minute % 5)) -eq 0 ]; then
-    # ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
-    pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss >/dev/null
-    ${OPENSHIFT_DATA_DIR}/php/bin/php ./update_daemon2.php --feeds
-    popd >/dev/null
+    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
+    # pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss >/dev/null
+    # ${OPENSHIFT_DATA_DIR}/php/bin/php ./update_daemon2.php --feeds
+    # popd >/dev/null
 fi
 __HEREDOC__
 chmod +x update_feeds.sh &
