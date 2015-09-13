@@ -55,6 +55,8 @@ perl -pi -e "s/define\(\'SELF_URL_PATH\', \'http:\/\/example.org\/tt-rss\/\'/def
 # TODO
 # perl -pi -e "s/define\(\'PHP_EXECUTABLE\', \'\/usr\/bin\/php\'/define('PHP_EXECUTABLE', getenv('OPENSHIFT_DATA_DIR')\/php\/bin\/php/g" config.php
 perl -pi -e "s/define\(\'ENABLE_GZIP_OUTPUT\', false/define('ENABLE_GZIP_OUTPUT', true/g" config.php
+echo >> config.php
+echo "\tdefine('_CURL_HTTP_PROXY', getenv('OPENSHIFT_DIY_IP') . ':33128');" >> config.php
 
 php -l config.php
 # TODO
