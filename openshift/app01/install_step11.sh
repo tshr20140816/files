@@ -143,7 +143,9 @@ else
      --enable-mbstring \
      --enable-mbregex \
      --enable-sockets \
+     --enable-pcntl \
      --disable-ipv6 \
+     --disable-debug \
      --with-gettext=${OPENSHIFT_DATA_DIR}/php \
      --with-zend-vm=GOTO 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 
