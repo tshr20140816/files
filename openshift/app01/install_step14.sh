@@ -11,7 +11,7 @@ rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs > /dev/null
 cp ${OPENSHIFT_DATA_DIR}/download_files/ttrss_archive.zip ./
 time unzip ttrss_archive.zip
-mv tt-rss.git tt-rss
+mv tt-rss.git ttrss
 popd > /dev/null
 
 # *** create database ***
