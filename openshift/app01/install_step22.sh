@@ -27,6 +27,7 @@ if [ ${testrubyserver_count} -gt 0 ]; then
     # *** delegate ***
     pushd ${OPENSHIFT_DATA_DIR}/delegate
     ./delegated -r +=P30080
+    ./delegated -r +=P33128
     popd > /dev/null
 
     # *** memcached ***
