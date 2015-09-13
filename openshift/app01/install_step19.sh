@@ -244,8 +244,8 @@ elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
     ./bin/memcached -l ${OPENSHIFT_DIY_IP} -p 31211 -U 0 -m 60 -C -d &>> ${OPENSHIFT_LOG_DIR}/memcached.log
 fi
 
-# delegated
-is_alive=$(ps awhx | grep delegated | grep -v grep | grep -c ${OPENSHIFT_DIY_IP})
+# delegated port 30080
+is_alive=$(ps awhx | grep delegated | grep -v grep | grep -c ${OPENSHIFT_DIY_IP}:30080)
 if [ ${is_alive} -gt 0 ]; then
     if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
         ./delegated +=P30080 -Fkill
@@ -256,6 +256,20 @@ elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
     echo RESTART delegated
     cd ${OPENSHIFT_DATA_DIR}/delegate/
     ./delegated -r +=P30080
+fi
+
+# delegated port 33128
+is_alive=$(ps awhx | grep delegated | grep -v grep | grep -c ${OPENSHIFT_DIY_IP}:33128)
+if [ ${is_alive} -gt 0 ]; then
+    if [ -f ${OPENSHIFT_TMP_DIR}/stop ]; then
+        ./delegated +=P33128 -Fkill
+    else
+        echo delegated is alive
+    fi
+elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
+    echo RESTART delegated
+    cd ${OPENSHIFT_DATA_DIR}/delegate/
+    ./delegated -r +=P33128
 fi
 
 # redmine
