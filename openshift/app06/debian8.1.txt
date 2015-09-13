@@ -7,6 +7,9 @@ MIRRORS=( 'http://ftp1.debian.or.jp/debian,http://ftp.nara.wide.ad.jp/debian,htt
 
 _MAXNUM=9
 
+apt-get install sudo ntp lxde gcc g++ build-essential fakeroot kernel-package libncurses5-dev
+
+
 http://xmodulo.com/speed-slow-apt-get-install-debian-ubuntu.html
 http://ameblo.jp/sora8492/entry-11838796776.html
 
