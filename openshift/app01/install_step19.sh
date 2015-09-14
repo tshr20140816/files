@@ -326,7 +326,7 @@ minute=$((10#$(date +%M)))
 if [ $((minute % 5)) -eq 0 ]; then
     ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
     # pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss >/dev/null
-    # ${OPENSHIFT_DATA_DIR}/php/bin/php ./update_daemon2.php --feeds
+    # ${OPENSHIFT_DATA_DIR}/php/bin/php ./update_daemon2.php --tasks 5
     # popd >/dev/null
 fi
 __HEREDOC__
