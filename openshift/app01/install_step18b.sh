@@ -50,9 +50,9 @@ else
     echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_sphinx.log
     ./configure \
      --prefix=${OPENSHIFT_DATA_DIR}/sphinx \
-     --mandir=/tmp/gomi \
-     --infodir=/tmp/gomi \
-     --docdir=/tmp/gomi \
+     --mandir=/tmp/man \
+     --infodir=/tmp/info \
+     --docdir=/tmp/doc \
      --disable-dependency-tracking \
      --disable-id64 \
      --with-mysql \
