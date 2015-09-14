@@ -74,7 +74,93 @@ unset CXX
 
 # *** config ***
 
-# ★
+pushd ${OPENSHIFT_DATA_DIR}/sphinx > /dev/null
+cat << '__HEREDOC__' > sphinx.conf
+source ttrss
+{
+    type = mysql
+    sql_host = __OPENSHIFT_MYSQL_DB_HOST__
+    sql_user = __OPENSHIFT_MYSQL_DB_USERNAME__
+    sql_pass = __OPENSHIFT_MYSQL_DB_PASSWORD__
+    sql_db = ttrss
+    sql_port = 3306
+    sql_query_pre = SET NAMES utf8
+    sql_query = \
+        SELECT int_id AS id, ref_id, UNIX_TIMESTAMP(updated) AS updated, \
+            ttrss_entries.title AS title, link, content, \
+            ttrss_feeds.title AS feed_title, \
+            marked, published, unread, \
+            author, ttrss_user_entries.owner_uid \
+        FROM ttrss_entries, ttrss_user_entries, ttrss_feeds \
+        WHERE ref_id = ttrss_entries.id AND feed_id = ttrss_feeds.id;
+
+    # sql_attr_uint = owner_uid
+    # sql_attr_uint = ref_id
+
+    sql_ranged_throttle = 0
+
+    sql_query_info = \
+        SELECT * FROM ttrss_entries, \
+            ttrss_user_entries WHERE ref_id = id AND int_id=$id
+}
+
+source delta : ttrss {
+    sql_query = \
+        SELECT int_id AS id, ref_id, UNIX_TIMESTAMP(updated) AS updated, \
+            ttrss_entries.title AS title, link, content, \
+            ttrss_feeds.title AS feed_title, \
+            marked, published, unread, \
+            author, ttrss_user_entries.owner_uid \
+        FROM ttrss_entries, ttrss_user_entries, ttrss_feeds \
+        WHERE ref_id = ttrss_entries.id AND feed_id = ttrss_feeds.id \
+        AND ttrss_entries.updated > NOW() - INTERVAL 24 HOUR;
+
+    sql_query_killlist = \
+        SELECT int_id FROM ttrss_entries, ttrss_user_entries \
+            WHERE ref_id = ttrss_entries.id AND updated > NOW() - INTERVAL 24 HOUR;
+}
+
+index ttrss {
+    source = ttrss
+    path = __OPENSHIFT_DATA_DIR__/sphinx/ttrss
+    docinfo = extern
+    mlock = 0
+    morphology = none
+    min_word_len = 1
+    charset_type = utf-8
+    min_prefix_len = 3
+    prefix_fields = title, content, feed_title, author
+    enable_star = 1
+    html_strip = 1
+}
+
+index delta : ttrss {
+    source = delta
+    path = __OPENSHIFT_DATA_DIR__/sphinx/ttrss_delta
+}
+
+indexer {
+    mem_limit = 32M
+}
+
+searchd {
+    log = __OPENSHIFT_LOG_DIR__/sphinx_searchd.log
+    query_log = __OPENSHIFT_LOG_DIR__/sphinx_query.log
+    read_timeout = 5
+    client_timeout = 300
+    max_children = 30
+    pid_file = __OPENSHIFT_DATA_DIR__/sphinx/searchd.pid
+    max_matches = 1000
+    seamless_rotate = 1
+    preopen_indexes = 1
+    unlink_old = 1
+    mva_updates_pool = 1M
+    max_packet_size = 8M
+    max_filters = 256
+    max_filter_values = 4096
+}
+__HEREDOC__
+popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f sphinx-${sphinx_version}-release.tar.xz
