@@ -9,8 +9,8 @@ MIRRORS=( 'http://ftp1.debian.or.jp/debian,http://ftp.nara.wide.ad.jp/debian,htt
 
 _MAXNUM=15
 
-apt-get install sudo ntp tightvncserver xtightvncviewer lxde-core lxappearance lxinput lxsession-edit lxterminal gcc g++ build-essential fakeroot kernel-package libncurses5-dev
-
+# apt-get install sudo ntp tightvncserver xtightvncviewer lxde-core lxappearance lxinput lxsession-edit lxterminal gcc g++ build-essential fakeroot kernel-package libncurses5-dev
+apt-get install sudo ntp tightvncserver xtightvncviewer lxde gcc g++ build-essential fakeroot kernel-package libncurses5-dev
 
 http://xmodulo.com/speed-slow-apt-get-install-debian-ubuntu.html
 http://ameblo.jp/sora8492/entry-11838796776.html
