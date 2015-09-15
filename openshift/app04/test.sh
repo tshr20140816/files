@@ -5,6 +5,21 @@ set -x
 quota -s
 
 cd /tmp
+
+mkdir work
+cd work
+wget http://pkg-config.freedesktop.org/releases/pkgconfig-0.18.tar.gz
+tar zxf pkgconfig-0.18.tar.gz
+cd pkgconfig-0.18
+./configure --help
+time ./configure
+time make
+
+cd /tmp
+rm -rf work
+exit
+
+cd /tmp
 mkdir work
 cd work
 wget http://ftp.mozilla.org/pub/mozilla.org/calendar/sunbird/releases/1.0b1/source/sunbird-1.0b1.source.tar.bz2
