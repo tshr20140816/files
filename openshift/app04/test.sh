@@ -4,9 +4,8 @@ set -x
 
 quota -s
 
-tree /tmp/local
-
-exit
+# tree /tmp/local
+# exit
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
@@ -21,6 +20,7 @@ cd pkgconfig-0.18
 ./configure --help
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
+tree /tmp/local
 
 cd /tmp
 rm -rf work
