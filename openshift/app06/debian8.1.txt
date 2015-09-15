@@ -11,8 +11,7 @@ MIRRORS=( 'http://ftp1.debian.or.jp/debian,http://ftp.nara.wide.ad.jp/debian,htt
 
 _MAXNUM=15
 
-deb http://http.debian.net/debian/ jessie main contrib
-
+apt-get update
 # apt-get install cifs-utils sudo ntp tightvncserver xtightvncviewer lxde-core lxappearance lxinput lxsession-edit lxterminal gcc g++ build-essential fakeroot kernel-package libncurses5-dev
 apt-fast install cifs-utils wpasupplicant wakeonlan scim scim-anthy firmware-b43-installer b43-fwcutter sysv-rc-conf sudo ntp tightvncserver xtightvncviewer lxde gcc g++ build-essential fakeroot kernel-package libncurses5-dev virtualbox linux-headers-$(uname -r|sed 's,[^-]*-[^-]*-,,')
 
@@ -43,13 +42,6 @@ Preemption Model → Preemptible Kernel
 Preempt the Big Kernel Lock → o
 Timer Frequency → 1000
 Kernel Hacking → x
-
-deb http://ftp.jp.debian.org/debian jessie-updates main contrib
-deb http://ftp.jp.debian.org/debian jessie-backports main contrib non-free
-
-deb http://ftp.jp.debian.org/debian squeeze-lts main contrib non-free
-deb-src http://ftp.jp.debian.org/debian squeeze-lts main contrib non-free
-
 
 cd  /tmp
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > /tmp/user_fqdn.txt
