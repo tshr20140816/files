@@ -13,6 +13,14 @@ cd /tmp
 mkdir work
 cd work
 
+wget http://ftp.gnome.org/pub/GNOME/sources/glib/2.12/glib-2.12.13.tar.bz2
+tar jxf glib-2.12.13.tar.bz2
+cd glib-2.12.13
+./configure --help
+time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
+time make -j4
+make install
+
 wget http://ftp.gtk.org/pub/gtk/v2.10/gtk+-2.10.14.tar.bz2
 time tar jxf gtk+-2.10.14.tar.bz2
 cd gtk+-2.10.14
