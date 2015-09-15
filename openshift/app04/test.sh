@@ -12,6 +12,15 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir work
 cd work
+
+wget http://ftp.gtk.org/pub/gtk/v2.10/gtk+-2.10.14.tar.bz2
+time tar jxf gtk+-2.10.14.tar.bz2
+cd gtk+-2.10.14
+./configure --help
+time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
+time make -j4
+make install
+
 wget http://ftp.mozilla.org/pub/mozilla.org/calendar/sunbird/releases/1.0b1/source/sunbird-1.0b1.source.tar.bz2
 time tar jxf sunbird-1.0b1.source.tar.bz2
 rm sunbird-1.0b1.source.tar.bz2
