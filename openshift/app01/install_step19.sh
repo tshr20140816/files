@@ -903,6 +903,49 @@ __HEREDOC__
 chmod +x icalendar.sh &
 echo icalendar.sh >> jobs.allow
 
+# * optimize table *
+
+cat << '__HEREDOC__' > optimize_table.sh
+#!/bin/bash
+export TZ=JST-9
+date +%Y/%m/%d" "%H:%M:%S
+
+connection_string=$(cat << __HEREDOC_2__
+--user=${OPENSHIFT_MYSQL_DB_USERNAME}
+--password=${OPENSHIFT_MYSQL_DB_PASSWORD}
+--host=${OPENSHIFT_MYSQL_DB_HOST}
+--port=${OPENSHIFT_MYSQL_DB_PORT}
+--database=mysql
+--silent
+--batch
+__HEREDOC_2__
+)
+
+sql=$(cat << '__HEREDOC_2__'
+SELECT CONCAT(T1.TABLE_SCHEMA, '.', T1.TABLE_NAME)
+  FROM information_schema.TABLES T1
+ WHERE T1.TABLE_ROWS IS NOT NULL
+   AND T1.TABLE_ROWS > 0
+   AND T1.TABLE_SCHEMA NOT IN ('performance_schema', 'mysql')
+   AND T1.DATA_FREE > 0
+ ORDER BY T1.DATA_FREE DESC
+ LIMIT 0, 30
+__HEREDOC_2__
+)
+
+local tables=$(mysql ${connection_string} --execute="${sql}"
+if [ ${#tables[*]} -gt 0 ]; then
+    for table in ${tables[@]}; do
+    do
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) OPTIMIZE START ${table}"
+        mysql ${connection_string} --execute="ALTER TABLE ${table} ENGINE=InnoDB;"
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) OPTIMIZE FINISH ${table}"
+    done
+fi
+__HEREDOC__
+chmod +x optimize_table.sh &
+echo optimize_table.sh >> jobs.allow
+
 popd > /dev/null
 
 # *** minutely ***
