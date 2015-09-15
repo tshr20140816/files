@@ -60,6 +60,7 @@ time ./configure \
 --disable-xul \
 --disable-zipwriter \
 --enable-application=calendar \
+--enable-static \
 --with-windows-version=501
 
 quota -s
