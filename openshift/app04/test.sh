@@ -44,6 +44,16 @@ make install
 fi
 
 if [ 1 -eq 1 ]; then
+wget ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-1.6.18.tar.xz
+tar zxf libpng-1.6.18.tar.xz
+cd libpng-1.6.18
+./configure --help
+time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
+time make -j4
+make install
+fi
+
+if [ 1 -eq 1 ]; then
 wget http://cairographics.org/releases/cairo-1.2.0.tar.gz
 tar zxf cairo-1.2.0.tar.gz
 cd cairo-1.2.0
@@ -53,6 +63,7 @@ time make -j4
 make install
 fi
 
+if [ 1 -eq 0 ]; then
 wget http://ftp.gtk.org/pub/gtk/v2.10/gtk+-2.10.14.tar.bz2
 time tar jxf gtk+-2.10.14.tar.bz2
 cd gtk+-2.10.14
@@ -60,7 +71,9 @@ cd gtk+-2.10.14
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
 make install
+fi
 
+if [ 1 -eq 0 ]; then
 wget http://ftp.mozilla.org/pub/mozilla.org/calendar/sunbird/releases/1.0b1/source/sunbird-1.0b1.source.tar.bz2
 time tar jxf sunbird-1.0b1.source.tar.bz2
 rm sunbird-1.0b1.source.tar.bz2
@@ -116,6 +129,7 @@ time ./configure \
 --enable-application=calendar \
 --enable-static \
 --with-windows-version=501
+fi
 
 quota -s
 cd /tmp
