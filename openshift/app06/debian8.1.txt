@@ -1,23 +1,33 @@
 https://wiki.debian.org/VirtualBox
 
-apt-get install telnetd aria2 vim wget
+su -
+apt-get install telnetd
+
+su -
+apt-get install aria2 vim wget
+update-alternatives --set editor /usr/bin/vim.basic
+
+echo "net.ipv6.conf.all.disable_ipv6 = 1" > /etc/sysctl.d/ipv6.conf
 
 wget --no-check-certificate https://raw.githubusercontent.com/ilikenwf/apt-fast/master/apt-fast
 # wget --no-check-certificate https://raw.githubusercontent.com/ilikenwf/apt-fast/master/apt-fast.conf
 wget --no-check-certificate https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app06/apt-fast.conf
 wget --no-check-certificate https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app06/sources.list
 
-MIRRORS=( 'http://ftp1.debian.or.jp/debian,http://ftp.nara.wide.ad.jp/debian,http://ftp.tsukuba.wide.ad.jp/debian/debian,http://dennou-h.gfd-dennou.org/debian,http://dennou-k.gfd-dennou.org/debian,http://dennou-q.gfd-dennou.org/debian,http://debian-mirror.sakura.ne.jp/debian/debian,http://ftp.riken.jp/pub/Linux/debian/debian,http://ftp.kddilabs.jp/pub/Linux/distributions/Debian/debian/debian,http://ring.shibaura-it.ac.jp/pub/linux/debian/debian,http://ring.tains.tohoku.ac.jp/pub/linux/debian/debian,http://ring.u-toyama.ac.jp/pub/linux/debian/debian,http://ring.yamanashi.ac.jp/pub/linux/debian/debian,http://ring.airnet.ne.jp/pub/linux/debian/debian,http://ring.maffin.ad.jp/pub/linux/debian/debian' )
-
-_MAXNUM=15
+mv apt-fast /usr/bin/
+chmod +x /usr/bin/apt-fast
+mv apt-fast.conf /etc/
+mv /etc/apt/sources.list /etc/apt/sources.list.org
+mv sources.list /etc/apt/
 
 apt-get update
-# apt-get install cifs-utils sudo ntp tightvncserver xtightvncviewer lxde-core lxappearance lxinput lxsession-edit lxterminal gcc g++ build-essential fakeroot kernel-package libncurses5-dev
-apt-fast install cifs-utils wpasupplicant wakeonlan scim scim-anthy firmware-b43-installer b43-fwcutter sysv-rc-conf sudo ntp tightvncserver xtightvncviewer lxde gcc g++ build-essential fakeroot kernel-package libncurses5-dev virtualbox linux-headers-$(uname -r|sed 's,[^-]*-[^-]*-,,')
+apt-fast install smbclient cifs-utils wpasupplicant wakeonlan scim scim-anthy firmware-b43-installer b43-fwcutter sysv-rc-conf sudo ntp tightvncserver xtightvncviewer lxde gcc g++ build-essential fakeroot kernel-package libncurses5-dev virtualbox linux-headers-$(uname -r|sed 's,[^-]*-[^-]*-,,')
 
 apt-get -t jessie-backports install linux-image-4.1.0-0.bpo.2-686-pae
 
-http://xmodulo.com/speed-slow-apt-get-install-debian-ubuntu.html
+reboot
+
+
 http://ameblo.jp/sora8492/entry-11838796776.html
 
 http://www.itmedia.co.jp/enterprise/articles/0707/19/news012.html
@@ -42,18 +52,6 @@ Preemption Model → Preemptible Kernel
 Preempt the Big Kernel Lock → o
 Timer Frequency → 1000
 Kernel Hacking → x
-
-cd  /tmp
-rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' > /tmp/user_fqdn.txt
-while read LINE
-do
-    user_fqdn=$(echo "${LINE}")
-    ssh -fMN -F ~/.ssh/config ${user_fqdn}
-    user_string=$(echo "${LINE}" | awk -F@ '{print $1}')
-    distcc_hosts_string="${distcc_hosts_string} ${user_fqdn}/4:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start"
-done < ${OPENSHIFT_DATA_DIR}/user_fqdn.txt
-distcc_hosts_string="${distcc_hosts_string:1}"
-echo "${distcc_hosts_string}" > /tmp/distcc_hosts.txt
 
 
 cl401sn
