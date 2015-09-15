@@ -59,7 +59,8 @@ time ./configure \
 --disable-xtf \
 --disable-xul \
 --disable-zipwriter \
---enable-application=calendar
+--enable-application=calendar \
+--with-windows-version=601
 
 quota -s
 cd /tmp
