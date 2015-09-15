@@ -23,6 +23,7 @@ time make -j4
 make install
 fi
 
+if [ 1 -eq 0 ]; then
 wget http://ftp.gnome.org/pub/GNOME/sources/atk/1.9/atk-1.9.1.tar.bz2
 tar jxf atk-1.9.1.tar.bz2
 cd atk-1.9.1
@@ -30,6 +31,17 @@ cd atk-1.9.1
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
 make install
+fi
+
+if [ 1 -eq 1 ]; then
+wget http://ftp.gnome.org/pub/GNOME/sources/pango/1.12/pango-1.12.4.tar.bz2
+tar jxf pango-1.12.4.tar.bz2
+cd pango-1.12.4
+./configure --help
+time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
+time make -j4
+make install
+fi
 
 wget http://ftp.gtk.org/pub/gtk/v2.10/gtk+-2.10.14.tar.bz2
 time tar jxf gtk+-2.10.14.tar.bz2
