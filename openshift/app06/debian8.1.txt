@@ -3,7 +3,8 @@ https://wiki.debian.org/VirtualBox
 apt-get install telnetd aria2 vim wget
 
 wget --no-check-certificate https://raw.githubusercontent.com/ilikenwf/apt-fast/master/apt-fast
-wget --no-check-certificate https://raw.githubusercontent.com/ilikenwf/apt-fast/master/apt-fast.conf
+# wget --no-check-certificate https://raw.githubusercontent.com/ilikenwf/apt-fast/master/apt-fast.conf
+wget --no-check-certificate https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app06/apt-fast.conf
 wget --no-check-certificate https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app06/sources.list
 
 MIRRORS=( 'http://ftp1.debian.or.jp/debian,http://ftp.nara.wide.ad.jp/debian,http://ftp.tsukuba.wide.ad.jp/debian/debian,http://dennou-h.gfd-dennou.org/debian,http://dennou-k.gfd-dennou.org/debian,http://dennou-q.gfd-dennou.org/debian,http://debian-mirror.sakura.ne.jp/debian/debian,http://ftp.riken.jp/pub/Linux/debian/debian,http://ftp.kddilabs.jp/pub/Linux/distributions/Debian/debian/debian,http://ring.shibaura-it.ac.jp/pub/linux/debian/debian,http://ring.tains.tohoku.ac.jp/pub/linux/debian/debian,http://ring.u-toyama.ac.jp/pub/linux/debian/debian,http://ring.yamanashi.ac.jp/pub/linux/debian/debian,http://ring.airnet.ne.jp/pub/linux/debian/debian,http://ring.maffin.ad.jp/pub/linux/debian/debian' )
