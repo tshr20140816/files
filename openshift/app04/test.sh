@@ -33,10 +33,20 @@ time make -j4
 make install
 fi
 
-if [ 1 -eq 1 ]; then
+if [ 1 -eq 0 ]; then
 wget http://ftp.gnome.org/pub/GNOME/sources/pango/1.12/pango-1.12.4.tar.bz2
 tar jxf pango-1.12.4.tar.bz2
 cd pango-1.12.4
+./configure --help
+time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
+time make -j4
+make install
+fi
+
+if [ 1 -eq 1 ]; then
+wget http://cairographics.org/releases/cairo-1.2.0.tar.gz
+tar zxf cairo-1.2.0.tar.gz
+cd cairo-1.2.0
 ./configure --help
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
