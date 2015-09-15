@@ -4,10 +4,14 @@ set -x
 
 quota -s
 
+rm -rf work
+
 export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
 export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/local/lib:$LD_LIBRARY_PATH"
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
+
+cd /tmp
 
 mkdir work
 cd work
