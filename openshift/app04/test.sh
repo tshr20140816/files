@@ -4,9 +4,15 @@ set -x
 
 quota -s
 
+cd /tmp
+
+exit
+
 rm -rf work
 
 ls -lang ${OPENSHIFT_DATA_DIR}
+
+exit
 
 export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
 export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/local/lib:$LD_LIBRARY_PATH"
@@ -46,8 +52,6 @@ cd /tmp
 rm -rf work
 rm -rf gomi
 tree local
-exit
-
 exit
 
 export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
