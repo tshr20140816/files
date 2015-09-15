@@ -10,12 +10,14 @@ export CXXFLAGS="${CFLAGS}"
 
 mkdir work
 cd work
+
 wget http://ftp.gnome.org/pub/GNOME/sources/glib/2.0/glib-2.0.7.tar.bz2
 tar jxf glib-2.0.7.tar.bz2
 cd glib-2.0.7
 ./configure --help
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
+make install
 
 cd /tmp
 rm -rf work
