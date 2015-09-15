@@ -11,6 +11,14 @@ export CXXFLAGS="${CFLAGS}"
 mkdir work
 cd work
 
+wget http://ftp.gtk.org/pub/gtk/v2.0/atk-1.0.3.tar.bz2
+tar jxf atk-1.0.3.tar.bz2
+cd atk-1.0.3
+./configure --help
+time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
+time make -j4
+make install
+
 wget http://ftp.gtk.org/pub/gtk/v2.0/gtk+-2.0.9.tar.bz2
 tar jxf gtk+-2.0.9.tar.bz2
 cd gtk+-2.0.9
