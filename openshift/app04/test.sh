@@ -5,17 +5,19 @@ set -x
 quota -s
 
 export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
+export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/local/lib:$LD_LIBRARY_PATH"
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 mkdir work
 cd work
 
+
 wget http://ftp.gtk.org/pub/gtk/v2.0/atk-1.0.3.tar.bz2
 tar jxf atk-1.0.3.tar.bz2
 cd atk-1.0.3
 ./configure --help
-time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
+time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi --enable-shared --disable-static
 time make -j4
 make install
 
