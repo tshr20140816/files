@@ -23,7 +23,7 @@ time make -j4
 make install
 fi
 
-http://ftp.gnome.org/pub/GNOME/sources/atk/1.9/atk-1.9.1.tar.bz2
+wget http://ftp.gnome.org/pub/GNOME/sources/atk/1.9/atk-1.9.1.tar.bz2
 tar jxf atk-1.9.1.tar.bz2
 cd atk-1.9.1
 ./configure --help
