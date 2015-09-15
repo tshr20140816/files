@@ -45,7 +45,7 @@ fi
 
 if [ 1 -eq 1 ]; then
 wget ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng16/libpng-1.6.18.tar.xz
-tar zxf libpng-1.6.18.tar.xz
+tar Jxf libpng-1.6.18.tar.xz
 cd libpng-1.6.18
 ./configure --help
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
