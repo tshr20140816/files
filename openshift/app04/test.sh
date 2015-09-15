@@ -20,6 +20,7 @@ cd pkgconfig-0.18
 ./configure --help
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
+make install
 tree /tmp/local
 
 cd /tmp
