@@ -10,7 +10,9 @@ cd work
 wget http://ftp.mozilla.org/pub/mozilla.org/calendar/sunbird/releases/1.0b1/source/sunbird-1.0b1.source.tar.bz2
 tar jxf sunbird-1.0b1.source.tar.bz2
 rm sunbird-1.0b1.source.tar.bz2
-
+cd sunbird*
+./configure --help
+ls -lang
 quota -s
 cd /tmp
 rm -rf work
