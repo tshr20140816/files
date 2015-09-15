@@ -135,6 +135,8 @@ quota -s
 cd /tmp
 rm -rf work
 
+tree local
+
 exit
 
 rm -rf work
