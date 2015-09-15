@@ -4,8 +4,23 @@ set -x
 
 quota -s
 
-# tree /tmp/local
-# exit
+export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
+mkdir work
+cd work
+wget http://ftp.gnome.org/pub/GNOME/sources/glib/2.0/glib-2.0.7.tar.bz2
+tar jxf glib-2.0.7.tar.bz2
+cd glib-2.0.7
+./configure --help
+time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
+time make -j4
+
+cd /tmp
+rm -rf work
+rm -rf gomi
+exit
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
