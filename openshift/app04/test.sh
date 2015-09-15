@@ -6,6 +6,8 @@ quota -s
 
 rm -rf work
 
+ls -lang ${OPENSHIFT_DATA_DIR}
+
 export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
 export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/local/lib:$LD_LIBRARY_PATH"
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
