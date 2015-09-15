@@ -4,7 +4,73 @@ set -x
 
 quota -s
 
+export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
+export LD_LIBRARY_PATH="${OPENSHIFT_TMP_DIR}/local/lib:$LD_LIBRARY_PATH"
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
 cd /tmp
+mkdir work
+cd work
+wget http://ftp.mozilla.org/pub/mozilla.org/calendar/sunbird/releases/1.0b1/source/sunbird-1.0b1.source.tar.bz2
+time tar jxf sunbird-1.0b1.source.tar.bz2
+rm sunbird-1.0b1.source.tar.bz2
+cd comm-1.9.1
+./configure --help
+time ./configure \
+--disable-accessibility \
+--disable-activex \
+--disable-activex-scripting \
+--disable-auto-deps \
+--disable-composer \
+--disable-crypto \
+--disable-dbus \
+--disable-feeds \
+--disable-glibtest \
+--disable-gnomeui \
+--disable-gnomevfs \
+--disable-inspector-apis \
+--disable-installer \
+--disable-jsd \
+--disable-jsloader \
+--disable-ldap \
+--disable-logging \
+--disable-mailnews \
+--disable-md \
+--disable-negotiateauth \
+--disable-ogg \
+--disable-oji \
+--disable-optimize \
+--disable-parental-controls \
+--disable-pedantic \
+--disable-permissions \
+--disable-plugins \
+--disable-pref-extensions \
+--disable-printing \
+--disable-profile-guided-optimization \
+--disable-profilelocking \
+--disable-rdf \
+--disable-tests \
+--disable-universalchardet \
+--disable-updater \
+--disable-view-source \
+--disable-vista-sdk-requirements \
+--disable-wave \
+--disable-xpcom-fastload \
+--disable-xpcom-obsolete \
+--disable-xpconnect-idispatch \
+--disable-xpfe-components \
+--disable-xpinstall \
+--disable-xtf \
+--disable-xul \
+--disable-zipwriter \
+--enable-application=calendar \
+--enable-static \
+--with-windows-version=501
+
+quota -s
+cd /tmp
+rm -rf work
 
 exit
 
