@@ -910,6 +910,11 @@ cat << '__HEREDOC__' > optimize_table.sh
 export TZ=JST-9
 date +%Y/%m/%d" "%H:%M:%S
 
+hour=$((10#$(date +%H)))
+if [ ${hour} -ne 3 ]; then
+    exit
+fi
+
 connection_string=$(cat << __HEREDOC_2__
 --user=${OPENSHIFT_MYSQL_DB_USERNAME}
 --password=${OPENSHIFT_MYSQL_DB_PASSWORD}
