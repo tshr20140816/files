@@ -21,6 +21,7 @@ cd glib-2.12.13
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
 make install
+cd ..
 fi
 
 if [ 1 -eq 0 ]; then
@@ -31,6 +32,7 @@ cd atk-1.9.1
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
 make install
+cd ..
 fi
 
 if [ 1 -eq 0 ]; then
@@ -41,6 +43,7 @@ cd pango-1.12.4
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
 make install
+cd ..
 fi
 
 if [ 1 -eq 1 ]; then
@@ -51,6 +54,7 @@ cd libpng-1.6.18
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
 make install
+cd ..
 fi
 
 if [ 1 -eq 1 ]; then
@@ -61,6 +65,7 @@ cd cairo-1.2.0
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
 make install
+cd ..
 fi
 
 if [ 1 -eq 0 ]; then
@@ -71,6 +76,7 @@ cd gtk+-2.10.14
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
 make install
+cd ..
 fi
 
 if [ 1 -eq 0 ]; then
@@ -129,6 +135,7 @@ time ./configure \
 --enable-application=calendar \
 --enable-static \
 --with-windows-version=501
+cd ..
 fi
 
 quota -s
