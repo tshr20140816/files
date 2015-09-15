@@ -4,6 +4,10 @@ set -x
 
 quota -s
 
+tree /tmp/local
+
+exit
+
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
