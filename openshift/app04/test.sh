@@ -12,7 +12,7 @@ wget http://pkg-config.freedesktop.org/releases/pkgconfig-0.18.tar.gz
 tar zxf pkgconfig-0.18.tar.gz
 cd pkgconfig-0.18
 ./configure --help
-time ./configure
+time ./configure --prefix=/tmp/local
 time make
 
 cd /tmp
