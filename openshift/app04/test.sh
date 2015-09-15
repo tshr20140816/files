@@ -6,25 +6,32 @@ quota -s
 
 cd /tmp
 
-rm -rf delegate9.9.13
-rm delegate9.9.13.tar.gz
+rm -rf work
 
-mkdir work
-cd work
+cd ${OPENSHIFT_DATA_DIR}/delegate/
 
-export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
-export CXXFLAGS="${CFLAGS}"
+cat << '__HEREDOC__' > P33128
+-P__OPENSHIFT_DIY_IP__:33128
+SERVER=http
+ADMIN=__ADMIN_MAILADDRESS__
+DGROOT=__OPENSHIFT_DATA_DIR__delegate
+LOGDIR="__OPENSHIFT_LOG_DIR__"
+LOGFILE=${LOGDIR}/delegate_${PORT}.log[date+.%w]
+PROTOLOG=${LOGDIR}/delegate_${PORT}.${PROTO}.log[date+.%w]:%X
+ERRORLOG=${LOGDIR}/delegate_errors.log[date+.%w]
+CACHEDIR=__OPENSHIFT_DATA_DIR__delegate/cache
+CACHE=do
+MAXIMA=delegated:10
+HTTPCONF=methods:GET,CONNECT
+HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
+HTTPCONF=cache:any
+DGSIGN="x.x.x/x.x.x"
+CRON='0 7 * * * -expire 2'
+__HEREDOC__
+perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P33128
+perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P33128
+perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' P33128
+redmine_email_address=$(cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_address)
+sed -i -e "s|__ADMIN_MAILADDRESS__|${redmine_email_address}|g" P33128
 
-wget http://www.delegate.org/anonftp/DeleGate/delegate9.9.13.tar.gz
-
-tar zxf delegate9.9.13.tar.gz
-
-cd delegate9.9.13
-
-time make -j4 ADMIN=user@rhcloud.local
-
-mkdir ${OPENSHIFT_DATA_DIR}/delegate/
-cp src/delegated ${OPENSHIFT_DATA_DIR}/delegate/
-
-cd /tmp
-rmdir -rf work
+cat P33128
