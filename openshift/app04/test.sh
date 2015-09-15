@@ -12,7 +12,15 @@ time tar jxf sunbird-1.0b1.source.tar.bz2
 rm sunbird-1.0b1.source.tar.bz2
 cd comm-1.9.1
 ./configure --help
-time ./configure
+time ./configure \
+--disable-windows-mobile-components \
+--disable-vista-sdk-requirements \
+--disable-os2-high-mem \
+--disable-ldap \
+--disable-mailnews \
+--disable-gnomevfs \
+--enable-application=calendar
+
 quota -s
 cd /tmp
 rm -rf work
