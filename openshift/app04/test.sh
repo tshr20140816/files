@@ -13,9 +13,19 @@ cd /tmp
 mkdir work
 cd work
 
+if [ 1 -eq 0 ]; then
 wget http://ftp.gnome.org/pub/GNOME/sources/glib/2.12/glib-2.12.13.tar.bz2
 tar jxf glib-2.12.13.tar.bz2
 cd glib-2.12.13
+./configure --help
+time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
+time make -j4
+make install
+fi
+
+http://ftp.gnome.org/pub/GNOME/sources/atk/1.9/atk-1.9.1.tar.bz2
+tar jxf atk-1.9.1.tar.bz2
+cd atk-1.9.1
 ./configure --help
 time ./configure --prefix=/tmp/local --mandir=/tmp/gomi --infodir=/tmp/gomi
 time make -j4
