@@ -1,10 +1,21 @@
 #!/bin/bash
 
-# 1255
-
 set -x
 
 quota -s
+
+cd /tmp
+mkdir work
+cd work
+wget http://ftp.mozilla.org/pub/mozilla.org/calendar/sunbird/releases/1.0b1/source/sunbird-1.0b1.source.tar.bz2
+tar jxf sunbird-1.0b1.source.tar.bz2
+rm sunbird-1.0b1.source.tar.bz2
+
+quota -s
+cd /tmp
+rm -rf work
+
+exit
 
 cd /tmp
 
