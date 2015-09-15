@@ -938,9 +938,9 @@ SELECT CONCAT(T1.TABLE_SCHEMA, '.', T1.TABLE_NAME)
 __HEREDOC_2__
 )
 
-local tables=$(mysql ${connection_string} --execute="${sql}"
+local tables=$(mysql ${connection_string} --execute="${sql}")
 if [ ${#tables[*]} -gt 0 ]; then
-    for table in ${tables[@]}; do
+    for table in ${tables[@]}
     do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) OPTIMIZE START ${table}"
         mysql ${connection_string} --execute="ALTER TABLE ${table} ENGINE=InnoDB;"
