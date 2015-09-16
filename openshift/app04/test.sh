@@ -51,6 +51,8 @@ curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.microsoft.com/ > /dev/n
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.google.com/ > /dev/null
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.google.co.jp/ > /dev/null
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://headlines.yahoo.co.jp/hl?a=20150916-00010000-fullcount-base > /dev/null
+curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://baseball.yahoo.co.jp/npb/standings/ > /dev/null
+
 ls -lang
 
 tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
