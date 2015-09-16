@@ -942,7 +942,7 @@ SELECT CONCAT(T1.TABLE_SCHEMA, '.', T1.TABLE_NAME)
 __HEREDOC_2__
 )
 
-local tables=$(mysql ${connection_string} --execute="${sql}")
+tables=$(mysql ${connection_string} --execute="${sql}")
 if [ ${#tables[*]} -gt 0 ]; then
     for table in ${tables[@]}
     do
