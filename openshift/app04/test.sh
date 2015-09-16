@@ -6,6 +6,16 @@ set -x
 
 quota -s
 
+cd /tmp
+
+wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/test.php
+
+php test.php
+
+rm test.php
+
+exit
+
 # cd /tmp
 # rm ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
 
