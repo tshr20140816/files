@@ -13,7 +13,7 @@ cd ${OPENSHIFT_DATA_DIR}/delegate/
 cat << '__HEREDOC__' > P33128
 -P__OPENSHIFT_DIY_IP__:33128
 SERVER=http
-ADMIN=__ADMIN_MAILADDRESS__
+ADMIN=dummy@dummy.local
 DGROOT=__OPENSHIFT_DATA_DIR__delegate
 LOGDIR="__OPENSHIFT_LOG_DIR__"
 LOGFILE=${LOGDIR}/delegate_${PORT}.log[date+.%w]
