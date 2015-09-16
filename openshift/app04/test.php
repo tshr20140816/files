@@ -47,9 +47,6 @@ foreach($lines as $value) {
     }
     $dt = '20' . str_replace('.', '/', substr($m[2][$i], 0, 8));
     $title = substr($m[2][$i], 8);
-    // echo $url . "\n";
-    // echo $dt . "\n";
-    // echo $title . "\n";
     $buffer = str_replace("{0}", $title, $item_template);
     $buffer = str_replace("{1}", $url, $buffer);
     $items[] = str_replace("{2}", $dt, $buffer);
