@@ -955,6 +955,18 @@ __HEREDOC__
 chmod +x optimize_table.sh &
 echo optimize_table.sh >> jobs.allow
 
+# * carp_news *
+
+cat << '__HEREDOC__' > carp_news.sh
+#!/bin/bash
+
+export TZ=JST-9
+date +%Y/%m/%d" "%H:%M:%S
+php ${OPENSHIFT_DATA_DIR}/github/openshift/app01/carp_news.php > ${OPENSHIFT_DATA_DIR}/apache/htdocs/carp_news.xml
+__HEREDOC__
+chmod +x carp_news.sh &
+echo carp_news.sh >> jobs.allow
+
 popd > /dev/null
 
 # *** minutely ***
