@@ -23,6 +23,8 @@ foreach(explode("\n", $contents) as $value) {
   }
 }
 
+$items[] = array();
+
 foreach($lines as $value) {
   $cnt = preg_match_all('/.+?<a href="(.+?)">(.+?)</', $value, $m);
   for($i = 0; $i < $cnt; $i++) {
@@ -36,8 +38,12 @@ foreach($lines as $value) {
     echo $url . "\n";
     echo $dt . "\n";
     echo $title . "\n";
+    $buffer = str_replace("{0}", $title, $item_template);
+    $buffer = str_replace("{1}", $url, $buffer);
+    $items[] = str_replace("{2}", $dt, $buffer);
   }
 }
-// <li><a href="../bosyu15/index.html">xxx</a></li>
+$buffer = str_replace("{0}", implode($items), $xml);
+echo $buffer;
 echo "\n";
 ?>
