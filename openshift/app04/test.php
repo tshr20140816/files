@@ -57,5 +57,4 @@ foreach($lines as $value) {
 }
 $buffer = str_replace("{0}", implode($items), $xml);
 echo $buffer;
-echo "\n";
 ?>
