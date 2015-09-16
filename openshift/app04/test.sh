@@ -31,7 +31,5 @@ __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P33128
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P33128
 perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' P33128
-redmine_email_address=$(cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_address)
-sed -i -e "s|__ADMIN_MAILADDRESS__|${redmine_email_address}|g" P33128
 
 cat P33128
