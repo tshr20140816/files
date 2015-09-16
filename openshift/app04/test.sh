@@ -26,7 +26,7 @@ MAXIMA=delegated:10
 REMITTABLE=http,ftp,https
 HTTPCONF=methods:GET,CONNECT
 HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
-# HTTPCONF=cache:any
+HTTPCONF=cache:any
 DGSIGN="x.x.x/x.x.x"
 CRON='0 7 * * * -expire 2'
 # CMAP="cache:FSV:http:www.yahoo.co.jp"
@@ -50,7 +50,7 @@ curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.yahoo.co.jp/ > /dev/nul
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.microsoft.com/ > /dev/null
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.google.com/ > /dev/null
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.google.co.jp/ > /dev/null
-curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://headlines.yahoo.co.jp/hl?a=20150916-00010000-fullcount-base
+curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://headlines.yahoo.co.jp/hl?a=20150916-00010000-fullcount-base > /dev/null
 ls -lang
 
 tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
