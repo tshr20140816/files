@@ -27,7 +27,7 @@ foreach($lines as $value){
   # echo $value;
   # echo "\n";
   $cnt = preg_match_all('.+?<a href="(.+?)">(.+?)<', $value, $m);
-  if($cnt > 0)){
+  if($cnt > 0){
     echo $m[1][0];
     echo "\n";
     echo $m[2][0];
