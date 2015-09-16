@@ -25,7 +25,7 @@ foreach(explode("\n", $contents) as $value){
 
 foreach($lines as $value){
   $cnt = preg_match_all('/.+?<a href="(.+?)">(.+?)</', $value, $m);
-  for($i=0; $i++; $i<$cnt+1){
+  for($i=0; $i<$cnt+1; $i++){
     if(substr($m[1][i], 0, 5) == "http:"){
       $url = $m[1][i];
     } else {
