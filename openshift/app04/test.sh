@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1648"
+echo "1650"
 
 set -x
 
@@ -9,6 +9,8 @@ quota -s
 cd /tmp
 
 wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/test.php
+
+cat test.php
 
 php test.php
 
