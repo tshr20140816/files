@@ -34,7 +34,7 @@ foreach($lines as $value) {
       $url = "http://www.carp.co.jp/headline15/" . $m[1][$i];
     }
     $dt = '20' . str_replace('.', '/', substr($m[2][$i], 0, 8));
-    $title = trim(substr($m[2][$i], 8));
+    $title = trim(substr($m[2][$i], 8), '　');
     echo $url . "\n";
     echo $dt . "\n";
     echo $title . "\n";
