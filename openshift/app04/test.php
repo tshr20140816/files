@@ -7,6 +7,7 @@ $contents = file_get_contents('http://www.carp.co.jp/headline15/index.html');
 
 foreach(explode("\n", $contents) as $value){
   echo $value;
+  echo "\n";
 }
 
 echo "\n";
