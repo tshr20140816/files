@@ -58,5 +58,6 @@ ls -lang
 tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
 
 find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type f -print | grep -v www.honda.co.jp | xargs rm
+find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type d -empty -print | xargs rm -rf
 
 tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
