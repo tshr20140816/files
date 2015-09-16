@@ -324,6 +324,7 @@ date +%Y/%m/%d" "%H:%M:%S
 minute=$((10#$(date +%M)))
 
 if [ $((minute % 5)) -eq 0 ]; then
+    find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type f -print | grep -v tshrapp | xargs rm
     ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
     # pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss >/dev/null
     # ${OPENSHIFT_DATA_DIR}/php/bin/php ./update_daemon2.php --tasks 5
