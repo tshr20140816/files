@@ -21,13 +21,14 @@ LOGFILE=${LOGDIR}/delegate_${PORT}.log[date+.%w]
 PROTOLOG=${LOGDIR}/delegate_${PORT}.${PROTO}.log[date+.%w]:%X
 ERRORLOG=${LOGDIR}/delegate_errors.log[date+.%w]
 CACHEDIR=__OPENSHIFT_DATA_DIR__delegate/cache
-CACHE=do
+# CACHE=do
 MAXIMA=delegated:10
 HTTPCONF=methods:GET,CONNECT
 HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
 HTTPCONF=cache:any
 DGSIGN="x.x.x/x.x.x"
 CRON='0 7 * * * -expire 2'
+CMAP="cache:FSV:http:www.yahoo.co.jp"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_PHP_IP}/g' P33128
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P33128
