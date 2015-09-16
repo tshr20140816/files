@@ -7,7 +7,7 @@ set -x
 quota -s
 
 # cd /tmp
-rm ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
+# rm ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
 
 cd ${OPENSHIFT_DATA_DIR}/delegate/
 
@@ -55,4 +55,6 @@ ls -lang
 
 tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
 
-find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type f -print | grep -v www.honda.co.jp
+find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type f -print | grep -v www.honda.co.jp | xargs rm
+
+tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
