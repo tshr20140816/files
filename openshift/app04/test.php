@@ -52,6 +52,6 @@ foreach($lines as $value) {
     $items[] = str_replace("{2}", $dt, $buffer);
   }
 }
-$buffer = str_replace("{0}", implode($items), $xml);
+$buffer = str_replace("{0}", implode('', $items), $xml);
 echo $buffer;
 ?>
