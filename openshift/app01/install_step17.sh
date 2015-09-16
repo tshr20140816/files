@@ -99,6 +99,7 @@ ERRORLOG=${LOGDIR}/delegate_errors.log[date+.%w]
 CACHEDIR=__OPENSHIFT_DATA_DIR__delegate/cache
 CACHE=do
 MAXIMA=delegated:10
+REMITTABLE=http,ftp,https
 HTTPCONF=methods:GET,CONNECT
 HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
 HTTPCONF=cache:any
