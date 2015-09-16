@@ -26,7 +26,11 @@ foreach(explode("\n", $contents) as $value){
 foreach($lines as $value){
   $cnt = preg_match_all('/.+?<a href="(.+?)">(.+?)</', $value, $m);
   for($i=0; $i++; $i<$cnt+1){
-    echo $m[1][i];
+    if(substr($m[1][i], 0, 5) == "http:"){
+      echo $m[1][i];
+    } else {
+      echo "http://www.carp.co.jp/headline15/" . $m[1][i];
+    }
     echo "\n";
     echo $m[2][i];
     echo "\n";
