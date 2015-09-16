@@ -40,7 +40,9 @@ cat P33128
 
 cd /tmp
 
-curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.yahoo.com/ > /dev/null
+curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.honda.co.jp/ > /dev/null
+curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.mazda.co.jp/ > /dev/null
+curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.toyota.co.jp/ > /dev/null
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.yahoo.co.jp/ > /dev/null
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.microsoft.com/ > /dev/null
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.google.com/ > /dev/null
