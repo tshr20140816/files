@@ -32,7 +32,7 @@ perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' P33128
 
 cat P33128
 
-./delegate -r +=P33128
+./delegated -r +=P33128
 
 cd /tmp
 
