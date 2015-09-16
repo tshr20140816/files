@@ -4,9 +4,7 @@ set -x
 
 quota -s
 
-cd /tmp
-
-rm -rf work
+# cd /tmp
 
 cd ${OPENSHIFT_DATA_DIR}/delegate/
 
