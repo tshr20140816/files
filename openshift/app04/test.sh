@@ -54,4 +54,4 @@ ls -lang
 
 tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
 
-find -name ${OPENSHIFT_DATA_DIR}/delegate/cache/ * -print
+find ${OPENSHIFT_DATA_DIR}/delegate/cache -name * -type f -print
