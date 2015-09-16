@@ -28,8 +28,16 @@ HTTPCONF=cache:any
 DGSIGN="x.x.x/x.x.x"
 CRON='0 7 * * * -expire 2'
 __HEREDOC__
-perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P33128
+perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_PHP_IP}/g' P33128
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P33128
 perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' P33128
 
 cat P33128
+
+./delegate -r +=P33128
+
+cd /tmp
+
+curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.yahoo.co.jp/ > /dev/null
+
+ls -lang
