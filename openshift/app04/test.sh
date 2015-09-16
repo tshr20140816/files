@@ -6,6 +6,8 @@ quota -s
 
 # cd /tmp
 
+rm ${OPENSHIFT_LOG_DIR}/cron_minutely.log-20150913062508
+
 cd ${OPENSHIFT_DATA_DIR}/delegate/
 
 cat << '__HEREDOC__' > P33128
