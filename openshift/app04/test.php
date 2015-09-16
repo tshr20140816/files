@@ -19,10 +19,13 @@ foreach(explode("\n", $contents) as $value){
     break;
   }
   if($start_flg == 1){
-    $lines[] = $value;
-    echo $value;
-    echo "\n";
+    $lines[] = trim($value);
   }
+}
+
+foreach($lines[] as $value){
+  echo $value;
+  echo "\n";
 }
 
 echo "\n";
