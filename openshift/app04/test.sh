@@ -38,6 +38,7 @@ cat P33128
 cd /tmp
 
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.yahoo.co.jp/ > /dev/null
+curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.microsoft.com/ > /dev/null
 
 ls -lang
 
