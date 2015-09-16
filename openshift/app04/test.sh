@@ -41,3 +41,5 @@ cd /tmp
 curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.yahoo.co.jp/ > /dev/null
 
 ls -lang
+
+tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
