@@ -27,16 +27,15 @@ foreach($lines as $value){
   $cnt = preg_match_all('/.+?<a href="(.+?)">(.+?)</', $value, $m);
   for($i=0; $i++; $i<$cnt+1){
     if(substr($m[1][i], 0, 5) == "http:"){
-      echo $m[1][i];
+      $url = $m[1][i];
     } else {
-      echo "http://www.carp.co.jp/headline15/" . $m[1][i];
+      $url = "http://www.carp.co.jp/headline15/" . $m[1][i];
     }
-    echo "\n";
     $dt = substr($m[2][i], 0, 8);
-    echo $dt;
-    echo "\n";
-    echo trim(substr($m[2][i], 9));
-    echo "\n";
+    $title = trim(substr($m[2][i], 9));
+    echo $url . "\n";
+    echo $dt . "\n";
+    echo $title . "\n";
   }
 }
 //<li><a href="../bosyu15/index.html">xxx</a></li>
