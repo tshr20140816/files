@@ -49,3 +49,6 @@ curl --proxy http://${OPENSHIFT_PHP_IP}:33128 http://www.google.co.jp/ > /dev/nu
 ls -lang
 
 tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
+
+find ${OPENSHIFT_DATA_DIR}/delegate/cache/ -name * -print
+
