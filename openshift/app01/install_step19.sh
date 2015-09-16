@@ -324,7 +324,10 @@ date +%Y/%m/%d" "%H:%M:%S
 minute=$((10#$(date +%M)))
 
 if [ $((minute % 5)) -eq 0 ]; then
-    find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type f -print | grep -v tshrapp | xargs rm
+    # appspot.com への負荷を下げる
+    find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type f -print | grep -v appspot.com | xargs rm
+    # 階層が深いと少しずつ
+    find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type d -empty -print | xargs rm -rf
     ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/update.php --feeds
     # pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss >/dev/null
     # ${OPENSHIFT_DATA_DIR}/php/bin/php ./update_daemon2.php --tasks 5
