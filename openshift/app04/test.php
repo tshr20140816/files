@@ -26,7 +26,8 @@ foreach(explode("\n", $contents) as $value){
 foreach($lines as $value){
   echo $value;
   echo "\n";
-  if(preg_match_all('.+?<a href="(.+?)">(.+?)<', $m)){
+  $cnt = preg_match_all('.+?<a href="(.+?)">(.+?)<', $m);
+  if($cnt > 0)){
     echo $m[1][0];
     echo "\n";
     echo $m[2][0];
