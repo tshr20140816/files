@@ -25,14 +25,14 @@ foreach(explode("\n", $contents) as $value) {
 
 foreach($lines as $value) {
   $cnt = preg_match_all('/.+?<a href="(.+?)">(.+?)</', $value, $m);
-  for($i = 0; $i < $cnt + 1; $i++) {
-    if(substr($m[1][i], 0, 5) == "http:") {
-      $url = $m[1][i];
+  for($i = 0; $i < $cnt; $i++) {
+    if(substr($m[1][$i], 0, 5) == "http:") {
+      $url = $m[1][$i];
     } else {
-      $url = "http://www.carp.co.jp/headline15/" . $m[1][i];
+      $url = "http://www.carp.co.jp/headline15/" . $m[1][$i];
     }
-    $dt = '20' . str_replace('.', '/', substr($m[2][i], 0, 8));
-    $title = trim(substr($m[2][i], 9));
+    $dt = '20' . str_replace('.', '/', substr($m[2][$i], 0, 8));
+    $title = trim(substr($m[2][$i], 9));
     echo $url . "\n";
     echo $dt . "\n";
     echo $title . "\n";
