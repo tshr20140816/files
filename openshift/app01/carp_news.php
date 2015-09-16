@@ -45,12 +45,12 @@ foreach($lines as $value) {
       $url = "http://www.carp.co.jp/headline15/" . $m[1][$i];
     }
     $dt = '20' . str_replace('.', '/', substr($m[2][$i], 0, 8));
-    $title = substr($m[2][$i], 8);
+    $title = str_replace("&times;", "x", substr($m[2][$i], 8));
     $buffer = str_replace("{0}", $title, $item_template);
     $buffer = str_replace("{1}", $url, $buffer);
     $items[] = str_replace("{2}", $dt, $buffer);
   }
 }
-$buffer = str_replace("{0}", implode('', $items), $xml);
+$buffer = str_replace("{0}", implode("\n", $items), $xml);
 echo $buffer;
 ?>
