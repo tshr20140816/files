@@ -1,4 +1,21 @@
 <?php
+$xml = <<< __HEREDOC__
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>CARPニュース</title>
+  <link>http://www.carp.co.jp/</link>
+  <description>ニュースヘッドライン</description>
+  <language>ja</language>
+  {0}
+</channel>
+</rss>
+__HEREDOC__;
+
+$item_template = <<< __HEREDOC__
+<item><title>{0}</title><link>{1}</link><description /><pubDate>{2}</pubDate></item>
+__HEREDOC__;
+
 header('Content-type: text/plain; charset=utf-8');
 
 $contents = file_get_contents('http://www.carp.co.jp/headline15/index.html');
