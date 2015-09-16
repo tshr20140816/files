@@ -32,7 +32,10 @@ foreach($lines as $value){
       echo "http://www.carp.co.jp/headline15/" . $m[1][i];
     }
     echo "\n";
-    echo $m[2][i];
+    $dt = substr($m[2][i], 0, 8);
+    echo $dt;
+    echo "\n";
+    echo trim(substr($m[2][i], 9));
     echo "\n";
   }
 }
