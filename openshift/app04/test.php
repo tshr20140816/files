@@ -26,7 +26,13 @@ foreach(explode("\n", $contents) as $value){
 foreach($lines[] as $value){
   echo $value;
   echo "\n";
+  if(preg_match_all('.+?<a href="(.+?)">(.+?)<', $m)){
+    echo $m[1];
+    echo "\n";
+    echo $m[2];
+    echo "\n";
+  }
 }
-
+//<li><a href="../bosyu15/index.html">xxx</a></li>
 echo "\n";
 ?>
