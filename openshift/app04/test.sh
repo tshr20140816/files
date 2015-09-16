@@ -12,7 +12,7 @@ wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04
 
 cat test.php
 
-php test.php
+php test.php > ${OPENSHIFT_LOG_DIR}/test.xml
 
 rm test.php
 
