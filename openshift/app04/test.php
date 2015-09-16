@@ -23,7 +23,7 @@ foreach(explode("\n", $contents) as $value){
   }
 }
 
-foreach($lines[] as $value){
+foreach($lines as $value){
   echo $value;
   echo "\n";
   if(preg_match_all('.+?<a href="(.+?)">(.+?)<', $m)){
