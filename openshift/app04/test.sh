@@ -8,13 +8,10 @@ quota -s
 
 cd /tmp
 
-wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/test.php
-
-cat test.php
-
-php test.php > ${OPENSHIFT_LOG_DIR}/test.xml
-
-rm test.php
+rm atom.xml
+wget http://railf.jp/rss/atom.xml
+sed -i -e "s|&mdash;|-|g" atom.xml
+cp -f atom.xml ${OPENSHIFT_LOG_DIR}/railf_jp_rss_atom.xml
 
 exit
 
