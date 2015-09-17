@@ -35,10 +35,9 @@ $items = array();
 foreach($lines as $value) {
   $cnt = preg_match_all('/.+?<a href="(.+?)">(.+?)</', $value, $m);
   for($i = 0; $i < $cnt; $i++) {
-    if(substr($m[1][$i], 0, 5) == "http:") {
-      $url = $m[1][$i];
-    } else {
-      $url = "http://www.carp.co.jp/headline15/" . $m[1][$i];
+    $url = $m[1][$i];
+    if(substr($url, 0, 4) != "http") {
+      $url .= "http://www.carp.co.jp/headline15/";
     }
     $dt = '20' . str_replace('.', '/', substr($m[2][$i], 0, 8));
     $title = str_replace("&times;", "x", substr($m[2][$i], 8));
@@ -47,6 +46,5 @@ foreach($lines as $value) {
     $items[] = str_replace("{2}", $dt, $buffer);
   }
 }
-$buffer = str_replace("{0}", implode("\n", $items), $xml);
-echo $buffer;
+echo str_replace("{0}", implode("\n", $items), $xml);
 ?>
