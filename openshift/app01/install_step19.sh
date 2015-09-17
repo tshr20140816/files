@@ -967,6 +967,24 @@ __HEREDOC__
 chmod +x carp_news.sh &
 echo carp_news.sh >> jobs.allow
 
+# * railf_jp_rss_atom_xml *
+
+cat << '__HEREDOC__' > convert_railf_jp_rss_atom_xml.sh
+#!/bin/bash
+
+export TZ=JST-9
+date +%Y/%m/%d" "%H:%M:%S
+
+cd /tmp
+rm -f atom.xml
+wget http://railf.jp/rss/atom.xml
+sed -i -e "s|&mdash;|-|g" atom.xml
+cp -f atom.xml ${OPENSHIFT_DATA_DIR}/apache/htdocs/railf_jp_rss_atom.xml
+rm atom.xml
+__HEREDOC__
+chmod +x convert_railf_jp_rss_atom_xml.sh &
+echo convert_railf_jp_rss_atom_xml.sh >> jobs.allow
+
 popd > /dev/null
 
 # *** minutely ***
