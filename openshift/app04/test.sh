@@ -13,6 +13,8 @@ wget http://railf.jp/rss/atom.xml
 sed -i -e "s|&mdash;|-|g" atom.xml
 cp -f atom.xml ${OPENSHIFT_LOG_DIR}/railf_jp_rss_atom.xml
 
+tree ${OPENSHIFT_REPO_DIR}
+
 exit
 
 # cd /tmp
