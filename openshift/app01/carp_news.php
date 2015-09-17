@@ -12,7 +12,7 @@ $xml = <<< __HEREDOC__
 </rss>
 __HEREDOC__;
 
-$item_template = "<item><title>{0}</title><link>{1}</link><description /><pubDate>{2}</pubDate></item>";
+$item_template = "<item><title>%s</title><link>%s</link><description /><pubDate>%s</pubDate></item>";
 
 header('Content-type: text/plain; charset=utf-8');
 
@@ -41,9 +41,7 @@ foreach($lines as $value) {
     }
     $dt = '20' . str_replace('.', '/', substr($m[2][$i], 0, 8));
     $title = str_replace("&times;", "x", substr($m[2][$i], 8));
-    $buffer = str_replace("{0}", $title, $item_template);
-    $buffer = str_replace("{1}", $url, $buffer);
-    $items[] = str_replace("{2}", $dt, $buffer);
+    $items[] = sprintf($item_template, $title, $url, $dt);
   }
 }
 echo str_replace("{0}", implode("\n", $items), $xml);
