@@ -12,17 +12,13 @@ $xml = <<< __HEREDOC__
 </rss>
 __HEREDOC__;
 
-$item_template = <<< __HEREDOC__
-<item><title>{0}</title><link>{1}</link><description /><pubDate>{2}</pubDate></item>
-__HEREDOC__;
+$item_template = "<item><title>{0}</title><link>{1}</link><description /><pubDate>{2}</pubDate></item>";
 
 header('Content-type: text/plain; charset=utf-8');
 
-$contents = file_get_contents('http://www.carp.co.jp/headline15/index.html');
-
 $start_flg = 0;
 $lines = array();
-foreach(explode("\n", $contents) as $value) {
+foreach(explode("\n", file_get_contents('http://www.carp.co.jp/headline15/index.html')) as $value) {
   if(trim($value) == '<div id="contents">') {
     $start_flg = 1;
     continue;
