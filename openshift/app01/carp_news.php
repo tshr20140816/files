@@ -21,7 +21,7 @@ header('Content-type: text/plain; charset=utf-8');
 $contents = file_get_contents('http://www.carp.co.jp/headline15/index.html');
 
 $start_flg = 0;
-$lines[] = array();
+$lines = array();
 foreach(explode("\n", $contents) as $value) {
   if(trim($value) == '<div id="contents">') {
     $start_flg = 1;
@@ -35,7 +35,7 @@ foreach(explode("\n", $contents) as $value) {
   }
 }
 
-$items[] = array();
+$items = array();
 foreach($lines as $value) {
   $cnt = preg_match_all('/.+?<a href="(.+?)">(.+?)</', $value, $m);
   for($i = 0; $i < $cnt; $i++) {
