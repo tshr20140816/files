@@ -37,7 +37,7 @@ foreach($lines as $value) {
   for($i = 0; $i < $cnt; $i++) {
     $url = $m[1][$i];
     if(substr($url, 0, 4) != "http") {
-      $url .= "http://www.carp.co.jp/headline15/";
+      $url = "http://www.carp.co.jp/headline15/" . $url;
     }
     $dt = '20' . str_replace('.', '/', substr($m[2][$i], 0, 8));
     $title = str_replace("&times;", "x", substr($m[2][$i], 8));
