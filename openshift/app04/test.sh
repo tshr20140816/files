@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1656"
+echo "0856"
 
 set -x
 
@@ -8,12 +8,11 @@ quota -s
 
 cd /tmp
 
-rm atom.xml
-wget http://railf.jp/rss/atom.xml
-sed -i -e "s|&mdash;|-|g" atom.xml
-cp -f atom.xml ${OPENSHIFT_REPO_DIR}/railf_jp_rss_atom.xml
+rm -f test.php
+wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
+cat test.php
 
-tree ${OPENSHIFT_REPO_DIR}
+php test.php
 
 exit
 
