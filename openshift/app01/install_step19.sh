@@ -931,7 +931,7 @@ __HEREDOC_2__
 )
 
 sql=$(cat << '__HEREDOC_2__'
-SELECT CONCAT(T1.TABLE_SCHEMA, '.', T1.TABLE_NAME, ",", T1.CREATE_OPTIONS)
+SELECT CONCAT(T1.TABLE_SCHEMA, '.', T1.TABLE_NAME, ',', T1.CREATE_OPTIONS)
   FROM information_schema.TABLES T1
  WHERE T1.TABLE_ROWS IS NOT NULL
    AND T1.TABLE_ROWS > 0
@@ -947,8 +947,8 @@ tables=$(mysql ${connection_string} --execute="${sql}")
 if [ ${#tables[*]} -gt 0 ]; then
     for table_option in ${tables[@]}
     do
-        table = $(echo "${table_option}" | awk -F, '{print $1}')
-        option = $(echo "${table_option}" | awk -F, '{print $2}')
+        table=$(echo "${table_option}" | awk -F, '{print $1}')
+        option="$(echo "${table_option}" | awk -F, '{print $2}')"
         echo "$(date +%Y/%m/%d" "%H:%M:%S) OPTIMIZE START ${table}"
         mysql ${connection_string} --execute="ALTER TABLE ${table} ENGINE=InnoDB ${option};" 
         echo "$(date +%Y/%m/%d" "%H:%M:%S) OPTIMIZE FINISH ${table}"
