@@ -14,4 +14,13 @@ for($i = 0; $i < 7; $i++){
     }
   }
 }
+
+$contents = file_get_contents('http://h50146.www5.hp.com/directplus/personal/');
+foreach(explode("\n", $contents) as $value) {
+  $cnt = preg_match('/.*<p class="mrk_.+?href="(.+?)".+?>(.+?)</', $value, $m);
+  if($cnt > 0){
+    echo $m[1] . "\n";
+    echo $m[2] . "\n";
+  }
+}
 ?>
