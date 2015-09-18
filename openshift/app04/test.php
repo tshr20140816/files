@@ -9,9 +9,12 @@ for($i = 0; $i < 7; $i++){
   foreach(explode("\n", $contents) as $value) {
     $cnt = preg_match('/.*<li><p class="ttl"><a href="(.+?)".*?>(.+?)<.+/', $value, $m);
     if($cnt > 0){
-      echo date("Y/m/d", $dt) . "\n";
-      echo $m[1] . "\n";
-      echo $m[2] . "\n";
+      $url = $m[1];
+      $title = $m[2];
+      $date = date("Y/m/d", $dt);
+      echo $date . "\n";
+      echo $url . "\n";
+      echo $title . "\n";
     }
   }
 }
@@ -21,8 +24,13 @@ $contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
 foreach(explode("\n", $contents) as $value) {
   $cnt = preg_match('/.*<p class="mrk_.+?href="(.+?)".+?>(.+?)<.+/', $value, $m);
   if($cnt > 0){
-    echo "http://h50146.www5.hp.com/" . $m[1] . "\n";
-    echo $m[2] . "\n";
+    $url = $m[1];
+    if(substr($url, 0, 4) != "http") {
+      $url = "http://h50146.www5.hp.com/" . $url;
+    }
+    $title = $m[2];
+    echo $url . "\n";
+    echo $title . "\n";
   }
 }
 ?>
