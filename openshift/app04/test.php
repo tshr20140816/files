@@ -21,7 +21,7 @@ $contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
 foreach(explode("\n", $contents) as $value) {
   $cnt = preg_match('/.*<p class="mrk_.+?href="(.+?)".+?>(.+?)<.+/', $value, $m);
   if($cnt > 0){
-    echo $m[1] . "\n";
+    echo "http://h50146.www5.hp.com/" . $m[1] . "\n";
     echo $m[2] . "\n";
   }
 }
