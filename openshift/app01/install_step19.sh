@@ -962,7 +962,7 @@ cat << '__HEREDOC__' > carp_news.sh
 
 export TZ=JST-9
 date +%Y/%m/%d" "%H:%M:%S
-php ${OPENSHIFT_DATA_DIR}/github/openshift/app01/carp_news.php > ${OPENSHIFT_DATA_DIR}/apache/htdocs/carp_news.xml
+php ${OPENSHIFT_DATA_DIR}/github/openshift/app01/rss/carp_news.php > ${OPENSHIFT_DATA_DIR}/apache/htdocs/carp_news.xml
 __HEREDOC__
 chmod +x carp_news.sh &
 echo carp_news.sh >> jobs.allow
