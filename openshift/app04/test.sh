@@ -8,13 +8,16 @@ quota -s
 
 cd /tmp
 
-# echo "echo" >> ${OPENSHIFT_DATA_DIR}test.sh
-rm -f test.php
-wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
-cat test.php
+rm yahoo_news_hiroshima.php
+rm hp_campaign.php
+wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/rss/yahoo_news_hiroshima.php
+wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/rss/hp_campaign.php
 
-php test.php
+php yahoo_news_hiroshima.php > ${OPENSHIFT_REPO_DIR}/yahoo_news_hiroshima.xml
+php hp_campaign.php > ${OPENSHIFT_REPO_DIR}/hp_campaign.xml
 
+rm yahoo_news_hiroshima.php
+rm hp_campaign.php
 exit
 
 # cd /tmp
