@@ -18,6 +18,8 @@ php hp_campaign.php > ${OPENSHIFT_REPO_DIR}/hp_campaign.xml
 
 rm yahoo_news_hiroshima.php
 rm hp_campaign.php
+
+ls -lang ${OPENSHIFT_REPO_DIR}
 exit
 
 # cd /tmp
