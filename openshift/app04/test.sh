@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0856"
+echo "0918"
 
 set -x
 
@@ -8,7 +8,7 @@ quota -s
 
 cd /tmp
 
-rm ${OPENSHIFT_DATA_DIR}test.sh.old
+echo "TEST" > ${OPENSHIFT_DATA_DIR}test.sh.old
 rm -f test.php
 wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
 cat test.php
