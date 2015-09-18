@@ -9,6 +9,7 @@ for($i = 0; $i < 7; $i++){
   foreach(explode("\n", $contents) as $value) {
     $cnt = preg_match('/.*<li><p class="ttl"><a href="(.+?)".*?>(.+?)<.+/', $value, $m);
     if($cnt > 0){
+      echo date("Y/m/d", $dt) . "\n";
       echo $m[1] . "\n";
       echo $m[2] . "\n";
     }
