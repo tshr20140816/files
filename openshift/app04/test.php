@@ -12,7 +12,7 @@ foreach(explode("\n", $contents) as $value) {
   }
 }
 
-for($i=0;$i<7;$i++){
-  echo date("Y/m/d", strtotime("-" . $i . " day")) . "\n";
+for($i = 0; $i < 7; $i++){
+  echo date("Ymd", strtotime("-" . $i . " day")) . "\n";
 }
 ?>
