@@ -16,6 +16,7 @@ for($i = 0; $i < 7; $i++){
 }
 
 $contents = file_get_contents('http://h50146.www5.hp.com/directplus/personal/');
+$contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
 foreach(explode("\n", $contents) as $value) {
   $cnt = preg_match('/.*<p class="mrk_.+?href="(.+?)".+?>(.+?)<.+/', $value, $m);
   if($cnt > 0){
