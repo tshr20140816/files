@@ -19,18 +19,24 @@ for($i = 0; $i < 7; $i++){
   }
 }
 
-$contents = file_get_contents('http://h50146.www5.hp.com/directplus/personal/');
-$contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
-foreach(explode("\n", $contents) as $value) {
-  $cnt = preg_match('/.*<p class="mrk_.+?href="(.+?)".+?>(.+?)<.+/', $value, $m);
-  if($cnt > 0){
-    $url = $m[1];
-    if(substr($url, 0, 4) != "http") {
-      $url = "http://h50146.www5.hp.com/" . $url;
+$urls = array();
+$urls[] = 'http://h50146.www5.hp.com/directplus/personal/';
+$urls[] = 'http://h50146.www5.hp.com/directplus/smb/';
+
+foreach($urls as $url){
+  $contents = file_get_contents($url);
+  $contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
+  foreach(explode("\n", $contents) as $value) {
+    $cnt = preg_match('/.*<p class="mrk_.+?href="(.+?)".+?>(.+?)<.+/', $value, $m);
+    if($cnt > 0){
+      $link = $m[1];
+      if(substr($link, 0, 4) != "http") {
+        $link = "http://h50146.www5.hp.com/" . $link;
+      }
+      $title = $m[2];
+      echo $link . "\n";
+      echo $title . "\n";
     }
-    $title = $m[2];
-    echo $url . "\n";
-    echo $title . "\n";
   }
 }
 ?>
