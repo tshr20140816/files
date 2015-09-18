@@ -8,8 +8,7 @@ quota -s
 
 cd /tmp
 
-# echo "TEST" > ${OPENSHIFT_DATA_DIR}test.sh.old
-ls -lang ${OPENSHIFT_DATA_DIR}
+echo "echo" >> ${OPENSHIFT_DATA_DIR}test.sh
 rm -f test.php
 wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
 cat test.php
@@ -73,3 +72,5 @@ find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type f -print | grep -v www
 find ${OPENSHIFT_DATA_DIR}/delegate/cache -name '*' -type d -empty -print | xargs rm -rf
 
 tree ${OPENSHIFT_DATA_DIR}/delegate/cache/
+
+#
