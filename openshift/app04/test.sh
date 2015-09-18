@@ -8,6 +8,7 @@ quota -s
 
 cd /tmp
 
+rm ${OPENSHIFT_DATA_DIR}test.sh.old
 rm -f test.php
 wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
 cat test.php
