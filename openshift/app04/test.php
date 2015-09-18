@@ -11,4 +11,8 @@ foreach(explode("\n", $contents) as $value) {
     echo $m[2] . "\n";
   }
 }
+
+for($i=0;$i<7;$i++){
+  echo date("Y/m/d", strtotime("-" . $i . " day")) . "\n";
+}
 ?>
