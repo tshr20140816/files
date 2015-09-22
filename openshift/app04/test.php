@@ -35,13 +35,13 @@ foreach(explode("\n", $contents) as $value) {
       echo $temp_array[2] . "\n";
       $i++;
       $sb[] = 'BEGIN:VEVENT';
-      $sb[] = 'CREATED:';
-      $sb[] = 'LAST-MODIFIED:';
-      $sb[] = 'DTSTAMP:';
-      $sb[] = 'UID:';
-      $sb[] = 'DTSTART:';
-      $sb[] = 'DTEND:';
-      $sb[] = 'SUMMARY:';
+      $sb[] = 'CREATED:' . $created;
+      $sb[] = 'LAST-MODIFIED:' . $created;
+      $sb[] = 'DTSTAMP:' . $created;
+      $sb[] = 'UID:UIDx' . $uid . 'x' . $i;
+      $sb[] = 'DTSTART;VALUE=DATE:' . date('Ymd', strtotime($temp_array[1]));
+      $sb[] = 'DTEND;VALUE=DATE:' . date('Ymd', strtotime($temp_array[1] . " 1 day"));
+      $sb[] = 'SUMMARY:' . $temp_array[2]. ' ' . ltrim($temp_array[0], '"');
       $sb[] = 'TRANSP:TRANSPARENT';
       $sb[] = 'END:VEVENT';
     }
