@@ -41,7 +41,7 @@ foreach(explode("\n", $contents) as $value) {
       $sb[] = 'UID:UIDx' . $uid . 'x' . $i;
       $sb[] = 'DTSTART;VALUE=DATE:' . date('Ymd', strtotime($temp_array[1]));
       $sb[] = 'DTEND;VALUE=DATE:' . date('Ymd', strtotime($temp_array[1] . " 1 day"));
-      $sb[] = 'SUMMARY:' . $temp_array[2]. ' ' . ltrim($temp_array[0], '"');
+      $sb[] = 'SUMMARY:' . $temp_array[2] . ' ' . ltrim($temp_array[0], '"');
       $sb[] = 'TRANSP:TRANSPARENT';
       $sb[] = 'END:VEVENT';
     }
