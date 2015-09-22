@@ -16,7 +16,7 @@ $sb[] = 'DTSTART:20010101T000000';
 $sb[] = 'END:STANDARD';
 $sb[] = 'END:VTIMEZONE';
 
-$created = date('YmdTHisZ');
+$created = date('Ymd\THis\Z');
 echo $created . "\n";
 $uid = strtoupper(sha1($created));
 $i = 0;
