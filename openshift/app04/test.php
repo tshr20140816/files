@@ -8,6 +8,7 @@ for($i = 0; $i < 7; $i++) {
     if($cnt > 0) {
       // echo $value . "\n";
       $temp_array = explode('","', $value);
+      echo $temp_array[0] . "\n";
       if($temp_array[1] >= date('Ymd', strtotime("-2 day"))){
         echo $temp_array[0] . "\n";
         echo $temp_array[1] . "\n";
