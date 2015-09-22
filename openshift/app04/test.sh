@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1441"
+echo "1444"
 
 set -x
 
@@ -10,7 +10,7 @@ cd /tmp
 
 rm test.php
 wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/test.php
-
+cat test.php
 php test.php
 
 rm test.php
