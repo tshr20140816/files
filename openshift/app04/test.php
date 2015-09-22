@@ -9,7 +9,7 @@ foreach(explode("\n", $contents) as $value) {
     // echo $value . "\n";
     $temp_array = explode('","', $value);
     if($temp_array[1] >= date('Y/m/d', strtotime("-2 day"))){
-      echo $temp_array[0] . "\n";
+      echo ltrim($temp_array[0], '"') . "\n";
       echo $temp_array[1] . "\n";
       echo $temp_array[2] . "\n";
     }
