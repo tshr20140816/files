@@ -18,6 +18,8 @@ $sb[] = 'END:VTIMEZONE';
 
 $created = date('YmdTHisZ');
 echo $created . "\n";
+$uid = strtoupper(sha1($created))
+$i = 0;
 
 # $contents = file_get_contents('http://soccer.phew.homeip.net/download/schedule/data/SJIS_all_hirosima.csv');
 $contents = file_get_contents('/tmp/SJIS_all_hirosima.csv');
@@ -31,6 +33,7 @@ foreach(explode("\n", $contents) as $value) {
       echo ltrim($temp_array[0], '"') . "\n";
       echo $temp_array[1] . "\n";
       echo $temp_array[2] . "\n";
+      $i++;
       $sb[] = 'BEGIN:VEVENT';
       $sb[] = 'CREATED:';
       $sb[] = 'LAST-MODIFIED:';
