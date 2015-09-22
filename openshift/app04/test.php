@@ -18,7 +18,7 @@ $sb[] = 'END:VTIMEZONE';
 
 $created = date('YmdTHisZ');
 echo $created . "\n";
-$uid = strtoupper(sha1($created))
+$uid = strtoupper(sha1($created));
 $i = 0;
 
 # $contents = file_get_contents('http://soccer.phew.homeip.net/download/schedule/data/SJIS_all_hirosima.csv');
@@ -47,6 +47,6 @@ foreach(explode("\n", $contents) as $value) {
     }
   }
 }
-$sb[] = 'END:VCALENDAR'
+$sb[] = 'END:VCALENDAR';
 echo implode("\n", $sb);
 ?>
