@@ -2,21 +2,22 @@
 header('Content-type: text/plain; charset=utf-8');
 
 $sb = array();
-$sb[] = 'BEGIN:VCALENDAR'
-$sb[] = 'PRODID:tshr_original_20150922'
-$sb[] = 'VERSION:2.0'
-$sb[] = 'BEGIN:VTIMEZONE'
-$sb[] = 'TZID:Asia/Tokyo'
-$sb[] = 'X-LIC-LOCATION:Asia/Tokyo'
-$sb[] = 'BEGIN:STANDARD'
-$sb[] = 'TZOFFSETFROM:+0900'
-$sb[] = 'TZOFFSETTO:+0900'
-$sb[] = 'TZNAME:JST'
-$sb[] = 'DTSTART:20010101T000000'
-$sb[] = 'END:STANDARD'
-$sb[] = 'END:VTIMEZONE'
+$sb[] = 'BEGIN:VCALENDAR';
+$sb[] = 'PRODID:tshr_original_20150922';
+$sb[] = 'VERSION:2.0';
+$sb[] = 'BEGIN:VTIMEZONE';
+$sb[] = 'TZID:Asia/Tokyo';
+$sb[] = 'X-LIC-LOCATION:Asia/Tokyo';
+$sb[] = 'BEGIN:STANDARD';
+$sb[] = 'TZOFFSETFROM:+0900';
+$sb[] = 'TZOFFSETTO:+0900';
+$sb[] = 'TZNAME:JST';
+$sb[] = 'DTSTART:20010101T000000';
+$sb[] = 'END:STANDARD';
+$sb[] = 'END:VTIMEZONE';
 
-$created =
+$created = date('YmdTHisZ');
+echo $created . "\n";
 
 # $contents = file_get_contents('http://soccer.phew.homeip.net/download/schedule/data/SJIS_all_hirosima.csv');
 $contents = file_get_contents('/tmp/SJIS_all_hirosima.csv');
@@ -30,16 +31,16 @@ foreach(explode("\n", $contents) as $value) {
       echo ltrim($temp_array[0], '"') . "\n";
       echo $temp_array[1] . "\n";
       echo $temp_array[2] . "\n";
-      $sb[] = 'BEGIN:VEVENT'
-      $sb[] = 'CREATED:'
-      $sb[] = 'LAST-MODIFIED:'
-      $sb[] = 'DTSTAMP:'
-      $sb[] = 'UID:'
-      $sb[] = 'DTSTART:'
-      $sb[] = 'DTEND:'
-      $sb[] = 'SUMMARY:'
-      $sb[] = 'TRANSP:TRANSPARENT'
-      $sb[] = 'END:VEVENT'
+      $sb[] = 'BEGIN:VEVENT';
+      $sb[] = 'CREATED:';
+      $sb[] = 'LAST-MODIFIED:';
+      $sb[] = 'DTSTAMP:';
+      $sb[] = 'UID:';
+      $sb[] = 'DTSTART:';
+      $sb[] = 'DTEND:';
+      $sb[] = 'SUMMARY:';
+      $sb[] = 'TRANSP:TRANSPARENT';
+      $sb[] = 'END:VEVENT';
     }
   }
 }
