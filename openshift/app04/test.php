@@ -47,5 +47,6 @@ foreach(explode("\n", $contents) as $value) {
     }
   }
 }
-sb[] = 'END:VCALENDAR'
+$sb[] = 'END:VCALENDAR'
+echo implode("\n", $sb);
 ?>
