@@ -1,7 +1,8 @@
 <?php
 header('Content-type: text/plain; charset=utf-8');
 for($i = 0; $i < 7; $i++) {
-  $contents = file_get_contents('http://soccer.phew.homeip.net/download/schedule/data/SJIS_all_hirosima.csv');
+  # $contents = file_get_contents('http://soccer.phew.homeip.net/download/schedule/data/SJIS_all_hirosima.csv');
+  $contents = file_get_contents('/tmp/SJIS_all_hirosima.csv');
   $contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
   foreach(explode("\n", $contents) as $value) {
     $cnt = preg_match('/.*エディオンスタジアム広島.+/', $value, $m);
