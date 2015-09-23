@@ -13,7 +13,8 @@ $xml = <<< __HEREDOC__
 __HEREDOC__;
 $item_template = "<item><title>%s</title><link>%s</link><description /><pubDate /></item>";
 
-header('Content-type: text/plain; charset=utf-8');
+header('Content-type: text/xml; charset=utf-8');
+
 $items = array();
 $urls = array();
 $urls[] = 'http://h50146.www5.hp.com/directplus/personal/';
