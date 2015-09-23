@@ -37,7 +37,7 @@ $items = array();
 $tmp_old = '';
 foreach($lines as $value) {
   $tmp = preg_replace('/<.+?>/', ' ', $value);
-  $tmp = preg_replace('/ +/', ' ', $tmp);
+  $tmp = trim(preg_replace('/ +/', ' ', $tmp));
   if($tmp_old != $tmp){
     $items[] = $tmp;
     $tmp_old = $tmp;
