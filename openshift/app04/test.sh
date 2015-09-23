@@ -13,12 +13,14 @@ cd /tmp
 # rm test.php
 
 rm HPHP-2.1.0.zip
-wget https://github.com/facebook/hhvm/archive/HPHP-2.1.0.zip
-unzip HPHP-2.1.0.zip > /dev/null
+# wget https://github.com/facebook/hhvm/archive/HPHP-2.1.0.zip
+# unzip HPHP-2.1.0.zip > /dev/null
 rm HPHP-2.1.0.zip
 
-rm SJIS_all_hirosima.csv*
 ls -lang
+
+export HPHP_HOME=${OPENSHIFT_DATA_DIR}
+
 cd hhvm-HPHP-2.1.0
 ./configure --help
 ./configure
