@@ -8,8 +8,14 @@ quota -s
 
 cd /tmp
 
-rm ${OPENSHIFT_REPO_DIR}test.ics
-rm ${OPENSHIFT_REPO_DIR}test.xml
+rm test.php
+wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/test.php
+cat test.php
+
+php test.php
+echo ''
+
+rm test.php
 
 exit
 
