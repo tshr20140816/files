@@ -1,8 +1,21 @@
 <?php
+$xml = <<< __HEREDOC__
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>NPB 公示 セリーグ</title>
+  <link>http://www.npb.or.jp/announcement/2015/roster_cl.html</link>
+  <description>NPB 公示 セリーグ</description>
+  <language>ja</language>
+  <item><title>%s</title><link>%s</link><description>%s</description><pubDate /></item>
+</channel>
+</rss>
+__HEREDOC__;
 
 header('Content-type: text/plain; charset=utf-8');
 
-$contents = file_get_contents('http://www.npb.or.jp/announcement/2015/roster_cl' . date('Ymd') . '.html');
+$url = 'http://www.npb.or.jp/announcement/2015/roster_cl' . date('Ymd') . '.html'
+$contents = file_get_contents($url);
 $contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
 // echo $contents;
 
@@ -31,5 +44,5 @@ foreach($lines as $value) {
   // echo trim($tmp) . "\n";
   $items[] = $tmp;
 }
-echo implode("&lt;br /&gt;", $items);
+echo sprintf($xml, date('Y.m.d'), $url, implode("&lt;br /&gt;", $items));
 ?>
