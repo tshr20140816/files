@@ -8,8 +8,7 @@ $contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
 
 $start_flg = 0;
 $lines = array();
-foreach(explode("\r\n", $contents) as $value) {
-  echo $value + "\n";
+foreach(explode("\n", $contents) as $value) {
   if(trim($value) == '<!-- 公示日付 -->') {
     $start_flg = 1;
     continue;
@@ -19,7 +18,6 @@ foreach(explode("\r\n", $contents) as $value) {
   }
   if($start_flg == 1) {
     $lines[] = trim($value);
-    echo trim($value) + "\n";
   }
 }
 
@@ -27,6 +25,6 @@ $items = array();
 foreach($lines as $value) {
   $value = preg_replace('/<.+?>/', ' ', $value);
   $value = preg_replace('/ .+/', ' ', $value);
-  //echo trim($value) + "\n";
+  echo trim($value) . "\n";
 }
 ?>
