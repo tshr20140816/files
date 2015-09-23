@@ -19,7 +19,8 @@ foreach(explode("\n", file_get_contents('http://www.npb.or.jp/announcement/2015/
 
 $items = array();
 foreach($lines as $value) {
-  $value = preg_replace('/<.+?>/', '', $value);
+  $value = preg_replace('/<.+?>/', ' ', $value);
+  $value = preg_replace('/ .+>/', ' ', $value);
   echo trim($value) + "\n";
 }
 ?>
