@@ -8,13 +8,13 @@ quota -s
 
 cd /tmp
 
-# wget http://soccer.phew.homeip.net/download/schedule/data/SJIS_all_hirosima.csv
-rm test.php
-wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app04/test.php
-cat test.php
-php test.php > ${OPENSHIFT_REPO_DIR}test.ics
+rm ${OPENSHIFT_REPO_DIR}test.ics
+rm ${OPENSHIFT_REPO_DIR}test.xml
 
-rm test.php
+
+curl --digest -u tshrapp9:$(date +%Y%m%d%H) \
+ -F "url=https://woo-20140818.rhcloud.com/" \
+ https://tshrapp9.appspot.com/createwebcroninformation
 
 exit
 
