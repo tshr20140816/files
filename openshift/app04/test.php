@@ -24,14 +24,12 @@ foreach(explode("\n", $contents) as $value) {
   }
 }
 
-var_dump($lines);
-
 $items = array();
 foreach($lines as $value) {
-  // echo trim($value) . "\n";
   $tmp = preg_replace('/<.+?>/', ' ', $value);
-  echo trim($tmp) . "\n";
   $tmp = preg_replace('/ +/', ' ', $tmp);
-  echo trim($tmp) . "\n";
+  // echo trim($tmp) . "\n";
+  $items[] = $tmp;
 }
+echo implode("&lt;br /&gt;", $items);
 ?>
