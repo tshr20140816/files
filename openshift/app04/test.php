@@ -31,7 +31,7 @@ foreach($lines as $value) {
   // echo trim($value) . "\n";
   $tmp = preg_replace('/<.+?>/', ' ', $value);
   echo trim($tmp) . "\n";
-  // $tmp = preg_replace('/ .+/', ' ', $tmp);
-  // echo trim($tmp) . "\n";
+  $tmp = preg_replace('/ +/', ' ', $tmp);
+  echo trim($tmp) . "\n";
 }
 ?>
