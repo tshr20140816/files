@@ -10,13 +10,16 @@ $start_flg = 0;
 $lines = array();
 foreach(explode("\n", $contents) as $value) {
   if(trim($value) == '<!-- 公示日付 -->') {
+    echo trim($value) . "\n";
     $start_flg = 1;
     continue;
   }
   if($start_flg == 1 && trim($value) == '<!-- 出場選手一覧 -->') {
+    echo trim($value) . "\n";
     break;
   }
   if($start_flg == 1) {
+    echo trim($value) . "\n";
     $lines[] = trim($value);
   }
 }
