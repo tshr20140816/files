@@ -28,7 +28,7 @@ foreach(explode("\n", $contents) as $value) {
   if($cnt > 0) {
     $temp_array = explode('","', $value);
     if($temp_array[1] >= date('Y/m/d', strtotime("-2 day"))){
-      $start_time = explode('":"', $temp_array[2]);
+      $start_time = explode(':', $temp_array[2]);
       $i++;
       $sb[] = 'BEGIN:VEVENT';
       $sb[] = 'CREATED:' . $created;
