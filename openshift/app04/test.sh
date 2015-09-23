@@ -12,19 +12,6 @@ cat test.php
 php test.php
 rm test.php
 
-rm HPHP-2.1.0.zip
-# wget https://github.com/facebook/hhvm/archive/HPHP-2.1.0.zip
-# unzip HPHP-2.1.0.zip > /dev/null
-rm HPHP-2.1.0.zip
-
-ls -lang
-
-export HPHP_HOME=$(pwd)
-
-cd hhvm-HPHP-2.1.0
-./configure --help
-./configure
-
-cat /tmp/hhvm-HPHP-2.1.0/CMakeFiles/CMakeOutput.log
+rm -rf hhvm-HPHP-2.1.0
 
 exit
