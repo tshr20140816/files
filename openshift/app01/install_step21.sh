@@ -14,6 +14,10 @@ curl --digest -u $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server_user):$(da
  -F "url=$(cat ${OPENSHIFT_DATA_DIR}/params/mirror_server)" \
  $(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)createwebcroninformation
 
+# ***** rss & ics *****
+
+cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/rss/*.php ${OPENSHIFT_DATA_DIR}/apache/htdocs/
+
 # ***** infrastructure info *****
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/ > /dev/null
