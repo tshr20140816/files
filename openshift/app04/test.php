@@ -44,5 +44,5 @@ foreach($lines as $value) {
   // echo trim($tmp) . "\n";
   $items[] = $tmp;
 }
-echo sprintf($xml, date('Y.m.d'), $url, implode("&lt;br /&gt;", $items));
+echo sprintf($xml, date('Y.m.d'), $url, implode("&lt;br /&gt;\n", $items));
 ?>
