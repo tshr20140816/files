@@ -28,8 +28,10 @@ var_dump($lines);
 
 $items = array();
 foreach($lines as $value) {
-  $value = preg_replace('/<.+?>/', ' ', $value);
-  $value = preg_replace('/ .+/', ' ', $value);
   echo trim($value) . "\n";
+  $tmp = preg_replace('/<.+?>/', ' ', $value);
+  echo trim($tmp) . "\n";
+  $tmp = preg_replace('/ .+/', ' ', $tmp);
+  echo trim($tmp) . "\n";
 }
 ?>
