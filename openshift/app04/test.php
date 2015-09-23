@@ -4,11 +4,11 @@ header('Content-type: text/plain; charset=utf-8');
 
 $contents = file_get_contents('http://www.npb.or.jp/announcement/2015/roster_cl' . date('Ymd') . '.html');
 $contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
-echo $contents;
+// echo $contents;
 
 $start_flg = 0;
 $lines = array();
-foreach(explode("\n", $contents) as $value) {
+foreach(explode("\r\n", $contents) as $value) {
   echo $value + "\n";
   if(trim($value) == '<!-- 公示日付 -->') {
     $start_flg = 1;
