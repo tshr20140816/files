@@ -14,6 +14,4 @@ cat test.php
 php test.php
 rm test.php
 
-rm -rf hhvm-HPHP-2.1.0
-
 exit
