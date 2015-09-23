@@ -4,6 +4,7 @@ header('Content-type: text/plain; charset=utf-8');
 
 $contents = file_get_contents('http://www.npb.or.jp/announcement/2015/roster_cl' . date('Ymd') . '.html');
 $contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
+echo $contents;
 
 $start_flg = 0;
 $lines = array();
