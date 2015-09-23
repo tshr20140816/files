@@ -12,7 +12,7 @@ $xml = <<< __HEREDOC__
 </rss>
 __HEREDOC__;
 
-header('Content-type: text/plain; charset=utf-8');
+header('Content-type: text/xml; charset=utf-8');
 
 $url = 'http://www.npb.or.jp/announcement/2015/roster_cl' . date('Ymd') . '.html';
 $contents = file_get_contents($url);
