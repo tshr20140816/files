@@ -17,7 +17,6 @@ $sb[] = 'END:STANDARD';
 $sb[] = 'END:VTIMEZONE';
 
 $created = date('Ymd\THis\Z');
-echo $created . "\n";
 $uid = strtoupper(sha1($created));
 $i = 0;
 
@@ -33,6 +32,7 @@ foreach(explode("\n", $contents) as $value) {
       echo ltrim($temp_array[0], '"') . "\n";
       echo $temp_array[1] . "\n";
       echo $temp_array[2] . "\n";
+      $start_time = explode('":"', $temp_array[2]);
       $i++;
       $sb[] = 'BEGIN:VEVENT';
       $sb[] = 'CREATED:' . $created;
@@ -41,7 +41,7 @@ foreach(explode("\n", $contents) as $value) {
       $sb[] = 'UID:UIDx' . $uid . 'x' . $i;
       $sb[] = 'DTSTART;VALUE=DATE:' . date('Ymd', strtotime($temp_array[1]));
       $sb[] = 'DTEND;VALUE=DATE:' . date('Ymd', strtotime($temp_array[1] . " 1 day"));
-      $sb[] = 'SUMMARY:' . $temp_array[2] . ' ' . ltrim($temp_array[0], '"');
+      $sb[] = 'SUMMARY:' . $start_time[0] . ':' . $start_time[1] . ' ' . ltrim($temp_array[0], '"');
       $sb[] = 'TRANSP:TRANSPARENT';
       $sb[] = 'END:VEVENT';
     }
