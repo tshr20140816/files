@@ -17,13 +17,14 @@ foreach(explode("\n", $contents) as $value) {
   }
   if($start_flg == 1) {
     $lines[] = trim($value);
+    echo trim($value) + "\n";
   }
 }
 
 $items = array();
 foreach($lines as $value) {
   $value = preg_replace('/<.+?>/', ' ', $value);
-  $value = preg_replace('/ .+>/', ' ', $value);
+  $value = preg_replace('/ .+/', ' ', $value);
   echo trim($value) + "\n";
 }
 ?>
