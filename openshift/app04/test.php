@@ -43,5 +43,7 @@ foreach($lines as $value) {
     $tmp_old = $tmp;
   }
 }
-echo sprintf($xml, date('Y.m.d'), $url, implode("&lt;br /&gt;\n", $items));
+if(count($items) > 0){
+  echo sprintf($xml, date('Y.m.d'), $url, implode("&lt;br /&gt;\n", $items));
+}
 ?>
