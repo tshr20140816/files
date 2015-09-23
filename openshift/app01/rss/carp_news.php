@@ -14,7 +14,7 @@ __HEREDOC__;
 
 $item_template = "<item><title>%s</title><link>%s</link><description /><pubDate>%s</pubDate></item>";
 
-header('Content-type: text/plain; charset=utf-8');
+header('Content-type: text/xml; charset=utf-8');
 
 $start_flg = 0;
 $lines = array();
