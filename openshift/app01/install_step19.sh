@@ -930,6 +930,8 @@ connection_string=$(cat << __HEREDOC_2__
 __HEREDOC_2__
 )
 
+mysql ${connection_string} --execute="SET GLOBAL innodb_file_per_table=1;SET GLOBAL innodb_file_format=Barracuda;" 
+
 sql=$(cat << '__HEREDOC_2__'
 SELECT CONCAT(T1.TABLE_SCHEMA, '.', T1.TABLE_NAME, ',', T1.CREATE_OPTIONS)
   FROM information_schema.TABLES T1
