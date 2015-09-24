@@ -7,10 +7,12 @@ $xml = <<< __HEREDOC__
   <link>http://www.npb.or.jp/announcement/2015/roster_cl.html</link>
   <description>NPB 公示 セリーグ</description>
   <language>ja</language>
-  <item><title>%s</title><link>%s</link><description>%s</description><pubDate /></item>
+  {0}
 </channel>
 </rss>
 __HEREDOC__;
+
+$item_template = "<item><title>%s</title><link>%s</link><description>%s</description><pubDate /></item>";
 
 header('Content-type: text/xml; charset=utf-8');
 
@@ -44,6 +46,8 @@ foreach($lines as $value) {
   }
 }
 if(count($items) > 0) {
-  echo sprintf($xml, date('Y.m.d'), $url, implode("&lt;br /&gt;\n", $items));
+  echo str_replace("{0}", sprintf($item_template, date('Y.m.d'), $url, implode("&lt;br /&gt;\n", $items)), $xml);
+} else {
+  echo str_replace("{0}", "", $xml);
 }
 ?>
