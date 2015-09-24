@@ -181,7 +181,7 @@ perl -pi -e 's/(^;extension=php_xsl.*$)/$1\r\nextension=memcached.so/g' lib/php.
 perl -pi -e 's/^(session.save_handler =).+$/$1 memcached/g' lib/php.ini
 perl -pi -e 's/^;(session.save_path =).+$/$1 "$ENV{OPENSHIFT_DIY_IP}:31211"/g' lib/php.ini
 perl -pi -e 's/^expose_php .+$/expose_php = Off/g' lib/php.ini
-# TODO
+perl -pi -e 's/(^;always_populate_raw_post_data =.*$)/$1\r\nalways_populate_raw_post_data = -1/g' lib/php.ini
 perl -pi -e 's/(^;error_log =.*$)/error_log = __OPENSHIFT_LOG_DIR__\/php_error.log/g' lib/php.ini
 sed -i -e "s|__OPENSHIFT_LOG_DIR__|${OPENSHIFT_LOG_DIR}|g" lib/php.ini
 
