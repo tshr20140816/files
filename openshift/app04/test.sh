@@ -2,7 +2,7 @@
 
 set -x
 
-echo "1743"
+echo "1507"
 
 quota -s
 
