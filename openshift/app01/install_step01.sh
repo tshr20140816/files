@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.10.09 ccache_version 3.2.3 → 3.2.4
 # 2015.09.12 fio_version 2.2.9 → 2.2.10
 # 2015.09.10 sphinx_version 2.2.9 → 2.2.10
 # 2015.09.05 php_version 5.6.12 → 5.6.13
@@ -68,7 +69,7 @@ baikal_version 0.2.7
 cacti_version 0.8.8f
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
-ccache_version 3.2.3
+ccache_version 3.2.4
 distcc_version 3.1
 delegate_version 9.9.13
 expect_version 5.45
