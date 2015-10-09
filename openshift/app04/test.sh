@@ -2,7 +2,7 @@
 
 set -x
 
-echo "0952"
+echo "1020"
 
 quota -s
 
