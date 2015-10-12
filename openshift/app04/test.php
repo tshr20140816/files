@@ -1,20 +1,17 @@
 <?php
 header('Content-type: text/plain; charset=utf-8');
 
-$item_template = "<item><title>%s</title><link>%s</link><description />%s<pubDate>%s</pubDate></item>";
+$item_template = "<item><title>%s</title><link>%s</link><description /><pubDate>%s</pubDate></item>";
 
 $items = array();
 
-$url = 'http://www.cellstar.co.jp/mcd/gps/img/gps_date_top.gif';
-$headers = get_headers($url);
-
-foreach ($headers as $value) {
-  if(substr($value, 0, 13) == 'Last-Modified'){
-    print $value ."\n";
-    $title = 'test1';
-    $items[] = sprintf($item_template, $title, $url, substr($value, 15));
+$url = 'http://www.hiroden.co.jp/what/new/topic.htm';
+$contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
+foreach(explode("\n", $contents) as $value) {
+  if(substr(trim($contents), 0, 4) == '<h3>'){
+    echo trim($contents);
   }
 }
 
-print var_dump($items);
+//print var_dump($items);
 ?>
