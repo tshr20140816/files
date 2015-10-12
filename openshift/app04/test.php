@@ -8,8 +8,8 @@ $items = array();
 $url = 'http://www.hiroden.co.jp/what/new/topic.htm';
 $contents = mb_convert_encoding($contents, "UTF-8", "SJIS");
 foreach(explode("\n", $contents) as $value) {
-  if(substr(trim($contents), 0, 4) == '<h3>'){
-    echo trim($contents);
+  if(substr(trim($value), 0, 4) == '<h3>'){
+    echo trim($value);
   }
 }
 
