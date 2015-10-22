@@ -1,5 +1,5 @@
 <?php
-header('Content-type: application/force-download')
+header('Content-type: application/force-download');
 
 echo date('Ymd');
 ?>
