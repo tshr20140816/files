@@ -13,5 +13,6 @@ curl_setopt($ch, CURLOPT_NOBODY, true);
 $info = curl_getinfo($ch);
 curl_close($ch);
 
-print $info["http_code"];
+//print $info["http_code"];
+print var_dump($info);
 ?>
