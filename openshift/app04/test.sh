@@ -2,6 +2,8 @@
 
 set -x
 
+# 1536
+
 ls -al ${OPENSHIFT_REPO_DIR}
 
 cd ${OPENSHIFT_REPO_DIR}
