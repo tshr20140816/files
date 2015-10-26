@@ -2,7 +2,7 @@
 
 set -x
 
-# 1544
+# 1546
 
 ls -al ${OPENSHIFT_REPO_DIR}
 
