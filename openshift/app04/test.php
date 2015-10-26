@@ -19,7 +19,7 @@ curl_close($ch);
 print var_dump($info);
 
 $context = stream_context_create(array(
-    'http' => array('ignore_errors' => true)
+    'http' => array('ignore_errors' => true, 'follow_location' => 1);
 ));
 
 $response = file_get_contents($url, false, $context);
