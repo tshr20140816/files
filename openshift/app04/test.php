@@ -17,4 +17,11 @@ curl_close($ch);
 
 //print $info["http_code"];
 print var_dump($info);
+
+$context = stream_context_create(array(
+    'http' => array('ignore_errors' => true)
+));
+
+$response = file_get_contents($url, false, $context);
+print $http_response_header[0];
 ?>
