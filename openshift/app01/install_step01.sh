@@ -83,7 +83,7 @@ memcached_version 1.4.24
 mrtg_version 2.17.4
 murlin_version 0.2.4
 openssh_version 6.8p1
-php_version 5.6.13
+php_version 5.6.14
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.6
 ruby_version 2.1.7
