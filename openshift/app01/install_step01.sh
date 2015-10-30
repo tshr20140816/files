@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.10.30 php_version 5.6.14 → 5.6.15
 # 2015.10.30 redmine_version 2.6.6 → 2.6.7
 # 2015.10.30 php_version 5.6.13 → 5.6.14
 # 2015.10.09 ccache_version 3.2.3 → 3.2.4
@@ -84,7 +85,7 @@ memcached_version 1.4.24
 mrtg_version 2.17.4
 murlin_version 0.2.4
 openssh_version 6.8p1
-php_version 5.6.14
+php_version 5.6.15
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.7
 ruby_version 2.1.7
