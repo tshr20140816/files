@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.11.06 fio_version 2.2.10 → 2.2.11
 # 2015.10.30 php_version 5.6.14 → 5.6.15
 # 2015.10.30 redmine_version 2.6.6 → 2.6.7
 # 2015.10.30 php_version 5.6.13 → 5.6.14
@@ -76,7 +77,7 @@ ccache_version 3.2.4
 distcc_version 3.1
 delegate_version 9.9.13
 expect_version 5.45
-fio_version 2.2.10
+fio_version 2.2.11
 ipafont_version 00303
 libmemcached_version 1.0.18
 lynx_version 2.8.7
