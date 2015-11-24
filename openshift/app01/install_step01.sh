@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.11.24 memcached_version 1.4.24 → 1.4.25
 # 2015.11.16 redmine_version 2.6.7 → 2.6.8
 # 2015.11.06 fio_version 2.2.10 → 2.2.11
 # 2015.10.30 php_version 5.6.14 → 5.6.15
@@ -83,7 +84,7 @@ ipafont_version 00303
 libmemcached_version 1.0.18
 lynx_version 2.8.7
 memcached_php_ext_version 2.2.0
-memcached_version 1.4.24
+memcached_version 1.4.25
 mrtg_version 2.17.4
 murlin_version 0.2.4
 openssh_version 6.8p1
