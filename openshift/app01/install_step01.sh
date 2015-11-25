@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2015.11.25 fio_version 2.2.11 → 2.2.12
 # 2015.11.24 memcached_version 1.4.24 → 1.4.25
 # 2015.11.16 redmine_version 2.6.7 → 2.6.8
 # 2015.11.06 fio_version 2.2.10 → 2.2.11
@@ -79,7 +80,7 @@ ccache_version 3.2.4
 distcc_version 3.1
 delegate_version 9.9.13
 expect_version 5.45
-fio_version 2.2.11
+fio_version 2.2.12
 ipafont_version 00303
 libmemcached_version 1.0.18
 lynx_version 2.8.7
