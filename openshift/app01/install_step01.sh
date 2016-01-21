@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.01.21 php_version 5.6.16 → 5.6.17
 # 2016.01.21 wordpress_version 4.4-ja → 4.4.1-ja
 # 2016.01.21 fio_version 2.2.13 → 2.5
 # 2016.01.06 wordpress_version 4.3-ja → 4.4-ja
@@ -96,7 +97,7 @@ memcached_version 1.4.25
 mrtg_version 2.17.4
 murlin_version 0.2.4
 openssh_version 6.8p1
-php_version 5.6.16
+php_version 5.6.17
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.9
 ruby_version 2.1.8
