@@ -30,5 +30,5 @@ redmine-2.6.8.tar.gz http://www.redmine.org/releases/redmine-2.6.8.tar.gz
 sphinx-2.2.10-release.tar.gz http://sphinxsearch.com/files/sphinx-2.2.10-release.tar.gz
 tcl8.6.4-src.tar.gz http://prdownloads.sourceforge.net/tcl/tcl8.6.4-src.tar.gz
 webalizer-2.23-08-src.tar.bz2 ftp://ftp.mrunix.net/pub/webalizer/webalizer-2.23-08-src.tar.bz2
-wordpress-4.4-ja.tar.gz https://ja.wordpress.org/wordpress-4.4-ja.tar.gz
+wordpress-4.4.1-ja.tar.gz https://ja.wordpress.org/wordpress-4.4.1-ja.tar.gz
 xz-5.2.1.tar.xz http://tukaani.org/xz/xz-5.2.1.tar.xz
