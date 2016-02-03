@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.02.04 wordpress_version 4.4.1-ja → 4.4.2-ja
 # 2016.01.28 fio_version 2.5 → 2.6
 # 2016.01.21 php_version 5.6.16 → 5.6.17
 # 2016.01.21 wordpress_version 4.4-ja → 4.4.1-ja
@@ -105,7 +106,7 @@ ruby_version 2.1.8
 sphinx_version 2.2.10
 tcl_version 8.6.4
 webalizer_version 2.23-08
-wordpress_version 4.4.1-ja
+wordpress_version 4.4.2-ja
 xz_version 5.2.1
 __HEREDOC__
 
