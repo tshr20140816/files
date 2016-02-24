@@ -9,7 +9,8 @@ rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
 do
     user_fqdn=$(echo "${line}")
-    ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    # ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -t -t -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 done
 
 # apache インストールの前で実施(時間短縮のため)
