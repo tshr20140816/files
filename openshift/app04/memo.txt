@@ -1,26 +1,4 @@
-Apex Launcher
-Power Toggles
-Apps Organizer
-Cool Tool
-Default App Reset
-Glaeja
-Heads-up
-iCalSync
-Llama
-DashClock 
-// Migiued
-mineo スイッチ
-
-Skype
-radiko
-MyCellstar
-A-Volume Widget
-Adaptive Rotation Lock
-Y!防災速報
-
-365Scores
-ジョルテ
-
+Graphviz
 
 Glaeja
 
