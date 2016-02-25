@@ -311,8 +311,9 @@ else
      --enable-xml \
      --enable-mbstring \
      --enable-mbregex \
-     --enable-sockets \
+     --enable-opcache \
      --enable-pcntl \
+     --enable-sockets \
      --disable-ipv6 \
      --disable-debug \
      --with-gettext=${OPENSHIFT_DATA_DIR}/php \
