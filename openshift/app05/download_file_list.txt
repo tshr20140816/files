@@ -1,3 +1,4 @@
+apcu-4.0.10.zip https://github.com/krakjoe/apcu/archive/v4.0.10.zip
 autossh-1.4e.tgz http://www.harding.motd.ca/autossh/autossh-1.4e.tgz
 axel-2.4.tar.bz2 http://downloads.sourceforge.net/project/axel2/axel-2.4/axel-2.4.tar.bz2
 CalDavZAP_0.12.1.zip http://www.inf-it.com/CalDavZAP_0.12.1.zip
