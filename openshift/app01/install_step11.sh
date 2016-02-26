@@ -339,7 +339,7 @@ time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apcu make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apcu.log
-time make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apcu.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apcu.log
 mv ${OPENSHIFT_LOG_DIR}/install_apcu.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
