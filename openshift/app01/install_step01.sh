@@ -164,7 +164,7 @@ if [ $# -ne 22 ]; then
     echo "arg19 : hidrive password"
     echo "arg20 : loggly token"
     echo "arg21 : build server 2 (http://xxx/files/ / none)"
-    echo "arg22 : user default password"
+    echo "arg22 : user default password (redmine)"
     exit
 fi
 
