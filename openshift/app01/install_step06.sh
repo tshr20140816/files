@@ -278,8 +278,11 @@ LanguagePriority ja en
 
 # log
 
+DeflateFilterNote ratio
+
 LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
 LogFormat "[%{%Y-%m-%d %H:%M:%S %Z}t] %p %{X-Forwarded-For}i %l %m %s %b \"%r\" \"%{User-Agent}i\"" remoteip
+LogFormat "[%{%Y-%m-%d %H:%M:%S %Z}t] \"%r\" %b (%{ratio}n) \"%{User-agent}i\"" deflate
 
 SetEnvIf Request_Method (HEAD|OPTIONS) method_head_options
 
@@ -288,6 +291,8 @@ CustomLog \
 CustomLog \
  "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_remoteip_log __APACHE_DIR__logs/access_remoteip_log.%w 86400 540" \
  remoteip env=!method_head_options
+CustomLog \
+ "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_deflate_log __APACHE_DIR__logs/access_deflate_log.%w 86400 540" deflate
 
 ErrorLog \
  "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/error_log __APACHE_DIR__logs/error_log.%w 86400 540"
