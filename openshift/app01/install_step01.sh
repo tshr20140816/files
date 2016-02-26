@@ -81,6 +81,7 @@ set -x
 # 2014.09.23 first
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
+apcu_version 4.0.10
 apache_version 2.2.31
 axel_version 2.4
 baikal_version 0.2.7
@@ -348,6 +349,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/sphinx-${sphinx_version}-release.tar.gz &
     # ld.gold
     wget -t1 ${mirror_server}/ld.gold &
+    # apcu
+    wget -t1 ${mirror_server}/apcu-{apcu_version}.zip &
     wait
 
     # apache
@@ -975,6 +978,15 @@ do
         wget http://tukaani.org/xz/xz-${xz_version}.tar.xz
     fi
     [ -f xz-${xz_version}.tar.xz ] || files_exists=0
+
+    # *** apcu ***
+    if [ ! -f apcu-${apcu_version}.zip ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing apcu-${apcu_version}.zip" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) apcu wget" >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget -O apcu-${apcu_version}.zip https://github.com/krakjoe/apcu/archive/v${apcu_version}.zip
+    fi
+    [ -f apcu-${apcu_version}.zip ] || files_exists=0
 
     # *** gem ***
     for gem in bundler rack passenger logglier
