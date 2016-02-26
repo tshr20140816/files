@@ -351,15 +351,15 @@ user_default_password_sha1=$(echo -n ${user_default_password}  | openssl sha1 | 
 
 cat << __HEREDOC__ > update_default_password.sql
 UPDATE users
-   SET hashed_password='${user_default_password_sha1}'
+   SET hashed_password=SHA1(CONCAT(salt, SHA1('${user_default_password_sha1}')))
  WHERE login = 'admin';
 EXIT
 __HEREDOC__
 
-# mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
-# --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
-# -h "${OPENSHIFT_MYSQL_DB_HOST}" \
-# -P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < update_default_password.sql
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+ --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+ -h "${OPENSHIFT_MYSQL_DB_HOST}" \
+ -P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < update_default_password.sql
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
