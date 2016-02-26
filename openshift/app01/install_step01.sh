@@ -556,6 +556,13 @@ do
     # fi
     # [ -f super_pi-jp.tar.gz ] || files_exists=0
 
+    # *** Tiny Tiny RSS ***
+    if [ ! -f ttrss_archive.zip ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) ttrss wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip &
+    fi
+    [ -f ttrss_archive.zip ] || files_exists=0
+
     # *** sphinx ***
     if [ ! -f sphinx-${sphinx_version}-release.tar.gz ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing sphinx-${sphinx_version}-release.tar.gz" \
@@ -742,19 +749,6 @@ do
         wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
     fi
     [ -f wordpress-${wordpress_version}.tar.gz ] || files_exists=0
-
-    # *** Tiny Tiny RSS ***
-    # if [ ! -f ${ttrss_version}.tar.gz ]; then
-    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing ${ttrss_version}.tar.gz" \
-    #      | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) Tiny Tiny RSS wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    #     wget https://github.com/gothfox/Tiny-Tiny-RSS/archive/${ttrss_version}.tar.gz
-    # fi
-    # [ -f ${ttrss_version}.tar.gz ] || files_exists=0
-    if [ ! -f ttrss_archive.zip ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) ttrss wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip
-    fi
 
     # *** cacti ***
     if [ ! -f cacti-${cacti_version}.tar.gz ]; then
