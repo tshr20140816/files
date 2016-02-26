@@ -10,7 +10,12 @@ download_list[${#download_list[@]}]="rbenv-installer,rbenv-installer,https://raw
 
 for item in ${download_list[@]}
 do
-    echo "$item"
+    title=$(echo $item | awk -F, '{print $1}')
+    file_name=$(echo $item | awk -F, '{print $2}')
+    url=$(echo $item | awk -F, '{print $3}')
+    echo $title
+    echo $file_name
+    echo $url
 done
 
 exit
