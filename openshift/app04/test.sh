@@ -2,6 +2,7 @@
 
 set -x
 
-echo -n "admin"  | openssl sha1
+abc=$(echo -n "admin"  | openssl sha1)
+echo $abc
 
 exit
