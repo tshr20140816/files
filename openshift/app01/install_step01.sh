@@ -4,7 +4,7 @@ set -x
 
 # History
 # 2016.02.26 cacti_version 0.8.8f → 0.8.8g
-# 2016.02.16 php_version 5.6.17 → 5.6.18
+# 2016.02.05 php_version 5.6.17 → 5.6.18
 # 2016.02.04 wordpress_version 4.4.1-ja → 4.4.2-ja
 # 2016.01.28 fio_version 2.5 → 2.6
 # 2016.01.21 php_version 5.6.16 → 5.6.17
