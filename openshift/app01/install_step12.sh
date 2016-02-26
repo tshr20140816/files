@@ -356,10 +356,10 @@ UPDATE users
 EXIT
 __HEREDOC__
 
-mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
---password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
--h "${OPENSHIFT_MYSQL_DB_HOST}" \
--P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < update_default_password.sql
+# mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+# --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+# -h "${OPENSHIFT_MYSQL_DB_HOST}" \
+# -P "${OPENSHIFT_MYSQL_DB_PORT}" redmine < update_default_password.sql
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
