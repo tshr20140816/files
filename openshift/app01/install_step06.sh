@@ -328,6 +328,14 @@ AddType application/x-httpd-php .php
     Header append Vary User-Agent env=!dont-vary
 </Location>
 
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript
+
+ExpiresActive On
+ExpiresByType text/css "access plus 1 days"
+ExpiresByType application/javascript "access plus 1 days"
+ExpiresByType image/png "access plus 1 days"
+ExpiresByType image/gif "access plus 1 days"
+
 # force ssl
 
 <IfModule mod_rewrite.c>
