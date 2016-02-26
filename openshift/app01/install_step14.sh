@@ -68,6 +68,25 @@ pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs > /dev/null
 rm ttrss_archive.zip
 popd > /dev/null
 
+# *** change default password ***
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+user_default_password=$(cat ${OPENSHIFT_DATA_DIR}/params/user_default_password)
+user_default_password_sha1=$(echo -n ${user_default_password}  | openssl sha1 | awk '{print $2;}')
+
+cat << __HEREDOC__ > update_default_password.sql
+UPDATE ttrss_users
+   SET pwd_hash='SHA1:${user_default_password_sha1}'
+ WHERE login = 'admin';
+EXIT
+__HEREDOC__
+
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+--password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+-h "${OPENSHIFT_MYSQL_DB_HOST}" \
+-P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < update_default_password.sql
+popd > /dev/null
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
