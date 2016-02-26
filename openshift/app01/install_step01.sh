@@ -466,6 +466,7 @@ if [ "${mirror_server}" != "none" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm -f ccache-${ccache_version}.tar.xz
     fi
+    rm -f ccache-${ccache_version}.tar.xz.asc
 
     # # openssh
     # wget -t1 ${mirror_server}/openssh-${openssh_version}.tar.gz
@@ -492,6 +493,7 @@ if [ "${mirror_server}" != "none" ]; then
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm -f distcc-${distcc_version}.tar.bz2
     fi
+    rm -f distcc.html
 
     # cadaver
     wget -t1 ${mirror_server}/cadaver-${cadaver_version}.tar.gz
@@ -502,6 +504,7 @@ if [ "${mirror_server}" != "none" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm -f cadaver-${cadaver_version}.tar.gz
     fi
+    rm -f cadaver-${cadaver_version}.tar.gz.asc
 
    # xz
    wget -t1 ${mirror_server}/xz-${xz_version}.tar.xz
