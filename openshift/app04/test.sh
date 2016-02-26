@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "1423"
+
 set -x
 
 word="admin"
