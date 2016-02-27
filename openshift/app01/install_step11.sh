@@ -143,6 +143,7 @@ else
      --enable-xml \
      --enable-mbstring \
      --enable-mbregex \
+     --enable-opcache \
      --enable-sockets \
      --enable-pcntl \
      --disable-ipv6 \
