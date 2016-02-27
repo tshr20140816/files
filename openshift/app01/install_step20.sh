@@ -26,7 +26,7 @@ find ${OPENSHIFT_REPO_DIR}/.openshift/cron/ -name *.sh -type f -print0 | xargs -
  >> ${OPENSHIFT_LOG_DIR}/shell_syntax_error.log 2>&1
 popd > /dev/null
 touch ${OPENSHIFT_LOG_DIR}/shell_syntax_error.txt
-echo "shell syntax error count : $(wc -l ${OPENSHIFT_LOG_DIR}/shell_syntax_error.txt)" \
+echo "$(date +%Y/%m/%d" "%H:%M:%S) shell syntax error count : $(wc -l ${OPENSHIFT_LOG_DIR}/shell_syntax_error.txt)" \
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # ***** delete files *****
@@ -52,7 +52,7 @@ find ./ -name "*" -mindepth 2 -type f -print0 \
  | grep -v -e "delegated" \
  | awk -F':' '{printf $1"\n"}' \
  > ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-echo "strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
+echo "$(date +%Y/%m/%d" "%H:%M:%S) strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
