@@ -347,11 +347,10 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 user_default_password=$(cat ${OPENSHIFT_DATA_DIR}/params/user_default_password)
-user_default_password_sha1=$(echo -n ${user_default_password}  | openssl sha1 | awk '{print $2;}')
 
 cat << __HEREDOC__ > update_default_password.sql
 UPDATE users
-   SET hashed_password=SHA1(CONCAT(salt, SHA1('${user_default_password_sha1}')))
+   SET hashed_password=SHA1(CONCAT(salt, SHA1('${user_default_password}')))
  WHERE login = 'admin';
 EXIT
 __HEREDOC__
