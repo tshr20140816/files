@@ -177,14 +177,22 @@ touch ${OPENSHIFT_LOG_DIR}/php_error.log
 
 pushd ${OPENSHIFT_DATA_DIR}/php > /dev/null
 perl -pi -e 's/^short_open_tag .+$/short_open_tag = On/g' lib/php.ini
-perl -pi -e 's/(^;date.timezone =.*$)/$1\r\ndate.timezone = Asia\/Tokyo/g' lib/php.ini
-perl -pi -e 's/(^;extension=php_xsl.*$)/$1\r\nextension=memcached.so/g' lib/php.ini
+perl -pi -e 's/(^;date.timezone =.*$)/$1\ndate.timezone = Asia\/Tokyo/g' lib/php.ini
+perl -pi -e 's/(^;extension=php_xsl.*$)/$1\nextension=apcu.so/g' lib/php.ini
+perl -pi -e 's/(^;extension=php_xsl.*$)/$1\nextension=memcached.so/g' lib/php.ini
 perl -pi -e 's/^(session.save_handler =).+$/$1 memcached/g' lib/php.ini
 perl -pi -e 's/^;(session.save_path =).+$/$1 "$ENV{OPENSHIFT_DIY_IP}:31211"/g' lib/php.ini
 perl -pi -e 's/^expose_php .+$/expose_php = Off/g' lib/php.ini
-perl -pi -e 's/(^;always_populate_raw_post_data =.*$)/$1\r\nalways_populate_raw_post_data = -1/g' lib/php.ini
+perl -pi -e 's/(^;always_populate_raw_post_data =.*$)/$1\nalways_populate_raw_post_data = -1/g' lib/php.ini
 perl -pi -e 's/(^;error_log =.*$)/error_log = __OPENSHIFT_LOG_DIR__\/php_error.log/g' lib/php.ini
 sed -i -e "s|__OPENSHIFT_LOG_DIR__|${OPENSHIFT_LOG_DIR}|g" lib/php.ini
+cat << '__HEREDOC__' >> lib/php.ini
+
+apc.enabled=1
+apc.shm_size=8M
+apc.ttl=7200
+apc.enable_cli=1
+__HEREDOC__
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) php.ini diff" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 diff -u lib/php.ini-production lib/php.ini
