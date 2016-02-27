@@ -45,10 +45,13 @@ php -l Standard.php
 # *** Database.php ***
 
 sed -i -e 's|"PROJECT_DB_MYSQL" => FALSE|"PROJECT_DB_MYSQL" => TRUE|g' Database.php
-sed -i -e 's|"PROJECT_DB_MYSQL_HOST" => ""|"PROJECT_DB_MYSQL_HOST" => getenv("OPENSHIFT_MYSQL_DB_HOST") . ":" . getenv("OPENSHIFT_MYSQL_DB_PORT")|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_HOST" => ""|"PROJECT_DB_MYSQL_HOST" => "__PROJECT_DB_MYSQL_HOST__"|g' Database.php
 sed -i -e 's|"PROJECT_DB_MYSQL_DBNAME" => ""|"PROJECT_DB_MYSQL_DBNAME" => "baikal"|g' Database.php
-sed -i -e 's|"PROJECT_DB_MYSQL_USERNAME" => ""|"PROJECT_DB_MYSQL_USERNAME" => getenv("OPENSHIFT_MYSQL_DB_USERNAME")|g' Database.php
-sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => getenv("OPENSHIFT_MYSQL_DB_PASSWORD")|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_USERNAME" => ""|"PROJECT_DB_MYSQL_USERNAME" => "__OPENSHIFT_MYSQL_DB_USERNAME__"|g' Database.php
+sed -i -e 's|"PROJECT_DB_MYSQL_PASSWORD" => ""|"PROJECT_DB_MYSQL_PASSWORD" => "__OPENSHIFT_MYSQL_DB_PASSWORD__"|g' Database.php
+perl -pi -e 's/__PROJECT_DB_MYSQL_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' Database.php
+perl -pi -e 's/__OPENSHIFT_MYSQL_DB_USERNAME__/$ENV{OPENSHIFT_MYSQL_DB_USERNAME}/g' Database.php
+perl -pi -e 's/__OPENSHIFT_MYSQL_DB_PASSWORD__/$ENV{OPENSHIFT_MYSQL_DB_PASSWORD}/g' Database.php
 php -l Database.php
 
 # *** System.php ***
@@ -63,6 +66,9 @@ sed -i -e 's|define("PROJECT_DB_MYSQL_HOST", "");|define("PROJECT_DB_MYSQL_HOST"
 sed -i -e 's|define("PROJECT_DB_MYSQL_DBNAME", "");|define("PROJECT_DB_MYSQL_DBNAME", "baikal");|g' System.php
 sed -i -e 's|define("PROJECT_DB_MYSQL_USERNAME", "");|define("PROJECT_DB_MYSQL_USERNAME", getenv("OPENSHIFT_MYSQL_DB_USERNAME"));|g' System.php
 sed -i -e 's|define("PROJECT_DB_MYSQL_PASSWORD", "");|define("PROJECT_DB_MYSQL_PASSWORD", getenv("OPENSHIFT_MYSQL_DB_PASSWORD"));|g' System.php
+perl -pi -e 's/__PROJECT_DB_MYSQL_HOST__/$ENV{OPENSHIFT_MYSQL_DB_HOST}/g' System.php
+perl -pi -e 's/__OPENSHIFT_MYSQL_DB_USERNAME__/$ENV{OPENSHIFT_MYSQL_DB_USERNAME}/g' System.php
+perl -pi -e 's/__OPENSHIFT_MYSQL_DB_PASSWORD__/$ENV{OPENSHIFT_MYSQL_DB_PASSWORD}/g' System.php
 php -l System.php
 
 popd > /dev/null
