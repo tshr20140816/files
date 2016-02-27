@@ -54,6 +54,24 @@ perl -pi -e 's/__OPENSHIFT_MYSQL_DB_PORT__/$ENV{OPENSHIFT_MYSQL_DB_PORT}/g' ${OP
 php -l ${OPENSHIFT_TMP_DIR}/config.php
 popd > /dev/null
 
+# *** change default password ***
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+user_default_password=$(cat ${OPENSHIFT_DATA_DIR}/params/user_default_password)
+
+cat << __HEREDOC__ > update_default_password.sql
+UPDATE user_auth
+   SET password=MD5('${user_default_password}')
+ WHERE username = 'admin';
+EXIT
+__HEREDOC__
+
+mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
+ --password="${OPENSHIFT_MYSQL_DB_PASSWORD}" \
+ -h "${OPENSHIFT_MYSQL_DB_HOST}" \
+ -P "${OPENSHIFT_MYSQL_DB_PORT}" cacti < update_default_password.sql
+popd > /dev/null
+
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti > /dev/null
 mv include/config.php include/config.php.$(date '+%Y%m%d')
 cp ${OPENSHIFT_TMP_DIR}/config.php include/
