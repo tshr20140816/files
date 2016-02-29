@@ -351,7 +351,7 @@ if [ "${mirror_server}" != "none" ]; then
     # ld.gold
     wget -t1 ${mirror_server}/ld.gold &
     # apcu
-    wget -t1 ${mirror_server}/apcu-{apcu_version}.zip &
+    wget -t1 ${mirror_server}/apcu-${apcu_version}.zip &
     wait
 
     # apache
