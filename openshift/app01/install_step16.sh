@@ -8,13 +8,12 @@ function010
 
 rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-regular
 rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal
-rm -f ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-flat-${baikal_version}.zip
+rm -f ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-${baikal_version}.zip
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/baikal-flat-${baikal_version}.zip ./
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/baikal-${baikal_version}.zip ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Baikal unzip" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-unzip baikal-flat-${baikal_version}.zip
-mv baikal-flat baikal
+unzip baikal-${baikal_version}.zip
 touch baikal/Specific/ENABLE_INSTALL
 popd > /dev/null
 
@@ -90,7 +89,7 @@ __HEREDOC__
 php -l baikal.php
 popd > /dev/null
 
-rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-flat-${baikal_version}.zip
+rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-${baikal_version}.zip
 
 # ***** CalDavZAP *****
 
