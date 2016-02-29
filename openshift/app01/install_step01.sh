@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.02.29 baikal_version 0.2.7 → 0.3.5
 # 2016.02.26 cacti_version 0.8.8f → 0.8.8g
 # 2016.02.05 php_version 5.6.17 → 5.6.18
 # 2016.02.04 wordpress_version 4.4.1-ja → 4.4.2-ja
@@ -85,7 +86,7 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apcu_version 4.0.10
 apache_version 2.2.31
 axel_version 2.4
-baikal_version 0.2.7
+baikal_version 0.3.5
 cacti_version 0.8.8g
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
@@ -339,7 +340,7 @@ if [ "${mirror_server}" != "none" ]; then
     # fio
     wget -t1 ${mirror_server}/fio-${fio_version}.tar.bz2 &
     # Baikal
-    wget -t1 ${mirror_server}/baikal-flat-${baikal_version}.zip &
+    wget -t1 ${mirror_server}/baikal-${baikal_version}.zip &
     # CalDavZAP
     wget -t1 ${mirror_server}/CalDavZAP_${caldavzap_version}.zip &
     # phpicalendar
@@ -876,13 +877,13 @@ do
     [ -f fio-${fio_version}.tar.bz2 ] || files_exists=0
 
     # *** Baikal ***
-    if [ ! -f baikal-flat-${baikal_version}.zip ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing baikal-flat-${baikal_version}.zip" \
+    if [ ! -f baikal-${baikal_version}.zip ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing baikal-${baikal_version}.zip" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Baikal wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://baikal-server.com/get/baikal-flat-${baikal_version}.zip
+        wget https://github.com/fruux/Baikal/releases/download/${baikal_version}/baikal-${baikal_version}.zip
     fi
-    [ -f baikal-flat-${baikal_version}.zip ] || files_exists=0
+    [ -f baikal-${baikal_version}.zip ] || files_exists=0
 
     # *** CalDavZAP ***
     if [ ! -f CalDavZAP_${caldavzap_version}.zip ]; then
