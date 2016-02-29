@@ -349,6 +349,10 @@ time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_
 echo "$(date +%Y/%m/%d" "%H:%M:%S) apcu make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apcu.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apcu.log
+cp apc.php ${OPENSHIFT_DATA_DIR}/apache/htdoc/info/
+user_default_password=$(cat ${OPENSHIFT_DATA_DIR}/params/user_default_password)
+sed -i -e "s|defaults('ADMIN_PASSWORD','password');|defaults('ADMIN_PASSWORD','${user_default_password}');|g" ${OPENSHIFT_DATA_DIR}/apache/htdoc/info/apc.php
+
 mv ${OPENSHIFT_LOG_DIR}/install_apcu.log ${OPENSHIFT_LOG_DIR}/install/
 popd > /dev/null
 
