@@ -6,9 +6,6 @@ echo "1012"
 
 cd /tmp
 
-rm -f baikal-0.3.5.zip
-rm -rf baikal
-
-ls -lang
+date -d 20160229 '+%w'
 
 exit
