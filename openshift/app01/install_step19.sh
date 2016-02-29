@@ -187,7 +187,7 @@ if [ ${is_alive} -gt 0 ]; then
         echo delegated is alive
     fi
 elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
-    echo RESTART delegated
+    echo RESTART delegated 30080
     cd ${OPENSHIFT_DATA_DIR}/delegate/
     ./delegated -r +=P30080
 fi
@@ -201,7 +201,7 @@ if [ ${is_alive} -gt 0 ]; then
         echo delegated is alive
     fi
 elif [ ! -f ${OPENSHIFT_TMP_DIR}/stop ]; then
-    echo RESTART delegated
+    echo RESTART delegated 33128
     cd ${OPENSHIFT_DATA_DIR}/delegate/
     ./delegated -r +=P33128
 fi
