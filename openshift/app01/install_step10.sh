@@ -79,6 +79,9 @@ time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
 kill ${pid_CCACHE_LOGFILE}
 kill ${pid_DISTCC_LOG}
 
+mv ${OPENSHIFT_LOG_DIR}/ccache_passenger-install-apache2-module.log ${OPENSHIFT_LOG_DIR}/install/
+mv ${OPENSHIFT_LOG_DIR}/distcc_passenger-install-apache2-module.log ${OPENSHIFT_LOG_DIR}/install/
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 if [ -f ccache_passenger-install-apache2-module.tar.xz ]; then
     ccache -s
