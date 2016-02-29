@@ -398,62 +398,6 @@ __HEREDOC__
 
 popd > /dev/null
 
-# # ***** logrotate *****
-#
-# for file_name in cron_monthly cron_weekly cron_daily cron_hourly cron_minutely
-# do
-#     [ -e ${OPENSHIFT_LOG_DIR}/${file_name}.log ] || touch ${OPENSHIFT_LOG_DIR}/${file_name}.log
-# done
-#
-# rm -rf ${OPENSHIFT_DATA_DIR}/logrotate
-# mkdir ${OPENSHIFT_DATA_DIR}/logrotate
-# pushd ${OPENSHIFT_DATA_DIR}/logrotate > /dev/null
-# cat << '__HEREDOC__' > logrotate.conf
-# compresscmd /usr/bin/xz
-# uncompresscmd /usr/bin/unxz
-# compressext .xz
-#
-# compress
-# create
-# daily
-# missingok
-# notifempty
-# noolddir
-# rotate 7
-# __OPENSHIFT_LOG_DIR__production.log {
-#   daily
-#   missingok
-#   notifempty
-#   copytruncate
-#   compress
-#   noolddir
-#   rotate 7
-# }
-# __OPENSHIFT_LOG_DIR__cron_minutely.log {
-#   daily
-#   missingok
-#   notifempty
-#   copytruncate
-#   compress
-#   noolddir
-#   rotate 7
-# }
-# __OPENSHIFT_LOG_DIR__update_feeds.sh.log {
-#   daily
-#   missingok
-#   notifempty
-#   copytruncate
-#   compress
-#   noolddir
-#   rotate 7
-# }
-# __HEREDOC__
-# perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' logrotate.conf
-# perl -pi -e "s/__REDMINE_VERSION__/${redmine_version}/g" logrotate.conf
-# perl -pi -e 's/__OPENSHIFT_LOG_DIR__/$ENV{OPENSHIFT_LOG_DIR}/g' logrotate.conf
-# cat logrotate.conf
-# popd > /dev/null
-
 # ***** cron *****
 
 # *** daily ***
@@ -462,17 +406,6 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) cron daily" | tee -a ${OPENSHIFT_LOG_DIR}/ins
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/daily > /dev/null
 rm -f ./*
 touch jobs.deny
-
-# # * logrotate *
-#
-# cat << '__HEREDOC__' > logrotate.sh
-# #!/bin/bash
-# /usr/sbin/logrotate -v -s ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.status -f ${OPENSHIFT_DATA_DIR}/logrotate/logrotate.conf
-# __HEREDOC__
-# chmod +x logrotate.sh
-# # echo logrotate.sh >> jobs.allow
-# ./logrotate.sh
-# ./logrotate.sh &
 
 # * mysql_backup *
 
@@ -508,34 +441,6 @@ __HEREDOC__
 chmod +x mysql_backup.sh
 echo mysql_backup.sh >> jobs.allow
 ./mysql_backup.sh &
-
-# # * another server list update *
-# 
-# cat << '__HEREDOC__' > another_server_list_update.sh
-# #!/bin/bash
-# 
-# export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-# export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-# export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-# export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-# eval "$(rbenv init -)"
-# 
-# env_home_backup=${HOME}
-# export HOME=${OPENSHIFT_DATA_DIR}
-# 
-# ${OPENSHIFT_DATA_DIR}.gem/bin/rhc apps \
-#  | grep uuid | grep -v ${OPENSHIFT_APP_DNS} \
-#  | awk '{print $1,$3}' > ${OPENSHIFT_DATA_DIR}/another_server_list.txt
-# 
-# export HOME=${env_home_backup}
-# 
-# perl -pi -e 's/http/https/g' ${OPENSHIFT_DATA_DIR}/another_server_list.txt
-# 
-# cp ${OPENSHIFT_DATA_DIR}/another_server_list.txt ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
-# __HEREDOC__
-# chmod +x another_server_list_update.sh
-# echo another_server_list_update.sh >> jobs.allow
-# ./another_server_list_update.sh &
 
 # * backup log files *
 
@@ -809,7 +714,6 @@ for target_uri in carp saekics soccer tv
 do
     ./ical_multi.sh $(cat ${OPENSHIFT_DATA_DIR}/params/schedule_server) ${target_uri}
 done
-./ical_multi.sh dummy f1 "http://www.textbox1.com/apps/rss-to-ical/rsstoical.rsb?rssfeed=http%3A%2F%2Fpipes.yahoo.com%2Fpipes%2Fpipe.run%3F_id%3Dbeb6e75d9ac7dd3e05f8ef12653e3b71%26_render%3Drss&@format=ICAL"
 ./ical_multi.sh dummy holiday "http://ical.mac.com/ical/Japanese32Holidays.ics"
 ./ical_multi.sh dummy shinkan "http://sinkan.net/?action_ical=true&uid=12500&key=dd01838215ab8f727710f8e711d9fa47"
 ./ical_multi.sh dummy tenki "http://weather.livedoor.com/forecast/ical/34/90.ics"
