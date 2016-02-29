@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "0913"
+echo "0919"
 
-set -x
+# set -x
 
 cd /tmp
 
