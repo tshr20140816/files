@@ -241,6 +241,7 @@ popd > /dev/null
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
 bundle show | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cat .bundle/config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+mv ${OPENSHIFT_LOG_DIR}/gcc_bundle.log ${OPENSHIFT_LOG_DIR}/install/
 
 # *** rake ***
 
