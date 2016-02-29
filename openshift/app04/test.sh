@@ -1,10 +1,12 @@
 #!/bin/bash
 
-echo "0919"
+echo "0920"
 
 # set -x
 
 cd /tmp
+
+ls -lang
 
 cat << '__HEREDOC__' > test2016029.txt
 __PROJECT_DB_MYSQL_HOST__
