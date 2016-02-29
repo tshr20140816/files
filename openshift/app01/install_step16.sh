@@ -6,7 +6,6 @@ function010
 
 # ***** Baikal *****
 
-rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-regular
 rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal
 rm -f ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-${baikal_version}.zip
 
