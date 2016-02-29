@@ -6,18 +6,12 @@ echo "1012"
 
 cd /tmp
 
-rm -rf graphviz-2.38.0
-rm mod-spdy-beta_current_x86_64.rpm
-rm rbenv-installer
+wget https://github.com/fruux/Baikal/releases/download/0.3.5/baikal-0.3.5.zip
+
+unzip baikal-0.3.5.zip
 
 ls -lang
 
-cat << '__HEREDOC__' > test2016029.txt
-__PROJECT_DB_MYSQL_HOST__
-__HEREDOC__
-
-perl -pi -e 's/__PROJECT_DB_MYSQL_HOST__/$ENV{OPENSHIFT_GEAR_UUID}/g' test2016029.txt
-
-cat test2016029.txt
+tree ./
 
 exit
