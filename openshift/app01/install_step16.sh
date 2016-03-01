@@ -6,14 +6,18 @@ function010
 
 # ***** Baikal *****
 
-rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal
-rm -f ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-${baikal_version}.zip
+unlink ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal
+rm -f ${OPENSHIFT_DATA_DIR}/baikal-${baikal_version}.zip
 
-pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ > /dev/null
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/baikal-${baikal_version}.zip ./
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Baikal unzip" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 unzip baikal-${baikal_version}.zip
 touch baikal/Specific/ENABLE_INSTALL
+popd > /dev/null
+
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs > /dev/null
+ln -s ${OPENSHIFT_DATA_DIR}/baikal/html/ baikal
 popd > /dev/null
 
 # create database
@@ -31,7 +35,7 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 
 popd > /dev/null
 
-pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal/Core/Frameworks/Baikal/Model/Config > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/baikal/Core/Frameworks/Baikal/Model/Config > /dev/null
 
 # *** Starndard.php ***
 
@@ -71,7 +75,7 @@ php -l System.php
 
 popd > /dev/null
 
-pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal/Core/Resources/Db/MySQL > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/baikal/Core/Resources/Db/MySQL > /dev/null
 
 cp db.sql db.sql.$(date '+%Y%m%d')
 sed -i -e '1s|^|SET GLOBAL innodb_file_per_table=1;\nSET GLOBAL innodb_file_format=Barracuda;\n\n|' db.sql
@@ -82,13 +86,13 @@ popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/system > /dev/null
 cat << '__HEREDOC__' > baikal.php
 <?php
-touch(getenv('OPENSHIFT_DATA_DIR') . '/apache/htdocs/baikal/Specific/ENABLE_INSTALL');
+touch(getenv('OPENSHIFT_DATA_DIR') . '/baikal/Specific/ENABLE_INSTALL');
 ?>
 __HEREDOC__
 php -l baikal.php
 popd > /dev/null
 
-rm ${OPENSHIFT_DATA_DIR}/apache/htdocs/baikal-${baikal_version}.zip
+rm ${OPENSHIFT_DATA_DIR}/baikal-${baikal_version}.zip
 
 # ***** CalDavZAP *****
 
