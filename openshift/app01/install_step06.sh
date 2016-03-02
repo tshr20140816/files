@@ -292,7 +292,8 @@ CustomLog \
  "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_remoteip_log __APACHE_DIR__logs/access_remoteip_log.%w 86400 540" \
  remoteip env=!method_head_options
 CustomLog \
- "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_deflate_log __APACHE_DIR__logs/access_deflate_log.%w 86400 540" deflate
+ "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_deflate_log __APACHE_DIR__logs/access_deflate_log.%w 86400 540" \
+ deflate env=!method_head_options
 
 ErrorLog \
  "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/error_log __APACHE_DIR__logs/error_log.%w 86400 540"
