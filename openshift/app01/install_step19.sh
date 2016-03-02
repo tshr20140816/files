@@ -460,7 +460,7 @@ do
     set +x
 done
 popd > /dev/null
-pushd ${OPENSHIFT_DATA_DIR}/redmine-__REDMINE_VERSION__/log/ > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/log/ > /dev/null
 if [ -f production.log.$(date --date '2 days ago' +%Y%m%d) ]; then
     set -x
     mv -f production.log.$(date --date '2 days ago' +%Y%m%d) production.log.${weekday}
