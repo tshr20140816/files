@@ -166,7 +166,7 @@ cat << '__HEREDOC__' > config.inc.php
 
 $configs = array(
 'default_path' => 'https://__OPENSHIFT_APP_DNS__/cal/',
-'timezone' => 'Etc/GMT+09',
+'timezone' => 'Etc/GMT+9',
 'language' => 'Japanese',
 'default_view' => 'month',
 'week_start_day' => 'Sunday',
