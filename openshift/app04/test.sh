@@ -1,12 +1,12 @@
 #!/bin/bash
 
-echo "1640"
+echo "1435"
 
 # set -x
 
 cd /tmp
 
-rhc-list-ports
-tree
+dt=$(date --date '2 days ago' +%Y%m%d)
+echo ${dt}
 
 exit
