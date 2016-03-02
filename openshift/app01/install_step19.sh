@@ -728,6 +728,10 @@ rm -f tenki.ics
 wget "http://weather.livedoor.com/forecast/ical/34/90.ics" -O tenki.ics
 rm -f holidays.ics
 wget "http://ical.mac.com/ical/Japanese32Holidays.ics" -O holidays.ics
+rm -f f1.ics
+wget "https://www.f1calendar.com/download/f1-calendar_p1_p2_p3_q_gp.ics" -O f1.ics
+rm -f carp.ics
+wget https://$(cat ${OPENSHIFT_DATA_DIR}/params/schedule_server)/schedule/carp -O carp.ics
 popd > /dev/null
 __HEREDOC__
 chmod +x icalendar.sh &
