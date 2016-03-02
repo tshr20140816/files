@@ -396,9 +396,9 @@ phpinfo();
 __HEREDOC__
 
 # * htpassword *
-# more arrange please
 
-echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/apache/.htpasswd
+user_default_password=$(cat ${OPENSHIFT_DATA_DIR}/params/user_default_password)
+echo user:realm:$(echo -n user:realm:${user_default_password} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/apache/.htpasswd
 
 # * htaccess *
 
