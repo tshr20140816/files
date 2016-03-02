@@ -61,19 +61,6 @@ chmod +x memory_usage_logging.sh &
 
 # ***** cron scripts *****
 
-# # *** logrotate ***
-# 
-# cat << '__HEREDOC__' > logrotate.sh
-# #!/bin/bash
-#
-# export TZ=JST-9
-# date +%Y/%m/%d" "%H:%M:%S
-#
-# cd ${OPENSHIFT_DATA_DIR}/logrotate
-# logrotate logrotate.conf -s logrotate.status
-# __HEREDOC__
-# chmod +x logrotate.sh &
-
 # *** redmine repository check ***
 
 cat << '__HEREDOC__' > redmine_repository_check.sh
