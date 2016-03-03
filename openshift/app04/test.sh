@@ -6,13 +6,13 @@ echo "1502"
 
 cd /tmp
 
-rm -rf compiled
-
-wget http://www.kokkonen.net/tjko/src/jpegoptim-1.4.3.tar.gz
-tar xvfz jpegoptim-1.4.3.tar.gz
-ls -lang
+# wget http://www.kokkonen.net/tjko/src/jpegoptim-1.4.3.tar.gz
+# tar xvfz jpegoptim-1.4.3.tar.gz
+# ls -lang
 cd jpegoptim*
 ls -lang
 ./configure --help
-
+time ./configure --prefix=/tmp/jpegoptim
+time make
+time make install
 exit
