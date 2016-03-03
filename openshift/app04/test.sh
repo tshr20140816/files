@@ -1,12 +1,11 @@
 #!/bin/bash
 
-echo "1435"
+echo "0938"
 
 # set -x
 
 cd /tmp
 
-dt=$(date --date '2 days ago' +%Y%m%d)
-echo ${dt}
+whereis java
 
 exit
