@@ -96,6 +96,7 @@ delegate_version 9.9.13
 expect_version 5.45
 fio_version 2.6
 ipafont_version 00303
+jpegoptim 1.4.3
 libmemcached_version 1.0.18
 lynx_version 2.8.7
 memcached_php_ext_version 2.2.0
@@ -103,6 +104,7 @@ memcached_version 1.4.25
 mrtg_version 2.17.4
 murlin_version 0.2.4
 openssh_version 6.8p1
+optipng 0.7.5
 php_version 5.6.18
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.9
@@ -353,6 +355,10 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/ld.gold &
     # apcu
     wget -t1 ${mirror_server}/apcu-${apcu_version}.zip &
+    # jpegoptim
+    wget -t1 ${mirror_server}/jpegoptim-${jpegoptim_version}.tar.gz &
+    # optipng
+    wget -t1 ${mirror_server}/optipng-${optipng_version}.tar.gz &
     wait
 
     # apache
