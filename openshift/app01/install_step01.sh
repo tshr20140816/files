@@ -586,6 +586,24 @@ do
     fi
     [ -f sphinx-${sphinx_version}-release.tar.gz ] || files_exists=0
 
+    # *** jpegoptim ***
+    if [ ! -f jpegoptim-${jpegoptim_version}.tar.gz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing jpegoptim-${jpegoptim_version}.tar.gz" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) jpegoptim wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://www.kokkonen.net/tjko/src/jpegoptim-${jpegoptim_version}.tar.gz &
+    fi
+    [ -f jpegoptim-${jpegoptim_version}.tar.gz ] || files_exists=0
+
+    # *** optipng ***
+    if [ ! -f optipng-${optipng_version}.tar.gz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing optipng-${optipng_version}.tar.gz" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) optipng wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-${optipng_version}/optipng-${optipng_version}.tar.gz &
+    fi
+    [ -f optipng-${optipng_version}.tar.gz ] || files_exists=0
+
     # *** spdy ***
     if [ ! -f mod-spdy-beta_current_x86_64.rpm ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) spdy wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -759,7 +777,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing webalizer-${webalizer_version}-src.tar.bz2" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) webalizer wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tar.bz2
+        wget ftp://ftp.mrunix.net/pub/webalizer/webalizer-${webalizer_version}-src.tar.bz2 &
     fi
     [ -f webalizer-${webalizer_version}-src.tar.bz2 ] || files_exists=0
 
@@ -768,7 +786,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing wordpress-${wordpress_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) wordpress wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
+        wget http://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz &
     fi
     [ -f wordpress-${wordpress_version}.tar.gz ] || files_exists=0
 
@@ -777,7 +795,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing cacti-${cacti_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) cacti wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://www.cacti.net/downloads/cacti-${cacti_version}.tar.gz
+        wget http://www.cacti.net/downloads/cacti-${cacti_version}.tar.gz &
     fi
     [ -f cacti-${cacti_version}.tar.gz ] || files_exists=0
 
@@ -794,7 +812,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mURLin wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing mURLin-${murlin_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        wget http://downloads.sourceforge.net/project/murlin/mURLin-${murlin_version}.tar.gz
+        wget http://downloads.sourceforge.net/project/murlin/mURLin-${murlin_version}.tar.gz &
     fi
     [ -f mURLin-${murlin_version}.tar.gz ] || files_exists=0
 
@@ -803,7 +821,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing tcl${tcl_version}-src.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Tcl wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz
+        wget http://prdownloads.sourceforge.net/tcl/tcl${tcl_version}-src.tar.gz &
     fi
     [ -f tcl${tcl_version}-src.tar.gz ] || files_exists=0
 
@@ -812,7 +830,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing expect${expect_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Expect wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz
+        wget http://downloads.sourceforge.net/project/expect/Expect/${expect_version}/expect${expect_version}.tar.gz &
     fi
     [ -f expect${expect_version}.tar.gz ] || files_exists=0
 
@@ -868,7 +886,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing lynx${lynx_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Lynx wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz
+        wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz &
     fi
     [ -f lynx${lynx_version}.tar.gz ] || files_exists=0
 
@@ -893,7 +911,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing fio-${fio_version}.tar.bz2" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) fio wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://brick.kernel.dk/snaps/fio-${fio_version}.tar.bz2
+        wget http://brick.kernel.dk/snaps/fio-${fio_version}.tar.bz2 &
     fi
     [ -f fio-${fio_version}.tar.bz2 ] || files_exists=0
 
@@ -902,7 +920,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing baikal-${baikal_version}.zip" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Baikal wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://github.com/fruux/Baikal/releases/download/${baikal_version}/baikal-${baikal_version}.zip
+        wget https://github.com/fruux/Baikal/releases/download/${baikal_version}/baikal-${baikal_version}.zip &
     fi
     [ -f baikal-${baikal_version}.zip ] || files_exists=0
 
@@ -911,7 +929,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing CalDavZAP_${caldavzap_version}.zip" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) CalDavZAP wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://www.inf-it.com/CalDavZAP_${caldavzap_version}.zip
+        wget http://www.inf-it.com/CalDavZAP_${caldavzap_version}.zip &
     fi
     [ -f CalDavZAP_${caldavzap_version}.zip ] || files_exists=0
 
@@ -920,7 +938,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing phpicalendar-${phpicalendar_version}.tar.bz2" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) phpicalendar wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://downloads.sourceforge.net/project/phpicalendar/phpicalendar/phpicalendar%202.4%20RC7/phpicalendar-${phpicalendar_version}.tar.bz2
+        wget http://downloads.sourceforge.net/project/phpicalendar/phpicalendar/phpicalendar%202.4%20RC7/phpicalendar-${phpicalendar_version}.tar.bz2 &
     fi
     [ -f phpicalendar-${phpicalendar_version}.tar.bz2 ] || files_exists=0
 
@@ -929,7 +947,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing axel-${axel_version}.tar.bz2" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) axel wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://downloads.sourceforge.net/project/axel2/axel-${axel_version}/axel-${axel_version}.tar.bz2
+        wget http://downloads.sourceforge.net/project/axel2/axel-${axel_version}/axel-${axel_version}.tar.bz2 &
     fi
     [ -f axel-${axel_version}.tar.bz2 ] || files_exists=0
 
@@ -938,7 +956,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing ccache-${ccache_version}.tar.xz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
+        wget http://samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz &
     fi
     [ -f ccache-${ccache_version}.tar.xz ] || files_exists=0
 
@@ -956,7 +974,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing distcc-${distcc_version}.tar.bz2" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
+        wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2 &
     fi
     [ -f distcc-${distcc_version}.tar.bz2 ] || files_exists=0
 
@@ -984,7 +1002,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing cadaver-${cadaver_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) cadaver wget" >> ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz
+        wget http://www.webdav.org/cadaver/cadaver-${cadaver_version}.tar.gz &
     fi
     [ -f cadaver-${cadaver_version}.tar.gz ] || files_exists=0
 
@@ -993,7 +1011,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing xz-${xz_version}.tar.xz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) xz wget" >> ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://tukaani.org/xz/xz-${xz_version}.tar.xz
+        wget http://tukaani.org/xz/xz-${xz_version}.tar.xz &
     fi
     [ -f xz-${xz_version}.tar.xz ] || files_exists=0
 
@@ -1002,7 +1020,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing apcu-${apcu_version}.zip" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) apcu wget" >> ${OPENSHIFT_LOG_DIR}/install.log
-        wget -O apcu-${apcu_version}.zip https://github.com/krakjoe/apcu/archive/v${apcu_version}.zip
+        wget -O apcu-${apcu_version}.zip https://github.com/krakjoe/apcu/archive/v${apcu_version}.zip &
     fi
     [ -f apcu-${apcu_version}.zip ] || files_exists=0
 
