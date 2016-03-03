@@ -96,14 +96,14 @@ delegate_version 9.9.13
 expect_version 5.45
 fio_version 2.6
 ipafont_version 00303
-jpegoptim 1.4.3
+jpegoptim_version 1.4.3
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
 memcached_version 1.4.25
 mrtg_version 2.17.4
 murlin_version 0.2.4
 openssh_version 6.8p1
-optipng 0.7.5
+optipng_version 0.7.5
 php_version 5.6.18
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.9
