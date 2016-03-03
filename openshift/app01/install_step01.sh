@@ -557,6 +557,13 @@ do
     # fi
     # [ -f super_pi-jp.tar.gz ] || files_exists=0
 
+    # *** Closure Compiler ***
+    if [ ! -f compiler-latest.zip ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) Closure Compiler wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://closure-compiler.googlecode.com/files/compiler-latest.zip &
+    fi
+    [ -f compiler-latest.zip ] || files_exists=0
+
     # *** Tiny Tiny RSS ***
     if [ ! -f ttrss_archive.zip ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) ttrss wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -957,13 +964,6 @@ do
         wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
     fi
     [ -f parallel-latest.tar.bz2 ] || files_exists=0
-
-    # *** Closure Compiler ***
-    if [ ! -f compiler-latest.zip ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) Closure Compiler wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://closure-compiler.googlecode.com/files/compiler-latest.zip
-    fi
-    [ -f compiler-latest.zip ] || files_exists=0
 
     # *** cadaver ***
     if [ ! -f cadaver-${cadaver_version}.tar.gz ]; then
