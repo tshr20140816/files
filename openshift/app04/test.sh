@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1545"
+echo "1549"
 
 # set -x
 
@@ -16,10 +16,10 @@ cd /tmp
 # time make
 # time make install
 
-wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.5/optipng-0.7.5.tar.gz
-tar xvfz optipng-0.7.5.tar.gz
+# wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.5/optipng-0.7.5.tar.gz
+# tar xvfz optipng-0.7.5.tar.gz
 ls -lang
-cd optipng
+cd optipng*
 ./configure --help
 time ./configure --prefix=/tmp/optipng
 time make
