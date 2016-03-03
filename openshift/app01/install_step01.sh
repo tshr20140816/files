@@ -98,7 +98,6 @@ fio_version 2.6
 ipafont_version 00303
 jpegoptim 1.4.3
 libmemcached_version 1.0.18
-lynx_version 2.8.7
 memcached_php_ext_version 2.2.0
 memcached_version 1.4.25
 mrtg_version 2.17.4
@@ -125,6 +124,7 @@ __HEREDOC__
 # unix_bench_version 5.1.3
 # sysbench_version 0.4.12.5
 # c-ares_version 1.10.0
+# lynx_version 2.8.7
 
 export TZ=JST-9
 
@@ -331,8 +331,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/expect${expect_version}.tar.gz &
     # # logrotate
     # wget -t1 ${mirror_server}/logrotate-${logrotate_version}.tar.gz &
-    # lynx
-    wget -t1 ${mirror_server}/lynx${lynx_version}.tar.gz &
+    # # lynx
+    # wget -t1 ${mirror_server}/lynx${lynx_version}.tar.gz &
     # memcached
     wget -t1 ${mirror_server}/memcached-${memcached_version}.tar.gz &
     # memcached(php extension)
@@ -881,14 +881,14 @@ do
     # fi
     # [ -f logrotate-${logrotate_version}.tar.gz ] || files_exists=0
 
-    # *** Lynx ***
-    if [ ! -f lynx${lynx_version}.tar.gz ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing lynx${lynx_version}.tar.gz" \
-         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) Lynx wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz &
-    fi
-    [ -f lynx${lynx_version}.tar.gz ] || files_exists=0
+    # # *** Lynx ***
+    # if [ ! -f lynx${lynx_version}.tar.gz ]; then
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing lynx${lynx_version}.tar.gz" \
+    #      | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) Lynx wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget http://lynx.isc.org/lynx${lynx_version}/lynx${lynx_version}.tar.gz &
+    # fi
+    # [ -f lynx${lynx_version}.tar.gz ] || files_exists=0
 
     # # *** UnixBench ***
     # if [ ! -f UnixBench${unix_bench_version}.tgz ]; then
