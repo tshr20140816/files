@@ -65,6 +65,8 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/compiler-latest.zip ./
 unzip compiler-latest.zip
 rm -f compiler-latest.zip
+cp ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh ./
+chmod +x ./closure_compiler.sh
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
