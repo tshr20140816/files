@@ -323,7 +323,7 @@ uptime >> ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt
 lsof -i -n -P >> ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt
 cp -f ${OPENSHIFT_TMP_DIR}/lsof_i_n_P.txt lsof_i_n_P.txt
 echo $(date +%Y/%m/%d" "%H:%M:%S) > ${OPENSHIFT_TMP_DIR}/listen_port.txt
-rhc-list-ports >> > ${OPENSHIFT_TMP_DIR}/listen_port.txt
+rhc-list-ports >> ${OPENSHIFT_TMP_DIR}/listen_port.txt
 cp -f ${OPENSHIFT_TMP_DIR}/listen_port.txt listen_port.txt
 __HEREDOC__
 chmod +x process_status.sh &
