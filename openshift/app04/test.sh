@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1101"
+echo "1119"
 
 # set -x
 
@@ -27,11 +27,7 @@ if [ "$(cat ./result.txt)" = "0 error(s), 0 warning(s)" ]; then
     echo "MATCH"
 fi
 
-for file_name in $(find ./ -name "*.js" -type f -print0)
-do
-    echo ${file_name}
-    echo "AAA"
-done
+find ./ -name "*.js" -type f -print0 | xargs -0i echo {}
 
 ls -lang
 
