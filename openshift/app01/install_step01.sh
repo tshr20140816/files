@@ -958,6 +958,13 @@ do
     fi
     [ -f parallel-latest.tar.bz2 ] || files_exists=0
 
+    # *** Closure Compiler ***
+    if [ ! -f compiler-latest.zip ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) Closure Compiler wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://closure-compiler.googlecode.com/files/compiler-latest.zip
+    fi
+    [ -f compiler-latest.zip ] || files_exists=0
+
     # *** cadaver ***
     if [ ! -f cadaver-${cadaver_version}.tar.gz ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing cadaver-${cadaver_version}.tar.gz" \
