@@ -620,6 +620,14 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) ical_multi.sh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/ical_multi.sh &
     fi
+    [ -f ical_multi.sh ] || files_exists=0
+
+    # *** closure_compiler ***
+    if [ ! -f closure_compiler.sh ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) closure_compiler.sh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/closure_compiler.sh &
+    fi
+    [ -f closure_compiler.sh ] || files_exists=0
 
     # *** wordpress salt ***
     if [ ! -f salt.txt ]; then
