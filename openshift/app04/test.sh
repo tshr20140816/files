@@ -22,6 +22,4 @@ java -jar compiler.jar --js jquery-ui-1.11.4.custom.js --js_output_file jquery-u
 
 ls -lang
 
-cat jquery-ui-1.11.4.custom2.js
-
 exit
