@@ -31,7 +31,7 @@ if [ "$(cat ./result.txt)" = "0 error(s), 0 warning(s)" ]; then
     echo "MATCH"
 fi
 
-find ./ -name "*.js" -type f -print0 | xargs -n1 -0i echo {}
+find ./ -name "*.js" -type f -print0 | xargs -n 2 -0i echo {}
 
 ls -lang
 
