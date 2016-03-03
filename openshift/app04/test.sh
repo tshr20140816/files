@@ -24,7 +24,10 @@ java -jar compiler.jar --help
 time java -jar compiler.jar --summary_detail_level 3 --js spectrum.js --js_output_file spectrum2.js > result.txt
 wc -l result.txt
 
-find ./ -name "*.js" -type f -print0
+for file_name in $(find ./ -name "*.js" -type f -print0)
+do
+    echo ${file_name}
+done
 
 ls -lang
 
