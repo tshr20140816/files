@@ -591,7 +591,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing jpegoptim-${jpegoptim_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) jpegoptim wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://www.kokkonen.net/tjko/src/jpegoptim-${jpegoptim_version}.tar.gz &
+        wget http://www.kokkonen.net/tjko/src/jpegoptim-${jpegoptim_version}.tar.gz
     fi
     [ -f jpegoptim-${jpegoptim_version}.tar.gz ] || files_exists=0
 
@@ -600,7 +600,7 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing optipng-${optipng_version}.tar.gz" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) optipng wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-${optipng_version}/optipng-${optipng_version}.tar.gz &
+        wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-${optipng_version}/optipng-${optipng_version}.tar.gz
     fi
     [ -f optipng-${optipng_version}.tar.gz ] || files_exists=0
 
