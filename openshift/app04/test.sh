@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1032"
+echo "1033"
 
 set -x
 
@@ -23,7 +23,7 @@ java -jar compiler.jar --help
 time java -jar compiler.jar --summary_detail_level 3 --js jquery-ui-1.11.4.custom.js --js_output_file jquery-ui-1.11.4.custom2.js
 time java -jar compiler.jar --summary_detail_level 3 --js spectrum.js --js_output_file spectrum2.js
 
-find ./ -name "*.js" -mindepth 2 -type f -print0
+find ./ -name "*.js" -type f -print0
 
 ls -lang
 
