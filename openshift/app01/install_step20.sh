@@ -42,7 +42,7 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./ -name "*.js" -mindepth 2 -type f -print0 \
- | xargs -0i ${OPENSHIFT_TMP_DIR}/closure_compiler.sh {}
+ | xargs -0i -n 2 ${OPENSHIFT_TMP_DIR}/closure_compiler.sh {}
 popd > /dev/null
 
 rm -f ${OPENSHIFT_TMP_DIR}/compiler.jar
