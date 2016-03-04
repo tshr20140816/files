@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "1010"
+echo "1033"
 
-# set -x
+set -x
 
 cd /tmp
 
