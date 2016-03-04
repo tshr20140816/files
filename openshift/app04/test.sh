@@ -32,7 +32,7 @@ do
     # time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./result.js
     # wc -c < ${file_name}
     # wc -c < ./result.js
-    ls -lang ${file_name}
+    ls -lang ${file_name} >> ${OPENSHIFT_LOG_DIR}/test.log
 done
 
 # time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/prefs.js --js_output_file ./prefs.js &
