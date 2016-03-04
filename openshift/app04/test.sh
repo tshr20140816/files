@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1414"
+echo "1431"
 
 set -x
 
@@ -27,12 +27,22 @@ cd /tmp
 
 # unzip compiler-latest.zip
 
+counter=1
 for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print)
 do
-    # time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./result.js
-    # wc -c < ${file_name}
-    # wc -c < ./result.js
-    ls -lang ${file_name} >> ${OPENSHIFT_LOG_DIR}/test.log
+    echo ${counter}
+    time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./$(basename "${file_name}").${RANDOM} &
+    counter=$((${counter}+1))
+    while :
+    do
+        usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
+        echo ${usage_in_bytes}
+        if [ ${usage_in_bytes} > $((300 * (10**6))) ]; then
+            sleep 5s
+        else
+            break
+        fi
+    done
 done
 
 # time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/prefs.js --js_output_file ./prefs.js &
