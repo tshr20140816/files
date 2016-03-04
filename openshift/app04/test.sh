@@ -13,44 +13,28 @@ rm -f *.js*
 
 ls -lang
 
-# wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip
-# wget http://www.kokkonen.net/tjko/src/jpegoptim-1.4.3.tar.gz
-# wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.5/optipng-0.7.5.tar.gz
-rm -f compiler-latest.zip*
-# wget http://dl.google.com/closure-compiler/compiler-latest.zip
+optipng_version="0.7.5"
+rm -f  optipng-${optipng_version}.tar.gz
+rm -rf optipng*
+wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-${optipng_version}/optipng-${optipng_version}.tar.gz
 
-# cp ./ttrss_archive.zip ${OPENSHIFT_DATA_DIR}/
+tar xfz optipng-${optipng_version}.tar.gz
 
-# cd ${OPENSHIFT_DATA_DIR}
-# unzip ttrss_archive.zip
-
-# ls -lang
+cd optipng*
+./configure --prefix=/tmp/optipng
+time make -j4
+make install
 
 cd /tmp
 
-# unzip compiler-latest.zip
+rm -rf optipng-*
+rm -f  optipng-${optipng_version}.tar.gz
 
-counter=1
-for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print)
-do
-    echo "$(date +%Y/%m/%d" "%H:%M:%S)"
-    echo ${counter}
-    time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./$(basename "${file_name}").${RANDOM} &
-    counter=$((${counter}+1))
-    while :
-    do
-        usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
-        echo ${usage_in_bytes}
-        if [ ${usage_in_bytes} -gt $((100 * (10**6))) ]; then
-            sleep 2s
-        else
-            break
-        fi
-    done
-done
+find ${OPENSHIFT_DATA_DIR} -name "*.png" -mindepth 2 -type f -print | tee -a ./png_compress_target_list.txt
 
-# time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/prefs.js --js_output_file ./prefs.js &
+ls -lang optipng
+ls -lang optipng/bin
 
-wait
+tree optipng
 
 exit
