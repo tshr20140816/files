@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1443"
+echo "1445"
 
 set -x
 
@@ -32,6 +32,7 @@ cd /tmp
 counter=1
 for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print)
 do
+    echo "$(date +%Y/%m/%d" "%H:%M:%S)"
     echo ${counter}
     time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./$(basename "${file_name}").${RANDOM} &
     counter=$((${counter}+1))
