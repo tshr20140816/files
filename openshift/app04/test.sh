@@ -32,7 +32,7 @@ cd /tmp
 for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.png" -type f -print)
 do
     cp -f ${file_name} ./
-    time ./optipng/bin/optipng -backup $(basename ${file_name})
+    time ./optipng/bin/optipng -backup -o7 $(basename ${file_name})
 done
 
 ls -lang
