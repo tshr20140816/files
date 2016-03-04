@@ -336,6 +336,8 @@ cat << '__HEREDOC__' > closure_compiler.sh
 export TZ=JST-9
 date +%Y/%m/%d" "%H:%M:%S
 
+suffix=$(date '+%Y%m%d')
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 if [ ! -f compiler.jar ]; then
     rm -f compiler-latest.zip
@@ -360,7 +362,7 @@ if [ $(wc -l ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | awk '{p
         size_original=$(wc -c < ${file_name})
         size_compiled=$(wc -c < ${compiled_file})
         echo "CHANGED ${size_original} ${size_compiled} ${file_name}"
-        cp -f ${file_name} ${file_name}.$(date '+%Y%m%d')
+        cp -f ${file_name} ${file_name}.${suffix}
         mv -f ${compiled_file} ${file_name}
     else
         echo "NOT CHANGED ${file_name}"
@@ -368,8 +370,9 @@ if [ $(wc -l ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | awk '{p
     fi
     rm -f ${result_file}
     rm -f ${compiled_file}
-    sed -e "1d" ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt > ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt
-    wc -l javascript_compress_target_list.txt
+    sed -e "1d" ./javascript_compress_target_list.txt ./javascript_compress_target_list.txt.${suffix}
+    cp -f ./javascript_compress_target_list.txt.${suffix} ./javascript_compress_target_list.txt
+    wc -l ./javascript_compress_target_list.txt
     popd > /dev/null
 fi
 popd > /dev/null
