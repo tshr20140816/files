@@ -328,6 +328,54 @@ cp -f ${OPENSHIFT_TMP_DIR}/listen_port.txt listen_port.txt
 __HEREDOC__
 chmod +x process_status.sh &
 
+# *** Closure Compiler ***
+
+cat << '__HEREDOC__' > closure_compiler.sh
+#!/bin/bash
+
+export TZ=JST-9
+date +%Y/%m/%d" "%H:%M:%S
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+if [ ! -f compiler.jar ]; then
+    rm -f compiler-latest.zip
+    wget http://dl.google.com/closure-compiler/compiler-latest.zip
+    unzip compiler-latest.zip
+    rm -f compiler-latest.zip
+fi
+
+if [ $(wc -l ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt) -ne 0 ]; then
+    file_name=$(head -n 1 ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt)
+    result_file=${OPENSHIFT_TMP_DIR}/$(basename ${file_name}).result.txt
+    compiled_file=${OPENSHIFT_TMP_DIR}/$(basename ${file_name})
+    rm -f ${result_file}
+    rm -f ${compiled_file}
+    pushd ${OPENSHIFT_DATA_DIR}
+    time java -jar ${OPENSHIFT_TMP_DIR}/compiler.jar \
+     --summary_detail_level 3 \
+     --js ${file_name} \
+     --js_output_file ${compiled_file} \
+     2> ${result_file}
+    if [ "$(cat ${result_file})" = "0 error(s), 0 warning(s)" ]; then
+        size_original=$(wc -c < ${file_name})
+        size_compiled=$(wc -c < ${compiled_file})
+        echo "CHANGED ${size_original} ${size_compiled} ${file_name}"
+        cp -f ${file_name} ${file_name}.$(date '+%Y%m%d')
+        mv -f ${compiled_file} ${file_name}
+    else
+        echo "NOT CHANGED ${file_name}"
+        cat ${result_file}
+    fi
+    rm -f ${result_file}
+    rm -f ${compiled_file}
+    sed -e "1d" ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt
+    wc -l javascript_compress_target_list.txt
+    popd > /dev/null
+fi
+popd > /dev/null
+__HEREDOC__
+chmod +x closure_compiler.sh &
+
 # *** cacti polling ***
 
 cat << '__HEREDOC__' > cacti_poller.sh
@@ -850,8 +898,7 @@ do
     fi
 done
 
-# for shell_name in another_server_check beacon memcached_status mrtg passenger_status process_status keep_process
-for shell_name in beacon memcached_status mrtg passenger_status process_status keep_process
+for shell_name in beacon memcached_status mrtg passenger_status process_status keep_process closure_compiler
 do
     # function030 "cron=minutely&shell_name=${shell_name}"
     touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
