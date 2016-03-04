@@ -27,11 +27,12 @@ cd /tmp
 
 # unzip compiler-latest.zip
 
-for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print)
+for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.jpg" -type f -print)
 do
-    time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./result.js
-    wc -c < ${file_name}
-    wc -c < ./result.js
+    # time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./result.js
+    # wc -c < ${file_name}
+    # wc -c < ./result.js
+    ls -lang ${file_name}
 done
 
 exit
