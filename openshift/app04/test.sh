@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "1612"
+echo "1613"
 
-# set -x
+set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
@@ -24,7 +24,8 @@ ls -lang
 ./optipng/bin/optipng --help
 
 cp -f $(head -n 1 png_compress_target_list.txt) ./$(basename $(head -n 1 png_compress_target_list.txt))
-time ./optipng/bin/optipng ./$(basename $(head -n 1 png_compress_target_list.txt)
+time ./optipng/bin/optipng ./$(basename $(head -n 1 png_compress_target_list.txt))
+# time ./optipng/bin/optipng -o7 ./$(basename $(head -n 1 png_compress_target_list.txt))
 
 ls -lang
 
