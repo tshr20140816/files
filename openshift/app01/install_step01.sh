@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.03.04 php_version 5.6.18 → 5.6.19
 # 2016.02.29 baikal_version 0.2.7 → 0.3.5
 # 2016.02.26 cacti_version 0.8.8f → 0.8.8g
 # 2016.02.05 php_version 5.6.17 → 5.6.18
@@ -104,7 +105,7 @@ mrtg_version 2.17.4
 murlin_version 0.2.4
 openssh_version 6.8p1
 optipng_version 0.7.5
-php_version 5.6.18
+php_version 5.6.19
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.9
 ruby_version 2.1.8
