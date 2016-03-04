@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1406"
+echo "1411"
 
 set -x
 
@@ -27,19 +27,15 @@ cd /tmp
 
 # unzip compiler-latest.zip
 
-# for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.jpg" -type f -print)
-# do
+for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print)
+do
     # time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./result.js
     # wc -c < ${file_name}
     # wc -c < ./result.js
-    # ls -lang ${file_name}
-# done
+    ls -lang ${file_name}
+done
 
-time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/prefs.js --js_output_file ./prefs.js &
-time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/viewfeed.js --js_output_file ./viewfeed.js &
-time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/lib/CheckBoxTree.js --js_output_file ./CheckBoxTree.js &
-time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/lib/dijit/BackgroundIframe.js --js_output_file ./BackgroundIframe.js &
-time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/lib/dijit/Calendar.js --js_output_file ./Calendar.js &
+# time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/prefs.js --js_output_file ./prefs.js &
 
 wait
 
