@@ -30,6 +30,23 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) shell syntax error count : $(wc -l ${OPENSHIF
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 mv ${OPENSHIFT_LOG_DIR}/shell_syntax_error.log ${OPENSHIFT_LOG_DIR}/install/
 
+# ***** Closure Compiler *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/compiler-latest.zip ./
+unzip compiler-latest.zip
+rm -f compiler-latest.zip
+cp ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh ./
+chmod +x ./closure_compiler.sh
+popd > /dev/null
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+find ./ -name "*.js" -mindepth 2 -type f -print0 \
+ | xargs -0i ${OPENSHIFT_TMP_DIR}/closure_compiler.sh {}
+popd > /dev/null
+
+rm -f ${OPENSHIFT_TMP_DIR}/compiler.jar
+
 # ***** delete files *****
 
 rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
@@ -58,23 +75,6 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) strip target count : $(wc -l ${OPENSHIFT_TMP_
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
 popd > /dev/null
-
-# ***** Closure Compiler *****
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/compiler-latest.zip ./
-unzip compiler-latest.zip
-rm -f compiler-latest.zip
-cp ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh ./
-chmod +x ./closure_compiler.sh
-popd > /dev/null
-
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ./ -name "*.js" -mindepth 2 -type f -print0 \
- | xargs -0i ${OPENSHIFT_TMP_DIR}/closure_compiler.sh {}
-popd > /dev/null
-
-rm -f ${OPENSHIFT_TMP_DIR}/compiler.jar
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
