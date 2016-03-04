@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1313"
+echo "1402"
 
 set -x
 
@@ -27,12 +27,17 @@ cd /tmp
 
 # unzip compiler-latest.zip
 
-for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.jpg" -type f -print)
-do
+# for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.jpg" -type f -print)
+# do
     # time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./result.js
     # wc -c < ${file_name}
     # wc -c < ./result.js
-    ls -lang ${file_name}
-done
+    # ls -lang ${file_name}
+# done
+
+time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/prefs.js --js_output_file ./prefs.js &
+time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/viewfeed.js --js_output_file ./viewfeed.js &
+
+wait
 
 exit
