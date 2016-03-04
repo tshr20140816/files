@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "1449"
+echo "1511"
 
-set -x
+# set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
