@@ -35,7 +35,7 @@ cd /tmp
 #     time ./optipng/bin/optipng -backup -o7 $(basename ${file_name})
 # done
 
-find ${OPENSHIFT_DATA_DIR} -name "*.png" -type f -print0 | xargs -0i -n5 cp -f {} ./ && ./optipng/bin/optipng -clobber -backup -o7 $(basename {})
+find ${OPENSHIFT_DATA_DIR} -name "*.png" -type f -print0 | xargs -0i -n20 ./optipng/bin/optipng -clobber -backup -o7 {}
 
 ls -lang
 
