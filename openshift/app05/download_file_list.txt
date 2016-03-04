@@ -29,7 +29,7 @@ openssh-6.6p1.tar.gz http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh
 openssh-6.3p1.tar.gz http://ftp.jaist.ac.jp/pub/OpenBSD/OpenSSH/portable/openssh-6.3p1.tar.gz
 openssh-6.6p1-hpnssh14v5.diff.gz http://downloads.sourceforge.net/project/hpnssh/HPN-SSH%2014.5%206.6p1/openssh-6.6p1-hpnssh14v5.diff.gz
 optipng-0.7.5.tar.gz http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.5/optipng-0.7.5.tar.gz
-php-5.6.18.tar.xz http://jp2.php.net/get/php-5.6.18.tar.xz/from/this/mirror
+php-5.6.19.tar.xz http://jp2.php.net/get/php-5.6.19.tar.xz/from/this/mirror
 phpicalendar-2.4_20100615.tar.bz2 http://downloads.sourceforge.net/project/phpicalendar/phpicalendar/phpicalendar%202.4%20RC7/phpicalendar-2.4_20100615.tar.bz2
 phpMyAdmin-4.4.15.4-all-languages.tar.xz https://files.phpmyadmin.net/phpMyAdmin/4.4.15.4/phpMyAdmin-4.4.15.4-all-languages.tar.xz
 phpMyAdmin-4.5.5-all-languages.tar.xz https://files.phpmyadmin.net/phpMyAdmin/4.5.5/phpMyAdmin-4.5.5-all-languages.tar.xz
