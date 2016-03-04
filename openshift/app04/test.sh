@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1616"
+echo "1625"
 
 set -x
 
@@ -23,9 +23,17 @@ ls -lang
 
 ./optipng/bin/optipng --help
 
-cp -f $(head -n 1 png_compress_target_list.txt) ./$(basename $(head -n 1 png_compress_target_list.txt))
+# cp -f $(head -n 1 png_compress_target_list.txt) ./$(basename $(head -n 1 png_compress_target_list.txt))
 # time ./optipng/bin/optipng ./$(basename $(head -n 1 png_compress_target_list.txt))
-time ./optipng/bin/optipng -backup -o7 ./$(basename $(head -n 1 png_compress_target_list.txt))
+# time ./optipng/bin/optipng -backup -o7 ./$(basename $(head -n 1 png_compress_target_list.txt))
+
+cd /tmp
+
+for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.png" -type f -print)
+do
+    cp -f ${file_name} ./
+    time ./optipng/bin/optipng -backup $(basename ${file_name})
+done
 
 ls -lang
 
