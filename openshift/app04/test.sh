@@ -1,12 +1,14 @@
 #!/bin/bash
 
-echo "1441"
+echo "1443"
 
 set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log
 
 cd /tmp
+
+rm -f *.js*
 
 ls -lang
 
