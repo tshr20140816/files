@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1511"
+echo "1603"
 
 # set -x
 
@@ -31,6 +31,8 @@ rm -rf optipng-*
 rm -f  optipng-${optipng_version}.tar.gz
 
 find ${OPENSHIFT_DATA_DIR} -name "*.png" -mindepth 2 -type f -print | tee -a ./png_compress_target_list.txt
+
+cat ./png_compress_target_list.txt
 
 ls -lang optipng
 ls -lang optipng/bin
