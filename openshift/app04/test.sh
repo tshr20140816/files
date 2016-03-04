@@ -5,6 +5,7 @@ echo "1449"
 set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log
+rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
 
 cd /tmp
 
