@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1625"
+echo "1638"
 
 set -x
 
@@ -29,11 +29,13 @@ ls -lang
 
 cd /tmp
 
-for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.png" -type f -print)
-do
-    cp -f ${file_name} ./
-    time ./optipng/bin/optipng -backup -o7 $(basename ${file_name})
-done
+# for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.png" -type f -print)
+# do
+#     cp -f ${file_name} ./
+#     time ./optipng/bin/optipng -backup -o7 $(basename ${file_name})
+# done
+
+find ${OPENSHIFT_DATA_DIR} -name "*.png" -type f -print0 | xargs -0i -n5 cp -f {} ./ && ./optipng/bin/optipng -clobber -backup -o7 $(basename {})
 
 ls -lang
 
