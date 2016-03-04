@@ -355,6 +355,7 @@ if [ $(wc -l ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | awk '{p
     pushd ${OPENSHIFT_DATA_DIR}
     time java -jar ${OPENSHIFT_TMP_DIR}/compiler.jar \
      --summary_detail_level 3 \
+     --compilation_level SIMPLE_OPTIMIZATIONS
      --js ${file_name} \
      --js_output_file ${compiled_file} \
      2> ${result_file}
