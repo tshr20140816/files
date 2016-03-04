@@ -6,20 +6,25 @@ echo "1010"
 
 cd /tmp
 
-rm -rf jpegoptim
-rm -rf jpegoptim-1.4.3
-rm -rf optipng
-rm -rf optipng-0.7.5
-rm -f result.txt
-rm -f test2016029.txt
+wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip
+# wget http://www.kokkonen.net/tjko/src/jpegoptim-1.4.3.tar.gz
+# wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.5/optipng-0.7.5.tar.gz
+wget http://closure-compiler.googlecode.com/files/compiler-latest.zip
 
-ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log
+cp ./ttrss_archive.zip ${OPENSHIFT_DATA_DIR}/
 
 cd ${OPENSHIFT_DATA_DIR}
+unzip ttrss_archive.zip
 
-rm -rf sphinx
+ls -lang
 
-ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log
+cd /tmp
 
+unzip compiler-latest.zip
+
+for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.js" -print)
+do
+    time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./result.js
+done
 
 exit
