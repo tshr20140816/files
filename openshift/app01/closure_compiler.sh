@@ -13,6 +13,7 @@ time java -jar ./compiler.jar \
 
 if [ "$(cat ${result_file})" = "0 error(s), 0 warning(s)" ]; then
     echo "CHANGED ${1}"
+    cp -f ${1} ${1}.$(date '+%Y%m%d')
     mv -f ./$(basename ${1}) ${1}
 else
     echo "NOT CHANGED $(head -n1 ${result_file}) ${1}"
