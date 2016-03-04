@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1139"
+echo "1141"
 
 set -x
 
@@ -14,7 +14,7 @@ ls -lang
 # wget http://www.kokkonen.net/tjko/src/jpegoptim-1.4.3.tar.gz
 # wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-0.7.5/optipng-0.7.5.tar.gz
 rm -f compiler-latest.zip*
-wget http://dl.google.com/closure-compiler/compiler-latest.zip
+# wget http://dl.google.com/closure-compiler/compiler-latest.zip
 
 # cp ./ttrss_archive.zip ${OPENSHIFT_DATA_DIR}/
 
@@ -25,7 +25,7 @@ wget http://dl.google.com/closure-compiler/compiler-latest.zip
 
 cd /tmp
 
-unzip compiler-latest.zip
+# unzip compiler-latest.zip
 
 for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print)
 do
