@@ -344,7 +344,7 @@ if [ ! -f compiler.jar ]; then
     rm -f compiler-latest.zip
 fi
 
-if [ $(wc -l ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt) -ne 0 ]; then
+if [ $(wc -l ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | awk '{print $1}') -ne 0 ]; then
     file_name=$(head -n 1 ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt)
     result_file=${OPENSHIFT_TMP_DIR}/$(basename ${file_name}).result.txt
     compiled_file=${OPENSHIFT_TMP_DIR}/$(basename ${file_name})
