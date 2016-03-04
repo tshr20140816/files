@@ -566,7 +566,7 @@ do
     # *** Closure Compiler ***
     if [ ! -f compiler-latest.zip ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Closure Compiler wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://closure-compiler.googlecode.com/files/compiler-latest.zip &
+        wget http://dl.google.com/closure-compiler/compiler-latest.zip &
     fi
     [ -f compiler-latest.zip ] || files_exists=0
 
