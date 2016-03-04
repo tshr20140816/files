@@ -368,7 +368,7 @@ if [ $(wc -l ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | awk '{p
     fi
     rm -f ${result_file}
     rm -f ${compiled_file}
-    sed -e "1d" ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt
+    sed -e "1d" ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt > ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt
     wc -l javascript_compress_target_list.txt
     popd > /dev/null
 fi
