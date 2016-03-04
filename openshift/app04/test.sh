@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1402"
+echo "1406"
 
 set -x
 
@@ -37,6 +37,9 @@ cd /tmp
 
 time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/prefs.js --js_output_file ./prefs.js &
 time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/js/viewfeed.js --js_output_file ./viewfeed.js &
+time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/lib/CheckBoxTree.js --js_output_file ./CheckBoxTree.js &
+time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/lib/dijit/BackgroundIframe.js --js_output_file ./BackgroundIframe.js &
+time java -jar ./compiler.jar --summary_detail_level 3 --js ${OPENSHIFT_DATA_DIR}/tt-rss.git/lib/dijit/Calendar.js --js_output_file ./Calendar.js &
 
 wait
 
