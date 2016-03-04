@@ -6,10 +6,10 @@ echo "0957"
 
 cd /tmp
 
-ls -lang
+ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log
 
 cd ${OPENSHIFT_DATA_DIR}
 
-ls -lang
+ls -lang >> ${OPENSHIFT_LOG_DIR}/test.log
 
 exit
