@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1048"
+echo "1139"
 
 set -x
 
@@ -29,9 +29,9 @@ unzip compiler-latest.zip
 
 for file_name in $(find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print)
 do
-    time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./result.js >${OPENSHIFT_LOG_DIR}/test.log 2>&1
-    wc -c < ${file_name} >${OPENSHIFT_LOG_DIR}/test.log 2>&1
-    wc -c < ./result.js >${OPENSHIFT_LOG_DIR}/test.log 2>&1
+    time java -jar ./compiler.jar --summary_detail_level 3 --js ${file_name} --js_output_file ./result.js >>${OPENSHIFT_LOG_DIR}/test.log 2>&1
+    wc -c < ${file_name} >>${OPENSHIFT_LOG_DIR}/test.log 2>&1
+    wc -c < ./result.js >>${OPENSHIFT_LOG_DIR}/test.log 2>&1
 done
 
 exit
