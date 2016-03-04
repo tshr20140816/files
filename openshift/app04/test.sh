@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1431"
+echo "1441"
 
 set -x
 
@@ -37,7 +37,7 @@ do
     do
         usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
         echo ${usage_in_bytes}
-        if [ ${usage_in_bytes} > $((300 * (10**6))) ]; then
+        if [ ${usage_in_bytes} -gt $((300 * (10**6))) ]; then
             sleep 5s
         else
             break
