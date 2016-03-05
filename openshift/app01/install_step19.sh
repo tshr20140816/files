@@ -906,7 +906,7 @@ do
     fi
 done
 
-for shell_name in beacon memcached_status mrtg passenger_status process_status keep_process closure_compiler
+for shell_name in beacon memcached_status mrtg passenger_status process_status keep_process
 do
     # function030 "cron=minutely&shell_name=${shell_name}"
     touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
