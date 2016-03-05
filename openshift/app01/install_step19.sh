@@ -362,9 +362,13 @@ if [ $(wc -l ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | awk '{p
     if [ "$(cat ${result_file})" = "0 error(s), 0 warning(s)" ]; then
         size_original=$(wc -c < ${file_name})
         size_compiled=$(wc -c < ${compiled_file})
-        echo "CHANGED ${size_original} ${size_compiled} ${file_name}"
-        cp -f ${file_name} ${file_name}.${suffix}
-        mv -f ${compiled_file} ${file_name}
+        if [ ${size_original} -gt ${size_compiled} ]; then
+            echo "CHANGED ${size_original} ${size_compiled} ${file_name}"
+            cp -f ${file_name} ${file_name}.${suffix}
+            mv -f ${compiled_file} ${file_name}
+        else
+            echo "NOT CHANGED SIZE UP ${size_original} ${size_compiled} ${file_name}"
+        fi
     else
         echo "NOT CHANGED ${file_name}"
         cat ${result_file}
