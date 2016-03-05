@@ -14,6 +14,7 @@ while :
 do
     if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
         sleep 10s
+        # ***** Log Compress *****
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         # url="${web_beacon_server}dummy"
         for file_name in install nohup nohup_error distcc
@@ -34,6 +35,7 @@ do
         done
         rm -f dummy*
         popd > /dev/null
+        # ****** Closure Compiler *****
         pushd ${OPENSHIFT_TMP_DIR} > /dev/null
         suffix=$(date '+%Y%m%d')
         while read target_file
