@@ -15,17 +15,17 @@ do
     if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
         sleep 10s
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-        url="${web_beacon_server}dummy"
+        # url="${web_beacon_server}dummy"
         for file_name in install nohup nohup_error distcc
         do
-            i=0
-            while read LINE
-            do
-                i=$((i+1))
-                log_String=$(echo ${LINE} | tr " " "_" | tr "+" "x" | perl -MURI::Escape -lne 'print uri_escape($_)')
-                query_string="server=${OPENSHIFT_APP_DNS}&file=${file_name}&log=${i}_${log_String}"
-                wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
-            done < ${file_name}.log
+            # i=0
+            # while read LINE
+            # do
+            #     i=$((i+1))
+            #     log_String=$(echo ${LINE} | tr " " "_" | tr "+" "x" | perl -MURI::Escape -lne 'print uri_escape($_)')
+            #     query_string="server=${OPENSHIFT_APP_DNS}&file=${file_name}&log=${i}_${log_String}"
+            #     wget --spider -b -q -o /dev/null "${url}?${query_string}" > /dev/null 2>&1
+            # done < ${file_name}.log
             if [ "${file_name}" != "install" ]; then
                 zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.${file_name}.log.zip ${file_name}.log
                 rm -f ${file_name}.log
