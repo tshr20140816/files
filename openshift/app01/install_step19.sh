@@ -375,7 +375,7 @@ if [ $(wc -l ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | awk '{p
     fi
     rm -f ${result_file}
     rm -f ${compiled_file}
-    sed -e "1d" ./javascript_compress_target_list.txt ./javascript_compress_target_list.txt.${suffix}
+    sed -e "1d" ./javascript_compress_target_list.txt > ./javascript_compress_target_list.txt.${suffix}
     cp -f ./javascript_compress_target_list.txt.${suffix} ./javascript_compress_target_list.txt
     wc -l ./javascript_compress_target_list.txt
     popd > /dev/null
