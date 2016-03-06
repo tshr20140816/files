@@ -65,12 +65,12 @@ do
                     cp -f ${target_file} ${target_file}.${suffix}
                     mv -f ${compiled_file} ${target_file}
                 else
-                    echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (SIZE UP) ${size_original} ${size_compiled} ${file_name}" \
+                    echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (SIZE UP) ${size_original} ${size_compiled} ${target_file}" \
                      >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
                     rm -f ${compiled_file}
                 fi
             else
-                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (ERROR OR WARNING) ${file_name}" \
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (ERROR OR WARNING) ${target_file}" \
                  >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
                 cat ${result_file} >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
             fi
