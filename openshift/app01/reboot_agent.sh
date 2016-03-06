@@ -60,7 +60,7 @@ do
                 size_original=$(wc -c < ${target_file})
                 size_compiled=$(wc -c < ${compiled_file})
                 if [ ${size_original} -lt ${size_compiled} ]; then
-                    echo "$(date +%Y/%m/%d" "%H:%M:%S) CHANGED ${size_original} ${size_compiled} ${target_file}"
+                    echo "$(date +%Y/%m/%d" "%H:%M:%S) CHANGED ${size_original} ${size_compiled} ${target_file}" \
                      >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
                     cp -f ${target_file} ${target_file}.${suffix}
                     mv -f ${compiled_file} ${target_file}
@@ -70,7 +70,7 @@ do
                     rm -f ${compiled_file}
                 fi
             else
-                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (ERROR OR WARNING) ${file_name}"
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (ERROR OR WARNING) ${file_name}" \
                  >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
                 cat ${result_file} >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
             fi
