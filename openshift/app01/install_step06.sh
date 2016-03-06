@@ -339,12 +339,12 @@ AddType application/x-httpd-php .php
 AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript
 
 ExpiresActive On
-ExpiresByType text/css "access plus 1 days"
-ExpiresByType application/javascript "access plus 1 days"
-ExpiresByType application/x-javascript "access plus 1 days" 
-ExpiresByType image/png "access plus 1 days"
-ExpiresByType image/gif "access plus 1 days"
-ExpiresByType image/jpeg "access plus 1 days"
+ExpiresByType text/css "access plus 60 days"
+ExpiresByType application/javascript "access plus 60 days"
+ExpiresByType application/x-javascript "access plus 60 days" 
+ExpiresByType image/png "access plus 60 days"
+ExpiresByType image/gif "access plus 60 days"
+ExpiresByType image/jpeg "access plus 60 days"
 
 # force ssl
 
