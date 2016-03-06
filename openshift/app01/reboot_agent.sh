@@ -59,7 +59,7 @@ do
             if [ "$(cat ${result_file})" = "0 error(s), 0 warning(s)" ]; then
                 size_original=$(wc -c < ${target_file})
                 size_compiled=$(wc -c < ${compiled_file})
-                if [ ${size_original} -gt ${size_compiled} ]; then
+                if [ ${size_original} -lt ${size_compiled} ]; then
                     echo "$(date +%Y/%m/%d" "%H:%M:%S) CHANGED ${size_original} ${size_compiled} ${target_file}"
                      >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
                     cp -f ${target_file} ${target_file}.${suffix}
