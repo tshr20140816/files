@@ -14,6 +14,7 @@ while :
 do
     if [ -f ${OPENSHIFT_DATA_DIR}/install_check_point/install_all.ok ]; then
         sleep 10s
+
         # ***** Log Compress *****
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         # url="${web_beacon_server}dummy"
@@ -35,6 +36,45 @@ do
         done
         rm -f dummy*
         popd > /dev/null
+
+        # ****** optipng *****
+        pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+        suffix=$(date '+%Y%m%d')
+        while read target_file
+        do
+            compressed_file=./$(basename ${target_file})
+            result_file=${compressed_file}.result.txt
+            rm -f ${compressed_file}
+            rm -f ${result_file}
+            ${OPENSHIFT_DATA_DIR}/optipng/bin/optipng \
+             -o7 \
+             -out ${compressed_file} \
+             ${target_file} \
+             >> ${OPENSHIFT_LOG_DIR}/optipng.log 2>&1
+            if [ ! -f ${compressed_file} ]; then
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) ERROR ${size_original} ${size_compiled} ${target_file}" \
+                 >> ${OPENSHIFT_LOG_DIR}/optipng.log
+                continue
+            fi
+            size_original=$(wc -c < ${target_file})
+            size_compiled=$(wc -c < ${compressed_file})
+            if [ ${size_original} -gt ${size_compiled} ]; then
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) CHANGED ${size_original} ${size_compiled} ${target_file}" \
+                 >> ${OPENSHIFT_LOG_DIR}/optipng.log
+                cp -f ${compressed_file} ${target_file}
+            else
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (SIZE UP) ${size_original} ${size_compiled} ${target_file}" \
+                 >> ${OPENSHIFT_LOG_DIR}/optipng.log
+            fi
+            rm -f ${compressed_file}
+        done < ${OPENSHIFT_DATA_DIR}/png_compress_target_list.txt
+        popd > /dev/null
+        pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+            zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
+            rm -f optipng.log
+            mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip ./install/
+        popd > /dev/null
+
         # ****** Closure Compiler *****
         pushd ${OPENSHIFT_TMP_DIR} > /dev/null
         suffix=$(date '+%Y%m%d')
