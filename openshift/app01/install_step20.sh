@@ -30,23 +30,6 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) shell syntax error count : $(wc -l ${OPENSHIF
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 mv ${OPENSHIFT_LOG_DIR}/shell_syntax_error.log ${OPENSHIFT_LOG_DIR}/install/
 
-# ***** Closure Compiler *****
-
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/compiler-latest.zip ./
-unzip compiler-latest.zip
-rm -f compiler-latest.zip
-cp ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh ./
-chmod +x ./closure_compiler.sh
-popd > /dev/null
-
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-# find ./ -name "*.js" -mindepth 2 -type f -print0 \
-#  | xargs -0i -n 2 ${OPENSHIFT_TMP_DIR}/closure_compiler.sh {}
-popd > /dev/null
-
-rm -f ${OPENSHIFT_TMP_DIR}/compiler.jar
-
 # ***** delete files *****
 
 rm -f ${OPENSHIFT_DATA_DIR}/download_files/*
