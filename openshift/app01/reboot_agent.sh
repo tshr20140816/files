@@ -67,7 +67,7 @@ do
                  >> ${OPENSHIFT_LOG_DIR}/optipng.log
             fi
             rm -f ${compressed_file}
-        done < ${OPENSHIFT_DATA_DIR}/png_compress_target_list.txt
+        done < ${OPENSHIFT_DATA_DIR}/png_gif_compress_target_list.txt
         popd > /dev/null
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
