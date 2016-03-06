@@ -47,7 +47,7 @@ do
             rm -f ${compressed_file}
             rm -f ${result_file}
             ${OPENSHIFT_DATA_DIR}/optipng/bin/optipng \
-             -o7 \
+             -o7 -zm1-9 \
              -out ${compressed_file} \
              ${target_file} \
              >> ${OPENSHIFT_LOG_DIR}/optipng.log 2>&1
