@@ -74,6 +74,7 @@ do
                  >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
                 cat ${result_file} >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
             fi
+            rm -f ${result_file}
         done < ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt
         popd > /dev/null
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
