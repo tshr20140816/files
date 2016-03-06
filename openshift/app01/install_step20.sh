@@ -59,7 +59,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) strip target count : $(wc -l ${OPENSHIFT_TMP_
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
 popd > /dev/null
 
-# ***** javascript/jpeg/png compress target list *****
+# ***** javascript/jpeg/png/css compress target list *****
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./ -name "*.js" -mindepth 2 -type f -print | tee -a ./javascript_compress_target_list.txt
@@ -71,6 +71,10 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 find ./ -name "*.png" -mindepth 2 -type f -print | tee -a ./png_compress_target_list.txt
+popd > /dev/null
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+find ./ -name "*.css" -mindepth 2 -type f -print | tee -a ./css_compress_target_list.txt
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
