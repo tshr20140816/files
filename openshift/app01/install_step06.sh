@@ -367,7 +367,7 @@ ExpiresActive On
     RewriteEngine on
     RewriteLog \
      "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/rewrite_log __APACHE_DIR__logs/rewrite_log.%w 86400 540"
-    RewriteLogLevel 0
+    RewriteLogLevel 2
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
 </IfModule>
