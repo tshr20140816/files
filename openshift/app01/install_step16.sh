@@ -131,13 +131,13 @@ perl -pi -e "s/^\/\/var globalUseJqueryAuth=.+$/var globalUseJqueryAuth=true;/g"
 cat << '__HEREDOC__' >> config.js
 var globalSubscribedCalendars={hrefLabel: 'Subscribed', 
  calendars: [{displayName: 'F1'
-               , href: 'https://__OPENSHIFT_APP_DNS__/f1-calendar_p1_p2_p3_q_gp.ics'
+               , href: 'https://__OPENSHIFT_APP_DNS__/cal/calendars/f1.ics'
                , userAuth: {userName: '', userPassword: ''}
                , ignoreAlarm: true
                , color: '#ff0000'
                , typeList: ['vevent']}
             ,{displayName: 'holidays'
-               , href: 'https://__OPENSHIFT_APP_DNS__/holidays.ics'
+               , href: 'https://__OPENSHIFT_APP_DNS__/cal/calendars/holidays.ics'
                , userAuth: {userName: '', userPassword: ''}
                , ignoreAlarm: true
                , color: '#00ff00'
