@@ -52,7 +52,7 @@ do
              ${target_file} \
              >> ${OPENSHIFT_LOG_DIR}/optipng.log 2>&1
             if [ ! -f ${compressed_file} ]; then
-                echo "$(date +%Y/%m/%d" "%H:%M:%S) ERROR ${size_original} ${size_compiled} ${target_file}" \
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) ERROR ${target_file}" \
                  >> ${OPENSHIFT_LOG_DIR}/optipng.log
                 continue
             fi
