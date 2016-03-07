@@ -286,16 +286,19 @@ LogFormat "[%{%Y-%m-%d %H:%M:%S %Z}t] %p %{X-Client-IP}i %{X-Forwarded-For}i %l 
 # LogFormat "[%{%Y-%m-%d %H:%M:%S %Z}t] \"%r\" %b (%{ratio}n) \"%{User-agent}i\"" deflate
 LogFormat "[%{%Y-%m-%d %H:%M:%S %Z}t] %X %>s %b %{ratio}n%% %D \"%r\"" deflate
 
-SetEnvIf Request_Method (HEAD|OPTIONS) method_head_options
+SetEnvIf Request_Method (HEAD|OPTIONS) no_log_1
+SetEnvIf Request_Method (HEAD|OPTIONS) no_log_2
+SetEnvIf Request_URI "\.gif$" no_log_2
+SetEnvIf Request_URI "\.png$" no_log_2
 
 CustomLog \
  "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_log __APACHE_DIR__logs/access_log.%w 86400 540" combined
 CustomLog \
  "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_remoteip_log __APACHE_DIR__logs/access_remoteip_log.%w 86400 540" \
- remoteip env=!method_head_options
+ remoteip env=!no_log_1
 CustomLog \
  "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_deflate_log __APACHE_DIR__logs/access_deflate_log.%w 86400 540" \
- deflate env=!method_head_options
+ deflate env=!no_log_2
 
 ErrorLog \
  "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/error_log __APACHE_DIR__logs/error_log.%w 86400 540"
