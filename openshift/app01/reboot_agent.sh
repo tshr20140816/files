@@ -52,7 +52,7 @@ do
              ${target_file} \
              >> ${OPENSHIFT_LOG_DIR}/optipng.log 2>&1
             if [ ! -f ${compressed_file} ]; then
-                echo "$(date +%Y/%m/%d" "%H:%M:%S) ERROR ${target_file}" \
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (ERROR) ${target_file}" \
                  >> ${OPENSHIFT_LOG_DIR}/optipng.log
                 continue
             fi
@@ -63,7 +63,7 @@ do
                  >> ${OPENSHIFT_LOG_DIR}/optipng.log
                 cp -f ${compressed_file} ${target_file}
             else
-                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (SIZE UP) ${size_original} ${size_compiled} ${target_file}" \
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${target_file}" \
                  >> ${OPENSHIFT_LOG_DIR}/optipng.log
             fi
             rm -f ${compressed_file}
@@ -73,6 +73,48 @@ do
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
             rm -f optipng.log
             mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip ./install/
+        popd > /dev/null
+
+        # ****** YUI Compressor *****
+        yuicompressor_version="2.4.8"
+        pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+        suffix=$(date '+%Y%m%d')
+        while read target_file
+        do
+            if [ ! -f ./yuicompressor-${yuicompressor_version}.jar ]; then
+                rm -f yuicompressor-${yuicompressor_version}.jar
+                wget https://github.com/yui/yuicompressor/releases/download/v${yuicompressor_version}/yuicompressor-${yuicompressor_version}.jar
+            fi
+            compressed_file=./$(basename ${target_file})
+            rm -f ${compressed_file}
+            rm -f ${result_file}
+            time java -jar ${OPENSHIFT_TMP_DIR}/yuicompressor-${yuicompressor_version}.jar \
+             --type css \
+             --o ${compressed_file} \
+             ${target_file}
+             >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log 2>&1
+            if [ ! -f ${compressed_file} ]; then
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (ERROR) ${target_file}" \
+                 >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
+                continue
+            fi
+            size_original=$(wc -c < ${target_file})
+            size_compiled=$(wc -c < ${compressed_file})
+            if [ ${size_original} -gt ${size_compiled} ]; then
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) CHANGED ${size_original} ${size_compiled} ${target_file}" \
+                 >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
+                cp -f ${compressed_file} ${target_file}
+            else
+                echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${target_file}" \
+                 >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
+            fi
+            rm -f ${compressed_file}
+        done < ${OPENSHIFT_DATA_DIR}/css_compress_target_list.txt
+        popd > /dev/null
+        pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+            zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
+            rm -f yuicompressor.log
+            mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip ./install/
         popd > /dev/null
 
         # ****** Closure Compiler *****
@@ -105,7 +147,7 @@ do
                     cp -f ${target_file} ${target_file}.${suffix}
                     mv -f ${compiled_file} ${target_file}
                 else
-                    echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (SIZE UP) ${size_original} ${size_compiled} ${target_file}" \
+                    echo "$(date +%Y/%m/%d" "%H:%M:%S) NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${target_file}" \
                      >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
                 fi
             else
