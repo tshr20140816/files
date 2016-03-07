@@ -128,6 +128,25 @@ perl -pi -e "s/^var globalTimeZone='Europe\/Berlin';/var globalTimeZone='Asia\/T
 
 perl -pi -e "s/^\/\/var globalUseJqueryAuth=.+$/var globalUseJqueryAuth=true;/g" config.js
 
+cat << '__HEREDOC__' >> config.js
+var globalSubscribedCalendars={hrefLabel: 'Subscribed', 
+ calendars: [{displayName: 'F1'
+               , href: 'https://__OPENSHIFT_APP_DNS__/f1-calendar_p1_p2_p3_q_gp.ics'
+               , userAuth: {userName: '', userPassword: ''}
+               , ignoreAlarm: true
+               , color: '#ff0000'
+               , typeList: ['vevent']}
+            ,{displayName: 'holidays'
+               , href: 'https://__OPENSHIFT_APP_DNS__/holidays.ics'
+               , userAuth: {userName: '', userPassword: ''}
+               , ignoreAlarm: true
+               , color: '#00ff00'
+               , typeList: ['vevent']}
+            ]
+ };
+__HEREDOC__
+sed -i -e "s|__OPENSHIFT_APP_DNS__|${OPENSHIFT_APP_DNS}|g" config.js
+
 diff -u config.js.${dt} config.js
 popd > /dev/null
 
