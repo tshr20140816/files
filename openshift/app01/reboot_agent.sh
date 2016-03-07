@@ -97,7 +97,7 @@ do
             rm -f ${compressed_file}
             rm -f ${result_file}
             ${OPENSHIFT_DATA_DIR}/optipng/bin/optipng \
-             -o7 -zm1-9 \
+             -o7 \
              -out ${compressed_file} \
              ${target_file} \
              >> ${OPENSHIFT_LOG_DIR}/optipng.log 2>&1
@@ -216,7 +216,7 @@ do
         unzip compiler-latest.zip
         rm -f compiler-latest.zip
         popd > /dev/null
-        cat ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | xrags -P 3 -n 1 func_closure_compile
+        cat ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | xargs -P 3 -n 1 func_closure_compile
         rm -f ${OPENSHIFT_DATA_DIR}/compiler.jar
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
