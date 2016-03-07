@@ -183,6 +183,11 @@ __HEREDOC__
 sed -i -e "s|__OPENSHIFT_APP_DNS__|${OPENSHIFT_APP_DNS}|g" config.inc.php
 php -l config.inc.php
 
+cp languages/japanese.inc.php languages/japanese.inc.php.$(date '+%Y%m%d')
+sed -i -e "s|$timeFormat = 'g:i A';|$timeFormat = 'H:i';|g" languages/japanese.inc.php
+sed -i -e "s|$timeFormat_small = 'g:i';|$timeFormat_small = 'H:i';|g" languages/japanese.inc.php
+diff -u languages/japanese.inc.php.$(date '+%Y%m%d') languages/japanese.inc.php
+
 rm -rf ./calendars/*.ics
 
 rm phpicalendar-${phpicalendar_version}.tar.bz2
