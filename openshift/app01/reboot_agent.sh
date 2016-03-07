@@ -11,6 +11,17 @@ web_beacon_server=${2}
 func_closure_compile() {
     echo "$$ $(oo-cgroup-read memory.usage_in_bytes | awk '{printf "%\047d\n", $1}')" \
      >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+    while :
+    do
+        local usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
+        if [ ${usage_in_bytes} -gt 350000000 ]; then
+            echo "$$ $(oo-cgroup-read memory.usage_in_bytes | awk '{printf "%\047d\n", $1}') waiting" \
+             >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+            sleep 5s
+        else
+            break
+        fi
+    done
     pushd ${OPENSHIFT_TMP_DIR} > /dev/null
     local suffix=$(date '+%Y%m%d')
     local rand=${RANDOM}
@@ -205,7 +216,7 @@ do
         unzip compiler-latest.zip
         rm -f compiler-latest.zip
         popd > /dev/null
-        cat ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | xrags -P 2 -n 1 func_closure_compile
+        cat ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt | xrags -P 3 -n 1 func_closure_compile
         rm -f ${OPENSHIFT_DATA_DIR}/compiler.jar
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
