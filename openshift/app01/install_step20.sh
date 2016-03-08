@@ -62,20 +62,17 @@ popd > /dev/null
 # ***** javascript/jpeg/png/gif/css compress target list *****
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ./ -name "*.js" -mindepth 2 -type f -print | tee -a ./javascript_compress_target_list.txt
+rm -f ./javascript_compress_target_list.txt
+rm -f ./jpeg_compress_target_list.txt
+rm -f ./png_gif_compress_target_list.txt
+find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | tee -a ./javascript_compress_target_list.txt
+find ${OPENSHIFT_DATA_DIR} -name "*.jpeg" -mindepth 2 -type f -print | tee -a ./jpeg_compress_target_list.txt
+find ${OPENSHIFT_DATA_DIR} -name "*.png" -mindepth 2 -type f -print | tee -a ./png_gif_compress_target_list.txt
+find ${OPENSHIFT_DATA_DIR} -name "*.gif" -mindepth 2 -type f -print | tee -a ./png_gif_compress_target_list.txt
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ./ -name "*.jpeg" -mindepth 2 -type f -print | tee -a ./jpeg_compress_target_list.txt
-popd > /dev/null
-
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ./ -name "*.png" -mindepth 2 -type f -print | tee -a ./png_gif_compress_target_list.txt
-find ./ -name "*.gif" -mindepth 2 -type f -print | tee -a ./png_gif_compress_target_list.txt
-popd > /dev/null
-
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ./ -name "*.css" -mindepth 2 -type f -print | tee -a ./css_compress_target_list.txt
+find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print | tee -a ./css_compress_target_list.txt
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
