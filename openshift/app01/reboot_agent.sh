@@ -38,9 +38,8 @@ do
         popd > /dev/null
 
         # ****** YUI Compressor *****
-        chmod +x ${OPENSHIFT_DATA_DIR}/download_files/yuicompressor.sh
         find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/yuicompressor.sh {}
+         | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
             rm -f closure_compiler.log
@@ -48,9 +47,8 @@ do
         popd > /dev/null
 
         # ****** Closure Compiler *****
-        chmod +x ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh
         find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh {}
+         | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
             rm -f closure_compiler.log
@@ -58,11 +56,10 @@ do
         popd > /dev/null
 
         # ****** optipng *****
-        chmod +x ${OPENSHIFT_DATA_DIR}/download_files/optipng.sh
         find ${OPENSHIFT_DATA_DIR} -name "*.png" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/optipng.sh {}
+         | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
         find ${OPENSHIFT_DATA_DIR} -name "*.gif" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/optipng.sh {}
+         | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
             rm -f optipng.log
