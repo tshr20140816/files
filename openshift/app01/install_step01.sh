@@ -114,6 +114,7 @@ tcl_version 8.6.4
 webalizer_version 2.23-08
 wordpress_version 4.4.2-ja
 xz_version 5.2.1
+yuicompressor_version 2.4.8
 __HEREDOC__
 
 # pigz_version 2.3.3
@@ -360,6 +361,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/jpegoptim-${jpegoptim_version}.tar.gz &
     # optipng
     wget -t1 ${mirror_server}/optipng-${optipng_version}.tar.gz &
+    # Yui compressor
+    wget -t1 ${mirror_server}/yuicompressor-${yuicompressor_version}.jar &
     wait
 
     # apache
@@ -578,6 +581,14 @@ do
     fi
     [ -f ttrss_archive.zip ] || files_exists=0
 
+    # *** YUI Compressor ***
+    if [ ! -f yuicompressor-${yuicompressor_version}.jar ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing yuicompressor-${yuicompressor_version}.jar" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) YUI Compressor wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://github.com/yui/yuicompressor/releases/download/v${yuicompressor_version}/yuicompressor-${yuicompressor_version}.jar
+    fi
+
     # *** sphinx ***
     if [ ! -f sphinx-${sphinx_version}-release.tar.gz ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing sphinx-${sphinx_version}-release.tar.gz" \
@@ -653,6 +664,20 @@ do
         wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/closure_compiler.sh &
     fi
     [ -f closure_compiler.sh ] || files_exists=0
+
+    # *** optipng ***
+    if [ ! -f optipng.sh ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) optipng.sh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/optipng.sh &
+    fi
+    [ -f optipng.sh ] || files_exists=0
+
+    # *** YUI compressor ***
+    if [ ! -f yuicompressor.sh ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) yuicompressor.sh wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app01/yuicompressor.sh &
+    fi
+    [ -f yuicompressor.sh ] || files_exists=0
 
     # *** wordpress salt ***
     if [ ! -f salt.txt ]; then
