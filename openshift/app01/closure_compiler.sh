@@ -17,10 +17,10 @@ do
     fi
 done
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-local suffix=$(date '+%Y%m%d')
-local target_file=${1}
-local compiled_file=./$(basename ${target_file}).$$
-local result_file=${compiled_file}.result.txt.$$
+suffix=$(date '+%Y%m%d')
+target_file=${1}
+compiled_file=./$(basename ${target_file}).$$
+result_file=${compiled_file}.result.txt.$$
 rm -f ${compiled_file}.$$
 rm -f ${result_file}.$$
 time java -jar ${OPENSHIFT_DATA_DIR}/compiler.jar \
@@ -30,8 +30,8 @@ time java -jar ${OPENSHIFT_DATA_DIR}/compiler.jar \
  --js_output_file ${compiled_file} \
  2> ${result_file}
 if [ "$(cat ${result_file})" = "0 error(s), 0 warning(s)" ]; then
-    local size_original=$(wc -c < ${target_file})
-    local size_compiled=$(wc -c < ${compiled_file})
+    size_original=$(wc -c < ${target_file})
+    size_compiled=$(wc -c < ${compiled_file})
     if [ ${size_original} -gt ${size_compiled} ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ CHANGED ${size_original} ${size_compiled} ${target_file}" \
          >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
