@@ -3,6 +3,7 @@ cd ${OPENSHIFT_DATA_DIR}/github/openshift/app01
 # timeout -s HUP 1h bash install_stepNN.sh
 bash install_step02.sh
 bash install_step03.sh
+bash install_step03a.sh
 bash install_step04.sh
 bash install_step05.sh
 bash install_step05a.sh
