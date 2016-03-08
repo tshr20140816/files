@@ -40,7 +40,7 @@ else
     else
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${target_file}" \
          >> ${OPENSHIFT_LOG_DIR}/optipng.log
+        rm -f ${compressed_file}
     fi
 fi
-rm -f ${compressed_file}
 popd > /dev/null
