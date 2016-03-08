@@ -8,7 +8,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ $(oo-cgroup-read memory.usage_in_bytes | a
 while :
 do
     usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
-    if [ ${usage_in_bytes} -gt 350000000 ]; then
+    if [ ${usage_in_bytes} -gt 450000000 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ $(oo-cgroup-read memory.usage_in_bytes | awk '{printf "%\047d\n", $1}') waiting" \
          >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
         sleep 5s
