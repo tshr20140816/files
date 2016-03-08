@@ -167,8 +167,10 @@ do
         rm -f compiler-latest.zip
         popd > /dev/null
         chmod +x ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh
-        cat ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt \
-         | xargs -I {} -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh {}
+        # cat ${OPENSHIFT_DATA_DIR}/javascript_compress_target_list.txt \
+        #  | xargs -I {} -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh {}
+        find ${OPENSHIFT_DATA_DIR} -name *.js -mindepth 2 -type f -print0 \
+         | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh {}
         rm -f ${OPENSHIFT_DATA_DIR}/compiler.jar
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
