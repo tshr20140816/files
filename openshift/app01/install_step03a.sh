@@ -6,11 +6,15 @@ function010
 
 # ***** YUI Compressor *****
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) YUI Compressor copy" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+
 cp ${OPENSHIFT_DATA_DIR}/download_files/yuicompressor-${yuicompressor_version}.jar ${OPENSHIFT_DATA_DIR}/yuicompressor.jar
 
 java -jar ${OPENSHIFT_DATA_DIR}/yuicompressor.jar --version
 
 # ***** Closure Compiler *****
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Closure Compiler unzip" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 cp -f ${OPENSHIFT_DATA_DIR}/download_files/compiler-latest.zip ./compiler-latest.zip
