@@ -42,7 +42,7 @@ do
          | xargs -0i -P 5 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
-            rm -f closure_compiler.log
+            rm -f yuicompressor.log
             mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip ./install/
         popd > /dev/null
 
