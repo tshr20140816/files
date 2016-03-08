@@ -7,7 +7,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ $(oo-cgroup-read memory.usage_in_bytes | a
  >> ${OPENSHIFT_LOG_DIR}/optipng.log
 while :
 do
-    local usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
+    usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
     if [ ${usage_in_bytes} -gt 350000000 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ $(oo-cgroup-read memory.usage_in_bytes | awk '{printf "%\047d\n", $1}') waiting" \
          >> ${OPENSHIFT_LOG_DIR}/optipng.log
@@ -17,9 +17,9 @@ do
     fi
 done
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-local suffix=$(date '+%Y%m%d')
-local target_file=${1}
-local compressed_file=./$(basename ${target_file}).$$
+suffix=$(date '+%Y%m%d')
+target_file=${1}
+compressed_file=./$(basename ${target_file}).$$
 rm -f ${compressed_file}
 # -o7 -zm1-9
 ${OPENSHIFT_DATA_DIR}/optipng/bin/optipng \
@@ -31,8 +31,8 @@ if [ ! -f ${compressed_file} ]; then
     echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file}" \
      >> ${OPENSHIFT_LOG_DIR}/optipng.log
 else
-    local size_original=$(wc -c < ${target_file})
-    local size_compiled=$(wc -c < ${compressed_file})
+    size_original=$(wc -c < ${target_file})
+    size_compiled=$(wc -c < ${compressed_file})
     if [ ${size_original} -gt ${size_compiled} ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ CHANGED ${size_original} ${size_compiled} ${target_file}" \
          >> ${OPENSHIFT_LOG_DIR}/optipng.log
