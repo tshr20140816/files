@@ -140,7 +140,7 @@ do
             rm -f ${result_file}
             time java -jar ${OPENSHIFT_TMP_DIR}/yuicompressor-${yuicompressor_version}.jar \
              --type css \
-             --o ${compressed_file} \
+             -o ${compressed_file} \
              ${target_file}
              >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log 2>&1
             if [ ! -f ${compressed_file} ]; then
