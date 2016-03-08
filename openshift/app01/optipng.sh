@@ -21,6 +21,7 @@ local suffix=$(date '+%Y%m%d')
 local target_file=${1}
 local compressed_file=./$(basename ${target_file}).$$
 rm -f ${compressed_file}
+# -o7 -zm1-9
 ${OPENSHIFT_DATA_DIR}/optipng/bin/optipng \
  -o7 \
  -out ${compressed_file} \
