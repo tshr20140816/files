@@ -39,7 +39,7 @@ do
 
         # ****** YUI Compressor *****
         chmod +x ${OPENSHIFT_DATA_DIR}/download_files/yuicompressor.sh
-        find ${OPENSHIFT_DATA_DIR} -name *.css -mindepth 2 -type f -print0 \
+        find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print0 \
          | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/yuicompressor.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
@@ -49,7 +49,7 @@ do
 
         # ****** Closure Compiler *****
         chmod +x ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh
-        find ${OPENSHIFT_DATA_DIR} -name *.js -mindepth 2 -type f -print0 \
+        find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print0 \
          | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/closure_compiler.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
@@ -59,16 +59,16 @@ do
 
         # ****** optipng *****
         chmod +x ${OPENSHIFT_DATA_DIR}/download_files/optipng.sh
-        find ${OPENSHIFT_DATA_DIR} -name *.png -mindepth 2 -type f -print0 \
+        find ${OPENSHIFT_DATA_DIR} -name "*.png" -mindepth 2 -type f -print0 \
          | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/optipng.sh {}
-        find ${OPENSHIFT_DATA_DIR} -name *.gif -mindepth 2 -type f -print0 \
+        find ${OPENSHIFT_DATA_DIR} -name "*.gif" -mindepth 2 -type f -print0 \
          | xargs -0i -P 3 -n 1 ${OPENSHIFT_DATA_DIR}/download_files/optipng.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
             rm -f optipng.log
             mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip ./install/
         popd > /dev/null
-        echo $(date +%Y/%m/%d" "%H:%M:%S) Good Bye
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) Good Bye"
         exit
     fi
 
@@ -86,7 +86,7 @@ do
 
     case "$(cat ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt)" in
         "restart" )
-            echo $(date +%Y/%m/%d" "%H:%M:%S) gear restart
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) gear restart"
             query_string="server=${OPENSHIFT_APP_DNS}&action=restart"
             wget --spider ${web_beacon_server}dummy?${query_string} > /dev/null 2>&1
     
@@ -94,14 +94,14 @@ do
             /usr/bin/gear start --trace
             ;;
         "stop" )
-            echo $(date +%Y/%m/%d" "%H:%M:%S) gear stop
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) gear stop"
             query_string="server=${OPENSHIFT_APP_DNS}&action=stop"
             wget --spider ${web_beacon_server}dummy?${query_string} > /dev/null 2>&1
     
             /usr/bin/gear stop --trace
             ;;
         "start" )
-            echo $(date +%Y/%m/%d" "%H:%M:%S) gear start
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) gear start"
             query_string="server=${OPENSHIFT_APP_DNS}&action=start"
             wget --spider ${web_beacon_server}dummy?${query_string} > /dev/null 2>&1
     
