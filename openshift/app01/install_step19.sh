@@ -32,7 +32,7 @@ suffix=$(date '+%Y%m%d')
 target_file=${1}
 compressed_file=./$(basename ${target_file}).$$
 rm -f ${compressed_file}
-time java -jar ${OPENSHIFT_TMP_DIR}/yuicompressor.jar \
+time java -jar ${OPENSHIFT_DATA_DIR}/yuicompressor.jar \
  --type css \
  -o ${compressed_file} \
  ${target_file} \
