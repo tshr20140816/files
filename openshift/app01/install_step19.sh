@@ -31,7 +31,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 suffix=$(date '+%Y%m%d')
 target_file=${1}
 compressed_file=./$(basename ${target_file}).$$
-rm -f ${compressed_file}.$$
+rm -f ${compressed_file}
 time java -jar ${OPENSHIFT_TMP_DIR}/yuicompressor.jar \
  --type css \
  -o ${compressed_file} \
@@ -84,8 +84,8 @@ suffix=$(date '+%Y%m%d')
 target_file=${1}
 compiled_file=./$(basename ${target_file}).$$
 result_file=${compiled_file}.result.txt.$$
-rm -f ${compiled_file}.$$
-rm -f ${result_file}.$$
+rm -f ${compiled_file}
+rm -f ${result_file}
 time java -jar ${OPENSHIFT_DATA_DIR}/compiler.jar \
  --summary_detail_level 3 \
  --compilation_level SIMPLE_OPTIMIZATIONS \
