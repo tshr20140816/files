@@ -17,6 +17,7 @@ do
     fi
 done
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+local suffix=$(date '+%Y%m%d')
 local target_file=${1}
 local compressed_file=./$(basename ${target_file}).$$
 rm -f ${compressed_file}
@@ -34,6 +35,7 @@ else
     if [ ${size_original} -gt ${size_compiled} ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ CHANGED ${size_original} ${size_compiled} ${target_file}" \
          >> ${OPENSHIFT_LOG_DIR}/optipng.log
+        mv -f ${target_file} ${target_file}.${suffix}
         mv -f ${compressed_file} ${target_file}
     else
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${target_file}" \
