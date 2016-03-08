@@ -166,6 +166,7 @@ else
 fi
 popd > /dev/null
 __HEREDOC__
+chmod +x optipng.sh &
 
 # ***** memory usage logging *****
 
