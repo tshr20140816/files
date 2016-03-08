@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0858"
+echo "0909"
 
 set -x
 
@@ -14,7 +14,7 @@ yuicompressor_version="2.4.8"
 
 time java -jar ${OPENSHIFT_TMP_DIR}/yuicompressor-${yuicompressor_version}.jar \
  --type css \
- -o ./cdm.css
+ -o ./cdm.css \
  ${OPENSHIFT_DATA_DIR}/tt-rss.git/css/cdm.css
 
 cat cdm.css
