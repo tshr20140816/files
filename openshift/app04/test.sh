@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1728"
+echo "1731"
 
 set -x
 
@@ -24,7 +24,7 @@ js_code=$(cat ./FeedTree.js)
 # echo ${js_code}
 # php -r 'echo urlencode("$js_code");'
 # js_code=$(php -r 'echo urlencode("$js_code");')
-js_code=$(php -r "echo urlencode($js_code);")
+js_code=$(php -r "echo urlencode(\"$js_code\");")
 echo "${js_code}"
 # wget --post-data="suffix=$$&js_code=2" --content-disposition https://tenv-20150605.rhcloud.com/test.php 
 cd ..
