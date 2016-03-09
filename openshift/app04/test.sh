@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1801"
+echo "1810"
 
 # set -x
 
@@ -21,7 +21,7 @@ cd temp1
 rm -f FeedTree.js
 wget https://woo-20140818.rhcloud.com/ttrss/js/FeedTree.js
 # js_code=$(cat ./FeedTree.js)
-ruby -r uri -ne 'puts URI.escape $_.chomp' < ./FeedTree.js
+ruby -r uri -ne 'puts URI.escape $_.chomp' < ./FeedTree.js | tr "\n" " " | sed 's/ /%0D%0A/g'
 # echo ${js_code}
 # php -r 'echo urlencode("$js_code");'
 # js_code=$(php -r 'echo urlencode("$js_code");')
