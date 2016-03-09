@@ -1,5 +1,4 @@
 <?php
-
 // curl https://xxx/test.php -F "file=@./jquery-1.7.1.min.js" -F "param1=value1"
 $suffix = $_POST["suffix"];
 if(preg_match('/^\w+$/') == 0){
