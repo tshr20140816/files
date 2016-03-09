@@ -9,13 +9,10 @@ rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
 
 cd /tmp
 
-# java -jar ${OPENSHIFT_DATA_DIR}/compiler.jar --help
-# exit
+rm -f test.php
+wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
 
-# rm -f test.php
-# wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
-
-# php test.php
+cp -f ./test.php ${OPENSHIFT_REPO_DIR}/
 
 ls -lang
 
