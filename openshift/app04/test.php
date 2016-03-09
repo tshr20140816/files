@@ -2,6 +2,8 @@
 // header('Content-type: application/force-download');
 header('Content-type: text/plain');
 
+print session_id();
+
 $url = "https://woo-20140818.rhcloud.com/ttrss/js/FeedTree.js";
 $s = file_get_contents($url);
 if($s == FALSE){
