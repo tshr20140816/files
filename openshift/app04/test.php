@@ -12,6 +12,9 @@ if($s == FALSE){
     return;
 }
 
+print urlencode($s);
+print urldecode(urlencode($s));
+
 $fp = fopen("/tmp/FeedTree.js", "w");
 fwrite($fp, $s);
 fclose($fp);
