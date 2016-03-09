@@ -13,7 +13,7 @@ $fp = fopen("/tmp/FeedTree.js", "w");
 fwrite($fp, $s);
 fclose($fp);
 
-$cmd = "java -jar " . getenv("OPENSHIFT_DATA_DIR") . "/compiler.jar --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js /tmp/FeedTree.js --js_output_file /tmp/compiled.js";
+$cmd = "java -jar " . getenv("OPENSHIFT_DATA_DIR") . "/compiler.jar --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js /tmp/FeedTree.js --js_output_file /tmp/compiled.js 2>&1";
 exec($cmd, $arr, $res);
 if($res === 0){
     print var_dump($arr);
