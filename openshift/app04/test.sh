@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1128"
+echo "1445"
 
 # set -x
 
@@ -18,9 +18,5 @@ cd /tmp
 # php test.php
 
 ls -lang
-
-cd ~
-
-tree
 
 exit
