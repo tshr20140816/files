@@ -2,12 +2,14 @@
 
 // curl https://xxx/test.php -F "file=@./jquery-1.7.1.min.js" -F "param1=value1"
 $suffix = $_POST["suffix"];
-move_uploaded_file($_FILES['userfile']['tmp_name'], getenv("OPENSHIFT_TMP_DIR") . "/" . $_FILES['userfile']['name'] . "." . $suffix);
+move_uploaded_file($_FILES['file']['tmp_name'], getenv("OPENSHIFT_TMP_DIR") . "/" . $_FILES['file']['name'] . "." . $suffix);
 
-$original_file = getenv("OPENSHIFT_TMP_DIR") . "/" . $_FILES['userfile']['name'] . "." . $suffix;
-$compiled_file = getenv("OPENSHIFT_TMP_DIR") . "/compiled.$suffix.js";
-$result_file = getenv("OPENSHIFT_TMP_DIR") . "/result.$suffix.txt";
-$zip_file = getenv("OPENSHIFT_TMP_DIR") . "/result.$suffix.zip";
+chdir(getenv("OPENSHIFT_TMP_DIR"));
+
+$original_file = $_FILES['file']['name'] . "." . $suffix;
+$compiled_file = "compiled.$suffix.js";
+$result_file = "result.$suffix.txt";
+$zip_file = "result.$suffix.zip";
 $download_file = "result.$suffix.zip";
 
 $cmd = "java -jar " . getenv("OPENSHIFT_DATA_DIR") . "/compiler.jar --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js $original_file --js_output_file $compiled_file 2>&1";
