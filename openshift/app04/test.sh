@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0840"
+echo "0931"
 
 # set -x
 
@@ -9,15 +9,11 @@ rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
 
 cd /tmp
 
-rm -f compiler-latest.zip
-wget http://dl.google.com/closure-compiler/compiler-latest.zip
-unzip compiler-latest.zip
-rm -f compiler-latest.zip
+rm -f test.php
+wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
 
-mv -f ./compiler.jar ${OPENSHIFT_DATA_DIR}/compiler.jar
+php test.php
 
 ls -lang
-
-ls -lang ${OPENSHIFT_DATA_DIR}
 
 exit
