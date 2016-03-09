@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "1731"
+echo "1753"
 
-set -x
+# set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
@@ -20,12 +20,13 @@ mkdir temp1
 cd temp1
 rm -f FeedTree.js
 wget https://woo-20140818.rhcloud.com/ttrss/js/FeedTree.js
-js_code=$(cat ./FeedTree.js)
+# js_code=$(cat ./FeedTree.js)
+ruby -r uri -ne 'puts URI.escape $_.chomp' < $(cat ./FeedTree.js)
 # echo ${js_code}
 # php -r 'echo urlencode("$js_code");'
 # js_code=$(php -r 'echo urlencode("$js_code");')
-js_code=$(php -r "echo urlencode(\"$js_code\");")
-echo "${js_code}"
+# js_code=$(php -r "echo urlencode(\"$js_code\");")
+# echo "${js_code}"
 # wget --post-data="suffix=$$&js_code=2" --content-disposition https://tenv-20150605.rhcloud.com/test.php 
 cd ..
 rm -rf temp1
