@@ -1,6 +1,6 @@
 <?php
 
-$suffix = urldecode($_POST["suffix"]);
+$suffix = $_POST["suffix"];
 $js_code = urldecode($_POST["js_code"]);
 
 $original_file = getenv("OPENSHIFT_TMP_DIR") . "/original.$suffix.js";
