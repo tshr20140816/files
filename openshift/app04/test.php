@@ -2,17 +2,28 @@
 
 // curl https://xxx/test.php -F "file=@./jquery-1.7.1.min.js" -F "param1=value1"
 $suffix = $_POST["suffix"];
-move_uploaded_file($_FILES['file']['tmp_name'], getenv("OPENSHIFT_TMP_DIR") . "/" . $_FILES['file']['name'] . "." . $suffix);
+if(preg_match('/^\w+$/') == 0){
+    header('HTTP', true, 500);
+    exit;
+}
 
-chdir(getenv("OPENSHIFT_TMP_DIR"));
-
-$original_file = $_FILES['file']['name'] . "." . $suffix;
+$file_name = $_FILES['file']['name'];
+$original_file = $file_name . "." . $suffix;
 $compiled_file = "compiled.$suffix.js";
 $result_file = "result.$suffix.txt";
 $zip_file = "result.$suffix.zip";
 $download_file = "result.$suffix.zip";
+$closure_compiler = getenv("OPENSHIFT_DATA_DIR") . "/compiler.jar";
 
-$cmd = "java -jar " . getenv("OPENSHIFT_DATA_DIR") . "/compiler.jar --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js $original_file --js_output_file $compiled_file 2>&1";
+if(preg_match('/\.js$/') == 0){
+    header('HTTP', true, 500);
+    exit;
+}
+move_uploaded_file($_FILES['file']['tmp_name'], getenv("OPENSHIFT_TMP_DIR") . "/" . $original_file);
+
+chdir(getenv("OPENSHIFT_TMP_DIR"));
+
+$cmd = "java -jar $closure_compiler --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js $original_file --js_output_file $compiled_file 2>&1";
 exec($cmd, $arr, $res);
 
 $fp = fopen($result_file, "w");
