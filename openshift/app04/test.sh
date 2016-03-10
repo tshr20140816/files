@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1537"
+echo "1636"
 
 # set -x
 
@@ -26,6 +26,7 @@ sed -n -e ${line}p test.txt
 curl http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2 > /dev/null &
 # ps auwx | grep curl
 pgrep -l
+pgrep -f "curl"
 wait
 
 exit
