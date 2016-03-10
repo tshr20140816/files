@@ -115,6 +115,65 @@ popd > /dev/null
 __HEREDOC__
 chmod +x closure_compiler.sh &
 
+# ***** Closure Compiler 2 *****
+
+cat << '__HEREDOC__' > closure_compiler2.sh
+#!/bin/bash
+
+export TZ=JST-9
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${1}"
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+uuid=${OPENSHIFT_APP_UUID}$$
+suffix=$(date '+%Y%m%d')
+
+target_file=${1}
+
+while read LINE
+do
+    if [ $(ps auwx | grep curl | grep -v grep | grep -c ${LINE}) -eq 0 ]; then
+        server=${LINE}
+        break
+    fi
+done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
+
+rm -f result.${uuid}.zip
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${server}"
+curl https://${server}/closure_compiler.php -F "file=@${1}" -F "suffix=${uuid}" > result.${uuid}.zip
+
+rm -f compiled.${uuid}.js
+rm -f result.${uuid}.txt
+
+unzip result.${uuid}.zip
+if [ ! -f result.${uuid}.txt ]; then
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file}" \
+     >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+elif [ ! -f compiled.${uuid}.js ]; then
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file}" \
+     >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+else
+    size_original=$(wc -c < ${1})
+    size_compiled=$(wc -c < compiled.${uuid}.js)
+    if [ ${size_original} -gt ${size_compiled} ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ CHANGED ${size_original} ${size_compiled} ${1}" \
+         >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+        mv -f ${1} ${1}.${suffix}
+        mv -f compiled.${uuid}.js ${1}
+    else
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${1}" \
+         >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+    fi
+fi
+
+rm -f compiled.${uuid}.js
+rm -f result.${uuid}.txt
+rm -f result.${uuid}.zip
+popd > /dev/null
+__HEREDOC__
+chmod +x closure_compiler2.sh &
+
 # ***** optipng *****
 
 cat << '__HEREDOC__' > optipng.sh
