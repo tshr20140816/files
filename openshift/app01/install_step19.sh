@@ -132,6 +132,7 @@ target_file=${1}
 
 while read LINE
 do
+    # if [ $(pgrep -fl curl | grep ${LINE} | grep -c -v grep) -eq 0 ]; then
     if [ $(pgrep -fl curl | grep -c ${LINE}) -eq 0 ]; then
         server=${LINE}
         break
