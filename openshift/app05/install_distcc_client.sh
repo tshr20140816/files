@@ -46,8 +46,9 @@ export DISTCC_TCP_CORK=0
 export HOME=${OPENSHIFT_DATA_DIR}
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-export DISTCC_LOG=/dev/null
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.$$.log
 
+echo "$@" >> ${OPENSHIFT_LOG_DIR}/distcc.$$.log
 exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
 chmod 755 ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd_start
