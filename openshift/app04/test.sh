@@ -23,7 +23,8 @@ cat test.txt
 line=$((10%3+1))
 sed -n -e ${line}p test.txt
 
-ps auwx
-ps auwx | grep bash | awk '{print $3}'
+curl http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2 > /dev/null &
+ps auwx | grep curl
+wait
 
 exit
