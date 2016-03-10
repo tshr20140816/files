@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1337"
+echo "1343"
 
 # set -x
 
@@ -16,7 +16,7 @@ cat << '__HEREDOC__' > test.txt
 abc@aaa-bbb.test.local
 __HEREDOC__
 
-sed -e s/^.+?@// test.txt
+sed -e s/^.+?@//g test.txt
 
 cat test.txt
 
