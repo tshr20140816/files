@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1454"
+echo "1455"
 
 # set -x
 
@@ -24,6 +24,6 @@ line=$((10%3+1))
 sed -n -e ${line}p test.txt
 
 ps auwx
-ps auwx | grep bash | awk '{print $2}'
+ps auwx | grep bash | awk '{print $3}'
 
 exit
