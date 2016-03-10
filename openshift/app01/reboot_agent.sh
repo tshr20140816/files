@@ -72,7 +72,8 @@ do
     if [ ! -f ${OPENSHIFT_DATA_DIR}/install_check_point/gear_action.txt ]; then
         if [ ${loop_counter} -gt 20 ]; then
             loop_counter=0
-            is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
+            # is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
+            is_alive=$(pgrep -fl ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
             query_string="server=${OPENSHIFT_APP_DNS}&install_script_is_alive=${is_alive}"
             wget --spider "${web_beacon_server}dummy?${query_string}" > /dev/null 2>&1
         fi
