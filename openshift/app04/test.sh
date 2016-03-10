@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1654"
+echo "1657"
 
 # set -x
 
@@ -23,7 +23,7 @@ cat test.txt
 line=$((10%3+1))
 sed -n -e ${line}p test.txt
 
-curl http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2 > /dev/null &
+curl http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2 > /dev/null 2>&1 &
 # ps auwx | grep curl
 pgrep -l curl
 pgrep -f curl
