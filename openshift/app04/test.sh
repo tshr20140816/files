@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1653"
+echo "1654"
 
 # set -x
 
@@ -27,6 +27,7 @@ curl http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2 > /dev/null &
 # ps auwx | grep curl
 pgrep -l curl
 pgrep -f curl
+pgrep -fl curl
 wait
 
 exit
