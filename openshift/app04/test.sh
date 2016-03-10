@@ -16,7 +16,7 @@ cat << '__HEREDOC__' > test.txt
 abc@aaa-bbb.test.local
 __HEREDOC__
 
-sed -e s/^.+?@//g test.txt
+sed -e s/^.+@//g test.txt
 
 cat test.txt
 
