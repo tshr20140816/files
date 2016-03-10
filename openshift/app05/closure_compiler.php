@@ -1,5 +1,6 @@
 <?php
-// curl https://xxx/xxx.php -F "file=@./jquery-1.7.1.min.js" -F "suffix=value1"
+// wget http://dl.google.com/closure-compiler/compiler-latest.zip
+// curl https://xxx/xxx.php -F "file=@./jquery-1.7.1.min.js" -F "suffix=uuid"
 $suffix = $_POST["suffix"];
 if(preg_match('/^\w+$/') == 0){
     header('HTTP', true, 500);
