@@ -1,5 +1,3 @@
-		
-
 <?php
 
 // wget http://dl.google.com/closure-compiler/compiler-latest.zip
