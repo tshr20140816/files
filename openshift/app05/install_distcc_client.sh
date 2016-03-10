@@ -52,6 +52,19 @@ exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
 chmod 755 ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd_start
 
+# ***** Closure Compiler *****
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+wget http://dl.google.com/closure-compiler/compiler-latest.zip
+unzip compiler-latest.zip
+popd > /dev/null
+
+# ***** PHP (Closure Compiler) *****
+
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
+wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/closure_compiler.php
+popd > /dev/null
+
 # ***** register url *****
 
 curl --digest -u ${web_beacon_server_user}:$(date +%Y%m%d%H) -F "url=https://${OPENSHIFT_APP_DNS}/" \
