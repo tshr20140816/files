@@ -103,7 +103,8 @@ do
     yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
     rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee -a ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt
 done
-cat tee ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+sed -e 's/^.\+\?@//g' ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
 
 for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
 do
