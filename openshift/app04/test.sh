@@ -24,7 +24,8 @@ line=$((10%3+1))
 sed -n -e ${line}p test.txt
 
 curl http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2 > /dev/null &
-ps auwx | grep curl
+# ps auwx | grep curl
+pgrep -l
 wait
 
 exit
