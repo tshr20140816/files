@@ -77,7 +77,7 @@ do
             wget --spider "${web_beacon_server}dummy?${query_string}" > /dev/null 2>&1
         fi
         sleep 5s
-        loop_counter=$((${loop_counter}+1))
+        loop_counter=$((loop_counter+1))
         continue
     fi
 
