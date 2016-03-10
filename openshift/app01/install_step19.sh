@@ -132,7 +132,7 @@ target_file=${1}
 
 while read LINE
 do
-    if [ $(ps auwx | grep curl | grep -v grep | grep -c ${LINE}) -eq 0 ]; then
+    if [ $(pgrep -fl curl | grep -c ${LINE}) -eq 0 ]; then
         server=${LINE}
         break
     fi
