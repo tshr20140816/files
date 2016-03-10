@@ -48,7 +48,7 @@ do
 
         # ****** Closure Compiler *****
         find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 5 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler.sh {}
+         | xargs -0i -P 6 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler2.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
             rm -f closure_compiler.log
