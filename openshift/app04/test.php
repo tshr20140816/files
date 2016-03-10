@@ -29,7 +29,11 @@ $fp = fopen($result_file, "w");
 fwrite($fp, $arr[0]);
 fclose($fp);
 
-$cmd = "zip -9 $zip_file $compiled_file $result_file";
+if(file_exists($compiled_file)){
+    $cmd = "zip -9 $zip_file $compiled_file $result_file";
+} else {
+    $cmd = "zip -9 $zip_file $result_file";
+}
 exec($cmd, $arr, $res);
 
 header("Content-Type: application/octet-stream");
