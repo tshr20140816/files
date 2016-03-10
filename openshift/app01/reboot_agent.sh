@@ -39,7 +39,7 @@ do
 
         # ****** YUI Compressor *****
         find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 5 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
+         | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
             rm -f yuicompressor.log
@@ -57,9 +57,9 @@ do
 
         # ****** optipng *****
         find ${OPENSHIFT_DATA_DIR} -name "*.png" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 5 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
+         | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
         find ${OPENSHIFT_DATA_DIR} -name "*.gif" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 5 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
+         | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
             zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
             rm -f optipng.log
