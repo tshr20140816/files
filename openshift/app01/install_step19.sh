@@ -148,10 +148,10 @@ rm -f result.${uuid}.txt
 
 unzip result.${uuid}.zip
 if [ ! -f result.${uuid}.txt ]; then
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file}" \
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file} RESULT FILE NOT FOUND" \
      >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
 elif [ ! -f compiled.${uuid}.js ]; then
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file}" \
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file} $(tail -n 1 result.${uuid}.txt)" \
      >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
 else
     size_original=$(wc -c < ${1})
