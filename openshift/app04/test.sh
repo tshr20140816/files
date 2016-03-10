@@ -20,4 +20,7 @@ sed -e 's/^.\+\?@//g' test.txt
 
 cat test.txt
 
+line=$((10%3+1))
+sed -n -e ${line}p test.txt
+
 exit
