@@ -132,6 +132,12 @@ echo delete_log.sh >> jobs.allow
 
 popd > /dev/null
 
+# ***** logs dir *****
+
+pushd ${OPENSHIFT_REPO_DIR} /dev/null
+ln -s ${OPENSHIFT_LOG_DIR} logs
+popd > /dev/null
+
 # ***** register url *****
 
 curl --digest -u ${web_beacon_server_user}:$(date +%Y%m%d%H) -F "url=https://${OPENSHIFT_APP_DNS}/" \
