@@ -17,9 +17,9 @@ wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2
 
 tar jxf httpd-2.2.31.tar.bz2
 cd httpd-2.2.31
-./configure --prefix=/tmp/apache > /dev/null
-make > /dev/null
-make install > /dev/null
+time ./configure --prefix=/tmp/apache > /dev/null
+time make > /dev/null
+time make install > /dev/null
 
 time find /tmp/apache -name "*" -mindepth 2 -type f -print0 \
  | xargs -0i file {} \
