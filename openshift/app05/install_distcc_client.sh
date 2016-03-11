@@ -145,6 +145,36 @@ User-agent: *
 Disallow: /
 __HEREDOC__
 
+# ***** htaccess *****
+
+echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
+
+echo AuthType Digest > ${OPENSHIFT_LOG_DIR}/.htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> ${OPENSHIFT_LOG_DIR}/.htaccess
+cat << '__HEREDOC__' >> ${OPENSHIFT_LOG_DIR}/.htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+
+IndexOptions +FancyIndexing
+
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+__HEREDOC__
+
+# ***** phpinfo *****
+
+cat << '__HEREDOC__' > ${OPENSHIFT_LOG_DIR}/phpinfo.php
+<?php
+phpinfo();
+?>
+__HEREDOC__
+
 # ***** register url *****
 
 curl --digest -u ${web_beacon_server_user}:$(date +%Y%m%d%H) -F "url=https://${OPENSHIFT_APP_DNS}/" \
