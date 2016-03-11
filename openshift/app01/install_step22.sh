@@ -13,6 +13,8 @@ pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
 cat << '__HEREDOC__' > for_restart.sh
 #!/bin/bash
 
+export LOGSHIFTER_DIY_MAX_FILESIZE=5M
+
 testrubyserver_count=$(ps aux | grep -e testrubyserver.rb | grep -e ${OPENSHIFT_APP_UUID} | grep -c -v grep)
 
 if [ ${testrubyserver_count} -gt 0 ]; then
