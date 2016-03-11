@@ -11,22 +11,28 @@ cd /tmp
 
 rm -f httpd-2.2.31.tar.bz2
 rm -rf httpd-2.2.31
-rm -rf apache
 
-wget http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2
+mkdir 20160311
+cd 20160311
+cp -f /tmp/apache/lib/libapr-1.so.0.5.2 ./
+cp -f /tmp/apache/lib/apr-util-1/apr_dbd_pgsql-1.so ./
+cp -f /tmp/apache/lib/apr-util-1/apr_dbd_sqlite3-1.so ./
+cp -f /tmp/apache/lib/apr-util-1/apr_dbd_odbc-1.so ./
+cp -f /tmp/apache/lib/libaprutil-1.so.0.5.4 ./
+cp -f /tmp/apache/bin/htpasswd ./
+cp -f /tmp/apache/bin/htdigest ./
+cp -f /tmp/apache/bin/rotatelogs ./
+cp -f /tmp/apache/bin/logresolve ./
+cp -f /tmp/apache/bin/ab ./
+cp -f /tmp/apache/bin/htdbm ./
+cp -f /tmp/apache/bin/htcacheclean ./
+cp -f /tmp/apache/bin/httxt2dbm ./
+cp -f /tmp/apache/bin/checkgid ./
+cp -f /tmp/apache/bin/httpd ./
 
-tar jxf httpd-2.2.31.tar.bz2
-cd httpd-2.2.31
-time ./configure --prefix=/tmp/apache > /dev/null
-time make > /dev/null
-time make install > /dev/null
+ls -lang
 
-time find /tmp/apache -name "*" -mindepth 2 -type f -print0 \
- | xargs -0i file {} \
- | grep -e "not stripped" \
- | grep -v -e "delegated" | awk -F':' '{printf $1"\n"}' > /tmp/strip_starget.txt
 
-cat /tmp/strip_starget.txt
 
 # time strip --strip-debug /tmp/apache/bin/rotatelogs 
 
