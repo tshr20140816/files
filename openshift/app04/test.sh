@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1134"
+echo "1137"
 
 set -x
 
@@ -15,7 +15,7 @@ rm -rf httpd-2.2.31
 time find /tmp/apache -name "*" -mindepth 2 -type f -print0 \
  | xargs -0i file {} \
  | grep -e "not stripped" \
- | grep -v -e "delegated" > /tmp/strip_starget.txt
+ | grep -v -e "delegated" | awk -F':' '{printf $1"\n"}' > /tmp/strip_starget.txt
 
 cat /tmp/strip_starget.txt | xargs -t -P 1 -n 1 time strip --strip-debug
 
