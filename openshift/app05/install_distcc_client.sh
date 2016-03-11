@@ -138,6 +138,13 @@ pushd ${OPENSHIFT_REPO_DIR} /dev/null
 ln -s ${OPENSHIFT_LOG_DIR} logs
 popd > /dev/null
 
+# ***** robots.txt *****
+
+cat << '__HEREDOC__' > ${OPENSHIFT_REPO_DIR}/robots.txt
+User-agent: *
+Disallow: /
+__HEREDOC__
+
 # ***** register url *****
 
 curl --digest -u ${web_beacon_server_user}:$(date +%Y%m%d%H) -F "url=https://${OPENSHIFT_APP_DNS}/" \
