@@ -46,9 +46,9 @@ export DISTCC_TCP_CORK=0
 export HOME=${OPENSHIFT_DATA_DIR}
 export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.$$.log
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc/$(date +%Y%m%d).$$.log
 
-echo "$@" >> ${OPENSHIFT_LOG_DIR}/distcc.$$.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $@" >> ${DISTCC_LOG}
 exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
 chmod 755 ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd_start
@@ -64,6 +64,26 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/closure_compiler.php
+popd > /dev/null
+
+# ***** cron *****
+
+# *** hourly ***
+
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/hourly > /dev/null
+rm -f ./*
+touch jobs.deny
+
+
+cat << '__HEREDOC__' > delete_log.sh
+#!/bin/bash
+export TZ=JST-9
+
+find ${OPENSHIFT_LOG_DIR}/distcc/ -mtime +2 -print0 | xargs -0i -P 1 -n 1 rm -f {}
+__HEREDOC__
+chmod +x delete_log.sh
+echo delete_log.sh >> jobs.allow
+
 popd > /dev/null
 
 # ***** register url *****
