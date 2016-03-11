@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1007"
+echo "1024"
 
 set -x
 
