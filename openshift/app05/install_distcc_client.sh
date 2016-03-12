@@ -69,7 +69,7 @@ cat << '__HEREDOC__' > closure_compiler.php
 // wget http://dl.google.com/closure-compiler/compiler-latest.zip
 // curl https://xxx/xxx.php -F "file=@./jquery-1.7.1.min.js" -F "suffix=uuid"
 $suffix = $_POST["suffix"];
-if (preg_match('/^\w+$/') == 0)
+if (preg_match('/^\w+$/', $suffix) == 0)
 {
     header('HTTP', true, 500);
     exit;
@@ -81,7 +81,7 @@ $result_file = "result.$suffix.txt";
 $zip_file = "result.$suffix.zip";
 $download_file = "result.$suffix.zip";
 $closure_compiler = getenv("OPENSHIFT_DATA_DIR") . "/compiler.jar";
-if (preg_match('/\.js$/') == 0)
+if (preg_match('/\.js$/', $file_name) == 0)
 {
     header('HTTP', true, 500);
     exit;
