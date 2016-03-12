@@ -142,7 +142,12 @@ cat << '__HEREDOC__' > create_index_page.sh
 #!/bin/bash
 export TZ=JST-9
 
-ls -lang ${OPENSHIFT_LOG_DIR} > ${OPENSHIFT_LOG_DIR}/index.html
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+echo "<HTML><BODY><PRE>" > ${OPENSHIFT_TMP_DIR}/index.html.$$
+ls -lang >> ${OPENSHIFT_TMP_DIR}/index.html.$$
+echo "</PRE></BODY></HTML>" >> ${OPENSHIFT_TMP_DIR}/index.html.$$
+mv -f ${OPENSHIFT_TMP_DIR}/index.html.$$ ./index.html
+popd > /dev/null
 __HEREDOC__
 chmod +x create_index_page.sh
 echo create_index_page.sh >> jobs.allow
