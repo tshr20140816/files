@@ -132,6 +132,23 @@ echo delete_log.sh >> jobs.allow
 
 popd > /dev/null
 
+# *** minutely ***
+
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
+rm -f ./*
+touch jobs.deny
+
+cat << '__HEREDOC__' > create_index_page.sh
+#!/bin/bash
+export TZ=JST-9
+
+ls -lang ${OPENSHIFT_LOG_DIR} > ${OPENSHIFT_LOG_DIR}/index.html
+__HEREDOC__
+chmod +x delete_log.sh
+echo delete_log.sh >> jobs.allow
+
+popd > /dev/null
+
 # ***** logs dir *****
 
 pushd ${OPENSHIFT_REPO_DIR} /dev/null
