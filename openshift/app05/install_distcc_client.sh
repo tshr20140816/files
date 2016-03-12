@@ -144,8 +144,8 @@ export TZ=JST-9
 
 ls -lang ${OPENSHIFT_LOG_DIR} > ${OPENSHIFT_LOG_DIR}/index.html
 __HEREDOC__
-chmod +x delete_log.sh
-echo delete_log.sh >> jobs.allow
+chmod +x create_index_page.sh
+echo create_index_page.sh >> jobs.allow
 
 popd > /dev/null
 
