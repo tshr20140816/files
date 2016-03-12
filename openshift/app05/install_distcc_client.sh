@@ -102,9 +102,7 @@ move_uploaded_file($_FILES['file']['tmp_name'], getenv("OPENSHIFT_TMP_DIR") . "/
 chdir(getenv("OPENSHIFT_TMP_DIR"));
 $cmd = "java -jar $closure_compiler --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js $original_file --js_output_file $compiled_file 2>&1";
 exec($cmd, $arr, $res);
-$fp = fopen($result_file, "w");
-fwrite($fp, $arr[0]);
-fclose($fp);
+file_put_contents($result_file, $arr[0]);
 if (file_exists($compiled_file))
 {
     $cmd = "zip -9 $zip_file $compiled_file $result_file";
