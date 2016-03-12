@@ -53,6 +53,10 @@ exec ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd $@
 __HEREDOC__
 chmod 755 ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd_start
 
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+mkdir distcc
+popd > /dev/null
+
 # ***** Closure Compiler *****
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
