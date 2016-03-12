@@ -57,6 +57,14 @@ pushd ${OPENSHIFT_LOG_DIR} > /dev/null
 mkdir distcc
 popd > /dev/null
 
+# ***** YUI Compressor *****
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+yuicompressor_version="2.4.8"
+wget https://github.com/yui/yuicompressor/releases/download/v${yuicompressor_version}/yuicompressor-${yuicompressor_version}.jar
+cp yuicompressor-${yuicompressor_version}.jar yuicompressor.jar
+popd > /dev/null
+
 # ***** Closure Compiler *****
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
