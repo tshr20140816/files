@@ -177,7 +177,7 @@ require valid-user
     deny from all
 </Files>
 
-IndexOptions +FancyIndexing
+# IndexOptions +FancyIndexing
 
 RewriteEngine on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
