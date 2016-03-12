@@ -93,6 +93,7 @@ cacti_version 0.8.8g
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
 ccache_version 3.2.4
+curl_version 7.47.1
 distcc_version 3.1
 delegate_version 9.9.13
 expect_version 5.45
@@ -404,6 +405,16 @@ if [ "${mirror_server}" != "none" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) php pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         rm -f php-${php_version}.tar.xz
+    fi
+
+    # curl
+    wget -t1 ${mirror_server}/curl-${curl_version}.tar.bz2
+    wget https://curl.haxx.se/download/curl-${curl_version}.tar.bz2.asc
+    gpg --recv-keys $(gpg --verify curl-${curl_version}.tar.bz2.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    if [ $(gpg --verify curl-${curl_version}.tar.bz2.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) curl pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) curl pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        rm -f curl-${curl_version}.tar.bz2
     fi
 
     # delegate
@@ -719,6 +730,15 @@ do
         wget http://www.memcached.org/files/memcached-${memcached_version}.tar.gz
     fi
     [ -f memcached-${memcached_version}.tar.gz ] || files_exists=0
+
+    # *** curl ***
+    if [ ! -f curl-${curl_version}.tar.bz2 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing curl-${curl_version}.tar.bz2" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) curl wget" >> ${OPENSHIFT_LOG_DIR}/install.log
+        wget https://curl.haxx.se/download/curl-${curl_version}.tar.bz2
+    fi
+    [ -f curl-${curl_version}.tar.bz2 ] || files_exists=0
 
     # *** php ***
     if [ ! -f php-${php_version}.tar.xz ]; then
