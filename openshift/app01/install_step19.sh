@@ -154,7 +154,7 @@ if [ ! -f result.${uuid}.txt ]; then
 elif [ ! -f compiled.${uuid}.js ]; then
     echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file} $(tail -n 1 result.${uuid}.txt)" \
      >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
-else
+elif [ "$(cat result.${uuid}.txt)" = "0 error(s), 0 warning(s)" ]; then
     size_original=$(wc -c < ${1})
     size_compiled=$(wc -c < compiled.${uuid}.js)
     if [ ${size_original} -gt ${size_compiled} ]; then
@@ -166,6 +166,9 @@ else
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${1}" \
          >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
     fi
+else
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR OR WARNING) ${target_file} $(tail -n 1 result.${uuid}.txt)" \
+     >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
 fi
 
 rm -f compiled.${uuid}.js
