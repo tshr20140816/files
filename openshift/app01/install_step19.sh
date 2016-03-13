@@ -142,7 +142,7 @@ done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
 rm -f result.${uuid}.zip
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${server}"
-curl https://${server}/closure_compiler.php -F "file=@${1}" -F "suffix=${uuid}" > result.${uuid}.zip
+curl https://${server}/closure_compiler.php -F "file=@${1}" -F "suffix=${uuid}" -s -o result.${uuid}.zip
 
 rm -f compiled.${uuid}.js
 rm -f result.${uuid}.txt
