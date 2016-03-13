@@ -56,7 +56,7 @@ find ./ -name "*" -mindepth 2 -type f -print0 \
 echo "$(date +%Y/%m/%d" "%H:%M:%S) strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all
-# time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
+time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
 popd > /dev/null
 
 # ***** javascript/jpeg/png/gif/css compress target list *****
