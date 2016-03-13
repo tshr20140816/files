@@ -26,8 +26,10 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> $
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_jpegoptim.log
 popd > /dev/null
 mv ${OPENSHIFT_LOG_DIR}/install_jpegoptim.log ${OPENSHIFT_LOG_DIR}/install/
-rm ${OPENSHIFT_TMP_DIR}/jpegoptim-${jpegoptim_version}.tar.gz
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm jpegoptim-${jpegoptim_version}.tar.gz
 rm -rf jpegoptim-${jpegoptim}
+popd > /dev/null
 
 # ***** optipng *****
 
@@ -51,8 +53,10 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> $
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_optipng.log
 popd > /dev/null
 mv ${OPENSHIFT_LOG_DIR}/install_optipng.log ${OPENSHIFT_LOG_DIR}/install/
-rm ${OPENSHIFT_TMP_DIR}/optipng-${optipng_version}.tar.gz
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm optipng-${optipng_version}.tar.gz
 rm -rf optipng-${optipng}
+popd > /dev/null
 
 # ***** curl *****
 
@@ -76,8 +80,10 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> $
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
 popd > /dev/null
 mv ${OPENSHIFT_LOG_DIR}/install_curl.log ${OPENSHIFT_LOG_DIR}/install/
-rm ${OPENSHIFT_TMP_DIR}/curl-${curl_version}.tar.bz2
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm curl-${curl_version}.tar.bz2
 rm -rf curl-${curl_version}
+popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
