@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.03.14 redmine_version 2.6.9 → 2.6.10
 # 2016.03.10 fio_version 2.6 → 2.7
 # 2016.03.04 php_version 5.6.18 → 5.6.19
 # 2016.02.29 baikal_version 0.2.7 → 0.3.5
@@ -109,7 +110,7 @@ openssh_version 6.8p1
 optipng_version 0.7.5
 php_version 5.6.19
 phpicalendar_version 2.4_20100615
-redmine_version 2.6.9
+redmine_version 2.6.10
 ruby_version 2.1.8
 sphinx_version 2.2.10
 tcl_version 8.6.4
