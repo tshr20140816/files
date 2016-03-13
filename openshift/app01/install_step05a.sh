@@ -54,6 +54,31 @@ mv ${OPENSHIFT_LOG_DIR}/install_optipng.log ${OPENSHIFT_LOG_DIR}/install/
 rm ${OPENSHIFT_TMP_DIR}/optipng-${optipng_version}.tar.gz
 rm -rf optipng-${optipng}
 
+# ***** curl *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/curl-${curl_version}.tar.bz2 ./
+echo "$(date +%Y/%m/%d" "%H:%M:%S) curl tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+tar jxf curl-${curl_version}.tar.bz2
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/curl-${curl_version} > /dev/null
+echo "$(date +%Y/%m/%d" "%H:%M:%S) curl configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_curl.log
+./configure --help
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/curl \
+ --mandir=${OPENSHIFT_TMP_DIR}/man 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) curl make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_curl.log
+time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) curl make install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_curl.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
+popd > /dev/null
+mv ${OPENSHIFT_LOG_DIR}/install_curl.log ${OPENSHIFT_LOG_DIR}/install/
+rm ${OPENSHIFT_TMP_DIR}/curl-${curl_version}.tar.bz2
+rm -rf curl-${curl_version}
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
