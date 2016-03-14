@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1308"
+echo "1514"
 
 # set -x
 
@@ -9,13 +9,10 @@ rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
 
 cd /tmp
 
-rm -f httpd-2.2.31.tar.bz2
-rm -rf httpd-2.2.31
-rm -rf apache
-rm -rf 20160311
-
 ls -lang
 
-# time strip --strip-debug /tmp/apache/bin/rotatelogs 
+cd ${OPENSHIFT_DATA_DIR}
+
+ls -lang
 
 exit
