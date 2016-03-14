@@ -58,6 +58,15 @@ popd > /dev/null
 __HEREDOC__
 chmod +x yuicompressor.sh &
 
+cat << '__HEREDOC__' > yuicompressor2.sh
+#!/bin/bash
+
+export TZ=JST-9
+
+
+__HEREDOC__
+chmod +x yuicompressor2.sh &
+
 # ***** Closure Compiler *****
 
 cat << '__HEREDOC__' > closure_compiler.sh
