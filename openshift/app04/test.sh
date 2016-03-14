@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0839"
+echo "0843"
 
 # set -x
 
@@ -20,5 +20,6 @@ cd /tmp
 tree ${OPENSHITFT_HOME_DIR} > /dev/null &
 
 pgrep -fl tree
+pgrep -fl pgrep
 
 exit
