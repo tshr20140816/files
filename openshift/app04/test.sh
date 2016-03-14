@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1526"
+echo "0839"
 
 # set -x
 
@@ -15,17 +15,10 @@ fi
 
 cd /tmp
 
-rm -f *.js
-rm -f *.txt
-rm -f ttrss_archive.zip
+# ls -lang
 
-ls -lang
+tree ${OPENSHITFT_HOME_DIR} > /dev/null &
 
-cd ${OPENSHIFT_DATA_DIR}
-
-rm -f ttrss_archive.zip
-rm -rf tt-rss.git
-
-ls -lang
+pgrep -fl tree
 
 exit
