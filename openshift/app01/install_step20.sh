@@ -56,23 +56,7 @@ find ./ -name "*" -mindepth 2 -type f -print0 \
 echo "$(date +%Y/%m/%d" "%H:%M:%S) strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all
-time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
-popd > /dev/null
-
-# ***** javascript/jpeg/png/gif/css compress target list *****
-
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-rm -f ./javascript_compress_target_list.txt
-rm -f ./jpeg_compress_target_list.txt
-rm -f ./png_gif_compress_target_list.txt
-find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | tee -a ./javascript_compress_target_list.txt
-find ${OPENSHIFT_DATA_DIR} -name "*.jpeg" -mindepth 2 -type f -print | tee -a ./jpeg_compress_target_list.txt
-find ${OPENSHIFT_DATA_DIR} -name "*.png" -mindepth 2 -type f -print | tee -a ./png_gif_compress_target_list.txt
-find ${OPENSHIFT_DATA_DIR} -name "*.gif" -mindepth 2 -type f -print | tee -a ./png_gif_compress_target_list.txt
-popd > /dev/null
-
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print | tee -a ./css_compress_target_list.txt
+# time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
 popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
