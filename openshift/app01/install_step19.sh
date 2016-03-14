@@ -8,7 +8,7 @@ pushd ${OPENSHIFT_DATA_DIR}/scripts > /dev/null
 
 # ***** YUI Compressor *****
 
-cat << '__HEREDOC__' > yuicompressor.sh
+cat << '__HEREDOC__' > yuicompressor2.sh
 #!/bin/bash
 
 export TZ=JST-9
@@ -56,16 +56,60 @@ else
 fi
 popd > /dev/null
 __HEREDOC__
-chmod +x yuicompressor.sh &
+chmod +x yuicompressor2.sh &
 
-cat << '__HEREDOC__' > yuicompressor2.sh
+cat << '__HEREDOC__' > yuicompressor.sh
 #!/bin/bash
 
 export TZ=JST-9
 
+#!/bin/bash
 
+export TZ=JST-9
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${1}"
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+uuid=${OPENSHIFT_APP_UUID}$$
+suffix=$(date '+%Y%m%d')
+
+target_file=${1}
+
+while read LINE
+do
+    # if [ $(pgrep -fl curl | grep ${LINE} | grep -c -v grep) -eq 0 ]; then
+    if [ $(pgrep -fl curl | grep -c ${LINE}) -eq 0 ]; then
+        server=${LINE}
+        break
+    fi
+done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
+
+compressed_file=./$(basename ${target_file}).$$
+rm -f ${compressed_file}
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${server}"
+path=$(echo ${target_file} | sed -e 's|${OPENSHIFT_HOMEDIR}||g')
+curl https://${server}/yuicompressor.php -F "file=@${target_file}" -F "suffix=${uuid}" -F "path=${path}" -o ${compressed_file}
+
+if [ ! -f ${compressed_file} ]; then
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file}" \
+     >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
+else
+    size_original=$(wc -c < ${target_file})
+    size_compiled=$(wc -c < ${compressed_file})
+    if [ ${size_original} -gt ${size_compiled} ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ CHANGED ${size_original} ${size_compiled} ${target_file}" \
+         >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
+        mv -f ${target_file} ${target_file}.${suffix}
+        mv -f ${compressed_file} ${target_file}
+    else
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${target_file}" \
+         >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
+        rm -f ${compressed_file}
+    fi
+fi
 __HEREDOC__
-chmod +x yuicompressor2.sh &
+chmod +x yuicompressor.sh &
 
 # ***** Closure Compiler *****
 
