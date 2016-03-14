@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0843"
+echo "0847"
 
 # set -x
 
@@ -17,9 +17,9 @@ cd /tmp
 
 # ls -lang
 
-tree ${OPENSHITFT_HOME_DIR} > /dev/null &
+wget http://jp2.php.net/get/php-5.6.19.tar.xz/from/this/mirror -O /dev/null &
 
-pgrep -fl tree
+pgrep -fl wget
 pgrep -fl pgrep
 
 exit
