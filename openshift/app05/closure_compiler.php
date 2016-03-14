@@ -65,6 +65,7 @@ if (file_exists($compiled_file))
     $cmd = "zip -9 $zip_file $compiled_file $result_file";
     if (!file_exists($compressed_path . ".compressed"))
     {
+        @mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME), "0777", TRUE);
         copy($original_file, $compressed_path);
         copy($compiled_file, $compressed_path . ".compressed");
         copy($result_file, $compressed_path . ".result.txt");
