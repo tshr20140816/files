@@ -87,24 +87,25 @@ done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
 compressed_file=./$(basename ${target_file}).$$
 rm -f ${compressed_file}
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${server}"
 path=$(echo ${target_file} | sed -e 's|${OPENSHIFT_HOMEDIR}||g')
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ server=${server} target_file=${target_file} suffix=${uuid} path=${path} compressed_file=${compressed_file}" \
+ | tee -a ${OPENSHIFT_LOG_DIR}/yuicompressor.log
 curl https://${server}/yuicompressor.php -F "file=@${target_file}" -F "suffix=${uuid}" -F "path=${path}" -o ${compressed_file}
 
 if [ ! -f ${compressed_file} ]; then
     echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file}" \
-     >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
+     | tee -a ${OPENSHIFT_LOG_DIR}/yuicompressor.log
 else
     size_original=$(wc -c < ${target_file})
     size_compiled=$(wc -c < ${compressed_file})
     if [ ${size_original} -gt ${size_compiled} ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ CHANGED ${size_original} ${size_compiled} ${target_file}" \
-         >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
+         | tee -a ${OPENSHIFT_LOG_DIR}/yuicompressor.log
         mv -f ${target_file} ${target_file}.${suffix}
         mv -f ${compressed_file} ${target_file}
     else
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${target_file}" \
-         >> ${OPENSHIFT_LOG_DIR}/yuicompressor.log
+         | tee -a ${OPENSHIFT_LOG_DIR}/yuicompressor.log
         rm -f ${compressed_file}
     fi
 fi
@@ -136,8 +137,9 @@ done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
 
 rm -f result.${uuid}.zip
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${server}"
 path=$(echo ${target_file} | sed -e 's|${OPENSHIFT_HOMEDIR}||g')
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ server=${server} target_file=${target_file} suffix=${uuid} path=${path} result.zip=result.${uuid}.zip" \
+ | tee -a ${OPENSHIFT_LOG_DIR}/closure_compiler.log
 curl https://${server}/closure_compiler.php -F "file=@${target_file}" -F "suffix=${uuid}" -F "path=${path}" -o result.${uuid}.zip
 
 rm -f compiled.${uuid}.js
@@ -146,25 +148,25 @@ rm -f result.${uuid}.txt
 unzip result.${uuid}.zip
 if [ ! -f result.${uuid}.txt ]; then
     echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file} RESULT FILE NOT FOUND" \
-     >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+     | tee -a ${OPENSHIFT_LOG_DIR}/closure_compiler.log
 elif [ ! -f compiled.${uuid}.js ]; then
     echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file} $(tail -n 1 result.${uuid}.txt)" \
-     >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+     | tee -a ${OPENSHIFT_LOG_DIR}/closure_compiler.log
 elif [ "$(cat result.${uuid}.txt)" = "0 error(s), 0 warning(s)" ]; then
     size_original=$(wc -c < ${1})
     size_compiled=$(wc -c < compiled.${uuid}.js)
     if [ ${size_original} -gt ${size_compiled} ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ CHANGED ${size_original} ${size_compiled} ${1}" \
-         >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+         | tee -a ${OPENSHIFT_LOG_DIR}/closure_compiler.log
         mv -f ${1} ${1}.${suffix}
         mv -f compiled.${uuid}.js ${1}
     else
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${1}" \
-         >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+         | tee -a ${OPENSHIFT_LOG_DIR}/closure_compiler.log
     fi
 else
     echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR OR WARNING) ${target_file} $(tail -n 1 result.${uuid}.txt)" \
-     >> ${OPENSHIFT_LOG_DIR}/closure_compiler.log
+     | tee -a ${OPENSHIFT_LOG_DIR}/closure_compiler.log
 fi
 
 rm -f compiled.${uuid}.js
