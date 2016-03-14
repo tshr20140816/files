@@ -5,8 +5,8 @@
 
 if (!isset($_POST['suffix'], $_POST['path']))
 {
-	header('HTTP', true, 500);
-	exit;
+    header('HTTP', true, 500);
+    exit;
 }
 
 $suffix = $_POST["suffix"];
@@ -14,20 +14,20 @@ $path = $_POST["path"];
 
 if (preg_match('/^\w+$/', $suffix) == 0)
 {
-	header('HTTP', true, 500);
-	exit;
+    header('HTTP', true, 500);
+    exit;
 }
 
 if (preg_match('/.*\.\..*/', $path) == 1)
 {
-	header('HTTP', true, 500);
-	exit;
+    header('HTTP', true, 500);
+    exit;
 }
 
 if (preg_match('/^app-root\/data\/.+$/', $path) == 0)
 {
-	header('HTTP', true, 500);
-	exit;
+    header('HTTP', true, 500);
+    exit;
 }
 
 $compressed_path = getenv("OPENSHIFT_DATA_DIR") . "compressed/";
@@ -42,43 +42,43 @@ $closure_compiler = getenv("OPENSHIFT_DATA_DIR") . "/compiler.jar";
 
 if (preg_match('/\.js$/', $file_name) == 0)
 {
-	header('HTTP', true, 500);
-	exit;
+    header('HTTP', true, 500);
+    exit;
 }
 
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 
 if (file_exists($compressed_path . ".compressed") && file_exists($compressed_path))
 {
-	if (file_get_contents($original_file) == file_get_contents($compressed_path))
-	{
-		copy($compressed_path . ".compressed", $compiled_file);
-		copy($compressed_path . ".result.txt", $result_file);
-	}
+    if (file_get_contents($original_file) == file_get_contents($compressed_path))
+    {
+        copy($compressed_path . ".compressed", $compiled_file);
+        copy($compressed_path . ".result.txt", $result_file);
+    }
 }
 else
 {
-	$cmd = "java -jar $closure_compiler --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js $original_file --js_output_file $compiled_file 2>&1";
-	exec($cmd, $arr, $res);
-	file_put_contents($result_file, $arr[0]);
+    $cmd = "java -jar $closure_compiler --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js $original_file --js_output_file $compiled_file 2>&1";
+    exec($cmd, $arr, $res);
+    file_put_contents($result_file, $arr[0]);
 }
 
 chdir(getenv("OPENSHIFT_TMP_DIR"));
 
 if (file_exists($compiled_file))
 {
-	$cmd = "zip -9 $zip_file $compiled_file $result_file";
-	if (!file_exists($compressed_path . ".compressed"))
-	{
-		@mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , "0777", TRUE);
-		copy($original_file, $compressed_path);
-		copy($compiled_file, $compressed_path . ".compressed");
-		copy($result_file, $compressed_path . ".result.txt");
-	}
+    $cmd = "zip -9 $zip_file $compiled_file $result_file";
+    if (!file_exists($compressed_path . ".compressed"))
+    {
+        @mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , "0777", TRUE);
+        copy($original_file, $compressed_path);
+        copy($compiled_file, $compressed_path . ".compressed");
+        copy($result_file, $compressed_path . ".result.txt");
+    }
 }
 else
 {
-	$cmd = "zip -9 $zip_file $result_file";
+    $cmd = "zip -9 $zip_file $result_file";
 }
 
 exec($cmd, $arr, $res);
