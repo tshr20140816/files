@@ -29,9 +29,6 @@ if (preg_match('/^app-root\/data\/.+$/', $path) == 0)
     exit;
 }
 
-//file_exists
-//preg_replace
-
 $compressed_path = getenv("OPENSHIFT_DATA_DIR") . "compressed/";
 $compressed_path = preg_replace("/^app-root\/data\//", $compressed_path, $path);
 $file_name = $_FILES['file']['name'];
