@@ -79,7 +79,6 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${1}"
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 uuid=${OPENSHIFT_APP_UUID}$$
 suffix=$(date '+%Y%m%d')
-
 target_file=${1}
 
 while read LINE
@@ -94,8 +93,8 @@ done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
 rm -f result.${uuid}.zip
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${server}"
-path=$(echo ${1} | sed -e 's|${OPENSHIFT_HOMEDIR}||g')
-curl https://${server}/closure_compiler.php -F "file=@${1}" -F "suffix=${uuid}" -F "path=${path}" -o result.${uuid}.zip
+path=$(echo ${target_file} | sed -e 's|${OPENSHIFT_HOMEDIR}||g')
+curl https://${server}/closure_compiler.php -F "file=@${target_file}" -F "suffix=${uuid}" -F "path=${path}" -o result.${uuid}.zip
 
 rm -f compiled.${uuid}.js
 rm -f result.${uuid}.txt
