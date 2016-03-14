@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1519"
+echo "1521"
 
 # set -x
 
@@ -13,9 +13,16 @@ fi
 
 cd /tmp
 
+rm -f *.js
+rm -f *.txt
+rm -f ttrss_archive.zip
+
 ls -lang
 
 cd ${OPENSHIFT_DATA_DIR}
+
+rm -f ttrss_archive.zip
+rm -rf tt-rss.git
 
 ls -lang
 
