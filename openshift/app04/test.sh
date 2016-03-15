@@ -17,8 +17,7 @@ cd /tmp
 
 # ls -lang
 
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 80 | head -n 1 >1.txt
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 80 | head -n 1 >>1.txt
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 120 | head -n 1 >1.txt
 
 cat 1.txt
 
