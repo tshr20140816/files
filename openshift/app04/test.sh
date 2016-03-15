@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0909"
+echo "0914"
 
 # set -x
 
@@ -23,5 +23,7 @@ pgrep -fl pgrep
 pgrep -fl curl
 pgrep -fl curl | grep -c php
 pgrep -fl pgrep
+
+wait
 
 exit
