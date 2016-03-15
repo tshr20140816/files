@@ -17,7 +17,7 @@ cd /tmp
 
 # ls -lang
 
-rm -f 1.txt
+rm -f test.php*
 
 wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
 
