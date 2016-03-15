@@ -19,7 +19,17 @@ cd /tmp
 
 rm -f test.php*
 
-cat d1.txt
-cat d2.txt
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+export HOME=${OPENSHIFT_DATA_DIR}
+gem --version
+gem environment
+gem help install
+
+gem install rhc --verbose --no-rdoc --no-ri
+yes | rhc setup --server openshift.redhat.com --create-token -l $(cat d2.txt) -p $(cat d1.txt)
+rhc apps | grep -e SSH
+
+export HOME=${OPENSHIFT_HOME_DIR}
 
 exit
