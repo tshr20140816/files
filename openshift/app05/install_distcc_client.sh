@@ -73,13 +73,13 @@ cat << '__HEREDOC__' > yuicompressor.php
 $log_file = getenv("OPENSHIFT_LOG_DIR") . "yuicompressor_php_" . date("Ymd") . ".log";
 if (!isset($_POST['suffix']))
 {
-    file_put_contents($log_file, "CHECK POINT 010 suffix", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 010 suffix", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (!isset($_POST['path']))
 {
-    file_put_contents($log_file, "CHECK POINT 020 path", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 020 path", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
@@ -87,19 +87,19 @@ $suffix = $_POST["suffix"];
 $path = $_POST["path"];
 if (preg_match('/^\w+$/', $suffix) == 0)
 {
-    file_put_contents($log_file, "CHECK POINT 030 $suffix", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 030 $suffix", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (preg_match('/.*\.\..*/', $path) == 1)
 {
-    file_put_contents($log_file, "CHECK POINT 040 $path", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 040 $path", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (preg_match('/^app-root\/data\/.+$/', $path) == 0)
 {
-    file_put_contents($log_file, "CHECK POINT 050 $path", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 050 $path", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
@@ -111,21 +111,22 @@ $compressed_file = getenv("OPENSHIFT_TMP_DIR") . "compressed.$suffix.css";
 $yuicompressor = getenv("OPENSHIFT_DATA_DIR") . "/yuicompressor.jar";
 if (preg_match('/\.css/', $file_name) == 0)
 {
-    file_put_contents($log_file, "CHECK POINT 060 $file_name", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 060 $file_name", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
+file_put_contents($log_file, date("YmdHis") . " TARGET $path", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 chdir(getenv("OPENSHIFT_TMP_DIR"));
-if (file_exists($compressed_path . ".compressed") && file_exists($compressed_path))
+if (file_exists($compressed_path . ".compressed") && file_exists($compressed_path)
+    && (file_get_contents($original_file) == file_get_contents($compressed_path)))
 {
-    if (file_get_contents($original_file) == file_get_contents($compressed_path))
-    {
-        copy($compressed_path . ".compressed", $compressed_file);
-    }
+    file_put_contents($log_file, date("YmdHis") . " CACHE HIT $path", FILE_APPEND);
+    copy($compressed_path . ".compressed", $compressed_file);
 }
 else
 {
+    file_put_contents($log_file, date("YmdHis") . " CACHE MISS $path", FILE_APPEND);
     $cmd = "java -jar $yuicompressor --type css -o $compressed_file $original_file 2>&1";
     exec($cmd, $arr, $res);
 }
@@ -142,7 +143,7 @@ if (file_exists($compressed_file))
 }
 else
 {
-    file_put_contents($log_file, "CHECK POINT 070 $compressed_file", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 $compressed_file", FILE_APPEND);
     header('HTTP', true, 500);
 }
 @unlink($original_file);
@@ -214,17 +215,18 @@ if (preg_match('/\.js$/', $file_name) == 0)
     header('HTTP', true, 500);
     exit;
 }
+file_put_contents($log_file, date("YmdHis") . " TARGET $path", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
-if (file_exists($compressed_path . ".compressed") && file_exists($compressed_path))
+if (file_exists($compressed_path . ".compressed") && file_exists($compressed_path
+     && (file_get_contents($original_file) == file_get_contents($compressed_path)))
 {
-    if (file_get_contents($original_file) == file_get_contents($compressed_path))
-    {
-        copy($compressed_path . ".compressed", $compiled_file);
-        copy($compressed_path . ".result.txt", $result_file);
-    }
+    file_put_contents($log_file, date("YmdHis") . " CACHE HIT $path", FILE_APPEND);
+    copy($compressed_path . ".compressed", $compiled_file);
+    copy($compressed_path . ".result.txt", $result_file);
 }
 else
 {
+    file_put_contents($log_file, date("YmdHis") . " CACHE MISS $path", FILE_APPEND);
     $cmd = "java -jar $closure_compiler --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js $original_file --js_output_file $compiled_file 2>&1";
     exec($cmd, $arr, $res);
     file_put_contents($result_file, $arr[0]);
