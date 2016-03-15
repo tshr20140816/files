@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1137"
+echo "1148"
 
 # set -x
 
@@ -19,10 +19,7 @@ cd /tmp
 
 rm -f test.php*
 
-wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
-
-cat test.php
-
-cp -f test.php ${OPENSHIFT_REPO_DIR}/test.php
+cat d1.txt
+cat d2.txt
 
 exit
