@@ -19,6 +19,9 @@ cd /tmp
 
 rm -f test.php*
 
+mv ${OPENSHIFT_LOG_DIR}/d1.txt ./
+mv ${OPENSHIFT_LOG_DIR}/d2.txt ./
+
 cat d1.txt
 cat d2.txt
 
