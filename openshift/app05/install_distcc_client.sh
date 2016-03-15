@@ -234,7 +234,7 @@ else
 chdir(getenv("OPENSHIFT_TMP_DIR"));
 if (file_exists($compiled_file))
 {
-    $cmd = "zip -9 $zip_file $compiled_file $result_file";
+    $cmd = "zip -9 $zip_file " . pathinfo($compiled_file, PATHINFO_FILENAME) . " " . pathinfo($result_file, PATHINFO_FILENAME);
     if (!file_exists($compressed_path . ".compressed"))
     {
         @mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , "0777", TRUE);
@@ -245,7 +245,7 @@ if (file_exists($compiled_file))
 }
 else
 {
-    $cmd = "zip -9 $zip_file $result_file";
+    $cmd = "zip -9 $zip_file " . pathinfo($result_file, PATHINFO_FILENAME);
 }
 exec($cmd, $arr, $res);
 header("Content-Type: application/octet-stream");
