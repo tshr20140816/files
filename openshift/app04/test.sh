@@ -24,11 +24,9 @@ export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
 gem --version
 gem environment
-gem help install
 
-gem install rhc --verbose --no-rdoc --no-ri
-yes | rhc setup --server openshift.redhat.com --create-token -l $(cat d2.txt) -p $(cat d1.txt)
-rhc apps | grep -e SSH
+yes | rhc app delete -a portal5
+yes | rhc app create portal5 diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
 
 export HOME=${OPENSHIFT_HOME_DIR}
 
