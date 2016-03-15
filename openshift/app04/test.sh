@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1103"
+echo "1111"
 
 # set -x
 
@@ -17,8 +17,12 @@ cd /tmp
 
 # ls -lang
 
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 120 | head -n 1 >1.txt
+rm -f 1.txt
 
-cat 1.txt
+wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
+
+cat test.php
+
+cp -f test.php ${OPENSHIFT_REPO_DIR}/test.php
 
 exit
