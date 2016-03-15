@@ -17,13 +17,9 @@ cd /tmp
 
 # ls -lang
 
-curl http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2 -o /dev/null &
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1 >1.txt
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1 >>1.txt
 
-pgrep -fl pgrep
-pgrep -fl curl
-pgrep -fl curl | grep -c httpd
-pgrep -fl pgrep
-
-wait
+cat 1.txt
 
 exit
