@@ -302,7 +302,7 @@ popd > /dev/null
 
 # ***** logs dir *****
 
-pushd ${OPENSHIFT_REPO_DIR} /dev/null
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 ln -s ${OPENSHIFT_LOG_DIR} logs
 popd > /dev/null
 
