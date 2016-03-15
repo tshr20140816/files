@@ -30,6 +30,11 @@ yes | rhc app create portal5 diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server op
 
 server_link=$(rhc apps | grep ssh | grep portal5 | awk '{print $3}' | awk -F/ '{print $3}')
 echo ${server_link}
+
+
+ssh-keygen -F $(echo ${server_link} | sed -e s|.+@||g)
+ssh-keygen -R $(echo ${server_link} | sed -e s|.+@||g)
+
 ssh ${server_link} cat /proc/cpuinfo
 
 export HOME=${OPENSHIFT_HOME_DIR}
