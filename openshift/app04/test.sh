@@ -18,6 +18,9 @@ cd /tmp
 # ls -lang
 
 rm -f test.php*
+wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
+cp -f test.php ${OPENSHIFT_REPO_DIR}
+cat test.php
 
 cat d1.txt
 cat d2.txt
