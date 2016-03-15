@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0914"
+echo "0928"
 
 # set -x
 
@@ -17,11 +17,11 @@ cd /tmp
 
 # ls -lang
 
-curl http://jp2.php.net/get/php-5.6.19.tar.xz/from/this/mirror -o /dev/null &
+curl http://ftp.riken.jp/net/apache//httpd/httpd-2.2.31.tar.bz2 -o /dev/null &
 
 pgrep -fl pgrep
 pgrep -fl curl
-pgrep -fl curl | grep -c php
+pgrep -fl curl | grep -c httpd
 pgrep -fl pgrep
 
 wait
