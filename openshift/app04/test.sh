@@ -19,8 +19,10 @@ cd /tmp
 
 rm -f test.php*
 
-mv ${OPENSHIFT_LOG_DIR}/d1.txt ./
-mv ${OPENSHIFT_LOG_DIR}/d2.txt ./
+wget https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
+cp test.php ${OPENSHIFT_REPO_DIR}/test.php
+
+cat test.php
 
 cat d1.txt
 cat d2.txt
