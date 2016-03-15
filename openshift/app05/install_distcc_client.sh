@@ -70,8 +70,16 @@ popd > /dev/null
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 cat << '__HEREDOC__' > yuicompressor.php
 <?php
-if (!isset($_POST['suffix'], $_POST['path']))
+$log_file = getenv("OPENSHIFT_LOG_DIR") . "yuicompressor_php_" . date("Ymd") . ".log";
+if (!isset($_POST['suffix']))
 {
+    file_put_contents($log_file, "CHECK POINT 010 suffix", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+if (!isset($_POST['path']))
+{
+    file_put_contents($log_file, "CHECK POINT 020 path", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
@@ -79,16 +87,19 @@ $suffix = $_POST["suffix"];
 $path = $_POST["path"];
 if (preg_match('/^\w+$/', $suffix) == 0)
 {
+    file_put_contents($log_file, "CHECK POINT 030 $suffix", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (preg_match('/.*\.\..*/', $path) == 1)
 {
+    file_put_contents($log_file, "CHECK POINT 040 $path", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (preg_match('/^app-root\/data\/.+$/', $path) == 0)
 {
+    file_put_contents($log_file, "CHECK POINT 050 $path", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
@@ -98,8 +109,9 @@ $file_name = $_FILES['file']['name'];
 $original_file = getenv("OPENSHIFT_TMP_DIR") . $file_name . "." . $suffix;
 $compressed_file = getenv("OPENSHIFT_TMP_DIR") . "compressed.$suffix.css";
 $yuicompressor = getenv("OPENSHIFT_DATA_DIR") . "/yuicompressor.jar";
-if (preg_match('/\.js$/', $file_name) == 0)
+if (preg_match('/\.css/', $file_name) == 0)
 {
+    file_put_contents($log_file, "CHECK POINT 060 $file_name", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
@@ -130,6 +142,7 @@ if (file_exists($compressed_file))
 }
 else
 {
+    file_put_contents($log_file, "CHECK POINT 070 $compressed_file", FILE_APPEND);
     header('HTTP', true, 500);
 }
 @unlink($original_file);
@@ -153,8 +166,16 @@ cat << '__HEREDOC__' > closure_compiler.php
 <?php
 // wget http://dl.google.com/closure-compiler/compiler-latest.zip
 // curl https://xxx/xxx.php -F "file=@./jquery-1.7.1.min.js" -F "suffix=uuid" -F "path=app-root/"
-if (!isset($_POST['suffix'], $_POST['path']))
+$log_file = getenv("OPENSHIFT_LOG_DIR") . "closure_compiler_php_" . date("Ymd") . ".log";
+if (!isset($_POST['suffix']))
 {
+    file_put_contents($log_file, "CHECK POINT 010 suffix", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+if (!isset($_POST['path']))
+{
+    file_put_contents($log_file, "CHECK POINT 020 path", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
@@ -162,16 +183,19 @@ $suffix = $_POST["suffix"];
 $path = $_POST["path"];
 if (preg_match('/^\w+$/', $suffix) == 0)
 {
+    file_put_contents($log_file, "CHECK POINT 030 $suffix", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (preg_match('/.*\.\..*/', $path) == 1)
 {
+    file_put_contents($log_file, "CHECK POINT 040 $path", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (preg_match('/^app-root\/data\/.+$/', $path) == 0)
 {
+    file_put_contents($log_file, "CHECK POINT 050 $path", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
@@ -186,6 +210,7 @@ $download_file = "result.$suffix.zip";
 $closure_compiler = getenv("OPENSHIFT_DATA_DIR") . "/compiler.jar";
 if (preg_match('/\.js$/', $file_name) == 0)
 {
+    file_put_contents($log_file, "CHECK POINT 060 $file_name", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
