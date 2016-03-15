@@ -87,7 +87,7 @@ done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
 compressed_file=./$(basename ${target_file}).$$
 rm -f ${compressed_file}
 
-path=$(echo ${target_file} | sed -e 's|${OPENSHIFT_HOME_DIR}||g')
+path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ server=${server} target_file=${target_file} suffix=${uuid} path=${path} compressed_file=${compressed_file}" \
  | tee -a ${OPENSHIFT_LOG_DIR}/yuicompressor.log
 curl https://${server}/yuicompressor.php -F "file=@${target_file}" -F "suffix=${uuid}" -F "path=${path}" -o ${compressed_file}
@@ -137,7 +137,7 @@ done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
 
 rm -f result.${uuid}.zip
 
-path=$(echo ${target_file} | sed -e 's|${OPENSHIFT_HOME_DIR}||g')
+path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ server=${server} target_file=${target_file} suffix=${uuid} path=${path} result.zip=result.${uuid}.zip" \
  | tee -a ${OPENSHIFT_LOG_DIR}/closure_compiler.log
 curl https://${server}/closure_compiler.php -F "file=@${target_file}" -F "suffix=${uuid}" -F "path=${path}" -o result.${uuid}.zip
