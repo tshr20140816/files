@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1423"
+echo "1439"
 
 # set -x
 
@@ -25,15 +25,15 @@ export HOME=${OPENSHIFT_DATA_DIR}
 gem --version
 # gem environment
 
-yes | rhc app delete -a portal5
-yes | rhc app create portal5 diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
+# yes | rhc app delete -a portal5
+# yes | rhc app create portal5 diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
 
 server_link=$(rhc apps | grep ssh | grep portal5 | awk '{print $3}' | awk -F/ '{print $3}')
 echo ${server_link}
 
 
-ssh-keygen -F $(echo ${server_link} | sed -e s|.+@||g)
-ssh-keygen -R $(echo ${server_link} | sed -e s|.+@||g)
+ssh-keygen -F $(echo ${server_link} | sed -e "s|.+@||g")
+ssh-keygen -R $(echo ${server_link} | sed -e "s|.+@||g")
 
 ssh ${server_link} cat /proc/cpuinfo
 
