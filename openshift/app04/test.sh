@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0847"
+echo "0909"
 
 # set -x
 
@@ -17,9 +17,11 @@ cd /tmp
 
 # ls -lang
 
-wget http://jp2.php.net/get/php-5.6.19.tar.xz/from/this/mirror -O /dev/null &
+curl http://jp2.php.net/get/php-5.6.19.tar.xz/from/this/mirror -o /dev/null &
 
-pgrep -fl wget
+pgrep -fl pgrep
+pgrep -fl curl
+pgrep -fl curl | grep -c php
 pgrep -fl pgrep
 
 exit
