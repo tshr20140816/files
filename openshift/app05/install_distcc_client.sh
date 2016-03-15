@@ -165,8 +165,6 @@ pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 # wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/closure_compiler.php
 cat << '__HEREDOC__' > closure_compiler.php
 <?php
-// wget http://dl.google.com/closure-compiler/compiler-latest.zip
-// curl https://xxx/xxx.php -F "file=@./jquery-1.7.1.min.js" -F "suffix=uuid" -F "path=app-root/"
 $log_file = getenv("OPENSHIFT_LOG_DIR") . "closure_compiler_php_" . date("Ymd") . ".log";
 if (!isset($_POST['suffix']))
 {
@@ -215,38 +213,51 @@ if (preg_match('/\.js$/', $file_name) == 0)
     header('HTTP', true, 500);
     exit;
 }
+file_put_contents($log_file, date("YmdHis") . "CHECK POINT 070 suffix $suffix\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . "CHECK POINT 080 path $path\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . "CHECK POINT 090 compressed_path $compressed_path\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . "CHECK POINT 100 file_name $file_name\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . "CHECK POINT 110 original_file $original_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . "CHECK POINT 120 compiled_file $compiled_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . "CHECK POINT 130 result_file $result_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . "CHECK POINT 140 zip_file $zip_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . "CHECK POINT 150 download_file $download_file\r\n", FILE_APPEND);
 file_put_contents($log_file, date("YmdHis") . " TARGET $path", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 if (file_exists($compressed_path . ".compressed") && file_exists($compressed_path)
      && (file_get_contents($original_file) == file_get_contents($compressed_path)))
 {
-    file_put_contents($log_file, date("YmdHis") . " CACHE HIT $path", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CACHE HIT $path\r\n", FILE_APPEND);
     copy($compressed_path . ".compressed", $compiled_file);
     copy($compressed_path . ".result.txt", $result_file);
 }
 else
 {
-    file_put_contents($log_file, date("YmdHis") . " CACHE MISS $path", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CACHE MISS $path\r\n", FILE_APPEND);
     $cmd = "java -jar $closure_compiler --summary_detail_level 3 --compilation_level SIMPLE_OPTIMIZATIONS --js $original_file --js_output_file $compiled_file 2>&1";
     exec($cmd, $arr, $res);
     file_put_contents($result_file, $arr[0]);
+    file_put_contents($log_file, date("YmdHis") . " RESULT $arr[0]\r\n", FILE_APPEND);
 }
 chdir(getenv("OPENSHIFT_TMP_DIR"));
 if (file_exists($compiled_file))
 {
-    $cmd = "zip -9 $zip_file " . pathinfo($compiled_file, PATHINFO_FILENAME) . " " . pathinfo($result_file, PATHINFO_FILENAME);
     if (!file_exists($compressed_path . ".compressed"))
     {
+        tmp = pathinfo($compressed_path, PATHINFO_DIRNAME);
+        file_put_contents($log_file, date("YmdHis") . "CHECK POINT 160 MKDIR $tmp\r\n", FILE_APPEND);
         @mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , "0777", TRUE);
         copy($original_file, $compressed_path);
         copy($compiled_file, $compressed_path . ".compressed");
         copy($result_file, $compressed_path . ".result.txt");
     }
+    $cmd = "zip -9 $zip_file " . pathinfo($compiled_file, PATHINFO_FILENAME) . " " . pathinfo($result_file, PATHINFO_FILENAME);
 }
 else
 {
     $cmd = "zip -9 $zip_file " . pathinfo($result_file, PATHINFO_FILENAME);
 }
+file_put_contents($log_file, date("YmdHis") . " $cmd\r\n", FILE_APPEND);
 exec($cmd, $arr, $res);
 header("Content-Type: application/octet-stream");
 header("Content-Disposition: attachment; filename=$download_file");
