@@ -85,6 +85,12 @@ rm curl-${curl_version}.tar.bz2
 rm -rf curl-${curl_version}
 popd > /dev/null
 
+pushd ${OPENSHIFT_DATA_DIR}/curl/bin > /dev/null
+file curl | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
+strip --strip-all curl | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
+file curl | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
+popd > /dev/null
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
