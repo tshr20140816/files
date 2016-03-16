@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1439"
+echo "1154"
 
 # set -x
 
@@ -18,25 +18,12 @@ cd /tmp
 # ls -lang
 
 rm -f test.php*
+rm -f nkf-2.1.4.tar.gz
+rm -rf nkf-2.1.4
+wget https://osdn.jp/projects/nkf/downloads/64158/nkf-2.1.4.tar.gz/
+tar zxf nkf-2.1.4.tar.gz
 
-export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-export HOME=${OPENSHIFT_DATA_DIR}
-gem --version
-# gem environment
-
-# yes | rhc app delete -a portal5
-# yes | rhc app create portal5 diy-0.1 mysql-5.5 cron-1.4 phpmyadmin-4 --server openshift.redhat.com
-
-server_link=$(rhc apps | grep ssh | grep portal5 | awk '{print $3}' | awk -F/ '{print $3}')
-echo ${server_link}
-
-
-ssh-keygen -F $(echo ${server_link} | sed -e "s|.+@||g")
-ssh-keygen -R $(echo ${server_link} | sed -e "s|.+@||g")
-
-ssh ${server_link} cat /proc/cpuinfo
-
-export HOME=${OPENSHIFT_HOME_DIR}
+cd nkf-2.1.4
+./configure --help
 
 exit
