@@ -415,7 +415,7 @@ if [ "${mirror_server}" != "none" ]; then
     # curl
     wget -t1 ${mirror_server}/curl-${curl_version}.tar.bz2
     wget https://curl.haxx.se/download/curl-${curl_version}.tar.bz2.asc
-    gpg --recv-keys $(gpg --verify curl-${curl_version}.tar.bz2.asc 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+    gpg --recv-keys $(gpg --verify curl-${curl_version}.tar.bz2.asc 2>&1 | grep "DSA key ID" | awk '{print $NF}')
     if [ $(gpg --verify curl-${curl_version}.tar.bz2.asc 2>&1 | grep -c "Good signature from") != 1 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) curl pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) curl pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
