@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1334"
+echo "0829"
 
 # set -x
 
@@ -14,36 +14,14 @@ if [ $(wc -c < ${OPENSHIFT_LOG_DIR}/cron_minutely.log) -gt 100000 ]; then
 fi
 
 cd /tmp
+# wget http://www.redmine.org/releases/redmine-2.6.10.tar.gz
+# cd ${OPENSHIFT_DATA_DIR}
+# mv -f /tmp/redmine-2.6.10.tar.gz ./
 
-# ls -lang
-
-rm -f test.php*
-rm -f nkf-2.1.4.tar.gz
-rm -rf nkf-2.1.4
-
-wget http://iij.dl.osdn.jp/nkf/64158/nkf-2.1.4.tar.gz
-tar zxf nkf-2.1.4.tar.gz
 ls -lang
 
-cd nkf-2.1.4
-cat Makefile
+mv -f d1.txt sv.txt
 
-sed -e "s|-g -O2 -Wall -pedantic|-O2 -march=native -pipe -fomit-frame-pointer -s|g" Makefile > Makefile2
-
-cp -f Makefile2 Makefile
-
-cat Makefile
-
-# ./configure --help
-# make -p
-time make
-
-tree ./
-
-file nkf
-ls -lang nkf
-strip --strip-all nkf
-file nkf
-ls -lang nkf
+cat sv.txt
 
 exit
