@@ -25,13 +25,16 @@ rm -f index.html
 whereis nkf
 
 wget http://iij.dl.osdn.jp/nkf/64158/nkf-2.1.4.tar.gz
-tar zvxf nkf-2.1.4.tar.gz
+tar zxf nkf-2.1.4.tar.gz
 ls -lang
 
 cd nkf-2.1.4
+cat Makefile
 # ./configure --help
 make
 
 tree ./
+
+file nkf
 
 exit
