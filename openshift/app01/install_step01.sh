@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.03.17 fio_version 2.7 → 2.8
 # 2016.03.16 baikal_version 0.3.5 → 0.4.0
 # 2016.03.14 redmine_version 2.6.9 → 2.6.10
 # 2016.03.10 fio_version 2.6 → 2.7
@@ -99,7 +100,7 @@ curl_version 7.47.1
 distcc_version 3.1
 delegate_version 9.9.13
 expect_version 5.45
-fio_version 2.7
+fio_version 2.8
 ipafont_version 00303
 jpegoptim_version 1.4.3
 libmemcached_version 1.0.18
