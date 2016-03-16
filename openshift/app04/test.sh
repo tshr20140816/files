@@ -25,12 +25,12 @@ rm -f redmine-2.6.10.tar.gz
 # tar xfz redmine-2.6.10.tar.gz
 # rm -f redmine-2.6.10.tar.gz
 
-rm -f js_list.txt
-find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep redmine | tee -a js_list.txt
+# rm -f js_list.txt
+# find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep redmine | tee -a js_list.txt
 
 ls -lang
 
-for target_file in $(cat js_list)
+for target_file in $(cat js_list.txt)
 do
   path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
   echo ${path}
