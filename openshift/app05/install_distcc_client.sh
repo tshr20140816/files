@@ -145,7 +145,7 @@ if (file_exists($compressed_file))
     echo file_get_contents($compressed_file);
     if (!file_exists($compressed_path . ".compressed"))
     {
-        @mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , "0777", TRUE);
+        @mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , 0777, TRUE);
         copy($original_file, $compressed_path);
         copy($compressed_file, $compressed_path . ".compressed");
     }
@@ -255,7 +255,7 @@ if (file_exists($compiled_file))
     {
         $tmp = pathinfo($compressed_path, PATHINFO_DIRNAME);
         file_put_contents($log_file, date("YmdHis") . "CHECK POINT 160 MKDIR $tmp\r\n", FILE_APPEND);
-        @mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , "0777", TRUE);
+        @mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , 0777, TRUE);
         copy($original_file, $compressed_path);
         copy($compiled_file, $compressed_path . ".compressed");
         copy($result_file, $compressed_path . ".result.txt");
