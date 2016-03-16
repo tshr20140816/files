@@ -36,7 +36,7 @@ sed -e "s|-g -O2 -Wall -pedantic|-O2 -march=native -pipe -fomit-frame-pointer -s
 cat Makefile
 
 # ./configure --help
-make -p
+# make -p
 time make
 
 tree ./
