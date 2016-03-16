@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1154"
+echo "1321"
 
 # set -x
 
@@ -31,6 +31,7 @@ ls -lang
 cd nkf-2.1.4
 cat Makefile
 # ./configure --help
+make -p
 time make
 
 tree ./
