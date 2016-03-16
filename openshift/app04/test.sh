@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0834"
+echo "0843"
 
 # set -x
 
@@ -15,6 +15,7 @@ fi
 
 cd /tmp
 cat sv.txt
+mv -f ${OPENSHIFT_DATA_DIR}js_list.txt ./
 cat js_list.txt
 # rm -f js_list.txt
 rm -f redmine-2.6.10.tar.gz
