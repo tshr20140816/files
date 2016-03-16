@@ -31,7 +31,7 @@ ls -lang
 cd nkf-2.1.4
 cat Makefile
 # ./configure --help
-make
+time make
 
 tree ./
 
