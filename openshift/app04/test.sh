@@ -14,13 +14,15 @@ if [ $(wc -c < ${OPENSHIFT_LOG_DIR}/cron_minutely.log) -gt 100000 ]; then
 fi
 
 cd /tmp
-# wget http://www.redmine.org/releases/redmine-2.6.10.tar.gz
-# cd ${OPENSHIFT_DATA_DIR}
-# mv -f /tmp/redmine-2.6.10.tar.gz ./
+rm -f js_list.txt
+rm -f redmine-2.6.10.tar.gz
+wget http://www.redmine.org/releases/redmine-2.6.10.tar.gz
+cd ${OPENSHIFT_DATA_DIR}
+mv -f /tmp/redmine-2.6.10.tar.gz ./
+tar xfz redmine-2.6.10.tar.gz
+rm -f redmine-2.6.10.tar.gz
 
-ls -lang
-
-mv -f d1.txt sv.txt
+find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep redmine | tee -a js_list.txt
 
 cat sv.txt
 
