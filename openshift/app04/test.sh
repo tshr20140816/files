@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1327"
+echo "1334"
 
 # set -x
 
@@ -20,9 +20,6 @@ cd /tmp
 rm -f test.php*
 rm -f nkf-2.1.4.tar.gz
 rm -rf nkf-2.1.4
-rm -f index.html
-
-whereis nkf
 
 wget http://iij.dl.osdn.jp/nkf/64158/nkf-2.1.4.tar.gz
 tar zxf nkf-2.1.4.tar.gz
@@ -33,7 +30,9 @@ cat Makefile
 
 sed -e "s|-g -O2 -Wall -pedantic|-O2 -march=native -pipe -fomit-frame-pointer -s|g" Makefile > Makefile2
 
-cat Makefile2
+cp -f Makefile2 Makefile
+
+cat Makefile
 
 # ./configure --help
 # make -p
