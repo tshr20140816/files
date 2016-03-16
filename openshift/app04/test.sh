@@ -20,7 +20,8 @@ cd /tmp
 rm -f test.php*
 rm -f nkf-2.1.4.tar.gz
 rm -rf nkf-2.1.4
-wget https://osdn.jp/projects/nkf/downloads/64158/nkf-2.1.4.tar.gz/
+rm -f index.html
+wget http://iij.dl.osdn.jp/nkf/64158/nkf-2.1.4.tar.gz
 tar zxf nkf-2.1.4.tar.gz
 
 cd nkf-2.1.4
