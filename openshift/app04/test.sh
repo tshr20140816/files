@@ -31,9 +31,9 @@ ls -lang
 cd nkf-2.1.4
 cat Makefile
 
-sed -e "s|-g -O2 -Wall -pedantic|-O2 -march=native -pipe -fomit-frame-pointer -s|g" Makefile > Makefile
+sed -e "s|-g -O2 -Wall -pedantic|-O2 -march=native -pipe -fomit-frame-pointer -s|g" Makefile > Makefile2
 
-cat Makefile
+cat Makefile2
 
 # ./configure --help
 # make -p
