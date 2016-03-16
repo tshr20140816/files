@@ -85,6 +85,30 @@ rm curl-${curl_version}.tar.bz2
 rm -rf curl-${curl_version}
 popd > /dev/null
 
+# ***** nkf *****
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+cp -f ${OPENSHIFT_DATA_DIR}/download_files/nkf-${nkf_version}.tar.gz ./
+echo "$(date +%Y/%m/%d" "%H:%M:%S) nkf tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+tar zxf nkf-${nkf_version}.tar.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/nkf-${nkf_version} > /dev/null
+mv -f Makefile Makefile.org
+sed -e "s|-g -O2 -Wall -pedantic|-O2 -march=native -pipe -fomit-frame-pointer -s|g" Makefile.org > Makefile
+cat Makefile | tee -a ${OPENSHIFT_LOG_DIR}/install_nkf.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) curl nkf" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_nkf.log
+time make 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_nkf.log
+mkdir -p ${OPENSHIFT_DATA_DIR}/nkf/bin
+chmod +x nkf
+cp nkf ${OPENSHIFT_DATA_DIR}/nkf/bin/
+popd > /dev/null
+mv ${OPENSHIFT_LOG_DIR}/install_nkf.log ${OPENSHIFT_LOG_DIR}/install/
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm nkf-${nkf_version}.tar.gz
+rm -rf nkf-${nkf_version}
+popd > /dev/null
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename "${0}").ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
