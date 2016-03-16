@@ -107,6 +107,7 @@ memcached_php_ext_version 2.2.0
 memcached_version 1.4.25
 mrtg_version 2.17.4
 murlin_version 0.2.4
+nkf_version 2.1.4
 openssh_version 6.8p1
 optipng_version 0.7.5
 php_version 5.6.19
@@ -345,6 +346,8 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/memcached-${memcached_php_ext_version}.tgz &
     # mURLin
     wget -t1 ${mirror_server}/mURLin-${murlin_version}.tar.gz &
+    # nkf
+    wget -t ${mirror_server}/nkf-${nkf_version}.tar.gz &
     # fio
     wget -t1 ${mirror_server}/fio-${fio_version}.tar.bz2 &
     # Baikal
@@ -843,6 +846,15 @@ do
         wget http://downloads.sourceforge.net/project/murlin/mURLin-${murlin_version}.tar.gz &
     fi
     [ -f mURLin-${murlin_version}.tar.gz ] || files_exists=0
+
+    # *** nkf ***
+    if [ ! -f nkf-${nkf_version}.tar.gz ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) nkf wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing nkf-${nkf_version}.tar.gz" \
+         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        wget http://iij.dl.osdn.jp/nkf/64158/nkf-${nkf_version}.tar.gz &
+    fi
+    [ -f nkf-${nkf_version}.tar.gz ] || files_exists=0
 
     # *** Tcl ***
     if [ ! -f tcl${tcl_version}-src.tar.gz ]; then
