@@ -177,13 +177,13 @@ cat << '__HEREDOC__' > closure_compiler.php
 $log_file = getenv("OPENSHIFT_LOG_DIR") . "closure_compiler_php_" . date("Ymd") . ".log";
 if (!isset($_POST['suffix']))
 {
-    file_put_contents($log_file, date("YmdHis") . "CHECK POINT 010 suffix\r\n", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 010 suffix\r\n", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (!isset($_POST['path']))
 {
-    file_put_contents($log_file, date("YmdHis") . "CHECK POINT 020 path\r\n", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 020 path\r\n", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
@@ -191,19 +191,19 @@ $suffix = $_POST["suffix"];
 $path = $_POST["path"];
 if (preg_match('/^\w+$/', $suffix) == 0)
 {
-    file_put_contents($log_file, date("YmdHis") . "CHECK POINT 030 $suffix\r\n", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 030 $suffix\r\n", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (preg_match('/.*\.\..*/', $path) == 1)
 {
-    file_put_contents($log_file, date("YmdHis") . "CHECK POINT 040 $path\r\n", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 040 $path\r\n", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
 if (preg_match('/^app-root\/data\/.+$/', $path) == 0)
 {
-    file_put_contents($log_file, date("YmdHis") . "CHECK POINT 050 $path\r\n", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 050 $path\r\n", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
@@ -218,19 +218,19 @@ $download_file = "result.$suffix.zip";
 $closure_compiler = getenv("OPENSHIFT_DATA_DIR") . "/compiler.jar";
 if (preg_match('/\.js$/', $file_name) == 0)
 {
-    file_put_contents($log_file, date("YmdHis") . "CHECK POINT 060 $file_name\r\n", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 060 $file_name\r\n", FILE_APPEND);
     header('HTTP', true, 500);
     exit;
 }
-file_put_contents($log_file, date("YmdHis") . "CHECK POINT 070 suffix $suffix\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . "CHECK POINT 080 path $path\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . "CHECK POINT 090 compressed_path $compressed_path\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . "CHECK POINT 100 file_name $file_name\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . "CHECK POINT 110 original_file $original_file\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . "CHECK POINT 120 compiled_file $compiled_file\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . "CHECK POINT 130 result_file $result_file\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . "CHECK POINT 140 zip_file $zip_file\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . "CHECK POINT 150 download_file $download_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 suffix $suffix\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 080 path $path\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 090 compressed_path $compressed_path\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 100 file_name $file_name\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 110 original_file $original_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 120 compiled_file $compiled_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 130 result_file $result_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 140 zip_file $zip_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 150 download_file $download_file\r\n", FILE_APPEND);
 file_put_contents($log_file, date("YmdHis") . " TARGET $path\r\n", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 if (file_exists($compressed_path . ".compressed") && file_exists($compressed_path)
