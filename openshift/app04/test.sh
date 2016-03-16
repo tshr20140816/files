@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1321"
+echo "1327"
 
 # set -x
 
@@ -30,6 +30,11 @@ ls -lang
 
 cd nkf-2.1.4
 cat Makefile
+
+sed -e "s|-g -O2 -Wall -pedantic|-O2 -march=native -pipe -fomit-frame-pointer -s|g" Makefile > Makefile
+
+cat Makefile
+
 # ./configure --help
 make -p
 time make
