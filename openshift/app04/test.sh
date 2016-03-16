@@ -36,5 +36,9 @@ make
 tree ./
 
 file nkf
+ls -lang nkf
+strip --strip-all nkf
+file nkf
+ls -lang nkf
 
 exit
