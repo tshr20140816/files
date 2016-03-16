@@ -231,7 +231,7 @@ file_put_contents($log_file, date("YmdHis") . "CHECK POINT 120 compiled_file $co
 file_put_contents($log_file, date("YmdHis") . "CHECK POINT 130 result_file $result_file\r\n", FILE_APPEND);
 file_put_contents($log_file, date("YmdHis") . "CHECK POINT 140 zip_file $zip_file\r\n", FILE_APPEND);
 file_put_contents($log_file, date("YmdHis") . "CHECK POINT 150 download_file $download_file\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " TARGET $path", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " TARGET $path\r\n", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 if (file_exists($compressed_path . ".compressed") && file_exists($compressed_path)
      && (file_get_contents($original_file) == file_get_contents($compressed_path)))
