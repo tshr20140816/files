@@ -21,11 +21,17 @@ rm -f test.php*
 rm -f nkf-2.1.4.tar.gz
 rm -rf nkf-2.1.4
 rm -f index.html
+
+whereis nkf
+
 wget http://iij.dl.osdn.jp/nkf/64158/nkf-2.1.4.tar.gz
 tar zvxf nkf-2.1.4.tar.gz
 ls -lang
 
 cd nkf-2.1.4
-./configure --help
+# ./configure --help
+make
+
+tree ./
 
 exit
