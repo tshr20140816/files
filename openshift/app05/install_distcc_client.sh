@@ -122,7 +122,7 @@ file_put_contents($log_file, date("YmdHis") . " CHECK POINT 080 file_name $file_
 file_put_contents($log_file, date("YmdHis") . " CHECK POINT 090 original_file $original_file\r\n", FILE_APPEND);
 file_put_contents($log_file, date("YmdHis") . " CHECK POINT 100 compressed_file $compressed_file\r\n", FILE_APPEND);
 file_put_contents($log_file, date("YmdHis") . " CHECK POINT 110 yuicompressor $yuicompressor\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " TARGET $path", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " TARGET $path\r\n", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 chdir(getenv("OPENSHIFT_TMP_DIR"));
 if (file_exists($compressed_path . ".compressed") && file_exists($compressed_path)
