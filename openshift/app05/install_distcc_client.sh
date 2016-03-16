@@ -115,6 +115,13 @@ if (preg_match('/\.css/', $file_name) == 0)
     header('HTTP', true, 500);
     exit;
 }
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 050 suffix $suffix\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 060 path $path\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 compressed_path $compressed_path\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 080 file_name $file_name\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 090 original_file $original_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 100 compressed_file $compressed_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 110 yuicompressor $yuicompressor\r\n", FILE_APPEND);
 file_put_contents($log_file, date("YmdHis") . " TARGET $path", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 chdir(getenv("OPENSHIFT_TMP_DIR"));
@@ -129,6 +136,8 @@ else
     file_put_contents($log_file, date("YmdHis") . " CACHE MISS $path\r\n", FILE_APPEND);
     $cmd = "java -jar $yuicompressor --type css -o $compressed_file $original_file 2>&1";
     exec($cmd, $arr, $res);
+    $tmp = var_dump($arr);
+    file_put_contents($log_file, date("YmdHis") . " RESULT $tmp\r\n", FILE_APPEND);
 }
 if (file_exists($compressed_file))
 {
