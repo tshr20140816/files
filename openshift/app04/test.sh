@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0848"
+echo "0849"
 
 # set -x
 
@@ -26,6 +26,8 @@ rm -f redmine-2.6.10.tar.gz
 # rm -f redmine-2.6.10.tar.gz
 
 # find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep redmine | tee -a js_list.txt
+
+ls -lang
 
 for target_file in $(cat ./js_list)
 do
