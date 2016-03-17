@@ -39,9 +39,11 @@ cd /tmp
 #     flag=1
 #   fi
 # done
-sort --help
+# sort --help
 
-cat js_list.txt | sort -R
+# cat js_list.txt | sort -R
+
+sort --random-sort js_list.txt
 
 
 exit
