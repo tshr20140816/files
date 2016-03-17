@@ -15,13 +15,13 @@ fi
 
 cd /tmp
 
-mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
-pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
-rm -f wordpress-4.4.2-ja.tar.gz
-wget https://ja.wordpress.org/wordpress-4.4.2-ja.tar.gz
-tar zxf wordpress-4.4.2-ja.tar.gz --strip-components=1
-rm -f wordpress-4.4.2-ja.tar.gz
-popd > /dev/null
+# mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+# pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
+# rm -f wordpress-4.4.2-ja.tar.gz
+# wget https://ja.wordpress.org/wordpress-4.4.2-ja.tar.gz
+# tar zxf wordpress-4.4.2-ja.tar.gz --strip-components=1
+# rm -f wordpress-4.4.2-ja.tar.gz
+# popd > /dev/null
 
 rm -f js_list.txt
 find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep wordpress | tee -a js_list.txt
@@ -35,7 +35,7 @@ do
     echo ${path}
     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null 2>/dev/null
   fi
-  if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/tinymce/plugins/wpview/plugin.js" = ${path} ]; then
+  if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/tinymce/plugins/textcolor/plugin.js" = ${path} ]; then
     flag=1
   fi
 done
