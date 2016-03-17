@@ -43,7 +43,11 @@ cd /tmp
 
 # cat js_list.txt | sort -R
 
-sort --random-sort js_list.txt
+# sort --random-sort js_list.txt
 
+while read LINE
+do
+    echo ${LINE}
+done < $(sort --random-sort js_list.txt | head -n 10)
 
 exit
