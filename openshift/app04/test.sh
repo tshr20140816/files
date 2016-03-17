@@ -26,7 +26,7 @@ popd > /dev/null
 rm -f js_list.txt
 find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep wordpress | tee -a js_list.txt
 
-flag=1
+flag=0
 
 for target_file in $(cat js_list.txt)
 do
@@ -35,9 +35,9 @@ do
     echo ${path}
     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null
   fi
-  # if [ "app-root/data/redmine-2.6.10/public/javascripts/revision_graph.js" = ${path} ]; then
-  #     flag=1
-  # fi
+  if [ "app-root/data/apache/htdocs/wordpress/wp-admin/js/xfn.min.js" = ${path} ]; then
+    flag=1
+  fi
 done
 
 
