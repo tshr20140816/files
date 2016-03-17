@@ -79,7 +79,7 @@ if (file_exists($compiled_file))
     if (!file_exists($compressed_path . ".compressed"))
     {
         $tmp = pathinfo($compressed_path, PATHINFO_DIRNAME);
-        file_put_contents($log_file, date("YmdHis") . "CHECK POINT 160 MKDIR $tmp\r\n", FILE_APPEND);
+        file_put_contents($log_file, date("YmdHis") . " CHECK POINT 160 MKDIR $tmp\r\n", FILE_APPEND);
         @mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , 0777, TRUE);
         copy($original_file, $compressed_path);
         copy($compiled_file, $compressed_path . ".compressed");
