@@ -35,7 +35,7 @@ do
     echo ${path}
     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null 2>/dev/null
   fi
-  if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/tinymce/plugins/textcolor/plugin.js" = ${path} ]; then
+  if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/jquery/ui/effect-puff.min.js" = ${path} ]; then
     flag=1
   fi
 done
