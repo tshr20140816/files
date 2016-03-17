@@ -35,7 +35,7 @@ do
     echo ${path}
     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null
   fi
-  if [ "app-root/data/apache/htdocs/wordpress/wp-admin/js/customize-widgets.js" = ${path} ]; then
+  if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/wp-util.js" = ${path} ]; then
     flag=1
   fi
 done
