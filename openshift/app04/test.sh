@@ -33,7 +33,7 @@ do
   path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
   if [ $flag -eq 1 ]; then
     echo ${path}
-    curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null
+    curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null 2>/dev/null
   fi
   if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/wp-util.js" = ${path} ]; then
     flag=1
