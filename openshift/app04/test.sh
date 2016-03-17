@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0854"
+echo "0924"
 
 # set -x
 
@@ -29,12 +29,18 @@ rm -f redmine-2.6.10.tar.gz
 # find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep redmine | tee -a js_list.txt
 
 ls -lang
+flag=0
 
 for target_file in $(cat js_list.txt)
 do
   path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
-  echo ${path}
-  curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null
+  if [ $f -eq 1 ]; then
+    echo ${path}
+    curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null
+  fi
+  if [ "app-root/data/redmine-2.6.10/public/javascripts/jstoolbar/jstoolbar-textile.min.js" = ${path} ]; then
+      flag=1
+  fi
 done
 
 exit
