@@ -34,7 +34,7 @@ flag=0
 for target_file in $(cat js_list.txt)
 do
   path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
-  if [ $f -eq 1 ]; then
+  if [ $flag -eq 1 ]; then
     echo ${path}
     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null
   fi
