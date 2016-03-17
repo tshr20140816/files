@@ -260,11 +260,11 @@ if (file_exists($compiled_file))
         copy($compiled_file, $compressed_path . ".compressed");
         copy($result_file, $compressed_path . ".result.txt");
     }
-    $cmd = "zip -9 $zip_file " . pathinfo($compiled_file, PATHINFO_FILENAME) . " " . pathinfo($result_file, PATHINFO_FILENAME);
+    $cmd = "zip -9 $zip_file " . pathinfo($compiled_file, PATHINFO_BASENAME) . " " . pathinfo($result_file, PATHINFO_BASENAME);
 }
 else
 {
-    $cmd = "zip -9 $zip_file " . pathinfo($result_file, PATHINFO_FILENAME);
+    $cmd = "zip -9 $zip_file " . pathinfo($result_file, PATHINFO_BASENAME);
 }
 file_put_contents($log_file, date("YmdHis") . " $cmd\r\n", FILE_APPEND);
 exec($cmd, $arr, $res);
