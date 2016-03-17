@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0947"
+echo "1024"
 
 # set -x
 
@@ -14,22 +14,19 @@ if [ $(wc -c < ${OPENSHIFT_LOG_DIR}/cron_minutely.log) -gt 100000 ]; then
 fi
 
 cd /tmp
-# cat sv.txt
-# mv -f ${OPENSHIFT_DATA_DIR}js_list.txt ./
-# cat js_list.txt
-# rm -f js_list.txt
-rm -f redmine-2.6.10.tar.gz
-# wget http://www.redmine.org/releases/redmine-2.6.10.tar.gz
-# cd ${OPENSHIFT_DATA_DIR}
-# mv -f /tmp/redmine-2.6.10.tar.gz ./
-# tar xfz redmine-2.6.10.tar.gz
-# rm -f redmine-2.6.10.tar.gz
 
-# rm -f js_list.txt
-# find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep redmine | tee -a js_list.txt
+mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
+rm -f wordpress-4.4.2-ja.tar.gz
+wget https://ja.wordpress.org/wordpress-4.4.2-ja.tar.gz
+tar zxf wordpress-4.4.2-ja.tar.gz --strip-components=1
+rm -f wordpress-4.4.2-ja.tar.gz
+popd > /dev/null
 
-ls -lang
-flag=0
+rm -f js_list.txt
+find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep wordpress | tee -a js_list.txt
+
+flag=1
 
 for target_file in $(cat js_list.txt)
 do
@@ -38,9 +35,10 @@ do
     echo ${path}
     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null
   fi
-  if [ "app-root/data/redmine-2.6.10/public/javascripts/revision_graph.js" = ${path} ]; then
-      flag=1
-  fi
+  # if [ "app-root/data/redmine-2.6.10/public/javascripts/revision_graph.js" = ${path} ]; then
+  #     flag=1
+  # fi
 done
+
 
 exit
