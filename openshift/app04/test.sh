@@ -26,19 +26,22 @@ cd /tmp
 # rm -f js_list.txt
 # find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep wordpress | tee -a js_list.txt
 
-flag=0
+# flag=0
 
-for target_file in $(cat js_list.txt)
-do
-  path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
-  if [ $flag -eq 1 ]; then
-    echo ${path}
-    curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null 2>/dev/null
-  fi
-  if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/media-views.js" = ${path} ]; then
-    flag=1
-  fi
-done
+# for target_file in $(cat js_list.txt)
+# do
+#   path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
+#   if [ $flag -eq 1 ]; then
+#     echo ${path}
+#     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null 2>/dev/null
+#   fi
+#   if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/media-views.js" = ${path} ]; then
+#     flag=1
+#   fi
+# done
+sort --help
+
+cat js_list.txt | sort -R
 
 
 exit
