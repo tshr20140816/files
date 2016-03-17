@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0924"
+echo "0947"
 
 # set -x
 
@@ -38,7 +38,7 @@ do
     echo ${path}
     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null
   fi
-  if [ "app-root/data/redmine-2.6.10/public/javascripts/jstoolbar/jstoolbar-textile.min.js" = ${path} ]; then
+  if [ "app-root/data/redmine-2.6.10/public/javascripts/revision_graph.js" = ${path} ]; then
       flag=1
   fi
 done
