@@ -37,7 +37,7 @@ do
     echo ${path}
     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null 2>/dev/null
   fi
-  if [ "app-root/data/apache/htdocs/ttrss/lib/dijit/form/nls/cs/ComboBox.js" = ${path} ]; then
+  if [ "app-root/data/apache/htdocs/ttrss/lib/dijit/form/nls/pl/ComboBox.js" = ${path} ]; then
     flag=1
   fi
 done
