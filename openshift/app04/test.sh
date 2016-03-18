@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0943"
+echo "1005"
 
 # set -x
 
@@ -15,17 +15,24 @@ fi
 
 cd /tmp
 
-# pushd  ${OPENSHIFT_DATA_DIR}/apache/htdocs
-# rm -f ttrss_archive.zip
-# wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip
-# unzip ttrss_archive.zip
-# rm -f ttrss_archive.zip
-# popd
+rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
+rm -rf ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss.git
 
-tree ${OPENSHIFT_DATA_DIR}/apache/htdocs
+pushd  ${OPENSHIFT_DATA_DIR}/apache/htdocs
+rm -f ttrss_archive.zip
+wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip
+unzip ttrss_archive.zip
+mv tt-rss.git ttrss
+rm -f ttrss_archive.zip
+popd
+
 
 rm -f js_list.txt
 find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print | grep ttrss | tee -a js_list.txt
+
+cat js_list.txt
+
+exit
 
 flag=1
 
