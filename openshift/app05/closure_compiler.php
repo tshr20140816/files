@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Tokyo');
 $log_file = getenv("OPENSHIFT_LOG_DIR") . "closure_compiler_php_" . date("Ymd") . ".log";
 if (!isset($_POST['suffix']))
 {
