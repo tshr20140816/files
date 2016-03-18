@@ -22,6 +22,8 @@ cd /tmp
 # rm -f ttrss_archive.zip
 # popd
 
+tree ${OPENSHIFT_DATA_DIR}/apache/htdocs
+
 rm -f js_list.txt
 find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print | grep ttrss | tee -a js_list.txt
 
