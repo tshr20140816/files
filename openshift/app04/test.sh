@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0911"
+echo "0919"
 
 # set -x
 
@@ -48,6 +48,6 @@ cd /tmp
 while read LINE
 do
     echo ${LINE}
-done < (sort --random-sort js_list.txt | head -n 10)
+done < <(sort --random-sort js_list.txt | head -n 10)
 
 exit
