@@ -15,39 +15,28 @@ fi
 
 cd /tmp
 
-# mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress
-# pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/wordpress > /dev/null
-# rm -f wordpress-4.4.2-ja.tar.gz
-# wget https://ja.wordpress.org/wordpress-4.4.2-ja.tar.gz
-# tar zxf wordpress-4.4.2-ja.tar.gz --strip-components=1
-# rm -f wordpress-4.4.2-ja.tar.gz
-# popd > /dev/null
+pushd  ${OPENSHIFT_DATA_DIR}/apache/htdocs
+rm -f ttrss_archive.zip
+wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip
+unzip ttrss_archive.zip
+rm -f ttrss_archive.zip
+popd
 
-# rm -f js_list.txt
-# find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep wordpress | tee -a js_list.txt
+rm -f js_list.txt
+find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print | grep ttrss | tee -a js_list.txt
 
-# flag=0
+flag=1
 
-# for target_file in $(cat js_list.txt)
-# do
-#   path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
-#   if [ $flag -eq 1 ]; then
-#     echo ${path}
-#     curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null 2>/dev/null
-#   fi
-#   if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/media-views.js" = ${path} ]; then
+for target_file in $(cat js_list.txt)
+do
+  path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
+  if [ $flag -eq 1 ]; then
+    echo ${path}
+    curl $(cat sv.txt) -F "file=@${target_file}" -F "suffix=${OPENSHIFT_APP_UUID}" -F "path=${path}" -o /dev/null 2>/dev/null
+  fi
+#  if [ "app-root/data/apache/htdocs/wordpress/wp-includes/js/media-views.js" = ${path} ]; then
 #     flag=1
 #   fi
-# done
-# sort --help
-
-# cat js_list.txt | sort -R
-
-# sort --random-sort js_list.txt
-
-while read LINE
-do
-    echo ${LINE}
-done < <(sort --random-sort js_list.txt | head -n 10)
+done
 
 exit
