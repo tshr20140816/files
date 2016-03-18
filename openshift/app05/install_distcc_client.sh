@@ -70,6 +70,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 cat << '__HEREDOC__' > yuicompressor.php
 <?php
+date_default_timezone_set('Asia/Tokyo');
 $log_file = getenv("OPENSHIFT_LOG_DIR") . "yuicompressor_php_" . date("Ymd") . ".log";
 if (!isset($_POST['suffix']))
 {
@@ -174,6 +175,7 @@ pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 # wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/closure_compiler.php
 cat << '__HEREDOC__' > closure_compiler.php
 <?php
+date_default_timezone_set('Asia/Tokyo');
 $log_file = getenv("OPENSHIFT_LOG_DIR") . "closure_compiler_php_" . date("Ymd") . ".log";
 if (!isset($_POST['suffix']))
 {
