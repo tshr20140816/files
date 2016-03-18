@@ -75,6 +75,7 @@ suffix=$(date '+%Y%m%d')
 
 target_file=${1}
 
+sort --random-sort ${OPENSHIFT_DATA_DIR}/params/fqdn.txt > fqdn.$$.txt
 while read LINE
 do
     # if [ $(pgrep -fl curl | grep ${LINE} | grep -c -v grep) -eq 0 ]; then
@@ -82,7 +83,8 @@ do
         server=${LINE}
         break
     fi
-done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
+done < fqdn.$$.txt
+rm -f fqdn.$$.txt
 
 compressed_file=./$(basename ${target_file}).$$
 rm -f ${compressed_file}
@@ -109,6 +111,7 @@ else
         rm -f ${compressed_file}
     fi
 fi
+popd > /dev/null
 __HEREDOC__
 chmod +x yuicompressor.sh &
 
@@ -126,6 +129,7 @@ uuid=${OPENSHIFT_APP_UUID}$$
 suffix=$(date '+%Y%m%d')
 target_file=${1}
 
+sort --random-sort ${OPENSHIFT_DATA_DIR}/params/fqdn.txt > fqdn.$$.txt
 while read LINE
 do
     # if [ $(pgrep -fl curl | grep ${LINE} | grep -c -v grep) -eq 0 ]; then
@@ -133,8 +137,8 @@ do
         server=${LINE}
         break
     fi
-done < ${OPENSHIFT_DATA_DIR}/params/fqdn.txt
-
+done < fqdn.$$.txt
+rm -f fqdn.$$.txt
 rm -f result.${uuid}.zip
 
 path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
