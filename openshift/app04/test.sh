@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1005"
+echo "1707"
 
 # set -x
 
@@ -26,7 +26,8 @@ cd /tmp
 # rm -f js_list.txt
 # find ${OPENSHIFT_DATA_DIR} -name "*.js" -type f -print | grep ttrss | tee -a js_list.txt
 
-# cat js_list.txt
+wc -l js_list.txt
+rm -f js_list.txt
 
 flag=0
 
