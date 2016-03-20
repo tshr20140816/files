@@ -96,7 +96,7 @@ pushd ${OPENSHIFT_TMP_DIR}/nkf-${nkf_version} > /dev/null
 mv -f Makefile Makefile.org
 sed -e "s|-g -O2 -Wall -pedantic|-O2 -march=native -pipe -fomit-frame-pointer -s|g" Makefile.org > Makefile
 cat Makefile | tee -a ${OPENSHIFT_LOG_DIR}/install_nkf.log
-echo "$(date +%Y/%m/%d" "%H:%M:%S) curl nkf" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+echo "$(date +%Y/%m/%d" "%H:%M:%S) nkf make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_nkf.log
 time make 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_nkf.log
 mkdir -p ${OPENSHIFT_DATA_DIR}/nkf/bin
