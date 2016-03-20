@@ -349,7 +349,7 @@ if [ "${mirror_server}" != "none" ]; then
     # mURLin
     wget -t1 ${mirror_server}/mURLin-${murlin_version}.tar.gz &
     # nkf
-    wget -t ${mirror_server}/nkf-${nkf_version}.tar.gz &
+    wget -t1 ${mirror_server}/nkf-${nkf_version}.tar.gz &
     # fio
     wget -t1 ${mirror_server}/fio-${fio_version}.tar.bz2 &
     # Baikal
