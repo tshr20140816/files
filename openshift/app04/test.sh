@@ -17,4 +17,6 @@ cd /tmp
 
 ls -lang
 
+wc -c js_list.txt
+
 exit
