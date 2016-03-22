@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1707"
+echo "1018"
 
 # set -x
 
@@ -20,5 +20,7 @@ ls -lang
 rm -f compiler-latest.zip
 
 ( wget http://dl.google.com/closure-compiler/compiler-latest.zip; wc -c compiler-latest.zip; ) &
+
+wait
 
 exit
