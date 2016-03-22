@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1418"
+echo "1450"
 
 # set -x
 
@@ -24,7 +24,7 @@ rm -f parallel-latest.tar.bz2.sig
 rm -f parallel-latest.tar.bz2
 rm -f super_pi-jp.tar.gz
 
-wget --no-passive-ftp ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
+wget --passive-ftp ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
 
 ls -lang
 
