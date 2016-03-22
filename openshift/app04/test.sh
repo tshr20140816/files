@@ -21,6 +21,10 @@ rm -f compiler-latest.zip
 
 ( wget http://dl.google.com/closure-compiler/compiler-latest.zip; wc -c compiler-latest.zip; ) &
 
+ls -lang
+
 wait
+
+rm -f compiler-latest.zip
 
 exit
