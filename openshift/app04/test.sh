@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "1040"
+echo "1057"
 
-# set -x
+set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
@@ -25,16 +25,12 @@ cd /tmp
 
 ls -lang
 
-rm -f compiler-latest.zip
 rm -f parallel-latest.tar.bz2.sig
 rm -f parallel-latest.tar.bz2
 
 wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
 wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
 
-gpg --help
-
 gpg --recv-keys $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-gpg --recv-keys $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep "DSA key ID" | awk '{print $NF}')
 
 exit
