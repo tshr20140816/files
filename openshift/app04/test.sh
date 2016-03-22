@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1112"
+echo "1123"
 
 # set -x
 
@@ -32,7 +32,7 @@ wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
 wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
 
 gpg --recv-keys $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-gpg --verify parallel-latest.tar.bz2.sig
+gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep -c "Good signature from"
 # gpg --auto-key-locate keyserver --keyserver-options auto-key-retrieve parallel-latest.tar.bz2.sig
 
 exit
