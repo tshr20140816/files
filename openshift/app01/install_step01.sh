@@ -93,7 +93,7 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apcu_version 4.0.10
 apache_version 2.2.31
 axel_version 2.4
-baikal_version 0.4.1
+baikal_version 0.4.2
 cacti_version 0.8.8g
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
