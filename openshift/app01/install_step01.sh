@@ -608,15 +608,6 @@ do
         wget https://github.com/yui/yuicompressor/releases/download/v${yuicompressor_version}/yuicompressor-${yuicompressor_version}.jar &
     fi
 
-    # *** GNU Parallel ***
-    if [ ! -f parallel-latest.tar.bz2 ]; then
-        # TODO http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        # wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2
-        wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
-    fi
-    [ -f parallel-latest.tar.bz2 ] || files_exists=0
-
     # *** sphinx ***
     if [ ! -f sphinx-${sphinx_version}-release.tar.gz ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing sphinx-${sphinx_version}-release.tar.gz" \
@@ -1065,6 +1056,19 @@ do
         wget -O apcu-${apcu_version}.zip https://github.com/krakjoe/apcu/archive/v${apcu_version}.zip &
     fi
     [ -f apcu-${apcu_version}.zip ] || files_exists=0
+
+    # *** GNU Parallel ***
+    if [ ! -f parallel-latest.tar.bz2 ]; then
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
+        wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
+        gpg --recv-keys $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+        if [ $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep -c "Good signature from") != 1 ]; then
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) parallel pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) parallel pgp unmatch" | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+        fi
+    fi
+    [ -f parallel-latest.tar.bz2 ] || files_exists=0
 
     # *** gem ***
     for gem in bundler rack passenger logglier
