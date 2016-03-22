@@ -373,7 +373,6 @@ if [ "${mirror_server}" != "none" ]; then
     wget -t1 ${mirror_server}/optipng-${optipng_version}.tar.gz &
     # Yui compressor
     wget -t1 ${mirror_server}/yuicompressor-${yuicompressor_version}.jar &
-    wait
 
     # apache
     wget -t1 ${mirror_server}/httpd-${apache_version}.tar.bz2
@@ -573,6 +572,8 @@ if [ "${mirror_server}" != "none" ]; then
         fi
         rm -f ${gem}.html
     done
+
+    wait
 fi
 
 files_exists=0
