@@ -15,11 +15,6 @@ fi
 
 export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
 rm -rf ${GNUPGHOME}
-mkdir ${GNUPGHOME}
-chmod 700 ${GNUPGHOME}
-gpg --list-keys
-echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
-chmod 600 ${GNUPGHOME}/gpg.conf
 
 cd /tmp
 
@@ -27,12 +22,10 @@ ls -lang
 
 rm -f parallel-latest.tar.bz2.sig
 rm -f parallel-latest.tar.bz2
+rm -f super_pi-jp.tar.gz
 
-wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
-wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
+wget ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
 
-gpg --recv-keys $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
-gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep -c "Good signature from"
-# gpg --auto-key-locate keyserver --keyserver-options auto-key-retrieve parallel-latest.tar.bz2.sig
+ls -lang
 
 exit
