@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.03.22 baikal_version 0.4.1 → 0.4.2
 # 2016.03.18 baikal_version 0.4.0 → 0.4.1
 # 2016.03.17 fio_version 2.7 → 2.8
 # 2016.03.16 baikal_version 0.3.5 → 0.4.0
