@@ -17,6 +17,8 @@ cd /tmp
 
 ls -lang
 
-wc -c js_list.txt
+rm -f compiler-latest.zip
+
+( wget http://dl.google.com/closure-compiler/compiler-latest.zip; wc -c compiler-latest.zip; ) &
 
 exit
