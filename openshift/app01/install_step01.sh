@@ -589,14 +589,14 @@ do
     # *** Closure Compiler ***
     if [ ! -f compiler-latest.zip ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Closure Compiler wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://dl.google.com/closure-compiler/compiler-latest.zip &
+        ( wget http://dl.google.com/closure-compiler/compiler-latest.zip; wc -c compiler-latest.zip; ) &
     fi
     [ -f compiler-latest.zip ] || files_exists=0
 
     # *** Tiny Tiny RSS ***
     if [ ! -f ttrss_archive.zip ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) ttrss wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip &
+        ( wget https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -O ttrss_archive.zip; wc -c ttrss_archive.zip; ) &
     fi
     [ -f ttrss_archive.zip ] || files_exists=0
 
@@ -605,8 +605,17 @@ do
         echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing yuicompressor-${yuicompressor_version}.jar" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) YUI Compressor wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://github.com/yui/yuicompressor/releases/download/v${yuicompressor_version}/yuicompressor-${yuicompressor_version}.jar
+        wget https://github.com/yui/yuicompressor/releases/download/v${yuicompressor_version}/yuicompressor-${yuicompressor_version}.jar &
     fi
+
+    # *** GNU Parallel ***
+    if [ ! -f parallel-latest.tar.bz2 ]; then
+        # TODO http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
+        echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+        # wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2
+        wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
+    fi
+    [ -f parallel-latest.tar.bz2 ] || files_exists=0
 
     # *** sphinx ***
     if [ ! -f sphinx-${sphinx_version}-release.tar.gz ]; then
@@ -638,14 +647,14 @@ do
     # *** spdy ***
     if [ ! -f mod-spdy-beta_current_x86_64.rpm ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) spdy wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://dl-ssl.google.com/dl/linux/direct/mod-spdy-beta_current_x86_64.rpm &
+        ( wget https://dl-ssl.google.com/dl/linux/direct/mod-spdy-beta_current_x86_64.rpm; wc -c mod-spdy-beta_current_x86_64.rpm; ) &
     fi
     [ -f mod-spdy-beta_current_x86_64.rpm ] || files_exists=0
 
     # *** rbenv-installer ***
     if [ ! -f rbenv-installer ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) rbenv-installer wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer &
+        ( wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer; wc -c rbenv-installer; ) &
     fi
     [ -f rbenv-installer ] || files_exists=0
 
@@ -1029,15 +1038,6 @@ do
     #     wget http://www.zlib.net/pigz/pigz-${pigz_version}.tar.gz
     # fi
     # [ -f pigz-${pigz_version}.tar.gz ] || files_exists=0
-
-    # *** GNU Parallel ***
-    if [ ! -f parallel-latest.tar.bz2 ]; then
-        # TODO http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        # wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2
-        wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
-    fi
-    [ -f parallel-latest.tar.bz2 ] || files_exists=0
 
     # *** cadaver ***
     if [ ! -f cadaver-${cadaver_version}.tar.gz ]; then
