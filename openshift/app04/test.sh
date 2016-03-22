@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1018"
+echo "1040"
 
 # set -x
 
@@ -13,18 +13,28 @@ if [ $(wc -c < ${OPENSHIFT_LOG_DIR}/cron_minutely.log) -gt 100000 ]; then
     tail -n 1000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 fi
 
+export GNUPGHOME=${OPENSHIFT_DATA_DIR}/.gnupg
+rm -rf ${GNUPGHOME}
+mkdir ${GNUPGHOME}
+chmod 700 ${GNUPGHOME}
+gpg --list-keys
+echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${GNUPGHOME}/gpg.conf
+chmod 600 ${GNUPGHOME}/gpg.conf
+
 cd /tmp
 
 ls -lang
 
 rm -f compiler-latest.zip
+rm -f parallel-latest.tar.bz2.sig
+rm -f parallel-latest.tar.bz2
 
-( wget http://dl.google.com/closure-compiler/compiler-latest.zip; wc -c compiler-latest.zip; ) &
+wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
+wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
 
-ls -lang
+gpg --help
 
-wait
-
-rm -f compiler-latest.zip
+gpg --recv-keys $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
+gpg --recv-keys $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep "DSA key ID" | awk '{print $NF}')
 
 exit
