@@ -298,7 +298,29 @@ __HEREDOC__
 chmod +x delete_log.sh
 echo delete_log.sh >> jobs.allow
 
+cat << '__HEREDOC__' > make_compressed_files_zip.sh
+#!/bin/bash
+export TZ=JST-9
+
+weekday=$(date +%w)
+if [ ${weekday} -eq 0 or ${weekday} -eq 6 ]; then
+    exit
+fi
+
+hour=$(date +%H)
+if [ ${weekday} -ne 14 ]; then
+    exit
+fi
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+zip -9rX compressed_files.zip ./compressed/
+mv -f compressed_files.zip ${OPENSHIFT_REPO_DIR}
 popd > /dev/null
+__HEREDOC__
+
+popd > /dev/null
+chmod +x make_compressed_files_zip.sh
+echo make_compressed_files_zip.sh >> jobs.allow
 
 # *** minutely ***
 
