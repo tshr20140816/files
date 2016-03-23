@@ -2,7 +2,7 @@
 
 echo "0848"
 
-# set -x
+set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
@@ -17,8 +17,10 @@ cd /tmp
 
 ls -lang
 
+unzip --help
+
 target_file=${OPENSHIFT_DATA_DIR}ccache/bin/ccache
-compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATADIR}|${OPENSHIFT_DATADIR}/compressed/|g")
+compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
 echo ${compressed_file}
 
 exit
