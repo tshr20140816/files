@@ -72,11 +72,13 @@ export TZ=JST-9
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${1}"
 
-pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 uuid=${OPENSHIFT_APP_UUID}$$
 suffix=$(date '+%Y%m%d')
 target_file=${1}
+[ -f ${target_file}.${suffix} ] && exit
+[ -f ${target_file}.$(date -d '1 days ago' '+%Y%m%d')) ] && exit
 
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 while read LINE
 do
     # if [ $(pgrep -fl curl | grep ${LINE} | grep -c -v grep) -eq 0 ]; then
