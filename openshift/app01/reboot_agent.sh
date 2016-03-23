@@ -37,22 +37,34 @@ do
         rm -f dummy*
         popd > /dev/null
 
+        # ***** compressed files *****
+        
+        pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+        rm -f compressed_files.zip
+        rm -rf compressed
+        wget https://$(head -n1 ${OPENSHIFT_DATA_DIR}/params/fqdn.txt)/compressed_files.zip
+        unzip compressed_files.zip
+        
+        rm -f compressed_files.zip
+        rm -rf compressed
+        popd > /dev/null
+
         # ****** YUI Compressor *****
         find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print0 \
          | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-            zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
-            rm -f yuicompressor.log
-            mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip ./install/
+        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
+        rm -f yuicompressor.log
+        mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip ./install/
         popd > /dev/null
 
         # ****** Closure Compiler *****
         find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print0 \
          | xargs -0i -P 6 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-            zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
-            rm -f closure_compiler.log
-            mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip ./install/
+        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
+        rm -f closure_compiler.log
+        mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip ./install/
         popd > /dev/null
 
         # ****** optipng *****
@@ -61,9 +73,9 @@ do
         find ${OPENSHIFT_DATA_DIR} -name "*.gif" -mindepth 2 -type f -print0 \
          | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-            zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
-            rm -f optipng.log
-            mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip ./install/
+        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
+        rm -f optipng.log
+        mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip ./install/
         popd > /dev/null
         echo "$(date +%Y/%m/%d" "%H:%M:%S) Good Bye"
         exit
