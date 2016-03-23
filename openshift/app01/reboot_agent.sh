@@ -42,11 +42,23 @@ do
         pushd ${OPENSHIFT_DATA_DIR} > /dev/null
         rm -f compressed_files.zip
         rm -rf compressed
-        # find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print > compress_target_list.txt
-        find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print > compress_target_list.txt
+        find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print > compress_target_list_css.txt
+        find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print > compress_target_list_js.txt
         wget https://$(head -n1 ${OPENSHIFT_DATA_DIR}/params/fqdn.txt)/compressed_files.zip
         unzip compressed_files.zip
         suffix=$(date '+%Y%m%d')
+        while read LINE
+        do
+            target_file=${LINE}
+            compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATADIR}|${OPENSHIFT_DATADIR}/compressed/|g")
+            [ ! -f ${compressed_file} ] && continue
+            [ ! -f ${compressed_file}.compressed ] && continue
+            [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && continue
+            cmp ${target_file} ${compressed_file}
+            [ $? -ne 0 ] && continue
+            mv ${target_file} ${target_file}.${suffix}
+            mv ${compressed_file}.compressed ${target_file}
+        done < compress_target_list_css.txt
         while read LINE
         do
             target_file=${LINE}
@@ -60,7 +72,8 @@ do
             [ $? -ne 0 ] && continue
             mv ${target_file} ${target_file}.${suffix}
             mv ${compressed_file}.compressed ${target_file}
-        done < compress_target_list.txt
+        done < compress_target_list_js.txt
+        rm -f compress_target_list_js.txt
         rm -f compressed_files.zip
         rm -rf compressed
         popd > /dev/null
