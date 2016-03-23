@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1010"
+echo "1015"
 
 # set -x
 
@@ -29,11 +29,13 @@ cp -f test.sh test2.sh
 
 echo "cmp 1"
 cmp test.sh test2.sh
+echo $?
 
 echo "cmp 2"
 echo "AAA" >> test2.sh
 
 cmp test.sh test2.sh
+echo $?
 
 ls -lang
 
