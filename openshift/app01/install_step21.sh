@@ -154,6 +154,9 @@ done
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 suffix=$(date '+%Y%m%d')
 target_file=${1}
+[ -f ${target_file}.${suffix} ] && exit
+[ -f ${target_file}.$(date -d '1 days ago' '+%Y%m%d')) ] && exit
+
 compressed_file=./$(basename ${target_file}).$$
 rm -f ${compressed_file}
 # -o7 -zm1-9
