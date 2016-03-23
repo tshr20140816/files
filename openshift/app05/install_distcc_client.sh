@@ -281,6 +281,50 @@ unlink($zip_file);
 __HEREDOC__
 popd > /dev/null
 
+# ***** PHP (Compressed File Upload) *****
+
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
+cat << '__HEREDOC__' > compressed_file_upload.php
+<?php
+date_default_timezone_set('Asia/Tokyo');
+$log_file = getenv("OPENSHIFT_LOG_DIR") . "compressed_file_upload_php_" . date("Ymd") . ".log";
+if (!isset($_POST['path']))
+{
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 010 path\r\n", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+$path = $_POST["path"];
+if (preg_match('/.*\.\..*/', $path) == 1)
+{
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 020 $path\r\n", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+if (preg_match('/^app-root\/data\/.+$/', $path) == 0)
+{
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 030 $path\r\n", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+if (preg_match('/\.(png|gif)$/', $path) == 0)
+{
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 040 $path\r\n", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+$compressed_path = getenv("OPENSHIFT_DATA_DIR") . "compressed/";
+$compressed_path = preg_replace("/^app-root\/data\//", $compressed_path, $path);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 050 compressed_path $compressed_path\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 060 MKDIR $tmp\r\n", FILE_APPEND);
+@mkdir(pathinfo($compressed_path, PATHINFO_DIRNAME) , 0777, TRUE);
+
+move_uploaded_file($_FILES['original_file']['tmp_name'], $compressed_path);
+move_uploaded_file($_FILES['compressed_file']['tmp_name'], $compressed_path . '.compressed');
+?>
+__HEREDOC__
+popd > /dev/null
+
 # ***** PHP (Current Status) *****
 
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
