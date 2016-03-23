@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1450"
+echo "1010"
 
 # set -x
 
@@ -28,12 +28,12 @@ touch test.sh
 cp -f test.sh test2.sh
 
 echo "cmp 1"
-cmp -s test.sh test2.sh
+cmp test.sh test2.sh
 
 echo "cmp 2"
 echo "AAA" >> test2.sh
 
-cmp -s test.sh test2.sh
+cmp test.sh test2.sh
 
 ls -lang
 
