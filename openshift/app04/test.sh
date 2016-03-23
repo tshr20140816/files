@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1015"
+echo "0848"
 
 # set -x
 
@@ -17,9 +17,8 @@ cd /tmp
 
 ls -lang
 
-rm -f test.sh
-rm -f test2.sh
-
-tree ${OPENSHIFT_DATA_DIR}
+target_file=${OPENSHIFT_DATA_DIR}ccache/bin/ccache
+compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATADIR}|${OPENSHIFT_DATADIR}/compressed/|g")
+echo ${compressed_file}
 
 exit
