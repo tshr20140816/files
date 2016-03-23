@@ -359,12 +359,12 @@ cat << '__HEREDOC__' > make_compressed_files_zip.sh
 export TZ=JST-9
 
 weekday=$(date +%w)
-if [ ${weekday} -eq 0 or ${weekday} -eq 6 ]; then
+if [ ${weekday} -eq 0 ] || [ ${weekday} -eq 6 ]; then
     exit
 fi
 
 hour=$(date +%H)
-if [ ${weekday} -ne 14 ]; then
+if [ ${hour} -ne 14 ]; then
     exit
 fi
 
