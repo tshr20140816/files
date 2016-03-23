@@ -42,9 +42,24 @@ do
         pushd ${OPENSHIFT_DATA_DIR} > /dev/null
         rm -f compressed_files.zip
         rm -rf compressed
+        find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print > compress_target_list.txt
+        find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print >> compress_target_list.txt
         wget https://$(head -n1 ${OPENSHIFT_DATA_DIR}/params/fqdn.txt)/compressed_files.zip
         unzip compressed_files.zip
-        
+        suffix=$(date '+%Y%m%d')
+        while read LINE
+        do
+            target_file=${LINE}
+            compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATADIR}|${OPENSHIFT_DATADIR}/compressed/|g")
+            if [ ! -f ${compressed_file} ]; then
+                continue
+            fi
+            if [ ! -f ${compressed_file}.compressed ]; then
+                continue
+            fi
+            # mv ${target_file} ${target_file}.${suffix}
+            # mv ${compressed_file}.compressed ${target_file}
+        done < compress_target_list.txt
         rm -f compressed_files.zip
         rm -rf compressed
         popd > /dev/null
