@@ -24,7 +24,16 @@ rm -f parallel-latest.tar.bz2.sig
 rm -f parallel-latest.tar.bz2
 rm -f super_pi-jp.tar.gz
 
-wget --passive-ftp ftp://pi.super-computing.org/Linux_jp/super_pi-jp.tar.gz
+touch test.sh
+cp -f test.sh test2.sh
+
+echo "cmp 1"
+cmp -s test.sh test2.sh
+
+echo "cmp 2"
+echo "AAA" >> test2.sh
+
+cmp -s test.sh test2.sh
 
 ls -lang
 
