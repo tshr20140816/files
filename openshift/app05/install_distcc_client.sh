@@ -281,6 +281,18 @@ unlink($zip_file);
 __HEREDOC__
 popd > /dev/null
 
+# ***** PHP (Current Status) *****
+
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
+cat << '__HEREDOC__' > current_status.php
+<?php
+touch(getenv("OPENSHIFT_DATA_DIR") . "status.txt";);
+?>
+__HEREDOC__
+popd > /dev/null
+
+touch ${OPENSHIFT_DATA_DIR}/status.txt
+
 # ***** cron *****
 
 # *** hourly ***
