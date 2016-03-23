@@ -22,8 +22,9 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${1}"
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 uuid=${OPENSHIFT_APP_UUID}$$
 suffix=$(date '+%Y%m%d')
-
 target_file=${1}
+[ -f ${target_file}.${suffix} ] && exit
+[ -f ${target_file}.$(date -d '1 days ago' '+%Y%m%d')) ] && exit
 
 while read LINE
 do
