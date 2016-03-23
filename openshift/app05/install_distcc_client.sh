@@ -286,12 +286,12 @@ popd > /dev/null
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 cat << '__HEREDOC__' > current_status.php
 <?php
-touch(getenv("OPENSHIFT_DATA_DIR") . "current_status.txt";);
+touch(getenv("OPENSHIFT_DATA_DIR") . "current_status.txt");
 ?>
 __HEREDOC__
 popd > /dev/null
 
-touch ${OPENSHIFT_DATA_DIR}/status.txt
+touch ${OPENSHIFT_DATA_DIR}/current_status.txt
 
 # ***** cron *****
 
