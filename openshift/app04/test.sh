@@ -18,10 +18,6 @@ cd /tmp
 ls -lang
 
 rm -f compressed_files.zip
-rm -rf compressed
-
-wget -q https://b10-20160312.rhcloud.com/compressed_files.zip
-
-ls -lang
+rm -rf nkf-2.1.4
 
 exit
