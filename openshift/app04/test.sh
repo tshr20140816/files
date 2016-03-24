@@ -17,9 +17,9 @@ cd /tmp
 
 ls -lang
 
-"$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee test.txt
+$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}') | tee test.txt
 
-echo "CHECK POINT 020"
+echo "CHECK POINT 030"
 cat test.txt
 rm -f test.txt
 exit
