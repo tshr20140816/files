@@ -13,10 +13,6 @@ cat << '__HEREDOC__' > yuicompressor.sh
 
 export TZ=JST-9
 
-#!/bin/bash
-
-export TZ=JST-9
-
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${1}"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
