@@ -228,9 +228,7 @@ do
         remote_dir=/users/$(cat ${OPENSHIFT_DATA_DIR}/params/hidrive_account)
         echo "$(date +%Y/%m/%d" "%H:%M:%S) START memory_usage_logging.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
         ${OPENSHIFT_DATA_DIR}/scripts/./cadaver_put.sh ${OPENSHIFT_LOG_DIR}/backup/ ${remote_dir} ${file_name} | tee -a ${log_file_name}
-        if [ $(grep -c -e succeeded ${log_file_name}) -eq 1 ]; then
-            rm -f ${OPENSHIFT_LOG_DIR}/backup/${file_name}
-        fi
+        [ $(grep -c -e succeeded ${log_file_name}) -eq 1 ] && rm -f ${OPENSHIFT_LOG_DIR}/backup/${file_name}
         cat ${log_file_name} | tr -d "\b" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH memory_usage_logging.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
         # function030 "cron=minutely&shell_name=${shell_name}&check_point=done"
@@ -380,9 +378,7 @@ fi
 #  | xargs -i ruby {} --verbose \
 #  | grep Processes | awk '{print $NF}')
 process_count=$(${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-status --verbose | grep Processes | awk '{print $NF}')
-if [ ${process_count} = 0 ]; then
-    wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
-fi
+[ ${process_count} = 0 ] && wget --spider https://${OPENSHIFT_APP_DNS}/redmine/
 
 # memory usage logging
 is_alive=$(ps awhx | grep memory_usage_logging.sh | grep -v grep | grep -c ${OPENSHIFT_DIY_IP})
@@ -518,9 +514,7 @@ date +%Y/%m/%d" "%H:%M:%S
 
 minute=$((10#$(date +%M)))
 
-if [ $((minute % 5)) -eq 1 ]; then
-    ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php
-fi
+[ $((minute % 5)) -eq 1 ] && ${OPENSHIFT_DATA_DIR}/php/bin/php ${OPENSHIFT_DATA_DIR}/apache/htdocs/cacti/poller.php
 __HEREDOC__
 chmod +x cacti_poller.sh &
 
@@ -925,9 +919,7 @@ export TZ=JST-9
 date +%Y/%m/%d" "%H:%M:%S
 
 hour=$((10#$(date +%H)))
-if [ ${hour} -ne 3 ]; then
-    exit
-fi
+[ ${hour} -ne 3 ] && exit
 
 connection_string=$(cat << __HEREDOC_2__
 --user=${OPENSHIFT_MYSQL_DB_USERNAME}
