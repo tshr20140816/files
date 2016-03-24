@@ -147,7 +147,7 @@ if [ -f "$(basename "${0}").ok" ]; then
 fi
 popd > /dev/null
 
-while read LINE
+while read -r LINE
 do
     product=$(echo "${LINE}" | awk '{print $1}')
     version=$(echo "${LINE}" | awk '{print $2}')
