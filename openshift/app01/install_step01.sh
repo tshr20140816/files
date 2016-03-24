@@ -517,7 +517,7 @@ if [ "${mirror_server}" != "none" ]; then
     perl -pi -e 's/ //g' distcc.html
     distcc_sha1=$(cat distcc.html)
     tarball_sha1=$(sha1sum distcc-${distcc_version}.tar.bz2 | cut -d ' ' -f 1)
-    if [ "${distcc_sha1}" != "${tarball_sha1}"]; then
+    if [ "${distcc_sha1}" != "${tarball_sha1}" ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc-${distcc_version}.tar.bz2 sha1 unmatch" \
          | tee -a ${OPENSHIFT_LOG_DIR}/install.log
         echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc-${distcc_version}.tar.bz2 sha1 unmatch" \
