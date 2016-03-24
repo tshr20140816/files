@@ -22,7 +22,7 @@ target_file=${1}
 [ -f ${target_file}.${suffix} ] && exit
 [ -f ${target_file}.$(date -d '1 days ago' '+%Y%m%d') ] && exit
 
-while read LINE
+while read -r LINE
 do
     # if [ $(pgrep -fl curl | grep ${LINE} | grep -c -v grep) -eq 0 ]; then
     if [ $(pgrep -fl curl | grep -c ${LINE}) -eq 0 ]; then
@@ -76,7 +76,7 @@ target_file=${1}
 [ -f ${target_file}.$(date -d '1 days ago' '+%Y%m%d') ] && exit
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-while read LINE
+while read -r LINE
 do
     # if [ $(pgrep -fl curl | grep ${LINE} | grep -c -v grep) -eq 0 ]; then
     if [ $(pgrep -fl curl | grep -c ${LINE}) -eq 0 ]; then
