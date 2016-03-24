@@ -8,8 +8,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
 do
-    user_fqdn=$(echo "${line}")
-    # ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    user_fqdn="${line}"
     ssh -t -t -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 done
 
@@ -63,7 +62,7 @@ done
 # ***** php *****
 
 oo-cgroup-read memory.failcnt | awk '{printf "Memory Fail Count : %\047d\n", $1}' \
-| tee -a ${OPENSHIFT_LOG_DIR}/install.log
+ | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 rm -rf ${OPENSHIFT_TMP_DIR}/php-${php_version}
