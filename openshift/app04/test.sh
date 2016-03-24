@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0853"
+echo "0917"
 
 # set -x
 
@@ -17,15 +17,11 @@ cd /tmp
 
 ls -lang
 
-unzip --help
-
 rm -f compressed_files.zip
 rm -rf compressed
 
-wget https://b10-20160312.rhcloud.com/compressed_files.zip
+wget -q https://b10-20160312.rhcloud.com/compressed_files.zip
 
-unzip -q compressed_files.zip
-
-tree compressed/
+ls -lang
 
 exit
