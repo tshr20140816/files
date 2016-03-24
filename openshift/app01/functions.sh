@@ -98,7 +98,7 @@ function010() {
     #     ccache_hit_direct=$(ccache -s | grep -e "^cache hit .direct" | awk '{print $4}')
     #     query_string="${query_string}&ccache_hit_direct=${ccache_hit_direct}"
     # fi
-    wget --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" > /dev/null 2>&1
+    wget -b -q --spider "$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?${query_string}" -o /dev/null 2>&1
 
     # ***** version information *****
 
@@ -200,7 +200,7 @@ function020() {
 function030() {
     [ $# -ne 1 ] && return
     url="$(cat ${OPENSHIFT_DATA_DIR}/params/web_beacon_server)dummy?server=${OPENSHIFT_APP_DNS}&"
-    wget --spider -b -q -o /dev/null "${url}${1}" > /dev/null 2>&1
+    wget --spider -b -q -o /dev/null "${url}${1}" 2>&1
     curl -H "content-type:application/x-www-form-urlencoded" \
      -d '{"message":"${1}", "from":"${OPENSHIFT_APP_DNS}"}' \
      http://logs-01.loggly.com/inputs/$(cat ${OPENSHIFT_DATA_DIR}/params/loggly_token)/tag/test/
