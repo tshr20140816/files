@@ -108,14 +108,12 @@ sed -e 's/^.\+\?@//g' ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt > ${OPENSHIFT_D
 
 for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
 do
-    user_fqdn=$(echo "${line}")
+    user_fqdn="${line}"
     # -t -t は
     # Pseudo-terminal will not be allocated because stdin is not a terminal.
     # のワーニングの対策
     # tee だと止まる
-    # ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1| tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd >>${OPENSHIFT_LOG_DIR}/install.log 2>&1
-    # ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ssh -t -t -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
     distcc_hosts_string="${user_fqdn}/4:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start "
