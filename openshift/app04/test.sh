@@ -21,4 +21,7 @@ target_file=${OPENSHIFT_DATA_DIR}ccache/bin/ccache
 path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
 echo ${path}
 
+path=$(echo "${target_file||${OPENSHIFT_HOMEDIR}|}")
+echo ${path}
+
 exit
