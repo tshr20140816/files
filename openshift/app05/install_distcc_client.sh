@@ -71,7 +71,7 @@ pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 cat << '__HEREDOC__' > yuicompressor.php
 <?php
 date_default_timezone_set('Asia/Tokyo');
-$log_file = getenv("OPENSHIFT_LOG_DIR") . basename(_SERVER["SCRIPT_NAME"]) . "." . date("Ymd") . ".log";
+$log_file = getenv("OPENSHIFT_LOG_DIR") . basename($_SERVER["SCRIPT_NAME"]) . "." . date("Ymd") . ".log";
 if (!isset($_POST['suffix']))
 {
     file_put_contents($log_file, date("YmdHis") . " CHECK POINT 010 suffix\r\n", FILE_APPEND);
@@ -176,7 +176,7 @@ pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 cat << '__HEREDOC__' > closure_compiler.php
 <?php
 date_default_timezone_set('Asia/Tokyo');
-$log_file = getenv("OPENSHIFT_LOG_DIR") . basename(_SERVER["SCRIPT_NAME"]) . "." . date("Ymd") . ".log";
+$log_file = getenv("OPENSHIFT_LOG_DIR") . basename($_SERVER["SCRIPT_NAME"]) . "." . date("Ymd") . ".log";
 if (!isset($_POST['suffix']))
 {
     file_put_contents($log_file, date("YmdHis") . " CHECK POINT 010 suffix\r\n", FILE_APPEND);
