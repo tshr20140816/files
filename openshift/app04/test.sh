@@ -17,9 +17,8 @@ cd /tmp
 
 ls -lang
 
-$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}') | tee test.txt
+target_file=${OPENSHIFT_DATA_DIR}ccache/bin/ccache
+path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
+echo ${path}
 
-echo "CHECK POINT 030"
-cat test.txt
-rm -f test.txt
 exit
