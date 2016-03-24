@@ -50,7 +50,7 @@ do
         while read LINE
         do
             target_file=${LINE}
-            compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATADIR}|${OPENSHIFT_DATADIR}/compressed/|g")
+            compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
             [ ! -f ${compressed_file} ] && continue
             [ ! -f ${compressed_file}.compressed ] && continue
             [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && continue
@@ -62,7 +62,7 @@ do
         while read LINE
         do
             target_file=${LINE}
-            compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATADIR}|${OPENSHIFT_DATADIR}/compressed/|g")
+            compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
             [ ! -f ${compressed_file} ] && continue
             [ ! -f ${compressed_file}.compressed ] && continue
             [ ! -f ${compressed_file}.result.txt ] && continue
