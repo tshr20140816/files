@@ -20,6 +20,9 @@ ls -lang
 rm -f compressed_files.zip
 rm -rf nkf-2.1.4
 
-wget --help
+echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee test.txt
 
+echo "CHECK POINT 010"
+cat test.txt
+rm -f test.txt
 exit
