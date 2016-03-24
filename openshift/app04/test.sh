@@ -2,7 +2,7 @@
 
 echo "0853"
 
-set -x
+# set -x
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
@@ -19,8 +19,13 @@ ls -lang
 
 unzip --help
 
-target_file=${OPENSHIFT_DATA_DIR}ccache/bin/ccache
-compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
-echo ${compressed_file}
+rm -f compressed_files.zip
+rm -rf compressed
+
+wget https://b10-20160312.rhcloud.com/compressed_files.zip
+
+unzip -q compressed_files.zip
+
+tree compressed/
 
 exit
