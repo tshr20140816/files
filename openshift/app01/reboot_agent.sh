@@ -45,7 +45,7 @@ do
         find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print > compress_target_list_css.txt
         find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print > compress_target_list_js.txt
         wget https://$(head -n1 ${OPENSHIFT_DATA_DIR}/params/fqdn.txt)/compressed_files.zip
-        unzip compressed_files.zip
+        unzip -q compressed_files.zip
         suffix=$(date '+%Y%m%d')
         while read LINE
         do
