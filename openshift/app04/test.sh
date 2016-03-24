@@ -20,4 +20,6 @@ ls -lang
 rm -f compressed_files.zip
 rm -rf nkf-2.1.4
 
+wget --help
+
 exit
