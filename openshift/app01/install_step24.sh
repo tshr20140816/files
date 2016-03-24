@@ -17,25 +17,24 @@ export LOGSHIFTER_DIY_MAX_FILESIZE=5M
 
 testrubyserver_count=$(ps aux | grep -e testrubyserver.rb | grep -e ${OPENSHIFT_APP_UUID} | grep -c -v grep)
 
-if [ ${testrubyserver_count} -gt 0 ]; then
+[ ${testrubyserver_count} -gt 0 ] || exit
 
-    # *** kill testrubyserver.rb ***
-    kill $(ps auwx 2>/dev/null | grep -e testrubyserver.rb | grep -e ${OPENSHIFT_APP_UUID} | grep -v grep | awk '{print $2}')
+# *** kill testrubyserver.rb ***
+kill $(ps auwx 2>/dev/null | grep -e testrubyserver.rb | grep -e ${OPENSHIFT_APP_UUID} | grep -v grep | awk '{print $2}')
 
-    # *** apache ***
-    export TZ=JST-9
-    ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
+# *** apache ***
+export TZ=JST-9
+${OPENSHIFT_DATA_DIR}/apache/bin/apachectl -k graceful
 
-    # *** delegate ***
-    pushd ${OPENSHIFT_DATA_DIR}/delegate
-    ./delegated -r +=P30080
-    ./delegated -r +=P33128
-    popd > /dev/null
+# *** delegate ***
+pushd ${OPENSHIFT_DATA_DIR}/delegate
+./delegated -r +=P30080
+./delegated -r +=P33128
+popd > /dev/null
 
-    # *** memcached ***
-    ${OPENSHIFT_DATA_DIR}/memcached/bin/memcached -l ${OPENSHIFT_DIY_IP} \
-     -p 31211 -U 0 -m 60 -C -d &>> ${OPENSHIFT_LOG_DIR}/memcached.log
-fi
+# *** memcached ***
+${OPENSHIFT_DATA_DIR}/memcached/bin/memcached -l ${OPENSHIFT_DIY_IP} \
+ -p 31211 -U 0 -m 60 -C -d &>> ${OPENSHIFT_LOG_DIR}/memcached.log
 __HEREDOC__
 chmod +x for_restart.sh
 ./for_restart.sh
