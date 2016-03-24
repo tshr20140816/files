@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0917"
+echo "1025"
 
 # set -x
 
@@ -17,12 +17,9 @@ cd /tmp
 
 ls -lang
 
-rm -f compressed_files.zip
-rm -rf nkf-2.1.4
+"$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee test.txt
 
-echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')" | tee test.txt
-
-echo "CHECK POINT 010"
+echo "CHECK POINT 020"
 cat test.txt
 rm -f test.txt
 exit
