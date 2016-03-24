@@ -114,7 +114,7 @@ do
     # のワーニングの対策
     # tee だと止まる
     # ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1| tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd 2>&1 >> ${OPENSHIFT_LOG_DIR}/install.log
+    ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd >>${OPENSHIFT_LOG_DIR}/install.log 2>&1
     # ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     ssh -t -t -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
