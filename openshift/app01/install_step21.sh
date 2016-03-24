@@ -245,39 +245,40 @@ date +%Y/%m/%d" "%H:%M:%S
 minute=$((10#$(date +%M)))
 dt=$(date +%Y/%m/%d" "%H:%M:%S)
 
-if [ $((minute % 5)) -eq 2 ]; then
-    echo ${dt} start >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+[ $((minute % 5)) -eq 2 ] || exit
 
-    # memory usage check
-    usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
-    if [ ${usage_in_bytes} -gt 400000000 ]; then
-        dt=$(date +%Y/%m/%d" "%H:%M:%S)
-        echo ${dt} skip ... memory use ${usage_in_bytes} bytes \
-         >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
-        exit
-    fi
+echo ${dt} start >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
 
-    if [ -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt ]; then
-        dt=$(date +%Y/%m/%d" "%H:%M:%S)
-        echo ${dt} skip ... file exists ${OPENSHIFT_TMP_DIR}redmine_repository_check.txt \
-         >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
-        exit
-    fi
-
-    touch ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-    export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
-    export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-    export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-    export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-    eval "$(rbenv init -)" 
-
-    echo redmine_repository_check
-    cd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine
-    bundle exec rake redmine:fetch_changesets RAILS_ENV=production
-    rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
-    echo $(date +%Y/%m/%d" "%H:%M:%S) finish ${dt} \
+# memory usage check
+usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
+if [ ${usage_in_bytes} -gt 400000000 ]; then
+    dt=$(date +%Y/%m/%d" "%H:%M:%S)
+    echo ${dt} skip ... memory use ${usage_in_bytes} bytes \
      >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+    exit
 fi
+
+if [ -f ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt ]; then
+    dt=$(date +%Y/%m/%d" "%H:%M:%S)
+    echo ${dt} skip ... file exists ${OPENSHIFT_TMP_DIR}redmine_repository_check.txt \
+     >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+    exit
+fi
+
+touch ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
+export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+eval "$(rbenv init -)" 
+
+echo redmine_repository_check
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/redmine > /dev/null
+bundle exec rake redmine:fetch_changesets RAILS_ENV=production
+rm ${OPENSHIFT_TMP_DIR}/redmine_repository_check.txt
+echo $(date +%Y/%m/%d" "%H:%M:%S) finish ${dt} \
+ >> ${OPENSHIFT_LOG_DIR}/redmine_repository_check.log
+popd > /dev/null
 __HEREDOC__
 chmod +x redmine_repository_check.sh &
 
