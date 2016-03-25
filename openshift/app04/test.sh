@@ -17,6 +17,6 @@ cd /tmp
 
 ls -lang
 
-# ps aux | grep -e testrubyserver.rb | grep -e ${OPENSHIFT_APP_UUID} | grep -c -v grep
-ps aux
+ps aux | grep -e httpd | grep -e ${OPENSHIFT_APP_UUID} | grep -c -v grep
+
 exit
