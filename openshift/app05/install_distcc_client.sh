@@ -153,7 +153,7 @@ if (file_exists($compressed_file))
 }
 else
 {
-    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 $compressed_file\r\n", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 120 $compressed_file\r\n", FILE_APPEND);
     header('HTTP', true, 500);
 }
 @unlink($original_file);
