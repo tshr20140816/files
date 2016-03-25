@@ -30,13 +30,17 @@ wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
 tar jxf distcc-${distcc_version}.tar.bz2
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
-./configure --help
+# ./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
  --mandir=${OPENSHIFT_TMP_DIR}/man
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm -f distcc-${distcc_version}.tar.bz2 &
+rm -rf distcc-${distcc_version} &
 popd > /dev/null
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/distcc/bin/distccd_start
@@ -61,8 +65,9 @@ popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 yuicompressor_version="2.4.8"
-wget https://github.com/yui/yuicompressor/releases/download/v${yuicompressor_version}/yuicompressor-${yuicompressor_version}.jar
-cp yuicompressor-${yuicompressor_version}.jar yuicompressor.jar
+( wget https://github.com/yui/yuicompressor/releases/download/v${yuicompressor_version}/yuicompressor-${yuicompressor_version}.jar;
+  cp yuicompressor-${yuicompressor_version}.jar yuicompressor.jar;
+) &
 popd > /dev/null
 
 # ***** PHP (YUI Compressor) *****
@@ -165,14 +170,14 @@ popd > /dev/null
 # ***** Closure Compiler *****
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-wget http://dl.google.com/closure-compiler/compiler-latest.zip
-unzip compiler-latest.zip
+( wget http://dl.google.com/closure-compiler/compiler-latest.zip;
+  unzip compiler-latest.zip;
+) &
 popd > /dev/null
 
 # ***** PHP (Closure Compiler) *****
 
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
-# wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app05/closure_compiler.php
 cat << '__HEREDOC__' > closure_compiler.php
 <?php
 date_default_timezone_set('Asia/Tokyo');
@@ -296,8 +301,8 @@ time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm optipng-${optipng_version}.tar.gz
-rm -rf optipng-${optipng}
+rm optipng-${optipng_version}.tar.gz &
+rm -rf optipng-${optipng} &
 popd > /dev/null
 
 # ***** PHP (optipng) *****
@@ -555,6 +560,8 @@ cat << '__HEREDOC__' > ${OPENSHIFT_LOG_DIR}/phpinfo.php
 phpinfo();
 ?>
 __HEREDOC__
+
+wait
 
 # ***** register url *****
 
