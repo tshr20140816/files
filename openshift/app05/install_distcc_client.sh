@@ -359,18 +359,14 @@ cat << '__HEREDOC__' > make_compressed_files_zip.sh
 export TZ=JST-9
 
 weekday=$(date +%w)
-if [ ${weekday} -eq 0 ] || [ ${weekday} -eq 6 ]; then
-    exit
-fi
-
+[ ${weekday} -eq 0 ] || [ ${weekday} -eq 6 ] && exit
 hour=$(date +%H)
-if [ ${hour} -ne 14 ]; then
-    exit
-fi
+[ ${hour} -ne 14 ] && exit
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 zip -9rX compressed_files.zip ./compressed/
 mv -f compressed_files.zip ${OPENSHIFT_REPO_DIR}
+ls -lang ${OPENSHIFT_REPO_DIR}
 popd > /dev/null
 __HEREDOC__
 
