@@ -66,7 +66,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 yuicompressor_version="2.4.8"
 ( wget https://github.com/yui/yuicompressor/releases/download/v${yuicompressor_version}/yuicompressor-${yuicompressor_version}.jar;
-  cp yuicompressor-${yuicompressor_version}.jar yuicompressor.jar;
+  mv -f yuicompressor-${yuicompressor_version}.jar yuicompressor.jar;
 ) &
 popd > /dev/null
 
@@ -172,6 +172,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 ( wget http://dl.google.com/closure-compiler/compiler-latest.zip;
   unzip compiler-latest.zip;
+  rm -f compiler-latest.zip;
 ) &
 popd > /dev/null
 
