@@ -281,6 +281,36 @@ unlink($zip_file);
 __HEREDOC__
 popd > /dev/null
 
+# ***** optipng *****
+
+optipng_version=0.7.5
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget http://downloads.sourceforge.net/project/optipng/OptiPNG/optipng-${optipng_version}/optipng-${optipng_version}.tar.gz
+tar zxf optipng-${optipng_version}.tar.gz
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/optipng-${optipng_version} > /dev/null
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/optipng \
+ --mandir=${OPENSHIFT_TMP_DIR}/man
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+popd > /dev/null
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+rm optipng-${optipng_version}.tar.gz
+rm -rf optipng-${optipng}
+popd > /dev/null
+
+# ***** PHP (optipng) *****
+
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
+cat << '__HEREDOC__' > optipng.php
+<?php
+date_default_timezone_set('Asia/Tokyo');
+$log_file = getenv("OPENSHIFT_LOG_DIR") . basename($_SERVER["SCRIPT_NAME"]) . "." . date("Ymd") . ".log";
+?>
+__HEREDOC__
+popd > /dev/null
+
 # ***** PHP (Compressed File Upload) *****
 
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
