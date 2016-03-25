@@ -512,20 +512,20 @@ if [ "${mirror_server}" != "none" ]; then
 
     # distcc
     wget -t1 ${mirror_server}/distcc-${distcc_version}.tar.bz2
-    wget https://code.google.com/p/distcc/downloads/detail?name=distcc-${distcc_version}.tar.bz2 -O distcc.html
-    cat distcc.html | grep sha1 | tee distcc.html
-    perl -pi -e 's/<.+?>//g' distcc.html
-    perl -pi -e 's/ //g' distcc.html
-    distcc_sha1=$(cat distcc.html)
-    tarball_sha1=$(sha1sum distcc-${distcc_version}.tar.bz2 | cut -d ' ' -f 1)
-    if [ "${distcc_sha1}" != "${tarball_sha1}" ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc-${distcc_version}.tar.bz2 sha1 unmatch" \
-         | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc-${distcc_version}.tar.bz2 sha1 unmatch" \
-         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        rm -f distcc-${distcc_version}.tar.bz2
-    fi
-    rm -f distcc.html
+    # wget https://code.google.com/p/distcc/downloads/detail?name=distcc-${distcc_version}.tar.bz2 -O distcc.html
+    # cat distcc.html | grep sha1 | tee distcc.html
+    # perl -pi -e 's/<.+?>//g' distcc.html
+    # perl -pi -e 's/ //g' distcc.html
+    # distcc_sha1=$(cat distcc.html)
+    # tarball_sha1=$(sha1sum distcc-${distcc_version}.tar.bz2 | cut -d ' ' -f 1)
+    # if [ "${distcc_sha1}" != "${tarball_sha1}" ]; then
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc-${distcc_version}.tar.bz2 sha1 unmatch" \
+    #      | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc-${distcc_version}.tar.bz2 sha1 unmatch" \
+    #      | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     rm -f distcc-${distcc_version}.tar.bz2
+    # fi
+    # rm -f distcc.html
 
     # cadaver
     wget -t1 ${mirror_server}/cadaver-${cadaver_version}.tar.gz
