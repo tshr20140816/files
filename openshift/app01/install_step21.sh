@@ -134,47 +134,44 @@ cat << '__HEREDOC__' > optipng.sh
 export TZ=JST-9
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ ${1}"
-echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ $(oo-cgroup-read memory.usage_in_bytes | awk '{printf "%\047d\n", $1}')" \
- >> ${OPENSHIFT_LOG_DIR}/optipng.log
-while :
-do
-    usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
-    if [ ${usage_in_bytes} -gt 400000000 ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ $(oo-cgroup-read memory.usage_in_bytes | awk '{printf "%\047d\n", $1}') waiting" \
-         >> ${OPENSHIFT_LOG_DIR}/optipng.log
-        sleep 5s
-    else
-        break
-    fi
-done
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+uuid=${OPENSHIFT_APP_UUID}$$
 suffix=$(date '+%Y%m%d')
 target_file=${1}
 [ -f ${target_file}.${suffix} ] && exit
 [ -f ${target_file}.$(date -d '1 days ago' '+%Y%m%d') ] && exit
 
+while read -r LINE
+do
+    if [ $(pgrep -fl curl | grep -c ${LINE}) -eq 0 ]; then
+        server=${LINE}
+        break
+    fi
+done < <(sort --random-sort ${OPENSHIFT_DATA_DIR}/params/fqdn.txt)
+
 compressed_file=./$(basename ${target_file}).$$
 rm -f ${compressed_file}
-# -o7 -zm1-9
-${OPENSHIFT_DATA_DIR}/optipng/bin/optipng \
- -o7 \
- -out ${compressed_file} \
- ${target_file} \
- >> ${OPENSHIFT_LOG_DIR}/optipng.log 2>&1
+
+path=$(echo ${target_file} | sed -e "s|${OPENSHIFT_HOMEDIR}||g")
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ server=${server} target_file=${target_file} suffix=${uuid} path=${path} compressed_file=${compressed_file}" \
+ | tee -a ${OPENSHIFT_LOG_DIR}/optipng.log
+curl https://${server}/optipng.php -F "file=@${target_file}" -F "suffix=${uuid}" -F "path=${path}" -o ${compressed_file}
+
 if [ ! -f ${compressed_file} ]; then
     echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (ERROR) ${target_file}" \
-     >> ${OPENSHIFT_LOG_DIR}/optipng.log
+     | tee -a ${OPENSHIFT_LOG_DIR}/optipng.log
 else
     size_original=$(wc -c < ${target_file})
     size_compiled=$(wc -c < ${compressed_file})
     if [ ${size_original} -gt ${size_compiled} ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ CHANGED ${size_original} ${size_compiled} ${target_file}" \
-         >> ${OPENSHIFT_LOG_DIR}/optipng.log
+         | tee -a ${OPENSHIFT_LOG_DIR}/optipng.log
         mv -f ${target_file} ${target_file}.${suffix}
         mv -f ${compressed_file} ${target_file}
     else
         echo "$(date +%Y/%m/%d" "%H:%M:%S) $$ NOT CHANGED (SIZE NOT DOWNED) ${size_original} ${size_compiled} ${target_file}" \
-         >> ${OPENSHIFT_LOG_DIR}/optipng.log
+         | tee -a ${OPENSHIFT_LOG_DIR}/optipng.log
         rm -f ${compressed_file}
     fi
 fi
