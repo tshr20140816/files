@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1025"
+echo "1552"
 
 # set -x
 
@@ -17,5 +17,6 @@ cd /tmp
 
 ls -lang
 
-ps aux | grep -e testrubyserver.rb | grep -e ${OPENSHIFT_APP_UUID} | grep -c -v grep
+# ps aux | grep -e testrubyserver.rb | grep -e ${OPENSHIFT_APP_UUID} | grep -c -v grep
+ps aux
 exit
