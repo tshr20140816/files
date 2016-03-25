@@ -121,13 +121,13 @@ if (preg_match('/\.css/', $file_name) == 0)
     header('HTTP', true, 500);
     exit;
 }
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 050 suffix $suffix\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 060 path $path\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 compressed_path $compressed_path\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 080 file_name $file_name\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 090 original_file $original_file\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 100 compressed_file $compressed_file\r\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 110 yuicompressor $yuicompressor\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 suffix $suffix\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 080 path $path\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 090 compressed_path $compressed_path\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 100 file_name $file_name\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 110 original_file $original_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 120 compressed_file $compressed_file\r\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 130 yuicompressor $yuicompressor\r\n", FILE_APPEND);
 file_put_contents($log_file, date("YmdHis") . " TARGET $path\r\n", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 chdir(getenv("OPENSHIFT_TMP_DIR"));
@@ -158,7 +158,7 @@ if (file_exists($compressed_file))
 }
 else
 {
-    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 120 $compressed_file\r\n", FILE_APPEND);
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 140 $compressed_file\r\n", FILE_APPEND);
     header('HTTP', true, 500);
 }
 @unlink($original_file);
