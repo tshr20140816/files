@@ -19,6 +19,6 @@ ls -lang
 
 ps aux | grep -e httpd | grep -e ${OPENSHIFT_APP_UUID} | grep -c -v grep
 
-pgrep -f httpd
+pgrep -fl httpd
 
 exit
