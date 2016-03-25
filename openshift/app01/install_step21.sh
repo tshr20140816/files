@@ -1034,6 +1034,7 @@ popd > /dev/null
 __HEREDOC__
 chmod +x minutely_jobs.sh &
 echo minutely_jobs.sh >> jobs.allow
+popd > /dev/null
 
 wait
 
