@@ -494,10 +494,9 @@ mv -f compressed_files.zip ${OPENSHIFT_REPO_DIR}
 ls -lang ${OPENSHIFT_REPO_DIR}
 popd > /dev/null
 __HEREDOC__
-
-popd > /dev/null
 chmod +x make_compressed_files_zip.sh
 echo make_compressed_files_zip.sh >> jobs.allow
+popd > /dev/null
 
 # *** minutely ***
 
