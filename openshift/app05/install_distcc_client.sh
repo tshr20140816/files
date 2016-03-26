@@ -485,8 +485,7 @@ echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')"
 
 weekday=$(date +%w)
 [ ${weekday} -eq 0 ] || [ ${weekday} -eq 6 ] && exit
-hour=$(date +%H)
-[ ${hour} -ne 14 ] && exit
+[ $(date +%H) -ne 14 ] && exit
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 zip -9rX compressed_files.zip ./compressed/
