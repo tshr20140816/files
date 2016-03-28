@@ -49,7 +49,7 @@ do
         wget https://$(head -n1 ${OPENSHIFT_DATA_DIR}/params/fqdn.txt)/compressed_files.zip
         unzip -q compressed_files.zip
         suffix=$(date '+%Y%m%d')
-        while read LINE
+        while read -r LINE
         do
             target_file=${LINE}
             compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
@@ -62,7 +62,7 @@ do
             mv ${compressed_file}.compressed ${target_file}
         done < compress_target_list_css.txt
         rm -f compress_target_list_css.txt
-        while read LINE
+        while read -r LINE
         do
             target_file=${LINE}
             compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
@@ -77,7 +77,7 @@ do
             mv ${compressed_file}.compressed ${target_file}
         done < compress_target_list_js.txt
         rm -f compress_target_list_js.txt
-        while read LINE
+        while read -r LINE
         do
             target_file=${LINE}
             compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
