@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1120"
+echo "1124"
 
 # set -x
 
@@ -41,8 +41,8 @@ make install
 
 tree ${OPENSHIFT_DATA_DIR}/fping
 
-${OPENSHIFT_DATA_DIR}/fping/bin/fping --help
+${OPENSHIFT_DATA_DIR}/fping/sbin/fping --help
 
-${OPENSHIFT_DATA_DIR}/fping/bin/fping -n 10 8.8.8.8
+${OPENSHIFT_DATA_DIR}/fping/sbin/fping -n 10 8.8.8.8
 
 exit
