@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo "1041"
+echo "1052"
 
 # set -x
 
-rm -f ${OPENSHIFT_LOG_DIR}/test.log
-rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-*
+rm -f ${OPENSHIFT_LOG_DIR}/test.log &
+rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-* &
 
 ls -lang ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 
@@ -16,19 +16,19 @@ fi
 cd /tmp
 
 ls -lang
-# rm -f xymon-4.3.27.tar.gz*
-# rm -rf xymon-4.3.27
-# wget -O xymon-4.3.27.tar.gz http://downloads.sourceforge.net/project/xymon/Xymon/4.3.27/xymon-4.3.27.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fxymon%2Ffiles%2FXymon%2F&ts=1459128647&use_mirror=iweb
+rm -f xymon-4.3.27.tar.gz*
+rm -rf xymon-4.3.27
+rm -f fping-3.13.tar.gz
+rm -rf fping-3.13
 
-# tar xzf xymon-4.3.27.tar.gz
+wget http://fping.org/dist/fping-3.13.tar.gz
 
-cd xymon-4.3.27
+tar xfz fping-3.13.tar.gz
+
+cd fping-3.13
 
 ls -lang
 
-./configure --server --help
-# time make
-
-ping  -c 10 8.8.8.8
+./configure --help
 
 exit
