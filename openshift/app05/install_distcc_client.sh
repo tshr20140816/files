@@ -504,7 +504,7 @@ cat << '__HEREDOC__' > make_compressed_files_zip.sh
 #!/bin/bash
 export TZ=JST-9
 
-echo "$(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')"
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $(quota -s | grep -v a | awk '{print "Disk Usage : " $1,$4 " files"}')"
 
 weekday=$(date +%w)
 [ ${weekday} -eq 0 ] || [ ${weekday} -eq 6 ] && exit
