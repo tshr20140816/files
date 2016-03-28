@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1033"
+echo "1035"
 
 # set -x
 
@@ -16,11 +16,13 @@ fi
 cd /tmp
 
 ls -lang
- rm -f xymon-4.3.27.tar.gz
- rm -rf xymon-4.3.27
+rm -f xymon-4.3.27.tar.gz
+rm -rf xymon-4.3.27
 wget http://downloads.sourceforge.net/project/xymon/Xymon/4.3.27/xymon-4.3.27.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fxymon%2Ffiles%2FXymon%2F&ts=1459128647&use_mirror=iweb -O xymon-4.3.27.tar.gz
 
 tar xzf xymon-4.3.27.tar.gz
+
+ls -lang
 
 cd xymon-4.3.27
 
