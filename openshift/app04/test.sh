@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1032"
+echo "1033"
 
 # set -x
 
@@ -26,7 +26,7 @@ cd xymon-4.3.27
 
 ls -lang
 
-./configure
-time make
+./configure --help
+# time make
 
 exit
