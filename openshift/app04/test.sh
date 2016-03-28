@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1150"
+echo "1537"
 
 # set -x
 
@@ -16,14 +16,8 @@ fi
 cd /tmp
 
 ls -lang
-rm -f xymon-4.3.27.tar.gz*
-rm -rf xymon-4.3.27
-rm -f fping-3.13.tar.gz
-rm -rf fping-3.13
-rm -rf ${OPENSHIFT_DATA_DIR}/fping
 
-ping -c 10 8.8.8.8 | tail -n 1
-ping -c 10 usoppachi.rhcloud.com | tail -n 1
-ping -c 10 usoppachi.appspot.com | tail -n 1
+string="stirng" ; echo "${string//ir/ri}"
+string="stirng" ; echo "${string||ir|ri}"
 
 exit
