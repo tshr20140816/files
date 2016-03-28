@@ -29,6 +29,8 @@ cd fping-3.13
 
 ls -lang
 
+./autogen.sh
+
 ./configure --help
 
 exit
