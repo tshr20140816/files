@@ -22,8 +22,8 @@ rm -f fping-3.13.tar.gz
 rm -rf fping-3.13
 rm -rf ${OPENSHIFT_DATA_DIR}/fping
 
-ping -c 10 8.8.8.8
-ping -c 10 usoppachi.rhcloud.com
-ping -c 10 usoppachi.appspot.com
+ping -c 10 8.8.8.8 | tail -n 1
+ping -c 10 usoppachi.rhcloud.com | tail -n 1
+ping -c 10 usoppachi.appspot.com | tail -n 1
 
 exit
