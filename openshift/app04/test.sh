@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1058"
+echo "1115"
 
 # set -x
 
@@ -20,6 +20,7 @@ rm -f xymon-4.3.27.tar.gz*
 rm -rf xymon-4.3.27
 rm -f fping-3.13.tar.gz
 rm -rf fping-3.13
+rm -rf ${OPENSHIFT_DATA_DIR}/fping
 
 wget http://fping.org/dist/fping-3.13.tar.gz
 
@@ -32,7 +33,12 @@ ls -lang
 # ./autogen.sh
 
 ./configure --help
-./configure
+./configure --prefix=${OPENSHIFT_DATA_DIR}/fping
 time make -j4
+make install
+
+tree ${OPENSHIFT_DATA_DIR}/fping
+
+${OPENSHIFT_DATA_DIR}/fping/bin/fping --help
 
 exit
