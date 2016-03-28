@@ -18,6 +18,8 @@ fi
 web_beacon_server=${1}
 web_beacon_server_user=${2}
 
+log_file=${OPENSHIFT_LOG_DIR}/install.log
+
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
@@ -26,17 +28,17 @@ export CXXFLAGS="${CFLAGS}"
 distcc_version=3.1
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
-tar jxf distcc-${distcc_version}.tar.bz2
+wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2 | tee -a ${log_file}
+tar jxf distcc-${distcc_version}.tar.bz2 | tee -a ${log_file}
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
 # ./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
  --infodir=${OPENSHIFT_TMP_DIR}/info \
- --mandir=${OPENSHIFT_TMP_DIR}/man
-time make -j$(grep -c -e processor /proc/cpuinfo)
-make install
+ --mandir=${OPENSHIFT_TMP_DIR}/man  | tee -a ${log_file}
+time make -j$(grep -c -e processor /proc/cpuinfo)  | tee -a ${log_file}
+make install  | tee -a ${log_file}
 popd > /dev/null
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 rm -f distcc-${distcc_version}.tar.bz2 &
