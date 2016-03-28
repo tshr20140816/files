@@ -115,7 +115,8 @@ do
             loop_counter=0
             # is_alive=$(ps ahwx | grep ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
             is_alive=$(pgrep -fl ${install_script_file} | grep ${OPENSHIFT_DIY_IP} | grep -c -v grep)
-            query_string="server=${OPENSHIFT_APP_DNS}&install_script_is_alive=${is_alive}"
+            mfc=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $1}')
+            query_string="server=${OPENSHIFT_APP_DNS}&install_script_is_alive=${is_alive}&mfc=${mfc}"
             wget --spider "${web_beacon_server}dummy?${query_string}" > /dev/null 2>&1
         fi
         sleep 5s
