@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1119"
+echo "1120"
 
 # set -x
 
@@ -43,6 +43,6 @@ tree ${OPENSHIFT_DATA_DIR}/fping
 
 ${OPENSHIFT_DATA_DIR}/fping/bin/fping --help
 
-${OPENSHIFT_DATA_DIR}/fping/bin/fping 8.8.8.8
+${OPENSHIFT_DATA_DIR}/fping/bin/fping -n 10 8.8.8.8
 
 exit
