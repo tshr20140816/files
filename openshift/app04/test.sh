@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1115"
+echo "1119"
 
 # set -x
 
@@ -22,6 +22,8 @@ rm -f fping-3.13.tar.gz
 rm -rf fping-3.13
 rm -rf ${OPENSHIFT_DATA_DIR}/fping
 
+whereis fping
+
 wget http://fping.org/dist/fping-3.13.tar.gz
 
 tar xfz fping-3.13.tar.gz
@@ -40,5 +42,7 @@ make install
 tree ${OPENSHIFT_DATA_DIR}/fping
 
 ${OPENSHIFT_DATA_DIR}/fping/bin/fping --help
+
+${OPENSHIFT_DATA_DIR}/fping/bin/fping -c 10 8.8.8.8
 
 exit
