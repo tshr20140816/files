@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1140"
+echo "1143"
 
 # set -x
 
@@ -23,7 +23,7 @@ rm -rf fping-3.13
 rm -rf ${OPENSHIFT_DATA_DIR}/fping
 
 ping -c 10 8.8.8.8
-ping -c 10 b10-20160312.rhcloud.com
-ping -c 10 tshrapp20.appspot.com
+ping -c 10 usoppachi.rhcloud.com
+ping -c 10 usoppachi.appspot.com
 
 exit
