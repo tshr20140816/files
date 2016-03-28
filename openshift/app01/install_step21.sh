@@ -1016,7 +1016,7 @@ do
     fi
 done
 
-for shell_name in beacon memcached_status mrtg passenger_status process_status keep_process
+for shell_name in beacon memcached_status mrtg passenger_status process_status keep_process cacti_poller
 do
     # function030 "cron=minutely&shell_name=${shell_name}"
     touch ${OPENSHIFT_LOG_DIR}/${shell_name}.sh.log.${weekday}
