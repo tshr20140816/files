@@ -43,6 +43,6 @@ tree ${OPENSHIFT_DATA_DIR}/fping
 
 ${OPENSHIFT_DATA_DIR}/fping/bin/fping --help
 
-${OPENSHIFT_DATA_DIR}/fping/bin/fping -c 10 8.8.8.8
+${OPENSHIFT_DATA_DIR}/fping/bin/fping 8.8.8.8
 
 exit
