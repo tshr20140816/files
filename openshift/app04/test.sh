@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1124"
+echo "1138"
 
 # set -x
 
@@ -22,27 +22,6 @@ rm -f fping-3.13.tar.gz
 rm -rf fping-3.13
 rm -rf ${OPENSHIFT_DATA_DIR}/fping
 
-whereis fping
-
-wget http://fping.org/dist/fping-3.13.tar.gz
-
-tar xfz fping-3.13.tar.gz
-
-cd fping-3.13
-
-ls -lang
-
-# ./autogen.sh
-
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/fping
-time make -j4
-make install
-
-tree ${OPENSHIFT_DATA_DIR}/fping
-
-${OPENSHIFT_DATA_DIR}/fping/sbin/fping --help
-
-${OPENSHIFT_DATA_DIR}/fping/sbin/fping -n 10 8.8.8.8
+ping -c 10 8.8.8.8
 
 exit
