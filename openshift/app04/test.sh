@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1552"
+echo "1032"
 
 # set -x
 
@@ -16,11 +16,17 @@ fi
 cd /tmp
 
 ls -lang
+ rm -f xymon-4.3.27.tar.gz
+ rm -rf xymon-4.3.27
+wget http://downloads.sourceforge.net/project/xymon/Xymon/4.3.27/xymon-4.3.27.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fxymon%2Ffiles%2FXymon%2F&ts=1459128647&use_mirror=iweb -O xymon-4.3.27.tar.gz
 
-ps aux | grep -e httpd | grep -e ${OPENSHIFT_APP_UUID} | grep -c -v grep
+tar xzf xymon-4.3.27.tar.gz
 
-pgrep -fl httpd
+cd xymon-4.3.27
 
-pgrep --help
+ls -lang
+
+./configure
+time make
 
 exit
