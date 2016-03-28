@@ -29,7 +29,7 @@ cd fping-3.13
 
 ls -lang
 
-./autogen.sh
+# ./autogen.sh
 
 ./configure --help
 
