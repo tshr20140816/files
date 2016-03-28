@@ -448,6 +448,27 @@ move_uploaded_file($_FILES['compressed_file']['tmp_name'], $compressed_path . '.
 __HEREDOC__
 popd > /dev/null
 
+# ***** PHP (make_compressed_files_zip) *****
+
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
+cat << '__HEREDOC__' > make_compressed_files_zip.php
+<?php
+date_default_timezone_set('Asia/Tokyo');
+$log_file = getenv("OPENSHIFT_LOG_DIR") . basename($_SERVER["SCRIPT_NAME"]) . "." . date("Ymd") . ".log";
+file_put_contents($log_file, "\n" . date("YmdHis") . " _SERVER \n", FILE_APPEND);
+file_put_contents($log_file, var_dump($_SERVER), FILE_APPEND);
+file_put_contents($log_file, "\n getallheaders \n", FILE_APPEND);
+file_put_contents($log_file, getallheaders(), FILE_APPEND);
+file_put_contents($log_file, "\n", FILE_APPEND);
+
+chdir(getenv("OPENSHIFT_DATA_DIR"));
+$cmd = "zip -9rX compressed_files.zip ./compressed/";
+exec($cmd);
+rename(getenv("OPENSHIFT_DATA_DIR") . "compressed_files.zip", getenv("OPENSHIFT_REPO_DIR") . "compressed_files.zip");
+?>
+__HEREDOC__
+popd > /dev/null
+
 # ***** PHP (Current Status) *****
 
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
