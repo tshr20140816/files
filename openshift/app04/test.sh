@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1056"
+echo "1058"
 
 # set -x
 
@@ -32,5 +32,7 @@ ls -lang
 # ./autogen.sh
 
 ./configure --help
+./configure
+time make -j4
 
 exit
