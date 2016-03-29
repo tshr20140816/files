@@ -17,7 +17,10 @@ cd /tmp
 
 ls -lang
 
-string="stirng" ; echo "${string//ir/ri}"
-string="stirng" ; echo "${string||ir|ri}"
+wget --help
+
+echo "\n"
+
+curl --help
 
 exit
