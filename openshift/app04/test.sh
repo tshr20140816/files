@@ -17,10 +17,18 @@ cd /tmp
 
 ls -lang
 
-wget --help
-
-echo "\n"
+# wget --help
 
 curl --help
+
+rm -f ttrss_archive.zip
+
+echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
+
+curl https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -o ttrss_archive.zip
+
+wait
+
+echo "FINISH $(date +%Y/%m/%d" "%H:%M:%S)"
 
 exit
