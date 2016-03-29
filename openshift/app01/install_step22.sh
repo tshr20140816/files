@@ -42,20 +42,20 @@ rm -f download_cache/nginx*
 popd > /dev/null
 find ${OPENSHIFT_DATA_DIR}/.gem -name '*.md' -type f -print0 | xargs -0i -t -P 4 -n 3 rm -f {}
 
-# ***** strip *****
+# # ***** strip *****
 
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ./ -name "*" -mindepth 2 -type f -print0 \
- | xargs -0i file {} \
- | grep -e "not stripped" \
- | grep -v -e "delegated" \
- | awk -F':' '{printf $1"\n"}' \
- > ${OPENSHIFT_TMP_DIR}/strip_starget.txt
-echo "$(date +%Y/%m/%d" "%H:%M:%S) strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
- | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+# find ./ -name "*" -mindepth 2 -type f -print0 \
+#  | xargs -0i file {} \
+#  | grep -e "not stripped" \
+#  | grep -v -e "delegated" \
+#  | awk -F':' '{printf $1"\n"}' \
+#  > ${OPENSHIFT_TMP_DIR}/strip_starget.txt
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) strip target count : $(wc -l ${OPENSHIFT_TMP_DIR}/strip_starget.txt)" \
+#  | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-all
 # time cat ${OPENSHIFT_TMP_DIR}/strip_starget.txt | xargs -t -P 4 -n 3 strip --strip-debug
-popd > /dev/null
+# popd > /dev/null
 
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
