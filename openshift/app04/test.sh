@@ -32,9 +32,11 @@ curl -r 1500001- https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref
 
 wait
 
+echo "FINISH $(date +%Y/%m/%d" "%H:%M:%S)"
+
 curl https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -o ttrss_archive.zip
 
-echo "FINISH $(date +%Y/%m/%d" "%H:%M:%S)"
+echo "FINISH 2 $(date +%Y/%m/%d" "%H:%M:%S)"
 
 ls -lang
 
