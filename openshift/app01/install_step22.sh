@@ -18,9 +18,9 @@ wget https://$(head -n1 ${OPENSHIFT_DATA_DIR}/params/fqdn.txt)/make_compressed_f
 # ***** shell syntax check *****
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-find ${OPENSHIFT_DATA_DIR} -name *.sh -type f -print0 | xargs -0i bash -n {} \
+find ${OPENSHIFT_DATA_DIR} -name "*.sh" -type f -print0 | xargs -0i bash -n {} \
  >> ${OPENSHIFT_LOG_DIR}/shell_syntax_error.log 2>&1
-find ${OPENSHIFT_REPO_DIR}/.openshift/cron/ -name *.sh -type f -print0 | xargs -0i bash -n {} \
+find ${OPENSHIFT_REPO_DIR}/.openshift/cron/ -name "*.sh" -type f -print0 | xargs -0i bash -n {} \
  >> ${OPENSHIFT_LOG_DIR}/shell_syntax_error.log 2>&1
 popd > /dev/null
 touch ${OPENSHIFT_LOG_DIR}/shell_syntax_error.log
