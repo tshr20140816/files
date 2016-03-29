@@ -6,14 +6,10 @@ function010
 
 # ***** ssh master connection kill *****
 
-for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
+while read -r LINE
 do
-    user_fqdn=${line}
-    # ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    # ssh -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    ssh -t -t -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-    # ssh -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-done
+    ssh -t -t -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${LINE} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+done < ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt
 
 mv -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log ${OPENSHIFT_LOG_DIR}/install
 
