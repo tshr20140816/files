@@ -3,6 +3,8 @@
 set -x
 
 # History
+# 2016.03.31 ruby_version 2.1.8 → 2.1.9
+# 2016.03.31 baikal_version 0.4.3 → 0.4.4
 # 2016.03.24 baikal_version 0.4.2 → 0.4.3
 # 2016.03.22 baikal_version 0.4.1 → 0.4.2
 # 2016.03.18 baikal_version 0.4.0 → 0.4.1
@@ -94,7 +96,7 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apcu_version 4.0.10
 apache_version 2.2.31
 axel_version 2.4
-baikal_version 0.4.3
+baikal_version 0.4.4
 cacti_version 0.8.8g
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
@@ -117,7 +119,7 @@ optipng_version 0.7.5
 php_version 5.6.19
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.10
-ruby_version 2.1.8
+ruby_version 2.1.9
 sphinx_version 2.2.10
 tcl_version 8.6.4
 webalizer_version 2.23-08
