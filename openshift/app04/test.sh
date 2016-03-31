@@ -55,7 +55,6 @@ wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Ever
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-base-4.5.1.0-11.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/gmp-5.1.1-2.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/l/libffi-3.0.13-4.fc19.x86_64.rpm
-wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/glibc-2.17-4.fc19.x86_64.rpm
 
 for rpmball in $(find ./ -name "*.rpm" -type f -print)
 do
@@ -63,7 +62,7 @@ do
 done
 find ./ -name "*.so" -mindepth 2 -type f -print0 | xargs -0i -P 1 -n 1 mv -f {} /tmp/usr/lib64/
 
-ln -s /tmp/usr/lib64/libc-2.17.so /tmp/usr/lib64/libc.so.6
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/glibc-2.17-4.fc19.x86_64.rpm
 
 tree ./
 
