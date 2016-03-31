@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1730"
+echo "1739"
 
 # set -x
 
@@ -53,6 +53,8 @@ wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Ever
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-deepseq-1.3.0.0-11.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-array-0.4.0.0-11.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-base-4.5.1.0-11.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/gmp-5.1.1-2.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/l/libffi-3.0.13-4.fc19.x86_64.rpm
 
 for rpmball in $(find ./ -name "*.rpm" -type f -print)
 do
