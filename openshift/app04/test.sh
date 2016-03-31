@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1048"
+echo "1347"
 
 # set -x
 
@@ -19,15 +19,16 @@ ls -lang
 
 # wget --help
 
-curl --help
+# curl --help
 
-rm -f ttrss_archive.zip
-rm -f 01_ttrss_archive.zip
-rm -f 02_ttrss_archive.zip
+rm -f ShellCheck-0.2.0-2.fc19.x86_64.rpm
 
 echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
-curl -LI http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
+# curl -LI http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
+wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
+
+rpm -l ShellCheck-0.2.0-2.fc19.x86_64.rpm
 
 echo "FINISH $(date +%Y/%m/%d" "%H:%M:%S)"
 
