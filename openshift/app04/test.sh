@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1451"
+echo "1454"
 
 # set -x
 
@@ -33,12 +33,14 @@ echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
 # tree ./
 
-export LD_LIBRARY_PATH=/usr/lib64/ghc-7.4.2/regex-compat-0.95.1:$LD_LIBRARY_PATH
+echo ${LD_LIBRARY_PATH}
+
+export LD_LIBRARY_PATH=/usr/lib64/ghc-7.4.2/regex-compat-0.95.1:${LD_LIBRARY_PATH}
 
 echo ${LD_LIBRARY_PATH}
 
 ./usr/bin/shellcheck --version
-ldd ./usr/bin/shellchec
+ldd ./usr/bin/shellcheck
 
 # wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm
 # rpm2cpio ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm | cpio -idmv
