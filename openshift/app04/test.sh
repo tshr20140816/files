@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1507"
+echo "1508"
 
 # set -x
 
@@ -18,27 +18,23 @@ cd /tmp
 ls -lang
 
 # wget --help
-
 # curl --help
-
-rm -f ShellCheck-0.2.0-2.fc19.x86_64.rpm
 
 echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
 # curl -LI http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
 # wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
 
-# rpm2cpio ShellCheck-0.2.0-2.fc19.x86_64.rpm | cpio --list
 # rpm2cpio ShellCheck-0.2.0-2.fc19.x86_64.rpm | cpio -idmv
 
 # tree ./
 
 echo ${LD_LIBRARY_PATH}
-
-export LD_LIBRARY_PATH=/tmp/usr/lib64/ghc-7.4.2/regex-compat-0.95.1:${LD_LIBRARY_PATH}
-
+# export LD_LIBRARY_PATH=/tmp/usr/lib64/ghc-7.4.2/regex-compat-0.95.1:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=/tmp/usr/lib64
 echo ${LD_LIBRARY_PATH}
 
+cp /tmp/usr/lib64/ghc-7.4.2/regex-compat-0.95.1/libHSregex-compat-0.95.1-ghc7.4.2.so /tmp/usr/lib64/
 ./usr/bin/shellcheck --version
 ldd ./usr/bin/shellcheck
 
