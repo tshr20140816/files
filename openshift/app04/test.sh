@@ -48,6 +48,10 @@ wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Ever
 # rpm2cpio ghc-json-0.7-2.fc19.x86_64.rpm | cpio -idmv
 
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-syb-0.3.7-22.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-pretty-1.1.1.0-11.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-parsec-3.1.3-22.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-text-0.11.2.3-22.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-mtl-2.1.2-22.fc19.x86_64.rpm
 
 find ./ -name "*.rpm" -type f -print0 | xargs -0i -P 1 -n 1 rpm2cpio {} | cpio -idmv
 find ./ -name "*.so" -mindepth 2 -type f -print0 | xargs -0i -P 1 -n 1 mv -f {} /tmp/usr/lib64/
@@ -61,6 +65,8 @@ echo ${LD_LIBRARY_PATH}
 ldd ./usr/bin/shellcheck
 
 echo "FINISH $(date +%Y/%m/%d" "%H:%M:%S)"
+
+quota -s
 
 ls -lang
 
