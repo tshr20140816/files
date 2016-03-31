@@ -27,7 +27,7 @@ rm -f 02_ttrss_archive.zip
 
 echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
-curl -LI https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master
+curl -LI http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
 
 echo "FINISH $(date +%Y/%m/%d" "%H:%M:%S)"
 
