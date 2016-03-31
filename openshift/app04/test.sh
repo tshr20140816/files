@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1756"
+echo "0853"
 
 # set -x
 
@@ -19,6 +19,8 @@ ls -lang
 
 # wget --help
 # curl --help
+
+/lib64/libc.so.6
 
 rm -rf ./usr
 rm -f *.rpm
