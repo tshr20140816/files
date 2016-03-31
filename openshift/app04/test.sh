@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1741"
+echo "1756"
 
 # set -x
 
@@ -62,6 +62,8 @@ do
     rpm2cpio ${rpmball} | cpio -idmv
 done
 find ./ -name "*.so" -mindepth 2 -type f -print0 | xargs -0i -P 1 -n 1 mv -f {} /tmp/usr/lib64/
+
+ln -s /tmp/usr/lib64/libc-2.17.so /tmp/usr/lib64/libc.so.6
 
 tree ./
 
