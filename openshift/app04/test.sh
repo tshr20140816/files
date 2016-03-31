@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1347"
+echo "1430"
 
 # set -x
 
@@ -34,6 +34,11 @@ echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 # tree ./
 
 ./usr/bin/shellcheck --version
+
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm
+rpm2cpio ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm | cpio -idmv
+
+tree ./
 
 echo "FINISH $(date +%Y/%m/%d" "%H:%M:%S)"
 
