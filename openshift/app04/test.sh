@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1718"
+echo "1727"
 
 # set -x
 
@@ -53,7 +53,10 @@ wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Ever
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-text-0.11.2.3-22.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-mtl-2.1.2-22.fc19.x86_64.rpm
 
-find ./ -name "*.rpm" -type f -print0 | xargs -0i -P 1 -n 1 rpm2cpio {} | cpio -idmv
+for rpmball in $(find ./ -name "*.rpm" -type f -print)
+do
+    rpm2cpio ${rpmball} | cpio -idmv
+done
 find ./ -name "*.so" -mindepth 2 -type f -print0 | xargs -0i -P 1 -n 1 mv -f {} /tmp/usr/lib64/
 
 tree ./
