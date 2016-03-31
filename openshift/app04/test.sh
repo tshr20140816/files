@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0229"
+echo "1048"
 
 # set -x
 
@@ -27,16 +27,9 @@ rm -f 02_ttrss_archive.zip
 
 echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
-curl -r 0-499 https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -o 01_ttrss_archive.zip &
-# curl -r 1500001- https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -o 02_ttrss_archive.zip &
-
-wait
+curl -LI https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master
 
 echo "FINISH $(date +%Y/%m/%d" "%H:%M:%S)"
-
-curl https://tt-rss.org/gitlab/fox/tt-rss/repository/archive.zip?ref=master -o ttrss_archive.zip
-
-echo "FINISH 2 $(date +%Y/%m/%d" "%H:%M:%S)"
 
 ls -lang
 
