@@ -44,6 +44,12 @@ wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Ever
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-mtl-2.1.2-22.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-transformers-0.3.0.0-22.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-directory-1.1.0.2-11.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-unix-2.5.1.1-11.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-bytestring-0.9.2.1-11.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-old-time-1.1.0.0-11.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-old-locale-1.0.0.4-11.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-filepath-1.3.0.0-11.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-containers-0.4.2.1-11.fc19.x86_64.rpm
 
 for rpmball in $(find ./ -name "*.rpm" -type f -print)
 do
