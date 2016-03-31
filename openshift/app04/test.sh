@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1508"
+echo "1657"
 
 # set -x
 
@@ -19,6 +19,8 @@ ls -lang
 
 # wget --help
 # curl --help
+
+rm -f *.rpm
 
 echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
@@ -40,6 +42,12 @@ ldd ./usr/bin/shellcheck
 
 # wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm
 # rpm2cpio ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm | cpio -idmv
+
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-posix-0.95.2-22.fc19.x86_64.rpm
+rpm2cpio ghc-regex-posix-0.95.2-22.fc19.x86_64.rpm | cpio -idmv
+
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-base-0.93.2-22.fc19.x86_64.rpm
+rpm2cpio ghc-regex-base-0.93.2-22.fc19.x86_64.rpm | cpio -idmv
 
 tree ./
 
