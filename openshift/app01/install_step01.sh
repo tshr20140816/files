@@ -1151,7 +1151,7 @@ mkdir ${OPENSHIFT_LOG_DIR}/install
 # ***** install script *****
 
 pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
-rm -f *
+rm -f ./*
 touch jobs.deny
 
 install_script_file='install_step_from_02_to_22'
