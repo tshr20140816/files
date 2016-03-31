@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1454"
+echo "1507"
 
 # set -x
 
@@ -35,7 +35,7 @@ echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
 echo ${LD_LIBRARY_PATH}
 
-export LD_LIBRARY_PATH=/usr/lib64/ghc-7.4.2/regex-compat-0.95.1:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=/tmp/usr/lib64/ghc-7.4.2/regex-compat-0.95.1:${LD_LIBRARY_PATH}
 
 echo ${LD_LIBRARY_PATH}
 
