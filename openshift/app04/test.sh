@@ -26,12 +26,14 @@ rm -f ShellCheck-0.2.0-2.fc19.x86_64.rpm
 echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
 # curl -LI http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
-wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
+# wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
 
-rpm2cpio ShellCheck-0.2.0-2.fc19.x86_64.rpm | cpio --list
-rpm2cpio ShellCheck-0.2.0-2.fc19.x86_64.rpm | cpio -idmv
+# rpm2cpio ShellCheck-0.2.0-2.fc19.x86_64.rpm | cpio --list
+# rpm2cpio ShellCheck-0.2.0-2.fc19.x86_64.rpm | cpio -idmv
 
-tree ./
+# tree ./
+
+./usr/bin/shellcheck --version
 
 echo "FINISH $(date +%Y/%m/%d" "%H:%M:%S)"
 
