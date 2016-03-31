@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1657"
+echo "1718"
 
 # set -x
 
@@ -37,15 +37,17 @@ rpm2cpio ShellCheck-0.2.0-2.fc19.x86_64.rpm | cpio -idmv
 
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm
 rpm2cpio ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm | cpio -idmv
-cp /tmp/usr/lib64/ghc-7.4.2/regex-compat-0.95.1/libHSregex-compat-0.95.1-ghc7.4.2.so /tmp/usr/lib64/
 
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-posix-0.95.2-22.fc19.x86_64.rpm
 rpm2cpio ghc-regex-posix-0.95.2-22.fc19.x86_64.rpm | cpio -idmv
-cp /tmp/usr/lib64/ghc-7.4.2/regex-posix-0.95.2/libHSregex-posix-0.95.2-ghc7.4.2.so /tmp/usr/lib64/
 
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-base-0.93.2-22.fc19.x86_64.rpm
 rpm2cpio ghc-regex-base-0.93.2-22.fc19.x86_64.rpm | cpio -idmv
-cp /tmp/usr/lib64/ghc-7.4.2/regex-base-0.93.2/libHSregex-base-0.93.2-ghc7.4.2.so /tmp/usr/lib64/
+
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-json-0.7-2.fc19.x86_64.rpm
+rpm2cpio ghc-json-0.7-2.fc19.x86_64.rpm | cpio -idmv
+
+find ./ -name "*.so" -mindepth 2 -type f -print0 | xargs -0i -P 1 -n 1 mv -f {} /tmp/usr/lib64/
 
 tree ./
 
