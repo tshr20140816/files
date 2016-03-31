@@ -33,7 +33,9 @@ echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
 # tree ./
 
-cp ./usr/lib64/ghc-7.4.2/regex-compat-0.95.1/libHSregex-compat-0.95.1-ghc7.4.2.so ./usr/bin/
+rm -f ./usr/bin/libHSregex-compat-0.95.1-ghc7.4.2.so
+
+export LD_LIBRARY_PATH=/usr/lib64/ghc-7.4.2/regex-compat-0.95.1:$LD_LIBRARY_PATH
 
 ./usr/bin/shellcheck --version
 
