@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1727"
+echo "1730"
 
 # set -x
 
@@ -33,25 +33,17 @@ echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 # tree ./
 
 wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
-# rpm2cpio ShellCheck-0.2.0-2.fc19.x86_64.rpm | cpio -idmv
-
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm
-# rpm2cpio ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm | cpio -idmv
-
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-posix-0.95.2-22.fc19.x86_64.rpm
-# rpm2cpio ghc-regex-posix-0.95.2-22.fc19.x86_64.rpm | cpio -idmv
-
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-base-0.93.2-22.fc19.x86_64.rpm
-# rpm2cpio ghc-regex-base-0.93.2-22.fc19.x86_64.rpm | cpio -idmv
-
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-json-0.7-2.fc19.x86_64.rpm
-# rpm2cpio ghc-json-0.7-2.fc19.x86_64.rpm | cpio -idmv
-
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-syb-0.3.7-22.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-pretty-1.1.1.0-11.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-parsec-3.1.3-22.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-text-0.11.2.3-22.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-mtl-2.1.2-22.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-transformers-0.3.0.0-22.fc19.x86_64.rpm
+wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-directory-1.1.0.2-11.fc19.x86_64.rpm
 
 for rpmball in $(find ./ -name "*.rpm" -type f -print)
 do
