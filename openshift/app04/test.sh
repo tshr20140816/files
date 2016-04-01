@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1319"
+echo "1322"
 
 # set -x
 
@@ -23,6 +23,7 @@ rm -f v0.2.0.tar.gz
 rm -f *.rpm
 rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
 rm -rf ghc-6.10.4
+rm -rf /tmp/ghc
 rm -f dummy.txt
 
 touch dummy.txt
