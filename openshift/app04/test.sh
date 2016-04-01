@@ -40,7 +40,9 @@ wget -q https://downloads.haskell.org/~ghc/4.08.2/ghc-4.08.2-src.tar.bz2
 tar jxf ghc-4.08.2-src.tar.bz2
 cd ghc-4.08.2
 ./configure --help
-./configure --prefix=/tmp/ghc4 --mandir=/dev/null --datadir=/dev/null
+cat ./configure
+./configure --prefix=/tmp/ghc4
+cat Makefile
 time make
 
 quota -s
