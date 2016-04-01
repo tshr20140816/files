@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1331"
+echo "1338"
 
 # set -x
 
@@ -41,7 +41,13 @@ ls -lang ghc-6.10.4-src.tar.bz2
 
 tar jxf ghc-6.10.4-src.tar.bz2
 
-tree ./
+# tree ./
+
+cd ghc-6.10.4
+./configure --help
+./configure --prefix=/tmp/ghc
+
+time make -j1
 
 quota -s
 
