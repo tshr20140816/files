@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1106"
+echo "1117"
 
 # set -x
 
@@ -22,21 +22,26 @@ rm -f ShellCheck.spec
 rm -f v0.2.0.tar.gz
 rm -f *.rpm
 rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
+rm -rf ghc-6.10.4
 
 whereis ghc
 
-wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.src.rpm
+# wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.src.rpm
 
-rpm2cpio ShellCheck-0.2.0-2.fc19.src.rpm | cpio -idmv
-tar zxf v0.2.0.tar.gz
+# rpm2cpio ShellCheck-0.2.0-2.fc19.src.rpm | cpio -idmv
+# tar zxf v0.2.0.tar.gz
 
-tree ./
+# tree ./
 
-cat ./shellcheck-0.2.0/Makefile
+# cat ./shellcheck-0.2.0/Makefile
 
-wget https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
+wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
 
 tar jxf ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
+
+rm -rf ./*.html
+rm -rf ./*.pdf
+rm -rf ./*.ps
 
 tree ./
 quota -s
