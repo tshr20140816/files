@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1105"
+echo "1106"
 
 # set -x
 
@@ -22,6 +22,8 @@ rm -f ShellCheck.spec
 rm -f v0.2.0.tar.gz
 rm -f *.rpm
 rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
+
+whereis ghc
 
 wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.src.rpm
 
