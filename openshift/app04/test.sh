@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0924"
+echo "0931"
 
 # set -x
 
@@ -76,6 +76,8 @@ tree ./
 ls -lang /tmp/lib64/
 
 /tmp/lib64/libc.so.6
+
+find / -name libc-2.17.so -print
 
 export LD_LIBRARY_PATH=/tmp/lib64:/tmp/usr/lib64
 echo ${LD_LIBRARY_PATH}
