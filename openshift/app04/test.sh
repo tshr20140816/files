@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1548"
+echo "1600"
 
 # set -x
 
@@ -39,10 +39,11 @@ wget -q https://downloads.haskell.org/~ghc/4.08.2/ghc-4.08.2-src.tar.bz2
 
 tar jxf ghc-4.08.2-src.tar.bz2
 cd ghc-4.08.2
+cp /usr/share/libtool/config.guess .
+cp /usr/share/libtool/config.sub .
+
 ./configure --help
-cat ./configure
 ./configure --prefix=/tmp/ghc4
-cat Makefile
 time make
 
 quota -s
