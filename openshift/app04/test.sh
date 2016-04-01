@@ -17,12 +17,13 @@ cd /tmp
 
 ls -lang
 
+rm -rf ./usr
 rm -rf shellcheck-0.2.0
 rm -f ShellCheck.spec
 rm -f v0.2.0.tar.gz
 rm -f *.rpm
 rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
-rm -f ghc-6.10.4-src.tar.bz2
+rm -f ghc-6.10.4-src.tar.bz2*
 rm -rf ghc-6.10.4
 rm -rf /tmp/ghc
 rm -f dummy.txt
@@ -37,9 +38,9 @@ rm -f dummy.txt
 # cat ./shellcheck-0.2.0/Makefile
 
 # wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-src.tar.bz2
-wget https://www.haskell.org/ghc/dist/4.08.2/ghc-4.08.2-1.i386.rpm
+wget https://downloads.haskell.org/~ghc/6.6.1/rpm/rhel5/x86_64/ghc-6.6.1-2.el5.x86_64.rpm
 
-rpm2cpio ghc-4.08.2-1.i386.rpm | cpio -idmv
+rpm2cpio ghc-6.6.1-2.el5.x86_64.rpm | cpio -idmv
 
 tree ./
 
