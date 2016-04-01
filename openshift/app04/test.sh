@@ -44,6 +44,8 @@ rpm2cpio ghc-6.6.1-2.el5.x86_64.rpm | cpio -idmv
 
 tree ./
 
+ldd ./usr/bin/ghc
+
 quota -s
 
 exit
