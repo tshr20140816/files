@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1247"
+echo "1310"
 
 # set -x
 
@@ -57,7 +57,7 @@ rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
 cd ghc-6.10.4
 
 ./configure --help
-./configure
+./configure --prefix=/tmp/ghc
 time make
 
 quota -s
