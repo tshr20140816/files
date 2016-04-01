@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1339"
+echo "1335"
 
 # set -x
 
@@ -36,19 +36,12 @@ rm -f dummy.txt
 
 # cat ./shellcheck-0.2.0/Makefile
 
-wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-src.tar.bz2
+# wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-src.tar.bz2
+wget https://www.haskell.org/ghc/dist/4.08.2/ghc-4.08.2-1.i386.rpm
 
-ls -lang ghc-6.10.4-src.tar.bz2
+rpm2cpio ghc-4.08.2-1.i386.rpm | cpio -idmv
 
-tar jxf ghc-6.10.4-src.tar.bz2
-
-# tree ./
-
-cd ghc-6.10.4
-./configure --help
-./configure --prefix=/tmp/ghc
-
-time make -j1
+tree ./
 
 quota -s
 
