@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1124"
+echo "1133"
 
 # set -x
 
@@ -50,6 +50,11 @@ find ./ -name '*.pdf' -type f -print0 | xargs -0i rm -f {}
 find ./ -name '*.ps' -type f -print0 | xargs -0i rm -f {}
 
 tree ./
+
+cd ghc-6.10.4
+./confiure --help
+./confiure
+
 quota -s
 
 exit
