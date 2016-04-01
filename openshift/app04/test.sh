@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1021"
+echo "1041"
 
 # set -x
 
@@ -74,8 +74,8 @@ rpm2cpio glibc-2.17-4.fc19.x86_64.rpm | cpio -idmv
 tree ./
 
 # /tmp/lib64/libc-2.17.so
-ldd /tmp/lib64/libc-2.17.so
-ldd /tmp/lib64/libc.so.6
+ldd -v /tmp/lib64/libc-2.17.so
+ldd -v /tmp/lib64/libc.so.6
 
 # ln -s /tmp/lib64/libc-2.17.so /tmp/usr/lib64/libc.so.6
 
