@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1006"
+echo "1016"
 
 # set -x
 
@@ -73,13 +73,13 @@ rpm2cpio glibc-2.17-4.fc19.x86_64.rpm | cpio -idmv
 
 tree ./
 
-/tmp/lib64/libc-2.17.so
-ldd /tmp/lib64/libc-2.17.so
+# /tmp/lib64/libc-2.17.so
+# ldd /tmp/lib64/libc-2.17.so
 
-ln -s /tmp/lib64/libc-2.17.so /tmp/usr/lib64/libc.so.6
+# ln -s /tmp/lib64/libc-2.17.so /tmp/usr/lib64/libc.so.6
 
-# export LD_LIBRARY_PATH=/tmp/lib64:/tmp/usr/lib64
-export LD_LIBRARY_PATH=/tmp/usr/lib64
+export LD_LIBRARY_PATH=/tmp/lib64:/tmp/usr/lib64
+# export LD_LIBRARY_PATH=/tmp/usr/lib64
 echo ${LD_LIBRARY_PATH}
 
 /tmp/lib64/libc.so.6
