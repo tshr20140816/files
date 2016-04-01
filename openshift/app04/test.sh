@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1426"
+echo "1510"
 
 # set -x
 
@@ -48,6 +48,9 @@ tree ./
 ls -lang ./usr/bin/
 
 ldd ./usr/bin/ghc-6.6.1
+
+export LD_LIBRARY_PATH=/tmp/usr/lib64
+echo ${LD_LIBRARY_PATH}
 ./usr/bin/ghc --help
 
 quota -s
