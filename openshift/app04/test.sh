@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0853"
+echo "0906"
 
 # set -x
 
@@ -68,7 +68,7 @@ wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Ever
 
 tree ./
 
-export LD_LIBRARY_PATH=/tmp/usr/lib64
+export LD_LIBRARY_PATH=/tmp/usr/lib64:/tmp/lib64
 echo ${LD_LIBRARY_PATH}
 
 ./usr/bin/shellcheck --version
