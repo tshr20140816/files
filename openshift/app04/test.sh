@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1616"
+echo "1621"
 
 # set -x
 
@@ -24,6 +24,7 @@ rm -f v0.2.0.tar.gz
 rm -f *.rpm
 rm -f *.diff
 rm -f dummy.txt
+rm -f ghc-4.08.2-src.tar.bz2*
 
 # wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.src.rpm
 
@@ -42,8 +43,8 @@ wget -q https://downloads.haskell.org/~ghc/4.08.2/ghc-4.08.2-src.tar.bz2
 
 tar jxf ghc-4.08.2-src.tar.bz2
 cd ghc-4.08.2
-cp /usr/share/libtool/config.guess .
-cp /usr/share/libtool/config.sub .
+cp /usr/lib/rpm/config.guess .
+cp /usr/lib/rpm/config.sub .
 
 ./configure --help
 ./configure --prefix=/tmp/ghc4
