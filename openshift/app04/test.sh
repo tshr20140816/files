@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1056"
+echo "1105"
 
 # set -x
 
@@ -17,11 +17,11 @@ cd /tmp
 
 ls -lang
 
-rm -f d4bc0f6.diff
 rm -rf shellcheck-0.2.0
 rm -f ShellCheck.spec
 rm -f v0.2.0.tar.gz
 rm -f *.rpm
+rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
 
 wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.src.rpm
 
@@ -32,6 +32,11 @@ tree ./
 
 cat ./shellcheck-0.2.0/Makefile
 
-# quota -s
+wget https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
+
+tar jxf ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
+
+tree ./
+quota -s
 
 exit
