@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1510"
+echo "1548"
 
 # set -x
 
@@ -35,23 +35,13 @@ rm -f dummy.txt
 # cat ./shellcheck-0.2.0/Makefile
 
 # wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-src.tar.bz2
-wget -q https://downloads.haskell.org/~ghc/6.6.1/rpm/rhel5/x86_64/ghc-6.6.1-2.el5.x86_64.rpm
-wget -q https://downloads.haskell.org/~ghc/6.6.1/rpm/rhel5/x86_64/ghc661-6.6.1-2.el5.x86_64.rpm
+wget -q https://downloads.haskell.org/~ghc/4.08.2/ghc-4.08.2-src.tar.bz2
 
-for rpmball in $(find ./ -name "*.rpm" -type f -print)
-do
-    rpm2cpio ${rpmball} | cpio -idmv
-done
-
-tree ./
-
-ls -lang ./usr/bin/
-
-ldd ./usr/bin/ghc-6.6.1
-
-export LD_LIBRARY_PATH=/tmp/usr/lib64
-echo ${LD_LIBRARY_PATH}
-./usr/bin/ghc --help
+tar jxf ghc-4.08.2-src.tar.bz2
+cd ghc-4.08.2
+./configure --help
+./configure --prefix=/tmp/ghc4 --mandir=/dev/null --datadir=/dev/null
+time make
 
 quota -s
 
