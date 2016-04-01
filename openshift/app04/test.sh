@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0931"
+echo "0947"
 
 # set -x
 
@@ -67,9 +67,11 @@ for rpmball in $(find ./ -name "*.rpm" -type f -print)
 do
     rpm2cpio ${rpmball} | cpio -idmv
 done
-find ./ -name "*.so" -mindepth 2 -type f -print0 | xargs -0i -P 1 -n 1 mv -f {} /tmp/usr/lib64/
 
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/glibc-2.17-4.fc19.x86_64.rpm
+rpm2cpio glibc-2.17-4.fc19.x86_64.rpm | cpio -idmv
+
+find ./ -name "*.so" -mindepth 2 -type f -print0 | xargs -0i -P 1 -n 1 mv -f {} /tmp/usr/lib64/ 2>/dev/null
 
 tree ./
 
