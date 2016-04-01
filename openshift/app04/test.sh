@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1052"
+echo "1056"
 
 # set -x
 
@@ -17,6 +17,8 @@ cd /tmp
 
 ls -lang
 
+rm -f d4bc0f6.diff
+rm -rf shellcheck-0.2.0
 rm -f ShellCheck.spec
 rm -f v0.2.0.tar.gz
 rm -f *.rpm
@@ -28,6 +30,8 @@ tar zxf v0.2.0.tar.gz
 
 tree ./
 
-quota -s
+cat ./shellcheck-0.2.0/Makefile
+
+# quota -s
 
 exit
