@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0923"
+echo "0924"
 
 # set -x
 
@@ -23,6 +23,11 @@ ls -lang
 /lib64/libc.so.6
 
 rm -rf ./usr
+rm -rf ./etc
+rm -rf ./lib64
+rm -rf ./sbin
+rm -rf ./var
+
 rm -f *.rpm
 
 echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
