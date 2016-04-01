@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1416"
+echo "1420"
 
 # set -x
 
@@ -22,10 +22,7 @@ rm -rf shellcheck-0.2.0
 rm -f ShellCheck.spec
 rm -f v0.2.0.tar.gz
 rm -f *.rpm
-rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
-rm -f ghc-6.10.4-src.tar.bz2*
-rm -rf ghc-6.10.4
-rm -rf /tmp/ghc
+rm -f *.diff
 rm -f dummy.txt
 
 # wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.src.rpm
@@ -38,9 +35,13 @@ rm -f dummy.txt
 # cat ./shellcheck-0.2.0/Makefile
 
 # wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-src.tar.bz2
-wget https://downloads.haskell.org/~ghc/6.6.1/rpm/rhel5/x86_64/ghc-6.6.1-2.el5.x86_64.rpm
+wget -q https://downloads.haskell.org/~ghc/6.6.1/rpm/rhel5/x86_64/ghc-6.6.1-2.el5.x86_64.rpm
+wget -q https://downloads.haskell.org/~ghc/6.6.1/rpm/rhel5/x86_64/ghc661-6.6.1-2.el5.x86_64.rpm
 
-rpm2cpio ghc-6.6.1-2.el5.x86_64.rpm | cpio -idmv
+for rpmball in $(find ./ -name "*.rpm" -type f -print)
+do
+    rpm2cpio ${rpmball} | cpio -idmv
+done
 
 tree ./
 
