@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1600"
+echo "1616"
 
 # set -x
 
@@ -33,6 +33,9 @@ rm -f dummy.txt
 # tree ./
 
 # cat ./shellcheck-0.2.0/Makefile
+
+find / -name config.guess -print 2>/dev/null
+find / -name config.sub -print 2>/dev/null
 
 # wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-src.tar.bz2
 wget -q https://downloads.haskell.org/~ghc/4.08.2/ghc-4.08.2-src.tar.bz2
