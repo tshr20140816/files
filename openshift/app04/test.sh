@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1310"
+echo "1319"
 
 # set -x
 
@@ -23,8 +23,9 @@ rm -f v0.2.0.tar.gz
 rm -f *.rpm
 rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
 rm -rf ghc-6.10.4
+rm -f dummy.txt
 
-whereis ghc
+touch dummy.txt
 
 # wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.src.rpm
 
@@ -43,12 +44,35 @@ rm -rf ./*.html
 rm -rf ./*.pdf
 rm -rf ./*.ps
 
-find ./ -name '*.html' -type f -print0 | xargs -0i rm -f {}
-find ./ -name '*.js' -type f -print0 | xargs -0i rm -f {}
-find ./ -name '*.css' -type f -print0 | xargs -0i rm -f {}
-find ./ -name '*.pdf' -type f -print0 | xargs -0i rm -f {}
-find ./ -name '*.ps' -type f -print0 | xargs -0i rm -f {}
-find ./ -name '*.gif' -type f -print0 | xargs -0i rm -f {}
+for LINE in $(find ./ -name '*.html' -type f -print)
+do
+    rm -f ${LINE}
+    ln -s /tmp/dummy.txt ${LINE}
+done
+
+for LINE in $(find ./ -name '*.css' -type f -print)
+do
+    rm -f ${LINE}
+    ln -s /tmp/dummy.txt ${LINE}
+done
+
+for LINE in $(find ./ -name '*.pdf' -type f -print)
+do
+    rm -f ${LINE}
+    ln -s /tmp/dummy.txt ${LINE}
+done
+
+for LINE in $(find ./ -name '*.ps' -type f -print)
+do
+    rm -f ${LINE}
+    ln -s /tmp/dummy.txt ${LINE}
+done
+
+for LINE in $(find ./ -name '*.gif' -type f -print)
+do
+    rm -f ${LINE}
+    ln -s /tmp/dummy.txt ${LINE}
+done
 
 # tree ./
 
