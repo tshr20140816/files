@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1133"
+echo "1142"
 
 # set -x
 
@@ -51,7 +51,7 @@ find ./ -name '*.ps' -type f -print0 | xargs -0i rm -f {}
 
 tree ./
 
-cd ghc-6.10.4
+cd ghc-6.10.4/compiler
 ./confiure --help
 ./confiure
 
