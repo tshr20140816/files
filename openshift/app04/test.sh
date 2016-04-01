@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1142"
+echo "1148"
 
 # set -x
 
@@ -49,11 +49,9 @@ find ./ -name '*.css' -type f -print0 | xargs -0i rm -f {}
 find ./ -name '*.pdf' -type f -print0 | xargs -0i rm -f {}
 find ./ -name '*.ps' -type f -print0 | xargs -0i rm -f {}
 
-tree ./
+# tree ./
 
-cd ghc-6.10.4/compiler
-./confiure --help
-./confiure
+find ./ -name confiure -print
 
 quota -s
 
