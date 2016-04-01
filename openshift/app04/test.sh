@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1200"
+echo "1247"
 
 # set -x
 
@@ -51,7 +51,10 @@ find ./ -name '*.ps' -type f -print0 | xargs -0i rm -f {}
 
 # tree ./
 
-find ./ -name configure -print
+cd ghc-6.10.4
+
+./configure --help
+./configure
 
 quota -s
 
