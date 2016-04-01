@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1154"
+echo "1200"
 
 # set -x
 
@@ -51,7 +51,7 @@ find ./ -name '*.ps' -type f -print0 | xargs -0i rm -f {}
 
 # tree ./
 
-find ./ -name confiure -print
+find ./ -name configure -print
 
 quota -s
 
