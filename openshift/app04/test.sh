@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1338"
+echo "1339"
 
 # set -x
 
@@ -22,6 +22,7 @@ rm -f ShellCheck.spec
 rm -f v0.2.0.tar.gz
 rm -f *.rpm
 rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
+rm -f ghc-6.10.4-src.tar.bz2
 rm -rf ghc-6.10.4
 rm -rf /tmp/ghc
 rm -f dummy.txt
