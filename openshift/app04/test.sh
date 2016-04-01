@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1322"
+echo "1331"
 
 # set -x
 
@@ -26,8 +26,6 @@ rm -rf ghc-6.10.4
 rm -rf /tmp/ghc
 rm -f dummy.txt
 
-touch dummy.txt
-
 # wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.src.rpm
 
 # rpm2cpio ShellCheck-0.2.0-2.fc19.src.rpm | cpio -idmv
@@ -37,53 +35,13 @@ touch dummy.txt
 
 # cat ./shellcheck-0.2.0/Makefile
 
-wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
+wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-src.tar.bz2
 
-tar jxf ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
+ls -lang ghc-6.10.4-src.tar.bz2
 
-rm -rf ./*.html
-rm -rf ./*.pdf
-rm -rf ./*.ps
+tar jxf ghc-6.10.4-src.tar.bz2
 
-for LINE in $(find ./ -name '*.html' -type f -print)
-do
-    rm -f ${LINE}
-    ln -s /tmp/dummy.txt ${LINE}
-done
-
-for LINE in $(find ./ -name '*.css' -type f -print)
-do
-    rm -f ${LINE}
-    ln -s /tmp/dummy.txt ${LINE}
-done
-
-for LINE in $(find ./ -name '*.pdf' -type f -print)
-do
-    rm -f ${LINE}
-    ln -s /tmp/dummy.txt ${LINE}
-done
-
-for LINE in $(find ./ -name '*.ps' -type f -print)
-do
-    rm -f ${LINE}
-    ln -s /tmp/dummy.txt ${LINE}
-done
-
-for LINE in $(find ./ -name '*.gif' -type f -print)
-do
-    rm -f ${LINE}
-    ln -s /tmp/dummy.txt ${LINE}
-done
-
-# tree ./
-
-rm -f ghc-6.10.4-x86_64-unknown-linux-n.tar.bz2
-
-cd ghc-6.10.4
-
-./configure --help
-./configure --prefix=/tmp/ghc
-time make
+tree ./
 
 quota -s
 
