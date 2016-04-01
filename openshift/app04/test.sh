@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0919"
+echo "0923"
 
 # set -x
 
@@ -67,6 +67,8 @@ find ./ -name "*.so" -mindepth 2 -type f -print0 | xargs -0i -P 1 -n 1 mv -f {} 
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/glibc-2.17-4.fc19.x86_64.rpm
 
 tree ./
+
+ls -lang /tmp/lib64/
 
 /tmp/lib64/libc.so.6
 
