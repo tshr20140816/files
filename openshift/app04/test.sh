@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1335"
+echo "1416"
 
 # set -x
 
@@ -43,6 +43,8 @@ wget https://downloads.haskell.org/~ghc/6.6.1/rpm/rhel5/x86_64/ghc-6.6.1-2.el5.x
 rpm2cpio ghc-6.6.1-2.el5.x86_64.rpm | cpio -idmv
 
 tree ./
+
+ls -lang ./usr/bin/
 
 ldd ./usr/bin/ghc
 
