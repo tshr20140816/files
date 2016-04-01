@@ -39,7 +39,7 @@ echo "START $(date +%Y/%m/%d" "%H:%M:%S)"
 
 # tree ./
 
-wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
+wget -q http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-compat-0.95.1-22.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-posix-0.95.2-22.fc19.x86_64.rpm
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/ghc-regex-base-0.93.2-22.fc19.x86_64.rpm
@@ -71,19 +71,18 @@ done
 wget http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/19/Everything/x86_64/os/Packages/g/glibc-2.17-4.fc19.x86_64.rpm
 rpm2cpio glibc-2.17-4.fc19.x86_64.rpm | cpio -idmv
 
-find ./ -name "*.so" -mindepth 2 -type f -print0 | xargs -0i -P 1 -n 1 mv -f {} /tmp/usr/lib64/ 2>/dev/null
-
 tree ./
 
-ls -lang /tmp/lib64/
+/tmp/usr/lib64/libc-2.17.so
+ldd /tmp/usr/lib64/libc-2.17.so
 
-/tmp/lib64/libc.so.6
+ln -s /tmp/usr/lib64/libc-2.17.so /tmp/usr/lib64/libc.so.6
 
-find / -name libc-2.17.so -print
-
-export LD_LIBRARY_PATH=/tmp/lib64:/tmp/usr/lib64
+# export LD_LIBRARY_PATH=/tmp/lib64:/tmp/usr/lib64
+export LD_LIBRARY_PATH=/tmp/usr/lib64
 echo ${LD_LIBRARY_PATH}
 
+/tmp/lib64/libc.so.6
 ./usr/bin/shellcheck --version
 ldd ./usr/bin/shellcheck
 
