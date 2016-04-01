@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1420"
+echo "1426"
 
 # set -x
 
@@ -47,7 +47,8 @@ tree ./
 
 ls -lang ./usr/bin/
 
-ldd ./usr/bin/ghc
+ldd ./usr/bin/ghc-6.6.1
+./usr/bin/ghc --help
 
 quota -s
 
