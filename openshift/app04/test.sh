@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0226"
+echo "0233"
 
 # set -x
 
@@ -55,6 +55,9 @@ usr/bin/cabal --config-file=${OPENSHIFT_DATA_DIR}/.cabal/config install shellche
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
 # tree ./
+
+find ./ -name package.cache -print 2>/dev/null
+find ${OPENSHIFT_DATA_DIR} -name package.cache -print 2>/dev/null
 
 quota -s
 
