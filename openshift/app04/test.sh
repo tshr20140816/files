@@ -50,11 +50,11 @@ export HOME=${OPENSHIFT_DATA_DIR}
 usr/bin/cabal --help
 # usr/bin/cabal --version
 usr/bin/cabal update
-usr/bin/cabal install shellcheck
+usr/bin/cabal --config-file=${OPENSHIFT_DATA_DIR}/.cabal/config install shellcheck
 
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
-tree ./
+# tree ./
 
 quota -s
 
