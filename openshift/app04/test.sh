@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0120"
+echo "0125"
 
 # set -x
 
@@ -25,9 +25,13 @@ cd 20160405
 [ ! -f scotty.tar.gz ] && wget http://www.accursoft.com/cartridges/scotty.tar.gz
 # ls -lang scotty.tar.gz
 
-tar xvfz scotty.tar.gz
+# tar xvfz scotty.tar.gz
 
 tree ./
+
+ls -lang usr/bin
+
+cat usr/bin/ghc
 
 quota -s
 
