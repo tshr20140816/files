@@ -17,13 +17,15 @@ cd /tmp
 
 ls -lang
 
-mkdir 20160405
+# mkdir 20160405
 
 cd 20160405
 
-rm -rf scotty.tar.gz
-wget http://www.accursoft.com/cartridges/scotty.tar.gz
-ls -lang scotty.tar.gz
+# rm -rf scotty.tar.gz
+[ ! -f scotty.tar.gz ] && wget http://www.accursoft.com/cartridges/scotty.tar.gz
+# ls -lang scotty.tar.gz
+
+tar xvfz scotty.tar.gz
 
 tree ./
 
