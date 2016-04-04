@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0324"
+echo "0342"
 
 # set -x
 
