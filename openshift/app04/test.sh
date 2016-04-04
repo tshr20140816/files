@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0154"
+echo "0156"
 
 # set -x
 
@@ -47,6 +47,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 usr/bin/cabal --help
 usr/bin/cabal --version
 usr/bin/cabal update
+usr/bin/cabal install shellcheck
 
 quota -s
 
