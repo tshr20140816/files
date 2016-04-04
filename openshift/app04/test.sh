@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0249"
+echo "0251"
 
 # set -x
 
@@ -47,6 +47,7 @@ cat ${OPENSHIFT_DATA_DIR}/.cabal/config
 export PATH=/tmp/20160405/usr/bin:$PATH
 export HOME=${OPENSHIFT_DATA_DIR}
 
+mkdir /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d
 usr/bin/ghc-pkg --user recache
 ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d
 
