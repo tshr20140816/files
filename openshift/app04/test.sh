@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0317"
+echo "0318"
 
 # set -x
 
@@ -60,7 +60,10 @@ usr/bin/cabal update
 ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 usr/bin/ghc-pkg --global recache
 ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
+usr/bin/ghc-pkg list
+set -x
 usr/bin/cabal install shellcheck
+usr/bin/ghc-pkg list
 
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
