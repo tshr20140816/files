@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0147"
+echo "0151"
 
 # set -x
 
@@ -27,7 +27,7 @@ cd 20160405
 
 # tar xvfz scotty.tar.gz
 
-tree ./
+# tree ./
 
 ls -lang usr/bin
 
@@ -39,6 +39,8 @@ set -x
 
 # usr/bin/ghc --help
 # usr/bin/ghc --version
+
+export HOME=${OPENSHIFT_DATA_DIR}
 
 usr/bin/cabal --help
 usr/bin/cabal --version
