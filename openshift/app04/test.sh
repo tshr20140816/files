@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0213"
+echo "0220"
 
 # set -x
 
@@ -31,29 +31,28 @@ cd 20160405
 
 # tree ./
 
-ls -lang usr/bin
+rm -rf /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
-cat usr/bin/ghc
+ls -lang usr/bin
 
 export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
 
 # usr/bin/ghc --help
 # usr/bin/ghc --version
 
-rm -rf ${OPENSHIFT_DATA_DIR}/delegate/
 tree ${OPENSHIFT_DATA_DIR}
 
+export PATH=/tmp/20160405/usr/bin:$PATH
 export HOME=${OPENSHIFT_DATA_DIR}
 
 usr/bin/cabal --help
 # usr/bin/cabal --version
-usr/bin/cabal update
-
-export PATH=$PATH:/tmp/20160405/usr/bin
-
+# usr/bin/cabal update
 usr/bin/cabal install shellcheck
 
-ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
+# ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
+
+tree ./
 
 quota -s
 
