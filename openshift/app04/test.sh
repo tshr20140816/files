@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0311"
+echo "0317"
 
 # set -x
 
@@ -19,15 +19,17 @@ cd /tmp
 
 ls -lang
 
-# mkdir 20160405
+rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
 
+rm -rf 20160405
+mkdir 20160405
 cd 20160405
 
 # rm -rf scotty.tar.gz
-# [ ! -f scotty.tar.gz ] && wget http://www.accursoft.com/cartridges/scotty.tar.gz
+[ ! -f scotty.tar.gz ] && wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
 # ls -lang scotty.tar.gz
 
-# tar xvfz scotty.tar.gz
+tar xvfz scotty.tar.gz
 
 # tree ./
 
@@ -48,25 +50,25 @@ export PATH=/tmp/20160405/usr/bin:$PATH
 export HOME=${OPENSHIFT_DATA_DIR}
 
 # mkdir /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d
-usr/bin/ghc-pkg --help
-usr/bin/ghc-pkg --user recache
-usr/bin/ghc-pkg recache
-usr/bin/ghc-pkg --global recache
-ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
+# usr/bin/ghc-pkg --help
+# usr/bin/ghc-pkg --user recache
+# usr/bin/ghc-pkg recache
 
-usr/bin/cabal --help
+# usr/bin/cabal --help
 # usr/bin/cabal --version
 usr/bin/cabal update
-usr/bin/cabal --config-file=${OPENSHIFT_DATA_DIR}/.cabal/config install shellcheck
+ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
+usr/bin/ghc-pkg --global recache
+ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
+usr/bin/cabal install shellcheck
 
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
 # tree ./
 
-find ./ -name package.cache -print 2>/dev/null
-find ${OPENSHIFT_DATA_DIR} -name package.cache -print 2>/dev/null
-
 tree ${OPENSHIFT_DATA_DIR}/.cabal/
+
+find / -name shellcheck -print 2>/dev/null
 
 quota -s
 
