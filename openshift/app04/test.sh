@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0208"
+echo "0213"
 
 # set -x
 
@@ -40,13 +40,14 @@ export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
 # usr/bin/ghc --help
 # usr/bin/ghc --version
 
+rm -rf ${OPENSHIFT_DATA_DIR}/delegate/
 tree ${OPENSHIFT_DATA_DIR}
 
 export HOME=${OPENSHIFT_DATA_DIR}
 
-# usr/bin/cabal --help
+usr/bin/cabal --help
 # usr/bin/cabal --version
-# usr/bin/cabal update
+usr/bin/cabal update
 
 export PATH=$PATH:/tmp/20160405/usr/bin
 
