@@ -50,6 +50,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 # mkdir /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d
 usr/bin/ghc-pkg --help
 usr/bin/ghc-pkg --user recache
+usr/bin/ghc-pkg recache
 ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
 usr/bin/cabal --help
