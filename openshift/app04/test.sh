@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0137"
+echo "0143"
 
 # set -x
 
@@ -22,7 +22,7 @@ ls -lang
 cd 20160405
 
 # rm -rf scotty.tar.gz
-[ ! -f scotty.tar.gz ] && wget http://www.accursoft.com/cartridges/scotty.tar.gz
+# [ ! -f scotty.tar.gz ] && wget http://www.accursoft.com/cartridges/scotty.tar.gz
 # ls -lang scotty.tar.gz
 
 # tar xvfz scotty.tar.gz
@@ -37,8 +37,11 @@ export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
 
 set -x
 
-usr/bin/ghc --help
-usr/bin/ghc --version
+# usr/bin/ghc --help
+# usr/bin/ghc --version
+
+usr/bin/cabal --help
+usr/bin/cabal --version
 
 quota -s
 
