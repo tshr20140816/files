@@ -1,8 +1,10 @@
 #!/bin/bash
 
-echo "0151"
+echo "0154"
 
 # set -x
+
+quota -s
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log &
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-* &
