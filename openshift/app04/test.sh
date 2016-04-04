@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0342"
+echo "0537"
 
 # set -x
 
@@ -19,17 +19,17 @@ cd /tmp
 
 ls -lang
 
-rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
+# rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
 
-rm -rf 20160405
-mkdir 20160405
+# rm -rf 20160405
+# mkdir 20160405
 cd 20160405
 
 # rm -rf scotty.tar.gz
 [ ! -f scotty.tar.gz ] && wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
 # ls -lang scotty.tar.gz
 
-tar xfz scotty.tar.gz
+# tar xfz scotty.tar.gz
 
 # tree ./
 
