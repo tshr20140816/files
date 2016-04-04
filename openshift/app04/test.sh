@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0204"
+echo "0208"
 
 # set -x
 
@@ -37,23 +37,22 @@ cat usr/bin/ghc
 
 export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
 
-set -x
-
 # usr/bin/ghc --help
 # usr/bin/ghc --version
 
+tree ${OPENSHIFT_DATA_DIR}
+
 export HOME=${OPENSHIFT_DATA_DIR}
 
-usr/bin/cabal --help
-usr/bin/cabal --version
-usr/bin/cabal update
-usr/bin/cabal install shellcheck
-
-echo $PATH
+# usr/bin/cabal --help
+# usr/bin/cabal --version
+# usr/bin/cabal update
 
 export PATH=$PATH:/tmp/20160405/usr/bin
 
 usr/bin/cabal install shellcheck
+
+ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
 quota -s
 
