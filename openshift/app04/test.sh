@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1621"
+echo "0113"
 
 # set -x
 
@@ -17,14 +17,7 @@ cd /tmp
 
 # ls -lang
 
-rm -rf ./usr
-rm -rf shellcheck-0.2.0
-rm -f ShellCheck.spec
-rm -f v0.2.0.tar.gz
-rm -f *.rpm
-rm -f *.diff
-rm -f dummy.txt
-rm -f ghc-4.08.2-src.tar.bz2*
+rm -rf ghc-4.08.2
 
 ls -lang
 
