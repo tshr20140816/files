@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0233"
+echo "0235"
 
 # set -x
 
@@ -58,6 +58,8 @@ usr/bin/cabal --config-file=${OPENSHIFT_DATA_DIR}/.cabal/config install shellche
 
 find ./ -name package.cache -print 2>/dev/null
 find ${OPENSHIFT_DATA_DIR} -name package.cache -print 2>/dev/null
+
+tree ${OPENSHIFT_DATA_DIR}/.cabal/
 
 quota -s
 
