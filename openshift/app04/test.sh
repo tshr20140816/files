@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0251"
+echo "0300"
 
 # set -x
 
@@ -31,7 +31,7 @@ cd 20160405
 
 # tree ./
 
-rm -rf /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
+# rm -rf /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
 ls -lang usr/bin
 
@@ -42,14 +42,14 @@ export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
 
 # tree ${OPENSHIFT_DATA_DIR}
 
-cat ${OPENSHIFT_DATA_DIR}/.cabal/config
+# cat ${OPENSHIFT_DATA_DIR}/.cabal/config
 
 export PATH=/tmp/20160405/usr/bin:$PATH
 export HOME=${OPENSHIFT_DATA_DIR}
 
-mkdir /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d
+# mkdir /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d
 usr/bin/ghc-pkg --user recache
-ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d
+ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
 usr/bin/cabal --help
 # usr/bin/cabal --version
