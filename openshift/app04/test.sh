@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0200"
+echo "0204"
 
 # set -x
 
@@ -51,7 +51,7 @@ usr/bin/cabal install shellcheck
 
 echo $PATH
 
-export $PATH:/tmp/20160405/usr/bin
+export PATH=$PATH:/tmp/20160405/usr/bin
 
 usr/bin/cabal install shellcheck
 
