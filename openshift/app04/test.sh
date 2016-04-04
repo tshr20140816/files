@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0220"
+echo "0226"
 
 # set -x
 
@@ -40,14 +40,16 @@ export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
 # usr/bin/ghc --help
 # usr/bin/ghc --version
 
-tree ${OPENSHIFT_DATA_DIR}
+# tree ${OPENSHIFT_DATA_DIR}
+
+cat ${OPENSHIFT_DATA_DIR}/.cabal/config
 
 export PATH=/tmp/20160405/usr/bin:$PATH
 export HOME=${OPENSHIFT_DATA_DIR}
 
 usr/bin/cabal --help
 # usr/bin/cabal --version
-# usr/bin/cabal update
+usr/bin/cabal update
 usr/bin/cabal install shellcheck
 
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
