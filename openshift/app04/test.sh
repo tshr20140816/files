@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0304"
+echo "0311"
 
 # set -x
 
@@ -51,6 +51,7 @@ export HOME=${OPENSHIFT_DATA_DIR}
 usr/bin/ghc-pkg --help
 usr/bin/ghc-pkg --user recache
 usr/bin/ghc-pkg recache
+usr/bin/ghc-pkg --global recache
 ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
 usr/bin/cabal --help
