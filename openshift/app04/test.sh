@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0143"
+echo "0147"
 
 # set -x
 
@@ -42,6 +42,7 @@ set -x
 
 usr/bin/cabal --help
 usr/bin/cabal --version
+usr/bin/cabal update
 
 quota -s
 
