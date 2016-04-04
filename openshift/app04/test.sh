@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0113"
+echo "0115"
 
 # set -x
 
@@ -15,11 +15,17 @@ fi
 
 cd /tmp
 
-# ls -lang
-
-rm -rf ghc-4.08.2
-
 ls -lang
+
+mkdir 20160405
+
+cd 20160405
+
+rm -rf scotty.tar.gz
+wget http://www.accursoft.com/cartridges/scotty.tar.gz
+ls -lang scotty.tar.gz
+
+tree ./
 
 quota -s
 
