@@ -15,7 +15,7 @@ fi
 
 cd /tmp
 
-ls -lang
+# ls -lang
 
 rm -rf ./usr
 rm -rf shellcheck-0.2.0
@@ -26,29 +26,7 @@ rm -f *.diff
 rm -f dummy.txt
 rm -f ghc-4.08.2-src.tar.bz2*
 
-# wget http://olea.org/paquetes-rpm/fedora-19/ShellCheck-0.2.0-2.fc19.src.rpm
-
-# rpm2cpio ShellCheck-0.2.0-2.fc19.src.rpm | cpio -idmv
-# tar zxf v0.2.0.tar.gz
-
-# tree ./
-
-# cat ./shellcheck-0.2.0/Makefile
-
-find / -name config.guess -print 2>/dev/null
-find / -name config.sub -print 2>/dev/null
-
-# wget -q https://www.haskell.org/ghc/dist/6.10.4/ghc-6.10.4-src.tar.bz2
-wget -q https://downloads.haskell.org/~ghc/4.08.2/ghc-4.08.2-src.tar.bz2
-
-tar jxf ghc-4.08.2-src.tar.bz2
-cd ghc-4.08.2
-cp /usr/lib/rpm/config.guess .
-cp /usr/lib/rpm/config.sub .
-
-./configure --help
-./configure --prefix=/tmp/ghc4
-time make
+ls -lang
 
 quota -s
 
