@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0125"
+echo "0137"
 
 # set -x
 
@@ -32,6 +32,13 @@ tree ./
 ls -lang usr/bin
 
 cat usr/bin/ghc
+
+export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
+
+set -x
+
+usr/bin/ghc --help
+usr/bin/ghc --version
 
 quota -s
 
