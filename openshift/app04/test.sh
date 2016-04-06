@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0926"
+echo "0927"
 
 # set -x
 
@@ -25,11 +25,11 @@ ls -lang
 # mkdir 20160405
 cd 20160405
 
-rm -rf scotty.tar.gz
+# rm -rf scotty.tar.gz
 [ ! -f scotty.tar.gz ] && wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
 ls -lang scotty.tar.gz
 
-tar xfz scotty.tar.gz
+# tar xfz scotty.tar.gz
 
 # tree ./
 
