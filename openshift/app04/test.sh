@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1333"
+echo "1347"
 
 # set -x
 
@@ -51,10 +51,14 @@ export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
 export PATH=/tmp/20160405/usr/bin:$PATH
 export HOME=${OPENSHIFT_DATA_DIR}
 
+chmod 777 ${OPENSHIFT_DATA_DIR}/.cabal/
+chmod 777 ${OPENSHIFT_DATA_DIR}/.cabal/packages/
+chmod 777 ${OPENSHIFT_DATA_DIR}/.cabal/packages/hackage.haskell.org/
+
 # usr/bin/cabal --help
 # usr/bin/cabal --version
 usr/bin/cabal update --help
-usr/bin/cabal update
+usr/bin/cabal update -v3
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 # usr/bin/ghc-pkg --global recache
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
