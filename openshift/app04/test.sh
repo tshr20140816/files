@@ -37,7 +37,7 @@ cd haskell
 # wget -q http://www.accursoft.com/cartridges/mflow.tar.gz
 # wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
 
-tar xfz network.tar.gz
+[ ! -f $OPENSHIFT_DATA_DIR/haskell/usr/bin/cabal ] && tar xfz network.tar.gz
 
 ls -lang
 ls -lang usr/bin
@@ -46,8 +46,8 @@ export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haksell
 
-cabal --help
-cabel -v3 update
+cabal update --help
+cabal -v3 update
 
 echo "FINISH"
 
