@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1714"
+echo "1724"
 
 # set -x
 
@@ -32,7 +32,7 @@ cat cabal_install_cabalinstall.log
 [ ! -f scotty.tar.gz ] && wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
 # ls -lang scotty.tar.gz
 
-# tar xfz scotty.tar.gz
+tar xfz scotty.tar.gz
 
 # tree ./
 
