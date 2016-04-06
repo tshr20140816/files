@@ -49,6 +49,9 @@ do
         wget https://$(head -n1 ${OPENSHIFT_DATA_DIR}/params/fqdn.txt)/compressed_files.zip
         unzip -q compressed_files.zip
         suffix=$(date '+%Y%m%d')
+        
+        # *** css ***
+        
         touch compress_target_list_css_add.txt
         while read -r LINE
         do
@@ -70,6 +73,9 @@ do
             fi
         done < compress_target_list_css.txt
         rm -f compress_target_list_css.txt
+        
+        # *** js ***
+        
         while read -r LINE
         do
             target_file=${LINE}
@@ -85,6 +91,9 @@ do
             mv ${compressed_file}.compressed ${target_file}
         done < compress_target_list_js.txt
         rm -f compress_target_list_js.txt
+        
+        # *** png/gif ***
+        
         while read -r LINE
         do
             target_file=${LINE}
