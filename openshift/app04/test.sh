@@ -23,6 +23,13 @@ rm -f *.tar.gz
 
 cd $OPENSHIFT_DATA_DIR
 
+rm -rf ccache
+rm -f compiler.jar
+
+tree .ghc
+
+rm -rf apache
+
 ls -lang
 
 # wget -q http://www.accursoft.com/cartridges/network.tar.gz
