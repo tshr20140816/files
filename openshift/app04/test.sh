@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1316"
+echo "1333"
 
 # set -x
 
@@ -53,7 +53,8 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 # usr/bin/cabal --help
 # usr/bin/cabal --version
-# usr/bin/cabal update
+usr/bin/cabal update --help
+usr/bin/cabal update
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 # usr/bin/ghc-pkg --global recache
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
