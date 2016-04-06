@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1707"
+echo "1714"
 
 # set -x
 
@@ -19,15 +19,14 @@ cd /tmp
 
 ls -lang
 
-cat cabal_install_shellcheck.log
+rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
 
-cat cabal_install_cabalinstall.log
-
-# rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
-
-# rm -rf 20160405
-# mkdir 20160405
+rm -rf 20160405
+mkdir 20160405
 cd 20160405
+
+cat cabal_install_shellcheck.log
+cat cabal_install_cabalinstall.log
 
 # rm -rf scotty.tar.gz
 [ ! -f scotty.tar.gz ] && wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
@@ -57,12 +56,12 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 # usr/bin/cabal --help
 # usr/bin/cabal --version
-usr/bin/cabal update --help
+# usr/bin/cabal update --help
 usr/bin/cabal update -v3
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 # usr/bin/ghc-pkg --global recache
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
-usr/bin/ghc-pkg list
+# usr/bin/ghc-pkg list
 usr/bin/cabal --help
 usr/bin/cabal install --help
 set -x
