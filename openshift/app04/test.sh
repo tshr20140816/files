@@ -19,10 +19,10 @@ cd /tmp
 
 ls -lang
 
-rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
+# rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
 
-rm -rf 20160405
-mkdir 20160405
+# rm -rf 20160405
+# mkdir 20160405
 cd 20160405
 
 rm -rf scotty.tar.gz
