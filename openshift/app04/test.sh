@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1724"
+echo "1748"
 
 # set -x
 
@@ -19,10 +19,10 @@ cd /tmp
 
 ls -lang
 
-rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
+# rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
 
-rm -rf 20160405
-mkdir 20160405
+# rm -rf 20160405
+# mkdir 20160405
 cd 20160405
 
 cat cabal_install_shellcheck.log
@@ -32,7 +32,7 @@ cat cabal_install_cabalinstall.log
 [ ! -f scotty.tar.gz ] && wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
 # ls -lang scotty.tar.gz
 
-tar xfz scotty.tar.gz
+# tar xfz scotty.tar.gz
 
 # tree ./
 
@@ -80,7 +80,7 @@ tree ${OPENSHIFT_DATA_DIR}/.cabal/
 find / -name shellcheck -print 2>/dev/null
 
 usr/bin/ghc-pkg --help
-usr/bin/ghc-pkg --dump --global -v3
+usr/bin/ghc-pkg --global -v3 dump
 
 quota -s
 
