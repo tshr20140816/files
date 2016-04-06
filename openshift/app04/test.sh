@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1255"
+echo "1305"
 
 # set -x
 
@@ -20,6 +20,8 @@ cd /tmp
 ls -lang
 
 cat cabal_install_shellcheck.log
+
+cat cabal_install_cabalinstall.log
 
 # rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
 
@@ -59,6 +61,9 @@ usr/bin/ghc-pkg list
 usr/bin/cabal --help
 usr/bin/cabal install --help
 set -x
+rm -f cabal_install_cabalinstall.log
+cabal install -j1 -v3 --disable-documentation Cabal cabal-install | tee -a cabal_install_cabalinstall.log
+rm -f cabal_install_shellcheck.log
 usr/bin/cabal install -j1 -v3 --disable-documentation ShellCheck | tee -a cabal_install_shellcheck.log
 usr/bin/ghc-pkg list
 
