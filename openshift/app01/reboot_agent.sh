@@ -133,8 +133,8 @@ do
         # ****** YUI Compressor *****
         # find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print0 \
         #  | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
-        cat compress_target_list_css_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
-        rm -f compress_target_list_css_add.txt
+        cat ${OPENSHIFT_DATA_DIR}/compress_target_list_css_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
+        rm -f ${OPENSHIFT_DATA_DIR}/compress_target_list_css_add.txt
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
         rm -f yuicompressor.log
@@ -144,8 +144,8 @@ do
         # ****** Closure Compiler *****
         # find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print0 \
         #  | xargs -0i -P 6 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler.sh {}
-        cat compress_target_list_js_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler.sh {}
-        rm -f compress_target_list_js_add.txt
+        cat ${OPENSHIFT_DATA_DIR}/compress_target_list_js_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler.sh {}
+        rm -f ${OPENSHIFT_DATA_DIR}/compress_target_list_js_add.txt
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
         rm -f closure_compiler.log
@@ -157,8 +157,8 @@ do
         #  | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
         # find ${OPENSHIFT_DATA_DIR} -name "*.gif" -mindepth 2 -type f -print0 \
         #  | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
-        cat compress_target_list_png_gif_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
-        rm -f compress_target_list_png_gif_add.txt
+        cat ${OPENSHIFT_DATA_DIR}/compress_target_list_png_gif_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
+        rm -f ${OPENSHIFT_DATA_DIR}/compress_target_list_png_gif_add.txt
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
         rm -f optipng.log
