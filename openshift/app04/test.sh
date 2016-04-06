@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0927"
+echo "0933"
 
 # set -x
 
@@ -49,10 +49,10 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 # usr/bin/cabal --help
 # usr/bin/cabal --version
-usr/bin/cabal update
-ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
-usr/bin/ghc-pkg --global recache
-ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
+# usr/bin/cabal update
+# ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
+# usr/bin/ghc-pkg --global recache
+# ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 usr/bin/ghc-pkg list
 set -x
 usr/bin/cabal install shellcheck
