@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0852"
+echo "0909"
 
 # set -x
 
@@ -19,21 +19,19 @@ cd /tmp
 
 ls -lang
 
-# rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
+rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
 
-# rm -rf 20160405
-# mkdir 20160405
+rm -rf 20160405
+mkdir 20160405
 cd 20160405
 
-# rm -rf scotty.tar.gz
+rm -rf scotty.tar.gz
 [ ! -f scotty.tar.gz ] && wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
-# ls -lang scotty.tar.gz
+ls -lang scotty.tar.gz
 
-# tar xfz scotty.tar.gz
+tar xfz scotty.tar.gz
 
 # tree ./
-
-# rm -rf /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 
 ls -lang usr/bin
 
@@ -48,11 +46,6 @@ export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
 
 export PATH=/tmp/20160405/usr/bin:$PATH
 export HOME=${OPENSHIFT_DATA_DIR}
-
-# mkdir /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d
-# usr/bin/ghc-pkg --help
-# usr/bin/ghc-pkg --user recache
-# usr/bin/ghc-pkg recache
 
 # usr/bin/cabal --help
 # usr/bin/cabal --version
