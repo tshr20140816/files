@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1347"
+echo "1706"
 
 # set -x
 
@@ -79,6 +79,9 @@ usr/bin/ghc-pkg list
 tree ${OPENSHIFT_DATA_DIR}/.cabal/
 
 find / -name shellcheck -print 2>/dev/null
+
+usr/bin/ghc-pkg --help
+usr/bin/ghc-pkg --dump --global -v3
 
 quota -s
 
