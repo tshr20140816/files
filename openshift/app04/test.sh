@@ -41,6 +41,7 @@ cd haskell
 
 ls -lang
 ls -lang usr/bin
+ls -lang bin
 
 export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
