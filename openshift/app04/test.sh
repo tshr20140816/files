@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1149"
+echo "1152"
 
 # set -x
 
@@ -18,6 +18,8 @@ fi
 cd /tmp
 
 ls -lang
+
+cat cabal_install_shellcheck.log
 
 # rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
 
@@ -57,7 +59,7 @@ usr/bin/ghc-pkg list
 usr/bin/cabal --help
 usr/bin/cabal install --help
 set -x
-usr/bin/cabal install -j1 -v --disable-documentation shellcheck
+usr/bin/cabal install -j1 -v --disable-documentation shellcheck | tee -a cabal_install_shellcheck.log
 usr/bin/ghc-pkg list
 
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
