@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1139"
+echo "1143"
 
 # set -x
 
@@ -57,7 +57,7 @@ usr/bin/ghc-pkg list
 usr/bin/cabal --help
 usr/bin/cabal install --help
 set -x
-usr/bin/cabal install shellcheck
+usr/bin/cabal install -v --disable-documentation shellcheck
 usr/bin/ghc-pkg list
 
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
