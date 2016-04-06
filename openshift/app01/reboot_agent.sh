@@ -73,47 +73,68 @@ do
             fi
         done < compress_target_list_css.txt
         rm -f compress_target_list_css.txt
+        wc -l compress_target_list_css_add.txt
         
         # *** js ***
         
+        touch compress_target_list_js_add.txt
         while read -r LINE
         do
             target_file=${LINE}
             compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
-            [ ! -f ${compressed_file} ] && continue
-            [ ! -f ${compressed_file}.compressed ] && continue
-            [ ! -f ${compressed_file}.result.txt ] && continue
-            [ "$(cat ${compressed_file}.result.txt)" != "0 error(s), 0 warning(s)" ] && continue
-            [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && continue
-            cmp ${target_file} ${compressed_file}
-            [ $? -ne 0 ] && continue
-            mv ${target_file} ${target_file}.${suffix}
-            mv ${compressed_file}.compressed ${target_file}
+            is_replaced=1
+            [ ! -f ${compressed_file} ] && is_replaced=0
+            [ ${is_replaced} -eq 1 ] && [ ! -f ${compressed_file}.compressed ] && is_replaced=0
+            [ ${is_replaced} -eq 1 ] && [ ! -f ${compressed_file}.result.txt ] && is_replaced=0
+            [ ${is_replaced} -eq 1 ] && [ "$(cat ${compressed_file}.result.txt)" != "0 error(s), 0 warning(s)" ] && is_replaced=0
+            [ ${is_replaced} -eq 1 ] && [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && is_replaced=0
+            if [ ${is_replaced} -eq 1 ]; then
+                cmp ${target_file} ${compressed_file}
+                [ $? -ne 0 ] && is_replaced=0
+            fi
+            if [ ${is_replaced} -eq 1 ]; then
+                mv ${target_file} ${target_file}.${suffix}
+                mv ${compressed_file}.compressed ${target_file}
+            else
+                echo -e "${target_file}\n" >> compress_target_list_js_add.txt
+            fi
         done < compress_target_list_js.txt
         rm -f compress_target_list_js.txt
+        wc -l compress_target_list_js_add.txt
         
         # *** png/gif ***
         
+        touch compress_target_list_png_gif_add.txt
         while read -r LINE
         do
             target_file=${LINE}
             compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
-            [ ! -f ${compressed_file} ] && continue
-            [ ! -f ${compressed_file}.compressed ] && continue
-            [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && continue
-            cmp ${target_file} ${compressed_file}
-            [ $? -ne 0 ] && continue
-            mv ${target_file} ${target_file}.${suffix}
-            mv ${compressed_file}.compressed ${target_file}
+            is_replaced=1
+            [ ! -f ${compressed_file} ] && is_replaced=0
+            [ ${is_replaced} -eq 1 ] && [ ! -f ${compressed_file}.compressed ] && is_replaced=0
+            [ ${is_replaced} -eq 1 ] && [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && is_replaced=0
+            if [ ${is_replaced} -eq 1 ]; then
+                cmp ${target_file} ${compressed_file}
+                [ $? -ne 0 ] && is_replaced=0
+            fi
+            if [ ${is_replaced} -eq 1 ]; then
+                mv ${target_file} ${target_file}.${suffix}
+                mv ${compressed_file}.compressed ${target_file}
+            else
+                echo -e "${target_file}\n" >> compress_target_list_png_gif_add.txt
+            fi
         done < compress_target_list_png_gif.txt
         rm -f compress_target_list_png_gif.txt
+        wc -l compress_target_list_png_gif_add.txt
         rm -f compressed_files.zip
         rm -rf compressed
         popd > /dev/null
 
         # ****** YUI Compressor *****
-        find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
+        # find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print0 \
+        #  | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
+        cat compress_target_list_css_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
+        rm -f compress_target_list_css_add.txt
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
         rm -f yuicompressor.log
@@ -121,8 +142,10 @@ do
         popd > /dev/null
 
         # ****** Closure Compiler *****
-        find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 6 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler.sh {}
+        # find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print0 \
+        #  | xargs -0i -P 6 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler.sh {}
+        cat compress_target_list_js_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/closure_compiler.sh {}
+        rm -f compress_target_list_js_add.txt
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.closure_compiler.log.zip closure_compiler.log
         rm -f closure_compiler.log
@@ -130,10 +153,12 @@ do
         popd > /dev/null
 
         # ****** optipng *****
-        find ${OPENSHIFT_DATA_DIR} -name "*.png" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
-        find ${OPENSHIFT_DATA_DIR} -name "*.gif" -mindepth 2 -type f -print0 \
-         | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
+        # find ${OPENSHIFT_DATA_DIR} -name "*.png" -mindepth 2 -type f -print0 \
+        #  | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
+        # find ${OPENSHIFT_DATA_DIR} -name "*.gif" -mindepth 2 -type f -print0 \
+        #  | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
+        cat compress_target_list_png_gif_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/optipng.sh {}
+        rm -f compress_target_list_png_gif_add.txt
         pushd ${OPENSHIFT_LOG_DIR} > /dev/null
         zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.optipng.log.zip optipng.log
         rm -f optipng.log
