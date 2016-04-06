@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1047"
+echo "1139"
 
 # set -x
 
@@ -27,7 +27,7 @@ cd 20160405
 
 # rm -rf scotty.tar.gz
 [ ! -f scotty.tar.gz ] && wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
-ls -lang scotty.tar.gz
+# ls -lang scotty.tar.gz
 
 # tar xfz scotty.tar.gz
 
@@ -54,6 +54,8 @@ export HOME=${OPENSHIFT_DATA_DIR}
 # usr/bin/ghc-pkg --global recache
 # ls -lang /tmp/20160405/usr/lib/ghc-7.10.3/package.conf.d/
 usr/bin/ghc-pkg list
+usr/bin/cabal --help
+usr/bin/cabal install --help
 set -x
 usr/bin/cabal install shellcheck
 usr/bin/ghc-pkg list
