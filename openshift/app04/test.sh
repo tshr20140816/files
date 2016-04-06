@@ -17,16 +17,19 @@ fi
 
 cd /tmp
 
-rm -rf ${OPENSHIFT_DATA_DIR}/.cabal/
-rm -rf 20160405
+ls -lang
+
+rm -f *.tar.gz
+
+cd $OPENSHIFT_DATA_DIR
 
 ls -lang
 
-wget -q http://www.accursoft.com/cartridges/network.tar.gz
-wget -q http://www.accursoft.com/cartridges/yesod.tar.gz
-wget -q http://www.accursoft.com/cartridges/snap.tar.gz
-wget -q http://www.accursoft.com/cartridges/happstack.tar.gz
-wget -q http://www.accursoft.com/cartridges/mflow.tar.gz
-wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
+# wget -q http://www.accursoft.com/cartridges/network.tar.gz
+# wget -q http://www.accursoft.com/cartridges/yesod.tar.gz
+# wget -q http://www.accursoft.com/cartridges/snap.tar.gz
+# wget -q http://www.accursoft.com/cartridges/happstack.tar.gz
+# wget -q http://www.accursoft.com/cartridges/mflow.tar.gz
+# wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
 
-ls -lang
+# ls -lang
