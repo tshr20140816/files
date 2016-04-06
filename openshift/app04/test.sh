@@ -46,6 +46,8 @@ export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haksell
 
+cat $HOME/.cabal/config
+
 cabal update --help
 cabal -v3 update
 
