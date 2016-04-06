@@ -49,17 +49,25 @@ do
         wget https://$(head -n1 ${OPENSHIFT_DATA_DIR}/params/fqdn.txt)/compressed_files.zip
         unzip -q compressed_files.zip
         suffix=$(date '+%Y%m%d')
+        touch compress_target_list_css_add.txt
         while read -r LINE
         do
             target_file=${LINE}
             compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
-            [ ! -f ${compressed_file} ] && continue
-            [ ! -f ${compressed_file}.compressed ] && continue
-            [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && continue
-            cmp ${target_file} ${compressed_file}
-            [ $? -ne 0 ] && continue
-            mv ${target_file} ${target_file}.${suffix}
-            mv ${compressed_file}.compressed ${target_file}
+            is_replaced=1
+            [ ! -f ${compressed_file} ] && is_replaced=0
+            [ ${is_replaced} -eq 1 ] && [ ! -f ${compressed_file}.compressed ] && is_replaced=0
+            [ ${is_replaced} -eq 1 ] && [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && is_replaced=0
+            if [ ${is_replaced} -eq 1 ]; then
+                cmp ${target_file} ${compressed_file}
+                [ $? -ne 0 ] && is_replaced=0
+            fi
+            if [ ${is_replaced} -eq 1 ]; then
+                mv ${target_file} ${target_file}.${suffix}
+                mv ${compressed_file}.compressed ${target_file}
+            else
+                echo -e "${target_file}\n" >> compress_target_list_css_add.txt
+            fi
         done < compress_target_list_css.txt
         rm -f compress_target_list_css.txt
         while read -r LINE
