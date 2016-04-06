@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1706"
+echo "1707"
 
 # set -x
 
@@ -51,9 +51,9 @@ export OPENSHIFT_HASKELL_DIR=/tmp/20160405/
 export PATH=/tmp/20160405/usr/bin:$PATH
 export HOME=${OPENSHIFT_DATA_DIR}
 
-chmod 777 ${OPENSHIFT_DATA_DIR}/.cabal/
-chmod 777 ${OPENSHIFT_DATA_DIR}/.cabal/packages/
-chmod 777 ${OPENSHIFT_DATA_DIR}/.cabal/packages/hackage.haskell.org/
+# chmod 777 ${OPENSHIFT_DATA_DIR}/.cabal/
+# chmod 777 ${OPENSHIFT_DATA_DIR}/.cabal/packages/
+# chmod 777 ${OPENSHIFT_DATA_DIR}/.cabal/packages/hackage.haskell.org/
 
 # usr/bin/cabal --help
 # usr/bin/cabal --version
