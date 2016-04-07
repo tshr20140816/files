@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1609"
+echo "1616"
 
 set -x
 
@@ -63,6 +63,9 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 # cabal install --help
 # cabal install -j1 -v3 --disable-documentation shellcheck
 # cabal install -j1 -v3 --disable-documentation virthualenv
+
+
+exit
 
 cd /tmp
 rm -rf hashable
