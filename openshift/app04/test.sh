@@ -31,13 +31,19 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v
 
+rm -f *.gz
+
 exit
 
-if [ ! -f $OPENSHIFT_DATA_DIR/ccache/bin/ccache ]; then
+cd ${OPENSHIFT_TMP_DIR}
+
+if [ ! -f ${OPENSHIFT_DATA_DIR}/local/bin/ccache ]; then
+    rm -f ccache-3.2.4.tar.xz
+    rm -rf ccache-3.2.4
     wget http://samba.org/ftp/ccache/ccache-3.2.4.tar.xz
-    tar xfz ccache-3.2.4.tar.xz
+    tar Jxf ccache-3.2.4.tar.xz
     cd ccache-3.2.4
-    ./configure --prefix=$OPENSHIFT_DATA_DIR/ccache
+    ./configure --prefix=${OPENSHIFT_DATA_DIR}/local
     time make -j1
     make install
     cd ..
@@ -91,127 +97,6 @@ ghc-pkg list
 # cabal install -j1 -v3 --disable-documentation virthualenv
 
 # https://hackage.haskell.org/package/
-
-if [ $(ghc-pkg list | grep -c hashable) -eq 0 ]; then
-    cd /tmp
-    rm -rf hashable
-    git clone https://github.com/tibbe/hashable.git
-    cd hashable
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c unordered-containers) -eq 0 ]; then
-    cd /tmp
-    rm -rf unordered-containers
-    git clone https://github.com/tibbe/unordered-containers.git
-    cd unordered-containers
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c tagged) -eq 0 ]; then
-    cd /tmp
-    rm -rf tagged
-    git clone https://github.com/ekmett/tagged.git
-    cd tagged
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c semigroups) -eq 0 ]; then
-    cd /tmp
-    rm -rf semigroups
-    git clone https://github.com/ekmett/semigroups.git
-    cd semigroups
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c random) -eq 0 ]; then
-    cd /tmp
-    rm -rf random
-    git clone http://git.haskell.org/packages/random.git
-    cd random
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c primitive) -eq 0 ]; then
-    cd /tmp
-    rm -rf primitive
-    git clone https://github.com/haskell/primitive.git
-    cd primitive
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c tf-random) -eq 0 ]; then
-    cd /tmp
-    rm -f tf-random.zip
-    rm -rf tf-random
-    wget --content-disposition http://hub.darcs.net/michal.palka/tf-random/dist
-    unzip tf-random.zip
-    cd tf-random
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c QuickCheck) -eq 0 ]; then
-    cd /tmp
-    rm -rf quickcheck
-    git clone https://github.com/nick8325/quickcheck.git
-    cd quickcheck
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c mtl) -eq 0 ]; then
-    cd /tmp
-    rm -rf mtl-2.2.1
-    rm -f mtl-2.2.1.tar.gz
-    wget https://hackage.haskell.org/package/mtl-2.2.1/mtl-2.2.1.tar.gz
-    tar xfz mtl-2.2.1.tar.gz
-    ls -lang
-    cd mtl-2.2.1
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c parsec) -eq 0 ]; then
-    cd /tmp
-    rm -rf parsec-3.1.9
-    rm -f parsec-3.1.9.tar.gz
-    wget https://hackage.haskell.org/package/parsec-3.1.9/parsec-3.1.9.tar.gz
-    tar xfz parsec-3.1.9.tar.gz
-    ls -lang
-    cd parsec-3.1.9
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c regex-base) -eq 0 ]; then
-    cd /tmp
-    rm -rf regex-base-0.93.2
-    rm -f regex-base-0.93.2.tar.gz
-    wget https://hackage.haskell.org/package/regex-base-0.93.2/regex-base-0.93.2.tar.gz
-    tar xfz regex-base-0.93.2.tar.gz
-    ls -lang
-    cd regex-base-0.93.2
-    cabal install -j1 -v3 --disable-documentation
-fi
-
-if [ $(ghc-pkg list | grep -c regex-tdfa) -eq 0 ]; then
-    cd /tmp
-    cat regex.log
-    rm -f regex.log
-    rm -rf regex-tdfa-1.2.1
-    rm -f regex-tdfa-1.2.1.tar.gz
-    wget https://hackage.haskell.org/package/regex-tdfa-1.2.1/regex-tdfa-1.2.1.tar.gz
-    tar xfz regex-tdfa-1.2.1.tar.gz
-    cd regex-tdfa-1.2.1
-    cabal install -j1 -v3 --disable-documentation >> /tmp/regex.log 2>&1
-fi
-
-exit
-
-if [ $(ghc-pkg list | grep -c shellcheck) -eq 0 ]; then
-    cd /tmp
-    rm -rf shellcheck
-    git clone https://github.com/koalaman/shellcheck.git
-    cd shellcheck
-    cabal install -j1 -v3 --disable-documentation
-fi
 
 echo "FINISH"
 
