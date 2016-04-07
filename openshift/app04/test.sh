@@ -65,6 +65,7 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 # cabal install -j1 -v3 --disable-documentation virthualenv
 
 ghc-pkg list | grep hashable
+ghc-pkg list | grep -c hashable
 
 exit
 
