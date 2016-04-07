@@ -103,6 +103,8 @@ ccache -s > ${OPENSHIFT_LOG_DIR}/ccache_stats.txt
 ccache -z
 ccache -s
 
+cabal configure --with-gcc=${OPENSHIFT_DATA_DIR}/local/bin/ccache
+
 package_list=()
 package_list+=("regex-tdfa-1.2.1")
 package_list+=("ShellCheck-0.4.3")
