@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1624"
+echo "1625"
 
 set -x
 
@@ -68,51 +68,39 @@ if [ $(ghc-pkg list | grep -c hashable) -eq 0 ]; then
     cd /tmp
     rm -rf hashable
     git clone https://github.com/tibbe/hashable.git
-    ls -lang
     cd hashable
     cabal install -j1 -v3 --disable-documentation
 fi
 
-cd /tmp
-rm -rf unordered-containers
-git clone https://github.com/tibbe/unordered-containers.git
-ls -lang
-cd unordered-containers
-cabal install -j1 -v3 --disable-documentation
+if [ $(ghc-pkg list | grep -c unordered-containers) -eq 0 ]; then
+    cd /tmp
+    rm -rf unordered-containers
+    git clone https://github.com/tibbe/unordered-containers.git
+    cd unordered-containers
+    cabal install -j1 -v3 --disable-documentation
+fi
+
+if [ $(ghc-pkg list | grep -c semigroups) -eq 0 ]; then
+    cd /tmp
+    rm -rf semigroups
+    git clone https://github.com/ekmett/semigroups.git
+    cd semigroups
+    cabal install -j1 -v3 --disable-documentation
+fi
 
 echo "DUMMY"
 exit
 
 cd /tmp
-
-rm -rf semigroups
-git clone https://github.com/ekmett/semigroups.git
-ls -lang
-cd semigroups
-cabal install -j1 -v3 --disable-documentation
-
-cd /tmp
-
 rm -rf quickcheck
-
 git clone https://github.com/nick8325/quickcheck.git
-
 cd quickcheck
-
 cabal install -j1 -v3 --disable-documentation
 
 cd /tmp
-
 rm -rf shellcheck
-
 git clone https://github.com/koalaman/shellcheck.git
-
-ls -lang
-
 cd shellcheck
-
-ls -lang
-
 cabal install -j1 -v3 --disable-documentation
 
 echo "FINISH"
