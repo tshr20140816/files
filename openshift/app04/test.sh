@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1425"
+echo "1502"
 
 set -x
 
@@ -50,7 +50,7 @@ cat $HOME/.cabal/config
 
 ghc --version
 # ghc-pkg --help
-ghc-pkg -v2 list
+# ghc-pkg -v2 list
 # ghc-pkg -v2 dump
 # ghc-pkg --global -v2 recache
 # ghc-pkg --user -v2 recache
@@ -59,9 +59,19 @@ ghc-pkg -v2 list
 # cabal update --help
 # cabal -v3 update
 # cabal update
-cabal install --help
+# cabal install --help
 # cabal install -j1 -v3 --disable-documentation shellcheck
-cabal install -j1 -v3 --disable-documentation virthualenv
+# cabal install -j1 -v3 --disable-documentation virthualenv
+
+cd /tmp
+
+git clone https://github.com/koalaman/shellcheck.git
+
+ls -lang
+
+cd ShellCheck
+
+cabal install -j1 -v3 --disable-documentation
 
 echo "FINISH"
 
