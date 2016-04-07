@@ -124,7 +124,7 @@ if [ $(ghc-pkg list | grep -c tf-random) -eq 0 ]; then
     cabal install -j1 -v3 --disable-documentation
 fi
 
-if [ $(ghc-pkg list | grep -c quickcheck) -eq 0 ]; then
+if [ $(ghc-pkg list | grep -c QuickCheck) -eq 0 ]; then
     cd /tmp
     rm -rf quickcheck
     git clone https://github.com/nick8325/quickcheck.git
