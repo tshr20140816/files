@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1625"
+echo "1632"
 
 set -x
 
@@ -77,6 +77,14 @@ if [ $(ghc-pkg list | grep -c unordered-containers) -eq 0 ]; then
     rm -rf unordered-containers
     git clone https://github.com/tibbe/unordered-containers.git
     cd unordered-containers
+    cabal install -j1 -v3 --disable-documentation
+fi
+
+if [ $(ghc-pkg list | grep -c tagged) -eq 0 ]; then
+    cd /tmp
+    rm -rf tagged
+    git clone https://github.com/ekmett/tagged.git
+    cd tagged
     cabal install -j1 -v3 --disable-documentation
 fi
 
