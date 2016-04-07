@@ -29,6 +29,15 @@ package_list+=("hashable-1.2.4.0")
 package_list+=("unordered-containers-0.2.7.0")
 package_list+=("tagged-0.8.3")
 package_list+=("semigroups-0.18.1")
+package_list+=("random-1.1")
+package_list+=("primitive-0.6.1.0")
+package_list+=("tf-random-0.5")
+package_list+=("QuickCheck-2.8.2")
+package_list+=("mtl-2.2.1")
+package_list+=("parsec-3.1.9")
+package_list+=("regex-base-0.93.2")
+package_list+=("regex-tdfa-1.2.1")
+package_list+=("ShellCheck-0.4.3")
 
 for package in ${package_list[@]}
 do
@@ -48,6 +57,9 @@ do
     rm -f "${package}".tar.gz
     quota -s
     oo-cgroup-read memory.failcnt
+    if [ $(ghc-pkg list | grep -c ${package}) -eq 0 ]; then
+        break
+    fi
 done
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH"
