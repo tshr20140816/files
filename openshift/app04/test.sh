@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1018"
+echo "1024"
 
 # set -x
 
@@ -18,8 +18,6 @@ fi
 cd /tmp
 
 ls -lang
-
-rm -f *.tar.gz
 
 cd $OPENSHIFT_DATA_DIR
 
@@ -50,11 +48,11 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 cat $HOME/.cabal/config
 
 ghc --version
-
-cabal update --help
+ghc-pkg --help
+# cabal update --help
 cabal -v3 update
-cabal install --help
-cabal install -j1 -v3 --disable-documentation shellcheck
+# cabal install --help
+# cabal install -j1 -v3 --disable-documentation shellcheck
 
 echo "FINISH"
 
