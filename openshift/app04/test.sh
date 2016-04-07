@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1817"
+echo "1830"
 
 set -x
 
@@ -19,6 +19,18 @@ fi
 cd /tmp
 
 ls -lang
+
+if [ ! -f $OPENSHIFT_DATA_DIR/ccache/bin/ccache ]; then
+    wget http://samba.org/ftp/ccache/ccache-3.2.4.tar.xz
+    tar xfz ccache-3.2.4.tar.xz
+    cd ccache-3.2.4
+    ./configure --prefix=$OPENSHIFT_DATA_DIR/ccache
+    time make -j1
+    make install
+    cd ..
+    rm -rf ccache-3.2.4
+    rm -f ccache-3.2.4.tar.xz
+fi
 
 cd $OPENSHIFT_DATA_DIR
 
