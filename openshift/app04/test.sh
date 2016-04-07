@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1647"
+echo "1652"
 
 set -x
 
@@ -93,6 +93,14 @@ if [ $(ghc-pkg list | grep -c semigroups) -eq 0 ]; then
     rm -rf semigroups
     git clone https://github.com/ekmett/semigroups.git
     cd semigroups
+    cabal install -j1 -v3 --disable-documentation
+fi
+
+if [ $(ghc-pkg list | grep -c random) -eq 0 ]; then
+    cd /tmp
+    rm -rf random
+    git clone http://git.haskell.org/packages/random.git
+    cd random
     cabal install -j1 -v3 --disable-documentation
 fi
 
