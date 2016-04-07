@@ -52,5 +52,7 @@ cat $HOME/.cabal/config
 cabal update --help
 cabal -v3 update
 
+cabal install -j1 -v3 --disable-documentation shellcheck
+
 echo "FINISH"
 
