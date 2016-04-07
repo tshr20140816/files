@@ -51,7 +51,7 @@ cat $HOME/.cabal/config
 # ghc-pkg --help
 # ghc-pkg -v2 list
 # ghc-pkg -v2 dump
-ghc-pkg -v2 recache
+ghc-pkg --global -v2 recache
 ghc-pkg --user -v2 recache
 # tree --help
 # tree -a $OPENSHIFT_DATA_DIR
