@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1701"
+echo "1703"
 
 set -x
 
@@ -130,14 +130,13 @@ if [ $(ghc-pkg list | grep -c quickcheck) -eq 0 ]; then
     cabal install -j1 -v3 --disable-documentation
 fi
 
-echo "DUMMY"
-exit
-
-cd /tmp
-rm -rf shellcheck
-git clone https://github.com/koalaman/shellcheck.git
-cd shellcheck
-cabal install -j1 -v3 --disable-documentation
+if [ $(ghc-pkg list | grep -c shellcheck) -eq 0 ]; then
+    cd /tmp
+    rm -rf shellcheck
+    git clone https://github.com/koalaman/shellcheck.git
+    cd shellcheck
+    cabal install -j1 -v3 --disable-documentation
+fi
 
 echo "FINISH"
 
