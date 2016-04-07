@@ -16,6 +16,9 @@ if [ $(wc -c < ${OPENSHIFT_LOG_DIR}/cron_minutely.log) -gt 100000 ]; then
     tail -n 1000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 fi
 
+/usr/bin/gear status
+/usr/bin/gear start --trace
+
 cd /tmp
 
 ls -lang
