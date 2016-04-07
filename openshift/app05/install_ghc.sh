@@ -87,8 +87,15 @@ do
     fi
 done
 
-export CC="ccache gcc"
-export CXX="ccache g++"
+# export CC="ccache gcc"
+# export CXX="ccache g++"
+
+cd ${OPENSHIFT_DATA_DIR}/local/bin
+ln -s ccache ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+ln -s ccache ${OPENSHIFT_DATA_DIR}/local/bin/g++
+ln -s ccache ${OPENSHIFT_DATA_DIR}/local/bin/cc
+ln -s ccache ${OPENSHIFT_DATA_DIR}/local/bin/c++
+
 export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
 
 ccache -s > ${OPENSHIFT_LOG_DIR}/ccache_stats.txt
