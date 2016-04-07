@@ -37,9 +37,9 @@ cd haskell
 
 [ ! -f $OPENSHIFT_DATA_DIR/haskell/usr/bin/cabal ] && tar xfz network.tar.gz
 
-ls -lang
+# ls -lang
 ls -lang usr/bin
-ls -lang bin
+# ls -lang bin
 
 export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
