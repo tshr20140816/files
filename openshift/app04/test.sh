@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1521"
+echo "1524"
 
 set -x
 
@@ -66,7 +66,8 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 cd /tmp
 
 rm -rf semigroups
-git git://github.com/ekmett/semigroups.git
+git https://github.com/ekmett/semigroups.git
+ls -lang
 cd semigroups
 cabal install -j1 -v3 --disable-documentation
 
