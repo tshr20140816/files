@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1103"
+echo "1425"
 
 set -x
 
@@ -60,8 +60,8 @@ ghc --version
 # cabal -v3 update
 # cabal update
 cabal install --help
-# cabal install -j1 -v3 --disable-documentation
-cabal install -j1 -v3 --disable-documentation shellcheck
+# cabal install -j1 -v3 --disable-documentation shellcheck
+cabal install -j1 -v3 --disable-documentation virthualenv
 
 echo "FINISH"
 
