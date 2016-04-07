@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1654"
+echo "1658"
 
 set -x
 
@@ -101,6 +101,14 @@ if [ $(ghc-pkg list | grep -c random) -eq 0 ]; then
     rm -rf random
     git clone http://git.haskell.org/packages/random.git
     cd random
+    cabal install -j1 -v3 --disable-documentation
+fi
+
+if [ $(ghc-pkg list | grep -c primitive) -eq 0 ]; then
+    cd /tmp
+    rm -rf primitive
+    git clone https://github.com/haskell/primitive.git
+    cd primitive
     cabal install -j1 -v3 --disable-documentation
 fi
 
