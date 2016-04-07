@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1016"
+echo "1018"
 
 # set -x
 
@@ -45,7 +45,7 @@ ls -lang bin
 
 export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
-export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haksell
+export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 cat $HOME/.cabal/config
 
