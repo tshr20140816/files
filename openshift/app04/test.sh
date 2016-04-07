@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0000"
+echo "1016"
 
 # set -x
 
@@ -48,6 +48,8 @@ export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haksell
 
 cat $HOME/.cabal/config
+
+ghc --version
 
 cabal update --help
 cabal -v3 update
