@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1658"
+echo "1701"
 
 set -x
 
@@ -121,9 +121,6 @@ if [ $(ghc-pkg list | grep -c tf-random) -eq 0 ]; then
     cd tf-random
     cabal install -j1 -v3 --disable-documentation
 fi
-
-echo "DUMMY"
-exit
 
 if [ $(ghc-pkg list | grep -c quickcheck) -eq 0 ]; then
     cd /tmp
