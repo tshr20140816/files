@@ -130,6 +130,17 @@ if [ $(ghc-pkg list | grep -c quickcheck) -eq 0 ]; then
     cabal install -j1 -v3 --disable-documentation
 fi
 
+if [ $(ghc-pkg list | grep -c mtl) -eq 0 ]; then
+    cd /tmp
+    rm -rf mtl-2.2.1
+    rm -f mtl-2.2.1.tar.gz
+    wget https://hackage.haskell.org/package/mtl-2.2.1/mtl-2.2.1.tar.gz
+    tar xfz mtl-2.2.1.tar.gz
+    ls -lang
+    cd mtl-2.2.1
+    cabal install -j1 -v3 --disable-documentation
+fi
+
 if [ $(ghc-pkg list | grep -c regex-tdfa) -eq 0 ]; then
     cd /tmp
     rm -rf regex-tdfa*
