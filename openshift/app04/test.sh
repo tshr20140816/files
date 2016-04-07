@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1632"
+echo "1640"
 
 set -x
 
@@ -96,14 +96,16 @@ if [ $(ghc-pkg list | grep -c semigroups) -eq 0 ]; then
     cabal install -j1 -v3 --disable-documentation
 fi
 
+if [ $(ghc-pkg list | grep -c quickcheck) -eq 0 ]; then
+    cd /tmp
+    rm -rf quickcheck
+    git clone https://github.com/nick8325/quickcheck.git
+    cd quickcheck
+    cabal install -j1 -v3 --disable-documentation
+fi
+
 echo "DUMMY"
 exit
-
-cd /tmp
-rm -rf quickcheck
-git clone https://github.com/nick8325/quickcheck.git
-cd quickcheck
-cabal install -j1 -v3 --disable-documentation
 
 cd /tmp
 rm -rf shellcheck
