@@ -75,10 +75,6 @@ cd shellcheck
 
 ls -lang
 
-cd ShellCheck
-
-ls -lang
-
 cabal install -j1 -v3 --disable-documentation
 
 echo "FINISH"
