@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1515"
+echo "1521"
 
 set -x
 
@@ -62,6 +62,16 @@ cat $HOME/.cabal/config
 # cabal install --help
 # cabal install -j1 -v3 --disable-documentation shellcheck
 # cabal install -j1 -v3 --disable-documentation virthualenv
+
+cd /tmp
+
+rm -rf semigroups
+git git://github.com/ekmett/semigroups.git
+cd semigroups
+cabal install -j1 -v3 --disable-documentation
+
+echo "DUMMY"
+exit
 
 cd /tmp
 
