@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1703"
+echo "1711"
 
 set -x
 
@@ -127,6 +127,17 @@ if [ $(ghc-pkg list | grep -c quickcheck) -eq 0 ]; then
     rm -rf quickcheck
     git clone https://github.com/nick8325/quickcheck.git
     cd quickcheck
+    cabal install -j1 -v3 --disable-documentation
+fi
+
+if [ $(ghc-pkg list | grep -c regex-tdfa) -eq 0 ]; then
+    cd /tmp
+    rm -rf regex-tdfa*
+    rm -f regex-tdfa-1.2.1.tar.gz
+    wget https://hackage.haskell.org/package/regex-tdfa-1.2.1/regex-tdfa-1.2.1.tar.gz
+    tar xfz regex-tdfa-1.2.1.tar.gz
+    ls -lang
+    cd regex-tdfa*
     cabal install -j1 -v3 --disable-documentation
 fi
 
