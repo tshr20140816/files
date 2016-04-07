@@ -22,6 +22,12 @@ ls -lang
 
 /usr/bin/gear --help
 
+export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
+export HOME=$OPENSHIFT_DATA_DIR
+export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
+
+cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v
+
 exit
 
 if [ ! -f $OPENSHIFT_DATA_DIR/ccache/bin/ccache ]; then
