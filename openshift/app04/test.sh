@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1618"
+echo "1624"
 
 set -x
 
@@ -64,20 +64,14 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 # cabal install -j1 -v3 --disable-documentation shellcheck
 # cabal install -j1 -v3 --disable-documentation virthualenv
 
-ghc-pkg list | grep hashable
-ghc-pkg list | grep -c hashable
-
-exit
-
-cd /tmp
-rm -rf hashable
-git clone https://github.com/tibbe/hashable.git
-ls -lang
-cd hashable
-cabal install -j1 -v3 --disable-documentation
-
-echo "DUMMY"
-exit
+if [ $(ghc-pkg list | grep -c hashable) -eq 0 ]; then
+    cd /tmp
+    rm -rf hashable
+    git clone https://github.com/tibbe/hashable.git
+    ls -lang
+    cd hashable
+    cabal install -j1 -v3 --disable-documentation
+fi
 
 cd /tmp
 rm -rf unordered-containers
@@ -85,6 +79,9 @@ git clone https://github.com/tibbe/unordered-containers.git
 ls -lang
 cd unordered-containers
 cabal install -j1 -v3 --disable-documentation
+
+echo "DUMMY"
+exit
 
 cd /tmp
 
