@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1543"
+echo "1546"
 
 set -x
 
@@ -45,6 +45,7 @@ ls -lang usr/bin
 export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
+export GHCRTS='-M128M'
 
 # cat $HOME/.cabal/config
 
@@ -65,10 +66,10 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 cd /tmp
 
-rm -rf unordered-container
+rm -rf unordered-containers
 git clone https://github.com/tibbe/unordered-containers.git
 ls -lang
-cd unordered-container
+cd unordered-containers
 cabal install -j1 -v3 --disable-documentation
 
 echo "DUMMY"
