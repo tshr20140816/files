@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1509"
+echo "1515"
 
 set -x
 
@@ -65,7 +65,17 @@ cat $HOME/.cabal/config
 
 cd /tmp
 
-rm -rf ShellCheck
+rm -rf quickcheck
+
+git clone https://github.com/nick8325/quickcheck.git
+
+cd quickcheck
+
+cabal install -j1 -v3 --disable-documentation
+
+cd /tmp
+
+rm -rf shellcheck
 
 git clone https://github.com/koalaman/shellcheck.git
 
