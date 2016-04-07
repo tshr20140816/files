@@ -31,6 +31,7 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 # cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v
 ghc --help
+ghc --info
 
 rm -f *.gz
 rm -rf ghc*
