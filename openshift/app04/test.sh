@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1616"
+echo "1618"
 
 set -x
 
@@ -51,7 +51,7 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 # ghc --version
 # ghc-pkg --help
- ghc-pkg list
+# ghc-pkg list
 # ghc-pkg -v2 dump
 # ghc-pkg --global -v2 recache
 # ghc-pkg --user -v2 recache
@@ -64,6 +64,7 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 # cabal install -j1 -v3 --disable-documentation shellcheck
 # cabal install -j1 -v3 --disable-documentation virthualenv
 
+ghc-pkg list | grep hashable
 
 exit
 
