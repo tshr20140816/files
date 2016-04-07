@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1101"
+echo "1102"
 
 set -x
 
@@ -21,9 +21,9 @@ ls -lang
 
 cd $OPENSHIFT_DATA_DIR
 
-rm -rf .ghc
+# rm -rf .ghc
 
-ls -lang
+# ls -lang
 
 mkdir haskell
 cd haskell
@@ -47,7 +47,7 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 cat $HOME/.cabal/config
 
-# ghc --version
+ghc --version
 # ghc-pkg --help
 # ghc-pkg -v2 list
 # ghc-pkg -v2 dump
