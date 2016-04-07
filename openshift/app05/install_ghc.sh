@@ -69,6 +69,7 @@ do
     fi
     cd ${OPENSHIFT_TMP_DIR}
     rm -f "${package}".tar.gz
+    rm -rf "${package}"
     wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     cd "${package}"
@@ -104,6 +105,7 @@ do
     fi
     cd ${OPENSHIFT_TMP_DIR}
     rm -f "${package}".tar.gz
+    rm -rf "${package}"
     wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     cd "${package}"
