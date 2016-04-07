@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1046"
+echo "1048"
 
 set -x
 
@@ -51,12 +51,12 @@ cat $HOME/.cabal/config
 # ghc-pkg --help
 # ghc-pkg -v2 list
 # ghc-pkg -v2 dump
-ghc-pkg -v2 recache
+# ghc-pkg -v2 recache
 # tree --help
 # tree -a $OPENSHIFT_DATA_DIR
 # cabal update --help
 # cabal -v3 update
-cabal update
+# cabal update
 # cabal install --help
 cabal install -j1 -v3 --disable-documentation shellcheck
 
