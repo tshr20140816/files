@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1811"
+echo "1817"
 
 set -x
 
@@ -175,7 +175,7 @@ if [ $(ghc-pkg list | grep -c regex-tdfa) -eq 0 ]; then
     wget https://hackage.haskell.org/package/regex-tdfa-1.2.1/regex-tdfa-1.2.1.tar.gz
     tar xfz regex-tdfa-1.2.1.tar.gz
     cd regex-tdfa-1.2.1
-    cabal install -j1 -v3 --disable-documentation >> /tmp/regex.log
+    cabal install -j1 -v3 --disable-documentation >> /tmp/regex.log 2>&1
 fi
 
 exit
