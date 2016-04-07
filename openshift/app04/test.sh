@@ -46,7 +46,7 @@ export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
-cat $HOME/.cabal/config
+# cat $HOME/.cabal/config
 
 # ghc --version
 # ghc-pkg --help
