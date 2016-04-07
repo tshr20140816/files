@@ -34,33 +34,14 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 ghc --help
 ghc --info
 
-rm -f *.gz
-rm -rf ghc*
-rm -rf hashable
-rm -rf mtl-2.2.1
-rm -rf parsec-3.1.9
-rm -rf primitive
-rm -rf quickcheck
-rm -rf random
-rm -rf regex-base-0.93.2
-rm -rf regex-tdfa-1.2.1
-rm -rf semigroups
-rm -rf shellcheck
-rm -rf tagged
-rm -rf tf-random
-rm -rf unordered-containers
-rm -f tf-random.zip
-rm -f ccache-3.2.4.tar.xz
-
-rm -rf $OPENSHIFT_DATA_DIR/haskell
-
-exit
-
 cd ${OPENSHIFT_TMP_DIR}
 
 cd $OPENSHIFT_DATA_DIR
 
+rm -rf .cabal
+rm -rf .ghc
 
+ls -lang
 
 echo "FINISH"
 
