@@ -29,27 +29,31 @@ export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
-cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v
+# cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v
 
 rm -f *.gz
+rm -rf ghc*
+rm -rf hashable
+rm -rf mtl-2.2.1
+rm -rf parsec-3.1.9
+rm -rf primitive
+rm -rf quickcheck
+rm -rf random
+rm -rf regex-base-0.93.2
+rm -rf regex-tdfa-1.2.1
+rm -rf semigroups
+rm -rf shellcheck
+rm -rf tagged
+rm -rf tf-random
+rm -rf unordered-containers
+rm -f tf-random.zip
+rm -f ccache-3.2.4.tar.xz
+
+rm -rf $OPENSHIFT_DATA_DIR/haskell
 
 exit
 
 cd ${OPENSHIFT_TMP_DIR}
-
-if [ ! -f ${OPENSHIFT_DATA_DIR}/local/bin/ccache ]; then
-    rm -f ccache-3.2.4.tar.xz
-    rm -rf ccache-3.2.4
-    wget http://samba.org/ftp/ccache/ccache-3.2.4.tar.xz
-    tar Jxf ccache-3.2.4.tar.xz
-    cd ccache-3.2.4
-    ./configure --prefix=${OPENSHIFT_DATA_DIR}/local
-    time make -j1
-    make install
-    cd ..
-    rm -rf ccache-3.2.4
-    rm -f ccache-3.2.4.tar.xz
-fi
 
 cd $OPENSHIFT_DATA_DIR
 
