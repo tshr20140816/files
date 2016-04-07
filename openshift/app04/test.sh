@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "1031"
+echo "1036"
 
-# set -x
+set -x
 
 quota -s
 
@@ -47,13 +47,13 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 cat $HOME/.cabal/config
 
-ghc --version
-ghc-pkg --help
-ghc-pkg -v2 list
-ghc-pkg -v2 dump
+# ghc --version
+# ghc-pkg --help
+# ghc-pkg -v2 list
+# ghc-pkg -v2 dump
 ghc-pkg -v2 recache
-tree --help
-tree $OPENSHIFT_DATA_DIR
+# tree --help
+tree -a $OPENSHIFT_DATA_DIR
 # cabal update --help
 # cabal -v3 update
 cabal update
