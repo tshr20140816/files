@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1502"
+echo "1506"
 
 set -x
 
@@ -22,7 +22,7 @@ ls -lang
 cd $OPENSHIFT_DATA_DIR
 
 # rm -rf .ghc
-tree -a .ghc
+# tree -a .ghc
 
 # ls -lang
 
@@ -48,7 +48,7 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 cat $HOME/.cabal/config
 
-ghc --version
+# ghc --version
 # ghc-pkg --help
 # ghc-pkg -v2 list
 # ghc-pkg -v2 dump
@@ -65,7 +65,13 @@ ghc --version
 
 cd /tmp
 
+rm -rf ShellCheck
+
 git clone https://github.com/koalaman/shellcheck.git
+
+ls -lang
+
+cd shellcheck
 
 ls -lang
 
