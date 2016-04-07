@@ -1,10 +1,11 @@
 #!/bin/bash
 
-echo "1755"
+echo "1801"
 
 set -x
 
 quota -s
+oo-cgroup-read memory.failcnt
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log &
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-* &
