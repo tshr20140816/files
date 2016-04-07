@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1652"
+echo "1654"
 
 set -x
 
@@ -51,7 +51,7 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 # ghc --version
 # ghc-pkg --help
-# ghc-pkg list
+ghc-pkg list
 # ghc-pkg -v2 dump
 # ghc-pkg --global -v2 recache
 # ghc-pkg --user -v2 recache
