@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1646"
+echo "1647"
 
 set -x
 
@@ -96,12 +96,15 @@ if [ $(ghc-pkg list | grep -c semigroups) -eq 0 ]; then
     cabal install -j1 -v3 --disable-documentation
 fi
 
-cd /tmp
-rm -f tf-random.zip
-wget --content-disposition http://hub.darcs.net/michal.palka/tf-random/dist
-ls -lang
-unzip tf-random.zip
-ls -lang
+if [ $(ghc-pkg list | grep -c tf-random) -eq 0 ]; then
+    cd /tmp
+    rm -f tf-random.zip
+    rm -rf tf-random
+    wget --content-disposition http://hub.darcs.net/michal.palka/tf-random/dist
+    unzip tf-random.zip
+    cd tf-random
+    cabal install -j1 -v3 --disable-documentation
+fi
 
 echo "DUMMY"
 exit
