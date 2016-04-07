@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1532"
+echo "1543"
 
 set -x
 
@@ -65,14 +65,22 @@ export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 cd /tmp
 
+rm -rf unordered-container
+git clone https://github.com/tibbe/unordered-containers.git
+ls -lang
+cd unordered-container
+cabal install -j1 -v3 --disable-documentation
+
+echo "DUMMY"
+exit
+
+cd /tmp
+
 rm -rf semigroups
 git clone https://github.com/ekmett/semigroups.git
 ls -lang
 cd semigroups
 cabal install -j1 -v3 --disable-documentation
-
-echo "DUMMY"
-exit
 
 cd /tmp
 
