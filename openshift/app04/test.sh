@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1546"
+echo "1605"
 
 set -x
 
@@ -45,7 +45,7 @@ ls -lang usr/bin
 export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
-export GHCRTS='-M128M'
+# export GHCRTS='-M128M'
 
 # cat $HOME/.cabal/config
 
