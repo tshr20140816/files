@@ -122,7 +122,7 @@ do
     tar xfz "${package}".tar.gz
     cd "${package}"
     # cabal install -j1 -v3 --disable-documentation
-    cabal install -j1 -v3 --disable-documentation --with-gcc=${OPENSHIFT_DATA_DIR}/local/bin/gcc 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
+    cabal install -j1 -v3 --disable-optimization --disable-documentation --with-gcc=${OPENSHIFT_DATA_DIR}/local/bin/gcc 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
