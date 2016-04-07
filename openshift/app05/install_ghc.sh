@@ -11,7 +11,7 @@ ls -lang ${OPENSHIFT_LOG_DIR}
 
 cd ${OPENSHIFT_TMP_DIR}
 
-if [ ! -f ${OPENSHIFT_DATA_DIR}/ccache/bin/ccache ]; then
+if [ ! -f ${OPENSHIFT_DATA_DIR}/local/bin/ccache ]; then
     wget http://samba.org/ftp/ccache/ccache-3.2.4.tar.xz
     tar xfz ccache-3.2.4.tar.xz
     cd ccache-3.2.4
