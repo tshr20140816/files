@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "1830"
+echo "0825"
 
-set -x
+# set -x
 
 quota -s
 oo-cgroup-read memory.failcnt
@@ -19,6 +19,10 @@ fi
 cd /tmp
 
 ls -lang
+
+/usr/bin/gear --help
+
+exit
 
 if [ ! -f $OPENSHIFT_DATA_DIR/ccache/bin/ccache ]; then
     wget http://samba.org/ftp/ccache/ccache-3.2.4.tar.xz
