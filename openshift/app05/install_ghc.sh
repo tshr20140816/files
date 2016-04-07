@@ -88,7 +88,7 @@ export CC="ccache gcc"
 export CXX="ccache g++"
 export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
 
-ccache -s
+ccache -s > ${OPENSHIFT_LOG_DIR}/ccache_stats.txt
 ccache -z
 ccache -s
 
