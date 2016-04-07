@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1736"
+echo "1745"
 
 set -x
 
@@ -149,6 +149,17 @@ if [ $(ghc-pkg list | grep -c parsec) -eq 0 ]; then
     tar xfz parsec-3.1.9.tar.gz
     ls -lang
     cd parsec-3.1.9
+    cabal install -j1 -v3 --disable-documentation
+fi
+
+if [ $(ghc-pkg list | grep -c regex-base) -eq 0 ]; then
+    cd /tmp
+    rm -rf regex-base-0.93.2
+    rm -f regex-base-0.93.2.tar.gz
+    wget https://hackage.haskell.org/package/regex-base-0.93.2/regex-base-0.93.2.tar.gz
+    tar xfz regex-base-0.93.2.tar.gz
+    ls -lang
+    cd regex-base-0.93.2
     cabal install -j1 -v3 --disable-documentation
 fi
 
