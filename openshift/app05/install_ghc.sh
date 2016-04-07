@@ -7,6 +7,8 @@ export TZ=JST-9
 quota -s
 oo-cgroup-read memory.failcnt
 
+ls -lang ${OPENSHIFT_LOG_DIR}
+
 cd ${OPENSHIFT_TMP_DIR}
 
 if [ ! -f ${OPENSHIFT_DATA_DIR}/ccache/bin/ccache ]; then
