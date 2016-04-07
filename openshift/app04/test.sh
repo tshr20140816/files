@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1036"
+echo "1046"
 
 set -x
 
@@ -53,7 +53,7 @@ cat $HOME/.cabal/config
 # ghc-pkg -v2 dump
 ghc-pkg -v2 recache
 # tree --help
-tree -a $OPENSHIFT_DATA_DIR
+# tree -a $OPENSHIFT_DATA_DIR
 # cabal update --help
 # cabal -v3 update
 cabal update
