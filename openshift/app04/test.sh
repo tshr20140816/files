@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1102"
+echo "1103"
 
 set -x
 
@@ -22,6 +22,7 @@ ls -lang
 cd $OPENSHIFT_DATA_DIR
 
 # rm -rf .ghc
+tree -a .ghc
 
 # ls -lang
 
