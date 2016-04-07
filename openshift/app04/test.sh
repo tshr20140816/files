@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1715"
+echo "1736"
 
 set -x
 
@@ -141,6 +141,17 @@ if [ $(ghc-pkg list | grep -c mtl) -eq 0 ]; then
     cabal install -j1 -v3 --disable-documentation
 fi
 
+if [ $(ghc-pkg list | grep -c parsec) -eq 0 ]; then
+    cd /tmp
+    rm -rf parsec-3.1.9
+    rm -f parsec-3.1.9.tar.gz
+    wget https://hackage.haskell.org/package/parsec-3.1.9/parsec-3.1.9.tar.gz
+    tar xfz parsec-3.1.9.tar.gz
+    ls -lang
+    cd parsec-3.1.9
+    cabal install -j1 -v3 --disable-documentation
+fi
+
 if [ $(ghc-pkg list | grep -c regex-tdfa) -eq 0 ]; then
     cd /tmp
     rm -rf regex-tdfa-1.2.1
@@ -150,6 +161,8 @@ if [ $(ghc-pkg list | grep -c regex-tdfa) -eq 0 ]; then
     cd regex-tdfa-1.2.1
     cabal install -j1 -v3 --disable-documentation
 fi
+
+exit
 
 if [ $(ghc-pkg list | grep -c shellcheck) -eq 0 ]; then
     cd /tmp
