@@ -64,6 +64,8 @@ ghc-pkg list
 # cabal install -j1 -v3 --disable-documentation shellcheck
 # cabal install -j1 -v3 --disable-documentation virthualenv
 
+# https://hackage.haskell.org/package/
+
 if [ $(ghc-pkg list | grep -c hashable) -eq 0 ]; then
     cd /tmp
     rm -rf hashable
