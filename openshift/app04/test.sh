@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1621"
+echo "1640"
 
 set -x
 
@@ -16,7 +16,10 @@ if [ $(wc -c < ${OPENSHIFT_LOG_DIR}/cron_minutely.log) -gt 100000 ]; then
     tail -n 1000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 fi
 
-tree -a ${OPENSHIFT_DATA_DIR}
+# tree -a ${OPENSHIFT_DATA_DIR}
+# exit
+
+cat ${OPENSHIFT_DATA_DIR}/usr/lib/ghc-7.10.3/settings
 exit
 
 /usr/bin/gear status --help
