@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1129"
+echo "1130"
 
 set -x
 
@@ -108,7 +108,7 @@ do
     echo "cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v" | tee ${OPENSHIFT_LOG_DIR}/${package}.log
     cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
     echo "cabal install -j1 -v3 --disable-documentation" | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
-    cabal install -j1 -v3 --disable-documentation 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
+    cabal install -j1 -v3 --disable-documentation --ghc-options="+RTS -N1 -M128m -RTS" 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
