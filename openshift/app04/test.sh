@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1010"
+echo "1128"
 
 set -x
 
@@ -26,6 +26,12 @@ ls -lang
 rm -rf ghc*
 
 /usr/bin/gear --help
+
+rm -f monitor_resourse.sh
+wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_resourse.sh
+chmod +x monitor_resourse.sh
+./monitor_resourse.sh &
+pid=$!
 
 cd $OPENSHIFT_DATA_DIR
 
@@ -112,5 +118,7 @@ do
         break
     fi
 done
+
+kill ${pid}
 
 echo "FINISH"
