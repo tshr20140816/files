@@ -19,8 +19,7 @@ fi
 # tree -a ${OPENSHIFT_DATA_DIR}
 # exit
 
-cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
-exit
+# cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
 
 /usr/bin/gear status --help
 /usr/bin/gear start --trace
@@ -115,7 +114,7 @@ do
     # cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
     echo "cabal install -j1 -v3 --disable-documentation" | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
     # cabal install -j1 -v3 --disable-documentation --ghc-options="+RTS -N1 -M264m -RTS" 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
-    cabal install -j1 -v3 --disable-documentation --ghc-options="+RTS -N1 -M264m -RTS"
+    cabal install -j1 -v3 --disable-documentation --ghc-options="+RTS -N1 -M384m -RTS"
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
