@@ -23,6 +23,8 @@ cd /tmp
 
 ls -lang
 
+rm -rf ghc*
+
 /usr/bin/gear --help
 
 cd $OPENSHIFT_DATA_DIR
