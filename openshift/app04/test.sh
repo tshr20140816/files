@@ -36,7 +36,7 @@ export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
-# cabal install --help
+cabal install --help
 ghc-pkg list
 ghc-pkg recache
 ghc --info
@@ -100,7 +100,7 @@ do
     echo "cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v" | tee ${OPENSHIFT_LOG_DIR}/${package}.log
     cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
     echo "cabal install -j1 -v3 --disable-documentation" | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
-    cabal install -j1 --disable-documentation 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
+    cabal install -j1 -v3 --disable-documentation 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
