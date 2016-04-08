@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1303"
+echo "1544"
 
 set -x
 
@@ -27,11 +27,11 @@ rm -rf ghc*
 
 /usr/bin/gear --help
 
-rm -f monitor_resourse.sh
-wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_resourse.sh
-chmod +x monitor_resourse.sh
-./monitor_resourse.sh &
-pid=$!
+# rm -f monitor_resourse.sh
+# wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_resourse.sh
+# chmod +x monitor_resourse.sh
+# ./monitor_resourse.sh &
+# pid=$!
 
 cd $OPENSHIFT_DATA_DIR
 
@@ -98,7 +98,7 @@ do
     if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
         continue
     fi
-    cat ${OPENSHIFT_LOG_DIR}/${package}.log
+    # cat ${OPENSHIFT_LOG_DIR}/${package}.log
     cd ${OPENSHIFT_TMP_DIR}
     rm -f "${package}".tar.gz
     rm -rf "${package}"
@@ -108,7 +108,8 @@ do
     # echo "cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v" | tee ${OPENSHIFT_LOG_DIR}/${package}.log
     # cabal configure --ghc-option=+RTS --ghc-option=-M128m --ghc-option=-RTS -v 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
     echo "cabal install -j1 -v3 --disable-documentation" | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
-    cabal install -j1 -v3 --disable-documentation --ghc-options="+RTS -N1 -M256m -RTS" 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
+    # cabal install -j1 -v3 --disable-documentation --ghc-options="+RTS -N1 -M264m -RTS" 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/${package}.log
+    cabal install -j1 -v3 --disable-documentation --ghc-options="+RTS -N1 -M264m -RTS"
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
@@ -119,6 +120,6 @@ do
     fi
 done
 
-kill ${pid}
+# kill ${pid}
 
 echo "FINISH"
