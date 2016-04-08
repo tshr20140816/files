@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1544"
+echo "1621"
 
 set -x
 
@@ -15,6 +15,9 @@ ls -lang ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 if [ $(wc -c < ${OPENSHIFT_LOG_DIR}/cron_minutely.log) -gt 100000 ]; then
     tail -n 1000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 fi
+
+tree -a ${OPENSHIFT_DATA_DIR}
+exit
 
 /usr/bin/gear status --help
 /usr/bin/gear start --trace
