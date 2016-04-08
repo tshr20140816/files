@@ -49,6 +49,8 @@ ghc-pkg recache
 quota -s
 oo-cgroup-read memory.failcnt
 
+mv -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
+
 package_list=()
 package_list+=("hashable-1.2.4.0")
 package_list+=("unordered-containers-0.2.7.0")
@@ -103,7 +105,14 @@ ccache -s > ${OPENSHIFT_LOG_DIR}/ccache_stats.txt
 ccache -z
 ccache -s
 
-cabal configure --with-gcc=${OPENSHIFT_DATA_DIR}/local/bin/ccache
+# cabal configure --with-gcc=${OPENSHIFT_DATA_DIR}/local/bin/ccache
+
+if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
+    cp ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org
+    sed -i -e "s|/usr/bin/gcc|${OPENSHIFT_DATA_DIR}/local/bin/gcc|g" ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
+fi
+
+cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
 
 package_list=()
 package_list+=("regex-tdfa-1.2.1")
@@ -121,10 +130,11 @@ do
     wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     cd "${package}"
+    # cabal configure --with-gcc=${OPENSHIFT_DATA_DIR}/local/bin/ccache
     # cabal install -j1 -v3 --disable-documentation
-    cabal install -j1 -v3 --max-backjumps=10 --disable-optimization --disable-documentation \
+    cabal install -j1 -v3 --disable-optimization --disable-documentation \
      --disable-tests --disable-coverage --disable-benchmarks \
-     --with-gcc=${OPENSHIFT_DATA_DIR}/local/bin/gcc 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
+     --ghc-options="+RTS -N1 -M256m -RTS" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
