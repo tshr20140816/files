@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1128"
+echo "1129"
 
 set -x
 
@@ -72,9 +72,9 @@ do
         continue
     fi
     cd ${OPENSHIFT_TMP_DIR}
-    rm -f "${package}".tar.gz
+    # rm -f "${package}".tar.gz
     rm -rf "${package}"
-    wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
+    [ ! -f "${package}".tar.gz ]wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     cd "${package}"
     cabal install -j2 --disable-documentation
