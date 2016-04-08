@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0921"
+echo "0926"
 
 set -x
 
@@ -16,8 +16,8 @@ if [ $(wc -c < ${OPENSHIFT_LOG_DIR}/cron_minutely.log) -gt 100000 ]; then
     tail -n 1000 ${OPENSHIFT_LOG_DIR}/cron_minutely.log > ${OPENSHIFT_LOG_DIR}/cron_minutely.log
 fi
 
-/usr/bin/gear status cron-1.4
-/usr/bin/gear status php-5.4
+1|/usr/bin/gear status
+2|/usr/bin/gear status
 /usr/bin/gear start --trace
 
 cd /tmp
