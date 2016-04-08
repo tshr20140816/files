@@ -19,7 +19,7 @@ fi
 # tree -a ${OPENSHIFT_DATA_DIR}
 # exit
 
-cat ${OPENSHIFT_DATA_DIR}/usr/lib/ghc-7.10.3/settings
+cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
 exit
 
 /usr/bin/gear status --help
