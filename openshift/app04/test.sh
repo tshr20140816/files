@@ -96,7 +96,8 @@ done
 package_list=()
 package_list+=("regex-tdfa-1.2.1")
 package_list+=("json-0.9.1")
-package_list+=("directory-1.2.5.1")
+# package_list+=("directory-1.2.5.1")
+# package_list+=("containers-0.5.6.2")
 package_list+=("ShellCheck-0.4.3")
 
 for package in ${package_list[@]}
