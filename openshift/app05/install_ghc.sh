@@ -84,7 +84,7 @@ do
     if [ "${usage_in_bytes}" -lt 400000000 ]; then
         break
     fi
-    sleep 1s
+    sleep 10s
 done
 
 /usr/bin/gcc $@
