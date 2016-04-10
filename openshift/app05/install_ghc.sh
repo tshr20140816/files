@@ -9,28 +9,6 @@ oo-cgroup-read memory.failcnt
 
 ls -lang ${OPENSHIFT_LOG_DIR}
 
-cd ${OPENSHIFT_TMP_DIR}
-
-if [ ! -f ${OPENSHIFT_DATA_DIR}/local/bin/ccache ]; then
-    rm -f ccache-3.2.4.tar.xz
-    rm -rf ccache-3.2.4
-    wget http://samba.org/ftp/ccache/ccache-3.2.4.tar.xz
-    tar Jxf ccache-3.2.4.tar.xz
-    cd ccache-3.2.4
-    ./configure --prefix=${OPENSHIFT_DATA_DIR}/local
-    time make -j1
-    make install
-    cd ..
-    rm -rf ccache-3.2.4
-    rm -f ccache-3.2.4.tar.xz
-fi
-
-export CCACHE_DIR=${OPENSHIFT_DATA_DIR}/ccache
-export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/ccache
-# export CCACHE_LOGFILE=/dev/null
-export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.$(date +%Y%m%d%H%M%S).log
-export CCACHE_MAXSIZE=200M
-
 cd $OPENSHIFT_DATA_DIR
 
 mkdir haskell
@@ -90,22 +68,30 @@ do
     fi
 done
 
-export CC="ccache gcc"
-export CXX="ccache g++"
-
+mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
 cd ${OPENSHIFT_DATA_DIR}/local/bin
-ln -s ccache ${OPENSHIFT_DATA_DIR}/local/bin/gcc
-ln -s ccache ${OPENSHIFT_DATA_DIR}/local/bin/g++
-ln -s ccache ${OPENSHIFT_DATA_DIR}/local/bin/cc
-ln -s ccache ${OPENSHIFT_DATA_DIR}/local/bin/c++
+cat << '__HEREDOC__' > gcc
+#!/bin/bash
+
+export TZ=JST-9
+
+while :
+do
+    dt=$(date +%Y/%m/%d" "%H:%M:%S)
+    usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
+    failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
+    echo "$dt $usage_in_bytes $failcnt"
+    if [ "${usage_in_bytes}" -lt 400000000 ]; then
+        break
+    fi
+    sleep 1s
+done
+
+/usr/bin/gcc $@
+__HEREDOC__
+chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
 export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
-
-ccache -s > ${OPENSHIFT_LOG_DIR}/ccache_stats.txt
-ccache -z
-ccache -s
-
-# cabal configure --with-gcc=${OPENSHIFT_DATA_DIR}/local/bin/ccache
 
 if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
     cp ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org
@@ -130,7 +116,6 @@ do
     wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     cd "${package}"
-    # cabal configure --with-gcc=${OPENSHIFT_DATA_DIR}/local/bin/ccache
     # cabal install -j1 -v3 --disable-documentation
     cabal install -j1 -v3 --disable-optimization --disable-documentation \
      --disable-tests --disable-coverage --disable-benchmarks \
