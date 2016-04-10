@@ -16,6 +16,9 @@ cd haskell
 [ ! -f network.tar.gz ] && wget -q http://www.accursoft.com/cartridges/network.tar.gz
 [ ! -f $OPENSHIFT_DATA_DIR/haskell/usr/bin/cabal ] && tar xfz network.tar.gz
 
+quota -s
+oo-cgroup-read memory.failcnt
+
 export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
