@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# cd /tmp
+# wget https://github.com/tshr20140816/files/raw/master/openshift/app05/install_ghc.sh
+# bash install_ghc.sh > $OPENSHIFT_REPO_DIR/diy/install.txt 2>&1 &
+
 set -x
 
 export TZ=JST-9
