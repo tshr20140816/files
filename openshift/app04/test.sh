@@ -32,11 +32,11 @@ rm -rf ghc*
 
 /usr/bin/gear --help
 
-# rm -f monitor_resourse.sh
-# wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_resourse.sh
-# chmod +x monitor_resourse.sh
-# ./monitor_resourse.sh &
-# pid=$!
+rm -f monitor_resourse.sh
+wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_resourse.sh
+chmod +x monitor_resourse.sh
+./monitor_resourse.sh &
+pid=$!
 
 cd $OPENSHIFT_DATA_DIR
 
@@ -125,6 +125,6 @@ do
     fi
 done
 
-# kill ${pid}
+kill ${pid}
 
 echo "FINISH"
