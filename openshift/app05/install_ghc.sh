@@ -118,6 +118,7 @@ do
     if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
         continue
     fi
+    echo "$(oo-cgroup-read memory.usage_in_bytes)"
     cd ${OPENSHIFT_TMP_DIR}
     rm -f "${package}".tar.gz
     rm -rf "${package}"
