@@ -120,7 +120,7 @@ do
     # cabal install -j1 -v3 --disable-documentation
     cabal install -j1 -v3 --disable-optimization --disable-documentation \
      --disable-tests --disable-coverage --disable-benchmarks \
-     --ghc-options="+RTS -N1 -M256m -RTS" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
+     --ghc-options="+RTS -N1 -M448m -RTS" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
