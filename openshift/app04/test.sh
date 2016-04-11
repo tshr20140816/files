@@ -40,6 +40,7 @@ cd ../
 
 tree test
 
+export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/test/usr/lib
 $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm --version
 
 whereis cmake
