@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0851"
+echo "0853"
 
 set -x
 
@@ -48,7 +48,8 @@ wget http://mirror.centos.org/centos/6/os/x86_64/Packages/tbb-2.2-3.20090809.el6
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
 # wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-thread-1.41.0-27.el6.x86_64.rpm
-wget http://downloads.naulinux.ru/pub/NauLinux/6x/x86_64/Extras/RPMS/Projects/OpenFlow/boost-thread-1.44.0-1.el6.x86_64.rpm
+# wget http://downloads.naulinux.ru/pub/NauLinux/6x/x86_64/Extras/RPMS/Projects/OpenFlow/boost-thread-1.44.0-1.el6.x86_64.rpm
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-thread-1.48.0-7.el6.x86_64.rpm
 # wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-1.41.0-27.el6.x86_64.rpm
 # wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-system-1.41.0-27.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-system-1.48.0-7.el6.x86_64.rpm
