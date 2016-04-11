@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1733"
+echo "1734"
 
 set -x
 
@@ -54,7 +54,7 @@ find ./ -name *.rpm -print > list.txt
 while read -r LINE
 do
     rpm2cpio ${LINE} | cpio -idmv
-done
+done < list.txt
 
 cd usr/lib64
 ln -s libboost_regex.so.5 libboost_regex.so.1.54.0
