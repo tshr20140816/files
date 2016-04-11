@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1738"
+echo "1740"
 
 set -x
 
@@ -59,6 +59,8 @@ done < list.txt
 cd usr/lib64
 ln -s libboost_regex.so.5 libboost_regex.so.1.54.0
 ln -s libboost_program_options.so.5 libboost_program_options.so.1.54.0
+ln -s libboost_thread_options.so.5 libboost_thread_options.so.1.54.0
+ln -s libboost_system_options.so.5 libboost_system_options.so.1.54.0
 ln -s libboost_filesystem.so.5 libboost_filesystem.so.1.54.0
 ln -s /usr/lib64/mysql/libmysqlclient.so.16.0.0 libmysqlclient.so.18
 
