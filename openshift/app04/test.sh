@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1542"
+echo "1552"
 
 set -x
 
@@ -39,5 +39,7 @@ rpm2cpio hhvm-3.5.0-4.el6.x86_64.rpm | cpio -idmv
 cd ../
 
 tree test
+
+$OPENSHIFT_DATA_DIR/test/usr/bin/hhvm --version
 
 echo "FINISH"
