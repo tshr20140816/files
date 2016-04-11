@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1643"
+echo "1646"
 
 set -x
 
@@ -51,7 +51,7 @@ cd /tmp
 
 tree test
 
-export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/test/usr/lib:$OPENSHIFT_DATA_DIR/test/usr/lib64
+export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/test/usr/lib:$OPENSHIFT_DATA_DIR/test/usr/lib/hhvm:$OPENSHIFT_DATA_DIR/test/usr/lib64
 $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm --version
 
 whereis cmake
