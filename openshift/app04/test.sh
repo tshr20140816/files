@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1752"
+echo "0829"
 
 set -x
 
@@ -45,8 +45,8 @@ wget http://mirror.centos.org/centos/6/os/x86_64/Packages/tbb-2.2-3.20090809.el6
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
 # wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-thread-1.41.0-27.el6.x86_64.rpm
-# wget http://downloads.naulinux.ru/pub/NauLinux/6x/x86_64/Extras/RPMS/Projects/OpenFlow/boost-thread-1.44.0-1.el6.x86_64.rpm
-wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-1.41.0-27.el6.x86_64.rpm
+wget http://downloads.naulinux.ru/pub/NauLinux/6x/x86_64/Extras/RPMS/Projects/OpenFlow/boost-thread-1.44.0-1.el6.x86_64.rpm
+# wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-1.41.0-27.el6.x86_64.rpm
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-system-1.41.0-27.el6.x86_64.rpm
 wget http://pkgrepo.linuxtech.net/el6/release/x86_64/liblcms2-2.4-1.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libwebp-0.4.3-3.el6.x86_64.rpm
@@ -61,7 +61,7 @@ done < list.txt
 cd usr/lib64
 ln -s libboost_regex.so.5 libboost_regex.so.1.54.0
 ln -s libboost_program_options.so.5 libboost_program_options.so.1.54.0
-# ln -s libboost_thread_options.so.5 libboost_thread_options.so.1.54.0
+ln -s libboost_thread-mt.so.5 libboost_thread.so.1.54.0
 ln -s libboost_system.so.5 libboost_system.so.1.54.0
 ln -s libboost_filesystem.so.5 libboost_filesystem.so.1.54.0
 ln -s /usr/lib64/mysql/libmysqlclient.so.16.0.0 libmysqlclient.so.18
