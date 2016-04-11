@@ -64,6 +64,7 @@ ln -s libboost_program_options.so.5 libboost_program_options.so.1.54.0
 ln -s libboost_system_options.so.5 libboost_system_options.so.1.54.0
 ln -s libboost_filesystem.so.5 libboost_filesystem.so.1.54.0
 ln -s /usr/lib64/mysql/libmysqlclient.so.16.0.0 libmysqlclient.so.18
+ln -s libwebp.so.5.0.3 libwebp.so.4
 
 cd $OPENSHIFT_DATA_DIR
 
