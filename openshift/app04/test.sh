@@ -56,6 +56,15 @@ rpm2cpio boost-program-options-1.41.0-27.el6.x86_64.rpm | cpio -idmv
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-filesystem-1.41.0-27.el6.x86_64.rpm
 rpm2cpio boost-filesystem-1.41.0-27.el6.x86_64.rpm | cpio -idmv
 
+wget http://mirror.centos.org/centos/6/os/x86_64/Packages/tbb-2.2-3.20090809.el6.x86_64.rpm
+rpm2cpio tbb-2.2-3.20090809.el6.x86_64.rpm | cpio -idmv
+
+wget http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
+rpm2cpio oniguruma-5.9.1-3.1.el6.x86_64.rpm | cpio -idmv
+
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
+rpm2cpio libdwarf-20140413-1.el6.x86_64.rpm | cpio -idmv
+
 cd usr/lib64
 ln -s libboost_regex.so.5 libboost_regex.so.1.54.0
 ln -s libboost_program_options.so.5 libboost_program_options.so.1.54.0
