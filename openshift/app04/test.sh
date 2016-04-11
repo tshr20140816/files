@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1522"
+echo "1525"
 
 set -x
 
@@ -35,5 +35,15 @@ rmdir -rf haskell
 rm -rf .cabal
 rm -rf .ghc
 
+rm -rf test
+mkdir test
+cd test
+wget https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
+
+rpm2cpio glibc-devel-2.12-1.166.el6.i686.rpm | cpio -idmv
+
+cd ../
+
+tree test
 
 echo "FINISH"
