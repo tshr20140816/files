@@ -96,7 +96,7 @@ do
 done
 
 set -x
-/usr/bin/gcc $@
+/usr/bin/gcc "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
