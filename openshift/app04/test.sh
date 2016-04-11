@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1631"
+echo "1635"
 
 set -x
 
@@ -42,7 +42,7 @@ wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-regex-1.41.0-27.
 rpm2cpio boost-regex-1.41.0-27.el6.x86_64.rpm | cpio -idmv
 
 cd usr/lib64
-ln -s libboost_regex.so.1.54.0 libboost_regex.so.5
+ln -s libboost_regex.so.5 libboost_regex.so.1.54.0
 
 cd /tmp
 
