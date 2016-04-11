@@ -4,14 +4,6 @@ echo "1243"
 
 set -x
 
-free
-sync
-cat /proc/sys/vm/drop_caches
-echo 1 > /proc/sys/vm/drop_caches
-cat /proc/sys/vm/drop_caches
-sysctl -w vm.drop_caches=3
-free
-
 quota -s
 oo-cgroup-read memory.failcnt
 
@@ -27,10 +19,10 @@ fi
 # tree -a ${OPENSHIFT_DATA_DIR}
 # exit
 
-# cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
-
 /usr/bin/gear status --help
 /usr/bin/gear start --trace
+
+shopt
 
 cd /tmp
 
