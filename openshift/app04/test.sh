@@ -1,11 +1,13 @@
 #!/bin/bash
 
-echo "0943"
+echo "1015"
 
 set -x
 
 free
 sync
+cat /proc/sys/vm/drop_caches
+echo 1 > /proc/sys/vm/drop_caches
 cat /proc/sys/vm/drop_caches
 sysctl -w vm.drop_caches=3
 free
