@@ -51,6 +51,8 @@ wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-system-1.41.0-27
 wget http://pkgrepo.linuxtech.net/el6/release/x86_64/liblcms2-2.4-1.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libwebp-0.4.3-3.el6.x86_64.rpm
 
+http://mirror.centos.org/centos/6/os/x86_64/Packages/gmp-4.3.1-7.el6_2.2.x86_64.rpm
+
 find ./ -name "*.rpm" -print > list.txt
 
 while read -r LINE
