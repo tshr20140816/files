@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1015"
+echo "1243"
 
 set -x
 
@@ -63,6 +63,7 @@ cabal install --help
 ghc-pkg list
 ghc-pkg recache
 ghc --info
+cat $OPENSHIFT_DATA_DIR/haskell/usr/bin/ghc
 
 quota -s
 oo-cgroup-read memory.failcnt
