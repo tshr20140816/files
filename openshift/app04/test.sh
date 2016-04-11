@@ -29,9 +29,6 @@ ls -lang
 
 cd $OPENSHIFT_DATA_DIR
 
-rm -rf haskell
-rm -rf .gem
-
 rm -rf test
 
 tree -a $OPENSHIFT_DATA_DIR
@@ -48,7 +45,7 @@ cd ../
 
 tree test
 
-export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/test/usr/lib
+export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/test/usr/lib:$OPENSHIFT_DATA_DIR/test/usr/lib64
 $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm --version
 
 whereis cmake
