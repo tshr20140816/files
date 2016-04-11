@@ -61,7 +61,7 @@ cd work
  --disable-shared --enable-static \
  --program-suffix=-493 \
  --disable-libjava --disable-libgo --disable-libgfortran --enable-languages=c,c++
-time make -j2
+time make
 make install
 rm -rf /tmp/gcc-4.9.3
 
