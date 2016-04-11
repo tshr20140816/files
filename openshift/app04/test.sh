@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0836"
+echo "0851"
 
 set -x
 
@@ -36,18 +36,22 @@ tree -a $OPENSHIFT_DATA_DIR
 mkdir test
 cd test
 wget -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
-wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-regex-1.41.0-27.el6.x86_64.rpm
+# wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-regex-1.41.0-27.el6.x86_64.rpm
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-regex-1.48.0-7.el6.x86_64.rpm
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/inotify-tools-3.14-1.el6.x86_64.rpm
-wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-program-options-1.41.0-27.el6.x86_64.rpm
-wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-filesystem-1.41.0-27.el6.x86_64.rpm
+# wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-program-options-1.41.0-27.el6.x86_64.rpm
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-program-options-1.48.0-7.el6.x86_64.rpm
+# wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-filesystem-1.41.0-27.el6.x86_64.rpm
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-filesystem-1.48.0-7.el6.x86_64.rpm
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/tbb-2.2-3.20090809.el6.x86_64.rpm
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
-wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-thread-1.41.0-27.el6.x86_64.rpm
-# wget http://downloads.naulinux.ru/pub/NauLinux/6x/x86_64/Extras/RPMS/Projects/OpenFlow/boost-thread-1.44.0-1.el6.x86_64.rpm
+# wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-thread-1.41.0-27.el6.x86_64.rpm
+wget http://downloads.naulinux.ru/pub/NauLinux/6x/x86_64/Extras/RPMS/Projects/OpenFlow/boost-thread-1.44.0-1.el6.x86_64.rpm
 # wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-1.41.0-27.el6.x86_64.rpm
-wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-system-1.41.0-27.el6.x86_64.rpm
+# wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-system-1.41.0-27.el6.x86_64.rpm
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-system-1.48.0-7.el6.x86_64.rpm
 wget http://pkgrepo.linuxtech.net/el6/release/x86_64/liblcms2-2.4-1.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libwebp-0.4.3-3.el6.x86_64.rpm
 
@@ -61,11 +65,11 @@ do
 done < list.txt
 
 cd usr/lib64
-ln -s libboost_regex.so.5 libboost_regex.so.1.54.0
-ln -s libboost_program_options.so.5 libboost_program_options.so.1.54.0
-ln -s libboost_thread-mt.so.5 libboost_thread.so.1.54.0
-ln -s libboost_system.so.5 libboost_system.so.1.54.0
-ln -s libboost_filesystem.so.5 libboost_filesystem.so.1.54.0
+ln -s libboost_regex.so.8 libboost_regex.so.1.54.0
+ln -s libboost_program_options.so.8 libboost_program_options.so.1.54.0
+ln -s libboost_thread-mt.so.8 libboost_thread.so.1.54.0
+ln -s libboost_system.so.8 libboost_system.so.1.54.0
+ln -s libboost_filesystem.so.8 libboost_filesystem.so.1.54.0
 ln -s /usr/lib64/mysql/libmysqlclient.so.16.0.0 libmysqlclient.so.18
 ln -s libwebp.so.5.0.3 libwebp.so.4
 
