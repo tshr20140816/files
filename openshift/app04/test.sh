@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1552"
+echo "1555"
 
 set -x
 
@@ -41,5 +41,9 @@ cd ../
 tree test
 
 $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm --version
+
+whereis cmake
+
+cmake --version
 
 echo "FINISH"
