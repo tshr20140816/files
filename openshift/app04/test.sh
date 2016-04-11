@@ -1,8 +1,14 @@
 #!/bin/bash
 
-echo "1640"
+echo "0943"
 
 set -x
+
+free
+sync
+cat /proc/sys/vm/drop_caches
+sysctl -w vm.drop_caches=3
+free
 
 quota -s
 oo-cgroup-read memory.failcnt
