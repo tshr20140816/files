@@ -47,15 +47,11 @@ rpm2cpio libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
 cd usr/lib64
 ln -s libboost_regex.so.5 libboost_regex.so.1.54.0
 
-cd /tmp
+cd $OPENSHIFT_DATA_DIR
 
 tree test
 
 export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/test/usr/lib:$OPENSHIFT_DATA_DIR/test/usr/lib/hhvm:$OPENSHIFT_DATA_DIR/test/usr/lib64
 $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm --version
-
-whereis cmake
-
-cmake --version
 
 echo "FINISH"
