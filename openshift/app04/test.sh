@@ -46,6 +46,8 @@ wget http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-thread-1.41.0-27.el6.x86_64.rpm
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-system-1.41.0-27.el6.x86_64.rpm
+wget http://pkgrepo.linuxtech.net/el6/release/x86_64/liblcms2-2.4-1.el6.x86_64.rpm
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libwebp-0.4.3-3.el6.x86_64.rpm
 
 find ./ -name *.rpm -print > list.txt
 
