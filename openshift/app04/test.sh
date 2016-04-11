@@ -58,6 +58,6 @@ tree test
 export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/test/usr/lib:$OPENSHIFT_DATA_DIR/test/usr/lib/hhvm:$OPENSHIFT_DATA_DIR/test/usr/lib64
 $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm --version
 
-find / -name libmysqlclient.so.* -print 2>/dev/null
+find / -name libinotifytools.so.* -print 2>/dev/null
 
 echo "FINISH"
