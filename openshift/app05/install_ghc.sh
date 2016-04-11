@@ -95,6 +95,7 @@ do
     sleep 10s
 done
 
+set -x
 /usr/bin/gcc $@
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
