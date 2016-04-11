@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1603"
+echo "1612"
 
 set -x
 
@@ -29,13 +29,16 @@ ls -lang
 
 cd $OPENSHIFT_DATA_DIR
 
+rm -rf haskell
+rm -rf .gem
+
 rm -rf test
 
 tree -a $OPENSHIFT_DATA_DIR
 
 mkdir test
 cd test
-wget https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
+wget -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
 rpm2cpio hhvm-3.5.0-4.el6.x86_64.rpm | cpio -idmv
 
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-regex-1.41.0-27.el6.x86_64.rpm
