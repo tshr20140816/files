@@ -36,34 +36,23 @@ tree -a $OPENSHIFT_DATA_DIR
 mkdir test
 cd test
 wget -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
-rpm2cpio hhvm-3.5.0-4.el6.x86_64.rpm | cpio -idmv
-
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-regex-1.41.0-27.el6.x86_64.rpm
-rpm2cpio boost-regex-1.41.0-27.el6.x86_64.rpm | cpio -idmv
-
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
-rpm2cpio libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
-
-# wget http://mirror.centos.org/centos/6/os/x86_64/Packages/mysql-libs-5.1.73-5.el6_6.x86_64.rpm
-# rpm2cpio mysql-libs-5.1.73-5.el6_6.x86_64.rpm | cpio -idmv
-
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/inotify-tools-3.14-1.el6.x86_64.rpm
-rpm2cpio inotify-tools-3.14-1.el6.x86_64.rpm | cpio -idmv
-
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-program-options-1.41.0-27.el6.x86_64.rpm
-rpm2cpio boost-program-options-1.41.0-27.el6.x86_64.rpm | cpio -idmv
-
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-filesystem-1.41.0-27.el6.x86_64.rpm
-rpm2cpio boost-filesystem-1.41.0-27.el6.x86_64.rpm | cpio -idmv
-
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/tbb-2.2-3.20090809.el6.x86_64.rpm
-rpm2cpio tbb-2.2-3.20090809.el6.x86_64.rpm | cpio -idmv
-
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
-rpm2cpio oniguruma-5.9.1-3.1.el6.x86_64.rpm | cpio -idmv
-
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
-rpm2cpio libdwarf-20140413-1.el6.x86_64.rpm | cpio -idmv
+wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-thread-1.41.0-27.el6.x86_64.rpm
+wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-system-1.41.0-27.el6.x86_64.rpm
+
+find ./ -name *.rpm -print > list.txt
+
+while read -r LINE
+do
+    rpm2cpio ${LINE} | cpio -idmv
+done
 
 cd usr/lib64
 ln -s libboost_regex.so.5 libboost_regex.so.1.54.0
