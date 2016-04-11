@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1635"
+echo "1643"
 
 set -x
 
@@ -40,6 +40,9 @@ rpm2cpio hhvm-3.5.0-4.el6.x86_64.rpm | cpio -idmv
 
 wget http://mirror.centos.org/centos/6/os/x86_64/Packages/boost-regex-1.41.0-27.el6.x86_64.rpm
 rpm2cpio boost-regex-1.41.0-27.el6.x86_64.rpm | cpio -idmv
+
+wget http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
+rpm2cpio libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
 
 cd usr/lib64
 ln -s libboost_regex.so.5 libboost_regex.so.1.54.0
