@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Disk quota exceeded
+
 set -x
 
 cd /tmp
