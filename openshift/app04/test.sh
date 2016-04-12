@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1025"
+echo "1048"
 
 set -x
 
@@ -21,7 +21,7 @@ fi
 
 /usr/bin/gear start --trace
 
-shopt
+# shopt
 
 cd /tmp
 
@@ -37,7 +37,7 @@ ls -lang
 find ./ -name bootstrap.sh -print
 ./bootstrap.sh
 ./b2 --help
-./b2 install -j4 --prefix=$OPENSHIFT_DATA_DIR/boost
+./b2 install -j4 --prefix=$OPENSHIFT_DATA_DIR/boost --without-chrono --without-graph
 
 tree $OPENSHIFT_DATA_DIR/boost
 
