@@ -92,7 +92,7 @@ export TZ=JST-9
 
 while :
 do
-    dt=$(date +%Y/%m/%d" "%H:%M:%S)
+    dt=$(date +%H%M%S)
     usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
     usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
     failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
@@ -100,7 +100,7 @@ do
     if [ "${usage_in_bytes}" -lt 400000000 ]; then
         break
     fi
-    sleep 10s
+    sleep 30s
 done
 
 set -x
@@ -108,7 +108,7 @@ set -x
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
-# export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
+export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
 
 if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
     cp ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org
