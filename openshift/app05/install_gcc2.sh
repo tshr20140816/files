@@ -16,7 +16,9 @@ cd gmp-4.3.2
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j2
 make install
-rm -rf /tmp/gmp-4.3.2
+cd /tmp
+rm -rf gmp-4.3.2
+rm -f gmp-4.3.2.tar.bz2
 
 cd /tmp
 
@@ -29,7 +31,9 @@ cd mpfr-2.4.2
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j2
 make install
-rm -rf /tmp/mpfr-2.4.2
+cd /tmp
+rm -rf mpfr-2.4.2
+rm -f mpfr-2.4.2.tar.xz
 
 cd /tmp
 
@@ -42,7 +46,9 @@ cd mpc-1.0.3
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j4
 make install
-rm -rf /tmp/mpc-1.0.3
+cd /tmp
+rm -rf mpc-1.0.3
+rm -f mpc-1.0.3.tar.gz
 
 cd /tmp
 
@@ -50,6 +56,7 @@ cd /tmp
 
 rm -rf gcc-4.9.3
 tar jxf gcc-4.9.3.tar.bz2
+rm -f gcc-4.9.3.tar.bz2
 
 cd gcc-4.9.3
 mkdir work
