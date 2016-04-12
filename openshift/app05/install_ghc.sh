@@ -90,6 +90,8 @@ cat << '__HEREDOC__' > gcc
 
 export TZ=JST-9
 
+args="$@"
+
 while :
 do
     dt=$(date +%Y/%m/%d" "%H:%M:%S)
@@ -104,7 +106,7 @@ do
 done
 
 set -x
-/usr/bin/gcc "$@"
+/usr/bin/gcc "${args}"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
