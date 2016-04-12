@@ -58,6 +58,8 @@ cd /tmp
 [ ! -f gcc-4.9.3.tar.bz2 ] && wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2
 
 rm -rf gcc-4.9.3
+tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
+
 tar jxf gcc-4.9.3.tar.bz2
 rm -f gcc-4.9.3.tar.bz2
 
