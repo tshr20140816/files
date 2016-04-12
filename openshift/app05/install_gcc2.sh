@@ -40,7 +40,7 @@ cd mpc-1.0.3
 ./configure --help
 ./configure --prefix=$OPENSHIFT_DATA_DIR/gcc --disable-shared --enable-static --with-gmp=$OPENSHIFT_DATA_DIR/gcc --with-mpfr=$OPENSHIFT_DATA_DIR/gcc \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
-time make -j2
+time make -j4
 make install
 rm -rf /tmp/mpc-1.0.3
 
