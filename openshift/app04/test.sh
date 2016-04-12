@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1003"
+echo "1012"
 
 set -x
 
@@ -31,13 +31,10 @@ rm -rf $OPENSHIFT_DATA_DIR/boost
 [ ! -f boost_1_54_0.tar.bz2 ] && wget http://heanet.dl.sourceforge.net/project/boost/boost/1.54.0/boost_1_54_0.tar.bz2
 rm -rf boost_1_54_0
 tar jxf boost_1_54_0.tar.bz2
-ls -lang
-tree -a boost_1_54_0
 cd boost_1_54_0
-./configure --help
-./configure --prefix=$OPENSHIFT_DATA_DIR/boost
-time make -j4
-make install
+bootstrap.sh
+./b2 --help
+./b2 install -j4 --prefix=$OPENSHIFT_DATA_DIR/boost
 
 tree $OPENSHIFT_DATA_DIR/boost
 
