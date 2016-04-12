@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1021"
+echo "1025"
 
 set -x
 
@@ -35,7 +35,7 @@ ls -lang
 cd boost_1_54_0
 ls -lang
 find ./ -name bootstrap.sh -print
-bootstrap.sh
+./bootstrap.sh
 ./b2 --help
 ./b2 install -j4 --prefix=$OPENSHIFT_DATA_DIR/boost
 
