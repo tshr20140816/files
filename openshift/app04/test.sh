@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1120"
+echo "1219"
 
 set -x
 
@@ -39,7 +39,7 @@ find ./ -name bootstrap.sh -print
 ./b2 --help
 ./b2 --show-libraries
 ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
- --libdir=$OPENSHIFT_DATA_DIR/usr \
+ --libdir=$OPENSHIFT_DATA_DIR/test/usr/lib \
  --without-atomic \
  --without-chrono \
  --without-context \
