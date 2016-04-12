@@ -36,7 +36,7 @@ cd boost_1_54_0
 # ls -lang
 ./bootstrap.sh
 ./b2 --help
-time ./b2 install -j2 --prefix=$OPENSHIFT_DATA_DIR/boost \
+time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --without-atomic \
  --without-chrono \
  --without-context \
