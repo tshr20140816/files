@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1646"
+echo "1712"
 
 set -x
 
@@ -109,6 +109,10 @@ cd usr/lib64
 # ln -s libboost_filesystem.so.1.48.0 libboost_filesystem.so.1.54.0
 ln -s /usr/lib64/mysql/libmysqlclient.so.16.0.0 libmysqlclient.so.18
 ln -s libwebp.so.5.0.3 libwebp.so.4
+
+rm -rf $OPENSHIFT_DATA_DIR/test/share/doc/
+rm -rf $OPENSHIFT_DATA_DIR/test/share/man/
+rm -rf $OPENSHIFT_DATA_DIR/test/share/hhvm/LICENSE/
 
 cd $OPENSHIFT_DATA_DIR
 
