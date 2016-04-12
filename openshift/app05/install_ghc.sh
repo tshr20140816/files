@@ -11,6 +11,9 @@ export TZ=JST-9
 quota -s
 oo-cgroup-read memory.failcnt
 
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
 ls -lang ${OPENSHIFT_LOG_DIR}
 
 cd $OPENSHIFT_DATA_DIR
