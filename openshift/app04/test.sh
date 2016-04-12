@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1557"
+echo "1646"
 
 set -x
 
@@ -24,6 +24,9 @@ fi
 # shopt
 
 cd /tmp
+
+rm -f cc*
+rm -f jam*
 
 ls -lang
 
