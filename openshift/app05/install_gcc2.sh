@@ -49,6 +49,7 @@ make install
 cd /tmp
 rm -rf mpc-1.0.3
 rm -f mpc-1.0.3.tar.gz
+rm -rf gomi
 
 cd /tmp
 
