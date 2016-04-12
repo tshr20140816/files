@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1400"
+echo "1557"
 
 set -x
 
@@ -25,18 +25,15 @@ fi
 
 cd /tmp
 
-rm -f cc*
-rm -f jam*
-
 ls -lang
 
 rm -rf $OPENSHIFT_DATA_DIR/boost
 [ ! -f boost_1_54_0.tar.bz2 ] && wget http://heanet.dl.sourceforge.net/project/boost/boost/1.54.0/boost_1_54_0.tar.bz2
 rm -rf boost_1_54_0
 tar jxf boost_1_54_0.tar.bz2
-ls -lang
+rm -f boost_1_54_0.tar.bz2
 cd boost_1_54_0
-ls -lang
+# ls -lang
 ./bootstrap.sh
 ./b2 --help
 time ./b2 install -j4 --prefix=$OPENSHIFT_DATA_DIR/boost \
