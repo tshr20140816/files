@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1712"
+echo "1719"
 
 set -x
 
@@ -37,6 +37,8 @@ tar jxf boost_1_54_0.tar.bz2
 rm -f boost_1_54_0.tar.bz2
 cd boost_1_54_0
 # ls -lang
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
+export CXXFLAGS="${CFLAGS}"
 ./bootstrap.sh
 ./b2 --help
 time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
