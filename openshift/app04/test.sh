@@ -114,7 +114,7 @@ cd $OPENSHIFT_DATA_DIR
 
 tree test
 
-export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/test/usr/lib:$OPENSHIFT_DATA_DIR/test/usr/lib/hhvm:$OPENSHIFT_DATA_DIR/test/usr/lib64
+export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/test/usr/lib:$OPENSHIFT_DATA_DIR/test/usr/lib/hhvm:$OPENSHIFT_DATA_DIR/test/usr/lib64:$OPENSHIFT_DATA_DIR/boost/lib
 $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm --version
 
 find / -name libboost_thread.so.* -print 2>/dev/null
