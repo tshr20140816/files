@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1313"
+echo "1356"
 
 set -x
 
@@ -60,6 +60,9 @@ time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
 
 tree $OPENSHIFT_DATA_DIR/boost
 
+cd ..
+rm -rf boost_1_54_0
+
 cd $OPENSHIFT_DATA_DIR
 
 rm -rf test
@@ -94,6 +97,7 @@ find ./ -name "*.rpm" -print > list.txt
 while read -r LINE
 do
     rpm2cpio ${LINE} | cpio -idmv
+    rm -f ${LINE}
 done < list.txt
 
 cd usr/lib64
@@ -114,6 +118,8 @@ $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm --version
 
 # find / -name libboost_thread.so.* -print 2>/dev/null
 
-ldd $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm
+# ldd $OPENSHIFT_DATA_DIR/test/usr/bin/hhvm
+
+quota -s
 
 echo "FINISH"
