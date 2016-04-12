@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1048"
+echo "1050"
 
 set -x
 
@@ -37,7 +37,7 @@ ls -lang
 find ./ -name bootstrap.sh -print
 ./bootstrap.sh
 ./b2 --help
-./b2 install -j4 --prefix=$OPENSHIFT_DATA_DIR/boost --without-chrono --without-graph
+./b2 install -j2 --prefix=$OPENSHIFT_DATA_DIR/boost --without-chrono --without-graph
 
 tree $OPENSHIFT_DATA_DIR/boost
 
