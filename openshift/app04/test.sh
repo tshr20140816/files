@@ -34,11 +34,9 @@ tar jxf boost_1_54_0.tar.bz2
 ls -lang
 cd boost_1_54_0
 ls -lang
-find ./ -name bootstrap.sh -print
 ./bootstrap.sh
 ./b2 --help
-./b2 --show-libraries
-./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
+time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --without-atomic \
  --without-chrono \
  --without-context \
@@ -65,9 +63,6 @@ tree $OPENSHIFT_DATA_DIR/boost
 cd $OPENSHIFT_DATA_DIR
 
 rm -rf test
-
-tree -a $OPENSHIFT_DATA_DIR
-
 mkdir test
 cd test
 wget -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
