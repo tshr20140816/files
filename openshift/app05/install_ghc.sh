@@ -90,8 +90,6 @@ cat << '__HEREDOC__' > gcc
 
 export TZ=JST-9
 
-args="$@"
-
 while :
 do
     dt=$(date +%Y/%m/%d" "%H:%M:%S)
@@ -106,11 +104,11 @@ do
 done
 
 set -x
-/usr/bin/gcc "${args}"
+/usr/bin/gcc "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
-export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
+# export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
 
 if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
     cp ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org
