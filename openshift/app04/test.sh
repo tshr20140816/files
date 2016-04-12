@@ -39,7 +39,7 @@ cd boost_1_54_0
 ls -lang
 ./bootstrap.sh
 ./b2 --help
-time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
+time ./b2 install -j4 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --without-atomic \
  --without-chrono \
  --without-context \
@@ -92,8 +92,6 @@ wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_6
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libwebp-0.4.3-3.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/lcms2-2.7-3.el6.x86_64.rpm
 # wget http://pkgrepo.linuxtech.net/el6/release/x86_64/liblcms2-2.4-1.el6.x86_64.rpm
-
-wget http://mirror.centos.org/centos/6/os/x86_64/Packages/gmp-4.3.1-7.el6_2.2.x86_64.rpm
 
 find ./ -name "*.rpm" -print > list.txt
 
