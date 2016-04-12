@@ -100,7 +100,7 @@ do
     if [ "${usage_in_bytes}" -lt 400000000 ]; then
         break
     fi
-    sleep 30s
+    sleep 60s
 done
 
 set -x
