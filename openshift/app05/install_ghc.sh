@@ -18,8 +18,11 @@ cd $OPENSHIFT_DATA_DIR
 [ ! -f gmp-4.3.1-7.el6_2.2.x86_64.rpm ] && wget http://mirror.centos.org/centos/6/os/x86_64/Packages/gmp-4.3.1-7.el6_2.2.x86_64.rpm
 rpm2cpio gmp-4.3.1-7.el6_2.2.x86_64.rpm | cpio -idmv
 rm -f gmp-4.3.1-7.el6_2.2.x86_64.rpm
+cd usr/lib64
+ln -s libgmp.so.3 libgmp.so
 export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/lib64
 
+cd $OPENSHIFT_DATA_DIR
 mkdir haskell
 cd haskell
 [ ! -f network.tar.gz ] && wget -q http://www.accursoft.com/cartridges/network.tar.gz
