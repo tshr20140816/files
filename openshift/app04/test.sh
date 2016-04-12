@@ -40,7 +40,26 @@ find ./ -name bootstrap.sh -print
 ./b2 --show-libraries
 ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --libdir=$OPENSHIFT_DATA_DIR/usr \
- --without-chrono --without-graph --without-python --without-wave --without-timer --without-signals
+ --without-atomic \
+ --without-chrono \
+ --without-context \
+ --without-coroutine \
+ --without-date_time \
+ --without-exception \
+ --without-graph \
+ --without-graph_parallel \
+ --without-iostreams \
+ --without-locale \
+ --without-log \
+ --without-math \
+ --without-mpi \
+ --without-python \
+ --without-random \
+ --without-serialization \
+ --without-signals \
+ --without-test \
+ --without-timer \
+ --without-wave
 
 tree $OPENSHIFT_DATA_DIR/boost
 
