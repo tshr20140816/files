@@ -25,6 +25,9 @@ fi
 
 cd /tmp
 
+rm -f cc*
+rm -f jam*
+
 ls -lang
 
 rm -rf $OPENSHIFT_DATA_DIR/boost
