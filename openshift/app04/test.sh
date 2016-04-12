@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1054"
+echo "1055"
 
 set -x
 
@@ -84,11 +84,11 @@ do
 done < list.txt
 
 cd usr/lib64
-ln -s libboost_regex.so.1.48.0 libboost_regex.so.1.54.0
-ln -s libboost_program_options.so.1.48.0 libboost_program_options.so.1.54.0
-ln -s libboost_thread-mt.so.1.48.0 libboost_thread.so.1.54.0
-ln -s libboost_system.so.1.48.0 libboost_system.so.1.54.0
-ln -s libboost_filesystem.so.1.48.0 libboost_filesystem.so.1.54.0
+# ln -s libboost_regex.so.1.48.0 libboost_regex.so.1.54.0
+# ln -s libboost_program_options.so.1.48.0 libboost_program_options.so.1.54.0
+# ln -s libboost_thread-mt.so.1.48.0 libboost_thread.so.1.54.0
+# ln -s libboost_system.so.1.48.0 libboost_system.so.1.54.0
+# ln -s libboost_filesystem.so.1.48.0 libboost_filesystem.so.1.54.0
 ln -s /usr/lib64/mysql/libmysqlclient.so.16.0.0 libmysqlclient.so.18
 ln -s libwebp.so.5.0.3 libwebp.so.4
 
