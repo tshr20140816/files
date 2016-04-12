@@ -56,7 +56,7 @@ package_list+=("regex-base-0.93.2")
 # package_list+=("regex-tdfa-1.2.1")
 # package_list+=("ShellCheck-0.4.3")
 
-for package in ${package_list[@]}
+for package in "${package_list[@]}"
 do
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ${package}"
     if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
@@ -121,13 +121,13 @@ package_list+=("json-0.9.1")
 # package_list+=("containers-0.5.6.2")
 package_list+=("ShellCheck-0.4.3")
 
-for package in ${package_list[@]}
+for package in "${package_list[@]}"
 do
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ${package}"
     if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
         continue
     fi
-    echo "$(oo-cgroup-read memory.usage_in_bytes)"
+    oo-cgroup-read memory.usage_in_bytes
     cd ${OPENSHIFT_TMP_DIR}
     rm -f "${package}".tar.gz
     rm -rf "${package}"
