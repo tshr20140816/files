@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0900"
+echo "0909"
 
 set -x
 
@@ -27,6 +27,17 @@ cd /tmp
 
 ls -lang
 
+rm -rf $OPENSHIFT_DATA_DIR/boost
+[ ! -f boost_1_54_0.tar.bz2 ] && wget http://heanet.dl.sourceforge.net/project/boost/boost/1.54.0/boost_1_54_0.tar.bz2
+tar jxf boost_1_54_0.tar.bz2
+cd boost_1_54_0
+./configure --help
+./configure --prefix=$OPENSHIFT_DATA_DIR/boost
+time make -j4
+make install
+
+tree $OPENSHIFT_DATA_DIR/boost
+
 cd $OPENSHIFT_DATA_DIR
 
 rm -rf test
@@ -48,11 +59,11 @@ wget http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el
 
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/inotify-tools-3.14-1.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
-wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-regex-1.48.0-7.el6.x86_64.rpm
-wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-program-options-1.48.0-7.el6.x86_64.rpm
-wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-filesystem-1.48.0-7.el6.x86_64.rpm
-wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-thread-1.48.0-7.el6.x86_64.rpm
-wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-system-1.48.0-7.el6.x86_64.rpm
+# wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-regex-1.48.0-7.el6.x86_64.rpm
+# wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-program-options-1.48.0-7.el6.x86_64.rpm
+# wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-filesystem-1.48.0-7.el6.x86_64.rpm
+# wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-thread-1.48.0-7.el6.x86_64.rpm
+# wget http://dl.fedoraproject.org/pub/epel/6/x86_64/boost148-system-1.48.0-7.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/libwebp-0.4.3-3.el6.x86_64.rpm
 wget http://dl.fedoraproject.org/pub/epel/6/x86_64/lcms2-2.7-3.el6.x86_64.rpm
 # wget http://pkgrepo.linuxtech.net/el6/release/x86_64/liblcms2-2.4-1.el6.x86_64.rpm
