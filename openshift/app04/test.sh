@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1748"
+echo "0842"
 
 set -x
 
@@ -41,22 +41,12 @@ wc -l file_list.txt
 
 grep -v -E '^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
 wc -l tmp1.txt
-grep -v '/testsuite/' tmp1.txt > tmp2.txt
-wc -l tmp2.txt
-grep -v '/$' tmp2.txt > file_list.txt
+grep -v '/$' tmp1.txt > file_list.txt
 wc -l file_list.txt
 
 rm -f tmp*.txt
 
-set +x
-for file_name in $(cat file_list.txt)
-do
-    date
-    set -x
-    [ ! -f ${file_name} ] && tar jxvf gcc-4.9.3.tar.bz2 ${file_name}
-    set +x
-done
-set -x
+cat file_list.txt | xargs -P1 -n5000 tar jxvf
 
 tree ./
 
