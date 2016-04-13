@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1332"
+echo "1336"
 
 set -x
 
@@ -28,6 +28,8 @@ cd /tmp
 rm -rf gcc-4.9.3
 
 ls -lang
+
+exit
 
 rm -f gcc-4.9.3.tar.bz2
 time wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
