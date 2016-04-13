@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0855"
+echo "0909"
 
 set -x
 
@@ -62,7 +62,11 @@ time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --without-signals \
  --without-test \
  --without-timer \
- --without-wave
+ --without-wave \
+ variant=release \
+ link=shared \
+ threading=multi \
+ runtime-link=shared
 
 tree $OPENSHIFT_DATA_DIR/boost
 
