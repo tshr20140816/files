@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1523"
+echo "1526"
 
 set -x
 
@@ -39,14 +39,14 @@ cat << '__HEREDOC__' > mfree.c
 
 void main(void)
 {
-    system("free");
+    system("free -m");
     char *s;
     s = (char *)malloc(300000000);
     strcpy(s,"TEST");
     sleep(10);
-    system("free");
+    system("free -m");
     free(s);
-    system("free");
+    system("free -m");
 }
 __HEREDOC__
 
