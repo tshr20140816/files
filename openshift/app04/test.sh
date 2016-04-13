@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1703"
+echo "1725"
 
 set -x
 
@@ -33,7 +33,7 @@ ls -lang
 cd $OPENSHIFT_DATA_DIR
 
 rm -f gcc-4.9.3.tar.bz2
-time wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/
+time wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
 
 time tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 
