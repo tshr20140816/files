@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1349"
+echo "1350"
 
 set -x
 
@@ -37,6 +37,7 @@ void main(void)
 {
     char *s;
     s = (char *)malloc(100000000);
+    sleep(10000);
     free(s);
 }
 __HEREDOC__
@@ -44,9 +45,11 @@ __HEREDOC__
 gcc free.c -o free
 
 oo-cgroup-read memory.usage_in_bytes
-./free
+./free &
+sleep 3000
 oo-cgroup-read memory.usage_in_bytes
-
+wait
+oo-cgroup-read memory.usage_in_bytes
 exit
 
 rm -f gcc-4.9.3.tar.bz2
