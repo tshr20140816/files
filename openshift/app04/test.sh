@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "0941"
+echo "0948"
 
-# set -x
+set -x
 
 quota -s
 oo-cgroup-read memory.failcnt
@@ -27,11 +27,12 @@ cd /tmp
 
 ls -lang
 
-cd $OPENSHIFT_DATA_DIR
+rm -f gcc-4.9.3.tar.bz2
+time wget -q http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2
+time tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 
-rm -rf var
-
-ls -lang
+zip file_list.zip file_list.txt
+mv file_list.zip $OPENSHIFT_REPO_DIR/php/file_list.zip
 
 quota -s
 
