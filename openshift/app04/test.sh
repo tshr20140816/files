@@ -2,7 +2,7 @@
 
 echo "0941"
 
-set -x
+# set -x
 
 quota -s
 oo-cgroup-read memory.failcnt
@@ -25,17 +25,11 @@ fi
 
 cd /tmp
 
-rm -f cc*
-rm -f jam*
-
 ls -lang
 
 cd $OPENSHIFT_DATA_DIR
 
-rm -rf usr
-rm -rf test
-rm -rf etc
-rm -f list.txt
+rm -rf var
 
 ls -lang
 
