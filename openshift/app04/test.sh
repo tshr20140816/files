@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1726"
+echo "1732"
 
 set -x
 
@@ -48,12 +48,15 @@ wc -l file_list.txt
 
 rm -f tmp*.txt
 
-# set +x
+set +x
 for file_name in $(cat file_list.txt)
 do
     date
+    set -x
     [ ! -f ${file_name} ] && tar jxvf gcc-4.9.3.tar.bz2 ${file_name}
+    set +x
 done
+set -x
 
 tree ./
 
