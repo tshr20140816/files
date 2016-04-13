@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1437"
+echo "1439"
 
 set -x
 
@@ -32,12 +32,13 @@ ls -lang
 cat << '__HEREDOC__' > free.c
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void main(void)
 {
     char *s;
     s = (char *)malloc(100000000);
-    s = 'TEST\0';
+    strcpy(s,"TEST");
     sleep(10);
     free(s);
 }
