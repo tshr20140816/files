@@ -102,10 +102,16 @@ do
     usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
     failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
     echo "$dt $usage_in_bytes_format $failcnt"
-    if [ "${usage_in_bytes}" -lt 400000000 ]; then
+    if [ "${usage_in_bytes}" -lt 450000000 ]; then
         break
     fi
     # ps alx --sort -rss | head -n 3
+    if [ "${usage_in_bytes}" -gt 500000000 ]; then
+        pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+        wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
+        rm -f gcc-4.9.3.tar.bz2
+        popd > /dev/null
+    fi
     sleep 60s
 done
 
