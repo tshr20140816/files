@@ -27,16 +27,13 @@ cd /tmp
 
 ls -lang
 
-tree $OPENSHIFT_REPO_DIR
-
-exit
-
 rm -f gcc-4.9.3.tar.bz2
 time wget -q http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2
 time tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 
+rm -f file_list.zip
 zip file_list.zip file_list.txt
-mv file_list.zip $OPENSHIFT_REPO_DIR/php/file_list.zip
+mv file_list.zip $OPENSHIFT_REPO_DIR/file_list.zip
 
 quota -s
 
