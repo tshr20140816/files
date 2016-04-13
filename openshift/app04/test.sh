@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1336"
+echo "1344"
 
 set -x
 
@@ -28,6 +28,24 @@ cd /tmp
 rm -rf gcc-4.9.3
 
 ls -lang
+
+cat << '__HEREDOC__' > free.c
+#include <stdio.h>
+#include <stdlib.h>
+
+void main(void)
+{
+    char *s;
+    s = (char *)malloc(100000);
+    free(s);
+}
+__HEREDOC__
+
+gcc free.c -o free
+
+oo-cgroup-read memory.usage_in_bytes
+./free
+oo-cgroup-read memory.usage_in_bytes
 
 exit
 
