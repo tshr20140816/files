@@ -37,6 +37,7 @@ void main(void)
 {
     char *s;
     s = (char *)malloc(100000000);
+    *s = 'TEST';
     sleep(10);
     free(s);
 }
