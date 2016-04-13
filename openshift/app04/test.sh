@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1627"
+echo "1703"
 
 set -x
 
@@ -52,7 +52,7 @@ wc -l file_list.txt
 
 rm -f tmp*.txt
 
-set +x
+# set +x
 for file_name in $(cat file_list.txt)
 do
     date
