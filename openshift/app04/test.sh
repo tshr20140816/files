@@ -32,38 +32,6 @@ rm -rf gcc-4.9.3
 
 ls -lang
 
-cat << '__HEREDOC__' > mfree.c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-void main(void)
-{
-    system("free -m");
-    system("oo-cgroup-read memory.usage_in_bytes");
-    char *s;
-    s = (char *)malloc(500000000);
-    strcpy(s,"TEST");
-    system("free -m");
-    system("oo-cgroup-read memory.usage_in_bytes");
-    free(s);
-    system("free -m");
-    system("oo-cgroup-read memory.usage_in_bytes");
-}
-__HEREDOC__
-
-time gcc mfree.c -o mfree
-
-oo-cgroup-read memory.usage_in_bytes
-./mfree
-oo-cgroup-read memory.usage_in_bytes
-
-ps alx --sort -rss
-
-ps alx --sort -rss | head -n 10
-
-exit
-
 rm -f gcc-4.9.3.tar.bz2
 time wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
 
@@ -77,6 +45,8 @@ grep -v '/$' tmp1.txt > file_list.txt
 wc -l file_list.txt
 
 rm -f tmp*.txt
+
+exit
 
 for file_name in $(cat file_list.txt)
 do
