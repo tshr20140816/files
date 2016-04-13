@@ -1070,7 +1070,8 @@ do
     # *** GNU Parallel ***
     if [ ! -f parallel-latest.tar.bz2 ]; then
         echo "$(date +%Y/%m/%d" "%H:%M:%S) GNU Parallel wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
+        # wget http://ftp.jaist.ac.jp/pub/GNU/parallel/parallel-latest.tar.bz2
+        wget http://mirrors.kernel.org/gnu/parallel/parallel-latest.tar.bz2
         wget http://ftp.gnu.org/gnu/parallel/parallel-latest.tar.bz2.sig
         gpg --recv-keys $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep "RSA key ID" | awk '{print $NF}')
         if [ $(gpg --verify parallel-latest.tar.bz2.sig 2>&1 | grep -c "Good signature from") != 1 ]; then
