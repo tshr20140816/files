@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1621"
+echo "1627"
 
 set -x
 
@@ -28,13 +28,14 @@ fi
 
 cd /tmp
 
-rm -rf gcc-4.9.3
+rm -f *.c
+rm -f mfree
+rm -f free
+rm -f file_list.txt
 
 ls -lang
 
-rm -f gcc-4.9.3.tar.bz2
-
-exit
+cd $OPENSHIFT_DATA_DIR
 
 time wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
 
@@ -44,13 +45,17 @@ wc -l file_list.txt
 
 grep -v -E '^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
 wc -l tmp1.txt
-grep -v '/$' tmp1.txt > file_list.txt
+grep -v '/testsuite/' tmp1.txt > tmp2.txt
+wc -l tmp2.txt
+grep -v '/$' tmp2.txt > file_list.txt
 wc -l file_list.txt
 
 rm -f tmp*.txt
 
+set +x
 for file_name in $(cat file_list.txt)
 do
+    date
     tar jxvf gcc-4.9.3.tar.bz2 ${file_name}
 done
 
