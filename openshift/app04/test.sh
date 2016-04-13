@@ -28,16 +28,12 @@ fi
 
 cd /tmp
 
-rm -f *.c
-rm -f mfree
-rm -f free
-rm -f file_list.txt
-
 ls -lang
 
 cd $OPENSHIFT_DATA_DIR
 
-time wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
+rm -f gcc-4.9.3.tar.bz2
+time wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/
 
 time tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 
@@ -56,7 +52,7 @@ rm -f tmp*.txt
 for file_name in $(cat file_list.txt)
 do
     date
-    tar jxvf gcc-4.9.3.tar.bz2 ${file_name}
+    [ ! -f ${file_name} ] && tar jxvf gcc-4.9.3.tar.bz2 ${file_name}
 done
 
 tree ./
