@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1138"
+echo "1145"
 
 set -x
 
@@ -30,37 +30,17 @@ ls -lang
 rm -f gcc-4.9.3.tar.bz2
 time wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
 
-date
-
-curl -r 0-20000000 http://public.p-knowledge.co.jp/gnu-mirror/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-1 &
-curl -r 20000001-40000000 http://ftp.jaist.ac.jp/pub/GNU/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-2 &
-curl -r 40000001-60000000 http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-3 &
-curl -r 60000001- http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-4 &
-wait
-
-cat gcc-4.9.3.tar.bz2-* > gcc-4.9.3.tar.bz2.new
-
-date
-
-cmp gcc-4.9.3.tar.bz2 gcc-4.9.3.tar.bz2.new
-
-ls -lang
-
-rm -f gcc-4.9.3.tar.bz2-*
-rm -f gcc-4.9.3.tar.bz2.new
-
-exit
-
-rm -f gcc-4.9.3.tar.bz2
-time wget -q http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2
-# http://ftp.jaist.ac.jp/pub/GNU/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
-# http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
-
 time tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 
-rm -f file_list.zip
-zip file_list.zip file_list.txt
-mv file_list.zip $OPENSHIFT_REPO_DIR/file_list.zip
+wc -l file_list.txt
+
+grep -v ^gcc-4.9.3.libobjc file_list.txt > tmp1.txt
+grep -v ^gcc-4.9.3.libgfortran tmp1.txt > tmp2.txt
+grep -v ^gcc-4.9.3.libgo tmp2.txt > tmp3.txt
+grep -v ^gcc-4.9.3.libgomp tmp3.txt > tmp4.txt
+grep -v ^gcc-4.9.3.libjava tmp4.txt > tmp5.txt
+
+wc -l tmp5.txt
 
 quota -s
 
