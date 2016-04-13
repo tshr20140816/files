@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1350"
+echo "1357"
 
 set -x
 
@@ -37,7 +37,7 @@ void main(void)
 {
     char *s;
     s = (char *)malloc(100000000);
-    sleep(10000);
+    sleep(10);
     free(s);
 }
 __HEREDOC__
@@ -46,7 +46,7 @@ gcc free.c -o free
 
 oo-cgroup-read memory.usage_in_bytes
 ./free &
-sleep 3000
+sleep 3
 oo-cgroup-read memory.usage_in_bytes
 wait
 oo-cgroup-read memory.usage_in_bytes
