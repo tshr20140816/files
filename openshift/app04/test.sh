@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1357"
+echo "1428"
 
 set -x
 
@@ -37,7 +37,7 @@ void main(void)
 {
     char *s;
     s = (char *)malloc(100000000);
-    *s = 'TEST';
+    s = 'TEST';
     sleep(10);
     free(s);
 }
