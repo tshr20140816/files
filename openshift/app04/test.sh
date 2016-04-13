@@ -1,14 +1,14 @@
 #!/bin/bash
 
-echo "1517"
+echo "1521"
 
 set -x
 
 quota -s
 oo-cgroup-read memory.failcnt
 
-oo-cgroup-read all
-oo-cgroup-read report
+# oo-cgroup-read all
+# oo-cgroup-read report
 
 rm -f ${OPENSHIFT_LOG_DIR}/test.log &
 rm -f ${OPENSHIFT_LOG_DIR}/cron_minutely.log-* &
@@ -32,7 +32,7 @@ rm -rf gcc-4.9.3
 
 ls -lang
 
-cat << '__HEREDOC__' > free.c
+cat << '__HEREDOC__' > mfree.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,16 +44,16 @@ void main(void)
     s = (char *)malloc(300000000);
     strcpy(s,"TEST");
     sleep(10);
-    system('free');
+    system("free");
     free(s);
-    system('free');
+    system("free");
 }
 __HEREDOC__
 
-time gcc free.c -o free
+time gcc mfree.c -o mfree
 
 oo-cgroup-read memory.usage_in_bytes
-./free
+./mfree
 oo-cgroup-read memory.usage_in_bytes
 
 exit
