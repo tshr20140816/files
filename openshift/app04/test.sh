@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1545"
+echo "1546"
 
 set -x
 
@@ -60,7 +60,7 @@ oo-cgroup-read memory.usage_in_bytes
 
 ps alx --sort -rss
 
-ps alx --sort -rss | top 10
+ps alx --sort -rss | head -n 10
 
 exit
 
