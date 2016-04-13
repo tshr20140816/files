@@ -18,6 +18,8 @@ ls -lang ${OPENSHIFT_LOG_DIR}
 
 cd $OPENSHIFT_DATA_DIR
 
+mkdir tmp
+
 [ ! -f gmp-4.3.1-7.el6_2.2.x86_64.rpm ] && wget http://mirror.centos.org/centos/6/os/x86_64/Packages/gmp-4.3.1-7.el6_2.2.x86_64.rpm
 rpm2cpio gmp-4.3.1-7.el6_2.2.x86_64.rpm | cpio -idmv
 rm -f gmp-4.3.1-7.el6_2.2.x86_64.rpm
@@ -68,7 +70,7 @@ do
     if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
         continue
     fi
-    cd ${OPENSHIFT_TMP_DIR}
+    cd ${OPENSHIFT_DATA_DIR}/tmp
     rm -f "${package}".tar.gz
     rm -rf "${package}"
     wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
@@ -135,7 +137,7 @@ do
         continue
     fi
     oo-cgroup-read memory.usage_in_bytes
-    cd ${OPENSHIFT_TMP_DIR}
+    cd ${OPENSHIFT_DATA_DIR}/tmp
     rm -f "${package}".tar.gz
     rm -rf "${package}"
     wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
