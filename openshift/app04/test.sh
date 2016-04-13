@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1120"
+echo "1121"
 
 set -x
 
@@ -26,6 +26,9 @@ fi
 cd /tmp
 
 ls -lang
+
+rm -f gcc-4.9.3.tar.bz2
+time wget -q http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2
 
 date
 
