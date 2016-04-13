@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1439"
+echo "1448"
 
 set -x
 
@@ -48,10 +48,13 @@ time gcc free.c -o free
 
 oo-cgroup-read memory.usage_in_bytes
 ./free &
+date
 sleep 3
+date
 oo-cgroup-read memory.usage_in_bytes
 wait
 oo-cgroup-read memory.usage_in_bytes
+
 exit
 
 rm -f gcc-4.9.3.tar.bz2
