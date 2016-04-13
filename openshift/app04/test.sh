@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0948"
+echo "1107"
 
 set -x
 
@@ -27,11 +27,15 @@ cd /tmp
 
 ls -lang
 
+date
+
 curl -r -20000000 http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2 -O gcc-4.9.3.tar.bz2-1 &
 curl -r 20000001-40000000 http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2 -O gcc-4.9.3.tar.bz2-2 &
 curl -r 40000001- http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -O gcc-4.9.3.tar.bz2-3 &
 
 wait
+
+date
 
 ls -lang
 
