@@ -9,7 +9,7 @@ cd /tmp
 # export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 # export CXXFLAGS="${CFLAGS}"
 
-[ ! -f gmp-4.3.2.tar.bz2 ] && wget http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-4.3.2.tar.bz2
+[ ! -f gmp-4.3.2.tar.bz2 ] && wget http://mirrors.kernel.org/gnu/gmp/gmp-4.3.2.tar.bz2
 rm -rf gmp-4.3.2
 tar jxf gmp-4.3.2.tar.bz2
 cd gmp-4.3.2
@@ -24,7 +24,7 @@ rm -f gmp-4.3.2.tar.bz2
 
 cd /tmp
 
-[ ! -f mpfr-2.4.2.tar.xz ] && wget http://ftp.jaist.ac.jp/pub/GNU/mpfr/mpfr-2.4.2.tar.xz
+[ ! -f mpfr-2.4.2.tar.xz ] && wget http://mirrors.kernel.org/gnu/mpfr/mpfr-2.4.2.tar.xz
 rm -rf mpfr-2.4.2
 tar Jxf mpfr-2.4.2.tar.xz
 cd mpfr-2.4.2
@@ -39,7 +39,7 @@ rm -f mpfr-2.4.2.tar.xz
 
 cd /tmp
 
-[ ! -f mpc-1.0.3.tar.gz ] && wget http://ftp.jaist.ac.jp/pub/GNU/mpc/mpc-1.0.3.tar.gz
+[ ! -f mpc-1.0.3.tar.gz ] && wget http://mirrors.kernel.org/gnu/mpc/mpc-1.0.3.tar.gz
 rm -rf mpc-1.0.3
 tar zxf mpc-1.0.3.tar.gz
 cd mpc-1.0.3
@@ -55,7 +55,7 @@ rm -rf gomi
 
 cd /tmp
 
-[ ! -f gcc-4.9.3.tar.bz2 ] && wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2
+[ ! -f gcc-4.9.3.tar.bz2 ] && wget http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
 
 rm -rf gcc-4.9.3
 tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
