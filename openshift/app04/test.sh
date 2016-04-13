@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1126"
+echo "1130"
 
 set -x
 
@@ -38,11 +38,16 @@ curl -r 40000001-60000000 http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gc
 curl -r 60000001- http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-4 &
 wait
 
+cat gcc-4.9.3.tar.bz2-* > gcc-4.9.3.tar.bz2.new
+
 date
+
+cmp -s gcc-4.9.3.tar.bz2 gcc-4.9.3.tar.bz2.new
 
 ls -lang
 
 rm -f gcc-4.9.3.tar.bz2-*
+rm -f gcc-4.9.3.tar.bz2.new
 
 exit
 
