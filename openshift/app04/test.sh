@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1533"
+echo "1545"
 
 set -x
 
@@ -57,6 +57,10 @@ time gcc mfree.c -o mfree
 oo-cgroup-read memory.usage_in_bytes
 ./mfree
 oo-cgroup-read memory.usage_in_bytes
+
+ps alx --sort -rss
+
+ps alx --sort -rss | top 10
 
 exit
 
