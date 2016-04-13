@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1546"
+echo "1559"
 
 set -x
 
@@ -45,8 +45,6 @@ grep -v '/$' tmp1.txt > file_list.txt
 wc -l file_list.txt
 
 rm -f tmp*.txt
-
-exit
 
 for file_name in $(cat file_list.txt)
 do
