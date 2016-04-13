@@ -27,8 +27,23 @@ cd /tmp
 
 ls -lang
 
+curl -r -20000000 http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2 -O gcc-4.9.3.tar.bz2-1 &
+curl -r 20000001-40000000 http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2 -O gcc-4.9.3.tar.bz2-2 &
+curl -r 40000001- http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -O gcc-4.9.3.tar.bz2-3 &
+
+wait
+
+ls -lang
+
+rm -f gcc-4.9.3.tar.bz2-*
+
+exit
+
 rm -f gcc-4.9.3.tar.bz2
 time wget -q http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2
+# http://ftp.jaist.ac.jp/pub/GNU/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
+# http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
+
 time tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 
 rm -f file_list.zip
