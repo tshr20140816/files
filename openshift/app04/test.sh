@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1319"
+echo "1332"
 
 set -x
 
@@ -45,7 +45,7 @@ rm -f tmp*.txt
 
 for file_name in $(cat file_list.txt)
 do
-    tar jxf gcc-4.9.3.tar.bz2 ${file_name}
+    tar jxvf gcc-4.9.3.tar.bz2 ${file_name}
 done
 
 tree ./
