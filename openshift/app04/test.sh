@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1502"
+echo "1517"
 
 set -x
 
@@ -39,23 +39,21 @@ cat << '__HEREDOC__' > free.c
 
 void main(void)
 {
+    system('free');
     char *s;
     s = (char *)malloc(300000000);
     strcpy(s,"TEST");
     sleep(10);
+    system('free');
     free(s);
+    system('free');
 }
 __HEREDOC__
 
 time gcc free.c -o free
 
 oo-cgroup-read memory.usage_in_bytes
-./free &
-date
-sleep 3
-date
-oo-cgroup-read memory.usage_in_bytes
-wait
+./free
 oo-cgroup-read memory.usage_in_bytes
 
 exit
