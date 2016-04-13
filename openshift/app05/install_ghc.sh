@@ -105,7 +105,7 @@ do
     if [ "${usage_in_bytes}" -lt 400000000 ]; then
         break
     fi
-    ps alx --sort -rss | head -n 3
+    # ps alx --sort -rss | head -n 3
     sleep 60s
 done
 
