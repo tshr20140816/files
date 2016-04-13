@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1224"
+echo "1243"
 
 set -x
 
@@ -34,7 +34,7 @@ time tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 
 wc -l file_list.txt
 
-grep -v '^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
+grep -v -E '^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
 wc -l tmp1.txt
 # grep -v ^gcc-4.9.3.libgfortran tmp1.txt > tmp2.txt
 # wc -l tmp2.txt
