@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1155"
+echo "1200"
 
 set -x
 
@@ -34,16 +34,16 @@ time tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 
 wc -l file_list.txt
 
-grep -v ^gcc-4.9.3.libobjc file_list.txt > tmp1.txt
+grep -v ^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava) file_list.txt > tmp1.txt
 wc -l tmp1.txt
-grep -v ^gcc-4.9.3.libgfortran tmp1.txt > tmp2.txt
-wc -l tmp2.txt
-grep -v ^gcc-4.9.3.libgo tmp2.txt > tmp3.txt
-wc -l tmp3.txt
-grep -v ^gcc-4.9.3.libgomp tmp3.txt > tmp4.txt
-wc -l tmp4.txt
-grep -v ^gcc-4.9.3.libjava tmp4.txt > tmp5.txt
-wc -l tmp5.txt
+# grep -v ^gcc-4.9.3.libgfortran tmp1.txt > tmp2.txt
+# wc -l tmp2.txt
+# grep -v ^gcc-4.9.3.libgo tmp2.txt > tmp3.txt
+# wc -l tmp3.txt
+# grep -v ^gcc-4.9.3.libgomp tmp3.txt > tmp4.txt
+# wc -l tmp4.txt
+# grep -v ^gcc-4.9.3.libjava tmp4.txt > tmp5.txt
+# wc -l tmp5.txt
 
 rm -f *.txt
 
