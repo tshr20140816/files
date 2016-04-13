@@ -44,7 +44,7 @@ void main(void)
 }
 __HEREDOC__
 
-gcc free.c -o free
+time gcc free.c -o free
 
 oo-cgroup-read memory.usage_in_bytes
 ./free &
