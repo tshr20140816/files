@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1130"
+echo "1133"
 
 set -x
 
@@ -42,7 +42,7 @@ cat gcc-4.9.3.tar.bz2-* > gcc-4.9.3.tar.bz2.new
 
 date
 
-cmp -s gcc-4.9.3.tar.bz2 gcc-4.9.3.tar.bz2.new
+cmp gcc-4.9.3.tar.bz2 gcc-4.9.3.tar.bz2.new
 
 ls -lang
 
