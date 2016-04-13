@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1133"
+echo "1138"
 
 set -x
 
@@ -27,12 +27,12 @@ cd /tmp
 
 ls -lang
 
-# rm -f gcc-4.9.3.tar.bz2
-# time wget -q http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2
+rm -f gcc-4.9.3.tar.bz2
+time wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
 
 date
 
-curl -r -20000000 http://public.p-knowledge.co.jp/gnu-mirror/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-1 &
+curl -r 0-20000000 http://public.p-knowledge.co.jp/gnu-mirror/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-1 &
 curl -r 20000001-40000000 http://ftp.jaist.ac.jp/pub/GNU/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-2 &
 curl -r 40000001-60000000 http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-3 &
 curl -r 60000001- http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2 -o gcc-4.9.3.tar.bz2-4 &
