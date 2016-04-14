@@ -53,15 +53,20 @@ rm -rf mpc-1.0.3
 rm -f mpc-1.0.3.tar.gz
 rm -rf gomi
 
-cd /tmp
+cd $OPENSHIFT_DATA_DIR
 
 [ ! -f gcc-4.9.3.tar.bz2 ] && wget http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
 
 rm -rf gcc-4.9.3
 tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
-
-tar jxf gcc-4.9.3.tar.bz2
+wc -l file_list.txt
+grep -v -E '^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
+wc -l tmp1.txt
+grep -v '/$' tmp1.txt > file_list.txt
+wc -l file_list.txt
+time cat file_list.txt | xargs -P1 -n10000 tar jxvf gcc-4.9.3.tar.bz2
 rm -f gcc-4.9.3.tar.bz2
+quota -s
 
 cd gcc-4.9.3
 mkdir work
@@ -75,7 +80,7 @@ cd work
  --disable-libjava --disable-libgo --disable-libgfortran --enable-languages=c,c++
 time make
 make install
-rm -rf /tmp/gcc-4.9.3
+rm -rf $OPENSHIFT_DATA_DIR/gcc-4.9.3
 
 cd /tmp
 tree $OPENSHIFT_DATA_DIR/gcc
