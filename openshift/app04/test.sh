@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0953"
+echo "1000"
 
 set -x
 
@@ -48,9 +48,12 @@ rm -f tmp*.txt
 
 for file_name in $(cat file_list.txt)
 do
+   set +x
    [ -f ${file_name} ] && continue
+   set -x
    echo "${file_name}" >> tmp1.txt
 done
+set -x
 wc -l tmp1.txt
 rm file_list.txt
 mv tmp1.txt file_list.txt
