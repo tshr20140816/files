@@ -64,7 +64,7 @@ grep -v -E '^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava)' file_list.txt > tmp1
 wc -l tmp1.txt
 grep -v '/$' tmp1.txt > file_list.txt
 wc -l file_list.txt
-time cat file_list.txt | xargs -P1 -n10000 tar jxvf gcc-4.9.3.tar.bz2
+time cat file_list.txt | xargs -P 1 -n 10000 tar jxvf gcc-4.9.3.tar.bz2
 rm -f gcc-4.9.3.tar.bz2
 quota -s
 
