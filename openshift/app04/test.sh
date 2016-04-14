@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1354"
+echo "1419"
 
 set -x
 
@@ -30,8 +30,9 @@ cd /tmp
 
 ls -lang
 
+fallocate --help
 oo-cgroup-read memory.usage_in_bytes
-fallocate -l 100MB dummy.dat
+fallocate -l 100M dummy.dat
 oo-cgroup-read memory.usage_in_bytes
 rm -f dummy.dat
 oo-cgroup-read memory.usage_in_bytes
