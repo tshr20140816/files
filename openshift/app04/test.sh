@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1658"
+echo "1709"
 
 set -x
 
@@ -30,7 +30,25 @@ cd /tmp
 
 ls -lang
 
+rm -rf $OPENSHIFT_DATA_DIR/gcc-4.9.3
+rm -rf $OPENSHIFT_DATA_DIR/gcc
+rm -f gcc-4.9.3.tar.bz2
+rm -f file_list.txt
+rm -f 1
+cat index.html
+
 ls -lang $OPENSHIFT_DATA_DIR
+
+wget -q http://www.accursoft.com/cartridges/network.tar.gz
+wget -q http://www.accursoft.com/cartridges/yesod.tar.gz
+wget -q http://www.accursoft.com/cartridges/snap.tar.gz
+wget -q http://www.accursoft.com/cartridges/happstack.tar.gz
+wget -q http://www.accursoft.com/cartridges/mflow.tar.gz
+wget -q http://www.accursoft.com/cartridges/scotty.tar.gz
+
+ls -lang
+
+rm -f *.gz
 
 quota -s
 
