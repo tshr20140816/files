@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1241"
+echo "1251"
 
 set -x
 
@@ -59,9 +59,9 @@ wc -l tmp1.txt
 rm file_list.txt
 mv tmp1.txt file_list.txt
 
-# if [ $(wc -l file_list.txt) -gt 1 ]; then
+if [ $(cat file_list.txt | wc -l) -gt 1 ]; then
     cat file_list.txt | xargs -P1 -n5000 tar jxvf gcc-4.9.3.tar.bz2
-# fi
+fi
 
 tree ./
 
