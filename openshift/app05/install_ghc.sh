@@ -108,8 +108,8 @@ do
     # ps alx --sort -rss | head -n 3
     if [ "${usage_in_bytes}" -gt 500000000 ]; then
         pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-        wget -q http://mirrors.kernel.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2
-        rm -f gcc-4.9.3.tar.bz2
+        wget -q http://mirrors.kernel.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.bz2
+        rm -f gcc-5.3.0.tar.bz2
         popd > /dev/null
     fi
     sleep 60s
@@ -131,9 +131,38 @@ cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
 
 package_list=()
 package_list+=("regex-tdfa-1.2.1")
+
+for package in "${package_list[@]}"
+do
+    echo "$(date +%Y/%m/%d" "%H:%M:%S) ${package}"
+    if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
+        continue
+    fi
+    oo-cgroup-read memory.usage_in_bytes
+    cd ${OPENSHIFT_DATA_DIR}/tmp
+    rm -f "${package}".tar.gz
+    rm -rf "${package}"
+    wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
+    tar xfz "${package}".tar.gz
+    cd "${package}"
+    # cabal install -j1 -v3 --disable-documentation
+    cabal install -j1 -v3 --disable-optimization --disable-documentation \
+     --disable-tests --disable-coverage --disable-benchmarks \
+     --ghc-options="+RTS -N1 -M448m -RTS" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
+    cd ..
+    rm -rf "${package}"
+    rm -f "${package}".tar.gz
+    quota -s
+    oo-cgroup-read memory.failcnt
+    if [ $(ghc-pkg list | grep -c ${package}) -eq 0 ]; then
+        break
+    fi
+done
+
+cp -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
+
+package_list=()
 package_list+=("json-0.9.1")
-# package_list+=("directory-1.2.5.1")
-# package_list+=("containers-0.5.6.2")
 package_list+=("ShellCheck-0.4.3")
 
 for package in "${package_list[@]}"
