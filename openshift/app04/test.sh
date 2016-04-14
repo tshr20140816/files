@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1502"
+echo "1527"
 
 set -x
 
@@ -29,6 +29,55 @@ fi
 cd /tmp
 
 ls -lang
+
+cd /tmp
+
+[ ! -f gmp-4.3.2.tar.bz2 ] && wget http://mirrors.kernel.org/gnu/gmp/gmp-4.3.2.tar.bz2
+rm -rf gmp-4.3.2
+tar jxf gmp-4.3.2.tar.bz2
+cd gmp-4.3.2
+./configure --help
+./configure --prefix=$OPENSHIFT_DATA_DIR/gcc --disable-shared --enable-static \
+ --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
+time make -j2
+make install
+cd /tmp
+rm -rf gmp-4.3.2
+rm -f gmp-4.3.2.tar.bz2
+
+cd /tmp
+
+[ ! -f mpfr-2.4.2.tar.xz ] && wget http://mirrors.kernel.org/gnu/mpfr/mpfr-2.4.2.tar.xz
+rm -rf mpfr-2.4.2
+tar Jxf mpfr-2.4.2.tar.xz
+cd mpfr-2.4.2
+./configure --help
+./configure --prefix=$OPENSHIFT_DATA_DIR/gcc --disable-shared --enable-static --with-gmp=$OPENSHIFT_DATA_DIR/gcc \
+ --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
+time make -j2
+make install
+cd /tmp
+rm -rf mpfr-2.4.2
+rm -f mpfr-2.4.2.tar.xz
+cd /tmp
+
+[ ! -f mpc-1.0.3.tar.gz ] && wget http://mirrors.kernel.org/gnu/mpc/mpc-1.0.3.tar.gz
+rm -rf mpc-1.0.3
+tar zxf mpc-1.0.3.tar.gz
+cd mpc-1.0.3
+./configure --help
+./configure --prefix=$OPENSHIFT_DATA_DIR/gcc --disable-shared --enable-static --with-gmp=$OPENSHIFT_DATA_DIR/gcc --with-mpfr=$OPENSHIFT_DATA_DIR/gcc \
+ --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
+time make -j4
+make install
+cd /tmp
+rm -rf mpc-1.0.3
+rm -f mpc-1.0.3.tar.gz
+rm -rf gomi
+
+quota -s
+
+exit
 
 cd $OPENSHIFT_DATA_DIR
 
