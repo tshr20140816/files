@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1709"
+echo "1721"
 
 set -x
 
@@ -30,12 +30,10 @@ cd /tmp
 
 ls -lang
 
-rm -rf $OPENSHIFT_DATA_DIR/gcc-4.9.3
-rm -rf $OPENSHIFT_DATA_DIR/gcc
-rm -f gcc-4.9.3.tar.bz2
-rm -f file_list.txt
-rm -f 1
-cat index.html
+rm -f $OPENSHIFT_DATA_DIR/gcc-4.9.3.tar.bz2
+rm -f $OPENSHIFT_DATA_DIR/file_list.txt
+rm -f $OPENSHIFT_DATA_DIR/1
+cat $OPENSHIFT_DATA_DIR/index.html
 
 ls -lang $OPENSHIFT_DATA_DIR
 
