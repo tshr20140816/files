@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0852"
+echo "0938"
 
 set -x
 
@@ -45,6 +45,15 @@ grep -v '/$' tmp1.txt > file_list.txt
 wc -l file_list.txt
 
 rm -f tmp*.txt
+
+for file_name in $(cat file_list.txt)
+do
+   [ -f ${file_name} ] && continue
+   echo "${file_name}" >> tmp1.txt
+done
+wc -l tmp1.txt
+rm file_list.txt
+mv tmp1.txt file_list.txt
 
 cat file_list.txt | xargs -P1 -n5000 tar jxvf gcc-4.9.3.tar.bz2
 
