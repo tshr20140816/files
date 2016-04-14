@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1441"
+echo "1502"
 
 set -x
 
@@ -29,14 +29,6 @@ fi
 cd /tmp
 
 ls -lang
-
-fallocate --help
-oo-cgroup-read memory.usage_in_bytes
-fallocate -l 100M dummy.dat
-ls -lang dummy.dat
-oo-cgroup-read memory.usage_in_bytes
-rm -f dummy.dat
-oo-cgroup-read memory.usage_in_bytes
 
 cd $OPENSHIFT_DATA_DIR
 
