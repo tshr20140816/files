@@ -52,6 +52,7 @@ do
    [ -f ${file_name} ] && continue
    set -x
    echo "${file_name}" >> tmp1.txt
+   set +x
 done
 set -x
 wc -l tmp1.txt
