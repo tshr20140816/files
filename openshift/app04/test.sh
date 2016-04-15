@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1143"
+echo "1153"
 
 set -x
 
@@ -58,6 +58,8 @@ export CXXFLAGS="${CFLAGS}"
 ./b2 --help
 time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --libdir=$OPENSHIFT_DATA_DIR/usr/lib \
+ --cflags="${CFLAGS}" \
+ --cxxflags="${CXXFLAGS}" \
  --without-atomic \
  --without-chrono \
  --without-context \
