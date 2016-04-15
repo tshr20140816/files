@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1726"
+echo "1033"
 
 set -x
 
@@ -33,7 +33,7 @@ ls -lang
 cd $OPENSHIFT_DATA_DIR
 
 mkdir -p local/bin
-cat << '__HEREDOC__' > gcc
+cat << '__HEREDOC__' > local/bin/gcc
 #!/bin/bash
 
 export TZ=JST-9
