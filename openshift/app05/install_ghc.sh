@@ -77,7 +77,7 @@ do
     tar xfz "${package}".tar.gz
     cd "${package}"
     # cabal install -j1 -v3 --disable-documentation
-    cabal install -j2 --disable-documentation -O2 --enable-split-objs
+    cabal install -j2 --disable-documentation -O2 --enable-split-objs --disable-library-for-ghci
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
@@ -147,7 +147,7 @@ do
     cd "${package}"
     # cabal install -j1 -v3 --disable-documentation
     cabal install -j1 -v3 --disable-optimization --disable-documentation \
-     --disable-tests --disable-coverage --disable-benchmarks \
+     --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
      --ghc-options="+RTS -N1 -M448m -RTS" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
     cd ..
     rm -rf "${package}"
@@ -180,7 +180,7 @@ do
     cd "${package}"
     # cabal install -j1 -v3 --disable-documentation
     cabal install -j1 -v3 --disable-optimization --disable-documentation \
-     --disable-tests --disable-coverage --disable-benchmarks \
+     --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
      --ghc-options="+RTS -N1 -M448m -RTS" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
     cd ..
     rm -rf "${package}"
