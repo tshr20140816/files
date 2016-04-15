@@ -38,6 +38,7 @@ cat << '__HEREDOC__' > local/bin/wrap_gcc
 
 set -x
 time /usr/bin/gcc "$@"
+oo-cgroup-read memory.usage_in_bytes
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/wrap_gcc
 export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
