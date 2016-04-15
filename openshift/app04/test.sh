@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1153"
+echo "1255"
 
 set -x
 
@@ -42,9 +42,11 @@ oo-cgroup-read memory.usage_in_bytes
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/wrap_gcc
 export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
+export CXXFLAGS="${CFLAGS}"
 export HOME=${OPENSHIFT_DATA_DIR}
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/user-config.jam
-using gcc : : wrap_gcc ;
+using gcc : : wrap_gcc : <cflags>"-O2 -march=native -fomit-frame-pointer -s -pipe" <cxxflags>"-O2 -march=native -fomit-frame-pointer -s -pipe" ;
 __HEREDOC__
 
 rm -rf $OPENSHIFT_DATA_DIR/boost
@@ -53,14 +55,10 @@ rm -rf boost_1_54_0
 tar jxf boost_1_54_0.tar.bz2
 # rm -f boost_1_54_0.tar.bz2
 cd boost_1_54_0
-export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
-export CXXFLAGS="${CFLAGS}"
 ./bootstrap.sh
 ./b2 --help
 time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --libdir=$OPENSHIFT_DATA_DIR/usr/lib \
- --cflags="${CFLAGS}" \
- --cxxflags="${CXXFLAGS}" \
  --without-atomic \
  --without-chrono \
  --without-context \
