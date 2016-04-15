@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1417"
+echo "1432"
 
 set -x
 
@@ -24,6 +24,8 @@ fi
 # exit
 
 /usr/bin/gear start --trace
+
+ssh -help
 
 # shopt
 
