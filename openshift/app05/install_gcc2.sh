@@ -2,6 +2,8 @@
 
 # Disk quota exceeded
 
+export TZ=JST-9
+
 set -x
 
 cd /tmp
