@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1033"
+echo "1121"
 
 set -x
 
@@ -33,7 +33,7 @@ ls -lang
 cd $OPENSHIFT_DATA_DIR
 
 mkdir -p local/bin
-cat << '__HEREDOC__' > local/bin/gcc
+cat << '__HEREDOC__' > local/bin/wrap_gcc
 #!/bin/bash
 
 export TZ=JST-9
@@ -46,8 +46,12 @@ echo "$dt $usage_in_bytes_format $failcnt"
 set -x
 /usr/bin/gcc "$@"
 __HEREDOC__
-chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/wrap_gcc
 export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
+export HOME=${OPENSHIFT_DATA_DIR}
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/user-config.jam
+using gcc : : wrap_gcc ;
+__HEREDOC__
 
 rm -rf $OPENSHIFT_DATA_DIR/boost
 [ ! -f boost_1_54_0.tar.bz2 ] && wget -q http://heanet.dl.sourceforge.net/project/boost/boost/1.54.0/boost_1_54_0.tar.bz2
