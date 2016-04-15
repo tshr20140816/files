@@ -77,7 +77,7 @@ do
     tar xfz "${package}".tar.gz
     cd "${package}"
     # cabal install -j1 -v3 --disable-documentation
-    cabal install -j2 --disable-documentation
+    cabal install -j2 --disable-documentation -O2 --enable-split-objs
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
