@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1121"
+echo "1133"
 
 set -x
 
@@ -48,7 +48,7 @@ set -x
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/wrap_gcc
 export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
-export HOME=${OPENSHIFT_DATA_DIR}
+export BOOST_BUILD_PATH=${OPENSHIFT_DATA_DIR}
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/user-config.jam
 using gcc : : wrap_gcc ;
 __HEREDOC__
