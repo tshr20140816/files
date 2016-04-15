@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1136"
+echo "1137"
 
 set -x
 
@@ -36,13 +36,6 @@ mkdir -p local/bin
 cat << '__HEREDOC__' > local/bin/wrap_gcc
 #!/bin/bash
 
-export TZ=JST-9
-
-dt=$(date +%H%M%S)
-# usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
-usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
-failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
-echo "$dt $usage_in_bytes_format $failcnt"
 set -x
 time /usr/bin/gcc "$@"
 __HEREDOC__
