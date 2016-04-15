@@ -30,7 +30,60 @@ cd /tmp
 
 ls -lang
 
-rm -f  $OPENSHIFT_DATA_DIR/index.html
+cd $OPENSHIFT_DATA_DIR
+
+mkdir -p local/bin
+cat << '__HEREDOC__' > gcc
+#!/bin/bash
+
+export TZ=JST-9
+
+dt=$(date +%H%M%S)
+# usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
+usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
+failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
+echo "$dt $usage_in_bytes_format $failcnt"
+set -x
+/usr/bin/gcc "$@"
+__HEREDOC__
+chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
+
+rm -rf $OPENSHIFT_DATA_DIR/boost
+[ ! -f boost_1_54_0.tar.bz2 ] && wget -q http://heanet.dl.sourceforge.net/project/boost/boost/1.54.0/boost_1_54_0.tar.bz2
+rm -rf boost_1_54_0
+tar jxf boost_1_54_0.tar.bz2
+# rm -f boost_1_54_0.tar.bz2
+cd boost_1_54_0
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
+export CXXFLAGS="${CFLAGS}"
+./bootstrap.sh
+./b2 --help
+time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
+ --libdir=$OPENSHIFT_DATA_DIR/usr/lib \
+ --without-atomic \
+ --without-chrono \
+ --without-context \
+ --without-coroutine \
+ --without-date_time \
+ --without-exception \
+ --without-graph \
+ --without-graph_parallel \
+ --without-iostreams \
+ --without-locale \
+ --without-log \
+ --without-math \
+ --without-mpi \
+ --without-python \
+ --without-random \
+ --without-serialization \
+ --without-signals \
+ --without-test \
+ --without-timer \
+ --without-wave
+
+echo "FINISH"
+exit
 
 ls -lang $OPENSHIFT_DATA_DIR
 
