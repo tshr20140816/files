@@ -1,12 +1,12 @@
 #!/bin/bash
 
-echo "1348"
+echo "1417"
 
 set -x
 
 quota -s
 oo-cgroup-read memory.failcnt
-echo "$(oo-cgroup-read memory.failcnt)" | awk '{printf "%\047d\n", $0}'
+echo "$(oo-cgroup-read memory.usage_in_bytes)" | awk '{printf "%\047d\n", $0}'
 
 # oo-cgroup-read all
 # oo-cgroup-read report
