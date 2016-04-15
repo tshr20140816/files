@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1255"
+echo "1300"
 
 set -x
 
@@ -53,6 +53,11 @@ rm -rf $OPENSHIFT_DATA_DIR/boost
 rm -rf boost_1_54_0
 tar jxf boost_1_54_0.tar.bz2
 # rm -f boost_1_54_0.tar.bz2
+
+wget https://github.com/tshr20140816/files/raw/master/openshift/app01/monitor_resourse.sh
+bash monitor_resourse.sh &
+pid=$!
+
 cd boost_1_54_0
 ./bootstrap.sh
 ./b2 --help
@@ -78,6 +83,8 @@ time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --without-test \
  --without-timer \
  --without-wave
+
+kill ${pid}
 
 echo "FINISH"
 exit
