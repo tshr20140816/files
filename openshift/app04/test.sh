@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1133"
+echo "1136"
 
 set -x
 
@@ -44,7 +44,7 @@ usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}'
 failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
 echo "$dt $usage_in_bytes_format $failcnt"
 set -x
-/usr/bin/gcc "$@"
+time /usr/bin/gcc "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/wrap_gcc
 export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
