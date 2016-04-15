@@ -62,7 +62,8 @@ cd $OPENSHIFT_DATA_DIR
 rm -rf gcc-4.9.3
 tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 wc -l file_list.txt
-grep -v -E '^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
+# grep -v -E '^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
+grep -v -E '^gcc-4.9.3.(libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
 wc -l tmp1.txt
 grep -v '/$' tmp1.txt > file_list.txt
 wc -l file_list.txt
