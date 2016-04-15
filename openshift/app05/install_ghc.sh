@@ -61,8 +61,6 @@ package_list+=("QuickCheck-2.8.2")
 package_list+=("mtl-2.2.1")
 package_list+=("parsec-3.1.9")
 package_list+=("regex-base-0.93.2")
-# package_list+=("regex-tdfa-1.2.1")
-# package_list+=("ShellCheck-0.4.3")
 
 for package in "${package_list[@]}"
 do
