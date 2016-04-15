@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1307"
+echo "1315"
 
 set -x
 
@@ -86,6 +86,9 @@ time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --without-wave
 
 kill ${pid}
+
+rm -rf ${OPENSHIFT_DATA_DIR}/boost_1_54_0
+quota -s
 
 echo "FINISH"
 exit
