@@ -148,7 +148,7 @@ do
 done
 
 set -x
-${OPENSHIFT_DATA_DIR}/ccache/bin/ccache gcc "$@"
+${OPENSHIFT_DATA_DIR}/ccache/bin/ccache /usr/bin/gcc "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
