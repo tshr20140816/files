@@ -101,7 +101,7 @@ do
     usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
     failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
     echo "$dt $usage_in_bytes_format $failcnt"
-    if [ "${usage_in_bytes}" -lt 450000000 ]; then
+    if [ "${usage_in_bytes}" -lt 500000000 ]; then
         break
     fi
     # ps alx --sort -rss | head -n 3
