@@ -10,6 +10,7 @@ export TZ=JST-9
 
 quota -s
 oo-cgroup-read memory.failcnt
+oo-cgroup-read memory.usage_in_bytes
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
