@@ -15,22 +15,20 @@ export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
 ls -lang ${OPENSHIFT_LOG_DIR}
-
-cd $OPENSHIFT_DATA_DIR
-
-mkdir tmp
-
-[ ! -f gmp-4.3.1-7.el6_2.2.x86_64.rpm ] && wget http://mirror.centos.org/centos/6/os/x86_64/Packages/gmp-4.3.1-7.el6_2.2.x86_64.rpm
+mkdir ${OPENSHIFT_DATA_DIR}/tmp
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+wget -nc http://mirror.centos.org/centos/6/os/x86_64/Packages/gmp-4.3.1-7.el6_2.2.x86_64.rpm
 rpm2cpio gmp-4.3.1-7.el6_2.2.x86_64.rpm | cpio -idmv
 rm -f gmp-4.3.1-7.el6_2.2.x86_64.rpm
-cd usr/lib64
+pushd usr/lib64 > /dev/null
 ln -s libgmp.so.3 libgmp.so
+popd > /dev/null
+popd > /dev/null
 export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/lib64
-
-cd $OPENSHIFT_DATA_DIR
+pushd $OPENSHIFT_DATA_DIR > /dev/null
 mkdir haskell
-cd haskell
-[ ! -f network.tar.gz ] && wget -q http://www.accursoft.com/cartridges/network.tar.gz
+pushd haskell > /dev/null
+wget -nc -q http://www.accursoft.com/cartridges/network.tar.gz
 [ ! -f $OPENSHIFT_DATA_DIR/haskell/usr/bin/cabal ] && tar xfz network.tar.gz
 
 quota -s
