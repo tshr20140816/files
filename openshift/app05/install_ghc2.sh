@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # cd /tmp
-# wget https://github.com/tshr20140816/files/raw/master/openshift/app05/install_ghc.sh
+# wget https://github.com/tshr20140816/files/raw/master/openshift/app05/install_ghc2.sh
 # bash install_ghc.sh > $OPENSHIFT_REPO_DIR/diy/install.txt 2>&1 &
 
 set -x
@@ -29,6 +29,8 @@ if [ ! -f ${OPENSHIFT_DATA_DIR}/ccache/bin/ccache ]; then
      --docdir=${OPENSHIFT_TMP_DIR}/doc
     time make -j4
     make install
+    cd ..
+    rm -rf ccache-3.2.4
     rm -rf ${OPENSHIFT_TMP_DIR}/man
     rm -rf ${OPENSHIFT_TMP_DIR}/doc
     mkdir ${OPENSHIFT_DATA_DIR}/ccachedb
