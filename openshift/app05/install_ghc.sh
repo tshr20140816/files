@@ -8,8 +8,8 @@ set -x
 
 export TZ=JST-9
 
-quota -s
-oo-cgroup-read memory.failcnt
+# quota -s
+# oo-cgroup-read memory.failcnt
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
@@ -31,19 +31,19 @@ pushd haskell > /dev/null
 wget -nc -q http://www.accursoft.com/cartridges/network.tar.gz
 [ ! -f $OPENSHIFT_DATA_DIR/haskell/usr/bin/cabal ] && tar xfz network.tar.gz
 
-quota -s
-oo-cgroup-read memory.failcnt
+# quota -s
+# oo-cgroup-read memory.failcnt
 
 export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
 export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
-cabal install --help
+# cabal install --help
 ghc-pkg list
 ghc-pkg recache
 
-quota -s
-oo-cgroup-read memory.failcnt
+# quota -s
+# oo-cgroup-read memory.failcnt
 
 mv -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
 
@@ -78,8 +78,8 @@ do
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
-    quota -s
-    oo-cgroup-read memory.failcnt
+    # quota -s
+    # oo-cgroup-read memory.failcnt
     if [ $(ghc-pkg list | grep -c ${package}) -eq 0 ]; then
         break
     fi
@@ -135,11 +135,10 @@ do
     if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
         continue
     fi
-    oo-cgroup-read memory.usage_in_bytes
+    # oo-cgroup-read memory.usage_in_bytes
     cd ${OPENSHIFT_DATA_DIR}/tmp
-    rm -f "${package}".tar.gz
     rm -rf "${package}"
-    wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
+    wget -nc -q https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     cd "${package}"
     # cabal install -j1 -v3 --disable-documentation
@@ -149,8 +148,8 @@ do
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
-    quota -s
-    oo-cgroup-read memory.failcnt
+    # quota -s
+    # oo-cgroup-read memory.failcnt
     if [ $(ghc-pkg list | grep -c ${package}) -eq 0 ]; then
         break
     fi
@@ -168,11 +167,10 @@ do
     if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
         continue
     fi
-    oo-cgroup-read memory.usage_in_bytes
+    # oo-cgroup-read memory.usage_in_bytes
     cd ${OPENSHIFT_DATA_DIR}/tmp
-    rm -f "${package}".tar.gz
     rm -rf "${package}"
-    wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
+    wget -nc -q https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     cd "${package}"
     # cabal install -j1 -v3 --disable-documentation
@@ -182,8 +180,8 @@ do
     cd ..
     rm -rf "${package}"
     rm -f "${package}".tar.gz
-    quota -s
-    oo-cgroup-read memory.failcnt
+    # quota -s
+    # oo-cgroup-read memory.failcnt
     if [ $(ghc-pkg list | grep -c ${package}) -eq 0 ]; then
         break
     fi
