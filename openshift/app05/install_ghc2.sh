@@ -147,9 +147,8 @@ do
     sleep 60s
 done
 
-# /usr/bin/gcc "$@"
 set -x
-ccache gcc "$@"
+${OPENSHIFT_DATA_DIR}/ccache/bin/ccache gcc "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
