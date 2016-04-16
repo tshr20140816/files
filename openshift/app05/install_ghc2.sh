@@ -149,7 +149,7 @@ done
 
 # /usr/bin/gcc "$@"
 set -x
-ccache "$@"
+ccache gcc "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
