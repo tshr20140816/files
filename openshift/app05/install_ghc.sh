@@ -25,9 +25,9 @@ pushd ${OPENSHIFT_DATA_DIR}/usr/lib64 > /dev/null
 ln -s libgmp.so.3 libgmp.so
 popd > /dev/null
 export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/lib64
-pushd $OPENSHIFT_DATA_DIR > /dev/null
+cd $OPENSHIFT_DATA_DIR
 mkdir haskell
-pushd haskell > /dev/null
+cd haskell
 wget -nc -q http://www.accursoft.com/cartridges/network.tar.gz
 [ ! -f $OPENSHIFT_DATA_DIR/haskell/usr/bin/cabal ] && tar xfz network.tar.gz
 
