@@ -24,19 +24,22 @@ popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/usr/lib64 > /dev/null
 ln -s libgmp.so.3 libgmp.so
 popd > /dev/null
-export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/lib64
-cd $OPENSHIFT_DATA_DIR
-mkdir haskell
-cd haskell
-wget -nc -q http://www.accursoft.com/cartridges/network.tar.gz
-[ ! -f $OPENSHIFT_DATA_DIR/haskell/usr/bin/cabal ] && tar xfz network.tar.gz
+mkdir ${OPENSHIFT_DATA_DIR}/haskell
+pushd ${OPENSHIFT_DATA_DIR}/haskell > /dev/null
+if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/bin/cabal ]; then
+    wget -nc -q http://www.accursoft.com/cartridges/network.tar.gz
+    tar xfz network.tar.gz
+    rm -f network.tar.gz
+fi
+popd > /dev/null
 
 # quota -s
 # oo-cgroup-read memory.failcnt
 
-export PATH=$PATH:$OPENSHIFT_DATA_DIR/haskell/usr/bin
-export HOME=$OPENSHIFT_DATA_DIR
-export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
+export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib64
+export PATH=${PATH}:${OPENSHIFT_DATA_DIR}/haskell/usr/bin
+export HOME=${OPENSHIFT_DATA_DIR}
+export OPENSHIFT_HASKELL_DIR=${OPENSHIFT_DATA_DIR}/haskell
 
 # cabal install --help
 # ghc-pkg list
@@ -70,7 +73,8 @@ do
     tar xfz "${package}".tar.gz
     pushd "${package}" > /dev/null
     cabal install -j2 --disable-documentation -O2 \
-     --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping
+     --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
+     --disable-optimization --disable-tests --disable-coverage --disable-benchmarks
     popd > /dev/null
     rm -rf "${package}"
     rm -f "${package}".tar.gz
@@ -86,7 +90,6 @@ cat << '__HEREDOC__' > gcc
 #!/bin/bash
 
 export TZ=JST-9
-
 while :
 do
     dt=$(date +%H%M%S)
@@ -119,7 +122,7 @@ if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
     sed -i -e "s|/usr/bin/gcc|${OPENSHIFT_DATA_DIR}/local/bin/gcc|g" ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
 fi
 
-cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
+# cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
 
 package_list=()
 package_list+=("regex-tdfa-1.2.1")
