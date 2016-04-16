@@ -63,26 +63,21 @@ package_list+=("regex-base-0.93.2")
 for package in "${package_list[@]}"
 do
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ${package}"
-    if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
-        continue
-    fi
-    cd ${OPENSHIFT_DATA_DIR}/tmp
-    rm -f "${package}".tar.gz
+    [ $(ghc-pkg list | grep -c ${package}) -ne 0 ] && continue
+    pushd ${OPENSHIFT_DATA_DIR}/tmp > /dev/null
     rm -rf "${package}"
-    wget https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
+    wget -nc -q https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
-    cd "${package}"
-    # cabal install -j1 -v3 --disable-documentation
+    pushd "${package}" > /dev/null
     cabal install -j2 --disable-documentation -O2 \
      --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping
-    cd ..
+    popd > /dev/null
     rm -rf "${package}"
     rm -f "${package}".tar.gz
+    popd > /dev/null
     # quota -s
     # oo-cgroup-read memory.failcnt
-    if [ $(ghc-pkg list | grep -c ${package}) -eq 0 ]; then
-        break
-    fi
+    [ $(ghc-pkg list | grep -c ${package}) -eq 0 ] && break
 done
 
 mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
