@@ -162,28 +162,22 @@ package_list+=("ShellCheck-0.4.3")
 for package in "${package_list[@]}"
 do
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ${package}"
-    if [ $(ghc-pkg list | grep -c ${package}) -ne 0 ]; then
-        continue
-    fi
-    # oo-cgroup-read memory.usage_in_bytes
+    [ $(ghc-pkg list | grep -c ${package}) -ne 0 ] && continue
     pushd ${OPENSHIFT_DATA_DIR}/tmp > /dev/null
     rm -rf "${package}"
     wget -nc -q https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     pushd "${package}" > /dev/null
-    # cabal install -j1 -v3 --disable-documentation
-    cabal install -j1 -v3 --disable-optimization --disable-documentation \
-     --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
-     --ghc-options="+RTS -N1 -M448m -RTS" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
+    cabal install -j2 --disable-documentation -O2 \
+     --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
+     --disable-optimization --disable-tests --disable-coverage --disable-benchmarks
     popd > /dev/null
     rm -rf "${package}"
     rm -f "${package}".tar.gz
     popd > /dev/null
     # quota -s
     # oo-cgroup-read memory.failcnt
-    if [ $(ghc-pkg list | grep -c ${package}) -eq 0 ]; then
-        break
-    fi
+    [ $(ghc-pkg list | grep -c ${package}) -eq 0 ] && break
 done
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH"
