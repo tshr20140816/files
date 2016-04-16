@@ -16,6 +16,23 @@ export CXXFLAGS="${CFLAGS}"
 
 ls -lang ${OPENSHIFT_LOG_DIR}
 
+if [ ! -f ${OPENSHIFT_DATA_DIR}/ccache/bin/ccache ]; then
+    cd $OPENSHIFT_DATA_DIR
+    wget https://www.samba.org/ftp/ccache/ccache-3.2.4.tar.xz
+    tar Jxf ccache-3.2.4.tar.xz
+    rm -f ccache-3.2.4.tar.xz
+    cd ccache-3.2.4
+    ./configure \
+     --prefix=${OPENSHIFT_DATA_DIR}/ccache \
+     --mandir=${OPENSHIFT_TMP_DIR}/man \
+     --docdir=${OPENSHIFT_TMP_DIR}/doc
+    time make -j4
+    make install
+    rm -rf ${OPENSHIFT_TMP_DIR}/man
+    rm -rf ${OPENSHIFT_TMP_DIR}/doc
+    mkdir ${OPENSHIFT_DATA_DIR}/ccachedb
+fi
+
 cd $OPENSHIFT_DATA_DIR
 
 mkdir tmp
@@ -87,12 +104,21 @@ do
     fi
 done
 
+mkdir ${OPENSHIFT_TMP_DIR}/ccachetemp
+export CCACHE_DIR=${OPENSHIFT_DATA_DIR}/ccachedb
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/ccachetemp
+export CCACHE_LOGFILE=/dev/null
+export CCACHE_MAXSIZE=100M
+# export CC="ccache gcc"
+# export CXX="ccache g++"
+export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+ccache -s
+ccache -z
+
 mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
 cd ${OPENSHIFT_DATA_DIR}/local/bin
 cat << '__HEREDOC__' > gcc
 #!/bin/bash
-
-export TZ=JST-9
 
 while :
 do
@@ -101,7 +127,8 @@ do
     usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
     failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
     echo "$dt $usage_in_bytes_format $failcnt"
-    if [ "${usage_in_bytes}" -lt 450000000 ]; then
+    break
+    if [ "${usage_in_bytes}" -lt 500000000 ]; then
         break
     fi
     # ps alx --sort -rss | head -n 3
@@ -114,8 +141,9 @@ do
     sleep 60s
 done
 
+# /usr/bin/gcc "$@"
 set -x
-/usr/bin/gcc "$@"
+ccache "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
@@ -157,8 +185,10 @@ do
         break
     fi
 done
+ccache -s
+oo-cgroup-read memory.usage_in_bytes
 
-cp -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
+mv -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
 
 package_list=()
 package_list+=("json-0.9.1")
@@ -178,7 +208,7 @@ do
     tar xfz "${package}".tar.gz
     cd "${package}"
     # cabal install -j1 -v3 --disable-documentation
-    cabal install -j1 -v3 --disable-optimization --disable-documentation \
+    cabal install -j1 --disable-optimization --disable-documentation \
      --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
      --ghc-options="+RTS -N1 -M448m -RTS" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
     cd ..
