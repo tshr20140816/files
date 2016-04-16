@@ -39,7 +39,7 @@ export HOME=$OPENSHIFT_DATA_DIR
 export OPENSHIFT_HASKELL_DIR=$OPENSHIFT_DATA_DIR/haskell
 
 # cabal install --help
-ghc-pkg list
+# ghc-pkg list
 ghc-pkg recache
 
 # quota -s
