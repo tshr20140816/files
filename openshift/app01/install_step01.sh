@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.04.18 ccache_version 3.2.4 → 3.2.5
 # 2016.04.01 php_version 5.6.19 → 5.6.20
 # 2016.03.31 ruby_version 2.1.8 → 2.1.9
 # 2016.03.31 baikal_version 0.4.3 → 0.4.4
@@ -101,7 +102,7 @@ baikal_version 0.4.4
 cacti_version 0.8.8g
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
-ccache_version 3.2.4
+ccache_version 3.2.5
 curl_version 7.47.1
 distcc_version 3.1
 delegate_version 9.9.13
