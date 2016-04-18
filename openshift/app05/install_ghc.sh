@@ -132,11 +132,6 @@ do
     [ $(ghc-pkg list | grep -c ${package}) -eq 0 ] && break
 done
 
-if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
-    cp ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org
-    sed -i -e "s|/usr/bin/gcc|${OPENSHIFT_DATA_DIR}/local/bin/gcc|g" ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
-fi
-
 ${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck "${0}"
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH"
