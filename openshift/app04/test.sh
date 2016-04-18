@@ -25,7 +25,7 @@ fi
 
 /usr/bin/gear start --trace
 
-ssh -help
+ssh --help
 
 # shopt
 
