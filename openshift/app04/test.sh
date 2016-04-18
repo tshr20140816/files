@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1432"
+echo "1038"
 
 set -x
 
@@ -32,6 +32,10 @@ ssh -help
 cd /tmp
 
 ls -lang
+
+echo "${0}"
+
+exit
 
 cd $OPENSHIFT_DATA_DIR
 
