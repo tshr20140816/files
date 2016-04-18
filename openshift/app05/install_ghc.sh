@@ -29,8 +29,8 @@ pushd ${OPENSHIFT_DATA_DIR}/haskell > /dev/null
 if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/bin/cabal ]; then
     wget -nc -q http://www.accursoft.com/cartridges/network.tar.gz
     tar xfz network.tar.gz
-    rm -f network.tar.gz
 fi
+rm -f network.tar.gz
 popd > /dev/null
 
 # quota -s
@@ -48,6 +48,36 @@ ghc-pkg recache
 # quota -s
 # oo-cgroup-read memory.failcnt
 
+mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+#!/bin/bash
+
+while :
+do
+    dt=$(date +%H%M%S)
+    usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
+    usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
+    failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
+    echo "$dt $usage_in_bytes_format $failcnt"
+    if [ "${usage_in_bytes}" -lt 500000000 ]; then
+        break
+    fi
+    # ps alx --sort -rss | head -n 3
+    if [ "${usage_in_bytes}" -gt 500000000 ]; then
+        pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+        # sumanu
+        wget -q http://mirrors.kernel.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.bz2
+        rm -f gcc-5.3.0.tar.bz2
+        popd > /dev/null
+    fi
+    sleep 60s
+done
+
+set -x
+/usr/bin/gcc "$@"
+__HEREDOC__
+chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+
 mv -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
 
 package_list=()
@@ -62,97 +92,7 @@ package_list+=("QuickCheck-2.8.2")
 package_list+=("mtl-2.2.1")
 package_list+=("parsec-3.1.9")
 package_list+=("regex-base-0.93.2")
-
-for package in "${package_list[@]}"
-do
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) ${package}"
-    [ $(ghc-pkg list | grep -c ${package}) -ne 0 ] && continue
-    pushd ${OPENSHIFT_DATA_DIR}/tmp > /dev/null
-    rm -rf "${package}"
-    wget -nc -q https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
-    tar xfz "${package}".tar.gz
-    pushd "${package}" > /dev/null
-    cabal install -j2 --disable-documentation -O2 \
-     --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
-     --disable-optimization --disable-tests --disable-coverage --disable-benchmarks
-    popd > /dev/null
-    rm -rf "${package}"
-    rm -f "${package}".tar.gz
-    popd > /dev/null
-    # quota -s
-    # oo-cgroup-read memory.failcnt
-    [ $(ghc-pkg list | grep -c ${package}) -eq 0 ] && break
-done
-
-mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
-cd ${OPENSHIFT_DATA_DIR}/local/bin
-cat << '__HEREDOC__' > gcc
-#!/bin/bash
-
-export TZ=JST-9
-while :
-do
-    dt=$(date +%H%M%S)
-    usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
-    usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
-    failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
-    echo "$dt $usage_in_bytes_format $failcnt"
-    if [ "${usage_in_bytes}" -lt 500000000 ]; then
-        break
-    fi
-    # ps alx --sort -rss | head -n 3
-    if [ "${usage_in_bytes}" -gt 500000000 ]; then
-        pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-        wget -q http://mirrors.kernel.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.bz2
-        rm -f gcc-5.3.0.tar.bz2
-        popd > /dev/null
-    fi
-    sleep 60s
-done
-
-set -x
-/usr/bin/gcc "$@"
-__HEREDOC__
-chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
-
-export PATH="${OPENSHIFT_DATA_DIR}/local/bin:$PATH"
-
-if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
-    cp ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org
-    sed -i -e "s|/usr/bin/gcc|${OPENSHIFT_DATA_DIR}/local/bin/gcc|g" ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
-fi
-
-# cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
-
-package_list=()
 package_list+=("regex-tdfa-1.2.1")
-
-for package in "${package_list[@]}"
-do
-    echo "$(date +%Y/%m/%d" "%H:%M:%S) ${package}"
-    [ $(ghc-pkg list | grep -c ${package}) -ne 0 ] && continue
-    # oo-cgroup-read memory.usage_in_bytes
-    pushd ${OPENSHIFT_DATA_DIR}/tmp > /dev/null
-    rm -rf "${package}"
-    wget -nc -q https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
-    tar xfz "${package}".tar.gz
-    pushd "${package}" > /dev/null
-    # cabal install -j1 -v3 --disable-documentation
-    cabal install -j1 -v3 --disable-optimization --disable-documentation \
-     --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
-     --ghc-options="+RTS -N1 -M448m -RTS" 2>&1 | tee ${OPENSHIFT_LOG_DIR}/${package}.log
-    popd > /dev/null
-    rm -rf "${package}"
-    rm -f "${package}".tar.gz
-    popd > /dev/null
-    # quota -s
-    # oo-cgroup-read memory.failcnt
-    [ $(ghc-pkg list | grep -c ${package}) -eq 0 ] && break
-done
-
-cp -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
-
-package_list=()
 package_list+=("json-0.9.1")
 package_list+=("ShellCheck-0.4.3")
 
@@ -165,9 +105,24 @@ do
     wget -nc -q https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     pushd "${package}" > /dev/null
-    cabal install -j2 --disable-documentation -O2 \
-     --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
-     --disable-optimization --disable-tests --disable-coverage --disable-benchmarks
+    if [ "${package}" != "regex-tdfa-1.2.1" ]; then
+        cabal install -j2 --disable-documentation -O2 \
+         --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
+         --disable-tests --disable-coverage --disable-benchmarks
+    else
+        PATH_ORG="${PATH}"
+        export PATH="${OPENSHIFT_DATA_DIR}/local/bin:${PATH}"
+        if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
+            cp ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org
+            sed -i -e "s|/usr/bin/gcc|${OPENSHIFT_DATA_DIR}/local/bin/gcc|g" ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
+        fi
+        # cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
+        cabal install -j1 -v3 --disable-optimization --disable-documentation \
+         --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
+         --ghc-options="+RTS -N1 -M448m -RTS"
+        export PATH="${PATH_ORG}"
+        cp -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
+    fi
     popd > /dev/null
     rm -rf "${package}"
     rm -f "${package}".tar.gz
@@ -176,5 +131,12 @@ do
     # oo-cgroup-read memory.failcnt
     [ $(ghc-pkg list | grep -c ${package}) -eq 0 ] && break
 done
+
+if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
+    cp ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org
+    sed -i -e "s|/usr/bin/gcc|${OPENSHIFT_DATA_DIR}/local/bin/gcc|g" ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
+fi
+
+${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck "${0}"
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH"
