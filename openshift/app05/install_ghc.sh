@@ -137,4 +137,69 @@ done
 
 ${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck "${0}"
 
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+#!/bin/bash
+
+export TZ=JST-9
+
+export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib64
+export PATH=${PATH}:${OPENSHIFT_DATA_DIR}/haskell/usr/bin
+export HOME=${OPENSHIFT_DATA_DIR}
+export OPENSHIFT_HASKELL_DIR=${OPENSHIFT_DATA_DIR}/haskell
+
+${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck "$@"
+__HEREDOC__
+popd > /dev/null
+${OPENSHIFT_DATA_DIR}/local/bin/gcc
+chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+
+cat << '__HEREDOC__' > ${OPENSHIFT_REPO_DIR}/shellcheck.php
+<?php
+date_default_timezone_set('Asia/Tokyo');
+$log_file = getenv("OPENSHIFT_LOG_DIR") . basename($_SERVER["SCRIPT_NAME"]) . "." . date("Ymd") . ".log";
+
+if (!isset($_POST['suffix']))
+{
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 010 suffix\n", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+$suffix = $_POST["suffix"];
+if (preg_match('/^\w+$/', $suffix) == 0)
+{
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 020 $suffix\n", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+
+if (!isset($_FILES['file']['error']) || !is_int($_FILES['file']['error']))
+{
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 030 file\n", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+
+if ($_FILES['upfile']['error'] != UPLOAD_ERR_OK)
+{
+    file_put_contents($log_file, date("YmdHis") . " CHECK POINT 040 file\n", FILE_APPEND);
+    header('HTTP', true, 500);
+    exit;
+}
+
+$file_name = $_FILES['file']['name'];
+$original_file = getenv("OPENSHIFT_TMP_DIR") . $file_name . "." . $suffix;
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 suffix $suffix\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 100 file_name $file_name\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 110 original_file $original_file\n", FILE_APPEND);
+move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
+chdir(getenv("OPENSHIFT_TMP_DIR"));
+$cmd = getenv("OPENSHIFT_DATA_DIR") . "/local/bin/shellcheck $original_file 2>&1";
+exec($cmd, $arr, $res);
+$tmp = var_dump($arr);
+file_put_contents($log_file, date("YmdHis") . " RESULT $tmp\n", FILE_APPEND);
+echo $tmp;
+@unlink($original_file);
+?>
+__HEREDOC__
+
 echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH"
