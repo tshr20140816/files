@@ -31,25 +31,14 @@ ssh --help
 
 cd /tmp
 
-wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.lz
-wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
+rm -rf ${OPENSHIFT_DATA_DIR}/local
+rm -rf ${OPENSHIFT_DATA_DIR}/gmp-6.1.0
+rm -rf ${OPENSHIFT_TMP_DIR}/gmp-6.1.0
+rm -f *.lz
+rm -f *.xz
 
 ls -lang
 
-rm -rf gmp-6.1.0
-tar Jxf gmp-6.1.0.tar.xz
-
-cd gmp-6.1.0
-
-rm -rf ${OPENSHIFT_DATA_DIR}/local
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local --enable-static=no
-time make -j4
-make install
-
-tree -a ${OPENSHIFT_DATA_DIR}/local
-quota -s
-# echo "${0}"
 
 exit
 
