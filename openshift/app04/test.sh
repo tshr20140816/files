@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1108"
+echo "1135"
 
 set -x
 
@@ -41,10 +41,15 @@ tar Jxf gmp-6.1.0.tar.xz
 
 cd gmp-6.1.0
 
+rm -rf ${OPENSHIFT_DATA_DIR}/local
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/local
+time make -j4
+make install
 
-echo "${0}"
+tree -a ${OPENSHIFT_DATA_DIR}/local
+quota -s
+# echo "${0}"
 
 exit
 
