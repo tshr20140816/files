@@ -31,9 +31,17 @@ ssh --help
 
 cd /tmp
 
+rm -rf gmp-6.1.0
+rm -f gmp-*
 wget -nc -q "http://jaist.dl.sourceforge.net/project/zabbix/ZABBIX Latest Stable/3.0.1/zabbix-3.0.1.tar.gz"
 
 ls -lang
+
+rm -rf zabbix-3.0.1
+tar xfz zabbix-3.0.1.tar.gz
+
+cd zabbix-3.0.1
+./configure --help
 
 exit
 
