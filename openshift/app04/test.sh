@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1041"
+echo "1108"
 
 set -x
 
@@ -36,9 +36,9 @@ wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
 
 ls -lang
 
+rm -rf gmp-6.1.0
 tar Jxf gmp-6.1.0.tar.xz
 
-rm -rf gmp-6.1.0
 cd gmp-6.1.0
 
 ./configure --help
