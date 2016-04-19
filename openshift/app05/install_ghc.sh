@@ -26,14 +26,6 @@ popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/usr/lib64 > /dev/null
 ln -s libgmp.so.3 libgmp.so
 popd > /dev/null
-mkdir ${OPENSHIFT_DATA_DIR}/haskell
-pushd ${OPENSHIFT_DATA_DIR}/haskell > /dev/null
-if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/bin/cabal ]; then
-    wget -nc -q http://www.accursoft.com/cartridges/network.tar.gz
-    tar xfz network.tar.gz
-fi
-rm -f network.tar.gz
-popd > /dev/null
 export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib64
 else
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
@@ -49,6 +41,15 @@ rm -f gmp-6.1.0.tar.xz
 export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib
 popd > /dev/null
 fi
+
+mkdir ${OPENSHIFT_DATA_DIR}/haskell
+pushd ${OPENSHIFT_DATA_DIR}/haskell > /dev/null
+if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/bin/cabal ]; then
+    wget -nc -q http://www.accursoft.com/cartridges/network.tar.gz
+    tar xfz network.tar.gz
+fi
+rm -f network.tar.gz
+popd > /dev/null
 
 # quota -s
 # oo-cgroup-read memory.failcnt
