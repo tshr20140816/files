@@ -43,7 +43,7 @@ cd gmp-6.1.0
 
 rm -rf ${OPENSHIFT_DATA_DIR}/local
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local --enable-static=no
 time make -j4
 make install
 
