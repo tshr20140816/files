@@ -159,7 +159,7 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
 export TZ=JST-9
 
-export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib64
+export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib
 export PATH=${PATH}:${OPENSHIFT_DATA_DIR}/haskell/usr/bin
 export HOME=${OPENSHIFT_DATA_DIR}
 export OPENSHIFT_HASKELL_DIR=${OPENSHIFT_DATA_DIR}/haskell
@@ -218,5 +218,62 @@ echo $tmp;
 @unlink($original_file);
 ?>
 __HEREDOC__
+
+# ***** cron minutely *****
+
+pushd ${OPENSHIFT_REPO_DIR}/.openshift/cron/minutely > /dev/null
+rm -f ./*
+touch jobs.deny
+
+# *** index.html ***
+
+cat << '__HEREDOC__' > make_index.sh
+#!/bin/bash
+
+export TZ=JST-9
+
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+echo "<HTML><BODY><PRE>" > ${OPENSHIFT_TMP_DIR}/index.html
+ls -lang >> ${OPENSHIFT_TMP_DIR}/index.html
+echo "</PRE></BODY></HTML>" >> ${OPENSHIFT_TMP_DIR}/index.html
+mv -f ${OPENSHIFT_TMP_DIR}/index.html ./
+popd > /dev/null
+__HEREDOC__
+chmod +x make_index.sh
+echo make_index.sh >> jobs.allow
+
+# ***** log dir digest auth *****
+
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+
+echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
+echo AuthType Digest > .htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
+
+cat << '__HEREDOC__' >> .htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+
+AddType "text/plain; charset=UTF-8" .log
+
+AddDefaultCharset utf-8
+
+# IndexOptions +FancyIndexing
+
+# Force https
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+__HEREDOC__
+popd > /dev/null
+
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
+ln -s ${OPENSHIFT_LOG_DIR} logs
+popd > /dev/null
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH"
