@@ -205,9 +205,9 @@ if ($_FILES['upfile']['error'] != UPLOAD_ERR_OK)
 
 $file_name = $_FILES['file']['name'];
 $original_file = getenv("OPENSHIFT_TMP_DIR") . $file_name . "." . $suffix;
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 suffix $suffix\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 100 file_name $file_name\n", FILE_APPEND);
-file_put_contents($log_file, date("YmdHis") . " CHECK POINT 110 original_file $original_file\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 050 suffix $suffix\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 060 file_name $file_name\n", FILE_APPEND);
+file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 original_file $original_file\n", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 chdir(getenv("OPENSHIFT_TMP_DIR"));
 $cmd = getenv("OPENSHIFT_DATA_DIR") . "/local/bin/shellcheck $original_file 2>&1";
