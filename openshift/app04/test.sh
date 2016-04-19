@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1038"
+echo "1041"
 
 set -x
 
@@ -31,7 +31,18 @@ ssh --help
 
 cd /tmp
 
+wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.lz
+wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
+
 ls -lang
+
+tar Jxf gmp-6.1.0.tar.xz
+
+rm -rf gmp-6.1.0
+cd gmp-6.1.0
+
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local
 
 echo "${0}"
 
