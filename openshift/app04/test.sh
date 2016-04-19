@@ -31,14 +31,9 @@ ssh --help
 
 cd /tmp
 
-rm -rf ${OPENSHIFT_DATA_DIR}/local
-rm -rf ${OPENSHIFT_DATA_DIR}/gmp-6.1.0
-rm -rf ${OPENSHIFT_TMP_DIR}/gmp-6.1.0
-rm -f *.lz
-rm -f *.xz
+wget -nc -q "http://jaist.dl.sourceforge.net/project/zabbix/ZABBIX Latest Stable/3.0.1/zabbix-3.0.1.tar.gz"
 
 ls -lang
-
 
 exit
 
