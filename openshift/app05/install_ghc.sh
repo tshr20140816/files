@@ -16,6 +16,8 @@ export CXXFLAGS="${CFLAGS}"
 
 ls -lang ${OPENSHIFT_LOG_DIR}
 mkdir ${OPENSHIFT_DATA_DIR}/tmp
+
+if [ 1 -ne 1 ]; then
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 wget -nc http://mirror.centos.org/centos/6/os/x86_64/Packages/gmp-4.3.1-7.el6_2.2.x86_64.rpm
 rpm2cpio gmp-4.3.1-7.el6_2.2.x86_64.rpm | cpio -idmv
@@ -32,11 +34,26 @@ if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/bin/cabal ]; then
 fi
 rm -f network.tar.gz
 popd > /dev/null
+export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib64
+else
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
+tar Jxf gmp-6.1.0.tar.xz
+pushd gmp-6.1.0 > /dev/null
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local --enable-static=no
+time make -j4
+make install
+popd > /dev/null
+rm -rf gmp-6.1.0
+rm -f gmp-6.1.0.tar.xz
+export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib
+popd > /dev/null
+fi
 
 # quota -s
 # oo-cgroup-read memory.failcnt
 
-export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib64
+# export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib64
 export PATH=${PATH}:${OPENSHIFT_DATA_DIR}/haskell/usr/bin
 export HOME=${OPENSHIFT_DATA_DIR}
 export OPENSHIFT_HASKELL_DIR=${OPENSHIFT_DATA_DIR}/haskell
