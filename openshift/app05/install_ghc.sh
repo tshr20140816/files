@@ -130,6 +130,10 @@ do
         cabal install -j2 --disable-documentation -O2 \
          --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
          --disable-tests --disable-coverage --disable-benchmarks
+    elif [ "${package}" != "ShellCheck-0.4.3" ]; then
+        cabal install -j1 -v3 --disable-optimization --disable-documentation \
+         --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
+         --ghc-options="+RTS -N1 -M448m -RTS"
     else
         PATH_ORG="${PATH}"
         export PATH="${OPENSHIFT_DATA_DIR}/local/bin:${PATH}"
