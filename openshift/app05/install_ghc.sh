@@ -160,7 +160,7 @@ do
     wget -nc -q https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
     tar xfz "${package}".tar.gz
     pushd "${package}" > /dev/null
-    if [ "${package}" == "ShellCheck-0.4.3" ]; then
+    if [ "${package}" = "ShellCheck-0.4.3" ]; then
         cabal install -j1 -v3 --disable-optimization --disable-documentation \
          --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
          --ghc-options="+RTS -N1 -M448m -RTS"
