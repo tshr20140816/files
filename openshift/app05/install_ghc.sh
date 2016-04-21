@@ -274,6 +274,7 @@ export TZ=JST-9
 pushd ${OPENSHIFT_LOG_DIR} > /dev/null
 echo "<HTML><BODY><PRE>" > ${OPENSHIFT_TMP_DIR}/index.html
 ls -lang >> ${OPENSHIFT_TMP_DIR}/index.html
+quota -s >> ${OPENSHIFT_TMP_DIR}/index.html
 echo "</PRE></BODY></HTML>" >> ${OPENSHIFT_TMP_DIR}/index.html
 mv -f ${OPENSHIFT_TMP_DIR}/index.html ./
 popd > /dev/null
