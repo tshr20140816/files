@@ -11,10 +11,44 @@ export TZ=JST-9
 # quota -s
 # oo-cgroup-read memory.failcnt
 
+# ***** log dir digest auth *****
+
+pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+
+echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
+echo AuthType Digest > .htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
+
+cat << '__HEREDOC__' >> .htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+
+AddType "text/plain; charset=UTF-8" .log
+
+AddDefaultCharset utf-8
+
+# IndexOptions +FancyIndexing
+
+# Force https
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+__HEREDOC__
+popd > /dev/null
+
+pushd ${OPENSHIFT_REPO_DIR} > /dev/null
+ln -s ${OPENSHIFT_LOG_DIR} logs
+popd > /dev/null
+
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-ls -lang ${OPENSHIFT_LOG_DIR}
+# ls -lang ${OPENSHIFT_LOG_DIR}
 mkdir ${OPENSHIFT_DATA_DIR}/tmp
 
 if [ 1 -ne 1 ]; then
@@ -246,39 +280,6 @@ popd > /dev/null
 __HEREDOC__
 chmod +x make_index.sh
 echo make_index.sh >> jobs.allow
-
-# ***** log dir digest auth *****
-
-pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-
-echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
-echo AuthType Digest > .htaccess
-echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
-
-cat << '__HEREDOC__' >> .htaccess
-AuthName realm
-
-require valid-user
-
-<Files ~ "^.(htpasswd|htaccess)$">
-    deny from all
-</Files>
-
-AddType "text/plain; charset=UTF-8" .log
-
-AddDefaultCharset utf-8
-
-# IndexOptions +FancyIndexing
-
-# Force https
-RewriteEngine on
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
-__HEREDOC__
-popd > /dev/null
-
-pushd ${OPENSHIFT_REPO_DIR} > /dev/null
-ln -s ${OPENSHIFT_LOG_DIR} logs
 popd > /dev/null
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH"
