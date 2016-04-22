@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1251"
+echo "1510"
 
 set -x
 
@@ -29,15 +29,7 @@ ls -lang
 
 # -----
 
-cd /tmp
-rm -f jam*
-
 # -----
-
-cd /tmp
-
-# wget -nc -q http://ftp.meisei-u.ac.jp/mirror/apache/dist//httpd/httpd-2.2.31.tar.bz2
-# tar jxf httpd-2.2.31.tar.bz2
 
 cd /tmp
 
@@ -133,6 +125,14 @@ tree -a $OPENSHIFT_DATA_DIR/usr/lib
 tree -a $OPENSHIFT_DATA_DIR/usr/lib64
 
 quota -s
+
+cd /tmp
+wget -nc -q https://www.pccc.com/downloads/apache/current/mod_fastcgi-current.tar.gz
+rm -rf mod_fastcgi-2.4.6
+tar zxf mod_fastcgi-current.tar.gz
+cd mod_fastcgi-2.4.6
+cp Makefile.AP2 Makefile
+cat Makefile
 
 echo "FINISH"
 exit
