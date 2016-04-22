@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1159"
+echo "1251"
 
 set -x
 
@@ -29,20 +29,19 @@ ls -lang
 
 # -----
 
-rm -f /tmp/jam*
-rm -rf $OPENSHIFT_DATA_DIR/boost
-rm -rf $OPENSHIFT_DATA_DIR/usr
-rm -f $OPENSHIFT_DATA_DIR/monitor_*
-rm -f $OPENSHIFT_DATA_DIR/boost_1_54_0.tar.bz2
-rm -f $OPENSHIFT_DATA_DIR/gcc
-rm -rf $OPENSHIFT_DATA_DIR/local
-
-quota -s
+cd /tmp
+rm -f jam*
 
 # -----
 
 cd /tmp
 
+# wget -nc -q http://ftp.meisei-u.ac.jp/mirror/apache/dist//httpd/httpd-2.2.31.tar.bz2
+# tar jxf httpd-2.2.31.tar.bz2
+
+cd /tmp
+
+if [ ! -f $OPENSHIFT_DATA_DIR/usr/lib/libboost_system.so.1.54.0 ]; then
 wget -nc -q http://heanet.dl.sourceforge.net/project/boost/boost/1.54.0/boost_1_54_0.tar.bz2
 rm -rf boost_1_54_0
 tar jxf boost_1_54_0.tar.bz2
@@ -86,9 +85,52 @@ time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
 cd /tmp
 rm -rf boost_1_54_0
 rm -f boost_1_54_0.tar.bz2
+rm -rf $OPENSHIFT_DATA_DIR/boost
 
 tree -a $OPENSHIFT_DATA_DIR/usr/lib
-tree -a $OPENSHIFT_DATA_DIR/boost
+# tree -a $OPENSHIFT_DATA_DIR/boost
+fi
+rm -rf $OPENSHIFT_DATA_DIR/boost
+
+cd $OPENSHIFT_DATA_DIR
+
+rm -f *.rpm
+
+wget -nc -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
+
+wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
+wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/tbb-2.2-3.20090809.el6.x86_64.rpm
+wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
+
+wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/inotify-tools-3.14-1.el6.x86_64.rpm
+wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
+wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/libwebp-0.4.3-3.el6.x86_64.rpm
+wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/lcms2-2.7-3.el6.x86_64.rpm
+
+find ./ -name "*.rpm" -print > list.txt
+
+while read -r LINE
+do
+    rpm2cpio ${LINE} | cpio -idmv
+    rm -f ${LINE}
+done < list.txt
+rm -f list.txt
+
+cd usr/lib64
+ln -s /usr/lib64/mysql/libmysqlclient.so.16.0.0 libmysqlclient.so.18
+ln -s libwebp.so.5.0.3 libwebp.so.4
+
+rm -rf $OPENSHIFT_DATA_DIR/usr/share/doc/
+rm -rf $OPENSHIFT_DATA_DIR/usr/share/man/
+rm -rf $OPENSHIFT_DATA_DIR/usr/share/hhvm/LICENSE/
+
+export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/lib:$OPENSHIFT_DATA_DIR/usr/lib/hhvm:$OPENSHIFT_DATA_DIR/usr/lib64
+$OPENSHIFT_DATA_DIR/usr/bin/hhvm --version
+
+cat $OPENSHIFT_DATA_DIR/etc/hhvm/server.ini
+
+tree -a $OPENSHIFT_DATA_DIR/usr/lib
+tree -a $OPENSHIFT_DATA_DIR/usr/lib64
 
 quota -s
 
