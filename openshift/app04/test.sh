@@ -145,7 +145,19 @@ cd httpd-2.2.31
  --disable-authn-dbm \
  --disable-authz-dbm \
  --disable-authz-groupfile \
- --disable-authz-owner
+ --disable-authz-owner \
+ --disable-info \
+ --disable-proxy-balancer \
+ --disable-proxy-ftp \
+ --disable-speling \
+ --disable-status \
+ --disable-userdir \
+ --disable-version \
+ --disable-authn-dbd \
+ --disable-dbd \
+ --disable-log_forensic \
+ --disable-proxy-ajp \
+ --disable-proxy-scgi
 time make -j2
 make install
 
