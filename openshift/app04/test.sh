@@ -126,8 +126,8 @@ tree -a $OPENSHIFT_DATA_DIR/usr/lib64
 
 quota -s
 
+if [ ! -f ${OPENSHIFT_DATA_DIR}/apache/bin/httpd ]; then
 cd /tmp
-
 wget -nc -q http://ftp.meisei-u.ac.jp/mirror/apache/dist//httpd/httpd-2.2.31.tar.bz2
 tar jxf httpd-2.2.31.tar.bz2
 cd httpd-2.2.31
@@ -140,6 +140,7 @@ time make -j2
 make install
 
 tree -a ${OPENSHIFT_DATA_DIR}/apache
+fi
 
 cd /tmp
 rm -rf httpd-2.2.31
