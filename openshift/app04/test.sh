@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1115"
+echo "1132"
 
 set -x
 
@@ -22,9 +22,17 @@ fi
 
 /usr/bin/gear start --trace
 
+cd /tmp
+ls -lang
+cd $OPENSHIFT_DATA_DIR
+ls -lang
+
 # -----
 
 rm -f jam*
+rm -rf $OPENSHIFT_DATA_DIR/boost
+rm -rf $OPENSHIFT_DATA_DIR/usr
+quota -s
 
 # -----
 
