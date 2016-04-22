@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1526"
+echo "1546"
 
 set -x
 
@@ -127,6 +127,23 @@ tree -a $OPENSHIFT_DATA_DIR/usr/lib64
 quota -s
 
 cd /tmp
+
+wget -nc -q http://ftp.meisei-u.ac.jp/mirror/apache/dist//httpd/httpd-2.2.31.tar.bz2
+tar jxf httpd-2.2.31.tar.bz2
+cd httpd-2.2.31
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --enable-mods-shared='all proxy'
+time make -j2
+make install
+
+tree -a ${OPENSHIFT_DATA_DIR}/apache
+
+cd /tmp
+rm -rf httpd-2.2.31
+
 wget -nc -q https://www.pccc.com/downloads/apache/current/mod_fastcgi-current.tar.gz
 rm -rf mod_fastcgi-2.4.6
 tar zxf mod_fastcgi-current.tar.gz
