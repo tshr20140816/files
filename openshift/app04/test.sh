@@ -172,9 +172,9 @@ rm -rf mod_fastcgi-2.4.6
 tar zxf mod_fastcgi-current.tar.gz
 cd mod_fastcgi-2.4.6
 cp Makefile.AP2 Makefile
-sed -i -e "s|^top_dir.+$|top_dir = ${OPENSHIFT_DATA_DIR}/apache|g" Makefile
-sed -i -e "s|^APXS.+$|APXS = ${OPENSHIFT_DATA_DIR}/apache/bin/apxs|g" Makefile
-sed -i -e "s|^APACHECTL.+$|APACHECTL = ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl|g" Makefile
+sed -i -e "s|^top_dir.\+$|top_dir = ${OPENSHIFT_DATA_DIR}/apache|g" Makefile
+sed -i -e "s|^APXS.\+$|APXS = ${OPENSHIFT_DATA_DIR}/apache/bin/apxs|g" Makefile
+sed -i -e "s|^APACHECTL.\+$|APACHECTL = ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl|g" Makefile
 cat Makefile
 
 echo "FINISH"
