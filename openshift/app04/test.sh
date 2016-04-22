@@ -140,12 +140,12 @@ cd httpd-2.2.31
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
  --enable-mods-shared='all proxy' \
- --disable-vhost_alias \
- --disable-authn_anon \
- --disable-authn_dbm \
- --disable-authz_dbm \
- --disable-authz_groupfile \
- --disable-authz_owner
+ --disable-vhost-alias \
+ --disable-authn-anon \
+ --disable-authn-dbm \
+ --disable-authz-dbm \
+ --disable-authz-groupfile \
+ --disable-authz-owner
 time make -j2
 make install
 
@@ -160,6 +160,9 @@ rm -rf mod_fastcgi-2.4.6
 tar zxf mod_fastcgi-current.tar.gz
 cd mod_fastcgi-2.4.6
 cp Makefile.AP2 Makefile
+sed -i -e "s|^top_dir.+$|top_dir = ${OPENSHIFT_DATA_DIR}/apache|g" Makefile
+sed -i -e "s|^APXS.+$|APXS = ${OPENSHIFT_DATA_DIR}/apache/bin/apxs|g" Makefile
+sed -i -e "s|^APACHECTL.+$|APACHECTL = ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl|g" Makefile
 cat Makefile
 
 echo "FINISH"
