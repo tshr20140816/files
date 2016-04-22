@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1136"
+echo "1159"
 
 set -x
 
@@ -29,7 +29,7 @@ ls -lang
 
 # -----
 
-rm -f jam*
+rm -f /tmp/jam*
 rm -rf $OPENSHIFT_DATA_DIR/boost
 rm -rf $OPENSHIFT_DATA_DIR/usr
 rm -f $OPENSHIFT_DATA_DIR/monitor_*
@@ -61,6 +61,7 @@ cd boost_1_54_0
 time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --libdir=$OPENSHIFT_DATA_DIR/usr/lib \
  --link=shared \
+ --runtime-link=shared \
  --without-atomic \
  --without-chrono \
  --without-context \
