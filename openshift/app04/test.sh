@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1055"
+echo "1059"
 
 set -x
 
@@ -32,7 +32,7 @@ ssh --help
 cd /tmp
 
 rm -f zabbix-3.0.1.tar.gz
-tar xfz zabbix-3.0.1.tar.gz
+rm -rf zabbix-3.0.1
 
 ls -lang
 
