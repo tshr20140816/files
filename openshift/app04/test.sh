@@ -126,21 +126,31 @@ tree -a $OPENSHIFT_DATA_DIR/usr/lib64
 
 quota -s
 
-if [ ! -f ${OPENSHIFT_DATA_DIR}/apache/bin/httpd ]; then
+# if [ ! -f ${OPENSHIFT_DATA_DIR}/apache/bin/httpd ]; then
+rm -rf ${OPENSHIFT_DATA_DIR}/apache
+rm -rf ${OPENSHIFT_TMP_DIR}/man
+rm -rf ${OPENSHIFT_TMP_DIR}/doc
 cd /tmp
 wget -nc -q http://ftp.meisei-u.ac.jp/mirror/apache/dist//httpd/httpd-2.2.31.tar.bz2
 tar jxf httpd-2.2.31.tar.bz2
 cd httpd-2.2.31
+./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
  --docdir=${OPENSHIFT_TMP_DIR}/doc \
- --enable-mods-shared='all proxy'
+ --enable-mods-shared='all proxy' \
+ --disable-vhost_alias \
+ --disable-authn_anon \
+ --disable-authn_dbm \
+ --disable-authz_dbm \
+ --disable-authz_groupfile \
+ --disable-authz_owner
 time make -j2
 make install
 
 tree -a ${OPENSHIFT_DATA_DIR}/apache
-fi
+# fi
 
 cd /tmp
 rm -rf httpd-2.2.31
