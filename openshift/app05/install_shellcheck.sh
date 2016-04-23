@@ -8,6 +8,8 @@ set -x
 
 export TZ=JST-9
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) START"
+
 # quota -s
 # oo-cgroup-read memory.failcnt
 
