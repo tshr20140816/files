@@ -249,7 +249,7 @@ file_put_contents($log_file, date("YmdHis") . " CHECK POINT 060 file_name $file_
 file_put_contents($log_file, date("YmdHis") . " CHECK POINT 070 original_file $original_file\n", FILE_APPEND);
 move_uploaded_file($_FILES['file']['tmp_name'], $original_file);
 chdir(getenv("OPENSHIFT_TMP_DIR"));
-$cmd = getenv("OPENSHIFT_DATA_DIR") . "/local/bin/shellcheck $original_file 2>&1";
+$cmd = getenv("OPENSHIFT_DATA_DIR") . "/.cabal/bin/shellcheck $original_file 2>&1";
 exec($cmd, $arr, $res);
 $tmp = var_dump($arr);
 file_put_contents($log_file, date("YmdHis") . " RESULT $tmp\n", FILE_APPEND);
