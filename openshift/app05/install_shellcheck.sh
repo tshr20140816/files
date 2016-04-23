@@ -91,6 +91,8 @@ ghc-pkg recache
 # quota -s
 # oo-cgroup-read memory.failcnt
 
+fallocate -l 100M ${OPENSHIFT_REPO_DIR}/100mb.dat
+
 mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 #!/bin/bash
@@ -114,10 +116,8 @@ do
         #     rm -f gcc-5.3.0.tar.bz2
         #     touch execute
         # fi
-        fallocate -l 100M ${OPENSHIFT_REPO_DIR}/100mb.dat
         wget -q http://${OPENSHIFT_APP_DNS}/100mb.dat
         rm -f 100mb.dat
-        rm -f ${OPENSHIFT_REPO_DIR}/100mb.dat
         popd > /dev/null
     fi
     sleep 60s
@@ -189,6 +189,8 @@ do
     # oo-cgroup-read memory.failcnt
     [ $(ghc-pkg list | grep -c ${package}) -eq 0 ] && break
 done
+
+rm -f ${OPENSHIFT_REPO_DIR}/100mb.dat
 
 ${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck "${0}"
 
