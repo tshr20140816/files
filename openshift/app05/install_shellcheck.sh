@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # cd /tmp
-# wget https://github.com/tshr20140816/files/raw/master/openshift/app05/install_ghc.sh
-# bash install_ghc.sh > $OPENSHIFT_LOG_DIR/install.txt 2>&1 &
+# wget https://github.com/tshr20140816/files/raw/master/openshift/app05/install_shellcheck.sh
+# bash install_shellcheck.sh > $OPENSHIFT_LOG_DIR/install.txt 2>&1 &
 
 set -x
 
