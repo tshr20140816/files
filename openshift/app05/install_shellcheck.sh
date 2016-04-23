@@ -167,8 +167,12 @@ do
             sed -i -e "s|/usr/bin/gcc|${OPENSHIFT_DATA_DIR}/local/bin/gcc|g" ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
         fi
         # cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
-        cabal install -j1 -v3 --disable-optimization --disable-documentation \
-         --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
+        # cabal install -j1 -v3 --disable-optimization --disable-documentation \
+        #  --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
+        #  --ghc-options="+RTS -N1 -M448m -RTS"
+        cabal install -j1 --disable-documentation -O2 \
+         --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
+         --disable-tests --disable-coverage --disable-benchmarks \
          --ghc-options="+RTS -N1 -M448m -RTS"
         export PATH="${PATH_ORG}"
         cp -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
