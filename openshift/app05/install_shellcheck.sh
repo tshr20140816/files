@@ -193,7 +193,7 @@ done
 
 ${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck "${0}"
 
-cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/shellcheck
 #!/bin/bash
 
 export TZ=JST-9
@@ -205,9 +205,7 @@ export OPENSHIFT_HASKELL_DIR=${OPENSHIFT_DATA_DIR}/haskell
 
 ${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck "$@"
 __HEREDOC__
-popd > /dev/null
-${OPENSHIFT_DATA_DIR}/local/bin/gcc
-chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/shellcheck
 
 cat << '__HEREDOC__' > ${OPENSHIFT_REPO_DIR}/shellcheck.php
 <?php
