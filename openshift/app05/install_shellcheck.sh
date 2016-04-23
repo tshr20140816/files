@@ -108,12 +108,16 @@ do
     # ps alx --sort -rss | head -n 3
     if [ "${usage_in_bytes}" -gt 500000000 ]; then
         pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-        if [ $(find ./ -type f -mmin -3 -name execute -print | wc -l) -eq 0 ]; then
-            # sumanu
-            wget -q http://mirrors.kernel.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.bz2
-            rm -f gcc-5.3.0.tar.bz2
-            touch execute
-        fi
+        # if [ $(find ./ -type f -mmin -3 -name execute -print | wc -l) -eq 0 ]; then
+        #     # sumanu
+        #     wget -q http://mirrors.kernel.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.bz2
+        #     rm -f gcc-5.3.0.tar.bz2
+        #     touch execute
+        # fi
+        fallocate -l 100M ${OPENSHIFT_REPO_DIR}/100mb.dat
+        wget -q http://${OPENSHIFT_APP_DNS}/100mb.dat
+        rm -f 100mb.dat
+        rm -f ${OPENSHIFT_REPO_DIR}/100mb.dat
         popd > /dev/null
     fi
     sleep 60s
