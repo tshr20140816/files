@@ -97,14 +97,14 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
 while :
 do
-    dt=$(date +%H%M%S)
     usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
-    usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
-    failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
-    echo "$dt $usage_in_bytes_format $failcnt"
     if [ "${usage_in_bytes}" -lt 500000000 ]; then
         break
     fi
+    dt=$(date +%H%M%S)
+    usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
+    failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
+    echo "$dt $usage_in_bytes_format $failcnt"
     # ps alx --sort -rss | head -n 3
     if [ "${usage_in_bytes}" -gt 500000000 ]; then
         pushd ${OPENSHIFT_TMP_DIR} > /dev/null
