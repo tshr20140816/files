@@ -57,6 +57,7 @@ pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
 tar Jxf gmp-6.1.0.tar.xz
 pushd gmp-6.1.0 > /dev/null
+./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/local --enable-static=no
 time make -j4
 make install
