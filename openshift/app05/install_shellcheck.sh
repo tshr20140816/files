@@ -51,17 +51,6 @@ export CXXFLAGS="${CFLAGS}"
 # ls -lang ${OPENSHIFT_LOG_DIR}
 mkdir ${OPENSHIFT_DATA_DIR}/tmp
 
-if [ 1 -ne 1 ]; then
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-wget -nc http://mirror.centos.org/centos/6/os/x86_64/Packages/gmp-4.3.1-7.el6_2.2.x86_64.rpm
-rpm2cpio gmp-4.3.1-7.el6_2.2.x86_64.rpm | cpio -idmv
-rm -f gmp-4.3.1-7.el6_2.2.x86_64.rpm
-popd > /dev/null
-pushd ${OPENSHIFT_DATA_DIR}/usr/lib64 > /dev/null
-ln -s libgmp.so.3 libgmp.so
-popd > /dev/null
-export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib64
-else
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
 tar Jxf gmp-6.1.0.tar.xz
@@ -74,7 +63,6 @@ rm -rf gmp-6.1.0
 rm -f gmp-6.1.0.tar.xz
 export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib
 popd > /dev/null
-fi
 
 mkdir ${OPENSHIFT_DATA_DIR}/haskell
 pushd ${OPENSHIFT_DATA_DIR}/haskell > /dev/null
