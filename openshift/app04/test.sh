@@ -177,5 +177,7 @@ sed -i -e "s|^APXS.\+$|APXS = ${OPENSHIFT_DATA_DIR}/apache/bin/apxs|g" Makefile
 sed -i -e "s|^APACHECTL.\+$|APACHECTL = ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl|g" Makefile
 cat Makefile
 
+time make
+
 echo "FINISH"
 exit
