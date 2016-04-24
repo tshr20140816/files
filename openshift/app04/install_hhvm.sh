@@ -5,30 +5,36 @@ export CXXFLAGS="${CFLAGS}"
 
 # apache
 
-cd /tmp
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget -nc -q http://ftp.kddilabs.jp/infosystems/apache//httpd/httpd-2.2.31.tar.bz2
 tar jxf httpd-2.2.31.tar.bz2
-cd httpd-2.2.31
+pushd httpd-2.2.31 > /dev/null
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/apache --enable-mods-shared='all proxy'
 time make -j4
 make install
+popd > /dev/null
+rm -rf httpd-2.2.31
+popd > /dev/null
 
 # fastcgi
 
-cd /tmp
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget -nc -q https://www.pccc.com/downloads/apache/current/mod_fastcgi-current.tar.gz
 tar zxf mod_fastcgi-current.tar.gz
-cd mod_fastcgi-2.4.6
+pushd mod_fastcgi-2.4.6 > /dev/null
 time make top_dir=${OPENSHIFT_DATA_DIR}/apache
 make install top_dir=${OPENSHIFT_DATA_DIR}/apache
+popd > /dev/null
+rm -rf mod_fastcgi-2.4.6
+popd > /dev/null
 
 # boost
 
-cd /tmp
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget -nc -q http://heanet.dl.sourceforge.net/project/boost/boost/1.54.0/boost_1_54_0.tar.bz2
 tar jxf boost_1_54_0.tar.bz2
-cd boost_1_54_0
+pushd boost_1_54_0 > /dev/null
 export HOME=${OPENSHIFT_DATA_DIR}
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/user-config.jam
 using gcc : : gcc : <cflags>"-O2 -march=native -fomit-frame-pointer -s -pipe" <cxxflags>"-O2 -march=native -fomit-frame-pointer -s -pipe" ;
@@ -59,6 +65,9 @@ time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  --without-test \
  --without-timer \
  --without-wave
+ popd > /dev/null
+ rm -rf boost_1_54_0
+ popd > /dev/null
  
  tree -a $OPENSHIFT_DATA_DIR/usr/lib
  
