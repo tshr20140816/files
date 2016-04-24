@@ -20,6 +20,7 @@ popd > /dev/null
 # fastcgi
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+# wget -nc -q http://www.fastcgi.com/dist/mod_fastcgi-current.tar.gz
 wget -nc -q https://www.pccc.com/downloads/apache/current/mod_fastcgi-current.tar.gz
 tar zxf mod_fastcgi-current.tar.gz
 pushd mod_fastcgi-2.4.6 > /dev/null
