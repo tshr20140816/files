@@ -68,6 +68,7 @@ time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
  popd > /dev/null
  rm -rf boost_1_54_0
  popd > /dev/null
+ rm -rf $OPENSHIFT_DATA_DIR/boost
  
  tree -a $OPENSHIFT_DATA_DIR/usr/lib
  
