@@ -102,4 +102,8 @@ rm -rf $OPENSHIFT_DATA_DIR/usr/share/doc/
 rm -rf $OPENSHIFT_DATA_DIR/usr/share/man/
 rm -rf $OPENSHIFT_DATA_DIR/usr/share/hhvm/LICENSE/
 
- 
+export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/lib:$OPENSHIFT_DATA_DIR/usr/lib/hhvm:$OPENSHIFT_DATA_DIR/usr/lib64
+$OPENSHIFT_DATA_DIR/usr/bin/hhvm --version
+
+cat $OPENSHIFT_DATA_DIR/etc/hhvm/server.ini
+
