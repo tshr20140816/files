@@ -41,8 +41,8 @@ using gcc : : gcc : <cflags>"-O2 -march=native -fomit-frame-pointer -s -pipe" <c
 __HEREDOC__
 ./bootstrap.sh
 ./b2 --help
-time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
- --libdir=$OPENSHIFT_DATA_DIR/usr/lib \
+time ./b2 install -j1 --prefix=${OPENSHIFT_DATA_DIR}/boost \
+ --libdir=${OPENSHIFT_DATA_DIR}/usr/lib \
  --link=shared \
  --runtime-link=shared \
  --without-atomic \
@@ -68,11 +68,11 @@ time ./b2 install -j1 --prefix=$OPENSHIFT_DATA_DIR/boost \
 popd > /dev/null
 rm -rf boost_1_54_0
 popd > /dev/null
-rm -rf $OPENSHIFT_DATA_DIR/boost
+rm -rf ${OPENSHIFT_DATA_DIR}/boost
  
-tree -a $OPENSHIFT_DATA_DIR/usr/lib
+tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
  
-pushd $OPENSHIFT_DATA_DIR > /dev/null
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 wget -nc -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
 
 wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
@@ -98,12 +98,12 @@ ln -s /usr/lib64/mysql/libmysqlclient.so.16.0.0 libmysqlclient.so.18
 ln -s libwebp.so.5.0.3 libwebp.so.4
 popd > /dev/null
 popd > /dev/null
-rm -rf $OPENSHIFT_DATA_DIR/usr/share/doc/
-rm -rf $OPENSHIFT_DATA_DIR/usr/share/man/
-rm -rf $OPENSHIFT_DATA_DIR/usr/share/hhvm/LICENSE/
+rm -rf ${OPENSHIFT_DATA_DIR}/usr/share/doc/
+rm -rf ${OPENSHIFT_DATA_DIR}/usr/share/man/
+rm -rf ${OPENSHIFT_DATA_DIR}/usr/share/hhvm/LICENSE/
 
-export LD_LIBRARY_PATH=$OPENSHIFT_DATA_DIR/usr/lib:$OPENSHIFT_DATA_DIR/usr/lib/hhvm:$OPENSHIFT_DATA_DIR/usr/lib64
-$OPENSHIFT_DATA_DIR/usr/bin/hhvm --version
+export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib:${OPENSHIFT_DATA_DIR}/usr/lib/hhvm:${OPENSHIFT_DATA_DIR}/usr/lib64
+${OPENSHIFT_DATA_DIR}/usr/bin/hhvm --version
 
-cat $OPENSHIFT_DATA_DIR/etc/hhvm/server.ini
+cat ${OPENSHIFT_DATA_DIR}/etc/hhvm/server.ini
 
