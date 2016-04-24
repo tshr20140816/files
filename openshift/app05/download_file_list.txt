@@ -42,3 +42,11 @@ webalizer-2.23-08-src.tar.bz2 ftp://ftp.mrunix.net/pub/webalizer/webalizer-2.23-
 wordpress-4.4.2-ja.tar.gz https://ja.wordpress.org/wordpress-4.4.2-ja.tar.gz
 xz-5.2.1.tar.xz http://tukaani.org/xz/xz-5.2.1.tar.xz
 yuicompressor-2.4.8.jar https://github.com/yui/yuicompressor/releases/download/v2.4.8/yuicompressor-2.4.8.jar
+hhvm-3.5.0-4.el6.x86_64.rpm https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
+libvpx-1.3.0-5.el6_5.x86_64.rpm http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
+tbb-2.2-3.20090809.el6.x86_64.rpm http://mirror.centos.org/centos/6/os/x86_64/Packages/tbb-2.2-3.20090809.el6.x86_64.rpm
+oniguruma-5.9.1-3.1.el6.x86_64.rpm http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
+inotify-tools-3.14-1.el6.x86_64.rpm http://dl.fedoraproject.org/pub/epel/6/x86_64/inotify-tools-3.14-1.el6.x86_64.rpm
+libdwarf-20140413-1.el6.x86_64.rpm http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
+libwebp-0.4.3-3.el6.x86_64.rpm http://dl.fedoraproject.org/pub/epel/6/x86_64/libwebp-0.4.3-3.el6.x86_64.rpm
+lcms2-2.7-3.el6.x86_64.rpm http://dl.fedoraproject.org/pub/epel/6/x86_64/lcms2-2.7-3.el6.x86_64.rpm
