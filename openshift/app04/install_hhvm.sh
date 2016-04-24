@@ -16,6 +16,7 @@ make install
 popd > /dev/null
 rm -rf httpd-2.2.31
 popd > /dev/null
+quota -s
 
 # fastcgi
 
@@ -29,6 +30,7 @@ make install top_dir=${OPENSHIFT_DATA_DIR}/apache
 popd > /dev/null
 rm -rf mod_fastcgi-2.4.6
 popd > /dev/null
+quota -s
 
 # boost
 
@@ -70,8 +72,11 @@ popd > /dev/null
 rm -rf boost_1_54_0
 popd > /dev/null
 rm -rf ${OPENSHIFT_DATA_DIR}/boost
- 
+quota -s
+
 tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
+
+# hhvm
  
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 wget -nc -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
@@ -107,4 +112,5 @@ export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib:${OPENSHIFT_DATA_DIR}/usr/l
 ${OPENSHIFT_DATA_DIR}/usr/bin/hhvm --version
 
 cat ${OPENSHIFT_DATA_DIR}/etc/hhvm/server.ini
+quota -s
 
