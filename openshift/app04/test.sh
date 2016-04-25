@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1512"
+echo "1534"
 
 set -x
 
@@ -52,7 +52,11 @@ ls -lang
 tar xf lcms2-2.7.tar.gz
 cd lcms2-2.7
 ./configure --help
-time ./configure
+./configure --prefix=${OPENSHIFT_TMP_DIR}/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib --enable-static=no
+time make -j4
+make install
+ls -lang ${OPENSHIFT_DATA_DIR}/usr/lib
+
 quota -s
 echo "FINISH"
 exit
