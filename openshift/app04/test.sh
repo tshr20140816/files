@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0938"
+echo "0944"
 
 set -x
 
@@ -39,7 +39,9 @@ rm -rf libvpx-v1.3.0
 tar xf libvpx-v1.3.0.tar.bz2
 cd libvpx-v1.3.0
 ./configure --help
-time ./configure --prefix=/tmp/dummy --disable-examples --disable-docs --enable-shared --disable-static
+time ./configure --log=yes --prefix=/tmp/dummy --disable-examples --disable-docs --enable-shared --disable-static \
+ --disable-install-bins
+cat config.log
 
 quota -s
 echo "FINISH"
