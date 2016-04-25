@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1715"
+echo "1739"
 
 set -x
 
@@ -49,11 +49,8 @@ wget -q http://download.fedoraproject.org/pub/epel/6/SRPMS/libwebp-0.4.3-3.el6.s
 rpm2cpio libwebp-0.4.3-3.el6.src.rpm | cpio -idmv
 cat *.patch
 ls -lang
-
-exit
-
-tar xf lcms2-2.7.tar.gz
-cd lcms2-2.7
+tar xf libwebp-0.4.3.tar.gz
+cd libwebp-0.4.3
 ./configure --help
 ./configure --prefix=${OPENSHIFT_TMP_DIR}/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib --enable-static=no
 time make -j4
