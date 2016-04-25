@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1344"
+echo "1346"
 
 set -x
 
@@ -35,6 +35,8 @@ cd /tmp
 rm -rf 20160424
 rm -rf 20160425
 
+rm -rf ${OPENSHFIT_DATA_DIR}/usr
+
 # -----
 
 export CFLAGS="-std=c++0x -O2 -march=native -fomit-frame-pointer -s -pipe"
@@ -49,7 +51,7 @@ tree -a ./
 tar xf inotify-tools-3.14.tar.gz
 cd inotify-tools-3.14
 ./configure --help
-time ./configure --prefix=/tmp/gomi --libdir=${OPENSHFIT_DATA_DIR}/usr/lib
+time ./configure --prefix=/tmp/gomi --libdir=${OPENSHFIT_DATA_DIR}/usr/lib --enable-static=no
 time make -j4
 make install
 tree -a ${OPENSHFIT_DATA_DIR}/usr/lib
