@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0915"
+echo "0938"
 
 set -x
 
@@ -23,11 +23,8 @@ fi
 /usr/bin/gear start --trace
 
 cd /tmp
-rm -rf man mod_fastcgi-2.4.6
 ls -lang
 cd $OPENSHIFT_DATA_DIR
-rm -rf apache usr var etc
-rm -f user-config.jam
 ls -lang
 
 quota -s
@@ -37,11 +34,13 @@ quota -s
 # -----
 
 cd /tmp
-wget http://pkgs.fedoraproject.org/repo/pkgs/libvpx/libvpx-v1.3.0.tar.bz2/14783a148872f2d08629ff7c694eb31f/libvpx-v1.3.0.tar.bz2
+wget -nc -q http://pkgs.fedoraproject.org/repo/pkgs/libvpx/libvpx-v1.3.0.tar.bz2/14783a148872f2d08629ff7c694eb31f/libvpx-v1.3.0.tar.bz2
+rm -rf libvpx-v1.3.0
 tar xf libvpx-v1.3.0.tar.bz2
 cd libvpx-v1.3.0
 ./configure --help
-time ./configure --prefix=/tmp/dummy
+time ./configure --prefix=/tmp/dummy --disable-examples --disable-docs --enable-shared --disable-static
 
+quota -s
 echo "FINISH"
 exit
