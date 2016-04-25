@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1118"
+echo "1119"
 
 set -x
 
@@ -35,7 +35,8 @@ cd /tmp
 rm -rf libvpx-v1.3.0
 rm -f libvpx-v1.3.0.tar.bz2*
 rm -f *.rpm
-rm -f *.patch *.ver
+rm -f *.patch *.ver *.spec
+rm -rf 20160425
 
 # -----
 
