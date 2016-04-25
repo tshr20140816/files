@@ -34,6 +34,7 @@ quota -s
 cd /tmp
 rm -rf 20160424
 rm -rf 20160425
+rm -rf gomi
 
 rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
