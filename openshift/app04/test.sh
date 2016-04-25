@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1142"
+echo "1157"
 
 set -x
 
@@ -49,6 +49,8 @@ cd 20160425
 wget -nc -q ftp://bo.mirror.garr.it/1/slc/updates/slc6X/SRPMS/tbb-2.2-3.20090809.el6.src.rpm
 rpm2cpio tbb-2.2-3.20090809.el6.src.rpm | cpio -idmv
 tree -a ./
+
+cat *.patch
 
 quota -s
 echo "FINISH"
