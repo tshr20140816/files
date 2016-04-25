@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1033"
+echo "1036"
 
 set -x
 
@@ -33,7 +33,7 @@ quota -s
 
 cd /tmp
 rm -rf libvpx-v1.3.0
-rm -f libvpx-v1.3.0.tar.bz2
+rm -f libvpx-v1.3.0.tar.bz2*
 
 # -----
 
@@ -44,6 +44,8 @@ cd /tmp
 wget -nc -q ftp://bo.mirror.garr.it/2/scientific/6x/SRPMS/vendor/libvpx-1.3.0-5.el6_5.src.rpm
 rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
 tree -a ./
+
+cat *.patch
 
 quota -s
 echo "FINISH"
