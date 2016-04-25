@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1330"
+echo "1332"
 
 set -x
 
@@ -32,10 +32,7 @@ quota -s
 # -----
 
 cd /tmp
-rm -rf libvpx-v1.3.0
-rm -f libvpx-v1.3.0.tar.bz2*
-rm -f *.rpm
-rm -f *.patch *.ver *.spec
+rm -rf 20160424
 rm -rf 20160425
 
 # -----
@@ -48,6 +45,15 @@ mkdir 20160425
 cd 20160425
 wget -nc -q ftp://ftp.ntua.gr/pub/linux/fedora-epel/6/SRPMS/inotify-tools-3.14-1.el6.src.rpm
 rpm2cpio inotify-tools-3.14-1.el6.src.rpm | cpio -idmv
+tree -a ./
+
+cat *.patch
+
+cd /tmp
+mkdir 20160424
+cd 20160424
+wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/oniguruma-5.9.1-3.1.el6.src.rpm
+rpm2cpio oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
 tree -a ./
 
 cat *.patch
