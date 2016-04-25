@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1011"
+echo "1033"
 
 set -x
 
@@ -31,20 +31,19 @@ quota -s
 
 # -----
 
+cd /tmp
+rm -rf libvpx-v1.3.0
+rm -f libvpx-v1.3.0.tar.bz2
+
 # -----
 
 export CFLAGS="-std=c++0x -O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
-wget -nc -q http://pkgs.fedoraproject.org/repo/pkgs/libvpx/libvpx-v1.3.0.tar.bz2/14783a148872f2d08629ff7c694eb31f/libvpx-v1.3.0.tar.bz2
-rm -rf libvpx-v1.3.0
-tar xf libvpx-v1.3.0.tar.bz2
-cd libvpx-v1.3.0
-./configure --help
-time ./configure --log=yes --prefix=/tmp/dummy --disable-examples --disable-docs --enable-shared --disable-static \
- --disable-install-bins
-cat config.log
+wget -nc -q ftp://bo.mirror.garr.it/2/scientific/6x/SRPMS/vendor/libvpx-1.3.0-5.el6_5.src.rpm
+rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
+tree -a ./
 
 quota -s
 echo "FINISH"
