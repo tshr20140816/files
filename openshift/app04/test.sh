@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1708"
+echo "1715"
 
 set -x
 
@@ -45,8 +45,8 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget -q http://download.fedoraproject.org/pub/epel/6/SRPMS/libdwarf-20140413-1.el6.src.rpm
-rpm2cpio libdwarf-20140413-1.el6.src.rpm | cpio -idmv
+wget -q http://download.fedoraproject.org/pub/epel/6/SRPMS/libwebp-0.4.3-3.el6.src.rpm
+rpm2cpio libwebp-0.4.3-3.el6.src.rpm | cpio -idmv
 cat *.patch
 ls -lang
 
