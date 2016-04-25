@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1358"
+echo "1509"
 
 set -x
 
@@ -49,30 +49,10 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget -nc -q ftp://ftp.ntua.gr/pub/linux/fedora-epel/6/SRPMS/inotify-tools-3.14-1.el6.src.rpm
-rpm2cpio inotify-tools-3.14-1.el6.src.rpm | cpio -idmv
-tree -a ./
-tar xf inotify-tools-3.14.tar.gz
-cd inotify-tools-3.14
-./configure --help
-time ./configure --prefix=/tmp/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib --enable-static=no
-time make -j4
-make install
-tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
-
-cd /tmp
-mkdir 20160424
-cd 20160424
-wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/oniguruma-5.9.1-3.1.el6.src.rpm
-rpm2cpio oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
-tree -a ./
-tar xf onig-5.9.1.tar.gz
-cd onig-5.9.1
-./configure --help
-time ./configure --prefix=/tmp/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib --enable-static=no
-time make -j4
-make install
-tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
+wget -q http://download.fedoraproject.org/pub/epel/6/SRPMS/lcms2-2.7-3.el6.src.rpm
+rpm2cpio lcms2-2.7-3.el6.src.rpm | cpio -idmv
+cat *.patch
+ls -lang
 
 quota -s
 echo "FINISH"
