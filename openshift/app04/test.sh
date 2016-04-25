@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1351"
+echo "1352"
 
 set -x
 
@@ -32,6 +32,7 @@ quota -s
 # -----
 
 cd /tmp
+rm -rf 20160422
 rm -rf 20160423
 rm -rf 20160424
 rm -rf 20160425
@@ -41,7 +42,7 @@ rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 # -----
 
-export CFLAGS="-std=c++0x -O2 -march=native -fomit-frame-pointer -s -pipe"
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
@@ -76,6 +77,12 @@ cd /tmp
 mkdir 20160423
 wget -nc -q http://download.fedoraproject.org/pub/epel/6/SRPMS/libdwarf-20140413-1.el6.src.rpm
 rpm2cpio libdwarf-20140413-1.el6.src.rpm | cpio -idmv
+ls -lang
+
+cd /tmp
+mkdir 20160422
+wget -nc -q ftp://ftp.ntua.gr/pub/linux/fedora-epel/6/SRPMS/libwebp-0.4.3-3.el6.src.rpm
+rpm2cpio libwebp-0.4.3-3.el6.src.rpm | cpio -idmv
 ls -lang
 
 quota -s
