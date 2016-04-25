@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1338"
+echo "1344"
 
 set -x
 
@@ -49,7 +49,10 @@ tree -a ./
 tar xf inotify-tools-3.14.tar.gz
 cd inotify-tools-3.14
 ./configure --help
-time ./configure --prefix=/tmp/local
+time ./configure --prefix=/tmp/gomi --libdir=${OPENSHFIT_DATA_DIR}/usr/lib
+time make -j4
+make install
+tree -a ${OPENSHFIT_DATA_DIR}/usr/lib
 
 cd /tmp
 mkdir 20160424
@@ -57,10 +60,13 @@ cd 20160424
 wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/oniguruma-5.9.1-3.1.el6.src.rpm
 rpm2cpio oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
 tree -a ./
-tar onig-5.9.1.tar.gz
+tar xf onig-5.9.1.tar.gz
 cd onig-5.9.1
 ./configure --help
-time ./configure --prefix=/tmp/local
+time ./configure --prefix=/tmp/gomi --libdir=${OPENSHFIT_DATA_DIR}/usr/lib
+time make -j4
+make install
+tree -a ${OPENSHFIT_DATA_DIR}/usr/lib
 
 quota -s
 echo "FINISH"
