@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1332"
+echo "1334"
 
 set -x
 
@@ -46,8 +46,10 @@ cd 20160425
 wget -nc -q ftp://ftp.ntua.gr/pub/linux/fedora-epel/6/SRPMS/inotify-tools-3.14-1.el6.src.rpm
 rpm2cpio inotify-tools-3.14-1.el6.src.rpm | cpio -idmv
 tree -a ./
-
-cat *.patch
+tar xf inotify-tools-3.14.tar.gz
+cd inotify-tools-3.14
+./configure --help
+time ./configure --prefix=/tmp/local
 
 cd /tmp
 mkdir 20160424
