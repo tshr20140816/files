@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0944"
+echo "0957"
 
 set -x
 
@@ -32,6 +32,9 @@ quota -s
 # -----
 
 # -----
+
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
+export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
 wget -nc -q http://pkgs.fedoraproject.org/repo/pkgs/libvpx/libvpx-v1.3.0.tar.bz2/14783a148872f2d08629ff7c694eb31f/libvpx-v1.3.0.tar.bz2
