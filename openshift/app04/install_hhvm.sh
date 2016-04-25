@@ -91,8 +91,25 @@ time make -j4
 make install
 popd > /dev/null
 popd > /dev/null
-rm -rf ${OPENSHIFT_TMP_DIR}/gomi
-rm -rf src
+rm -rf gomi src
+popd > /dev/null
+
+# inotify-tools
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+mkdir src
+pushd src > /dev/null
+wget -nc -q http://download.fedoraproject.org/pub/epel/6/SRPMS/inotify-tools-3.14-1.el6.src.rpm
+rpm2cpio inotify-tools-3.14-1.el6.src.rpm | cpio -idmv
+tar zxf inotify-tools-3.14.tar.gz
+pushd inotify-tools-3.14 > /dev/null
+./configure --help
+./configure --prefix=${OPENSHIFT_TMP_DIR}/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib --enable-static=no
+time make -j4
+make install
+popd > /dev/null
+popd > /dev/null
+rm -rf gomi src
 popd > /dev/null
 
 # hhvm
@@ -104,7 +121,7 @@ wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.
 wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/tbb-2.2-3.20090809.el6.x86_64.rpm
 # wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
 
-wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/inotify-tools-3.14-1.el6.x86_64.rpm
+# wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/inotify-tools-3.14-1.el6.x86_64.rpm
 wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
 wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/libwebp-0.4.3-3.el6.x86_64.rpm
 wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/lcms2-2.7-3.el6.x86_64.rpm
