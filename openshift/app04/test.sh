@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1349"
+echo "1351"
 
 set -x
 
@@ -32,6 +32,7 @@ quota -s
 # -----
 
 cd /tmp
+rm -rf 20160423
 rm -rf 20160424
 rm -rf 20160425
 rm -rf gomi
@@ -70,6 +71,12 @@ time ./configure --prefix=/tmp/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib
 time make -j4
 make install
 tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
+
+cd /tmp
+mkdir 20160423
+wget -nc -q http://download.fedoraproject.org/pub/epel/6/SRPMS/libdwarf-20140413-1.el6.src.rpm
+rpm2cpio libdwarf-20140413-1.el6.src.rpm | cpio -idmv
+ls -lang
 
 quota -s
 echo "FINISH"
