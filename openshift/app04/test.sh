@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0858"
+echo "0908"
 
 set -x
 
@@ -23,9 +23,14 @@ fi
 /usr/bin/gear start --trace
 
 cd /tmp
+rm -rf man mod_fastcgi-2.4.6
 ls -lang
 cd $OPENSHIFT_DATA_DIR
+rm -rf apache usr var etc
+rm -f user-config.jam
 ls -lang
+
+quota -s
 
 # -----
 
