@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1157"
+echo "1304"
 
 set -x
 
@@ -46,8 +46,8 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget -nc -q ftp://bo.mirror.garr.it/1/slc/updates/slc6X/SRPMS/tbb-2.2-3.20090809.el6.src.rpm
-rpm2cpio tbb-2.2-3.20090809.el6.src.rpm | cpio -idmv
+wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/oniguruma-5.9.1-3.1.el6.src.rpm
+oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
 tree -a ./
 
 cat *.patch
