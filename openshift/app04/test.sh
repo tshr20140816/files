@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1346"
+echo "1348"
 
 set -x
 
@@ -35,7 +35,7 @@ cd /tmp
 rm -rf 20160424
 rm -rf 20160425
 
-rm -rf ${OPENSHFIT_DATA_DIR}/usr
+rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 # -----
 
