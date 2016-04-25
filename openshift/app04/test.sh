@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1509"
+echo "1512"
 
 set -x
 
@@ -32,12 +32,8 @@ quota -s
 # -----
 
 cd /tmp
-rm -rf 20160422
-rm -rf 20160423
-rm -rf 20160424
 rm -rf 20160425
 rm -rf gomi
-rm -f *.*
 
 rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
@@ -51,9 +47,12 @@ mkdir 20160425
 cd 20160425
 wget -q http://download.fedoraproject.org/pub/epel/6/SRPMS/lcms2-2.7-3.el6.src.rpm
 rpm2cpio lcms2-2.7-3.el6.src.rpm | cpio -idmv
-cat *.patch
+# cat *.patch
 ls -lang
-
+tar xf lcms2-2.7.tar.gz
+cd lcms2-2.7
+./configure --help
+time ./configure
 quota -s
 echo "FINISH"
 exit
