@@ -45,15 +45,15 @@ wget -nc -q ftp://bo.mirror.garr.it/2/scientific/6x/SRPMS/vendor/libvpx-1.3.0-5.
 rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
 tree -a ./
 
-cat *.patch
+# cat *.patch
 
 tar xf libvpx-v1.3.0.tar.bz2
 
-patch -c < Bug-fix-in-ssse3-quantize-function.patch
+patch < Bug-fix-in-ssse3-quantize-function.patch
 
-cd libvpx-1.3.0
-./configure --help
-./configure
+# cd libvpx-v1.3.0
+# ./configure --help
+# ./configure
 
 quota -s
 echo "FINISH"
