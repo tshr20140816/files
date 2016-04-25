@@ -69,24 +69,10 @@ tree -a ./
 tar xf onig-5.9.1.tar.gz
 cd onig-5.9.1
 ./configure --help
-time ./configure --prefix=/tmp/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib
+time ./configure --prefix=/tmp/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib --enable-static=no
 time make -j4
 make install
 tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
-
-cd /tmp
-mkdir 20160423
-cd 20160423
-wget -nc -q http://download.fedoraproject.org/pub/epel/6/SRPMS/libdwarf-20140413-1.el6.src.rpm
-rpm2cpio libdwarf-20140413-1.el6.src.rpm | cpio -idmv
-ls -lang
-
-cd /tmp
-mkdir 20160422
-cd 20160422
-wget -nc -q ftp://ftp.ntua.gr/pub/linux/fedora-epel/6/SRPMS/libwebp-0.4.3-3.el6.src.rpm
-rpm2cpio libwebp-0.4.3-3.el6.src.rpm | cpio -idmv
-ls -lang
 
 quota -s
 echo "FINISH"
