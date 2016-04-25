@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1606"
+echo "1708"
 
 set -x
 
@@ -45,10 +45,13 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget -q http://download.fedoraproject.org/pub/epel/6/SRPMS/lcms2-2.7-3.el6.src.rpm
-rpm2cpio lcms2-2.7-3.el6.src.rpm | cpio -idmv
-# cat *.patch
+wget -q http://download.fedoraproject.org/pub/epel/6/SRPMS/libdwarf-20140413-1.el6.src.rpm
+rpm2cpio libdwarf-20140413-1.el6.src.rpm | cpio -idmv
+cat *.patch
 ls -lang
+
+exit
+
 tar xf lcms2-2.7.tar.gz
 cd lcms2-2.7
 ./configure --help
