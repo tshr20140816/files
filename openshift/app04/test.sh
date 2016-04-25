@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1116"
+echo "1118"
 
 set -x
 
@@ -35,6 +35,7 @@ cd /tmp
 rm -rf libvpx-v1.3.0
 rm -f libvpx-v1.3.0.tar.bz2*
 rm -f *.rpm
+rm -f *.patch *.ver
 
 # -----
 
@@ -42,6 +43,8 @@ export CFLAGS="-std=c++0x -O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
+mkdir 20160425
+cd 20160425
 wget -nc -q ftp://ftp.rediris.es/volumes/sites/linuxsoft.cern.ch/slc/updates/slc6X/SRPMS/tbb-2.2-3.20090809.el6.src.rpm
 rpm2cpio tbb-2.2-3.20090809.el6.src.rpm | cpio -idmv
 tree -a ./
