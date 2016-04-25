@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1304"
+echo "1315"
 
 set -x
 
@@ -47,7 +47,8 @@ cd /tmp
 mkdir 20160425
 cd 20160425
 wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/oniguruma-5.9.1-3.1.el6.src.rpm
-oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
+# oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
+oniguruma-5.9.1-3.1.el6.src.rpm | xz -d | cpio -id
 tree -a ./
 
 cat *.patch
