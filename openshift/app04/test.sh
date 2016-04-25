@@ -47,6 +47,14 @@ tree -a ./
 
 cat *.patch
 
+tar xf libvpx-v1.3.0.tar.bz2
+
+patch -u < Bug-fix-in-ssse3-quantize-function.patch
+
+cd libvpx-1.3.0-5
+./configure --help
+./configure
+
 quota -s
 echo "FINISH"
 exit
