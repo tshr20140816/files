@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1334"
+echo "1338"
 
 set -x
 
@@ -57,8 +57,10 @@ cd 20160424
 wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/oniguruma-5.9.1-3.1.el6.src.rpm
 rpm2cpio oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
 tree -a ./
-
-cat *.patch
+tar onig-5.9.1.tar.gz
+cd onig-5.9.1
+./configure --help
+time ./configure --prefix=/tmp/local
 
 quota -s
 echo "FINISH"
