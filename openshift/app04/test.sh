@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1036"
+echo "1152"
 
 set -x
 
@@ -49,9 +49,9 @@ cat *.patch
 
 tar xf libvpx-v1.3.0.tar.bz2
 
-patch -u < Bug-fix-in-ssse3-quantize-function.patch
+patch -c < Bug-fix-in-ssse3-quantize-function.patch
 
-cd libvpx-1.3.0-5
+cd libvpx-1.3.0
 ./configure --help
 ./configure
 
