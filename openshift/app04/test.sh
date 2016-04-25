@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1322"
+echo "1328"
 
 set -x
 
@@ -46,12 +46,8 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/oniguruma-5.9.1-3.1.el6.src.rpm
-# oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
-# oniguruma-5.9.1-3.1.el6.src.rpm | xz -d | cpio -id
-wget -nc -q https://bugzilla.redhat.com/attachment.cgi?id=422705 -O rpm2cpio.sh
-chmod +x rpm2cpio.sh
-rpm2cpio.sh oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
+wget -nc -q ftp://ftp.ntua.gr/pub/linux/fedora-epel/6/SRPMS/inotify-tools-3.14-1.el6.src.rpm
+inotify-tools-3.14-1.el6.src.rpm | cpio -idmv
 tree -a ./
 
 cat *.patch
