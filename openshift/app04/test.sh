@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1119"
+echo "1142"
 
 set -x
 
@@ -46,7 +46,7 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget -nc -q ftp://ftp.rediris.es/volumes/sites/linuxsoft.cern.ch/slc/updates/slc6X/SRPMS/tbb-2.2-3.20090809.el6.src.rpm
+wget -nc -q ftp://bo.mirror.garr.it/1/slc/updates/slc6X/SRPMS/tbb-2.2-3.20090809.el6.src.rpm
 rpm2cpio tbb-2.2-3.20090809.el6.src.rpm | cpio -idmv
 tree -a ./
 
