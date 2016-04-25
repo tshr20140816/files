@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1352"
+echo "1358"
 
 set -x
 
@@ -37,6 +37,7 @@ rm -rf 20160423
 rm -rf 20160424
 rm -rf 20160425
 rm -rf gomi
+rm -f *.*
 
 rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
@@ -75,12 +76,14 @@ tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
 
 cd /tmp
 mkdir 20160423
+cd 20160423
 wget -nc -q http://download.fedoraproject.org/pub/epel/6/SRPMS/libdwarf-20140413-1.el6.src.rpm
 rpm2cpio libdwarf-20140413-1.el6.src.rpm | cpio -idmv
 ls -lang
 
 cd /tmp
 mkdir 20160422
+cd 20160422
 wget -nc -q ftp://ftp.ntua.gr/pub/linux/fedora-epel/6/SRPMS/libwebp-0.4.3-3.el6.src.rpm
 rpm2cpio libwebp-0.4.3-3.el6.src.rpm | cpio -idmv
 ls -lang
