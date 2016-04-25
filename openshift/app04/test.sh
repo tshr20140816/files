@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0957"
+echo "1011"
 
 set -x
 
@@ -33,7 +33,7 @@ quota -s
 
 # -----
 
-export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
+export CFLAGS="-std=c++0x -O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
