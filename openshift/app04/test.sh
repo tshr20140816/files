@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0908"
+echo "0915"
 
 set -x
 
@@ -35,6 +35,13 @@ quota -s
 # -----
 
 # -----
+
+cd /tmp
+wget http://pkgs.fedoraproject.org/repo/pkgs/libvpx/libvpx-v1.3.0.tar.bz2/14783a148872f2d08629ff7c694eb31f/libvpx-v1.3.0.tar.bz2
+tar xf libvpx-v1.3.0.tar.bz2
+cd libvpx-v1.3.0
+./configure --help
+time ./configure --prefix=/tmp/dummy
 
 echo "FINISH"
 exit
