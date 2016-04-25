@@ -76,6 +76,25 @@ quota -s
 
 tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
 
+# oniguruma
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+mkdir src
+pushd src > /dev/null
+wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/oniguruma-5.9.1-3.1.el6.src.rpm
+rpm2cpio oniguruma-5.9.1-3.1.el6.src.rpm | cpio -idmv
+tar zxf onig-5.9.1.tar.gz
+pushd onig-5.9.1 > /dev/null
+./configure --help
+./configure --prefix=${OPENSHIFT_TMP_DIR}/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib --enable-static=no
+time make -j4
+make install
+popd > /dev/null
+popd > /dev/null
+rm -rf ${OPENSHIFT_TMP_DIR}/gomi
+rm -rf src
+popd > /dev/null
+
 # hhvm
  
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
@@ -83,7 +102,7 @@ wget -nc -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
 
 wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
 wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/tbb-2.2-3.20090809.el6.x86_64.rpm
-wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
+# wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/oniguruma-5.9.1-3.1.el6.x86_64.rpm
 
 wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/inotify-tools-3.14-1.el6.x86_64.rpm
 wget -nc -q http://dl.fedoraproject.org/pub/epel/6/x86_64/libdwarf-20140413-1.el6.x86_64.rpm
