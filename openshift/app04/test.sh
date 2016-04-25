@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1348"
+echo "1349"
 
 set -x
 
@@ -51,10 +51,10 @@ tree -a ./
 tar xf inotify-tools-3.14.tar.gz
 cd inotify-tools-3.14
 ./configure --help
-time ./configure --prefix=/tmp/gomi --libdir=${OPENSHFIT_DATA_DIR}/usr/lib --enable-static=no
+time ./configure --prefix=/tmp/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib --enable-static=no
 time make -j4
 make install
-tree -a ${OPENSHFIT_DATA_DIR}/usr/lib
+tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
 
 cd /tmp
 mkdir 20160424
@@ -65,10 +65,10 @@ tree -a ./
 tar xf onig-5.9.1.tar.gz
 cd onig-5.9.1
 ./configure --help
-time ./configure --prefix=/tmp/gomi --libdir=${OPENSHFIT_DATA_DIR}/usr/lib
+time ./configure --prefix=/tmp/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib
 time make -j4
 make install
-tree -a ${OPENSHFIT_DATA_DIR}/usr/lib
+tree -a ${OPENSHIFT_DATA_DIR}/usr/lib
 
 quota -s
 echo "FINISH"
