@@ -184,6 +184,9 @@ perl -pi -e 's/^(session.save_handler =).+$/$1 memcached/g' lib/php.ini
 perl -pi -e 's/^;(session.save_path =).+$/$1 "$ENV{OPENSHIFT_DIY_IP}:31211"/g' lib/php.ini
 perl -pi -e 's/^expose_php .+$/expose_php = Off/g' lib/php.ini
 perl -pi -e 's/(^;always_populate_raw_post_data =.*$)/$1\nalways_populate_raw_post_data = -1/g' lib/php.ini
+perl -pi -e 's/(^;opcache.enable=.*$)/$1\nopcache.enable=1/g' lib/php.ini
+perl -pi -e 's/(^;opcache.enable_cli=.*$)/$1\nopcache.enable_cli=1/g' lib/php.ini
+perl -pi -e 's/(^;opcache.memory_consumption=.*$)/$1\nopcache.memory_consumption=32/g' lib/php.ini
 perl -pi -e 's/(^;error_log =.*$)/error_log = __OPENSHIFT_LOG_DIR__\/php_error.log/g' lib/php.ini
 sed -i -e "s|__OPENSHIFT_LOG_DIR__|${OPENSHIFT_LOG_DIR}|g" lib/php.ini
 cat << '__HEREDOC__' >> lib/php.ini
