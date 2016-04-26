@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1337"
+echo "1342"
 
 set -x
 
@@ -48,7 +48,7 @@ wget -q http://ftp.kddilabs.jp/infosystems/apache//httpd/httpd-2.2.31.tar.bz2
 tar xf httpd-2.2.31.tar.bz2
 cd httpd-2.2.31
 ./configure --help
-.configure --prefix=${OPENSHIFT_DATA_DIR}/usr \
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr \
  --disable-imagemap \
  --disable-include \
  --enable-mods-shared='all proxy' \
