@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1139"
+echo "1142"
 
 set -x
 
@@ -43,6 +43,13 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
+wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.bz2
+tar xf pcre-8.38.tar.bz2
+cd pcre-8.38
+ls -lang
+./configure --help
+exit
+
 wget -q http://ftp.yz.yamagata-u.ac.jp/pub/network/apache//httpd/httpd-2.4.20.tar.bz2
 tar xf httpd-2.4.20.tar.bz2
 wget -q http://ftp.tsukuba.wide.ad.jp/software/apache//apr/apr-1.5.2.tar.bz2
