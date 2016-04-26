@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0948"
+echo "1034"
 
 set -x
 
@@ -35,8 +35,6 @@ cd /tmp
 rm -rf 20160425
 rm -rf gomi
 
-rm -rf ${OPENSHIFT_DATA_DIR}/usr
-
 # -----
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
@@ -45,23 +43,10 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget -nc -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
-rpm2cpio hhvm-3.5.0-4.el6.x86_64.rpm | cpio -idmv
-tree -a ./
-
-cd etc/hhvm 
-[ ! -f server.ini.org ] && mv -f server.ini server.ini.org
-cat << __HEREDOC__ > server.ini
-pid = ${OPENSHIFT_DATA_DIR}/var/run/hhvm/pid
-hhvm.server.port = 39001
-hhvm.server.type = fastcgi
-hhvm.server.default_document = index.php
-hhvm.log.use_log_file = true
-hhvm.log.file = ${OPENSHIFT_LOG_DIR}/hhvm_error.log
-hhvm.repo.central.path = ${OPENSHIFT_DATA_DIR}/var/run/hhvm/hhvm.hhbc
-__HEREDOC__
-
-cat server.ini
+wget -q http://jp2.php.net/get/php-5.6.20.tar.xz/from/this/mirror -O php-5.6.20.tar.xz
+tar xf php-5.6.20.tar.xz
+cd php-5.6.20
+./configure --help
 
 quota -s
 echo "FINISH"
