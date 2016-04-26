@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1739"
+echo "0936"
 
 set -x
 
@@ -45,17 +45,11 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget -q http://download.fedoraproject.org/pub/epel/6/SRPMS/libwebp-0.4.3-3.el6.src.rpm
-rpm2cpio libwebp-0.4.3-3.el6.src.rpm | cpio -idmv
-cat *.patch
-ls -lang
-tar xf libwebp-0.4.3.tar.gz
-cd libwebp-0.4.3
-./configure --help
-./configure --prefix=${OPENSHIFT_TMP_DIR}/gomi --libdir=${OPENSHIFT_DATA_DIR}/usr/lib --enable-static=no
-time make -j4
-make install
-ls -lang ${OPENSHIFT_DATA_DIR}/usr/lib
+wget -nc -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
+rpm2cpio hhvm-3.5.0-4.el6.x86_64.rpm | cpio -idmv
+tree -a ./
+
+cat etc/hhvm/server.ini
 
 quota -s
 echo "FINISH"
