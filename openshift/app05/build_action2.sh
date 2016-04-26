@@ -168,11 +168,25 @@ pushd httpd-${apache_version} > /dev/null
  --docdir=${tmp_dir}/doc \
  --infodir=${tmp_dir}/info \
  --disable-imagemap \
+ --disable-include \
+ --enable-mods-shared='all proxy' \
+ --disable-authn-anon \
+ --disable-authn-dbm \
+ --disable-authz-dbm \
+ --disable-authz-groupfile \
+ --disable-info \
+ --disable-proxy-balancer \
+ --disable-proxy-ftp \
+ --disable-speling \
  --disable-status \
  --disable-userdir \
- --disable-include \
- --disable-authz-groupfile \
- --enable-mods-shared='all proxy'
+ --disable-version \
+ --disable-vhost-alias \
+ --disable-authn-dbd \
+ --disable-dbd \
+ --disable-log-forensic \
+ --disable-proxy-ajp \
+ --disable-proxy-scgi
 
 # 3機がけ前提 1機あたり4プロセス
 # time make -j$(grep -c -e processor /proc/cpuinfo)
