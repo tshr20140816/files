@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1118"
+echo "1129"
 
 set -x
 
@@ -45,6 +45,15 @@ mkdir 20160425
 cd 20160425
 wget -q http://ftp.yz.yamagata-u.ac.jp/pub/network/apache//httpd/httpd-2.4.20.tar.bz2
 tar xf httpd-2.4.20.tar.bz2
+wget -q http://ftp.tsukuba.wide.ad.jp/software/apache//apr/apr-1.5.2.tar.bz2
+tar xf apr-1.5.2.tar.bz2
+# cp -Rp ./apr-1.5.2 ./httpd-2.4.20/srclib/apr
+mv -f ./apr-1.5.2 ./httpd-2.4.20/srclib/apr
+wget -q http://ftp.tsukuba.wide.ad.jp/software/apache//apr/apr-util-1.5.4.tar.bz2
+tar xf apr-util-1.5.4.tar.bz2
+mv -f ./apr-util-1.5.4 ./httpd-2.4.20/srclib/apr-util
+rm -f *.bz2
+
 cd httpd-2.4.20
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi/man --docdir=${OPENSHIFT_TMP_DIR}/gomi/doc \
