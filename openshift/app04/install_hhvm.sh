@@ -183,6 +183,20 @@ rm -rf ${OPENSHIFT_DATA_DIR}/usr/share/hhvm/LICENSE/
 export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib:${OPENSHIFT_DATA_DIR}/usr/lib/hhvm:${OPENSHIFT_DATA_DIR}/usr/lib64
 ${OPENSHIFT_DATA_DIR}/usr/bin/hhvm --version
 
+pushd ${OPENSHIFT_DATA_DIR}/etc/hhvm > /dev/null
+[ ! -f server.ini.org ] && mv -f server.ini server.ini.org
+cat << __HEREDOC__ > server.ini
+pid = ${OPENSHIFT_DATA_DIR}/var/run/hhvm/pid
+hhvm.server.port = 39001
+hhvm.server.type = fastcgi
+hhvm.server.default_document = index.php
+hhvm.log.use_log_file = true
+hhvm.log.file = ${OPENSHIFT_LOG_DIR}/hhvm_error.log
+hhvm.repo.central.path = ${OPENSHIFT_DATA_DIR}/var/run/hhvm/hhvm.hhbc
+__HEREDOC__
+
 cat ${OPENSHIFT_DATA_DIR}/etc/hhvm/server.ini
+popd > /dev/null
+
 quota -s
 
