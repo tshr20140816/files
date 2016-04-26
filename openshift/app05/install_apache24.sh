@@ -6,6 +6,9 @@ quota -s
 oo-cgroup-read memory.usage_in_bytes
 oo-cgroup-read memory.failcnt
 
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
+export CXXFLAGS="${CFLAGS}"
+
 # pcre
 
 cd /tmp
