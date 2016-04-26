@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1323"
+echo "1337"
 
 set -x
 
@@ -48,6 +48,28 @@ wget -q http://ftp.kddilabs.jp/infosystems/apache//httpd/httpd-2.2.31.tar.bz2
 tar xf httpd-2.2.31.tar.bz2
 cd httpd-2.2.31
 ./configure --help
+.configure --prefix=${OPENSHIFT_DATA_DIR}/usr \
+ --disable-imagemap \
+ --disable-include \
+ --enable-mods-shared='all proxy' \
+ --disable-authn-anon \
+ --disable-authn-dbm \
+ --disable-authz-dbm \
+ --disable-authz-groupfile \
+ --disable-info \
+ --disable-proxy-balancer \
+ --disable-proxy-ftp \
+ --disable-speling \
+ --disable-status \
+ --disable-userdir \
+ --disable-version \
+ --disable-vhost-alias \
+ --disable-authn-dbd \
+ --disable-dbd \
+ --disable-log-forensic \
+ --disable-proxy-ajp \
+ --disable-proxy-scgi
+time make -j4
 
 cd /tmp
 rm -rf ${tmp_dir}
