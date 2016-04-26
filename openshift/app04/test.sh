@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1129"
+echo "1139"
 
 set -x
 
@@ -57,7 +57,7 @@ rm -f *.bz2
 cd httpd-2.4.20
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi/man --docdir=${OPENSHIFT_TMP_DIR}/gomi/doc \
- -enable-mods-shared='all proxy' --with-mpm=event
+ -enable-mods-shared='all proxy' --with-mpm=event --without-pcre
 time make -j4
 
 cd ..
