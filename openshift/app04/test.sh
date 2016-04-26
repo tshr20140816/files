@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1110"
+echo "1118"
 
 set -x
 
@@ -43,7 +43,7 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget http://ftp.yz.yamagata-u.ac.jp/pub/network/apache//httpd/httpd-2.4.20.tar.bz2
+wget -q http://ftp.yz.yamagata-u.ac.jp/pub/network/apache//httpd/httpd-2.4.20.tar.bz2
 tar xf httpd-2.4.20.tar.bz2
 cd httpd-2.4.20
 ./configure --help
@@ -52,7 +52,7 @@ cd httpd-2.4.20
 time make -j4
 
 cd ..
-wget http://us1.php.net/get/php-7.0.5.tar.xz/from/this/mirror -O php-7.0.5.tar.xz
+wget -q http://us1.php.net/get/php-7.0.5.tar.xz/from/this/mirror -O php-7.0.5.tar.xz
 tar xf php-7.0.5.tar.xz
 cd php-7.0.5
 ./configure --help
