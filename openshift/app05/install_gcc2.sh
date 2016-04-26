@@ -80,7 +80,7 @@ cd work
  --enable-stage1-checking=c,c++ target=x86_64-unknown-linux-gnu \
  --disable-shared --enable-static \
  --program-suffix=-493 \
- --disable-libjava --disable-libgo --disable-libgfortran --enable-languages=c,c++
+ --disable-libjava --disable-libgo --disable-libgfortran --disable-objc --enable-languages=c,c++
 time make
 make install
 rm -rf $OPENSHIFT_DATA_DIR/gcc-4.9.3
