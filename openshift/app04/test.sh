@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1034"
+echo "1047"
 
 set -x
 
@@ -43,9 +43,9 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 mkdir 20160425
 cd 20160425
-wget -q http://jp2.php.net/get/php-5.6.20.tar.xz/from/this/mirror -O php-5.6.20.tar.xz
-tar xf php-5.6.20.tar.xz
-cd php-5.6.20
+wget http://ftp.yz.yamagata-u.ac.jp/pub/network/apache//httpd/httpd-2.4.20.tar.bz2
+tar xf httpd-2.4.20.tar.bz2
+cd httpd-2.4.20
 ./configure --help
 
 quota -s
