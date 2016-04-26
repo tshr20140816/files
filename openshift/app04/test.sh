@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0936"
+echo "0948"
 
 set -x
 
@@ -49,7 +49,19 @@ wget -nc -q https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
 rpm2cpio hhvm-3.5.0-4.el6.x86_64.rpm | cpio -idmv
 tree -a ./
 
-cat etc/hhvm/server.ini
+cd etc/hhvm 
+[ ! -f server.ini.org ] && mv -f server.ini server.ini.org
+cat << __HEREDOC__ > server.ini
+pid = ${OPENSHIFT_DATA_DIR}/var/run/hhvm/pid
+hhvm.server.port = 39001
+hhvm.server.type = fastcgi
+hhvm.server.default_document = index.php
+hhvm.log.use_log_file = true
+hhvm.log.file = ${OPENSHIFT_LOG_DIR}/hhvm_error.log
+hhvm.repo.central.path = ${OPENSHIFT_DATA_DIR}/var/run/hhvm/hhvm.hhbc
+__HEREDOC__
+
+cat server.ini
 
 quota -s
 echo "FINISH"
