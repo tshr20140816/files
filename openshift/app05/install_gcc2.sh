@@ -63,7 +63,8 @@ rm -rf gcc-4.9.3
 tar jtf gcc-4.9.3.tar.bz2 > file_list.txt
 wc -l file_list.txt
 # grep -v -E '^gcc-4.9.3.(libobjc|libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
-grep -v -E '^gcc-4.9.3.(libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
+# grep -v -E '^gcc-4.9.3.(libgfortran|libgo|libjava)' file_list.txt > tmp1.txt
+grep -v -E '^gcc-4.9.3.libjava' file_list.txt > tmp1.txt
 wc -l tmp1.txt
 grep -v '/$' tmp1.txt > file_list.txt
 wc -l file_list.txt
@@ -77,7 +78,7 @@ cd work
 ../configure --help
 ../configure --with-gmp=$OPENSHIFT_DATA_DIR/gcc --with-mpfr=$OPENSHIFT_DATA_DIR/gcc --prefix=$OPENSHIFT_DATA_DIR/gcc \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --disable-multilib --enable-stage1-languages=c,c++ \
- --enable-stage1-checking=c,c++ target=x86_64-unknown-linux-gnu \
+ target=x86_64-unknown-linux-gnu \
  --disable-shared --enable-static \
  --program-suffix=-493 \
  --disable-libjava --disable-libgo --disable-libgfortran --disable-objc --enable-languages=c,c++
