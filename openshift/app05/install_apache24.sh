@@ -427,7 +427,7 @@ tar xf php-7.0.5.tar.xz
 cd php-7.0.5
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi/man --docdir=${OPENSHIFT_TMP_DIR}/gomi/doc \
- --enable-fpm
+ --enable-fpm --with-apxs2=${OPENSHIFT_DATA_DIR}/usr/bin/apxs
 time make -j1
 make install
 
