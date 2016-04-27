@@ -428,6 +428,8 @@ cd php-7.0.5
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi/man --docdir=${OPENSHIFT_TMP_DIR}/gomi/doc \
  --enable-fpm
+time make -j1
+make install
 
 cat << '__HEREDOC__' > /dev/null
 Optional Features and Packages:
