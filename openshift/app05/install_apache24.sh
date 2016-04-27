@@ -428,7 +428,9 @@ cd php-7.0.5
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi/man --docdir=${OPENSHIFT_TMP_DIR}/gomi/doc \
  --enable-fpm --with-apxs2=${OPENSHIFT_DATA_DIR}/usr/bin/apxs \
- --disable-ipv6 --without-sqlite3 --enable-mbstring --with-pcre=${OPENSHIFT_DATA_DIR}/usr
+ --disable-ipv6 --without-sqlite3 --enable-mbstring --with-pcre=${OPENSHIFT_DATA_DIR}/usr \
+ --without-pear -enable-static=no
+
 time make -j1
 make install
 
