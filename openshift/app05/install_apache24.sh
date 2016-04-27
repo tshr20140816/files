@@ -426,6 +426,8 @@ wget -q http://us1.php.net/get/php-7.0.5.tar.xz/from/this/mirror -O php-7.0.5.ta
 tar xf php-7.0.5.tar.xz
 cd php-7.0.5
 ./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi/man --docdir=${OPENSHIFT_TMP_DIR}/gomi/doc \
+ --enable-fpm
 
 cat << '__HEREDOC__' > /dev/null
 Optional Features and Packages:
