@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# bash install_apache24.sh | tee -a $OPENSHIFT_REPO_DIR/diy/install.txt
+
 export TZ=JST-9
 set -x
 quota -s
