@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1505"
+echo "1515"
 
 set -x
 
@@ -47,7 +47,7 @@ tar jxf distcc-3.1.tar.bz2
 rm -f distcc-3.1.tar.bz2
 pushd distcc-3.1 > /dev/null
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi --with-docdir==${OPENSHIFT_TMP_DIR}/gomi
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi --with-docdir=${OPENSHIFT_TMP_DIR}/gomi
 time make -j4
 make install
 popd > /dev/null
