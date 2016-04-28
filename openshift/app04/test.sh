@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1534"
+echo "1538"
 
 set -x
 
@@ -48,7 +48,7 @@ tar xf pcre-8.38.tar.bz2
 rm -f pcre-8.38.tar.bz2
 pushd pcre-8.38 > /dev/null
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=./gomi --docdir=./gomi --enable-static=no
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi --docdir=${OPENSHIFT_TMP_DIR}/gomi --enable-static=no
 time make -j4
 make install
 popd > /dev/null
