@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1342"
+echo "1417"
 
 set -x
 
@@ -44,35 +44,18 @@ export CXXFLAGS="${CFLAGS}"
 cd /tmp
 tmp_dir=$(mktemp -d tmp.XXXXX)
 cd ${tmp_dir}
-wget -q http://ftp.kddilabs.jp/infosystems/apache//httpd/httpd-2.2.31.tar.bz2
-tar xf httpd-2.2.31.tar.bz2
-cd httpd-2.2.31
+wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.bz2
+tar xf pcre-8.38.tar.bz2
+cd pcre-8.38
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr \
- --disable-imagemap \
- --disable-include \
- --enable-mods-shared='all proxy' \
- --disable-authn-anon \
- --disable-authn-dbm \
- --disable-authz-dbm \
- --disable-authz-groupfile \
- --disable-info \
- --disable-proxy-balancer \
- --disable-proxy-ftp \
- --disable-speling \
- --disable-status \
- --disable-userdir \
- --disable-version \
- --disable-vhost-alias \
- --disable-authn-dbd \
- --disable-dbd \
- --disable-log-forensic \
- --disable-proxy-ajp \
- --disable-proxy-scgi
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=/dev/null --docdir=/dev/null
 time make -j4
+make install
 
 cd /tmp
 rm -rf ${tmp_dir}
+
+tree -a ${OPENSHIFT_DATA_DIR}/usr
 
 quota -s
 echo "FINISH"
