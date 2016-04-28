@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1456"
+echo "1501"
 
 set -x
 
@@ -42,16 +42,16 @@ export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-wget -q https://www.samba.org/ftp/ccache/ccache-3.2.4.tar.xz
-tar Jxf ccache-3.2.4.tar.xz
-rm -f ccache-3.2.4.tar.xz
-pushd ccache-3.2.4 > /dev/null
+wget -q https://distcc.googlecode.com/files/distcc-3.1.tar.bz2
+tar jxf distcc-3.1.tar.bz2
+rm -f distcc-3.1.tar.bz2
+pushd distcc-3.1 > /dev/null
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi --infodir=${OPENSHIFT_TMP_DIR}/gomi
 time make -j4
 make install
 popd > /dev/null
-rm -rf ccache-3.2.4
+rm -rf distcc-3.1 gomi
 popd > /dev/null
 
 tree -a ${OPENSHIFT_DATA_DIR}/usr
