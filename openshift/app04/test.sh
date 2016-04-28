@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1429"
+echo "1435"
 
 set -x
 
@@ -48,8 +48,8 @@ wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.bz2
 tar xf pcre-8.38.tar.bz2
 cd pcre-8.38
 ./configure --help
-# ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=/dev/null --docdir=/dev/null
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --enable-static=no
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=/dev/null --docdir=/dev/null --enable-static=no
+# ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --enable-static=no
 time make -j4
 make install
 
