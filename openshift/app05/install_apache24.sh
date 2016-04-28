@@ -11,25 +11,64 @@ oo-cgroup-read memory.failcnt
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
+tmp_dir=/dummy
+
+# ccache
+
+if [ ! -f ${OPENSHIFT_DATA_DIR}/usr/bin/ccache ]; then
+    pushd ${OPENSHIFT_TMP_DIR}} > /dev/null
+    wget -q https://www.samba.org/ftp/ccache/ccache-3.2.4.tar.xz
+    tar Jxf ccache-3.2.4.tar.xz
+    rm -f ccache-3.2.4.tar.xz
+    pushd ccache-3.2.4 > /dev/null
+    ./configure --help
+    ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi --infodir=${OPENSHIFT_TMP_DIR}/gomi
+    time make -j4
+    make install
+    popd > /dev/null
+    rm -rf ccache-3.2.4 gomi
+    popd > /dev/null
+    mkdir ${OPENSHIFT_DATA_DIR}/ccache
+fi
+
+# distcc
+
+if [ ! -f ${OPENSHIFT_DATA_DIR}/usr/bin/distcc ]; then
+    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+    wget -q https://distcc.googlecode.com/files/distcc-3.1.tar.bz2
+    tar jxf distcc-3.1.tar.bz2
+    rm -f distcc-3.1.tar.bz2
+    pushd distcc-3.1 > /dev/null
+    ./configure --help
+    ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi --with-docdir==${OPENSHIFT_TMP_DIR}/gomi
+    time make -j4
+    make install
+    popd > /dev/null
+    rm -rf distcc-3.1 gomi
+    popd > /dev/null
+fi
+
 # pcre
 
-cd /tmp
-tmp_dir=$(mktemp -d tmp.XXXXX)
-cd ${tmp_dir}
-wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.bz2
-tar xf pcre-8.38.tar.bz2
-cd pcre-8.38
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi/man --docdir=${OPENSHIFT_TMP_DIR}/gomi/doc
-time make -j4
-make install
+if [ ! -f ${OPENSHIFT_DATA_DIR}/usr/lib/libpcre.so ]; then
+    pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+    wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.bz2
+    tar xf pcre-8.38.tar.bz2
+    rm -f pcre-8.38.tar.bz2
+    pushd pcre-8.38 > /dev/null
+    ./configure --help
+    ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi --docdir=${OPENSHIFT_TMP_DIR}/gomi --enable-static=no
+    time make -j4
+    make install
+    popd > /dev/null
+    rm -rf pcre-8.38
+    popd > /dev/null
+fi
 
 # apache
 
-cd /tmp
-rm -rf ${tmp_dir}
-tmp_dir=$(mktemp -d tmp.XXXXX)
-cd ${tmp_dir}
+if [ ! -f ${OPENSHIFT_DATA_DIR}/usr/bin/httpd ]; then
+cd ${OPENSHIFT_TMP_DIR}
 wget -q http://ftp.yz.yamagata-u.ac.jp/pub/network/apache//httpd/httpd-2.4.20.tar.bz2
 tar xf httpd-2.4.20.tar.bz2
 wget -q http://ftp.tsukuba.wide.ad.jp/software/apache//apr/apr-1.5.2.tar.bz2
@@ -42,10 +81,34 @@ rm -f *.bz2
 
 cd httpd-2.4.20
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi/man --docdir=${OPENSHIFT_TMP_DIR}/gomi/doc \
- -enable-mods-shared='all proxy' --with-mpm=event --with-pcre=${OPENSHIFT_DATA_DIR}/usr
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi --docdir=${OPENSHIFT_TMP_DIR}/gomi \
+ --enable-mods-shared='all proxy' --with-mpm=event --with-pcre=${OPENSHIFT_DATA_DIR}/usr \
+ --disable-authn-anon \
+ --disable-authn-dbd \
+ --disable-authn-dbm \
+ --disable-authz-dbm \
+ --disable-authz-groupfile \
+ --disable-authz-owner \
+ --disable-dbd \
+ --disable-info \
+ --disable-log-forensic \
+ --disable-proxy-ajp \
+ --disable-proxy-balancer \
+ --disable-proxy-ftp \
+ --disable-proxy-scgi \
+ --disable-speling \
+ --disable-status \
+ --disable-userdir \
+ --disable-version \
+ --disable-vhost-alias \
+ --disable-dialup
+
 time make -j4
 make install
+cd /tmp
+rm -rf httpd-2.4.20
+rm -rf ${OPENSHIFT_DATA_DIR}/usr/manual
+fi
 
 cat << '__HEREDOC__' > /dev/null
 Optional Features:
@@ -417,24 +480,48 @@ mod_xml2enc.so
 
 __HEREDOC__
 
+mkdir -p ${OPENSHIFT_DATA_DIR}/local/bin
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+#!/bin/bash
+
+while :
+do
+    usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
+    if [ "${usage_in_bytes}" -lt 500000000 ]; then
+        break
+    fi
+    dt=$(date +%H%M%S)
+    usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
+    failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
+    echo "${dt} ${usage_in_bytes_format} ${failcnt}"
+    sleep 60s
+done
+
+set -x
+/usr/bin/gcc "$@"
+__HEREDOC__
+chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/gcc
+
+export PATH="${OPENSHIFT_DATA_DIR}/local/bin:${PATH}"
+
 # php
 
-cd /tmp
-rm -rf ${tmp_dir}
-tmp_dir=$(mktemp -d tmp.XXXXX)
-cd ${tmp_dir}
+cd ${OPENSHIFT_TMP_DIR}
 
 wget -q http://us1.php.net/get/php-7.0.5.tar.xz/from/this/mirror -O php-7.0.5.tar.xz
 tar xf php-7.0.5.tar.xz
 cd php-7.0.5
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi/man --docdir=${OPENSHIFT_TMP_DIR}/gomi/doc \
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=${OPENSHIFT_TMP_DIR}/gomi --docdir=${OPENSHIFT_TMP_DIR}/gomi \
  --enable-fpm --with-apxs2=${OPENSHIFT_DATA_DIR}/usr/bin/apxs \
  --disable-ipv6 --without-sqlite3 --without-pdo-sqlite --enable-mbstring --with-pcre=${OPENSHIFT_DATA_DIR}/usr \
  --without-pear -enable-static=no
 
 time make -j1
 make install
+
+cd /tmp
+rm -rf php-7.0.5
 
 cat << '__HEREDOC__' > /dev/null
 Optional Features and Packages:
@@ -736,5 +823,4 @@ Libtool:
   --with-tags=TAGS        Include additional configurations automatic
 __HEREDOC__
 
-cd /tmp
-rm -rf ${tmp_dir}
+quota -s
