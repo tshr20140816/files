@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1442"
+echo "1452"
 
 set -x
 
@@ -47,7 +47,7 @@ tar Jxf ccache-3.2.4.tar.xz
 rm -f ccache-3.2.4.tar.xz
 pushd ccache-3.2.4 > /dev/null
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=/dev/null --infodir=/dev/null
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=./gomi --infodir=./gomi
 time make -j4
 make install
 popd > /dev/null
