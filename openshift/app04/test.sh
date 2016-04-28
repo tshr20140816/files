@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1435"
+echo "1442"
 
 set -x
 
@@ -41,20 +41,18 @@ rm -rf ${OPENSHIFT_DATA_DIR}/usr
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
-cd /tmp
-tmp_dir=$(mktemp -d tmp.XXXXX)
-cd ${tmp_dir}
-wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.bz2
-tar xf pcre-8.38.tar.bz2
-cd pcre-8.38
+pushd ${OPENSHIFT_TMP_DIR}} > /dev/null
+wget -q https://www.samba.org/ftp/ccache/ccache-3.2.4.tar.xz
+tar Jxf ccache-3.2.4.tar.xz
+rm -f ccache-3.2.4.tar.xz
+pushd ccache-3.2.4 > /dev/null
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=/dev/null --docdir=/dev/null --enable-static=no
-# ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --enable-static=no
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --mandir=/dev/null --infodir=/dev/null
 time make -j4
 make install
-
-cd /tmp
-rm -rf ${tmp_dir}
+popd > /dev/null
+rm -rf ccache-3.2.4
+popd > /dev/null
 
 tree -a ${OPENSHIFT_DATA_DIR}/usr
 
