@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1557"
+echo "1558"
 
 set -x
 
@@ -44,9 +44,10 @@ export CXXFLAGS="${CFLAGS}"
 export HOME=${OPENSHIFT_DATA_DIR}
 cd ~
 mkdir -p ~/rpm/{BUILD,SOURCES,SPECS,SRPMS,RPMS}
-cat << '__HEREDOC__' > .rpmmacros
-%_topdir  /home/foo/rpm
+cat << __HEREDOC__ > .rpmmacros
+%_topdir  ${OPENSHIFT_DATA_DIR}/rpm
 __HEREDOC__
+cat .rpmmacros
 
 cd /tmp
 
