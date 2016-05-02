@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1519"
+echo "1526"
 
 set -x
 
@@ -60,6 +60,8 @@ rpmbuild --help
 rpmbuild -bp libvpx.spec
 
 ls -lang
+
+cat /usr/lib/rpm/macros
 
 quota -s
 echo "FINISH"
