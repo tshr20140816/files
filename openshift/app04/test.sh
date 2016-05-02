@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1511"
+echo "1515"
 
 set -x
 
@@ -46,8 +46,11 @@ cd /tmp
 mkdir 20160425
 cd 20160425
 
-wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
-rpm2cpio libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
+# wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
+# rpm2cpio libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
+
+wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/libvpx-1.3.0-5.el6_5.src.rpm
+rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
 
 ls -lang
 
