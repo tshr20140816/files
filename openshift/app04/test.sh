@@ -51,6 +51,8 @@ rpm2cpio/libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
 
 ls -lang
 
+rpmbuild --help
+
 quota -s
 echo "FINISH"
 exit
