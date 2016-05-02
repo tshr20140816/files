@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1434"
+echo "1511"
 
 set -x
 
@@ -47,11 +47,12 @@ mkdir 20160425
 cd 20160425
 
 wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
-rpm2cpio/libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
+rpm2cpio libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
 
 ls -lang
 
 rpmbuild --help
+# rpmbuild -bp
 
 quota -s
 echo "FINISH"
