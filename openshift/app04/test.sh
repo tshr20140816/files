@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1538"
+echo "1429"
 
 set -x
 
@@ -40,6 +40,16 @@ rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
+
+cd /tmp
+
+mkdir 20160425
+cd 20160425
+
+wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
+rpm2cpio/libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
+
+ls -lang
 
 quota -s
 echo "FINISH"
