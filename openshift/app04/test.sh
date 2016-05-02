@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1515"
+echo "1518"
 
 set -x
 
@@ -55,7 +55,9 @@ rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
 ls -lang
 
 rpmbuild --help
-# rpmbuild -bp
+rpmbuild -bp libvpx.spec
+
+ls -lang
 
 quota -s
 echo "FINISH"
