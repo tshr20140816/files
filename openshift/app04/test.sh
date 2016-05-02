@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1531"
+echo "1540"
 
 set -x
 
@@ -33,7 +33,7 @@ quota -s
 
 cd /tmp
 rm -rf 20160425
-rm -rf gomi
+rm -rf gomi build
 rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 # -----
@@ -56,7 +56,11 @@ ls -lang
 
 cat libvpx.spec
 
-rpmbuild --help
+mkdir -p /tmp/build/SOURCES
+mv *.* /tmp/build/SOURCES/
+
+cd /tmp/build/SOURCES
+# rpmbuild --help
 rpmbuild -bp --define '_topdir /tmp/build' libvpx.spec
 
 ls -lang
