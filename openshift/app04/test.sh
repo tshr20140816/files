@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1544"
+echo "1548"
 
 set -x
 
@@ -58,10 +58,10 @@ cat libvpx.spec
 
 tar vf libvpx-v1.3.0.tar.bz2
 # cd libvpx-v1.3.0
-Bug-fix-in-ssse3-quantize-function.patch -p1 -b .patch0
-x86inc-nasm.patch -p1 -b .x86inc-nasm
-vp9-nasm.patch-p1 -b .vp9-nasm
-sectalign-nasm.patch -p1 -b .sectalign-nasm
+patch Bug-fix-in-ssse3-quantize-function.patch -p1 -b .patch0
+patch x86inc-nasm.patch -p1 -b .x86inc-nasm
+patch vp9-nasm.patch-p1 -b .vp9-nasm
+patch sectalign-nasm.patch -p1 -b .sectalign-nasm
 
 ls -lang
 
