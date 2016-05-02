@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1548"
+echo "1557"
 
 set -x
 
@@ -41,29 +41,23 @@ rm -rf ${OPENSHIFT_DATA_DIR}/usr
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
+export HOME=${OPENSHIFT_DATA_DIR}
+cd ~
+mkdir -p ~/rpm/{BUILD,SOURCES,SPECS,SRPMS,RPMS}
+cat << '__HEREDOC__' > .rpmmacros
+%_topdir  /home/foo/rpm
+__HEREDOC__
+
 cd /tmp
 
 mkdir 20160425
 cd 20160425
 
-# wget -nc -q http://mirror.centos.org/centos/6/os/x86_64/Packages/libvpx-1.3.0-5.el6_5.x86_64.rpm
-# rpm2cpio libvpx-1.3.0-5.el6_5.x86_64.rpm | cpio -idmv
-
 wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/libvpx-1.3.0-5.el6_5.src.rpm
-rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
+# rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
+rpmbuild --rebuild libvpx-1.3.0-5.el6_5.src.rpm
 
-ls -lang
-
-cat libvpx.spec
-
-tar vf libvpx-v1.3.0.tar.bz2
-# cd libvpx-v1.3.0
-patch Bug-fix-in-ssse3-quantize-function.patch -p1 -b .patch0
-patch x86inc-nasm.patch -p1 -b .x86inc-nasm
-patch vp9-nasm.patch-p1 -b .vp9-nasm
-patch sectalign-nasm.patch -p1 -b .sectalign-nasm
-
-ls -lang
+tree ~/rpm
 
 quota -s
 echo "FINISH"
