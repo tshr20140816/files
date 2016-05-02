@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1540"
+echo "1544"
 
 set -x
 
@@ -56,18 +56,14 @@ ls -lang
 
 cat libvpx.spec
 
-mkdir -p /tmp/build/SOURCES
-mv *.* /tmp/build/SOURCES/
-
-cd /tmp/build/SOURCES
-# rpmbuild --help
-rpmbuild -bp --define '_topdir /tmp/build' libvpx.spec
+tar vf libvpx-v1.3.0.tar.bz2
+# cd libvpx-v1.3.0
+Bug-fix-in-ssse3-quantize-function.patch -p1 -b .patch0
+x86inc-nasm.patch -p1 -b .x86inc-nasm
+vp9-nasm.patch-p1 -b .vp9-nasm
+sectalign-nasm.patch -p1 -b .sectalign-nasm
 
 ls -lang
-
-ls -lang /tmp/build
-
-# cat /usr/lib/rpm/macros
 
 quota -s
 echo "FINISH"
