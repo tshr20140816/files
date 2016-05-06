@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1104"
+echo "1108"
 
 set -x
 
@@ -32,13 +32,16 @@ quota -s
 # -----
 
 cd /tmp
-rm -rf 20160425
-rm -rf gomi build
-rm -rf ${OPENSHIFT_DATA_DIR}/usr
+# rm -rf 20160425
+# rm -rf gomi build
+# rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 # -----
 
 echo $PATH
+
+echo $PATH | grep "/opt/rh/php54/root/usr/bin"
+echo $PATH | grep -c "/opt/rh/php54/root/usr/bin"
 
 quota -s
 echo "FINISH"
