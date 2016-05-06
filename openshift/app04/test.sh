@@ -41,7 +41,8 @@ cd /tmp
 echo $PATH
 
 echo $PATH | grep "/opt/rh/php54/root/usr/bin"
-echo $PATH | grep -c "/opt/rh/php54/root/usr/bin"
+count=$(echo $PATH | grep -c "/opt/rh/php54/root/usr/bin")
+echo $count
 
 quota -s
 echo "FINISH"
