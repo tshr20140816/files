@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1527"
+echo "1531"
 
 set -x
 
@@ -32,7 +32,7 @@ quota -s
 # -----
 
 cd /tmp
-# rm -rf 20160425
+rm -rf 20160506
 # rm -rf gomi build
 # rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
@@ -54,8 +54,15 @@ echo "<meta http-equiv='refresh' content='10;URL=$referer'>";
 </html>
 __HEREDOC__
 
-
 ls -lang ${OPENSHIFT_REPO_DIR}
+
+cd /tmp
+
+mkdir 20160506
+cd 20160506
+wget -q https://files.phpmyadmin.net/phpMyAdmin/4.4.15.5/phpMyAdmin-4.4.15.5-english.tar.bz2
+tar xf phpMyAdmin-4.4.15.5-english.tar.bz2
+tree -a ./
 
 quota -s
 echo "FINISH"
