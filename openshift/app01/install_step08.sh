@@ -259,7 +259,7 @@ perl -pi -e 's/(^ *ErrorLog.+$)/# $1/g' conf/httpd.conf
 cat << '__HEREDOC__' > htdocs/502.html
 <html>
 <head>
-<meta http-equiv='refresh' content='5;URL='>
+<meta http-equiv='refresh' content='5'>
 <title>502 Error</title>
 </head>
 <body>
