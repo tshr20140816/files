@@ -256,17 +256,13 @@ perl -pi -e 's/(^ *LogFormat.+$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^ *CustomLog.+$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^ *ErrorLog.+$)/# $1/g' conf/httpd.conf
 
-cat << '__HEREDOC__' > htdocs/502.php
+cat << '__HEREDOC__' > htdocs/502.html
 <html>
 <head>
-<?php
-$referer = $_SERVER['HTTP_REFERER'];
-echo "<meta http-equiv='refresh' content='10;URL=$referer'>";
-?>
+<meta http-equiv='refresh' content='5;URL='>
 <title>502 Error</title>
 </head>
 <body>
-<div><?php echo $_SERVER['HTTP_REFERER']; ?></div><br />
 <div>Auto Retry...</div>
 </body>
 </html>
@@ -274,7 +270,7 @@ __HEREDOC__
 
 cat << '__HEREDOC__' > conf/custom.conf
 
-ErrorDocument 502 /502.php
+ErrorDocument 502 /502.html
 
 # spdy
 
