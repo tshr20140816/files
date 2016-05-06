@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1313"
+echo "1527"
 
 set -x
 
@@ -37,6 +37,23 @@ cd /tmp
 # rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 # -----
+
+cat << '__HEREDOC__' > ${OPENSHIFT_REPO_DIR}/502.php
+<html>
+<head>
+<?php
+$referer = $_SERVER['HTTP_REFERER'];
+echo "<meta http-equiv='refresh' content='10;URL=$referer'>";
+?>
+<title>502 Error</title>
+</head>
+<body>
+<div><?php echo $_SERVER['HTTP_REFERER']; ?></div><br />
+<div>Auto Retry...</div>
+</body>
+</html>
+__HEREDOC__
+
 
 ls -lang ${OPENSHIFT_REPO_DIR}
 
