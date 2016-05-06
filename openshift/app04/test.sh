@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1558"
+echo "1104"
 
 set -x
 
@@ -38,27 +38,7 @@ rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 # -----
 
-export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
-export CXXFLAGS="${CFLAGS}"
-
-export HOME=${OPENSHIFT_DATA_DIR}
-cd ~
-mkdir -p ~/rpm/{BUILD,SOURCES,SPECS,SRPMS,RPMS}
-cat << __HEREDOC__ > .rpmmacros
-%_topdir  ${OPENSHIFT_DATA_DIR}/rpm
-__HEREDOC__
-cat .rpmmacros
-
-cd /tmp
-
-mkdir 20160425
-cd 20160425
-
-wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/libvpx-1.3.0-5.el6_5.src.rpm
-# rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
-rpmbuild --rebuild libvpx-1.3.0-5.el6_5.src.rpm
-
-tree ~/rpm
+echo $PATH
 
 quota -s
 echo "FINISH"
