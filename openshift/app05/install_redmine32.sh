@@ -175,8 +175,8 @@ bash rbenv-installer
 rm rbenv-installer
 
 export RBENV_ROOT="${OPENSHIFT_DATA_DIR}/.rbenv"
-[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.rbenv/bin) -eq 0 ] || export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.gem/bin) -eq 0 ] || export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.rbenv/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.gem/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
 
 time CONFIGURE_OPTS="--disable-install-doc --mandir=${OPENSHIFT_TMP_DIR}/gomi --docdir=${OPENSHIFT_TMP_DIR}/gomi" \
