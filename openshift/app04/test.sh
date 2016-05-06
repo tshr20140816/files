@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1119"
+echo "1313"
 
 set -x
 
@@ -38,11 +38,7 @@ cd /tmp
 
 # -----
 
-echo $PATH
-
-echo $PATH | grep "/opt/rh/php54/root/usr/bin"
-count=$(echo $PATH | grep -c "/opt/rh/php54/root/usr/bin")
-echo $count
+ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 echo "FINISH"
