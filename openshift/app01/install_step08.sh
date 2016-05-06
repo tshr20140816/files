@@ -256,7 +256,23 @@ perl -pi -e 's/(^ *LogFormat.+$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^ *CustomLog.+$)/# $1/g' conf/httpd.conf
 perl -pi -e 's/(^ *ErrorLog.+$)/# $1/g' conf/httpd.conf
 
+cat << '__HEREDOC__' > htdocs/502.php
+<html>
+<head>
+<?php echo "<meta http-equiv='refresh' content='10;URL=$_SERVER['HTTP_REFERER']">'; ?>
+<title>502 Error</title>
+</head>
+<body>
+<div><?php echo $_SERVER['HTTP_REFERER']; ?></div><br />
+<div>Auto Retry...</div>
+</body>
+</html>
+__HEREDOC__
+
 cat << '__HEREDOC__' > conf/custom.conf
+
+ErrorDocument 502 /502.php
+
 # spdy
 
 # LoadModule ssl_module modules/mod_ssl_with_npn.so
