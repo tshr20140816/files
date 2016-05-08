@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.05.09 cacti_version 0.8.8g → 0.8.8h
 # 2016.05.02 php_version 5.6.20 → 5.6.21
 # 2016.04.24 wordpress_version 4.4.2-ja → 4.5-ja
 # 2016.04.18 ccache_version 3.2.4 → 3.2.5
@@ -101,7 +102,7 @@ apcu_version 4.0.10
 apache_version 2.2.31
 axel_version 2.4
 baikal_version 0.4.4
-cacti_version 0.8.8g
+cacti_version 0.8.8h
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
 ccache_version 3.2.5
