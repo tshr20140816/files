@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0955"
+echo "1008"
 
 set -x
 
@@ -55,6 +55,7 @@ export CXXFLAGS="${CFLAGS}"
 wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
 tar Jxf gmp-6.1.0.tar.xz
 cd gmp-6.1.0
+./configure --help
 ./configure --prefix=/tmp/20160509/local --enable-static=no
 time make -j4
 time make install
