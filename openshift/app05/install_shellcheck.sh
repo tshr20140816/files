@@ -69,6 +69,8 @@ rm -f gmp-6.1.0.tar.xz
 export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib
 popd > /dev/null
 
+tree ${OPENSHIFT_DATA_DIR}
+
 # ***** haskell *****
 
 mkdir ${OPENSHIFT_DATA_DIR}/haskell
