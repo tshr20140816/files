@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0953"
+echo "0955"
 
 set -x
 
@@ -36,23 +36,12 @@ rm -rf 20160506
 rm -rf 20160509
 # rm -rf gomi build
 # rm -rf ${OPENSHIFT_DATA_DIR}/usr
+cd ${OPENSHIFT_REPO_DIR}
+rm -f 502.php file_list.zip
 
 # -----
 
 ls -lang ${OPENSHIFT_REPO_DIR}
-
-cd /tmp
-
-mkdir 20160506
-cd 20160506
-wget -q https://files.phpmyadmin.net/phpMyAdmin/4.4.15.5/phpMyAdmin-4.4.15.5-english.tar.bz2
-tar xf phpMyAdmin-4.4.15.5-english.tar.bz2
-# tree -a ./
-
-cd phpMyAdmin-4.4.15.5-english
-ls -lang 
-
-cat config.sample.inc.php
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) START"
 
