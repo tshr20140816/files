@@ -215,7 +215,7 @@ eval "$(rbenv init -)"
 export PATH=${OPENSHIFT_DATA_DIR}/usr/bin:$PATH
 
 # mkdir -p ${OPENSHIFT_DATA_DIR}/usr/bin
-cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/bin/gcc
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/usr/bin/c++
 #!/bin/bash
 
 while :
@@ -243,9 +243,9 @@ do
 done
 
 set -x
-/usr/bin/gcc "$@"
+/usr/bin/c++ "$@"
 __HEREDOC__
-chmod +x ${OPENSHIFT_DATA_DIR}/bin/gcc
+chmod +x ${OPENSHIFT_DATA_DIR}/usr/bin/c++
 
 cd ${OPENSHIFT_TMP_DIR}
 
@@ -254,7 +254,7 @@ time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --languages ruby \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/usr/bin/apxs
 
-rm -f ${OPENSHIFT_DATA_DIR}/bin/gcc
+rm -f ${OPENSHIFT_DATA_DIR}/usr/bin/c++
 
 # *** patch ***
 
