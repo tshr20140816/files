@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1611"
+echo "0852"
 
 set -x
 
@@ -44,6 +44,7 @@ rm -f 502.php file_list.zip
 ls -lang ${OPENSHIFT_REPO_DIR}
 
 whereis audit
+audit --help
 
 cd /tmp
 
