@@ -70,6 +70,7 @@ MOUNT="/mail/* pop://__DELEGATE_POP_SERVER__:110/* noapop"
 FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
 HTTPCONF=methods:GET
 HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
+HTTPCONF="kill-rhead:X-Request*"
 DGSIGN="x.x.x/x.x.x"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P30080
