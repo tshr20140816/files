@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1537"
+echo "0949"
 
 set -x
 
@@ -33,6 +33,7 @@ quota -s
 
 cd /tmp
 rm -rf 20160506
+rm -rf 20160509
 # rm -rf gomi build
 # rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
@@ -53,7 +54,26 @@ ls -lang
 
 cat config.sample.inc.php
 
+echo "$(date +%Y/%m/%d" "%H:%M:%S) START"
 
+cd /tmp
+mkdir 20160509
+cd 20160509
+
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
+
+wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
+tar Jxf gmp-6.1.0.tar.xz
+cd gmp-6.1.0
+./configure --prefix=/tmp/20160509/local --enable-static=no
+time make -j4
+time make install
+
+cd /tmp
+rm -rf 20160509
+
+echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH"
 
 quota -s
 echo "FINISH"
