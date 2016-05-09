@@ -9,6 +9,31 @@ oo-cgroup-read memory.failcnt
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
+# ***** distcc *****
+
+distcc_version="3.1"
+
+cd ${OPENSHIFT_TMP_DIR}
+wget -q https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
+tar jxf distcc-${distcc_version}.tar.bz2
+cd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
+# ./configure --help
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/usr \
+ --infodir=${OPENSHIFT_TMP_DIR}/gomi \
+ --mandir=${OPENSHIFT_TMP_DIR}/gomi
+time make -j$(grep -c -e processor /proc/cpuinfo)
+make install
+cd ${OPENSHIFT_TMP_DIR}
+rm -rf distcc-${distcc_version}
+rm -f distcc-${distcc_version}.tar.bz2
+
+mkdir ${OPENSHIFT_DATA_DIR}/.distcc
+
+export PATH="${OPENSHIFT_DATA_DIR}/usr/bin:$PATH"
+export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+export DISTCC_LOG=/dev/null
+
 # ***** apache *****
 
 apache_version="2.2.31"
