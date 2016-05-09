@@ -230,13 +230,13 @@ do
     echo "$dt $usage_in_bytes_format $failcnt"
     # ps alx --sort -rss | head -n 3
     if [ "${usage_in_bytes}" -gt 500000000 ]; then
-        pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+        pushd "${OPENSHIFT_TMP_DIR}" > /dev/null
         if [ "$(find ./ -type f -mmin -3 -name execute -print | wc -l)" -eq 0 ]; then
             # sumanu
             wget -q http://mirrors.kernel.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.bz2
             rm -f gcc-5.3.0.tar.bz2
             touch execute
-        # fi
+        fi
         popd > /dev/null
     fi
     sleep 60s
