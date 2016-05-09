@@ -74,6 +74,7 @@ HTTPCONF="kill-rhead:X-Request*"
 DGSIGN="x.x.x/x.x.x"
 CONNECT=direct:*:*:*
 REACHABLE=__DELEGATE_POP_SERVER__
+REMITTABLE=http,pop
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P30080
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P30080
