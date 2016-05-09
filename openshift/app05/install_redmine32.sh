@@ -214,12 +214,47 @@ export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 eval "$(rbenv init -)"
 export PATH=${OPENSHIFT_DATA_DIR}/usr/bin:$PATH
 
+# mkdir -p ${OPENSHIFT_DATA_DIR}/usr/bin
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/bin/gcc
+#!/bin/bash
+
+while :
+do
+    usage_in_bytes=$(oo-cgroup-read memory.usage_in_bytes)
+    if [ "${usage_in_bytes}" -lt 500000000 ]; then
+        break
+    fi
+    dt=$(date +%H%M%S)
+    usage_in_bytes_format=$(echo "${usage_in_bytes}" | awk '{printf "%\047d\n", $0}')
+    failcnt=$(oo-cgroup-read memory.failcnt | awk '{printf "%\047d\n", $0}')
+    echo "$dt $usage_in_bytes_format $failcnt"
+    # ps alx --sort -rss | head -n 3
+    if [ "${usage_in_bytes}" -gt 500000000 ]; then
+        pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+        if [ "$(find ./ -type f -mmin -3 -name execute -print | wc -l)" -eq 0 ]; then
+            # sumanu
+            wget -q http://mirrors.kernel.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.bz2
+            rm -f gcc-5.3.0.tar.bz2
+            touch execute
+        # fi
+        popd > /dev/null
+    fi
+    sleep 60s
+done
+
+set -x
+/usr/bin/gcc "$@"
+__HEREDOC__
+chmod +x ${OPENSHIFT_DATA_DIR}/bin/gcc
+
 cd ${OPENSHIFT_TMP_DIR}
 
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
  --languages ruby \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/usr/bin/apxs
+
+rm -f ${OPENSHIFT_DATA_DIR}/bin/gcc
 
 # *** patch ***
 
