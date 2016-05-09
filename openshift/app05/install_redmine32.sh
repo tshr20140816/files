@@ -209,6 +209,8 @@ done
 
 # ***** passenger-install-apache2-module *****
 
+home_org=${HOME}
+export HOME=${OPENSHIFT_DATA_DIR}
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 eval "$(rbenv init -)"
@@ -255,6 +257,7 @@ time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/usr/bin/apxs
 
 rm -f ${OPENSHIFT_DATA_DIR}/usr/bin/c++
+export HOME=${home_org}
 
 # *** patch ***
 
