@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1008"
+echo "1611"
 
 set -x
 
@@ -43,28 +43,14 @@ rm -f 502.php file_list.zip
 
 ls -lang ${OPENSHIFT_REPO_DIR}
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) START"
-
 cd /tmp
-mkdir 20160509
-cd 20160509
 
-export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
-export CXXFLAGS="${CFLAGS}"
+ssh-keygen -t rsa -f id_rsa -P ''
+chmod 600 id_rsa
+chmod 600 id_rsa.pub
 
-wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
-tar Jxf gmp-6.1.0.tar.xz
-cd gmp-6.1.0
-./configure --help
-./configure --prefix=/tmp/20160509/local --enable-static=no
-time make -j4
-time make install
-
-tree -a /tmp/20160509/local
-cd /tmp
-rm -rf 20160509
-
-echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH"
+echo 'hoge' | openssl rsautl -encrypt -inkey ./id_rsa > pass.rsa
+openssl rsautl -decrypt -inkey ./id_rsa -in pass.rsa
 
 quota -s
 echo "FINISH"
