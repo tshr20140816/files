@@ -162,15 +162,19 @@ do
     tar zxf "${package}".tar.gz
     pushd "${package}" > /dev/null
     if [ "${package}" = "ShellCheck-0.4.3" ]; then
+        # *** For ShellCheck-0.4.3 ***
         # cabal install -j1 -v3
         cabal install -j1 --disable-documentation -O2 \
          --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
          --disable-tests --disable-coverage --disable-benchmarks \
          --ghc-options="+RTS -N1 -M448m -RTS"
     elif [ "${package}" != "regex-tdfa-1.2.1" ]; then
+        # cabal install -j3 --disable-documentation -O2 \
+        #  --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
+        #  --disable-tests --disable-coverage --disable-benchmarks
         cabal install -j3 --disable-documentation -O2 \
          --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
-         --disable-tests --disable-coverage --disable-benchmarks
+         --disable-tests --disable-coverage --disable-benchmarks --ghc-options=-march=native
     else
         # *** For regex-tdfa-1.2.1 ***
         PATH_ORG="${PATH}"
