@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0949"
+echo "0953"
 
 set -x
 
@@ -70,6 +70,7 @@ cd gmp-6.1.0
 time make -j4
 time make install
 
+tree -a /tmp/20160509/local
 cd /tmp
 rm -rf 20160509
 
