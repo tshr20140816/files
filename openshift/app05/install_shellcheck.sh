@@ -71,7 +71,7 @@ mkdir ${OPENSHIFT_DATA_DIR}/haskell
 pushd ${OPENSHIFT_DATA_DIR}/haskell > /dev/null
 if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/bin/cabal ]; then
     wget -nc -q http://www.accursoft.com/cartridges/network.tar.gz
-    tar xfz network.tar.gz
+    tar zxf network.tar.gz
 fi
 rm -f network.tar.gz
 popd > /dev/null
