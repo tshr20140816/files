@@ -64,17 +64,17 @@ LOGDIR="__OPENSHIFT_LOG_DIR__"
 LOGFILE=${LOGDIR}/delegate_${PORT}.log[date+.%w]
 PROTOLOG=${LOGDIR}/delegate_${PORT}.${PROTO}.log[date+.%w]:%X
 ERRORLOG=${LOGDIR}/delegate_errors.log[date+.%w]
-MAXIMA=delegated:5
+MAXIMA="delegated:5"
 MOUNT="/mail/* pop://__DELEGATE_POP_SERVER__:110/* noapop"
 # MOUNT="/-/builtin/* http://__OPENSHIFT_DIY_IP__:30080/delegate/builtin/*"
 FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
-HTTPCONF=methods:GET
+HTTPCONF="methods:GET"
 HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
 HTTPCONF="kill-rhead:X-Request*"
 DGSIGN="x.x.x/x.x.x"
-CONNECT=direct:*:*:*
-REACHABLE=__DELEGATE_POP_SERVER__
-REMITTABLE=http,pop
+CONNECT="direct:*:*:*"
+REACHABLE="__DELEGATE_POP_SERVER__"
+REMITTABLE="http,pop"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P30080
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P30080
