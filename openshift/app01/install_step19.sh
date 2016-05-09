@@ -75,6 +75,7 @@ DGSIGN="x.x.x/x.x.x"
 CONNECT="direct:*:*:*"
 REACHABLE="__DELEGATE_POP_SERVER__"
 REMITTABLE="http,pop"
+RESOLV="cache,dns"
 CACHE=no
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P30080
@@ -117,6 +118,7 @@ HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
 HTTPCONF=cache:any
 DGSIGN="x.x.x/x.x.x"
 CRON='0 7 * * * -expire 2'
+RESOLV="cache,dns"
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' P33128
 perl -pi -e 's/__OPENSHIFT_DATA_DIR__/$ENV{OPENSHIFT_DATA_DIR}/g' P33128
