@@ -43,6 +43,8 @@ rm -f 502.php file_list.zip
 
 ls -lang ${OPENSHIFT_REPO_DIR}
 
+whereis audit
+
 cd /tmp
 
 ssh-keygen -t rsa -f id_rsa -P ''
