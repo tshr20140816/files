@@ -17,7 +17,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) START"
 
 pushd ${OPENSHIFT_LOG_DIR} > /dev/null
 
-echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
+echo user:realm:"$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32)" > ${OPENSHIFT_DATA_DIR}/.htpasswd
 echo AuthType Digest > .htaccess
 echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
 
@@ -53,6 +53,8 @@ export CXXFLAGS="${CFLAGS}"
 # ls -lang ${OPENSHIFT_LOG_DIR}
 mkdir ${OPENSHIFT_DATA_DIR}/tmp
 
+# ***** gmp *****
+
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
 tar Jxf gmp-6.1.0.tar.xz
@@ -67,6 +69,8 @@ rm -f gmp-6.1.0.tar.xz
 export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib
 popd > /dev/null
 
+# ***** haskell *****
+
 mkdir ${OPENSHIFT_DATA_DIR}/haskell
 pushd ${OPENSHIFT_DATA_DIR}/haskell > /dev/null
 if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/bin/cabal ]; then
@@ -75,6 +79,8 @@ if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/bin/cabal ]; then
 fi
 rm -f network.tar.gz
 popd > /dev/null
+
+# ***** shellcheck *****
 
 # quota -s
 # oo-cgroup-read memory.failcnt
@@ -110,7 +116,7 @@ do
     # ps alx --sort -rss | head -n 3
     if [ "${usage_in_bytes}" -gt 500000000 ]; then
         pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-        # if [ $(find ./ -type f -mmin -3 -name execute -print | wc -l) -eq 0 ]; then
+        # if [ "$(find ./ -type f -mmin -3 -name execute -print | wc -l)" -eq 0 ]; then
         #     # sumanu
         #     wget -q http://mirrors.kernel.org/gnu/gcc/gcc-5.3.0/gcc-5.3.0.tar.bz2
         #     rm -f gcc-5.3.0.tar.bz2
@@ -149,16 +155,14 @@ package_list+=("ShellCheck-0.4.3")
 for package in "${package_list[@]}"
 do
     echo "$(date +%Y/%m/%d" "%H:%M:%S) ${package}"
-    [ $(ghc-pkg list | grep -c ${package}) -ne 0 ] && continue
+    [ "$(ghc-pkg list | grep -c ${package})" -ne 0 ] && continue
     pushd ${OPENSHIFT_DATA_DIR}/tmp > /dev/null
     rm -rf "${package}"
     wget -nc -q https://hackage.haskell.org/package/"${package}"/"${package}".tar.gz
-    tar xfz "${package}".tar.gz
+    tar zxf "${package}".tar.gz
     pushd "${package}" > /dev/null
     if [ "${package}" = "ShellCheck-0.4.3" ]; then
-        # cabal install -j1 -v3 --disable-optimization --disable-documentation \
-        #  --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
-        #  --ghc-options="+RTS -N1 -M448m -RTS"
+        # cabal install -j1 -v3
         cabal install -j1 --disable-documentation -O2 \
          --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
          --disable-tests --disable-coverage --disable-benchmarks \
@@ -168,6 +172,7 @@ do
          --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
          --disable-tests --disable-coverage --disable-benchmarks
     else
+        # *** For regex-tdfa-1.2.1 ***
         PATH_ORG="${PATH}"
         export PATH="${OPENSHIFT_DATA_DIR}/local/bin:${PATH}"
         if [ ! -f ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings.org ]; then
@@ -175,9 +180,6 @@ do
             sed -i -e "s|/usr/bin/gcc|${OPENSHIFT_DATA_DIR}/local/bin/gcc|g" ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
         fi
         # cat ${OPENSHIFT_DATA_DIR}/haskell/usr/lib/ghc-7.10.3/settings
-        # cabal install -j1 -v3 --disable-optimization --disable-documentation \
-        #  --disable-tests --disable-coverage --disable-benchmarks --disable-library-for-ghci \
-        #  --ghc-options="+RTS -N1 -M448m -RTS"
         cabal install -j1 --disable-documentation -O2 \
          --enable-split-objs --disable-library-for-ghci --enable-executable-stripping --enable-library-stripping \
          --disable-tests --disable-coverage --disable-benchmarks \
@@ -191,24 +193,28 @@ do
     popd > /dev/null
     # quota -s
     # oo-cgroup-read memory.failcnt
-    [ $(ghc-pkg list | grep -c ${package}) -eq 0 ] && break
+    [ "$(ghc-pkg list | grep -c ${package})" -eq 0 ] && break
 done
 
+rm -rf ${OPENSHIFT_DATA_DIR}/tmp
 rm -f ${OPENSHIFT_REPO_DIR}/100mb.dat
 
-${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck "${0}"
+# * Test *
+${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck --exclude=SC2086 "${0}"
+
+# ***** script *****
 
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/shellcheck
 #!/bin/bash
 
 export TZ=JST-9
 
-export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib
-export PATH=${PATH}:${OPENSHIFT_DATA_DIR}/haskell/usr/bin
-export HOME=${OPENSHIFT_DATA_DIR}
-export OPENSHIFT_HASKELL_DIR=${OPENSHIFT_DATA_DIR}/haskell
+export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}"/usr/lib
+export PATH="${PATH}":"${OPENSHIFT_DATA_DIR}"/haskell/usr/bin
+export HOME="${OPENSHIFT_DATA_DIR}"
+export OPENSHIFT_HASKELL_DIR="${OPENSHIFT_DATA_DIR}"/haskell
 
-${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck "$@"
+"${OPENSHIFT_DATA_DIR}"/.cabal/bin/shellcheck --exclude=SC2086 "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/shellcheck
 
@@ -260,6 +266,8 @@ echo $tmp;
 @unlink($original_file);
 ?>
 __HEREDOC__
+
+php -l ${OPENSHIFT_REPO_DIR}/shellcheck.php
 
 # ***** cron minutely *****
 
