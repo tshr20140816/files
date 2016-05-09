@@ -331,6 +331,7 @@ UseCanonicalName Off
 AccessFileName .htaccess
 TraceEnable Off
 
+Header add Server Apache
 Header always unset X-Powered-By
 Header always unset X-Rack-Cache
 Header always unset X-Runtime
