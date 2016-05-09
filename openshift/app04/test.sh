@@ -38,22 +38,6 @@ rm -rf 20160506
 
 # -----
 
-cat << '__HEREDOC__' > ${OPENSHIFT_REPO_DIR}/502.php
-<html>
-<head>
-<?php
-$referer = $_SERVER['HTTP_REFERER'];
-echo "<meta http-equiv='refresh' content='10;URL=$referer'>";
-?>
-<title>502 Error</title>
-</head>
-<body>
-<div><?php echo $_SERVER['HTTP_REFERER']; ?></div><br />
-<div>Auto Retry...</div>
-</body>
-</html>
-__HEREDOC__
-
 ls -lang ${OPENSHIFT_REPO_DIR}
 
 cd /tmp
@@ -68,6 +52,7 @@ cd phpMyAdmin-4.4.15.5-english
 ls -lang 
 
 cat config.sample.inc.php
+
 
 
 quota -s
