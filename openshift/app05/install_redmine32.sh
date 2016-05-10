@@ -236,10 +236,10 @@ done
 
 home_org=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
-export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
-export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+# export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+# export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 eval "$(rbenv init -)"
-export PATH=${OPENSHIFT_DATA_DIR}/usr/bin:$PATH
+# export PATH=${OPENSHIFT_DATA_DIR}/usr/bin:$PATH
 
 # mkdir -p ${OPENSHIFT_DATA_DIR}/usr/bin
 cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/usr/bin/c++
@@ -347,8 +347,8 @@ mkdir public/plugin_assets
 
 # *** ruby env ***
 
-export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
-export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
+# export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
+# export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 eval "$(rbenv init -)"
 
 rbenv local ${ruby_version}
@@ -452,7 +452,7 @@ bundle config --local
 mkdir .bundle
 touch .bundle/config
 
-time bundle install --no-color --path vendor/bundle --without=test development --verbose --jobs=2 --retry=5
+time bundle install --no-color --path vendor/bundle --without=test development --verbose --jobs=1 --retry=5
 
 time RAILS_ENV=production bundle exec rake generate_secret_token
 time RAILS_ENV=production bundle exec rake db:migrate
