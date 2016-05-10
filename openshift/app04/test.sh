@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0852"
+echo "1032"
 
 set -x
 
@@ -41,10 +41,11 @@ rm -f 502.php file_list.zip
 
 # -----
 
-ls -lang ${OPENSHIFT_REPO_DIR}
+cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 255 | head -n 1 | tee data1.txt
 
-whereis audit
-audit --help
+
+
+ls -lang ${OPENSHIFT_REPO_DIR}
 
 cd /tmp
 
