@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1339"
+echo "1342"
 
 set -x
 
@@ -68,6 +68,9 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 cd ${OPENSHIFT_DATA_DIR}/.ssh
 cat config
+
+ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config 56f9bba87628e1611400013c@b10-20160312.rhcloud.com pwd
+ssh -t -t -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config 56f9bba87628e1611400013c@b10-20160312.rhcloud.com
 
 quota -s
 echo "FINISH"
