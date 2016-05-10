@@ -1,5 +1,8 @@
 #!/bin/bash
 
+distcc_server_account=""
+distcc_server_password=""
+
 export TZ=JST-9
 set -x
 quota -s
@@ -17,7 +20,6 @@ cd ${OPENSHIFT_TMP_DIR}
 wget -q https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
 tar jxf distcc-${distcc_version}.tar.bz2
 cd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
-# ./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/usr \
  --infodir=${OPENSHIFT_TMP_DIR}/gomi \
@@ -25,7 +27,7 @@ cd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
 time make -j$(grep -c -e processor /proc/cpuinfo)
 make install
 cd ${OPENSHIFT_TMP_DIR}
-rm -rf distcc-${distcc_version}
+rm -rf distcc-${distcc_version} gomi
 rm -f distcc-${distcc_version}.tar.bz2
 
 mkdir ${OPENSHIFT_DATA_DIR}/.distcc
@@ -45,6 +47,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) $*" >> ${OPENSHIFT_LOG_DIR}/distcc_ssh.log
 exec /usr/bin/ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/usr/bin/distcc-ssh
+export DISTCC_SSH="${OPENSHIFT_DATA_DIR}/usr/bin/distcc-ssh"
 
 mkdir ${OPENSHIFT_DATA_DIR}/.ssh
 mkdir ${OPENSHIFT_TMP_DIR}/.ssh
@@ -63,7 +66,10 @@ Host *
 #  LogLevel DEBUG3
   LogLevel INFO
   Protocol 2
-  Ciphers arcfour256,arcfour128
+#  Ciphers arcfour256,arcfour128
+  Ciphers arcfour,blowfish-cbc
+  Macs hmac-md5-96
+  Compression no
   AddressFamily inet
   PreferredAuthentications publickey
   PasswordAuthentication no
@@ -79,11 +85,33 @@ __HEREDOC__
 sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
 sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
 
+# ***** rhc *****
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+home_org=${HOME}
+export HOME=${OPENSHIFT_DATA_DIR}
+
+gem install rhc --verbose --no-rdoc --no-ri --no-test -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+
+yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
+rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee -a ${OPENSHIFT_DATA_DIR}/user_fqdn.txt
+
+rm -f  ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt
+for line in $(cat ${OPENSHIFT_DATA_DIR}/user_fqdn.txt)
+do
+    user_fqdn="${line}"
+    ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn} pwd
+    ssh -t -t -O check -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${user_fqdn}
+    user_string=$(echo "${user_fqdn}" | awk -F@ '{print $1}')
+    distcc_hosts_string="${user_fqdn}/4:/var/lib/openshift/${user_string}/app-root/data/distcc/bin/distccd_start "
+    echo -n "${distcc_hosts_string}" >> ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt
+done
+export HOME=${home_org}
 
 # ***** distcc hosts *****
 
-tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt)"
-export DISTCC_HOSTS="${tmp_string}"
+export DISTCC_HOSTS="$(cat ${OPENSHIFT_DATA_DIR}/distcc_hosts.txt)"
 export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
 export CC="distcc gcc"
 export CXX="distcc g++"
@@ -127,7 +155,7 @@ time make -j4
 make install
 rm -rf ${OPENSHIFT_DATA_DIR}/usr/manual
 cd ${OPENSHIFT_TMP_DIR}
-rm -rf httpd-${apache_version}
+rm -rf httpd-${apache_version} gomi
 
 # *** conf ***
 
@@ -506,11 +534,16 @@ bundle config --local
 mkdir .bundle
 touch .bundle/config
 
-time bundle install --no-color --path vendor/bundle --without=test development --verbose --jobs=1 --retry=5
+time bundle install --no-color --path vendor/bundle --without=test development --verbose --jobs=2 --retry=5
 
 time RAILS_ENV=production bundle exec rake generate_secret_token
 time RAILS_ENV=production bundle exec rake db:migrate
 time RAILS_ENV=production bundle exec rake redmine:plugins:migrate
+
+for line in $(cat ${OPENSHIFT_DATA_DIR}/user_fqdn.txt)
+do
+    ssh -t -t -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${line}
+done
 
 # *** apache conf ***
 
