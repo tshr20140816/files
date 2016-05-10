@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1342"
+echo "1520"
 
 set -x
 
@@ -99,6 +99,7 @@ sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
 cat config
 
 ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config 56f9bba87628e1611400013c@b10-20160312.rhcloud.com pwd
+tree -a /tmp/.ssh
 ssh -t -t -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config 56f9bba87628e1611400013c@b10-20160312.rhcloud.com
 
 quota -s
