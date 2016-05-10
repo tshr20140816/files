@@ -32,7 +32,18 @@ mkdir ${OPENSHIFT_DATA_DIR}/.distcc
 
 export PATH="${OPENSHIFT_DATA_DIR}/usr/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-export DISTCC_LOG=/dev/null
+# export DISTCC_LOG=/dev/null
+export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
+
+# ***** distcc hosts *****
+
+if [ -e ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt ]; then
+    tmp_string="$(cat ${OPENSHIFT_DATA_DIR}/params/distcc_hosts.txt)"
+    export DISTCC_HOSTS="${tmp_string}"
+    export DISTCC_POTENTIAL_HOSTS="${DISTCC_HOSTS}"
+    export CC="distcc gcc"
+    export CXX="distcc g++"
+fi
 
 # ***** apache *****
 
