@@ -10,6 +10,7 @@ for line in $(cat ${OPENSHIFT_DATA_DIR}/params/user_fqdn.txt)
 do
     ssh -t -t -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config ${line} 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 done
+ls -lang ${OPENSHIFT_TMP_DIR}/.ssh
 
 mv -f ${OPENSHIFT_LOG_DIR}/distcc_ssh.log ${OPENSHIFT_LOG_DIR}/install
 
