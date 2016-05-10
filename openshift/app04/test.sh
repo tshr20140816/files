@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1139"
+echo "1142"
 
 set -x
 
@@ -40,17 +40,17 @@ rm -rf 20160506
 rm -rf 20160509
 # rm -rf gomi build
 # rm -rf ${OPENSHIFT_DATA_DIR}/usr
-cd ${OPENSHIFT_REPO_DIR}
-rm -f 502.php file_list.zip
 
 # -----
 
 cd /tmp
 
-mv d1.txt d3.txt
-mv d2.txt d4.txt
+# mv d1.txt d3.txt
+# mv d2.txt d4.txt
 ls -lang
 
+cat d3.txt
+cat d4.txt
 
 
 ls -lang ${OPENSHIFT_REPO_DIR}
