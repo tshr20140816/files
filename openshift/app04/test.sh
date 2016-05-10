@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1032"
+echo "1051"
 
 set -x
 
@@ -41,7 +41,7 @@ rm -f 502.php file_list.zip
 
 # -----
 
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 255 | head -n 1 | tee data1.txt
+cat /dev/urandom | tr -dc 'a-zA-Z0-9@.!#$%&()=-^[:+<>_' | fold -w 255 | head -n 1 | tee data1.txt
 
 
 
