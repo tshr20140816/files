@@ -67,6 +67,32 @@ export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
 
 cd ${OPENSHIFT_DATA_DIR}/.ssh
+
+cat << '__HEREDOC__' > config
+Host *
+  IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
+  StrictHostKeyChecking no
+  BatchMode yes
+  UserKnownHostsFile /dev/null
+  LogLevel QUIET
+#  LogLevel DEBUG3
+  Protocol 2
+  Ciphers arcfour256,arcfour128
+  AddressFamily inet
+  PreferredAuthentications publickey
+  PasswordAuthentication no
+  GSSAPIAuthentication no
+  ConnectionAttempts 5
+  ControlMaster auto
+  # ControlPath too long
+#  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
+  ControlPath __OPENSHIFT_TMP_DIR__.ssh/master-%r@%h:%p
+  ControlPersist yes
+  ServerAliveInterval 60
+__HEREDOC__
+sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
+sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
+
 cat config
 
 ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config 56f9bba87628e1611400013c@b10-20160312.rhcloud.com pwd
