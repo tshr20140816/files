@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1248"
+echo "1312"
 
 set -x
 
@@ -68,9 +68,14 @@ export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
 
+whereis gem
+
 gem --version
 gem environment
 gem help install
+
+gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+yes | rhc setup --server openshift.redhat.com --create-token -l $(cat d3.txt | cut -d ',' -f1) -p $(cat d3.txt | cut -d ',' -f2)
 
 quota -s
 echo "FINISH"
