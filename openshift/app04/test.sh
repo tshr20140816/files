@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1520"
+echo "1524"
 
 set -x
 
@@ -65,6 +65,8 @@ openssl rsautl -decrypt -inkey ./id_rsa -in pass.rsa
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
+
+mkdir /tmp/.ssh
 
 cd ${OPENSHIFT_DATA_DIR}/.ssh
 
