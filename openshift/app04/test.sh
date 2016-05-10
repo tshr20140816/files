@@ -103,8 +103,7 @@ cat config
 ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config 56f9bba87628e1611400013c@b10-20160312.rhcloud.com pwd
 tree -a /tmp/.ssh
 ssh -t -t -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config 56f9bba87628e1611400013c@b10-20160312.rhcloud.com
-
-man ssh_config
+tree -a /tmp/.ssh
 
 quota -s
 echo "FINISH"
