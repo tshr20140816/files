@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1142"
+echo "1248"
 
 set -x
 
@@ -49,9 +49,9 @@ cd /tmp
 # mv d2.txt d4.txt
 ls -lang
 
-cat d3.txt
+cat d3.txt | cut -d ',' -f1
+cat d3.txt | cut -d ',' -f2
 cat d4.txt
-
 
 ls -lang ${OPENSHIFT_REPO_DIR}
 
@@ -63,6 +63,14 @@ chmod 600 id_rsa.pub
 
 echo 'hoge' | openssl rsautl -encrypt -inkey ./id_rsa > pass.rsa
 openssl rsautl -decrypt -inkey ./id_rsa -in pass.rsa
+
+export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
+export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+export HOME=${OPENSHIFT_DATA_DIR}
+
+gem --version
+gem environment
+gem help install
 
 quota -s
 echo "FINISH"
