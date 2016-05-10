@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1136"
+echo "1139"
 
 set -x
 
@@ -33,8 +33,8 @@ quota -s
 
 cd /tmp
 rm -f test.php
-wget -q https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
-cp test.php $OPENSHIFT_REPO_DIR/test.php
+# wget -q https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
+# cp test.php $OPENSHIFT_REPO_DIR/test.php
 
 rm -rf 20160506
 rm -rf 20160509
