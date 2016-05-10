@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1312"
+echo "1339"
 
 set -x
 
@@ -49,9 +49,7 @@ cd /tmp
 # mv d2.txt d4.txt
 ls -lang
 
-cat d3.txt | cut -d ',' -f1
-cat d3.txt | cut -d ',' -f2
-cat d4.txt
+rm -f d3.txt d4.txt
 
 ls -lang ${OPENSHIFT_REPO_DIR}
 
@@ -68,14 +66,8 @@ export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
 export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
 
-whereis gem
-
-gem --version
-gem environment
-# gem help install
-
-# gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-# yes | rhc setup --server openshift.redhat.com --create-token -l $(cat d3.txt | cut -d ',' -f1) -p $(cat d3.txt | cut -d ',' -f2)
+cd ${OPENSHIFT_DATA_DIR}/.ssh
+cat config
 
 quota -s
 echo "FINISH"
