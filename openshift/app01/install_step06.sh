@@ -90,7 +90,7 @@ export PATH="${OPENSHIFT_TMP_DIR}/local2/bin:$PATH"
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc install" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
 # gem install commander -v 4.2.1 --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
-gem install rhc --verbose --no-rdoc --no-ri -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+gem install rhc --verbose --no-rdoc --no-ri --no-test -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) rhc setup" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
