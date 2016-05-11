@@ -48,8 +48,8 @@ else
     echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_cadaver.log
 
     ./configure \
-     --mandir=${OPENSHIFT_TMP_DIR}/man \
-     --docdir=${OPENSHIFT_TMP_DIR}/doc \
+     --mandir=${OPENSHIFT_TMP_DIR}/gomi \
+     --docdir=${OPENSHIFT_TMP_DIR}/gomi \
      --with-ssl=openssl \
      --prefix=${OPENSHIFT_DATA_DIR}/cadaver 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_cadaver.log
 
