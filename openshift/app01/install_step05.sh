@@ -17,8 +17,8 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 # ./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
- --infodir=${OPENSHIFT_TMP_DIR}/info \
- --mandir=${OPENSHIFT_TMP_DIR}/man 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_distcc.log
+ --infodir=${OPENSHIFT_TMP_DIR}/gomi \
+ --mandir=${OPENSHIFT_TMP_DIR}/gomi 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_distcc.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_distcc.log
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_distcc.log
@@ -48,8 +48,8 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache configure" | tee -a ${OPENSHIFT_LOG_DI
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_ccache.log
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/ccache \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc 2>&1 \
+ --mandir=${OPENSHIFT_TMP_DIR}/gomi \
+ --docdir=${OPENSHIFT_TMP_DIR}/gomi 2>&1 \
  | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_ccache.log
