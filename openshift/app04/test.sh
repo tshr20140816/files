@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1529"
+echo "1303"
 
 set -x
 
@@ -54,56 +54,10 @@ rm -f d3.txt d4.txt
 ls -lang ${OPENSHIFT_REPO_DIR}
 
 cd /tmp
-
-ssh-keygen -t rsa -f id_rsa -P ''
-chmod 600 id_rsa
-chmod 600 id_rsa.pub
-
-echo 'hoge' | openssl rsautl -encrypt -inkey ./id_rsa > pass.rsa
-openssl rsautl -decrypt -inkey ./id_rsa -in pass.rsa
-
-export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
-export HOME=${OPENSHIFT_DATA_DIR}
-
-mkdir /tmp/.ssh
-
-cd ${OPENSHIFT_DATA_DIR}/.ssh
-
-cat << '__HEREDOC__' > config
-Host *
-  IdentityFile __OPENSHIFT_DATA_DIR__.ssh/id_rsa
-  StrictHostKeyChecking no
-  BatchMode yes
-  UserKnownHostsFile /dev/null
-  LogLevel QUIET
-#  LogLevel DEBUG3
-  Protocol 2
-#  Ciphers arcfour256,arcfour128
-  Ciphers arcfour,blowfish-cbc
-  Macs hmac-md5-96
-  Compression no
-  AddressFamily inet
-  PreferredAuthentications publickey
-  PasswordAuthentication no
-  GSSAPIAuthentication no
-  ConnectionAttempts 5
-  ControlMaster auto
-  # ControlPath too long
-#  ControlPath __OPENSHIFT_DATA_DIR__.ssh/master-%r@%h:%p
-  ControlPath __OPENSHIFT_TMP_DIR__.ssh/master-%r@%h:%p
-  ControlPersist yes
-  ServerAliveInterval 60
-__HEREDOC__
-sed -i -e "s|__OPENSHIFT_DATA_DIR__|${OPENSHIFT_DATA_DIR}|g" config
-sed -i -e "s|__OPENSHIFT_TMP_DIR__|${OPENSHIFT_TMP_DIR}|g" config
-
-cat config
-
-# ssh -F ${OPENSHIFT_DATA_DIR}/.ssh/config xxx pwd
-tree -a /tmp/.ssh
-# ssh -t -t -O exit -F ${OPENSHIFT_DATA_DIR}/.ssh/config xxx
-tree -a /tmp/.ssh
+https://github.com/axboe/fio/archive/fio-2.9.tar.gz
+tar xf fio-2.9.tar.gz
+cd fio-2.9
+./configure --help
 
 quota -s
 echo "FINISH"
