@@ -24,7 +24,7 @@ function010() {
     if [ -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
         ccache_exists=$(printenv | grep ^PATH= | grep ccache | wc -l)
         if [ ${ccache_exists} -eq 0 ]; then
-            export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+            [ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/ccache/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
             export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
             export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
             rm -rf ${CCACHE_TEMPDIR}
@@ -43,7 +43,7 @@ function010() {
     if [ -e ${OPENSHIFT_DATA_DIR}/distcc ]; then
         distcc_exists=$(printenv | grep ^PATH= | grep distcc | wc -l)
         if [ ${distcc_exists} -eq 0 ]; then
-            export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+            [ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/distcc/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
             export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
             # export DISTCC_LOG=/dev/null
             export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
@@ -70,11 +70,11 @@ function010() {
     # ***** ld.gold *****
 
     if [ -f ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ]; then
-        mkdir -p ${OPENSHIFT_TMP_DIR}/local/bin
-        cp ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ${OPENSHIFT_TMP_DIR}/local/bin/
-        chmod +x ${OPENSHIFT_TMP_DIR}/local/bin/ld.gold
+        mkdir -p ${OPENSHIFT_TMP_DIR}/usr/bin
+        cp ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ${OPENSHIFT_TMP_DIR}/usr/bin/
+        chmod +x ${OPENSHIFT_TMP_DIR}/usr/bin/ld.gold
         export LD=ld.gold
-        export PATH="${OPENSHIFT_TMP_DIR}/local/bin:$PATH"
+        [ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/usr/bin) -eq 0 ] && export PATH="${OPENSHIFT_TMP_DIR}/usr/bin:$PATH"
     fi
 
     # ***** CFLAGS CXXFLAGS *****
