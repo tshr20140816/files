@@ -70,8 +70,8 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) curl configure" | tee -a ${OPENSHIFT_LOG_DIR}
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_curl.log
 ./configure --help
 ./configure \
- --prefix=${OPENSHIFT_DATA_DIR}/curl \
- --mandir=${OPENSHIFT_TMP_DIR}/man 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
+ --prefix=${OPENSHIFT_DATA_DIR}/gomi \
+ --mandir=${OPENSHIFT_TMP_DIR}/gomi 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) curl make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_curl.log
 time make -j$(grep -c -e processor /proc/cpuinfo) 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_curl.log
