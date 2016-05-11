@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1303"
+echo "1304"
 
 set -x
 
@@ -44,20 +44,13 @@ rm -rf 20160509
 # -----
 
 cd /tmp
-
-# mv d1.txt d3.txt
-# mv d2.txt d4.txt
-ls -lang
-
-rm -f d3.txt d4.txt
-
-ls -lang ${OPENSHIFT_REPO_DIR}
-
-cd /tmp
-https://github.com/axboe/fio/archive/fio-2.9.tar.gz
+wget -nc -q https://github.com/axboe/fio/archive/fio-2.9.tar.gz
 tar xf fio-2.9.tar.gz
 cd fio-2.9
 ./configure --help
+cd /tmp
+rm -f fio-2.9.tar.gz
+rm -rf fio-2.9
 
 quota -s
 echo "FINISH"
