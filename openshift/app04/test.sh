@@ -44,8 +44,13 @@ rm -rf 20160509
 # -----
 
 cd /tmp
+
+mkdir ${OPENSHIFT_DATA_DIR}/test20160511 > /dev/null 2>&1
+mkdir ${OPENSHIFT_DATA_DIR}/test20160511 > /dev/null 2>&1
+
 wget -nc -q https://github.com/axboe/fio/archive/fio-2.9.tar.gz
 tar xf fio-2.9.tar.gz
+ls -lang
 cd fio-2.9
 ./configure --help
 cd /tmp
