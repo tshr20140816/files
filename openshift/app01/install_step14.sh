@@ -11,8 +11,8 @@ export HOME=${OPENSHIFT_DATA_DIR}
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.rbenv/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.gem/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
 
 ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module --snippet > ${OPENSHIFT_TMP_DIR}/passenger.conf
@@ -174,8 +174,8 @@ popd > /dev/null
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.rbenv/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.gem/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)"
 
 rbenv local ${ruby_version}
@@ -186,7 +186,7 @@ export DISTCC_HOSTS="${tmp_string}"
 
 # ***** debug code ******
 
-mkdir -p ${OPENSHIFT_TMP_DIR}/local2/bin
+mkdir -p ${OPENSHIFT_TMP_DIR}/local2/bin > /dev/null 2>&1
 cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
 #!/bin/bash
 export TZ=JST-9
@@ -194,7 +194,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) $*" >> ${OPENSHIFT_LOG_DIR}/gcc_bundle.log
 /usr/bin/gcc "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
-export PATH="${OPENSHIFT_TMP_DIR}/local2/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/local2/bin) -eq 0 ] && export PATH="${OPENSHIFT_TMP_DIR}/local2/bin:$PATH"
 
 # *** bundle ***
 
