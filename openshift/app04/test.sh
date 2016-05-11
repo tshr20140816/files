@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1304"
+echo "1417"
 
 set -x
 
@@ -45,9 +45,13 @@ cd /tmp
 
 cd /tmp
 
-rm -rf test20160511
+rm -rf fio-fio-2.9 .ssh
+rm -f id_rsa id_rsa.pub pass.rsa
+rm -rf ${OPENSHIFT_DATA_DIR}/test20160511
 
 ls -lang
+
+tree ${OPENSHIFT_DATA_DIR}/rpm
 
 quota -s
 echo "FINISH"
