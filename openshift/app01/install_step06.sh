@@ -51,7 +51,7 @@ popd > /dev/null
 
 # *** distcc-ssh ***
 
-# mkdir ${OPENSHIFT_DATA_DIR}/bin
+mkdir ${OPENSHIFT_DATA_DIR}/bin > /dev/null 2>&1
 pushd ${OPENSHIFT_DATA_DIR}/bin > /dev/null
 cat << '__HEREDOC__' > distcc-ssh
 #!/bin/bash
@@ -70,7 +70,7 @@ popd > /dev/null
 # *** env ***
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}/.gem
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.gem/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 export HOME=${OPENSHIFT_DATA_DIR}
 gem --version
 gem environment
@@ -78,15 +78,15 @@ gem help install
 
 # ***** debug code ******
 
-mkdir -p ${OPENSHIFT_TMP_DIR}/local2/bin
-cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
-#!/bin/bash
-export TZ=JST-9
-echo "$(date +%Y/%m/%d" "%H:%M:%S) $*" >> ${OPENSHIFT_LOG_DIR}/gcc_rhc.log
-/usr/bin/gcc "$@"
-__HEREDOC__
-chmod +x ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
-export PATH="${OPENSHIFT_TMP_DIR}/local2/bin:$PATH"
+# mkdir -p ${OPENSHIFT_TMP_DIR}/local2/bin
+# cat << '__HEREDOC__' > ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
+# #!/bin/bash
+# export TZ=JST-9
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) $*" >> ${OPENSHIFT_LOG_DIR}/gcc_rhc.log
+# /usr/bin/gcc "$@"
+# __HEREDOC__
+# chmod +x ${OPENSHIFT_TMP_DIR}/local2/bin/gcc
+# export PATH="${OPENSHIFT_TMP_DIR}/local2/bin:$PATH"
 
 # *** install ***
 
