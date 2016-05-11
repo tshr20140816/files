@@ -24,8 +24,8 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) webalizer configure" | tee -a ${OPENSHIFT_LOG
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_webalizer.log
 ./configure \
 --prefix=${OPENSHIFT_DATA_DIR}/webalizer \
---mandir=${OPENSHIFT_TMP_DIR}/man \
---docdir=${OPENSHIFT_TMP_DIR}/doc \
+--mandir=${OPENSHIFT_TMP_DIR}/gomi \
+--docdir=${OPENSHIFT_TMP_DIR}/gomi \
 --with-language=japanese \
 --enable-dns 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_webalizer.log
 
