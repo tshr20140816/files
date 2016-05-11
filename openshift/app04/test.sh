@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0845"
+echo "0853"
 
 set -x
 
@@ -32,14 +32,8 @@ quota -s
 # -----
 
 cd /tmp
-# rm -f test.php
-# wget -q https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
-# cp test.php $OPENSHIFT_REPO_DIR/test.php
-
-# rm -rf 20160506
-# rm -rf 20160509
-# rm -rf gomi build
-# rm -rf ${OPENSHIFT_DATA_DIR}/usr
+rm -rf ${OPENSHIFT_DATA_DIR}/local
+rm -rf ${OPENSHIFT_DATA_DIR}/rpm
 
 # -----
 
@@ -51,7 +45,7 @@ tar xf gmp-6.1.0.tar.xz
 ls -lang
 cd gmp-6.1.0
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local --enable-static=no
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local --enable-static=no --libdir=${OPENSHIFT_DATA_DIR}/usr/lib
 time make -j4
 make install
 cd /tmp
