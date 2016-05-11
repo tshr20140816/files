@@ -49,7 +49,7 @@ echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIF
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/ccache \
  --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --docdir=${OPENSHIFT_TMP_DIR}/doc 2>&1 \
  | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_ccache.log
