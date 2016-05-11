@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0840"
+echo "0845"
 
 set -x
 
@@ -45,9 +45,19 @@ cd /tmp
 
 cd /tmp
 
-wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.lz
-tar xf gmp-6.1.0.tar.lz
+rm -f gmp-6.1.0.tar.lz
+wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
+tar xf gmp-6.1.0.tar.xz
 ls -lang
+cd gmp-6.1.0
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/local --enable-static=no
+time make -j4
+make install
+cd /tmp
+rm -rf gmp-6.1.0
+rm -f gmp-6.1.0.tar.xz
+tree ${OPENSHIFT_DATA_DIR}
 
 quota -s
 echo "FINISH"
