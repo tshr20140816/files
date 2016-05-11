@@ -37,8 +37,7 @@ rm -rf man
 rm -rf lib/bundler/man
 popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR}/.gem/gems/passenger-* > /dev/null
-rm -rf doc
-rm -rf man
+rm -rf doc man
 rm -f download_cache/nginx*
 popd > /dev/null
 find ${OPENSHIFT_DATA_DIR}/.gem -name '*.md' -type f -print0 | xargs -0i -t -P 4 -n 3 rm -f {}
