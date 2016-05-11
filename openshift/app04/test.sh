@@ -32,12 +32,12 @@ quota -s
 # -----
 
 cd /tmp
-rm -f test.php
+# rm -f test.php
 # wget -q https://github.com/tshr20140816/files/raw/master/openshift/app04/test.php
 # cp test.php $OPENSHIFT_REPO_DIR/test.php
 
-rm -rf 20160506
-rm -rf 20160509
+# rm -rf 20160506
+# rm -rf 20160509
 # rm -rf gomi build
 # rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
@@ -45,18 +45,9 @@ rm -rf 20160509
 
 cd /tmp
 
-mkdir ${OPENSHIFT_DATA_DIR}/test20160511 > /dev/null 2>&1
-mkdir ${OPENSHIFT_DATA_DIR}/test20160511 > /dev/null 2>&1
 rm -rf test20160511
 
-wget -nc -q https://github.com/axboe/fio/archive/fio-2.9.tar.gz
-tar xf fio-2.9.tar.gz
 ls -lang
-cd fio-2.9
-./configure --help
-cd /tmp
-rm -f fio-2.9.tar.gz
-rm -rf fio-2.9
 
 quota -s
 echo "FINISH"
