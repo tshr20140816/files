@@ -21,8 +21,8 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg configure" | tee -a ${OPENSHIFT_LOG_DIR}
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 ./configure \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
- --docdir=${OPENSHIFT_TMP_DIR}/doc \
+ --mandir=${OPENSHIFT_TMP_DIR}/gomi \
+ --docdir=${OPENSHIFT_TMP_DIR}/gomi \
  --prefix=${OPENSHIFT_DATA_DIR}/mrtg 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_mrtg.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) mrtg make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
