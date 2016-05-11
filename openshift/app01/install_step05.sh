@@ -32,7 +32,7 @@ rm -rf distcc-${distcc_version}
 
 mkdir ${OPENSHIFT_DATA_DIR}/.distcc
 
-export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/distcc/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
 export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
 export DISTCC_LOG=/dev/null
 
@@ -73,7 +73,7 @@ export CCACHE_MAXSIZE=300M
 # export CC="ccache gcc"
 # export CXX="ccache g++"
 
-export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/ccache/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 # ccache -z
 # ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
