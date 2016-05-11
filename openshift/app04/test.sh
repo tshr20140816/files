@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1418"
+echo "0840"
 
 set -x
 
@@ -45,6 +45,9 @@ cd /tmp
 
 cd /tmp
 
+wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.lz
+tar xf gmp-6.1.0.tar.lz
+ls -lang
 
 quota -s
 echo "FINISH"
