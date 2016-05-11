@@ -34,10 +34,10 @@ popd > /dev/null
 
 export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
-export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
-export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.rbenv/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/.gem/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 eval "$(rbenv init -)" 
-export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/apache/bin) -eq 0 ] && export PATH=${OPENSHIFT_DATA_DIR}/apache/bin:$PATH
 # export HTTPD=${OPENSHIFT_DATA_DIR}/apache/bin/httpd
 # export BINDIR=${OPENSHIFT_DATA_DIR}/apache
 
