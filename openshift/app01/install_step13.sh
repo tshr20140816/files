@@ -120,9 +120,9 @@ else
     echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_php.log
     ./configure \
      --prefix=${OPENSHIFT_DATA_DIR}/php \
-     --mandir=${OPENSHIFT_TMP_DIR}/man \
-     --docdir=${OPENSHIFT_TMP_DIR}/doc \
-     --infodir=${OPENSHIFT_TMP_DIR}/info \
+     --mandir=${OPENSHIFT_TMP_DIR}/gomi \
+     --docdir=${OPENSHIFT_TMP_DIR}/gomi \
+     --infodir=${OPENSHIFT_TMP_DIR}/gomi \
      --with-apxs2=${OPENSHIFT_TMP_DIR}/apache/bin/apxs \
      --with-mysql \
      --with-pdo-mysql \
@@ -254,8 +254,8 @@ else
     echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
     enable_jobserver="no" \
      ./configure \
-     --mandir=${OPENSHIFT_TMP_DIR}/man \
-     --docdir=${OPENSHIFT_TMP_DIR}/doc \
+     --mandir=${OPENSHIFT_TMP_DIR}/gomi \
+     --docdir=${OPENSHIFT_TMP_DIR}/gomi \
      --prefix=${OPENSHIFT_DATA_DIR}/libmemcached 2>&1 \
      | tee -a ${OPENSHIFT_LOG_DIR}/install_libmemcached.log
 
@@ -297,7 +297,7 @@ ${OPENSHIFT_DATA_DIR}/php/bin/phpize
 echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached_php_ext configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached_php_extension.log
 ./configure \
- --mandir=${OPENSHIFT_TMP_DIR}/man \
+ --mandir=${OPENSHIFT_TMP_DIR}/gomi \
  --prefix=${OPENSHIFT_DATA_DIR}/php_memcached \
  --with-libmemcached-dir=$OPENSHIFT_DATA_DIR/libmemcached \
  --disable-memcached-sasl \
