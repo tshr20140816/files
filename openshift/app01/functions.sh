@@ -18,6 +18,7 @@ function010() {
     export env_home_backup=${HOME}
 
     rm -rf ${OPENSHIFT_TMP_DIR}/gomi
+    rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
     # ***** ccache *****
 
