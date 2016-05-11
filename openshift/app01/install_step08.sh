@@ -21,7 +21,7 @@ pushd ${OPENSHIFT_TMP_DIR}/memcached-${memcached_version} > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_memcached.log
 ./configure \
---mandir=${OPENSHIFT_TMP_DIR}/man \
+--mandir=${OPENSHIFT_TMP_DIR}/gomi \
 --prefix=${OPENSHIFT_DATA_DIR}/memcached 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_memcached.log
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) memcached make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
@@ -94,8 +94,8 @@ else
     echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_apache.log
     ./configure \
      --prefix=${OPENSHIFT_DATA_DIR}/apache \
-     --mandir=${OPENSHIFT_TMP_DIR}/man \
-     --docdir=${OPENSHIFT_TMP_DIR}/doc \
+     --mandir=${OPENSHIFT_TMP_DIR}/gomi \
+     --docdir=${OPENSHIFT_TMP_DIR}/gomi \
      --enable-mods-shared='all proxy' 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
     echo "$(date +%Y/%m/%d" "%H:%M:%S) apache make" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
     echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_apache.log
