@@ -17,6 +17,8 @@ function010() {
     # 元に戻したい場合がでたときのため
     export env_home_backup=${HOME}
 
+    rm -rf ${OPENSHIFT_TMP_DIR}/gomi
+
     # ***** ccache *****
 
     if [ -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
