@@ -34,7 +34,7 @@ rm ${OPENSHIFT_TMP_DIR}/fio-${fio_version}.tar.bz2
 # *** run fio ***
 
 rm -rf ${OPENSHIFT_DATA_DIR}/work
-pushd ${OPENSHIFT_DATA_DIR}fio > /dev/null
+pushd ${OPENSHIFT_DATA_DIR}/fio > /dev/null
 for rwtype in read write randread randwrite
 do
     mkdir ${OPENSHIFT_DATA_DIR}/work
