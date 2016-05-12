@@ -51,7 +51,7 @@ rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
 ls -lang
 cat libvpx.spec
 rpmbuild --help
-export topdir=${OPENSHIFT_DATA_DIR}
+export _topdir=${OPENSHIFT_DATA_DIR}
 rpmbuild -bp libvpx.spec
 quota -s
 echo "FINISH"
