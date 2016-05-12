@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1033"
+echo "1112"
 
 set -x
 
@@ -35,6 +35,7 @@ cd /tmp
 rm -rf ${OPENSHIFT_DATA_DIR}/local
 rm -rf ${OPENSHIFT_DATA_DIR}/rpm
 rm -rf ${OPENSHIFT_DATA_DIR}/usr
+rm -rf 20160512
 
 # -----
 
@@ -43,25 +44,11 @@ cd /tmp
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
 
-rm -f gmp-6.1.0.tar.lz
-wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
-tar xf gmp-6.1.0.tar.xz
+mkdir 20160512
+cd 20160512
+wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/libvpx-1.3.0-5.el6_5.src.rpm
+rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
 ls -lang
-cd gmp-6.1.0
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local --enable-static=no --libdir=${OPENSHIFT_DATA_DIR}/usr/lib
-time make -j4
-make install
-cd /tmp
-rm -rf gmp-6.1.0
-rm -f gmp-6.1.0.tar.xz
-tree ${OPENSHIFT_DATA_DIR}
-
-ls -lang ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
-file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
-strip ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
-file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
-ls -lang ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
 
 quota -s
 echo "FINISH"
