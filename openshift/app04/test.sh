@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0853"
+echo "0901"
 
 set -x
 
@@ -34,10 +34,18 @@ quota -s
 cd /tmp
 rm -rf ${OPENSHIFT_DATA_DIR}/local
 rm -rf ${OPENSHIFT_DATA_DIR}/rpm
+# rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 # -----
 
 cd /tmp
+
+file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
+
+rm -rf ${OPENSHIFT_DATA_DIR}/usr
+
+export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
+export CXXFLAGS="${CFLAGS}"
 
 rm -f gmp-6.1.0.tar.lz
 wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
