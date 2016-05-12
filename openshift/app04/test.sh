@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1317"
+echo "1418"
 
 set -x
 
@@ -69,6 +69,7 @@ rpm2cpio tbb-2.2-3.20090809.el6.src.rpm | cpio -idmv
 ls -lang
 cp *.tar.* ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
 cp *.patch ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
+export HOME=${OPENSHIFT_DATA_DIR}
 rpmbuild --dbpath ${OPENSHIFT_DATA_DIR} -bp tbb.spec
 
 quota -s
