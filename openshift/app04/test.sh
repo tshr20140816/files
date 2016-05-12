@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0933"
+echo "1033"
 
 set -x
 
@@ -57,9 +57,11 @@ rm -rf gmp-6.1.0
 rm -f gmp-6.1.0.tar.xz
 tree ${OPENSHIFT_DATA_DIR}
 
+ls -lang ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
 file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
 strip ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
 file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
+ls -lang ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
 
 quota -s
 echo "FINISH"
