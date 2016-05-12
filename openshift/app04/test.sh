@@ -58,7 +58,7 @@ rm -f gmp-6.1.0.tar.xz
 tree ${OPENSHIFT_DATA_DIR}
 
 file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
-strip -d ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
+strip ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
 file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
 
 quota -s
