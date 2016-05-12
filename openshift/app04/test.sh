@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1418"
+echo "1420"
 
 set -x
 
@@ -67,7 +67,7 @@ mkdir -p ${OPENSHIFT_DATA_DIR}/rpm/SOURCES
 wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/tbb-2.2-3.20090809.el6.src.rpm
 rpm2cpio tbb-2.2-3.20090809.el6.src.rpm | cpio -idmv
 ls -lang
-cp *.tar.* ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
+cp *.tgz ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
 cp *.patch ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
 export HOME=${OPENSHIFT_DATA_DIR}
 rpmbuild --dbpath ${OPENSHIFT_DATA_DIR} -bp tbb.spec
