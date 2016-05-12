@@ -61,7 +61,7 @@ mkdir -p ${OPENSHIFT_DATA_DIR}/rpm/SOURCES
 cp libvpx-v1.3.0.tar.bz2 ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
 cp *.patch ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
 export HOME=${OPENSHIFT_DATA_DIR}
-rpmbuild --dbpath=${OPENSHIFT_DATA_DIR} -bp libvpx.spec
+rpmbuild --dbpath ${OPENSHIFT_DATA_DIR} -bp libvpx.spec
 
 cat ${OPENSHIFT_DATA_DIR}/.rpmmacros
 
