@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1134"
+echo "1139"
 
 set -x
 
@@ -51,6 +51,9 @@ rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
 ls -lang
 cat libvpx.spec
 rpmbuild --help
+mkdir -p ${OPENSHIFT_DATA_DIR}/rpm/SOURCES
+cp libvpx-v1.3.0.tar.bz2 ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
+cp *.patch ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
 export HOME=${OPENSHIFT_DATA_DIR}
 rpmbuild -bp libvpx.spec
 
