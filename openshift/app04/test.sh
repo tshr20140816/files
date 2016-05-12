@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1144"
+echo "1252"
 
 set -x
 
@@ -42,6 +42,8 @@ rm -rf 20160512
 whereis nasm
 whereis doxygen
 whereis php-cli
+
+ls -lang /var/lib/rpm
 
 cd /tmp
 
