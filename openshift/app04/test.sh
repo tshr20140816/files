@@ -39,6 +39,10 @@ rm -rf 20160512
 
 # -----
 
+whereis nasm
+whereis doxygen
+whereis php-cli
+
 cd /tmp
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
