@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0901"
+echo "0933"
 
 set -x
 
@@ -34,15 +34,11 @@ quota -s
 cd /tmp
 rm -rf ${OPENSHIFT_DATA_DIR}/local
 rm -rf ${OPENSHIFT_DATA_DIR}/rpm
-# rm -rf ${OPENSHIFT_DATA_DIR}/usr
+rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 # -----
 
 cd /tmp
-
-file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
-
-rm -rf ${OPENSHIFT_DATA_DIR}/usr
 
 export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
 export CXXFLAGS="${CFLAGS}"
@@ -60,6 +56,10 @@ cd /tmp
 rm -rf gmp-6.1.0
 rm -f gmp-6.1.0.tar.xz
 tree ${OPENSHIFT_DATA_DIR}
+
+file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
+strip -d ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
+file ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
 
 quota -s
 echo "FINISH"
