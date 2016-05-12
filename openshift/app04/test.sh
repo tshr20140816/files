@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1129"
+echo "1134"
 
 set -x
 
@@ -53,6 +53,9 @@ cat libvpx.spec
 rpmbuild --help
 export _topdir=${OPENSHIFT_DATA_DIR}
 rpmbuild -bp libvpx.spec
+
+cat ${OPENSHIFT_DATA_DIR}/.rpmmacros
+
 quota -s
 echo "FINISH"
 exit
