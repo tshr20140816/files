@@ -49,6 +49,7 @@ cd 20160512
 wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/libvpx-1.3.0-5.el6_5.src.rpm
 rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
 ls -lang
+cat libvpx.spec
 
 quota -s
 echo "FINISH"
