@@ -60,7 +60,7 @@ wget -nc -q https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz
 tar Jxf gmp-6.1.0.tar.xz
 pushd gmp-6.1.0 > /dev/null
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/local --enable-static=no
+./configure --prefix=${OPENSHIFT_TMP_DIR}/local --enable-static=no --libdir=${OPENSHIFT_DATA_DIR}/usr/lib
 time make -j4
 make install
 popd > /dev/null
@@ -68,6 +68,8 @@ rm -rf gmp-6.1.0
 rm -f gmp-6.1.0.tar.xz
 export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib
 popd > /dev/null
+strip ${OPENSHIFT_DATA_DIR}/usr/lib/libgmp.so.10.3.0
+rm -rf ${OPENSHIFT_TMP_DIR}/local
 
 tree ${OPENSHIFT_DATA_DIR}
 
@@ -88,7 +90,7 @@ popd > /dev/null
 # oo-cgroup-read memory.failcnt
 
 # export LD_LIBRARY_PATH=${OPENSHIFT_DATA_DIR}/usr/lib64
-export PATH=${PATH}:${OPENSHIFT_DATA_DIR}/haskell/usr/bin
+[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/haskell/usr/bin) -eq 0 ] && export PATH=${OPENSHIFT_DATA_DIR}/haskell/usr/bin:${PATH}
 export HOME=${OPENSHIFT_DATA_DIR}
 export OPENSHIFT_HASKELL_DIR=${OPENSHIFT_DATA_DIR}/haskell
 
@@ -201,6 +203,7 @@ done
 
 rm -rf ${OPENSHIFT_DATA_DIR}/tmp
 rm -f ${OPENSHIFT_REPO_DIR}/100mb.dat
+rm -f ${OPENSHIFT_DATA_DIR}/local/bin/gcc
 
 # * Test *
 ${OPENSHIFT_DATA_DIR}/.cabal/bin/shellcheck --exclude=SC2086 "${0}"
@@ -213,13 +216,14 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/local/bin/shellcheck
 export TZ=JST-9
 
 export LD_LIBRARY_PATH="${OPENSHIFT_DATA_DIR}"/usr/lib
-export PATH="${PATH}":"${OPENSHIFT_DATA_DIR}"/haskell/usr/bin
+export PATH="${OPENSHIFT_DATA_DIR}"/haskell/usr/bin:"${PATH}"
 export HOME="${OPENSHIFT_DATA_DIR}"
 export OPENSHIFT_HASKELL_DIR="${OPENSHIFT_DATA_DIR}"/haskell
 
 "${OPENSHIFT_DATA_DIR}"/.cabal/bin/shellcheck --exclude=SC2086 "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/local/bin/shellcheck
+bash -n ${OPENSHIFT_DATA_DIR}/local/bin/shellcheck
 
 cat << '__HEREDOC__' > ${OPENSHIFT_REPO_DIR}/shellcheck.php
 <?php
