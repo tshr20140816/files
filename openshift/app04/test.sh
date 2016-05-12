@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1252"
+echo "1317"
 
 set -x
 
@@ -57,13 +57,19 @@ rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
 ls -lang
 cat libvpx.spec
 rpmbuild --help
+rm -rf ${OPENSHIFT_DATA_DIR}/rpm/SOURCES
 mkdir -p ${OPENSHIFT_DATA_DIR}/rpm/SOURCES
-cp libvpx-v1.3.0.tar.bz2 ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
-cp *.patch ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
-export HOME=${OPENSHIFT_DATA_DIR}
-rpmbuild --dbpath ${OPENSHIFT_DATA_DIR} -bp libvpx.spec
+# cp libvpx-v1.3.0.tar.bz2 ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
+# cp *.patch ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
+# export HOME=${OPENSHIFT_DATA_DIR}
+# rpmbuild --dbpath ${OPENSHIFT_DATA_DIR} -bp libvpx.spec
 
-cat ${OPENSHIFT_DATA_DIR}/.rpmmacros
+wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/tbb-2.2-3.20090809.el6.src.rpm
+rpm2cpio tbb-2.2-3.20090809.el6.src.rpm | cpio -idmv
+ls -lang
+cp *.tar.* ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
+cp *.patch ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
+rpmbuild --dbpath ${OPENSHIFT_DATA_DIR} -bp tbb.spec
 
 quota -s
 echo "FINISH"
