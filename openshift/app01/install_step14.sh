@@ -230,7 +230,7 @@ popd > /dev/null
 #  --jobs=$(grep -c -e processor /proc/cpuinfo) --retry=5 \
 #  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 time bundle install --no-color --path vendor/bundle --without=test development --verbose \
- --jobs=3 --retry=20 \
+ --jobs=4 --retry=20 \
  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
 pushd ${OPENSHIFT_DATA_DIR}/distcc/bin > /dev/null
 unlink cc
