@@ -48,7 +48,7 @@ function010() {
             export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
             # export DISTCC_LOG=/dev/null
             export DISTCC_LOG=${OPENSHIFT_LOG_DIR}/distcc.log
-            echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/distcc.log
+            echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start $(basename "${0}")" | tee -a ${DISTCC_LOG}
         fi
     fi
 
@@ -75,7 +75,7 @@ function010() {
         cp ${OPENSHIFT_DATA_DIR}/download_files/ld.gold ${OPENSHIFT_TMP_DIR}/usr/bin/
         chmod +x ${OPENSHIFT_TMP_DIR}/usr/bin/ld.gold
         export LD=ld.gold
-        [ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/usr/bin) -eq 0 ] && export PATH="${OPENSHIFT_TMP_DIR}/usr/bin:$PATH"
+        [ $(echo $PATH | grep -c ${OPENSHIFT_TMP_DIR}/usr/bin) -eq 0 ] && export PATH="${OPENSHIFT_TMP_DIR}/usr/bin:$PATH"
     fi
 
     # ***** CFLAGS CXXFLAGS *****
