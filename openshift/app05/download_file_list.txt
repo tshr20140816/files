@@ -39,7 +39,7 @@ redmine-2.6.10.tar.gz http://www.redmine.org/releases/redmine-2.6.10.tar.gz
 sphinx-2.2.10-release.tar.gz http://sphinxsearch.com/files/sphinx-2.2.10-release.tar.gz
 tcl8.6.4-src.tar.gz http://prdownloads.sourceforge.net/tcl/tcl8.6.4-src.tar.gz
 webalizer-2.23-08-src.tar.bz2 ftp://ftp.mrunix.net/pub/webalizer/webalizer-2.23-08-src.tar.bz2
-wordpress-4.5-ja.tar.gz https://ja.wordpress.org/wordpress-4.5-ja.tar.gz
+wordpress-4.5.2-ja.tar.gz https://ja.wordpress.org/wordpress-4.5.2-ja.tar.gz
 xz-5.2.1.tar.xz http://tukaani.org/xz/xz-5.2.1.tar.xz
 yuicompressor-2.4.8.jar https://github.com/yui/yuicompressor/releases/download/v2.4.8/yuicompressor-2.4.8.jar
 hhvm-3.5.0-4.el6.x86_64.rpm https://yum.gleez.com/6/x86_64/hhvm-3.5.0-4.el6.x86_64.rpm
