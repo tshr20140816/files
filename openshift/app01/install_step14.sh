@@ -226,6 +226,7 @@ ln -s distcc gcc
 ln -s distcc c++
 ln -s distcc g++
 popd > /dev/null
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Start bundle install" | tee -a ${DISTCC_LOG}
 # time bundle install --no-color --path vendor/bundle --without=test development --verbose \
 #  --jobs=$(grep -c -e processor /proc/cpuinfo) --retry=5 \
 #  >${OPENSHIFT_LOG_DIR}/bundle.install.log 2>&1
@@ -238,6 +239,7 @@ unlink gcc
 unlink c++
 unlink g++
 popd > /dev/null
+echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish bundle install" | tee -a ${DISTCC_LOG}
 mv ${OPENSHIFT_LOG_DIR}/bundle.install.log ${OPENSHIFT_LOG_DIR}/install/
 bundle show | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 cat .bundle/config | tee -a ${OPENSHIFT_LOG_DIR}/install.log
