@@ -192,16 +192,16 @@ tree ${OPENSHIFT_DATA_DIR}/apache/modules
 
 # *** spdy ***
 
-echo "$(date +%Y/%m/%d" "%H:%M:%S) apache spdy" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) apache spdy" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
-mkdir ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
-pushd ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64 > /dev/null
-cp ${OPENSHIFT_DATA_DIR}/download_files/mod-spdy-beta_current_x86_64.rpm ./
-rpm2cpio mod-spdy-beta_current_x86_64.rpm | cpio -idmv
-cp ./usr/lib64/httpd/modules/mod_spdy.so ${OPENSHIFT_DATA_DIR}/apache/modules/
-cp ./usr/lib64/httpd/modules/mod_ssl_with_npn.so ${OPENSHIFT_DATA_DIR}/apache/modules/
-popd > /dev/null
-rm -rf ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
+# mkdir ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
+# pushd ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64 > /dev/null
+# cp ${OPENSHIFT_DATA_DIR}/download_files/mod-spdy-beta_current_x86_64.rpm ./
+# rpm2cpio mod-spdy-beta_current_x86_64.rpm | cpio -idmv
+# cp ./usr/lib64/httpd/modules/mod_spdy.so ${OPENSHIFT_DATA_DIR}/apache/modules/
+# cp ./usr/lib64/httpd/modules/mod_ssl_with_npn.so ${OPENSHIFT_DATA_DIR}/apache/modules/
+# popd > /dev/null
+# rm -rf ${OPENSHIFT_TMP_DIR}/mod-spdy-beta_current_x86_64
 
 pushd ${OPENSHIFT_DATA_DIR}/apache > /dev/null
 
