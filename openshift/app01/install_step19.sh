@@ -95,7 +95,7 @@ cat << '__HEREDOC__' > filter.txt
 s/http:..__OPENSHIFT_DIY_IP__:30080.-.builtin.icons.ysato/\/delegate\/icons/g
 s/<TITLE>/<HTML><HEAD><META HTTP-EQUIV="REFRESH" CONTENT="600"><TITLE>/g
 s/<\/TITLE>/<\/TITLE><\/HEAD>/g
-s/<FORM ACTION="..\/-search" METHOD=GET>.+?</FORM>//g
+s/<FORM ACTION="..\/-search" METHOD=GET>.+?<\/FORM>//g
 s/<TABLE width=100% border=0 bgcolor=#8080FF cellpadding=1 cellspacing=0>.*/<\/HTML>/g
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt &
