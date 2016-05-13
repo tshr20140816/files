@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2016.05.13 wordpress_version 4.5-ja → 4.5.2-ja
 # 2016.05.10 fio_version 2.8 → 2.9
 # 2016.05.09 cacti_version 0.8.8g → 0.8.8h
 # 2016.05.02 php_version 5.6.20 → 5.6.21
