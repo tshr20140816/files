@@ -127,6 +127,10 @@ redmine_email_address=$(cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_address)
 sed -i -e "s|__ADMIN_MAILADDRESS__|${redmine_email_address}|g" P33128
 popd > /dev/null
 
+cp ${OPENSHIFT_DATA_DIR}/delegate/P30080 ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+cp ${OPENSHIFT_DATA_DIR}/delegate/filter.txt ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+cp ${OPENSHIFT_DATA_DIR}/delegate/P33128 ${OPENSHIFT_DATA_DIR}/apache/htdocs/info/
+
 # *** apache conf ***
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/ > /dev/null
