@@ -52,28 +52,28 @@ do
         
         # *** css ***
         
-        touch compress_target_list_css_add.txt
-        while read -r LINE
-        do
-            target_file=${LINE}
-            compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
-            is_replaced=1
-            [ ! -f ${compressed_file} ] && is_replaced=0
-            [ ${is_replaced} -eq 1 ] && [ ! -f ${compressed_file}.compressed ] && is_replaced=0
-            [ ${is_replaced} -eq 1 ] && [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && is_replaced=0
-            if [ ${is_replaced} -eq 1 ]; then
-                cmp ${target_file} ${compressed_file}
-                [ $? -ne 0 ] && is_replaced=0
-            fi
-            if [ ${is_replaced} -eq 1 ]; then
-                mv ${target_file} ${target_file}.${suffix}
-                mv ${compressed_file}.compressed ${target_file}
-            else
-                echo -e "${target_file}\n" >> compress_target_list_css_add.txt
-            fi
-        done < compress_target_list_css.txt
-        rm -f compress_target_list_css.txt
-        wc -l compress_target_list_css_add.txt
+        # touch compress_target_list_css_add.txt
+        # while read -r LINE
+        # do
+        #     target_file=${LINE}
+        #     compressed_file=$(echo ${target_file} | sed -e "s|${OPENSHIFT_DATA_DIR}|${OPENSHIFT_DATA_DIR}/compressed/|g")
+        #     is_replaced=1
+        #     [ ! -f ${compressed_file} ] && is_replaced=0
+        #     [ ${is_replaced} -eq 1 ] && [ ! -f ${compressed_file}.compressed ] && is_replaced=0
+        #     [ ${is_replaced} -eq 1 ] && [ $(wc -c < ${target_file}) -le $(wc -c < ${compressed_file}.compressed) ] && is_replaced=0
+        #     if [ ${is_replaced} -eq 1 ]; then
+        #         cmp ${target_file} ${compressed_file}
+        #         [ $? -ne 0 ] && is_replaced=0
+        #     fi
+        #     if [ ${is_replaced} -eq 1 ]; then
+        #         mv ${target_file} ${target_file}.${suffix}
+        #         mv ${compressed_file}.compressed ${target_file}
+        #     else
+        #         echo -e "${target_file}\n" >> compress_target_list_css_add.txt
+        #     fi
+        # done < compress_target_list_css.txt
+        # rm -f compress_target_list_css.txt
+        # wc -l compress_target_list_css_add.txt
         
         # *** js ***
         
@@ -130,16 +130,16 @@ do
         rm -rf compressed
         popd > /dev/null
 
-        # ****** YUI Compressor *****
-        # find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print0 \
-        #  | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
-        cat ${OPENSHIFT_DATA_DIR}/compress_target_list_css_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
-        rm -f ${OPENSHIFT_DATA_DIR}/compress_target_list_css_add.txt
-        pushd ${OPENSHIFT_LOG_DIR} > /dev/null
-        zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
-        rm -f yuicompressor.log
-        mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip ./install/
-        popd > /dev/null
+        # # ****** YUI Compressor *****
+        # # find ${OPENSHIFT_DATA_DIR} -name "*.css" -mindepth 2 -type f -print0 \
+        # #  | xargs -0i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
+        # cat ${OPENSHIFT_DATA_DIR}/compress_target_list_css_add.txt | xargs -i -P 4 -n 1 ${OPENSHIFT_DATA_DIR}/scripts/yuicompressor.sh {}
+        # rm -f ${OPENSHIFT_DATA_DIR}/compress_target_list_css_add.txt
+        # pushd ${OPENSHIFT_LOG_DIR} > /dev/null
+        # zip -9 ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip yuicompressor.log
+        # rm -f yuicompressor.log
+        # mv -f ${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.yuicompressor.log.zip ./install/
+        # popd > /dev/null
 
         # ****** Closure Compiler *****
         # find ${OPENSHIFT_DATA_DIR} -name "*.js" -mindepth 2 -type f -print0 \
