@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1420"
+echo "0856"
 
 set -x
 
@@ -39,38 +39,10 @@ rm -rf 20160512
 
 # -----
 
-whereis nasm
-whereis doxygen
-whereis php-cli
-
-ls -lang /var/lib/rpm
-
 cd /tmp
 
-export CFLAGS="-O2 -march=native -pipe -fomit-frame-pointer -s"
-export CXXFLAGS="${CFLAGS}"
-
-mkdir 20160512
-cd 20160512
-# wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/libvpx-1.3.0-5.el6_5.src.rpm
-# rpm2cpio libvpx-1.3.0-5.el6_5.src.rpm | cpio -idmv
-# ls -lang
-# cat libvpx.spec
-rpmbuild --help
-rm -rf ${OPENSHIFT_DATA_DIR}/rpm/SOURCES
-mkdir -p ${OPENSHIFT_DATA_DIR}/rpm/SOURCES
-# cp libvpx-v1.3.0.tar.bz2 ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
-# cp *.patch ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
-# export HOME=${OPENSHIFT_DATA_DIR}
-# rpmbuild --dbpath ${OPENSHIFT_DATA_DIR} -bp libvpx.spec
-
-wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/tbb-2.2-3.20090809.el6.src.rpm
-rpm2cpio tbb-2.2-3.20090809.el6.src.rpm | cpio -idmv
-ls -lang
-cp *.tgz ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
-cp *.patch ${OPENSHIFT_DATA_DIR}/rpm/SOURCES/
-export HOME=${OPENSHIFT_DATA_DIR}
-rpmbuild --dbpath ${OPENSHIFT_DATA_DIR} -bp tbb.spec
+wget -q -nc https://tt-rss.org/gitlab/fox/tt-rss/raw/master/classes/db/pdo.php
+md5sum pdo.php | cut -d " " -f1
 
 quota -s
 echo "FINISH"
