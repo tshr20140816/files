@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1615"
+echo "1633"
 
 set -x
 
@@ -32,37 +32,14 @@ quota -s
 # -----
 
 cd /tmp
-rm -rf ${OPENSHIFT_DATA_DIR}/local
-rm -rf ${OPENSHIFT_DATA_DIR}/rpm
-rm -rf ${OPENSHIFT_DATA_DIR}/usr
-rm -rf 20160512
-
-cd ${OPENSHIFT_DATA_DIR}
-rm -f __db.* Name Packages Providename 
-rm -rf rpm
+rm -rf ccache-3.2.5 ccache gomi
+rm -f ccache-3.2.5.tar.xz
 
 # -----
 
 cd /tmp
 
-rm -rf baikal
-rm -f baikal-0.4.4.zip
-rm -f ccache-3.2.5.tar.xz
-wget -q -nc https://www.samba.org/ftp/ccache/ccache-3.2.5.tar.xz
-tar xf ccache-3.2.5.tar.xz
-cd ccache-3.2.5
-./configure --prefix=/tmp/ccache --mandir=/tmp/gomi --docdir=/tmp/gomi
-time make -j4
-make install
-
-tree -a /tmp/ccache
-tree -a /tmp/gomi
-
-ls -lang /tmp/ccache/bin
-file /tmp/ccache/bin/ccache
-strip /tmp/ccache/bin/ccache
-file /tmp/ccache/bin/ccache
-ls -lang /tmp/ccache/bin
+ls -lang
 
 quota -s
 echo "FINISH"
