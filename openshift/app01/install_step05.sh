@@ -66,13 +66,13 @@ rm -rf ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version}
 mkdir ${OPENSHIFT_TMP_DIR}/ccache
 mkdir ${OPENSHIFT_TMP_DIR}/tmp_ccache
 
-export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
-export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
-#export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
-export CCACHE_LOGFILE=/dev/null
-export CCACHE_MAXSIZE=300M
-# export CC="ccache gcc"
-# export CXX="ccache g++"
+# export CCACHE_DIR=${OPENSHIFT_TMP_DIR}/ccache
+# export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/tmp_ccache
+# #export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+# export CCACHE_LOGFILE=/dev/null
+# export CCACHE_MAXSIZE=300M
+# # export CC="ccache gcc"
+# # export CXX="ccache g++"
 
 # [ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/ccache/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 # ccache -z
