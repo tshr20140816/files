@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1335"
+echo "1345"
 
 set -x
 
@@ -47,9 +47,18 @@ cd /tmp
 
 wget -q -nc https://github.com/fruux/Baikal/releases/download/0.4.4/baikal-0.4.4.zip
 unzip baikal-0.4.4.zip
-ls -lang
-cd baikal*
-cd Core/Frameworks/Baikal/Model/Config
+rm -rf baikal
+# ls -lang
+cd baikal/Core/Frameworks/Baikal/Model/Config
+cat Standard.php
+sed -i -e 's|Europe/Paris|Asia/Tokyo|g' Standard.php
+php -l Standard.php
+cat Standard.php
+sed -i -e 's|"BAIKAL_CARD_ENABLED" => TRUE|"BAIKAL_CARD_ENABLED" => FALSE|g' Standard.php
+php -l Standard.php
+cat Standard.php
+sed -i -e 's|define("BAIKAL_CARD_ENABLED", TRUE);|define("BAIKAL_CARD_ENABLED", FALSE);|g' Standard.php
+php -l Standard.php
 cat Standard.php
 
 quota -s
