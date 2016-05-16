@@ -58,6 +58,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) ccache make install" | tee -a ${OPENSHIFT_LOG
 echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> ${OPENSHIFT_LOG_DIR}/install_ccache.log
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
 popd > /dev/null
+strip ${OPENSHIFT_DATA_DIR}/ccache/bin/ccache
 mv ${OPENSHIFT_LOG_DIR}/install_ccache.log ${OPENSHIFT_LOG_DIR}/install/
 rm ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version}.tar.xz
 rm -rf ${OPENSHIFT_TMP_DIR}/ccache-${ccache_version}
@@ -73,7 +74,7 @@ export CCACHE_MAXSIZE=300M
 # export CC="ccache gcc"
 # export CXX="ccache g++"
 
-[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/ccache/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
+# [ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/ccache/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/ccache/bin:$PATH"
 # ccache -z
 # ccache -s | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 
