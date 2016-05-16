@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1345"
+echo "1347"
 
 set -x
 
@@ -46,8 +46,8 @@ rm -rf rpm
 cd /tmp
 
 wget -q -nc https://github.com/fruux/Baikal/releases/download/0.4.4/baikal-0.4.4.zip
-unzip baikal-0.4.4.zip
 rm -rf baikal
+unzip baikal-0.4.4.zip
 # ls -lang
 cd baikal/Core/Frameworks/Baikal/Model/Config
 cat Standard.php
