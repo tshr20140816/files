@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0903"
+echo "1335"
 
 set -x
 
@@ -45,9 +45,12 @@ rm -rf rpm
 
 cd /tmp
 
-wget -q -nc https://tt-rss.org/gitlab/fox/tt-rss/raw/master/classes/db/pdo.php
-md5sum pdo.php | cut -d " " -f1
-rm -f pdo.php
+wget -q -nc https://github.com/fruux/Baikal/releases/download/0.4.4/baikal-0.4.4.zip
+unzip baikal-0.4.4.zip
+ls -lang
+cd baikal*
+cd Core/Frameworks/Baikal/Model/Config
+cat Standard.php
 
 quota -s
 echo "FINISH"
