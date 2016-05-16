@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1347"
+echo "1615"
 
 set -x
 
@@ -45,21 +45,24 @@ rm -rf rpm
 
 cd /tmp
 
-wget -q -nc https://github.com/fruux/Baikal/releases/download/0.4.4/baikal-0.4.4.zip
 rm -rf baikal
-unzip baikal-0.4.4.zip
-# ls -lang
-cd baikal/Core/Frameworks/Baikal/Model/Config
-cat Standard.php
-sed -i -e 's|Europe/Paris|Asia/Tokyo|g' Standard.php
-php -l Standard.php
-cat Standard.php
-sed -i -e 's|"BAIKAL_CARD_ENABLED" => TRUE|"BAIKAL_CARD_ENABLED" => FALSE|g' Standard.php
-php -l Standard.php
-cat Standard.php
-sed -i -e 's|define("BAIKAL_CARD_ENABLED", TRUE);|define("BAIKAL_CARD_ENABLED", FALSE);|g' Standard.php
-php -l Standard.php
-cat Standard.php
+rm -f baikal-0.4.4.zip
+rm -f ccache-3.2.5.tar.xz
+wget -q -nc https://www.samba.org/ftp/ccache/ccache-3.2.5.tar.xz
+tar xf ccache-3.2.5.tar.xz
+cd ccache-3.2.5
+./configure --prefix=/tmp/ccache --mandir=/tmp/gomi --docdir=/tmp/gomi
+time make -j4
+make install
+
+tree -a /tmp/ccache
+tree -a /tmp/gomi
+
+ls -lang /tmp/ccache/bin
+file /tmp/ccache/bin/ccache
+strip /tmp/ccache/bin/ccache
+file /tmp/ccache/bin/ccache
+ls -lang /tmp/ccache/bin
 
 quota -s
 echo "FINISH"
