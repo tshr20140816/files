@@ -87,6 +87,15 @@ mysql -u "${OPENSHIFT_MYSQL_DB_USERNAME}" \
 -P "${OPENSHIFT_MYSQL_DB_PORT}" ttrss < update_default_password.sql
 popd > /dev/null
 
+# *** patch ***
+
+pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/classes/db > /dev/null
+if [ $(md5sum(./pdb.php) | cut -d ' ' -f1) = '4fc7abe61707c5ee836a9d820ee07ea0' ]; then
+  mv ./pdb.php ./pdb.php.$(date '+%Y%m%d')
+  cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/pdb.php ./
+fi
+popd > /dev/null
+
 touch ${OPENSHIFT_DATA_DIR}/install_check_point/$(basename $0).ok
 
 echo "$(date +%Y/%m/%d" "%H:%M:%S) Install Finish $(basename "${0}")" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
