@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0856"
+echo "0903"
 
 set -x
 
@@ -37,12 +37,17 @@ rm -rf ${OPENSHIFT_DATA_DIR}/rpm
 rm -rf ${OPENSHIFT_DATA_DIR}/usr
 rm -rf 20160512
 
+cd ${OPENSHIFT_DATA_DIR}
+rm -f __db.* Name Packages Providename 
+rm -rf rpm
+
 # -----
 
 cd /tmp
 
 wget -q -nc https://tt-rss.org/gitlab/fox/tt-rss/raw/master/classes/db/pdo.php
 md5sum pdo.php | cut -d " " -f1
+rm -f pdo.php
 
 quota -s
 echo "FINISH"
