@@ -90,7 +90,7 @@ popd > /dev/null
 # *** patch ***
 
 pushd ${OPENSHIFT_DATA_DIR}/apache/htdocs/ttrss/classes/db > /dev/null
-if [ $(md5sum(./pdb.php) | cut -d ' ' -f1) = '4fc7abe61707c5ee836a9d820ee07ea0' ]; then
+if [ $(md5sum ./pdb.php | cut -d ' ' -f1) = '4fc7abe61707c5ee836a9d820ee07ea0' ]; then
   mv ./pdb.php ./pdb.php.$(date '+%Y%m%d')
   cp ${OPENSHIFT_DATA_DIR}/github/openshift/app01/pdb.php ./
 fi
