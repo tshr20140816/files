@@ -157,8 +157,9 @@ redmine_email_password=$(cat ${OPENSHIFT_DATA_DIR}/params/redmine_email_password
 sed -i -e "s/__USER_NAME__/${redmine_email_address}/g" config/configuration.yml
 perl -pi -e "s/__PASSWORD__/${redmine_email_password}/g" config/configuration.yml
 
-# *** plugin_assets ***
-mkdir public/plugin_assets
+# # *** plugin_assets ***
+# # mkdir: cannot create directory `public/plugin_assets': File exists
+# mkdir public/plugin_assets
 
 popd > /dev/null
 
