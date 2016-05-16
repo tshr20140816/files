@@ -32,9 +32,9 @@ rm -rf distcc-${distcc_version}
 
 mkdir ${OPENSHIFT_DATA_DIR}/.distcc
 
-[ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/distcc/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
-export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
-export DISTCC_LOG=/dev/null
+# [ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/distcc/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
+# export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
+# export DISTCC_LOG=/dev/null
 
 # ***** ccache *****
 
