@@ -40,7 +40,9 @@ pushd ${OPENSHIFT_DATA_DIR}/baikal/Core/Frameworks/Baikal/Model/Config > /dev/nu
 # *** Starndard.php ***
 
 sed -i -e 's|Europe/Paris|Asia/Tokyo|g' Standard.php
+php -l Standard.php
 sed -i -e 's|"BAIKAL_CARD_ENABLED" => TRUE|"BAIKAL_CARD_ENABLED" => FALSE|g' Standard.php
+php -l Standard.php
 sed -i -e 's|define("BAIKAL_CARD_ENABLED", TRUE);|define("BAIKAL_CARD_ENABLED", FALSE);|g' Standard.php
 php -l Standard.php
 
