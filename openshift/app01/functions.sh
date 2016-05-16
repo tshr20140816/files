@@ -20,6 +20,12 @@ function010() {
     rm -rf ${OPENSHIFT_TMP_DIR}/gomi
     rm -f ${OPENSHIFT_DATA_DIR}/.distcc/lock/backoff*
 
+    # ***** check *****
+    
+    if [ -f ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl ]; then
+        ${OPENSHIFT_DATA_DIR}/apache/bin/apachectl configtest
+    fi
+
     # ***** ccache *****
 
     if [ -e ${OPENSHIFT_DATA_DIR}/ccache ]; then
