@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0948"
+echo "1153"
 
 set -x
 
@@ -37,10 +37,25 @@ rm -f ccache-3.2.5.tar.xz
 
 # -----
 
-whereis perl
-whereis php
-whereis python
-whereis ruby
+cat << '__HEREDOC__' > filter.pl
+#/usr/bin/perl
+
+my $alltext = $ARGV[0];
+
+$alltext =~ s/hoge/moge/m;
+
+return $alltext;
+__HEREDOC__
+
+cat << '__HEREDOC__' > testdata.txt
+test1
+hoge
+hoge
+test2
+__HEREDOC__
+
+cat testdata.txt | perl filter.pl
+
 
 quota -s
 echo "FINISH"
