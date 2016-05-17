@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1633"
+echo "0948"
 
 set -x
 
@@ -37,9 +37,7 @@ rm -f ccache-3.2.5.tar.xz
 
 # -----
 
-cd /tmp
-
-ls -lang
+whereis perl
 
 quota -s
 echo "FINISH"
