@@ -42,7 +42,7 @@ cd /tmp
 cat << '__HEREDOC__' > filter.php
 <?php
 print "start\n";
-var_dump($argv);
+var_dump(fgets(STDIN));
 print "finish\n";
 ?>
 __HEREDOC__
