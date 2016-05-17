@@ -37,10 +37,12 @@ rm -f ccache-3.2.5.tar.xz
 
 # -----
 
+cd /tmp
+
 cat << '__HEREDOC__' > filter.pl
 #/usr/bin/perl
 
-print 'start';
+print 'start\n';
 
 my $alltext = $ARGV[0];
 
@@ -48,7 +50,7 @@ $alltext =~ s/hoge/moge/m;
 
 print $alltext;
 
-print 'finish';
+print 'finish\n';
 __HEREDOC__
 
 cat << '__HEREDOC__' > testdata.txt
@@ -58,8 +60,7 @@ hoge
 test2
 __HEREDOC__
 
-cat testdata.txt | perl filter.pl
-
+perl filter.pl < testdata.txt
 
 quota -s
 echo "FINISH"
