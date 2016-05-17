@@ -44,7 +44,7 @@ my $alltext = $ARGV[0];
 
 $alltext =~ s/hoge/moge/m;
 
-return $alltext;
+print $alltext;
 __HEREDOC__
 
 cat << '__HEREDOC__' > testdata.txt
