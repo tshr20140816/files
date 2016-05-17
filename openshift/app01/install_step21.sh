@@ -570,7 +570,9 @@ touch jobs.deny
 cat << '__HEREDOC__' > mysql_backup.sh
 #!/bin/bash
 
-pushd ${OPENSHIFT_DATA_DIR}
+export TZ=JST-9
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 
 dump_file_name=${OPENSHIFT_APP_DNS}.mysql_dump_$(date +%a).xz
 
@@ -581,6 +583,10 @@ mysqldump \
  --password=${OPENSHIFT_MYSQL_DB_PASSWORD} \
  -x --all-databases --events | xz > ${dump_file_name}
 
+if [ ! -f ${dump_file_name} ]; then
+   echo "DUMP FILE NOT FOUND."
+   exit
+fi
 echo "$(date +%Y/%m/%d" "%H:%M:%S) START mysql_backup.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
 log_file_name=${OPENSHIFT_LOG_DIR}/cadaver.log
 ls -lhg --full-time | tee ${log_file_name}
@@ -594,7 +600,7 @@ else
 fi
 cat ${log_file_name} | tr -d "\b" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
 echo "$(date +%Y/%m/%d" "%H:%M:%S) FINISH mysql_backup.sh" >> ${OPENSHIFT_LOG_DIR}/cadaver_all.log
-popd
+popd > /dev/null
 __HEREDOC__
 chmod +x mysql_backup.sh
 echo mysql_backup.sh >> jobs.allow
