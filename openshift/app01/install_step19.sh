@@ -67,7 +67,8 @@ ERRORLOG=${LOGDIR}/delegate_errors.log[date+.%w]
 MAXIMA="delegated:5"
 MOUNT="/mail/* pop://__DELEGATE_POP_SERVER__:110/* noapop"
 # MOUNT="/-/builtin/* http://__OPENSHIFT_DIY_IP__:30080/delegate/builtin/*"
-FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
+# FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
+FTOCL="/usr/bin/php __OPENSHIFT_DATA_DIR__delegate/filter.php"
 HTTPCONF="methods:GET"
 HTTPCONF="kill-head:Via,HTTP-VIA,DeleGate-Ver"
 HTTPCONF="kill-rhead:X-Request*"
@@ -99,6 +100,22 @@ s/<FORM ACTION="..\/-search" METHOD=GET>.+?<\/FORM>//g
 s/<TABLE width=100% border=0 bgcolor=#8080FF cellpadding=1 cellspacing=0>.*/<\/HTML>/g
 __HEREDOC__
 perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.txt &
+cat << '__HEREDOC__' > filter.php
+$buffer = '';
+for(;;){
+    $tmp = fgets(STDIN);
+    if ( $tmp == FALSE ){
+        break;
+    }
+    $buffer .= $tmp;
+}
+$buffer = preg_replace("/http:..__OPENSHIFT_DIY_IP__:30080.-.builtin.icons.ysato/", "/delegate/icons", $buffer);
+$buffer = preg_replace("/<TITLE>/", "<HTML><HEAD><META HTTP-EQUIV="REFRESH" CONTENT="600"><TITLE>", $buffer, 1);
+$buffer = preg_replace("/<\/TITLE>/", "</TITLE></HEAD>", $buffer, 1);
+$buffer = preg_replace("/<FORM ACTION="..\/-search" METHOD=GET>.+?<\/FORM>/", "", $buffer, 1);
+$buffer = preg_replace("/<TABLE width=100% border=0 bgcolor=#8080FF cellpadding=1 cellspacing=0>.*/", "</HTML>", $buffer, 1);
+print $buffer;
+__HEREDOC__
 
 cat << '__HEREDOC__' > P33128
 -P__OPENSHIFT_DIY_IP__:33128
