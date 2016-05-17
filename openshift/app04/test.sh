@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1352"
+echo "1356"
 
 set -x
 
@@ -39,16 +39,12 @@ rm -f ccache-3.2.5.tar.xz
 
 cd /tmp
 
-cat << '__HEREDOC__' > filter.pl
+cat << '__HEREDOC__' > filter.php
+<?php
 print "start\n";
-
-my $alltext = $ARGV[0];
-
-$alltext =~ s/hoge/moge/m;
-
-print $alltext;
-
+var_dump($argv);
 print "finish\n";
+?>
 __HEREDOC__
 
 cat << '__HEREDOC__' > testdata.txt
@@ -58,8 +54,7 @@ hoge
 test2
 __HEREDOC__
 
-cat testdata.txt
-cat testdata.txt | perl filter.pl
+cat testdata.txt | php filter.php
 
 quota -s
 echo "FINISH"
