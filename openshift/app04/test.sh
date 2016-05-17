@@ -40,11 +40,15 @@ rm -f ccache-3.2.5.tar.xz
 cat << '__HEREDOC__' > filter.pl
 #/usr/bin/perl
 
+print 'start';
+
 my $alltext = $ARGV[0];
 
 $alltext =~ s/hoge/moge/m;
 
 print $alltext;
+
+print 'finish';
 __HEREDOC__
 
 cat << '__HEREDOC__' > testdata.txt
