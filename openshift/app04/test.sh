@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1356"
+echo "1424"
 
 set -x
 
@@ -42,7 +42,16 @@ cd /tmp
 cat << '__HEREDOC__' > filter.php
 <?php
 print "start\n";
-var_dump(fgets(STDIN));
+
+$dump = '';
+for(;;){
+    $tmp = fgets(STDIN);
+    if ( $tmp == FALSE)
+        break;
+    $dump .= $tmp;
+}
+
+var_dump($dump);
 print "finish\n";
 ?>
 __HEREDOC__
