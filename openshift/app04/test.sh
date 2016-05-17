@@ -38,6 +38,9 @@ rm -f ccache-3.2.5.tar.xz
 # -----
 
 whereis perl
+whereis php
+whereis python
+whereis ruby
 
 quota -s
 echo "FINISH"
