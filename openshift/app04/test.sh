@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1311"
+echo "1352"
 
 set -x
 
@@ -40,8 +40,6 @@ rm -f ccache-3.2.5.tar.xz
 cd /tmp
 
 cat << '__HEREDOC__' > filter.pl
-#/usr/bin/perl
-
 print "start\n";
 
 my $alltext = $ARGV[0];
@@ -60,7 +58,8 @@ hoge
 test2
 __HEREDOC__
 
-perl filter.pl < testdata.txt
+cat testdata.txt
+cat testdata.txt | perl filter.pl
 
 quota -s
 echo "FINISH"
