@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1153"
+echo "1311"
 
 set -x
 
@@ -42,7 +42,7 @@ cd /tmp
 cat << '__HEREDOC__' > filter.pl
 #/usr/bin/perl
 
-print 'start\n';
+print "start\n";
 
 my $alltext = $ARGV[0];
 
@@ -50,7 +50,7 @@ $alltext =~ s/hoge/moge/m;
 
 print $alltext;
 
-print 'finish\n';
+print "finish\n";
 __HEREDOC__
 
 cat << '__HEREDOC__' > testdata.txt
