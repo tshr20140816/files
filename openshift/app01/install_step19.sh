@@ -116,6 +116,7 @@ $buffer = preg_replace("/<FORM ACTION="..\/-search" METHOD=GET>.+?<\/FORM>/", ""
 $buffer = preg_replace("/<TABLE width=100% border=0 bgcolor=#8080FF cellpadding=1 cellspacing=0>.*/", "</HTML>", $buffer, 1);
 print $buffer;
 __HEREDOC__
+perl -pi -e 's/__OPENSHIFT_DIY_IP__/$ENV{OPENSHIFT_DIY_IP}/g' filter.php &
 
 cat << '__HEREDOC__' > P33128
 -P__OPENSHIFT_DIY_IP__:33128
