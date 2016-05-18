@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1527"
+echo "1621"
 
 set -x
 
@@ -61,6 +61,7 @@ tree -a ./
 cd /tmp
 
 export LD_LIBRARY_PATH=/tmp/20160518/usr/lib64
+ls -lang /tmp/20160518/usr/lib64
 wget -nc -q https://github.com/nghttp2/nghttp2/releases/download/v1.10.0/nghttp2-1.10.0.tar.xz
 tar xf nghttp2-1.10.0.tar.xz
 cd nghttp2-1.10.0
