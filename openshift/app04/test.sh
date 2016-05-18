@@ -72,7 +72,8 @@ cp -f /usr/bin/xml2-config ./
 sed -i -e "s|exec_prefix=/usr|exec_prefix=/tmp/20160518/usr|g" xml2-config
 cat xml2-config
 
-export PATH=/tmp/bin:${PATH}
+# export PATH=/tmp/bin:${PATH}
+export XML2_CONFIG=/tmp/bin/xml2-config
 export LD_LIBRARY_PATH=/tmp/20160518/usr/lib64
 ls -lang /tmp/20160518/usr/lib64
 wget -nc -q https://github.com/nghttp2/nghttp2/releases/download/v1.10.0/nghttp2-1.10.0.tar.xz
