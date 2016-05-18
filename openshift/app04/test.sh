@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1102"
+echo "1307"
 
 set -x
 
@@ -35,17 +35,17 @@ cd /tmp
 rm -rf ccache-3.2.5 ccache gomi
 rm -f ccache-3.2.5.tar.xz
 rm -rf nghttp2-1.10.0
-
+rm -rf Python-2.7.11
 # -----
 
 cd /tmp
 
 wget -nc -q https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tar.xz
 tar xf Python-2.7.11.tar.xz
-ls -lang
 cd Python-2.7.11
 ./configure --help
-./configure
+./configure --prefix=${OPENSHIFT_DATA_DIR}/python27 --disable-ipv6 --mandir=/tmp/gomi --docdir=/tmp/gomi
+time make -j2
 
 exit
 
