@@ -40,6 +40,15 @@ rm -rf nghttp2-1.10.0
 
 cd /tmp
 
+wget -nc -q https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tar.xz
+tar xf Python-2.7.11.tar.xz
+ls -lang
+cd Python-2.7.11
+./configure --help
+./configure
+
+exit
+
 wget -nc -q https://github.com/nghttp2/nghttp2/releases/download/v1.10.0/nghttp2-1.10.0.tar.xz
 tar xf nghttp2-1.10.0.tar.xz
 cd nghttp2-1.10.0
