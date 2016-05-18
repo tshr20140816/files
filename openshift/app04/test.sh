@@ -54,12 +54,13 @@ time make -j4
 
 mkdir 20160518
 cd 20160518
-wget -nc -q ftp://rpmfind.net/linux/centos/6.7/os/x86_64/Packages/libxml2-2.7.6-20.el6.x86_64.rpm
-rpm2cpio libxml2-2.7.6-20.el6.x86_64.rpm | cpio -idmv
+wget -nc -q ftp://ftp.xmlsoft.org/libxml2/libxml2-2.7.7-1.x86_64.rpm
+rpm2cpio libxml2-2.7.7-1.x86_64.rpm | cpio -idmv
 tree -a ./
 
 cd /tmp
 
+export LD_LIBRARY_PATH=/tmp/20160518/usr/lib64
 wget -nc -q https://github.com/nghttp2/nghttp2/releases/download/v1.10.0/nghttp2-1.10.0.tar.xz
 tar xf nghttp2-1.10.0.tar.xz
 cd nghttp2-1.10.0
