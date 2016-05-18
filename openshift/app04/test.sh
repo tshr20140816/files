@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1713"
+echo "1725"
 
 set -x
 
@@ -69,7 +69,7 @@ cat /usr/bin/xml2-config
 mkdir bin
 cd bin
 cp -f /usr/bin/xml2-config ./
-sed -i -e "s|exec_prefix=/usr|exec_prefix=/tmp/20160518/usr|g" xml2-config
+sed -i -e "s|exec_prefix=.+|exec_prefix=/tmp/20160518/usr|g" xml2-config
 cat xml2-config
 
 # export PATH=/tmp/bin:${PATH}
