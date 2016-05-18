@@ -36,6 +36,8 @@ rm -rf ccache-3.2.5 ccache gomi
 rm -f ccache-3.2.5.tar.xz
 rm -rf nghttp2-1.10.0
 rm -rf Python-2.7.11
+rm -rf 20160518
+
 # -----
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
@@ -49,6 +51,12 @@ cd Python-2.7.11
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/python27 --disable-ipv6 --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j4
+
+mkdir 20160518
+cd 20160518
+wget -nc -q ftp://rpmfind.net/linux/centos/6.7/os/x86_64/Packages/libxml2-2.7.6-20.el6.x86_64.rpm
+rpm2cpio libxml2-2.7.6-20.el6.x86_64.rpm | cpio -idmv
+tree -a ./
 
 exit
 
