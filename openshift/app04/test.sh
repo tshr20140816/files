@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1424"
+echo "1102"
 
 set -x
 
@@ -34,36 +34,17 @@ quota -s
 cd /tmp
 rm -rf ccache-3.2.5 ccache gomi
 rm -f ccache-3.2.5.tar.xz
+rm -rf nghttp2-1.10.0
 
 # -----
 
 cd /tmp
 
-cat << '__HEREDOC__' > filter.php
-<?php
-print "start\n";
-
-$dump = '';
-for(;;){
-    $tmp = fgets(STDIN);
-    if ( $tmp == FALSE)
-        break;
-    $dump .= $tmp;
-}
-
-var_dump($dump);
-print "finish\n";
-?>
-__HEREDOC__
-
-cat << '__HEREDOC__' > testdata.txt
-test1
-hoge
-hoge
-test2
-__HEREDOC__
-
-cat testdata.txt | php filter.php
+wget -nc -q https://github.com/nghttp2/nghttp2/releases/download/v1.10.0/nghttp2-1.10.0.tar.xz
+tar xf nghttp2-1.10.0.tar.xz
+cd nghttp2-1.10.0
+./configure --help
+./configure
 
 quota -s
 echo "FINISH"
