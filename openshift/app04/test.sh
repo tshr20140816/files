@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1307"
+echo "1510"
 
 set -x
 
@@ -38,6 +38,9 @@ rm -rf nghttp2-1.10.0
 rm -rf Python-2.7.11
 # -----
 
+export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
+export CXXFLAGS="${CFLAGS}"
+
 cd /tmp
 
 wget -nc -q https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tar.xz
@@ -45,7 +48,7 @@ tar xf Python-2.7.11.tar.xz
 cd Python-2.7.11
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/python27 --disable-ipv6 --mandir=/tmp/gomi --docdir=/tmp/gomi
-time make -j2
+time make -j3
 
 exit
 
