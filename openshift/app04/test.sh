@@ -63,7 +63,7 @@ cd /tmp/20160518
 tree -a ./
 
 cd /tmp
-
+whereis XML2_CONFIG
 export LD_LIBRARY_PATH=/tmp/20160518/usr/lib64
 ls -lang /tmp/20160518/usr/lib64
 wget -nc -q https://github.com/nghttp2/nghttp2/releases/download/v1.10.0/nghttp2-1.10.0.tar.xz
