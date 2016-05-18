@@ -186,7 +186,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) apache configtest" | tee -a ${OPENSHIFT_LOG_D
 popd > /dev/null
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-rm delegate${delegate_version}.tar.gz &
+rm -f delegate${delegate_version}.tar.gz &
 rm -rf delegate${delegate_version}
 popd > /dev/null
 
