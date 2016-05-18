@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1621"
+echo "1631"
 
 set -x
 
@@ -52,6 +52,7 @@ cd Python-2.7.11
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/python27 --disable-ipv6 --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j4
 
+cd /tmp
 mkdir 20160518
 cd 20160518
 wget -nc -q ftp://ftp.xmlsoft.org/libxml2/libxml2-2.7.7-1.x86_64.rpm
