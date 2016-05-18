@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1510"
+echo "1521"
 
 set -x
 
@@ -48,7 +48,7 @@ tar xf Python-2.7.11.tar.xz
 cd Python-2.7.11
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/python27 --disable-ipv6 --mandir=/tmp/gomi --docdir=/tmp/gomi
-time make -j3
+time make -j4
 
 exit
 
