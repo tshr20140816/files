@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1732"
+echo "1735"
 
 set -x
 
@@ -69,9 +69,9 @@ cat /usr/bin/xml2-config
 mkdir bin
 cd bin
 cp -f /usr/bin/xml2-config ./
-sed -i -e "s|libdir=${exec_prefix}/lib64|libdir=/tmp/20160518/usr/lib64|g" xml2-config
-sed -i -e "s|libdir=$prefix/lib|libdir=/tmp/20160518/usr/lib64|g" xml2-config
-sed -i -e "s|libdir=$exec_prefix/lib|libdir=/tmp/20160518/usr/lib64|g" xml2-config
+sed -i -e 's|libdir=${exec_prefix}/lib64|libdir=/tmp/20160518/usr/lib64|g' xml2-config
+sed -i -e 's|libdir=$prefix/lib|libdir=/tmp/20160518/usr/lib64|g' xml2-config
+sed -i -e 's|libdir=$exec_prefix/lib|libdir=/tmp/20160518/usr/lib64|g' xml2-config
 cat xml2-config
 
 # export PATH=/tmp/bin:${PATH}
