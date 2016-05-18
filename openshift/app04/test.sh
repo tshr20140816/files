@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1521"
+echo "1527"
 
 set -x
 
@@ -58,7 +58,7 @@ wget -nc -q ftp://rpmfind.net/linux/centos/6.7/os/x86_64/Packages/libxml2-2.7.6-
 rpm2cpio libxml2-2.7.6-20.el6.x86_64.rpm | cpio -idmv
 tree -a ./
 
-exit
+cd /tmp
 
 wget -nc -q https://github.com/nghttp2/nghttp2/releases/download/v1.10.0/nghttp2-1.10.0.tar.xz
 tar xf nghttp2-1.10.0.tar.xz
