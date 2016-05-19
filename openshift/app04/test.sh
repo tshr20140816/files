@@ -92,11 +92,15 @@ tree -a ${OPENSHIFT_DATA_DIR}/usr
 
 cd ${OPENSHIFT_DATA_DIR}
 
+wget -q -nc ftp://rpmfind.net/linux/fedora/linux/updates/23/x86_64/m/mpfr-3.1.3-2.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-5.3.1-6.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/glibc-2.22-16.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-c++-5.3.1-6.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/c/cpp-5.3.1-6.fc23.x86_64.rpm
 # wget -q -nc ftp://rpmfind.net/linux/fedora/linux/releases/23/Everything/x86_64/os/Packages/l/libmpc-1.0.2-4.fc23.i686.rpm
+
+rpm2cpio mpfr-3.1.3-2.fc23.x86_64.rpm | cpio -idmv
+tree -a ${OPENSHIFT_DATA_DIR}/usr
 
 rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
