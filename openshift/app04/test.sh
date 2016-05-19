@@ -53,6 +53,11 @@ wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gc
 ls -lang 
 rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 
+wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/glibc-2.22-16.fc23.x86_64.rpm
+rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
+
+export LD_LIBRARY_PATH=/tmp/20160519/usr/lib
+
 ./usr/bin/gcc --version
 ./usr/bin/gcc --help
 
