@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1706"
+echo "1749"
 
 set -x
 
@@ -101,6 +101,7 @@ wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/c/cp
 
 rpm2cpio mpfr-3.1.3-2.fc23.x86_64.rpm | cpio -idmv
 tree -a ${OPENSHIFT_DATA_DIR}/usr
+ldd ${OPENSHIFT_DATA_DIR}/usr/lib64/libmpfr.so.4.1.3
 
 rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
