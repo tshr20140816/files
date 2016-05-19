@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1432"
+echo "1521"
 
 set -x
 
@@ -38,6 +38,9 @@ rm -rf nghttp2-1.10.0
 rm -rf Python-2.7.11
 rm -rf 20160519
 rm -f gcc-c++-5.3.1-6.fc23.i686.rpm
+
+cd $OPENSHIFT_DATA_DIR
+rm -rf bin include lib lib64 libexec local sbin share
 
 # -----
 
