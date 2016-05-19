@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1656"
+echo "1706"
 
 set -x
 
@@ -56,7 +56,7 @@ wget -nc -q http://mirrors.kernel.org/gnu/gmp/gmp-4.3.2.tar.bz2
 tar xf gmp-4.3.2.tar.bz2
 cd gmp-4.3.2
 ./configure --help
-./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --enable-static \
+./configure --prefix=$OPENSHIFT_DATA_DIR/usr \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j2
 make install
@@ -68,7 +68,7 @@ wget -nc -q http://mirrors.kernel.org/gnu/mpfr/mpfr-2.4.2.tar.xz
 tar xf mpfr-2.4.2.tar.xz
 cd mpfr-2.4.2
 ./configure --help
-./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --enable-static --with-gmp=$OPENSHIFT_DATA_DIR/usr \
+./configure --prefix=$OPENSHIFT_DATA_DIR/usr --with-gmp=$OPENSHIFT_DATA_DIR/usr \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j2
 make install
