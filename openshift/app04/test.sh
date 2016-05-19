@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1218"
+echo "1235"
 
 set -x
 
@@ -68,6 +68,7 @@ export TZ=JST-9
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $*" >> ${OPENSHIFT_LOG_DIR}/gcc.log
 ${OPENSHIFT_DATA_DIR}/lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ${OPENSHIFT_DATA_DIR}/usr/bin/gcc "$@"
 __HEREDOC__
+chmod +x ${OPENSHIFT_DATA_DIR}/usr/local/bin/gcc
 
 rm -f ${OPENSHIFT_LOG_DIR}/gcc.log
 export PATH=${OPENSHIFT_DATA_DIR}/usr/local/bin:${PATH}
