@@ -36,7 +36,7 @@ rm -rf ccache-3.2.5 ccache gomi
 rm -f ccache-3.2.5.tar.xz
 rm -rf nghttp2-1.10.0
 rm -rf Python-2.7.11
-rm -rf 20160518
+rm -rf 20160519
 rm -f gcc-c++-5.3.1-6.fc23.i686.rpm
 
 # -----
@@ -44,28 +44,32 @@ rm -f gcc-c++-5.3.1-6.fc23.i686.rpm
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
-cd /tmp
+cd ${OPENSHIFT_DATA_DIR}
 
-rm -rf 20160519
-mkdir 20160519
-cd 20160519
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-5.3.1-6.fc23.x86_64.rpm
-ls -lang 
-rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
-
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/glibc-2.22-16.fc23.x86_64.rpm
+wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-c++-5.3.1-6.fc23.x86_64.rpm
+
+rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
+rpm2cpio gcc-c++-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 
-# export LD_LIBRARY_PATH=/tmp/20160519/lib64
+rm -f *.rpm
 
-# ./usr/bin/gcc --version
-# ./usr/bin/gcc --help
+./lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ./usr/bin/gcc --version
+./lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ./usr/bin/c++ --version
+./lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ./usr/bin/g++ --version
 
-# ldd ./usr/bin/gcc
+mkdir -p ${OPENSHIFT_DATA_DIR}/usr/local/bin
+cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/usr/local/bin/gcc
+#!/bin/bash
 
-./lib64/ld-linux-x86-64.so.2 --library-path /tmp/20160519/lib64:/tmp/20160519/usr/lib64 ./usr/bin/gcc --version
-./lib64/ld-linux-x86-64.so.2 --library-path /tmp/20160519/lib64:/tmp/20160519/usr/lib64 ldd ./usr/bin/gcc
+export TZ=JST-9
+echo "$(date +%Y/%m/%d" "%H:%M:%S) $*" >> ${OPENSHIFT_LOG_DIR}/gcc.log
+${OPENSHIFT_DATA_DIR}/lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ${OPENSHIFT_DATA_DIR}/usr/bin/gcc "$@"
+__HEREDOC__
 
+export PATH=${OPENSHIFT_DATA_DIR}/usr/local/bin:${PATH}
 cd /tmp
 wget -q -nc https://www.samba.org/ftp/ccache/ccache-3.2.5.tar.xz
 rm -rf ccache-3.2.5
