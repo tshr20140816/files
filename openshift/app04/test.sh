@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1735"
+echo "1008"
 
 set -x
 
@@ -42,51 +42,13 @@ rm -rf 20160518
 
 pump --help
 
-exit
-
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
 
-wget -nc -q https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tar.xz
-tar xf Python-2.7.11.tar.xz
-cd Python-2.7.11
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/python27 --disable-ipv6 --mandir=/tmp/gomi --docdir=/tmp/gomi
-# time make -j4
-
-cd /tmp
-mkdir 20160518
-cd 20160518
-wget -nc -q ftp://ftp.xmlsoft.org/libxml2/libxml2-2.7.7-1.x86_64.rpm
-rpm2cpio libxml2-2.7.7-1.x86_64.rpm | cpio -idmv
-cd /tmp/20160518/usr/lib64
-ln -s libxml2.so.2.7.7 libxml2.so 
-cd /tmp/20160518
-tree -a ./
-
-cd /tmp
-whereis XML2_CONFIG
-whereis xml2-config
-cat /usr/bin/xml2-config
-mkdir bin
-cd bin
-cp -f /usr/bin/xml2-config ./
-sed -i -e 's|libdir=${exec_prefix}/lib64|libdir=/tmp/20160518/usr/lib64|g' xml2-config
-sed -i -e 's|libdir=$prefix/lib|libdir=/tmp/20160518/usr/lib64|g' xml2-config
-sed -i -e 's|libdir=$exec_prefix/lib|libdir=/tmp/20160518/usr/lib64|g' xml2-config
-cat xml2-config
-
-# export PATH=/tmp/bin:${PATH}
-export XML2_CONFIG=/tmp/bin/xml2-config
-export LD_LIBRARY_PATH=/tmp/20160518/usr/lib64
-ls -lang /tmp/20160518/usr/lib64
-wget -nc -q https://github.com/nghttp2/nghttp2/releases/download/v1.10.0/nghttp2-1.10.0.tar.xz
-tar xf nghttp2-1.10.0.tar.xz
-cd nghttp2-1.10.0
-./configure --help
-./configure
+wget -q -nc ftp://rpmfind.net/linux/fedora/linux/updates/23/x86_64/g/gcc-c++-5.3.1-6.fc23.i686.rpm
+ls -lang 
 
 quota -s
 echo "FINISH"
