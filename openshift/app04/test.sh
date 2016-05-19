@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1010"
+echo "1014"
 
 set -x
 
@@ -46,11 +46,12 @@ export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
 
+rm -rf 20160519
 mkdir 20160519
 cd 20160519
-wget -q -nc ftp://rpmfind.net/linux/fedora/linux/updates/23/x86_64/g/gcc-c++-5.3.1-6.fc23.i686.rpm
+wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-5.3.1-6.fc23.x86_64.rpm
 ls -lang 
-rpm2cpio gcc-c++-5.3.1-6.fc23.i686.rpm | cpio -idmv
+rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 
 quota -s
 echo "FINISH"
