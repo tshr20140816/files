@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1113"
+echo "1119"
 
 set -x
 
@@ -51,12 +51,10 @@ mkdir 20160519
 cd 20160519
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-5.3.1-6.fc23.x86_64.rpm
 ls -lang 
-# rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
+rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/glibc-2.22-16.fc23.x86_64.rpm
-# rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
-
-rpm2cpio *.rpm | cpio -idmv
+rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
 
 # export LD_LIBRARY_PATH=/tmp/20160519/lib64
 
@@ -65,8 +63,8 @@ rpm2cpio *.rpm | cpio -idmv
 
 # ldd ./usr/bin/gcc
 
-./lib64/ld-linux-x86-64.so.2 --help
 ./lib64/ld-linux-x86-64.so.2 --library-path /tmp/20160519/lib64:/tmp/20160519/usr/lib64 ./usr/bin/gcc --version
+./lib64/ld-linux-x86-64.so.2 --library-path /tmp/20160519/lib64:/tmp/20160519/usr/lib64 ldd ./usr/bin/gcc
 
 quota -s
 echo "FINISH"
