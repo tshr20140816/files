@@ -52,6 +52,7 @@ mkdir -p ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/
 # リバースプロキシを経由する際にgifが HTTP 304 とならないことへの対策
 cp src/builtin/icons/ysato/*.gif ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/
 touch ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/index.html
+convert -geometry 12x12 -colors 2 ${OPENSHIFT_DATA_DIR}/apache/htdocs/delegate/icons/*.gif
 popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR}/delegate/ > /dev/null
