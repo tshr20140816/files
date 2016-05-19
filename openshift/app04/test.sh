@@ -50,15 +50,18 @@ wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gc
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/glibc-2.22-16.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-c++-5.3.1-6.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/c/cpp-5.3.1-6.fc23.x86_64.rpm
+wget -q -nc ftp://rpmfind.net/linux/fedora/linux/releases/23/Everything/x86_64/os/Packages/l/libmpc-1.0.2-4.fc23.i686.rpm
 
 rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio gcc-c++-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio cpp-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
+rpm2cpio libmpc-1.0.2-4.fc23.i686.rpm | cpio -idmv
 
 rm -f *.rpm
 
 ./lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ./usr/bin/gcc --version
+./lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ./usr/bin/cc1 --version
 ./lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ./usr/bin/c++ --version
 ./lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ./usr/bin/g++ --version
 
