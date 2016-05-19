@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1235"
+echo "1309"
 
 set -x
 
@@ -79,6 +79,7 @@ tar xf ccache-3.2.5.tar.xz
 cd ccache-3.2.5
 ./configure
 time make
+cat config.log
 cat ${OPENSHIFT_LOG_DIR}/gcc.log
 
 quota -s
