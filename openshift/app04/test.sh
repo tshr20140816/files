@@ -45,6 +45,8 @@ ls -lang
 
 # -----
 
+convert --help
+
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
