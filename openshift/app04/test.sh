@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1119"
+echo "1128"
 
 set -x
 
@@ -65,6 +65,14 @@ rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
 
 ./lib64/ld-linux-x86-64.so.2 --library-path /tmp/20160519/lib64:/tmp/20160519/usr/lib64 ./usr/bin/gcc --version
 ./lib64/ld-linux-x86-64.so.2 --library-path /tmp/20160519/lib64:/tmp/20160519/usr/lib64 ldd ./usr/bin/gcc
+
+cd /tmp
+wget -q -nc https://www.samba.org/ftp/ccache/ccache-3.2.5.tar.xz
+rm -rf ccache-3.2.5
+tar xf ccache-3.2.5.tar.xz
+cd ccache-3.2.5
+./configure
+time make
 
 quota -s
 echo "FINISH"
