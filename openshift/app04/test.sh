@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1538"
+echo "1541"
 
 set -x
 
@@ -53,6 +53,7 @@ cd /tmp
 wget -nc -q http://mirrors.kernel.org/gnu/gmp/gmp-4.3.2.tar.bz2
 tar xf gmp-4.3.2.tar.bz2
 cd gmp-4.3.2
+./configure --help
 ./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --enable-static \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j2
@@ -64,6 +65,7 @@ cd /tmp
 wget -nc -q http://mirrors.kernel.org/gnu/mpfr/mpfr-2.4.2.tar.xz
 tar xf mpfr-2.4.2.tar.xz
 cd mpfr-2.4.2
+./configure --help
 ./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --enable-static --with-gmp=$OPENSHIFT_DATA_DIR/usr \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j2
@@ -75,7 +77,8 @@ cd /tmp
 wget -nc -q http://mirrors.kernel.org/gnu/mpc/mpc-1.0.3.tar.gz
 tar xf mpc-1.0.3.tar.gz
 cd mpc-1.0.3
-./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --enable-static --with-gmp=$OPENSHIFT_DATA_DIR/usr --with-mpfr=$OPENSHIFT_DATA_DIR/usr \
+./configure --help
+./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --with-gmp=$OPENSHIFT_DATA_DIR/usr --with-mpfr=$OPENSHIFT_DATA_DIR/usr \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j4
 make install
