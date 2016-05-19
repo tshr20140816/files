@@ -44,19 +44,56 @@ rm -f gcc-c++-5.3.1-6.fc23.i686.rpm
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
+cd /tmp
+
+wget -nc -q http://mirrors.kernel.org/gnu/gmp/gmp-4.3.2.tar.bz2
+tar xf gmp-4.3.2.tar.bz2
+cd gmp-4.3.2
+./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --enable-static \
+ --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
+time make -j2
+make install
+cd /tmp
+rm -rf gmp-4.3.2
+
+cd /tmp
+wget -nc -q http://mirrors.kernel.org/gnu/mpfr/mpfr-2.4.2.tar.xz
+tar xf mpfr-2.4.2.tar.xz
+cd mpfr-2.4.2
+./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --enable-static --with-gmp=$OPENSHIFT_DATA_DIR/usr \
+ --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
+time make -j2
+make install
+cd /tmp
+rm -rf mpfr-2.4.2
+
+cd /tmp
+wget -nc -q http://mirrors.kernel.org/gnu/mpc/mpc-1.0.3.tar.gz
+tar xf mpc-1.0.3.tar.gz
+cd mpc-1.0.3
+./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --enable-static --with-gmp=$OPENSHIFT_DATA_DIR/usr --with-mpfr=$OPENSHIFT_DATA_DIR/usr \
+ --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
+time make -j4
+make install
+cd /tmp
+rm -rf mpc-1.0.3
+rm -rf gomi
+
+tree -a ${OPENSHIFT_DATA_DIR}/usr
+
 cd ${OPENSHIFT_DATA_DIR}
 
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-5.3.1-6.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/glibc-2.22-16.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-c++-5.3.1-6.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/c/cpp-5.3.1-6.fc23.x86_64.rpm
-wget -q -nc ftp://rpmfind.net/linux/fedora/linux/releases/23/Everything/x86_64/os/Packages/l/libmpc-1.0.2-4.fc23.i686.rpm
+# wget -q -nc ftp://rpmfind.net/linux/fedora/linux/releases/23/Everything/x86_64/os/Packages/l/libmpc-1.0.2-4.fc23.i686.rpm
 
 rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio gcc-c++-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio cpp-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
-rpm2cpio libmpc-1.0.2-4.fc23.i686.rpm | cpio -idmv
+# rpm2cpio libmpc-1.0.2-4.fc23.i686.rpm | cpio -idmv
 
 rm -f *.rpm
 
