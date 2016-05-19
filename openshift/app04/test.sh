@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1014"
+echo "1021"
 
 set -x
 
@@ -52,6 +52,9 @@ cd 20160519
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-5.3.1-6.fc23.x86_64.rpm
 ls -lang 
 rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
+
+./usr/bin/gcc --version
+./usr/bin/gcc --help
 
 quota -s
 echo "FINISH"
