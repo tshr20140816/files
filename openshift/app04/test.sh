@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1541"
+echo "1656"
 
 set -x
 
@@ -80,7 +80,7 @@ wget -nc -q http://mirrors.kernel.org/gnu/mpc/mpc-1.0.3.tar.gz
 tar xf mpc-1.0.3.tar.gz
 cd mpc-1.0.3
 ./configure --help
-./configure --prefix=$OPENSHIFT_DATA_DIR/usr --disable-shared --with-gmp=$OPENSHIFT_DATA_DIR/usr --with-mpfr=$OPENSHIFT_DATA_DIR/usr \
+./configure --prefix=$OPENSHIFT_DATA_DIR/usr --with-gmp=$OPENSHIFT_DATA_DIR/usr --with-mpfr=$OPENSHIFT_DATA_DIR/usr \
  --infodir=/tmp/gomi --mandir=/tmp/gomi --docdir=/tmp/gomi
 time make -j4
 make install
