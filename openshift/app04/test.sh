@@ -40,7 +40,7 @@ rm -rf 20160519
 rm -f gcc-c++-5.3.1-6.fc23.i686.rpm
 
 cd $OPENSHIFT_DATA_DIR
-rm -rf bin include lib lib64 libexec local sbin share
+rm -rf bin include lib lib64 libexec local sbin share usr
 ls -lang
 
 # -----
