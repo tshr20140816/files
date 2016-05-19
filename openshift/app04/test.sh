@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1008"
+echo "1010"
 
 set -x
 
@@ -37,18 +37,20 @@ rm -f ccache-3.2.5.tar.xz
 rm -rf nghttp2-1.10.0
 rm -rf Python-2.7.11
 rm -rf 20160518
+rm -f gcc-c++-5.3.1-6.fc23.i686.rpm
 
 # -----
-
-pump --help
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
 
+mkdir 20160519
+cd 20160519
 wget -q -nc ftp://rpmfind.net/linux/fedora/linux/updates/23/x86_64/g/gcc-c++-5.3.1-6.fc23.i686.rpm
 ls -lang 
+rpm2cpio gcc-c++-5.3.1-6.fc23.i686.rpm | cpio -idmv
 
 quota -s
 echo "FINISH"
