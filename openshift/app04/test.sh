@@ -49,10 +49,12 @@ cd ${OPENSHIFT_DATA_DIR}
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-5.3.1-6.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/glibc-2.22-16.fc23.x86_64.rpm
 wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/g/gcc-c++-5.3.1-6.fc23.x86_64.rpm
+wget -q -nc https://dl.fedoraproject.org/pub/fedora/linux/updates/23/x86_64/c/cpp-5.3.1-6.fc23.x86_64.rpm
 
 rpm2cpio gcc-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
 rpm2cpio gcc-c++-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
+rpm2cpio cpp-5.3.1-6.fc23.x86_64.rpm | cpio -idmv
 
 rm -f *.rpm
 
