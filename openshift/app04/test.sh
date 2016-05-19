@@ -59,7 +59,9 @@ rpm2cpio glibc-2.22-16.fc23.x86_64.rpm | cpio -idmv
 export LD_LIBRARY_PATH=/tmp/20160519/lib64
 
 ./usr/bin/gcc --version
-./usr/bin/gcc --help
+# ./usr/bin/gcc --help
+
+ldd ./usr/bin/gcc
 
 quota -s
 echo "FINISH"
