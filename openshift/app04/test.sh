@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1309"
+echo "1401"
 
 set -x
 
@@ -71,7 +71,7 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/usr/local/bin/gcc
 
 export TZ=JST-9
 echo "$(date +%Y/%m/%d" "%H:%M:%S) $*" >> ${OPENSHIFT_LOG_DIR}/gcc.log
-${OPENSHIFT_DATA_DIR}/lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ${OPENSHIFT_DATA_DIR}/usr/bin/gcc "$@"
+${OPENSHIFT_DATA_DIR}/lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64:${OPENSHIFT_DATA_DIR}/usr/lib ${OPENSHIFT_DATA_DIR}/usr/bin/gcc "$@"
 __HEREDOC__
 chmod +x ${OPENSHIFT_DATA_DIR}/usr/local/bin/gcc
 
