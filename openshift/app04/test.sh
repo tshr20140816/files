@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1128"
+echo "1218"
 
 set -x
 
@@ -69,6 +69,7 @@ echo "$(date +%Y/%m/%d" "%H:%M:%S) $*" >> ${OPENSHIFT_LOG_DIR}/gcc.log
 ${OPENSHIFT_DATA_DIR}/lib64/ld-linux-x86-64.so.2 --library-path ${OPENSHIFT_DATA_DIR}/lib64:${OPENSHIFT_DATA_DIR}/usr/lib64 ${OPENSHIFT_DATA_DIR}/usr/bin/gcc "$@"
 __HEREDOC__
 
+rm -f ${OPENSHIFT_LOG_DIR}/gcc.log
 export PATH=${OPENSHIFT_DATA_DIR}/usr/local/bin:${PATH}
 cd /tmp
 wget -q -nc https://www.samba.org/ftp/ccache/ccache-3.2.5.tar.xz
@@ -77,6 +78,7 @@ tar xf ccache-3.2.5.tar.xz
 cd ccache-3.2.5
 ./configure
 time make
+cat ${OPENSHIFT_LOG_DIR}/gcc.log
 
 quota -s
 echo "FINISH"
