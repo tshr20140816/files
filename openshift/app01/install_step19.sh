@@ -67,7 +67,8 @@ PROTOLOG=${LOGDIR}/delegate_${PORT}.${PROTO}.log[date+.%w]:%X
 ERRORLOG=${LOGDIR}/delegate_errors.log[date+.%w]
 MAXIMA="delegated:5"
 # MOUNT="/mail/* pop://__DELEGATE_POP_SERVER__:110/* noapop"
-MOUNT="/mail/* pop://__DELEGATE_POP_SERVER__:110/* CHARCODE=iso-2022-jp"
+MOUNT="/mail/* pop://__DELEGATE_POP_SERVER__:110/* CHARCODE=utf-8"
+MIMECONV charcode
 # MOUNT="/-/builtin/* http://__OPENSHIFT_DIY_IP__:30080/delegate/builtin/*"
 # FTOCL="/bin/sed -f __OPENSHIFT_DATA_DIR__delegate/filter.txt"
 # FTOCL="/usr/bin/php __OPENSHIFT_DATA_DIR__delegate/filter.php"
