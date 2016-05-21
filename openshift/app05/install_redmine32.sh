@@ -154,7 +154,7 @@ cd httpd-${apache_version}
  --disable-userdir \
  --disable-version \
  --disable-vhost-alias
-time make -j4
+time make -j8
 make install
 rm -rf ${OPENSHIFT_DATA_DIR}/usr/manual
 cd ${OPENSHIFT_TMP_DIR}
