@@ -95,7 +95,7 @@ export PATH="${OPENSHIFT_DATA_DIR}/.gem/bin:$PATH"
 home_org=${HOME}
 export HOME=${OPENSHIFT_DATA_DIR}
 
-gem install rhc --verbose --no-rdoc --no-ri --no-test -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
+time gem install rhc --verbose --no-rdoc --no-ri --no-test -- --with-cflags=\"-O2 -pipe -march=native -fomit-frame-pointer -s\"
 
 yes | rhc setup --server openshift.redhat.com --create-token -l ${distcc_server_account} -p ${distcc_server_password}
 rhc apps | grep -e SSH | grep -v -e ${OPENSHIFT_APP_UUID} | awk '{print $2}' | tee -a ${OPENSHIFT_DATA_DIR}/user_fqdn.txt
