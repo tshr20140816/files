@@ -17,8 +17,10 @@ export CXXFLAGS="${CFLAGS}"
 distcc_version="3.1"
 
 cd ${OPENSHIFT_TMP_DIR}
-wget -q https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
-tar jxf distcc-${distcc_version}.tar.bz2
+# wget -q https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2
+wget -q https://github.com/distcc/distcc/archive/distcc-${distcc_version}.tar.gz
+# tar jxf distcc-${distcc_version}.tar.bz2
+tar xf distcc-${distcc_version}.tar.gz
 cd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/usr \
@@ -29,6 +31,7 @@ make install
 cd ${OPENSHIFT_TMP_DIR}
 rm -rf distcc-${distcc_version} gomi
 rm -f distcc-${distcc_version}.tar.bz2
+rm -f distcc-${distcc_version}.tar.gz
 
 mkdir ${OPENSHIFT_DATA_DIR}/.distcc
 
