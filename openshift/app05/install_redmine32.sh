@@ -583,7 +583,7 @@ rm -rf ${OPENSHIFT_TMP_DIR}/gomi
 
 # ***** restart *****
 
-${OPENSHIFT_REPO_DIR}/.openshift/action_hooks
+cd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks
 cp start start.$(date '+%Y%m%d')
 cat << '__HEREDOC__' > start
 #!/bin/bash
