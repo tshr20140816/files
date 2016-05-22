@@ -220,16 +220,16 @@ SetEnvIf Request_URI "\.gif$" no_log_2
 SetEnvIf Request_URI "\.png$" no_log_2
 
 CustomLog \
- "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_log __APACHE_DIR__logs/access_log.%w 86400 540" combined
+ "|/usr/sbin/rotatelogs -L __OPENSHIFT_LOG_DIR__/access_log __OPENSHIFT_LOG_DIR__/access_log.%w 86400 540" combined
 CustomLog \
- "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_remoteip_log __APACHE_DIR__logs/access_remoteip_log.%w 86400 540" \
+ "|/usr/sbin/rotatelogs -L __OPENSHIFT_LOG_DIR__/access_remoteip_log __OPENSHIFT_LOG_DIR__/access_remoteip_log.%w 86400 540" \
  remoteip env=!no_log_1
 CustomLog \
- "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/access_deflate_log __APACHE_DIR__logs/access_deflate_log.%w 86400 540" \
+ "|/usr/sbin/rotatelogs -L __OPENSHIFT_LOG_DIR__/access_deflate_log __OPENSHIFT_LOG_DIR__/access_deflate_log.%w 86400 540" \
  deflate env=!no_log_2
 
 ErrorLog \
- "|/usr/sbin/rotatelogs -L __APACHE_DIR__logs/error_log __APACHE_DIR__logs/error_log.%w 86400 540"
+ "|/usr/sbin/rotatelogs -L __OPENSHIFT_LOG_DIR__/error_log __OPENSHIFT_LOG_DIR__/error_log.%w 86400 540"
 
 # indexes
 
