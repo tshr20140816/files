@@ -270,8 +270,28 @@ __HEREDOC__
 
 # *** logs ***
 
-ln -s ${OPENSHIFT_LOG_DIR} ${OPENSHIFT_DATA_DIR}/usr/htdocs/logs
+cd ${OPENSHIFT_LOG_DIR} 
 
+echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
+echo AuthType Digest > .htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
+
+cat << '__HEREDOC__' >> .htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+__HEREDOC__
+
+cd ${OPENSHIFT_DATA_DIR}/usr/htdocs
+ln -s ${OPENSHIFT_LOG_DIR} logs
 
 # ***** ruby *****
 
