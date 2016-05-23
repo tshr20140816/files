@@ -58,6 +58,18 @@ cd $OPENSHIFT_DATA_DIR
 # rpm2cpio gcc-4.4.7-16.el6.src.rpm | cpio -idmv
 # tree -a ${OPENSHIFT_DATA_DIR}/usr
 
+cat gcc.spec
+rm -f gcc.spec
+
+mv gcc-4.4.7-20120601.tar.bz2 /tmp/
+cd /tmp
+
+tar xf gcc-4.4.7-20120601.tar.bz2
+cd gcc-*
+./configure --help
+./configure
+time make -j2
+
 quota -s
 echo "FINISH"
 exit
