@@ -268,6 +268,11 @@ User-agent: *
 Disallow: /
 __HEREDOC__
 
+# *** logs ***
+
+ln -s ${OPENSHIFT_LOG_DIR} ${OPENSHIFT_DATA_DIR}/usr/htdocs/logs
+
+
 # ***** ruby *****
 
 ruby_version="2.3.1"
