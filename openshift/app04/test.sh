@@ -38,6 +38,7 @@ rm -rf nghttp2-1.10.0
 rm -rf Python-2.7.11
 rm -rf 20160519
 rm -f gcc-c++-5.3.1-6.fc23.i686.rpm
+rm -f *.patch
 
 cd $OPENSHIFT_DATA_DIR
 rm -rf bin include lib lib64 libexec local sbin share usr
@@ -52,10 +53,10 @@ export CXXFLAGS="${CFLAGS}"
 
 cd $OPENSHIFT_DATA_DIR
 
-wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/gcc-4.4.7-16.el6.src.rpm
+# wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/gcc-4.4.7-16.el6.src.rpm
 
-rpm2cpio gcc-4.4.7-16.el6.src.rpm | cpio -idmv
-tree -a ${OPENSHIFT_DATA_DIR}/usr
+# rpm2cpio gcc-4.4.7-16.el6.src.rpm | cpio -idmv
+# tree -a ${OPENSHIFT_DATA_DIR}/usr
 
 quota -s
 echo "FINISH"
