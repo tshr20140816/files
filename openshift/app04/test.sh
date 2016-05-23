@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1648"
+echo "1706"
 
 set -x
 
@@ -59,6 +59,8 @@ mkdir 20160523
 cd 20160523
 wget -q -nc http://mirrors.concertpass.com/gcc/releases/gcc-4.4.7/gcc-core-4.4.7.tar.bz2
 tar xf gcc-core-4.4.7.tar.bz2
+ls -lang
+cd gcc*
 ./configure
 time make -j2
 
