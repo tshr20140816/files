@@ -611,6 +611,10 @@ ln -s ${OPENSHIFT_DATA_DIR}/redmine-${redmine_version}/public ${OPENSHIFT_DATA_D
 
 rm -rf ${OPENSHIFT_TMP_DIR}/gomi
 
+# *** passenger status ***
+
+${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-status --verbose
+
 # ***** restart *****
 
 cd ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks
