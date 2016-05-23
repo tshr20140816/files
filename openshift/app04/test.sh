@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1308"
+echo "1631"
 
 set -x
 
@@ -52,7 +52,7 @@ export CXXFLAGS="${CFLAGS}"
 
 cd $OPENSHIFT_DATA_DIR
 
-wget -nc -q http://vault.centos.org/6.5/os/Source/SPackages/gcc-4.4.7-4.el6.src.rpm
+wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/gcc-4.4.7-16.el6.src.rpm
 
 rpm2cpio gcc-4.4.7-4.el6.src.rpm | cpio -idmv
 tree -a ${OPENSHIFT_DATA_DIR}/usr
