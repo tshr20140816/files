@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1631"
+echo "1634"
 
 set -x
 
@@ -45,14 +45,14 @@ ls -lang
 
 # -----
 
-convert --help
+# convert --help
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd $OPENSHIFT_DATA_DIR
 
-wget -nc -q http://vault.centos.org/6.7/os/Source/SPackages/gcc-4.4.7-16.el6.src.rpm
+wget -nc http://vault.centos.org/6.7/os/Source/SPackages/gcc-4.4.7-16.el6.src.rpm
 
 rpm2cpio gcc-4.4.7-4.el6.src.rpm | cpio -idmv
 tree -a ${OPENSHIFT_DATA_DIR}/usr
