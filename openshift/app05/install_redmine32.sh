@@ -386,12 +386,17 @@ chmod +x ${OPENSHIFT_DATA_DIR}/usr/bin/c++
 
 cd ${OPENSHIFT_TMP_DIR}
 
+/usr/bin/gear stop --trace
+
 time ${OPENSHIFT_DATA_DIR}/.gem/bin/passenger-install-apache2-module \
  --auto \
  --languages ruby \
  --apxs2-path ${OPENSHIFT_DATA_DIR}/usr/bin/apxs
 
 rm -f ${OPENSHIFT_DATA_DIR}/usr/bin/c++
+
+/usr/bin/gear start --trace
+
 export HOME=${home_org}
 
 # *** patch ***
