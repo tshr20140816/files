@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1600"
+echo "1637"
 
 set -x
 
@@ -32,10 +32,10 @@ quota -s
 # -----
 
 cd /tmp
-
+rm -rf mpfr-2.3.2
 
 cd $OPENSHIFT_DATA_DIR
-rm -rf local var etc
+rm -rf var etc
 rm -f fastjar-0.97.tar.gz gcc-4.4.7-16.el6.src.rpm protoize.1 README.libgcjwebplugin.so
 ls -lang
 
@@ -46,9 +46,11 @@ ls -lang
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
+if [ 1 -eq 0 ];then
 cd /tmp
 
 gmp_version=4.3.2
+
 
 wget -nc -q http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-${gmp_version}.tar.bz2
 rm -rf gmp-${gmp_version}
@@ -96,6 +98,7 @@ cd mpc-${mpc_version}
  --disable-dependency-tracking
 time make -j4
 make install
+fi
 
 tree ${OPENSHIFT_DATA_DIR}/local
 
@@ -116,11 +119,7 @@ time ./configure \
  --with-gmp=${OPENSHIFT_DATA_DIR}/local \
  --disable-libquadmath \
  --disable-libquadmath-support
-# time make -j2
-
-find / -name libgmp.so.3 -print 2>/dev/null
-find / -name libmpfr.so.1 -print 2>/dev/null
-find / -name libmpc.so.2 -print 2>/dev/null
+time make -j2
 
 quota -s
 echo "FINISH"
