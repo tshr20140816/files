@@ -59,7 +59,7 @@ cd /tmp
 
 gmp_version=4.3.2
 
-[ -f gmp-${gmp_version}.tar.bz2 ] || wget http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-${gmp_version}.tar.bz2
+wget -nc -q http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-${gmp_version}.tar.bz2
 tar jxf gmp-${gmp_version}.tar.bz2
 cd gmp-${gmp_version}
 ./configure \
@@ -71,9 +71,9 @@ make install
 
 cd /tmp
 
-mpfr_version=2.3.2
+mpfr_version=2.4.2
 
-[ -f mpfr-${mpfr_version}.tar.bz2 ] || wget http://mpfr.loria.fr/mpfr-${mpfr_version}/mpfr-${mpfr_version}.tar.bz2
+wget -nc -q http://mpfr.loria.fr/mpfr-${mpfr_version}/mpfr-${mpfr_version}.tar.bz2
 tar jxf mpfr-${mpfr_version}.tar.bz2
 cd mpfr-${mpfr_version}
 ./configure  \
@@ -90,7 +90,7 @@ cd /tmp
 mpc_version=0.8.2
 
 rm -rf mpc-${mpc_version}
-[ -f mpc-${mpc_version}.tar.gz ] || wget http://www.multiprecision.org/mpc/download/mpc-${mpc_version}.tar.gz
+wget -nc -q http://www.multiprecision.org/mpc/download/mpc-${mpc_version}.tar.gz
 tar zxf mpc-${mpc_version}.tar.gz
 cd mpc-${mpc_version}
 ./configure  \
