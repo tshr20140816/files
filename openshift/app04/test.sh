@@ -44,6 +44,8 @@ rm -rf gcc*
 
 cd $OPENSHIFT_DATA_DIR
 rm -rf bin include lib lib64 libexec local sbin share usr
+rm -f *.patch
+rm -f *.bz2
 ls -lang
 
 # -----
