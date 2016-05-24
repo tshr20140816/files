@@ -64,6 +64,7 @@ cd gcc*
 ./configure
 # time make -j2
 
+find / -name libgmp.so.3 -print 2>/dev/null
 find / -name libmpc.so.2 -print 2>/dev/null
 
 quota -s
