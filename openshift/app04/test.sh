@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1518"
+echo "1523"
 
 set -x
 
@@ -65,6 +65,7 @@ cd gcc*
 # time make -j2
 
 find / -name libgmp.so.3 -print 2>/dev/null
+find / -name libmpfr.so.1 -print 2>/dev/null
 find / -name libmpc.so.2 -print 2>/dev/null
 
 quota -s
