@@ -57,16 +57,71 @@ export CXXFLAGS="${CFLAGS}"
 
 cd /tmp
 
+gmp_version=4.3.2
+
+[ -f gmp-${gmp_version}.tar.bz2 ] || wget http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-${gmp_version}.tar.bz2
+tar jxf gmp-${gmp_version}.tar.bz2
+cd gmp-${gmp_version}
+./configure \
+ --mandir=/tmp/man \
+ --infodir=/tmp/info \
+ --prefix=${OPENSHIFT_DATA_DIR}/local
+time make -j4
+make install
+
+cd /tmp
+
+mpfr_version=2.3.2
+
+[ -f mpfr-${mpfr_version}.tar.bz2 ] || wget http://mpfr.loria.fr/mpfr-${mpfr_version}/mpfr-${mpfr_version}.tar.bz2
+tar jxf mpfr-${mpfr_version}.tar.bz2
+cd mpfr-${mpfr_version}
+./configure  \
+ --mandir=/tmp/man \
+ --infodir=/tmp/info \
+ --prefix=${OPENSHIFT_DATA_DIR}/local \
+ --disable-maintainer-mode \
+ --disable-dependency-tracking
+time make -j4
+make install
+
+cd /tmp
+
+mpc_version=0.8.2
+
+rm -rf mpc-${mpc_version}
+[ -f mpc-${mpc_version}.tar.gz ] || wget http://www.multiprecision.org/mpc/download/mpc-${mpc_version}.tar.gz
+tar zxf mpc-${mpc_version}.tar.gz
+cd mpc-${mpc_version}
+./configure  \
+ --mandir=/tmp/man \
+ --infodir=/tmp/info \
+ --prefix=${OPENSHIFT_DATA_DIR}/local \
+ --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local \
+ --disable-dependency-tracking
+time make -j4
+make install
+
+tree ${OPENSHIFT_DATA_DIR}/local
+
+cd /tmp
+
 mkdir 20160523
 cd 20160523
 
-export LD_LIBRARY_PATH=/usr/lib64
+# export LD_LIBRARY_PATH=/usr/lib64
 
 wget -q -nc http://mirrors.concertpass.com/gcc/releases/gcc-4.4.7/gcc-core-4.4.7.tar.bz2
 tar xf gcc-core-4.4.7.tar.bz2
 ls -lang
 cd gcc*
-./configure
+time ./configure \
+ --with-mpc=${OPENSHIFT_DATA_DIR}/local/ \
+ --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local \
+ --disable-libquadmath \
+ --disable-libquadmath-support
 # time make -j2
 
 find / -name libgmp.so.3 -print 2>/dev/null
