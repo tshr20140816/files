@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1637"
+echo "1649"
 
 set -x
 
@@ -104,6 +104,7 @@ tree ${OPENSHIFT_DATA_DIR}/local
 
 cd /tmp
 
+rm -rf
 mkdir 20160523
 cd 20160523
 
@@ -119,7 +120,7 @@ time ./configure \
  --with-gmp=${OPENSHIFT_DATA_DIR}/local \
  --disable-libquadmath \
  --disable-libquadmath-support
-time make -j2
+time make -j4
 
 quota -s
 echo "FINISH"
