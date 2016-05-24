@@ -57,6 +57,9 @@ cd /tmp
 
 mkdir 20160523
 cd 20160523
+
+export LD_LIBRARY_PATH=/usr/lib64
+
 wget -q -nc http://mirrors.concertpass.com/gcc/releases/gcc-4.4.7/gcc-core-4.4.7.tar.bz2
 tar xf gcc-core-4.4.7.tar.bz2
 ls -lang
