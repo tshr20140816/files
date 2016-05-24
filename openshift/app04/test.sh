@@ -44,8 +44,7 @@ rm -rf gcc*
 
 cd $OPENSHIFT_DATA_DIR
 rm -rf bin include lib lib64 libexec local sbin share usr
-rm -f *.patch
-rm -f *.bz2
+rm -f fastjar-0.97.tar.gz gcc-4.4.7-16.el6.src.rpm protoize.1 README.libgcjwebplugin.so
 ls -lang
 
 # -----
@@ -60,6 +59,7 @@ cd /tmp
 gmp_version=4.3.2
 
 wget -nc -q http://ftp.jaist.ac.jp/pub/GNU/gmp/gmp-${gmp_version}.tar.bz2
+rm -rf gmp-${gmp_version}
 tar jxf gmp-${gmp_version}.tar.bz2
 cd gmp-${gmp_version}
 ./configure \
@@ -74,6 +74,7 @@ cd /tmp
 mpfr_version=2.4.2
 
 wget -nc -q http://mpfr.loria.fr/mpfr-${mpfr_version}/mpfr-${mpfr_version}.tar.bz2
+rm -rf mpfr-${mpfr_version}
 tar jxf mpfr-${mpfr_version}.tar.bz2
 cd mpfr-${mpfr_version}
 ./configure  \
@@ -91,6 +92,7 @@ mpc_version=0.8.2
 
 rm -rf mpc-${mpc_version}
 wget -nc -q http://www.multiprecision.org/mpc/download/mpc-${mpc_version}.tar.gz
+rm -rf mpc-${mpc_version}
 tar zxf mpc-${mpc_version}.tar.gz
 cd mpc-${mpc_version}
 ./configure  \
