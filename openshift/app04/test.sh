@@ -32,18 +32,10 @@ quota -s
 # -----
 
 cd /tmp
-rm -rf ccache-3.2.5 ccache gomi
-rm -f ccache-3.2.5.tar.xz
-rm -rf nghttp2-1.10.0
-rm -rf Python-2.7.11
-rm -rf 20160523
-rm -f gcc-c++-5.3.1-6.fc23.i686.rpm
-rm -f *.patch
-rm -f *.bz2
-rm -rf gcc*
+
 
 cd $OPENSHIFT_DATA_DIR
-rm -rf bin include lib lib64 libexec local sbin share usr
+rm -rf local var etc
 rm -f fastjar-0.97.tar.gz gcc-4.4.7-16.el6.src.rpm protoize.1 README.libgcjwebplugin.so
 ls -lang
 
