@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1706"
+echo "1518"
 
 set -x
 
@@ -62,7 +62,9 @@ tar xf gcc-core-4.4.7.tar.bz2
 ls -lang
 cd gcc*
 ./configure
-time make -j2
+# time make -j2
+
+find / -name libmpc.so.2 -print 2>/dev/null
 
 quota -s
 echo "FINISH"
