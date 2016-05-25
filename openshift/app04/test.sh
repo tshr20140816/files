@@ -33,6 +33,9 @@ cat $OPENSHIFT_REPO_DIR/test2.php
 
 quota -s
 
+ssh --version
+ssh -V
+
 exit
 
 # -----
