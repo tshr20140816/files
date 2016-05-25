@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1144"
+echo "1425"
 
 set -x
 
@@ -36,6 +36,7 @@ cd /tmp
 rm -rf gmp-4.3.2 mpc-0.8.2 mpfr-2.4.2 openssh-6.9p1 bin info 20160523
 
 cd $OPENSHIFT_DATA_DIR
+rm -rf ssh
 
 # -----
 
@@ -53,10 +54,19 @@ tar xf openssh-${openssh_version}p1.tar.gz
 cd openssh-${openssh_version}p1
 ls -lang
 wget -O openssh-6_9_P1-hpn-14.7.diff http://netix.dl.sourceforge.net/project/hpnssh/HPN-SSH%2014v7%206.9p1/openssh-6_9_P1-hpn-14.7.diff
-cat openssh-6_9_P1-hpn-14.7.diff
+# cat openssh-6_9_P1-hpn-14.7.diff
 patch < openssh-6_9_P1-hpn-14.7.diff
 ./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/ssh \
+ --mandir=${OPENSHIFT_TMP_DIR}/gomi \
+ --infodir=${OPENSHIFT_TMP_DIR}/gomi \
+ --docdir=${OPENSHIFT_TMP_DIR}/gomi \
+ --disable-largefile \
+ --without-ssh1
+time make
+make install
 
+tree ${OPENSHIFT_DATA_DIR}/ssh
 quota -s
 echo "FINISH"
 exit
