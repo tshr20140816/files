@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1649"
+echo "1132"
 
 set -x
 
@@ -33,6 +33,7 @@ quota -s
 # -----
 
 cd /tmp
+rm -rf gmp-4.3.2 mpc-0.8.2 mpfr-2.4.2 openssh-6.9p1 bin info 20160523
 
 cd $OPENSHIFT_DATA_DIR
 
@@ -49,7 +50,12 @@ cd /tmp
 
 wget -nc -q http://mirrors.sonic.net/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}p1.tar.gz
 tar xf openssh-${openssh_version}p1.tar.gz
+cd openssh-${openssh_version}p1
 ls -lang
+wget -q http://osdn.jp/frs/g_redir.php?m=liquidtelecom&f=%2Fhpnssh%2FHPN-SSH+14v7+6.9p1%2Fopenssh-6_9_P1-hpn-14.7.diff -O openssh-6_9_P1-hpn-14.7.diff
+cat openssh-6_9_P1-hpn-14.7.diff
+patch openssh-6_9_P1-hpn-14.7.diff
+./configure --help
 
 quota -s
 echo "FINISH"
