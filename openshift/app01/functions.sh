@@ -50,7 +50,7 @@ function010() {
     if [ -e ${OPENSHIFT_DATA_DIR}/distcc ]; then
         distcc_exists=$(printenv | grep ^PATH= | grep distcc | wc -l)
         if [ ${distcc_exists} -eq 0 ]; then
-            export DISTCC_TCP_CORK=0
+            # export DISTCC_TCP_CORK=0
             [ $(echo $PATH | grep -c ${OPENSHIFT_DATA_DIR}/distcc/bin) -eq 0 ] && export PATH="${OPENSHIFT_DATA_DIR}/distcc/bin:$PATH"
             export DISTCC_DIR=${OPENSHIFT_DATA_DIR}.distcc
             # export DISTCC_LOG=/dev/null
