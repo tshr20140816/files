@@ -28,6 +28,9 @@ cd $OPENSHIFT_DATA_DIR
 ls -lang
 ls -lang $OPENSHIFT_REPO_DIR
 
+cat $OPENSHIFT_REPO_DIR/test.php
+cat $OPENSHIFT_REPO_DIR/test2.php
+
 quota -s
 
 exit
