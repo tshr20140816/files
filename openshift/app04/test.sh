@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1135"
+echo "1142"
 
 set -x
 
@@ -52,7 +52,7 @@ wget -nc -q http://mirrors.sonic.net/pub/OpenBSD/OpenSSH/portable/openssh-${open
 tar xf openssh-${openssh_version}p1.tar.gz
 cd openssh-${openssh_version}p1
 ls -lang
-wget -q http://osdn.jp/frs/g_redir.php?m=liquidtelecom&f=%2Fhpnssh%2FHPN-SSH+14v7+6.9p1%2Fopenssh-6_9_P1-hpn-14.7.diff -O openssh-6_9_P1-hpn-14.7.diff
+wget -O openssh-6_9_P1-hpn-14.7.diff http://osdn.jp/frs/g_redir.php?m=liquidtelecom&f=%2Fhpnssh%2FHPN-SSH+14v7+6.9p1%2Fopenssh-6_9_P1-hpn-14.7.diff
 cat openssh-6_9_P1-hpn-14.7.diff
 patch < openssh-6_9_P1-hpn-14.7.diff
 ./configure --help
