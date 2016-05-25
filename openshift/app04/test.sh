@@ -26,8 +26,11 @@ cd /tmp
 ls -lang
 cd $OPENSHIFT_DATA_DIR
 ls -lang
+ls -lang $OPENSHIFT_REPO_DIR
 
 quota -s
+
+exit
 
 # -----
 
