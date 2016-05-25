@@ -53,7 +53,7 @@ wget -nc -q http://mirrors.sonic.net/pub/OpenBSD/OpenSSH/portable/openssh-${open
 tar xf openssh-${openssh_version}p1.tar.gz
 cd openssh-${openssh_version}p1
 ls -lang
-wget -O openssh-6_9_P1-hpn-14.7.diff http://netix.dl.sourceforge.net/project/hpnssh/HPN-SSH%2014v7%206.9p1/openssh-6_9_P1-hpn-14.7.diff
+wget -O openssh-6_9_P1-hpn-14.7.diff http://superb-sea2.dl.sourceforge.net/project/hpnssh/HPN-SSH%2014v7%206.9p1/openssh-6_9_P1-hpn-14.7.diff
 # cat openssh-6_9_P1-hpn-14.7.diff
 patch < openssh-6_9_P1-hpn-14.7.diff
 ./configure --help
