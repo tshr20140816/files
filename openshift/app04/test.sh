@@ -62,7 +62,13 @@ patch < openssh-6_9_P1-hpn-14.7.diff
  --infodir=${OPENSHIFT_TMP_DIR}/gomi \
  --docdir=${OPENSHIFT_TMP_DIR}/gomi \
  --disable-largefile \
- --without-ssh1
+ --disable-etc-default-login \
+ --disable-utmp \
+ --disable-utmpx \
+ --disable-wtmp \
+ --disable-wtmpx \
+ --without-ssh1 \
+ --with-lastlog=${OPENSHIFT_LOG_DIR}/ssh_lastlog.log
 time make
 make install
 
