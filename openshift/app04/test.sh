@@ -72,6 +72,9 @@ patch < openssh-6_9_P1-hpn-14.7.diff
 time make
 make install
 
+${OPENSHIFT_DATA_DIR}/ssh/bin/ssh --version
+${OPENSHIFT_DATA_DIR}/ssh/bin/ssh -V
+
 tree ${OPENSHIFT_DATA_DIR}/ssh
 quota -s
 echo "FINISH"
