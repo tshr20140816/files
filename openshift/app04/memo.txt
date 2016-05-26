@@ -1,3 +1,5 @@
+https://github.com/tengyifei/openshift-cartridge-nginx-hhvm/tree/master/versions/shared/usr/bin
+
 Graphviz
 https://github.com/yui/yuicompressor/releases/download/v2.4.8/yuicompressor-2.4.8.jar
 
