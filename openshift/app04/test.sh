@@ -104,7 +104,19 @@ rm -rf gmp-${gmp_version}
 rm -rf mpfr-${mpfr_version}
 rm -rf mpc-${mpc_version}
 
-tree ${OPENSHIFT_DATA_DIR}/local
+# tree ${OPENSHIFT_DATA_DIR}/local
+
+wget -q -nc http://mirrors.concertpass.com/gcc/releases/gcc-4.4.7/gcc-core-4.4.7.tar.bz2
+tar xf gcc-core-4.4.7.tar.bz2
+ls -lang
+cd gcc*
+./configure \
+ --with-mpc=${OPENSHIFT_DATA_DIR}/local/ \
+ --with-mpfr=${OPENSHIFT_DATA_DIR}/local \
+ --with-gmp=${OPENSHIFT_DATA_DIR}/local \
+ --disable-libquadmath \
+ --disable-libquadmath-support
+
 
 rm -rf ${OPENSHIFT_DATA_DIR}/local
 
