@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1425"
+echo "1128"
 
 set -x
 
@@ -45,37 +45,18 @@ rm -rf ssh
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
-openssh_version=6.9
-
 cd /tmp
+mkdir 20160523
+cd 20160523
 
-wget -nc -q http://mirrors.sonic.net/pub/OpenBSD/OpenSSH/portable/openssh-${openssh_version}p1.tar.gz
-tar xf openssh-${openssh_version}p1.tar.gz
-cd openssh-${openssh_version}p1
-ls -lang
-wget -O openssh-6_9_P1-hpn-14.7.diff http://superb-sea2.dl.sourceforge.net/project/hpnssh/HPN-SSH%2014v7%206.9p1/openssh-6_9_P1-hpn-14.7.diff
-# cat openssh-6_9_P1-hpn-14.7.diff
-patch < openssh-6_9_P1-hpn-14.7.diff
-./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/ssh \
- --mandir=${OPENSHIFT_TMP_DIR}/gomi \
- --infodir=${OPENSHIFT_TMP_DIR}/gomi \
- --docdir=${OPENSHIFT_TMP_DIR}/gomi \
- --disable-largefile \
- --disable-etc-default-login \
- --disable-utmp \
- --disable-utmpx \
- --disable-wtmp \
- --disable-wtmpx \
- --without-ssh1 \
- --with-lastlog=${OPENSHIFT_LOG_DIR}/ssh_lastlog.log
-time make
-make install
+gcc_version=4.4.7
 
-${OPENSHIFT_DATA_DIR}/ssh/bin/ssh --version
-${OPENSHIFT_DATA_DIR}/ssh/bin/ssh -V
+[ -f gcc-core-${gcc_version}.tar.bz2 ] || wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-${gcc_version}/gcc-core-${gcc_version}.tar.bz2
+rm -rf gcc-${gcc_version}
+tar jxf gcc-core-${gcc_version}.tar.bz2
+cd gcc-${gcc_version}
+./configure
 
-tree ${OPENSHIFT_DATA_DIR}/ssh
 quota -s
 echo "FINISH"
 exit
