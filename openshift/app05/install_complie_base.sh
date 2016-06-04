@@ -56,7 +56,7 @@ Host *
   LogLevel QUIET
   Protocol 2
 #  Ciphers arcfour256,arcfour128
-  Ciphers arcfour,blowfish-cbc
+  Ciphers arcfour256,arcfour128
   Macs hmac-md5-96
   Compression no
   AddressFamily inet
