@@ -70,7 +70,7 @@ fi
 
 # apache
 
-apache_version=2.4.20
+apache_version=2.4.23
 apr_version=1.5.2
 aprutil_version=1.5.4
 if [ ! -f ${OPENSHIFT_DATA_DIR}/usr/bin/httpd ]; then
