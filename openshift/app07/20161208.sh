@@ -47,6 +47,7 @@ pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2
 tar xf pcre-${pcre_version}.tar.bz2
 pushd pcre-${pcre_version} > /dev/null
+./configure --help > ${OPENSHIFT_LOG_DIR}/configure_pcre
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --enable-static=no
 time make -j4
 make install
