@@ -9,6 +9,33 @@ oo-cgroup-read memory.failcnt
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
+# ***** ccache *****
+
+ccache_version=3.3.3
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget -q https://www.samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
+tar xf ccache-${ccache_version}.tar.xz
+pushd ccache-${ccache_version} > /dev/null
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
+time make -j4
+make install
+popd > /dev/null
+rm -f ccache-${ccache_version}.tar.xz
+popd > /dev/null
+
+export PATH="${OPENSHIFT_DATA_DIR}/usr/bin:$PATH"
+export CC="ccache gcc"
+export CXX="ccache g++"
+export CCACHE_DIR=${OPENSHIFT_DATA_DIR}/ccache
+export CCACHE_TEMPDIR=${OPENSHIFT_TMP_DIR}/
+# export CCACHE_LOGFILE=${OPENSHIFT_LOG_DIR}/ccache.log
+export CCACHE_LOGFILE=/dev/null
+export CCACHE_MAXSIZE=300M
+
+mkdir -p ${CCACHE_DIR}
+mkdir -p ${CCACHE_TEMPDIR}
+
 # ***** apache *****
 
 apache_version=2.4.23
