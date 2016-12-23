@@ -58,12 +58,12 @@ popd > /dev/null
 
 # *** httpd ***
 
-apache_version=2.4.23
+apache_version=2.4.25
 apr_version=1.5.2
 aprutil_version=1.5.4
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-wget -q http://ftp.yz.yamagata-u.ac.jp/pub/network/apache/httpd/httpd-${apache_version}.tar.bz2
+wget -q http://ftp.yz.yamagata-u.ac.jp/pub/network/apache//httpd/httpd-${apache_version}.tar.bz2
 tar xf httpd-${apache_version}.tar.bz2
 
 wget -q http://ftp.tsukuba.wide.ad.jp/software/apache//apr/apr-${apr_version}.tar.bz2
