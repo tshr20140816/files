@@ -89,6 +89,14 @@ popd > /dev/null
 
 php_version=7.1.0
 
+pushd ${OPENSHIFT_DATA_DIR}/usr/bin > /dev/null
+wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/gcc.sh
+chmod +x gcc.sh
+popd > /dev/null
+export CC="gcc.sh gcc"
+export CXX="gcc.sh g++"
+# export PATH="${OPENSHIFT_DATA_DIR}/usr/bin:$PATH"
+
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget -q http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar xf php-${php_version}.tar.xz
