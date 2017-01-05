@@ -90,7 +90,7 @@ popd > /dev/null
 php_version=7.1.0
 
 pushd ${OPENSHIFT_DATA_DIR}/usr/bin > /dev/null
-wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/gcc.sh
+wget -q https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/gcc.sh
 chmod +x gcc.sh
 popd > /dev/null
 export CC="gcc.sh gcc"
