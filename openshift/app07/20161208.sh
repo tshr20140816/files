@@ -93,8 +93,8 @@ pushd ${OPENSHIFT_DATA_DIR}/usr/bin > /dev/null
 wget -q https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/gcc.sh
 chmod +x gcc.sh
 popd > /dev/null
-export CC="gcc.sh gcc"
-export CXX="gcc.sh g++"
+export CC="gcc.sh"
+export CXX="gcc.sh"
 # export PATH="${OPENSHIFT_DATA_DIR}/usr/bin:$PATH"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
