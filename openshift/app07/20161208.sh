@@ -107,7 +107,7 @@ pushd php-${php_version} > /dev/null
 # ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr \
 #  --enable-fpm
 
-time make -j1
+time make -j1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 make install
 popd > /dev/null
 rm -rf php-${php_version}
