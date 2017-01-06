@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0921"
+echo "0950"
 
 set -x
 
@@ -44,7 +44,6 @@ cd php-${php_version}
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/usr \
  --disable-ipv6 \
- --disable-all \
  | tee configure_php.log
 make -j1 | tee make_php.log
 cd ..
