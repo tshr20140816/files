@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1323"
+echo "1339"
 
 set -x
 
@@ -37,17 +37,17 @@ cd ${OPENSHIFT_TMP_DIR}
 
 ls -al
 
-ccache_version=3.3.3
+# ccache_version=3.3.3
 
-wget -q https://www.samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
-tar xf ccache-${ccache_version}.tar.xz
-cd ccache-${ccache_version}
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
-time make -j4
-make install
-cd ..
-rm -f ccache-${ccache_version}.tar.xz
-rm -rf ccache-${ccache_version}
+# wget -q https://www.samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
+# tar xf ccache-${ccache_version}.tar.xz
+# cd ccache-${ccache_version}
+# ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
+# time make -j4
+# make install
+# cd ..
+# rm -f ccache-${ccache_version}.tar.xz
+# rm -rf ccache-${ccache_version}
 export PATH="${OPENSHIFT_DATA_DIR}/usr/bin:$PATH"
 export CC="ccache gcc"
 export CXX="ccache g++"
