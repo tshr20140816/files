@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1009"
+echo "1010"
 
 set -x
 
@@ -34,6 +34,8 @@ export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
+
+ls -al
 
 php_version=7.1.0
 rm -f php-${php_version}.tar.xz
