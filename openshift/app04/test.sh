@@ -60,6 +60,7 @@ export CCACHE_MAXSIZE=300M
 mkdir -p ${CCACHE_DIR}
 mkdir -p ${CCACHE_TEMPDIR}
 
+ccache -z
 ccache -s
 
 cd ${OPENSHIFT_TMP_DIR}
@@ -73,7 +74,6 @@ cd php-${php_version}
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/usr \
  --disable-ipv6 \
- --disable-all \
  | tee configure_php.log
 time make -j1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
 cd ..
