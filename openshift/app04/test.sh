@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1518"
+echo "1544"
 
 set -x
 
@@ -79,8 +79,8 @@ cd php-${php_version}
  --without-pdo-sqlite \
  --without-cdb \
  --without-pear \
- --disable-fileinfo \
  | tee configure_php.log
+# --disable-fileinfo
 time make -j1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
 cd ..
 rm -rf php-${php_version}
