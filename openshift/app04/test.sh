@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1339"
+echo "1404"
 
 set -x
 
@@ -60,6 +60,7 @@ export CCACHE_MAXSIZE=300M
 mkdir -p ${CCACHE_DIR}
 mkdir -p ${CCACHE_TEMPDIR}
 
+ccache -s
 ccache -z
 ccache -s
 
