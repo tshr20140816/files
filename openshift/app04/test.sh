@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1404"
+echo "1411"
 
 set -x
 
@@ -67,9 +67,9 @@ ccache -s
 cd ${OPENSHIFT_TMP_DIR}
 
 php_version=7.1.0
-rm -f php-${php_version}.tar.xz
-wget -q http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+wget -q -nc http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar xf php-${php_version}.tar.xz
+rm -f php-${php_version}.tar.xz
 cd php-${php_version}
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_php
 ./configure \
