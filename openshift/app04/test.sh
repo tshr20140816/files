@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1458"
+echo "1518"
 
 set -x
 
@@ -75,7 +75,10 @@ cd php-${php_version}
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_php
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/usr \
- --disable-ipv6 \
+ --without-sqlite3 \
+ --without-pdo-sqlite \
+ --without-cdb \
+ --without-pear \
  --disable-fileinfo \
  | tee configure_php.log
 time make -j1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
