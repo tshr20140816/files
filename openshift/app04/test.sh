@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1617"
+echo "1624"
 
 set -x
 
@@ -34,6 +34,8 @@ export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
+
+rm -q ./apprentice* ./phpdbg* ./tmp*
 
 ls -al
 
