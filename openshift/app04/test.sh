@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1556"
+echo "1558"
 
 set -x
 
@@ -81,7 +81,7 @@ cd php-${php_version}
  --without-pear \
  | tee configure_php.log
 # --disable-fileinfo
-time make -j1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
+time make -j1 2>&1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
 cd ..
 rm -rf php-${php_version}
 
