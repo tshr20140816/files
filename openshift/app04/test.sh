@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0912"
+echo "0916"
 
 set -x
 
@@ -30,20 +30,20 @@ ls -lang $OPENSHIFT_REPO_DIR
 
 quota -s
 
-# -----
-
-
-# -----
-
-# convert --help
-
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
 
+php_version=7.1.0
+rm -f php-${php_version}.tar.xz
+wget -q http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
+tar xf php-${php_version}.tar.xz
+cd php-${php_version}
+./configure --help > ${OPENSHIFT_LOG_DIR}/configure_php
 
-
+cd ..
+rm -rf php-${php_version}
 
 quota -s
 echo "FINISH"
