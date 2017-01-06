@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0916"
+echo "0921"
 
 set -x
 
@@ -41,6 +41,7 @@ wget -q http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php
 tar xf php-${php_version}.tar.xz
 cd php-${php_version}
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_php
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr | tee configure_php.log
 
 cd ..
 rm -rf php-${php_version}
