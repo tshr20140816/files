@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1333"
+echo "1347"
 
 set -x
 
@@ -95,6 +95,7 @@ cd bison-3.0.4
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
 time make -j4
+make install
 cd ..
 rm -rf bison-3.0.4
 rm -f bison-3.0.4.tar.gz
