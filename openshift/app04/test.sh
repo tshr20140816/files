@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1624"
+echo "0944"
 
 set -x
 
@@ -24,6 +24,7 @@ fi
 
 cd /tmp
 ls -lang
+rm -f delegate_*
 cd $OPENSHIFT_DATA_DIR
 ls -lang
 ls -lang $OPENSHIFT_REPO_DIR
@@ -38,6 +39,8 @@ cd ${OPENSHIFT_TMP_DIR}
 rm -q ./apprentice* ./phpdbg* ./tmp*
 
 ls -al
+
+exit
 
 # ccache_version=3.3.3
 
