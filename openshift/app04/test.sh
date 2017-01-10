@@ -90,6 +90,8 @@ fi
 
 if [ 1 -eq 0 ]; then
 
+# bison
+
 cd ${OPENSHIFT_TMP_DIR}
 wget -q http://ftp.gnu.org/gnu/bison/bison-3.0.4.tar.gz
 tar xf bison-3.0.4.tar.gz
@@ -103,6 +105,25 @@ rm -rf bison-3.0.4
 rm -f bison-3.0.4.tar.gz
 exit
 
+fi
+
+if [ 1 -eq 1 ]; then
+
+# re2c
+
+cd ${OPENSHIFT_TMP_DIR}
+wget -q https://github.com/skvadrik/re2c/releases/download/0.16/re2c-0.16.tar.gz
+tar xf re2c-0.16.tar.gz
+cd re2c-0.16
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
+time make -j4
+# make install
+cd ../
+rm -rf re2c-0.16
+rm -f re2c-0.16.tar.gz
+
+exit
 fi
 
 # ccache_version=3.3.3
