@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1558"
+echo "1603"
 
 set -x
 
@@ -107,7 +107,7 @@ exit
 
 fi
 
-if [ 1 -eq 1 ]; then
+if [ 1 -eq 0 ]; then
 
 # re2c
 
