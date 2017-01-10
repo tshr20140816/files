@@ -126,7 +126,7 @@ cd php-${php_version}
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_php
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/usr \
- --with-apxs2=${OPENSHIFT_TMP_DIR}/usr/bin/apxs \
+ --with-apxs2=${OPENSHIFT_DATA_DIR}/usr/bin/apxs \
  --without-sqlite3 \
  --without-pdo-sqlite \
  --without-cdb \
