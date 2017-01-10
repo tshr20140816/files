@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0944"
+echo "0947"
 
 set -x
 
@@ -22,11 +22,16 @@ fi
 
 /usr/bin/gear start --trace
 
+cd ${OPENSHIFT_LOG_DIR}
+rm -f delegate_*
+
 cd /tmp
 ls -lang
-rm -f delegate_*
+rm -f ./apprentice*
+rm -f ./tmp*
 cd $OPENSHIFT_DATA_DIR
 ls -lang
+
 ls -lang $OPENSHIFT_REPO_DIR
 
 quota -s
