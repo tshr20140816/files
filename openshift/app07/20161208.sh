@@ -89,23 +89,34 @@ popd > /dev/null
 
 php_version=7.1.0
 
-pushd ${OPENSHIFT_DATA_DIR}/usr/bin > /dev/null
-wget -q https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/gcc.sh
-chmod +x gcc.sh
-popd > /dev/null
-export CC="gcc.sh"
-export CXX="gcc.sh"
+# pushd ${OPENSHIFT_DATA_DIR}/usr/bin > /dev/null
+# wget -q https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/gcc.sh
+# chmod +x gcc.sh
+# popd > /dev/null
+# export CC="gcc.sh"
+# export CXX="gcc.sh"
 # export PATH="${OPENSHIFT_DATA_DIR}/usr/bin:$PATH"
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget -q http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar xf php-${php_version}.tar.xz
 pushd php-${php_version} > /dev/null
-./configure --help > ${OPENSHIFT_LOG_DIR}/configure_php
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
-
-# ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr \
-#  --enable-fpm
+# ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_php
+./configure \
+ --prefix=${OPENSHIFT_DATA_DIR}/usr \
+ --with-apxs2=${OPENSHIFT_DATA_DIR}/usr/bin/apxs \
+ --without-sqlite3 \
+ --without-pdo-sqlite \
+ --without-cdb \
+ --without-pear \
+ --with-curl \
+ --disable-fileinfo \
+ --disable-ipv6 \
+ --enable-fpm \
+ --enable-mbstring \
+ --with-pdo-mysql \
+ --disable-phar \
+ --disable-phpdbg
 
 time make -j1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 make install
@@ -113,6 +124,8 @@ popd > /dev/null
 rm -rf php-${php_version}
 rm -f php-${php_version}.tar.xz
 popd > /dev/null
+
+exit
 
 # ***** wordpress *****
 
