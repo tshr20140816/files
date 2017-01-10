@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1515"
+echo "1558"
 
 set -x
 
@@ -118,7 +118,7 @@ cd re2c-0.16
 ./configure --help
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
 time make -j4
-# make install
+make install
 cd ../
 rm -rf re2c-0.16
 rm -f re2c-0.16.tar.gz
