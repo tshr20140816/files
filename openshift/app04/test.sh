@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1112"
+echo "1333"
 
 set -x
 
@@ -87,6 +87,18 @@ rm -f *.tar.bz2
 popd > /dev/null
 
 fi
+
+cd ${OPENSHIFT_TMP_DIR}
+wget -q http://ftp.gnu.org/gnu/bison/bison-3.0.4.tar.gz
+tar xf bison-3.0.4.tar.gz
+cd bison-3.0.4
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
+time make -j4
+cd ..
+rm -rf bison-3.0.4
+rm -f bison-3.0.4.tar.gz
+exit
 
 # ccache_version=3.3.3
 
