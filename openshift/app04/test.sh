@@ -22,9 +22,6 @@ fi
 
 /usr/bin/gear start --trace
 
-cd ${OPENSHIFT_LOG_DIR}
-rm -f delegate_*
-
 cd /tmp
 ls -lang
 cd $OPENSHIFT_DATA_DIR
@@ -39,7 +36,7 @@ export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
 
-rm -f ./apprentice* ./phpdbg* ./tmp*
+rm -rf php-7.1.0
 
 ls -al
 
