@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0950"
+echo "0955"
 
 set -x
 
@@ -36,9 +36,55 @@ export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
 
-rm -rf php-7.1.0
+# ***** apache *****
 
-ls -al
+# *** pcre ***
+
+pcre_version=8.39
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_version}.tar.bz2
+tar xf pcre-${pcre_version}.tar.bz2
+pushd pcre-${pcre_version} > /dev/null
+./configure --help > ${OPENSHIFT_LOG_DIR}/configure_pcre
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --enable-static=no
+time make -j4
+make install
+popd > /dev/null
+rm -rf pcre-${pcre_version}
+rm -f pcre-${pcre_version}.tar.bz2
+popd > /dev/null
+
+# *** httpd ***
+
+apache_version=2.4.25
+apr_version=1.5.2
+aprutil_version=1.5.4
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget -q http://ftp.yz.yamagata-u.ac.jp/pub/network/apache//httpd/httpd-${apache_version}.tar.bz2
+tar xf httpd-${apache_version}.tar.bz2
+
+wget -q http://ftp.tsukuba.wide.ad.jp/software/apache//apr/apr-${apr_version}.tar.bz2
+tar xf apr-${apr_version}.tar.bz2
+mv -f ./apr-${apr_version} ./httpd-${apache_version}/srclib/apr
+
+wget -q http://ftp.tsukuba.wide.ad.jp/software/apache//apr/apr-util-${aprutil_version}.tar.bz2
+tar xf apr-util-${aprutil_version}.tar.bz2
+mv -f ./apr-util-${aprutil_version} ./httpd-${apache_version}/srclib/apr-util
+
+pushd httpd-${apache_version} > /dev/null
+./configure --help > ${OPENSHIFT_LOG_DIR}/configure_apache
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr \
+ --with-pcre=${OPENSHIFT_DATA_DIR}/usr
+time make -j4
+make install
+popd > /dev/null
+rm -rf httpd-${apache_version}
+rm -f *.tar.bz2
+popd > /dev/null
+
+tree ${OPENSHIFT_DATA_DIR}
 
 exit
 
