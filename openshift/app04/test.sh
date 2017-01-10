@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1603"
+echo "1616"
 
 set -x
 
@@ -176,6 +176,7 @@ cd php-${php_version}
  --enable-mbstring \
  --with-pdo-mysql \
  --disable-phar \
+ --disable-phpdbg \
  | tee configure_php.log
 # --disable-fileinfo
 time make -j1 2>&1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
