@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0947"
+echo "0950"
 
 set -x
 
@@ -27,8 +27,6 @@ rm -f delegate_*
 
 cd /tmp
 ls -lang
-rm -f ./apprentice*
-rm -f ./tmp*
 cd $OPENSHIFT_DATA_DIR
 ls -lang
 
@@ -41,7 +39,7 @@ export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
 
-rm -q ./apprentice* ./phpdbg* ./tmp*
+rm -f ./apprentice* ./phpdbg* ./tmp*
 
 ls -al
 
