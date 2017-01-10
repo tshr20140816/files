@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0955"
+echo "1029"
 
 set -x
 
@@ -35,6 +35,8 @@ export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
+
+if [ 1 -eq 0 ]; then
 
 # ***** apache *****
 
@@ -84,9 +86,7 @@ rm -rf httpd-${apache_version}
 rm -f *.tar.bz2
 popd > /dev/null
 
-tree ${OPENSHIFT_DATA_DIR}
-
-exit
+fi
 
 # ccache_version=3.3.3
 
@@ -126,11 +126,13 @@ cd php-${php_version}
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_php
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/usr \
+ --with-apxs2=${OPENSHIFT_TMP_DIR}/usr/bin/apxs \
  --without-sqlite3 \
  --without-pdo-sqlite \
  --without-cdb \
  --without-pear \
  --with-curl \
+ --disable-fileinfo \
  | tee configure_php.log
 # --disable-fileinfo
 time make -j1 2>&1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
