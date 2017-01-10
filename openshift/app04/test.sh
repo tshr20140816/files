@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1347"
+echo "1515"
 
 set -x
 
@@ -88,6 +88,8 @@ popd > /dev/null
 
 fi
 
+if [ 1 -eq 0 ]; then
+
 cd ${OPENSHIFT_TMP_DIR}
 wget -q http://ftp.gnu.org/gnu/bison/bison-3.0.4.tar.gz
 tar xf bison-3.0.4.tar.gz
@@ -100,6 +102,8 @@ cd ..
 rm -rf bison-3.0.4
 rm -f bison-3.0.4.tar.gz
 exit
+
+fi
 
 # ccache_version=3.3.3
 
