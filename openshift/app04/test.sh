@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1029"
+echo "1109"
 
 set -x
 
@@ -133,6 +133,7 @@ cd php-${php_version}
  --without-pear \
  --with-curl \
  --disable-fileinfo \
+ --enable-fpm \
  | tee configure_php.log
 # --disable-fileinfo
 time make -j1 2>&1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
