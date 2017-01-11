@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1617"
+echo "1635"
 
 set -x
 
@@ -44,6 +44,8 @@ rm -rf tt-rss
 cd ${OPENSHIFT_DATA_DIR}/usr
 
 tree -a
+
+cat conf/httpd.conf
 
 exit
 
