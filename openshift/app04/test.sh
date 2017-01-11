@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1542"
+echo "1617"
 
 set -x
 
@@ -41,7 +41,7 @@ tree --help
 cd ${OPENSHIFT_DATA_DIR}
 rm -rf tt-rss
 
-cd ${OPENSHIFT_DATA_DIR}/usr/bin
+cd ${OPENSHIFT_DATA_DIR}/usr
 
 tree -a
 
