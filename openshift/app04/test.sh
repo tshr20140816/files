@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1149"
+echo "1535"
 
 set -x
 
@@ -36,7 +36,7 @@ export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
 
-tree /?
+tree --help
 
 cd ${OPENSHIFT_DATA_DIR}
 rm -rf tt-rss
