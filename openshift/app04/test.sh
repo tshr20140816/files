@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1117"
+echo "1149"
 
 set -x
 
@@ -42,6 +42,8 @@ cd ${OPENSHIFT_DATA_DIR}
 rm -rf tt-rss
 git clone https://tt-rss.org/git/tt-rss.git ttrss
 tree ttrss
+cd ttrss
+ls -lang
 
 exit
 
