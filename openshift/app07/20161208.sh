@@ -125,7 +125,7 @@ popd > /dev/null
 rm -rf php-${php_version}
 rm -f php-${php_version}.tar.xz
 
-# ttrss
+# ***** ttrss *****
 
 popd > /dev/null
 
@@ -134,7 +134,14 @@ pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 rm -rf tt-rss
 git clone https://tt-rss.org/git/tt-rss.git tt-rss
 mv tt-rss ttrss
-
+pushd ttrss > /dev/null
+chmod -R 766 cache/images
+chmod -R 766 cache/upload
+chmod -R 766 cache/export
+chmod -R 766 cache/js
+chmod -R 766 feed-icons
+chmod -R 766 lock
+popd > /dev/null
 popd > /dev/null
 
 exit
