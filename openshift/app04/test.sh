@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1020"
+echo "1117"
 
 set -x
 
@@ -35,6 +35,15 @@ export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
+
+tree /?
+
+cd ${OPENSHIFT_DATA_DIR}
+rm -rf tt-rss
+git clone https://tt-rss.org/git/tt-rss.git ttrss
+tree ttrss
+
+exit
 
 if [ 1 -eq 0 ]; then
 
