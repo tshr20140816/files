@@ -132,7 +132,7 @@ popd > /dev/null
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 
 rm -rf tt-rss
-git clone https://tt-rss.org/git/tt-rss.git
+git clone https://tt-rss.org/git/tt-rss.git tt-rss
 mv tt-rss ttrss
 
 popd > /dev/null
