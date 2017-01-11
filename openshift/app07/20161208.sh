@@ -110,6 +110,7 @@ pushd php-${php_version} > /dev/null
  --without-cdb \
  --without-pear \
  --with-curl \
+ --with-gd \
  --disable-fileinfo \
  --disable-ipv6 \
  --enable-fpm \
@@ -123,6 +124,17 @@ make install
 popd > /dev/null
 rm -rf php-${php_version}
 rm -f php-${php_version}.tar.xz
+
+# ttrss
+
+popd > /dev/null
+
+pushd ${OPENSHIFT_DATA_DIR} > /dev/null
+
+rm -rf tt-rss
+git clone https://tt-rss.org/git/tt-rss.git
+mv tt-rss ttrss
+
 popd > /dev/null
 
 exit
