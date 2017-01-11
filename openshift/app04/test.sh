@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1535"
+echo "1542"
 
 set -x
 
@@ -43,7 +43,7 @@ rm -rf tt-rss
 
 cd ${OPENSHIFT_DATA_DIR}/usr/bin
 
-tree
+tree -a
 
 exit
 
