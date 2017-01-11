@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1638"
+echo "1020"
 
 set -x
 
@@ -170,6 +170,7 @@ cd php-${php_version}
  --without-cdb \
  --without-pear \
  --with-curl \
+ --with-gd \
  --disable-fileinfo \
  --disable-ipv6 \
  --enable-fpm \
