@@ -40,10 +40,10 @@ tree /?
 
 cd ${OPENSHIFT_DATA_DIR}
 rm -rf tt-rss
-git clone https://tt-rss.org/git/tt-rss.git ttrss
-tree ttrss
-cd ttrss
-ls -lang
+
+cd ${OPENSHIFT_DATA_DIR}/usr/bin
+
+tree
 
 exit
 
