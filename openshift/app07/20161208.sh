@@ -85,6 +85,40 @@ rm -rf httpd-${apache_version}
 rm -f *.tar.bz2
 popd > /dev/null
 
+# ***** bison *****
+
+bison_version=3.0.4
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget -q http://ftp.gnu.org/gnu/bison/bison-${bison_version}.tar.gz
+tar xf bison-${bison_version}.tar.gz
+pushd bison-${bison_version} > /dev/null
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
+time make -j4
+make install
+popd > /dev/null
+rm -rf bison-${bison_version}
+rm -f bison-${bison_version}.tar.gz
+popd > /dev/null
+
+# ***** re2c *****
+
+re2c_version=0.16
+
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
+wget -q https://github.com/skvadrik/re2c/releases/download/${re2c_version}/re2c-${re2c_version}.tar.gz
+tar xf re2c-${re2c_version}.tar.gz
+cd re2c-${re2c_version}
+./configure --help
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
+time make -j4
+make install
+popd > /dev/null
+rm -rf re2c-${re2c_version}
+rm -f re2c-${re2c_version}.tar.gz
+popd > /dev/null
+
 # ***** php *****
 
 php_version=7.1.0
