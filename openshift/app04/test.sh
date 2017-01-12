@@ -83,7 +83,7 @@ pushd httpd-${apache_version} > /dev/null
  --disable-status \
  --disable-unixd \
  --disable-proxy-ajp \
- --disaple-proxy-balancer
+ --disaple-proxy_balancer
 time make -j4
 make install
 popd > /dev/null
