@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0852"
+echo "0911"
 
 set -x
 
@@ -36,22 +36,13 @@ export CXXFLAGS="${CFLAGS}"
 
 cd ${OPENSHIFT_TMP_DIR}
 
-tree --help
-
-cd ${OPENSHIFT_DATA_DIR}
-rm -rf tt-rss
-
-cd ${OPENSHIFT_DATA_DIR}/usr
-
-tree -a
-
-cat conf/httpd.conf
-
 exit
 
-if [ 1 -eq 0 ]; then
+if [ 1 -eq 1 ]; then
 
 # ***** apache *****
+
+rm -rf ${OPENSHIFT_DATA_DIR}/apache
 
 # *** pcre ***
 
@@ -62,7 +53,7 @@ wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_versio
 tar xf pcre-${pcre_version}.tar.bz2
 pushd pcre-${pcre_version} > /dev/null
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_pcre
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --enable-static=no
+./configure --prefix=${OPENSHIFT_DATA_DIR}/apache --enable-static=no
 time make -j4
 make install
 popd > /dev/null
@@ -90,14 +81,20 @@ mv -f ./apr-util-${aprutil_version} ./httpd-${apache_version}/srclib/apr-util
 
 pushd httpd-${apache_version} > /dev/null
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_apache
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr \
- --with-pcre=${OPENSHIFT_DATA_DIR}/usr
+./configure --prefix=${OPENSHIFT_DATA_DIR}/apache \
+ --with-pcre=${OPENSHIFT_DATA_DIR}/usr \
+ --enable-so \
+ --enable-mods-shared='all proxy'
 time make -j4
 make install
 popd > /dev/null
 rm -rf httpd-${apache_version}
 rm -f *.tar.bz2
 popd > /dev/null
+
+tree -a ${OPENSHIFT_DATA_DIR}/apache
+
+exit
 
 fi
 
