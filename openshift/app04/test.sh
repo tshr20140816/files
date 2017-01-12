@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0947"
+echo "1039"
 
 set -x
 
@@ -77,7 +77,7 @@ pushd httpd-${apache_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --with-pcre=${OPENSHIFT_DATA_DIR}/usr \
  --enable-so \
- --enable-mods-shared='all'
+ --enable-mods-shared='few'
 time make -j4
 make install
 popd > /dev/null
