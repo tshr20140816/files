@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1531"
+echo "1805"
 
 set -x
 
@@ -81,7 +81,8 @@ pushd httpd-${apache_version} > /dev/null
  --enable-mods-shared='few auth_digest expires deflate logio proxy rewrite' \
  --disable-version \
  --disable-status \
- --disable-unixd
+ --disable-unixd \
+ --disable-proxy-ajp
 time make -j4
 make install
 popd > /dev/null
