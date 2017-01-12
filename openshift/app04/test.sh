@@ -78,7 +78,7 @@ pushd httpd-${apache_version} > /dev/null
  --with-mpm=prefork \
  --with-pcre=${OPENSHIFT_DATA_DIR}/usr \
  --enable-so \
- --enable-mods-shared='few auth_digest expires deflate logio proxy_http rewrite' \
+ --enable-mods-shared='few auth_digest expires deflate logio proxy rewrite' \
  --disable-version \
  --disable-status \
  --disable-unixd
