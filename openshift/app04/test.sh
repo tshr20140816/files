@@ -77,7 +77,7 @@ pushd httpd-${apache_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --with-pcre=${OPENSHIFT_DATA_DIR}/usr \
  --enable-so \
- --enable-mods-shared='all proxy'
+ --enable-mods-shared='all'
 time make -j4
 make install
 popd > /dev/null
