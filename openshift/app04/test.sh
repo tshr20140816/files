@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1039"
+echo "1124"
 
 set -x
 
@@ -77,7 +77,7 @@ pushd httpd-${apache_version} > /dev/null
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/apache \
  --with-pcre=${OPENSHIFT_DATA_DIR}/usr \
  --enable-so \
- --enable-mods-shared='few'
+ --enable-mods-shared='few auth_digest expires'
 time make -j4
 make install
 popd > /dev/null
