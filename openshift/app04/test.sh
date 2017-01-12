@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0911"
+echo "0922"
 
 set -x
 
@@ -22,21 +22,14 @@ fi
 
 /usr/bin/gear start --trace
 
-cd /tmp
-ls -lang
-cd $OPENSHIFT_DATA_DIR
-ls -lang
-
-ls -lang $OPENSHIFT_REPO_DIR
+ls -lang ${OPENSHIFT_TMP_DIR}
+ls -lang ${OPENSHIFT_DATA_DIR}
+ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
-
-cd ${OPENSHIFT_TMP_DIR}
-
-exit
 
 if [ 1 -eq 1 ]; then
 
