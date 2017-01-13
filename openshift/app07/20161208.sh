@@ -77,7 +77,23 @@ mv -f ./apr-util-${aprutil_version} ./httpd-${apache_version}/srclib/apr-util
 pushd httpd-${apache_version} > /dev/null
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_apache
 ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr \
- --with-pcre=${OPENSHIFT_DATA_DIR}/usr
+ --with-mpm=prefork \
+ --with-pcre=${OPENSHIFT_DATA_DIR}/usr \
+ --enable-so \
+ --enable-mods-shared='few auth_digest expires deflate logio proxy rewrite' \
+ --disable-version \
+ --disable-status \
+ --disable-unixd \
+ --disable-proxy-ajp \
+ --disable-proxy-balancer \
+ --disable-proxy-express \
+ --disable-proxy-scgi \
+ --disable-proxy-wstunnel \
+ --disable-proxy-ftp \
+ --disable-proxy-fdpass \
+ --disable-proxy-hcheck \
+ --disable-authz-groupfile \
+ --disable-access-compat
 time make -j4
 make install
 popd > /dev/null
