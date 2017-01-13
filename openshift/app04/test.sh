@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0912"
+echo "0926"
 
 set -x
 
@@ -91,8 +91,7 @@ pushd httpd-${apache_version} > /dev/null
  --disable-proxy-fdpass \
  --disable-proxy-hcheck \
  --disable-authz-groupfile \
- --disable-access-compat \
- --with-crypto
+ --disable-access-compat
 time make -j4
 make install
 popd > /dev/null
