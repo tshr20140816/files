@@ -18,9 +18,9 @@ wget -q https://www.samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
 tar xf ccache-${ccache_version}.tar.xz
 pushd ccache-${ccache_version} > /dev/null
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_ccache
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
-time make -j4
-make install
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_ccache.log
 popd > /dev/null
 rm -f ccache-${ccache_version}.tar.xz
 popd > /dev/null
@@ -48,9 +48,9 @@ wget -q ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${pcre_versio
 tar xf pcre-${pcre_version}.tar.bz2
 pushd pcre-${pcre_version} > /dev/null
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_pcre
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --enable-static=no
-time make -j4
-make install
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr --enable-static=no 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pcre.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pcre.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_pcre.log
 popd > /dev/null
 rm -rf pcre-${pcre_version}
 rm -f pcre-${pcre_version}.tar.bz2
@@ -93,12 +93,16 @@ pushd httpd-${apache_version} > /dev/null
  --disable-proxy-fdpass \
  --disable-proxy-hcheck \
  --disable-authz-groupfile \
- --disable-access-compat
-time make -j4
-make install
+ --disable-access-compat 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_apache.log
 popd > /dev/null
 rm -rf httpd-${apache_version}
 rm -f *.tar.bz2
+rm -f httpd.conf
+mv ${OPENSHIFT_DATA_DIR}/usr/conf/httpd.conf ${OPENSHIFT_DATA_DIR}/usr/conf/httpd.conf.$(date '+%Y%m%d')
+wget -q https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/httpd.conf
+mv httpd.conf ${OPENSHIFT_DATA_DIR}/usr/conf/
 popd > /dev/null
 
 # ***** bison *****
@@ -110,9 +114,9 @@ wget -q http://ftp.gnu.org/gnu/bison/bison-${bison_version}.tar.gz
 tar xf bison-${bison_version}.tar.gz
 pushd bison-${bison_version} > /dev/null
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
-time make -j4
-make install
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_bison.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_bison.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_bison.log
 popd > /dev/null
 rm -rf bison-${bison_version}
 rm -f bison-${bison_version}.tar.gz
@@ -127,9 +131,9 @@ wget -q https://github.com/skvadrik/re2c/releases/download/${re2c_version}/re2c-
 tar xf re2c-${re2c_version}.tar.gz
 cd re2c-${re2c_version}
 ./configure --help
-./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
-time make -j4
-make install
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_re2c.log
+time make -j4 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_re2c.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_re2c.log
 popd > /dev/null
 rm -rf re2c-${re2c_version}
 rm -f re2c-${re2c_version}.tar.gz
@@ -167,10 +171,9 @@ pushd php-${php_version} > /dev/null
  --enable-mbstring \
  --with-pdo-mysql \
  --disable-phar \
- --disable-phpdbg
-
-time make -j1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
-make install
+ --disable-phpdbg 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+time make -j1 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
+make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 popd > /dev/null
 rm -rf php-${php_version}
 rm -f php-${php_version}.tar.xz
