@@ -197,16 +197,4 @@ chmod -R 766 lock
 popd > /dev/null
 popd > /dev/null
 
-exit
-
-# ***** wordpress *****
-
-wordpress_version=4.7-ja
-
-pushd ${OPENSHIFT_DATA_DIR} > /dev/null
-wget -q https://ja.wordpress.org/wordpress-${wordpress_version}.tar.gz
-tar xf wordpress-${wordpress_version}.tar.gz
-rm -f wordpress-${wordpress_version}.tar.gz
-popd > /dev/null
-
 quota -s
