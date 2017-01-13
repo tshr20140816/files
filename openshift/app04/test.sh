@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0926"
+echo "0959"
 
 set -x
 
@@ -30,6 +30,8 @@ quota -s
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
+
+cat ${OPENSHIFT_DATA_DIR}/apache/conf/httpd.conf
 
 if [ 1 -eq 1 ]; then
 
@@ -100,6 +102,8 @@ rm -f *.tar.bz2
 popd > /dev/null
 
 tree -a ${OPENSHIFT_DATA_DIR}/apache
+
+cat ${OPENSHIFT_DATA_DIR}/apache/conf/httpd.conf
 
 exit
 
