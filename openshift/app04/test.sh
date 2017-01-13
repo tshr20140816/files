@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1805"
+echo "0903"
 
 set -x
 
@@ -83,7 +83,13 @@ pushd httpd-${apache_version} > /dev/null
  --disable-status \
  --disable-unixd \
  --disable-proxy-ajp \
- --disable-proxy-balancer
+ --disable-proxy-balancer \
+ --disable-proxy-express \
+ --disable-proxy-scgi \
+ --disable-proxy-wstunnel \
+ --disable-proxy-ftp \
+ --disable-proxy-fdpass \
+ --disable-proxy-hcheck
 time make -j4
 make install
 popd > /dev/null
