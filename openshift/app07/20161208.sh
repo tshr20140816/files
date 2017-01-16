@@ -177,10 +177,9 @@ make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_php.log
 popd > /dev/null
 rm -rf php-${php_version}
 rm -f php-${php_version}.tar.xz
+popd > /dev/null
 
 # ***** ttrss *****
-
-popd > /dev/null
 
 pushd ${OPENSHIFT_DATA_DIR} > /dev/null
 
