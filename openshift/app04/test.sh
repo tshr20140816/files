@@ -179,10 +179,13 @@ mkdir -p ${CCACHE_TEMPDIR}
 
 whereis gcc
 
+mkdir -p ${OPENSHIFT_DATA_DIR}/usr/bin
 cd ${OPENSHIFT_DATA_DIR}/usr/bin
 rm -f gcc.sh
 wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/gcc.sh
 chmod +x gcc.sh
+cat gcc.sh
+ls -lang
 
 export CC="gcc.sh"
 export CXX="gcc.sh"
