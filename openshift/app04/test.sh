@@ -178,6 +178,7 @@ mkdir -p ${CCACHE_TEMPDIR}
 # ccache -s
 
 whereis gcc
+whereis ld
 
 mkdir -p ${OPENSHIFT_DATA_DIR}/usr/bin
 cd ${OPENSHIFT_DATA_DIR}/usr/bin
