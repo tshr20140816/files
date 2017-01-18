@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0959"
+echo "0915"
 
 set -x
 
@@ -28,12 +28,14 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
+exit
+
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cat ${OPENSHIFT_DATA_DIR}/apache/conf/httpd.conf
 
-if [ 1 -eq 1 ]; then
+if [ 1 -eq 0 ]; then
 
 # ***** apache *****
 
