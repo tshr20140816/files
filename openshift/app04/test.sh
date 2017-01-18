@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0915"
+echo "0919"
 
 set -x
 
@@ -28,6 +28,7 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
+rm -f /var/lib/openshift/55ed727d89f5cfa2d300001f/app-root/runtime/repo/railf_jp_rss_atom.xml
 exit
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
