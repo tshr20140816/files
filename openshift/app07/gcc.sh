@@ -14,4 +14,4 @@ do
 	sleep 1s
 done
 
-exec /usr/bin/gcc $@
+exec /usr/bin/gcc "$@"
