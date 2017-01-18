@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 export TZ=JST-9
 
 while :
