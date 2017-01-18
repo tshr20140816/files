@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1010"
+echo "1027"
 
 set -x
 
@@ -196,7 +196,6 @@ cd php-${php_version}
 ./configure --help > ${OPENSHIFT_LOG_DIR}/configure_php
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/usr \
- --with-apxs2=${OPENSHIFT_DATA_DIR}/usr/bin/apxs \
  --without-sqlite3 \
  --without-pdo-sqlite \
  --without-cdb \
@@ -212,6 +211,7 @@ cd php-${php_version}
  --disable-phpdbg \
  | tee configure_php.log
 # --disable-fileinfo
+# --with-apxs2=${OPENSHIFT_DATA_DIR}/usr/bin/apxs \
 time make -j1 2>&1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
 cd ..
 rm -rf php-${php_version}
