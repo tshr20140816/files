@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0943"
+echo "1010"
 
 set -x
 
@@ -27,14 +27,6 @@ ls -lang ${OPENSHIFT_DATA_DIR}
 ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
-
-rm -rf ${OPENSHIFT_DATA_DIR}/ttrss
-rm -rf ${OPENSHIFT_DATA_DIR}/ccache
-
-ls -lang ${OPENSHIFT_TMP_DIR}
-ls -lang ${OPENSHIFT_DATA_DIR}
-ls -lang ${OPENSHIFT_REPO_DIR}
-exit
 
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
@@ -155,17 +147,20 @@ rm -f re2c-0.16.tar.gz
 exit
 fi
 
-# ccache_version=3.3.3
+if [ 1 -eq 0 ]; then
+ccache_version=3.3.3
 
-# wget -q https://www.samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
-# tar xf ccache-${ccache_version}.tar.xz
-# cd ccache-${ccache_version}
-# ./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
-# time make -j4
-# make install
-# cd ..
-# rm -f ccache-${ccache_version}.tar.xz
-# rm -rf ccache-${ccache_version}
+wget -q https://www.samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
+tar xf ccache-${ccache_version}.tar.xz
+cd ccache-${ccache_version}
+./configure --prefix=${OPENSHIFT_DATA_DIR}/usr
+time make -j4
+make install
+cd ..
+rm -f ccache-${ccache_version}.tar.xz
+rm -rf ccache-${ccache_version}
+fi
+
 export PATH="${OPENSHIFT_DATA_DIR}/usr/bin:$PATH"
 export CC="ccache gcc"
 export CXX="ccache g++"
@@ -178,9 +173,17 @@ export CCACHE_MAXSIZE=300M
 mkdir -p ${CCACHE_DIR}
 mkdir -p ${CCACHE_TEMPDIR}
 
-ccache -s
-ccache -z
-ccache -s
+# ccache -s
+# ccache -z
+# ccache -s
+
+cd ${OPENSHIFT_DATA_DIR}/usr/bin
+rm -f gcc.sh
+wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/gcc.sh
+chmod +x gcc.sh
+
+export CC="gcc.sh"
+export CXX="gcc.sh"
 
 cd ${OPENSHIFT_TMP_DIR}
 
@@ -213,7 +216,7 @@ time make -j1 2>&1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
 cd ..
 rm -rf php-${php_version}
 
-ccache -s
+# ccache -s
 
 quota -s
 echo "FINISH"
