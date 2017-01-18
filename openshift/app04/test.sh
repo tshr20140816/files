@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1027"
+echo "1039"
 
 set -x
 
@@ -176,6 +176,8 @@ mkdir -p ${CCACHE_TEMPDIR}
 # ccache -s
 # ccache -z
 # ccache -s
+
+whereis gcc
 
 cd ${OPENSHIFT_DATA_DIR}/usr/bin
 rm -f gcc.sh
