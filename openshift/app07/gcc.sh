@@ -14,4 +14,5 @@ do
 	sleep 1s
 done
 
+export PATH="/bin:/usr/bin:/usr/sbin"
 exec /usr/bin/gcc $@
