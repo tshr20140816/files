@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1257"
+echo "1321"
 
 set -x
 
@@ -173,9 +173,9 @@ export CCACHE_MAXSIZE=300M
 mkdir -p ${CCACHE_DIR}
 mkdir -p ${CCACHE_TEMPDIR}
 
-# ccache -s
-# ccache -z
-# ccache -s
+ccache -s
+ccache -z
+ccache -s
 
 cd ${OPENSHIFT_TMP_DIR}
 
@@ -208,7 +208,7 @@ time make -j1 2>&1 | tee ${OPENSHIFT_LOG_DIR}/make_php.log
 cd ..
 rm -rf php-${php_version}
 
-# ccache -s
+ccache -s
 
 quota -s
 echo "FINISH"
