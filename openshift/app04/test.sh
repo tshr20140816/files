@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0946"
+echo "1014"
 
 set -x
 
@@ -109,7 +109,7 @@ exit
 
 fi
 
-if [ 1 -eq 1 ]; then
+if [ 1 -eq 0 ]; then
 
 # bison
 
@@ -127,7 +127,7 @@ rm -f bison-3.0.4.tar.gz
 
 fi
 
-if [ 1 -eq 1 ]; then
+if [ 1 -eq 0 ]; then
 
 # re2c
 
@@ -145,7 +145,7 @@ rm -f re2c-0.16.tar.gz
 
 fi
 
-if [ 1 -eq 1 ]; then
+if [ 1 -eq 0 ]; then
 ccache_version=3.3.3
 
 cd /tmp
