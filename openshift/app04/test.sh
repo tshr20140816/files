@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1321"
+echo "1407"
 
 set -x
 
@@ -194,7 +194,6 @@ cd php-${php_version}
  --without-pear \
  --with-curl \
  --with-gd \
- --disable-fileinfo \
  --disable-ipv6 \
  --enable-fpm \
  --enable-mbstring \
