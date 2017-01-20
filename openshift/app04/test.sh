@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1116"
+echo "0946"
 
 set -x
 
@@ -31,7 +31,7 @@ quota -s
 export CFLAGS="-O2 -march=native -fomit-frame-pointer -s -pipe"
 export CXXFLAGS="${CFLAGS}"
 
-cat ${OPENSHIFT_DATA_DIR}/apache/conf/httpd.conf
+# cat ${OPENSHIFT_DATA_DIR}/apache/conf/httpd.conf
 
 if [ 1 -eq 0 ]; then
 
@@ -109,7 +109,7 @@ exit
 
 fi
 
-if [ 1 -eq 0 ]; then
+if [ 1 -eq 1 ]; then
 
 # bison
 
@@ -124,11 +124,10 @@ make install
 cd ..
 rm -rf bison-3.0.4
 rm -f bison-3.0.4.tar.gz
-exit
 
 fi
 
-if [ 1 -eq 0 ]; then
+if [ 1 -eq 1 ]; then
 
 # re2c
 
@@ -144,12 +143,12 @@ cd ../
 rm -rf re2c-0.16
 rm -f re2c-0.16.tar.gz
 
-exit
 fi
 
-if [ 1 -eq 0 ]; then
+if [ 1 -eq 1 ]; then
 ccache_version=3.3.3
 
+cd /tmp
 wget -q https://www.samba.org/ftp/ccache/ccache-${ccache_version}.tar.xz
 tar xf ccache-${ccache_version}.tar.xz
 cd ccache-${ccache_version}
@@ -159,6 +158,7 @@ make install
 cd ..
 rm -f ccache-${ccache_version}.tar.xz
 rm -rf ccache-${ccache_version}
+exit
 fi
 
 export PATH="${OPENSHIFT_DATA_DIR}/usr/bin:$PATH"
@@ -177,23 +177,9 @@ mkdir -p ${CCACHE_TEMPDIR}
 # ccache -z
 # ccache -s
 
-whereis gcc
-whereis ld
-
-mkdir -p ${OPENSHIFT_DATA_DIR}/usr/bin
-cd ${OPENSHIFT_DATA_DIR}/usr/bin
-rm -f gcc.sh
-wget https://raw.githubusercontent.com/tshr20140816/files/master/openshift/app07/gcc.sh
-chmod +x gcc.sh
-cat gcc.sh
-ls -lang
-
-export CC="gcc.sh"
-export CXX="gcc.sh"
-
 cd ${OPENSHIFT_TMP_DIR}
 
-php_version=7.1.0
+php_version=7.1.1
 rm -rf php-${php_version}
 wget -q -nc http://jp2.php.net/get/php-${php_version}.tar.xz/from/this/mirror -O php-${php_version}.tar.xz
 tar xf php-${php_version}.tar.xz
