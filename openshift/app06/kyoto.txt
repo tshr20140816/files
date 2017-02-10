@@ -21,8 +21,7 @@ TIGERS ID CHECK
  http://www2.city.kyoto.lg.jp/kotsu/busdia/hyperdia/055227.htm
 1107/1122 KINKAKUJI-MICHI
 ---- KINKAKUJI - 400 CASH
----- lunch
-
+(---- lunch)
 ---- KYOTO-TETSUDO-HAKUBUTSUKAN - 1080(1200) ICOCA
  * OPEN -1730
 1100-1530 SL - 300 ICOCA
@@ -69,3 +68,7 @@ TIGERS ID CHECK
 2131/2145 HIROSHIMA
 2139/2153 NISHI-HIROSHIMA
 
+
+Cafe Dish らふ
+YEBISU BAR 京都ヨドバシ店
+列車大行進
