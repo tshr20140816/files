@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1339"
+echo "1343"
 
 set -x
 
@@ -35,7 +35,7 @@ wget https://github.com/distcc/distcc/archive/master.zip
 unzip master
 cd distcc-master
 ./autogen.sh
-ls -lang
+./configure
 
 quota -s
 echo "FINISH"
