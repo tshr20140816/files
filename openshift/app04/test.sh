@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1449"
+echo "1453"
 
 set -x
 
@@ -29,10 +29,11 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 quota -s
 
 cd /tmp
+rm -f ./ *
 rm -f binutils-2.20.51.0.2-5.43.el6.src.rpm
 wget http://vault.centos.org/6.7/os/Source/SPackages/binutils-2.20.51.0.2-5.43.el6.src.rpm
 rpm2cpio binutils-2.20.51.0.2-5.43.el6.src.rpm | cpio -idmv
-tar zxf binutils-2.20.51.0.2-5.43.tar.gz
+tar zxf binutils-2.20.51.0.2.tar.bz2
 ls -lang
 
 cd /tmp
