@@ -3,6 +3,8 @@
 set -x
 
 # History
+# 2017.03.21 php_version 5.6.22 → 5.6.30
+# 2017.03.21 optipng_version 0.7.5 → 0.7.6
 # 2017.03.21 memcached_version 1.4.25 → 1.4.36
 # 2017.03.21 jpegoptim_version 1.4.3 → 1.4.4
 # 2017.03.21 fio_version 2.11 → 2.18
@@ -137,8 +139,8 @@ mrtg_version 2.17.4
 murlin_version 0.2.4
 nkf_version 2.1.4
 openssh_version 6.8p1
-optipng_version 0.7.5
-php_version 5.6.22
+optipng_version 0.7.6
+php_version 5.6.30
 phpicalendar_version 2.4_20100615
 redmine_version 2.6.10
 ruby_version 2.1.9
