@@ -3,6 +3,10 @@
 set -x
 
 # History
+# 2017.03.21 jpegoptim_version 1.4.3 → 1.4.4
+# 2017.03.21 fio_version 2.11 → 2.18
+# 2017.03.21 distcc_version 3.1 → 3.2
+# 2017.03.21 curl_version 7.47.1 → 7.53.1
 # 2017.03.21 ccache_version 3.2.5 → 3.3.4
 # 2017.03.21 caldavzap_version 0.12.1 → 0.13.1
 # 2017.03.21 cacti_version 0.8.8h → 1.1.0
@@ -118,13 +122,13 @@ cacti_version 1.1.0
 cadaver_version 0.23.3
 caldavzap_version 0.13.1
 ccache_version 3.3.4
-curl_version 7.47.1
-distcc_version 3.1
+curl_version 7.53.1
+distcc_version 3.2
 delegate_version 9.9.13
 expect_version 5.45
-fio_version 2.11
+fio_version 2.18
 ipafont_version 00303
-jpegoptim_version 1.4.3
+jpegoptim_version 1.4.4
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
 memcached_version 1.4.25
