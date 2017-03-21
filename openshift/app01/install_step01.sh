@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2017.03.21 baikal_version 0.4.5 → 0.4.6
 # 2017.03.21 apcu_version 4.0.10 → 4.0.11
 # 2017.03.21 apache_version 2.2.31 → 2.2.32
 # 2016.05.30 baikal_version 0.4.4 → 0.4.5
@@ -109,7 +110,7 @@ cat << '__HEREDOC__' > ${OPENSHIFT_DATA_DIR}/version_list
 apcu_version 4.0.11
 apache_version 2.2.32
 axel_version 2.4
-baikal_version 0.4.5
+baikal_version 0.4.6
 cacti_version 0.8.8h
 cadaver_version 0.23.3
 caldavzap_version 0.12.1
