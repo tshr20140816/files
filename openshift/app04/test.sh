@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1441"
+echo "1449"
 
 set -x
 
@@ -29,22 +29,24 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 quota -s
 
 cd /tmp
-rm -f binutils-2.20.51.0.2-5.44.el6.src.rpm
-wget http://vault.centos.org/6.7/os/Source/SPackages/binutils-2.20.51.0.2-5.44.el6.src.rpm
-rpm2cpio binutils-2.20.51.0.2-5.44.el6.src.rpm | cpio -idmv
-tar zxf binutils-2.20.51.0.2-5.44.tar.gz
+rm -f binutils-2.20.51.0.2-5.43.el6.src.rpm
+wget http://vault.centos.org/6.7/os/Source/SPackages/binutils-2.20.51.0.2-5.43.el6.src.rpm
+rpm2cpio binutils-2.20.51.0.2-5.43.el6.src.rpm | cpio -idmv
+tar zxf binutils-2.20.51.0.2-5.43.tar.gz
 ls -lang
 
 cd /tmp
-rm -f master.zip
-rm -rf distcc-master
+# rm -f master.zip
+# rm -rf distcc-master
 # wget https://github.com/distcc/distcc/archive/master.zip
-wget https://github.com/distcc/distcc/archive/distcc-3.1.zip
-unzip distcc-3.1.zip
+rm -f distcc-3.1.zip
+rm -rf distcc-distcc-3.1
+# wget https://github.com/distcc/distcc/archive/distcc-3.1.zip
+# unzip distcc-3.1.zip
 # ls -lang
-cd distcc-distcc-3.1
-./autogen.sh
-./configure
+# cd distcc-distcc-3.1
+# ./autogen.sh
+# ./configure
 
 quota -s
 echo "FINISH"
