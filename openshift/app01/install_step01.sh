@@ -3,6 +3,8 @@
 set -x
 
 # History
+# 2017.03.21 xz_version 5.2.1 → 5.2.3
+# 2017.03.21 wordpress_version 4.5-ja → 4.7.3-ja
 # 2017.03.21 php_version 5.6.22 → 5.6.30
 # 2017.03.21 optipng_version 0.7.5 → 0.7.6
 # 2017.03.21 memcached_version 1.4.25 → 1.4.36
@@ -147,8 +149,8 @@ ruby_version 2.1.9
 sphinx_version 2.2.10
 tcl_version 8.6.4
 webalizer_version 2.23-08
-wordpress_version 4.5-ja
-xz_version 5.2.1
+wordpress_version 4.7.3-ja
+xz_version 5.2.3
 yuicompressor_version 2.4.8
 __HEREDOC__
 
