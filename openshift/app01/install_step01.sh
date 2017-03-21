@@ -285,6 +285,7 @@ rm -rf openshift/app03
 rm -rf openshift/app04
 rm -rf openshift/app05
 rm -rf openshift/app06
+rm -rf openshift/app07
 rm -f openshift/*
 popd > /dev/null
 
