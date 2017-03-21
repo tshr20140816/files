@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2017.03.21 memcached_version 1.4.25 → 1.4.36
 # 2017.03.21 jpegoptim_version 1.4.3 → 1.4.4
 # 2017.03.21 fio_version 2.11 → 2.18
 # 2017.03.21 distcc_version 3.1 → 3.2
@@ -131,7 +132,7 @@ ipafont_version 00303
 jpegoptim_version 1.4.4
 libmemcached_version 1.0.18
 memcached_php_ext_version 2.2.0
-memcached_version 1.4.25
+memcached_version 1.4.36
 mrtg_version 2.17.4
 murlin_version 0.2.4
 nkf_version 2.1.4
