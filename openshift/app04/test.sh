@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1422"
+echo "1435"
 
 set -x
 
@@ -28,11 +28,13 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
+# http://vault.centos.org/6.7/os/Source/SPackages/binutils-2.20.51.0.2-5.44.el6.src.rpm
+
 cd /tmp
 rm -f master.zip
 rm -rf distcc-master
 # wget https://github.com/distcc/distcc/archive/master.zip
-https://github.com/distcc/distcc/archive/distcc-3.1.zip
+wget https://github.com/distcc/distcc/archive/distcc-3.1.zip
 unzip distcc-3.1.zip
 ls -lang
 # cd distcc-master
