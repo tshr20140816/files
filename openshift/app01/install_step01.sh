@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2017.03.21 ccache_version 3.2.5 → 3.3.4
 # 2017.03.21 caldavzap_version 0.12.1 → 0.13.1
 # 2017.03.21 cacti_version 0.8.8h → 1.1.0
 # 2017.03.21 baikal_version 0.4.5 → 0.4.6
@@ -116,7 +117,7 @@ baikal_version 0.4.6
 cacti_version 1.1.0
 cadaver_version 0.23.3
 caldavzap_version 0.13.1
-ccache_version 3.2.5
+ccache_version 3.3.4
 curl_version 7.47.1
 distcc_version 3.1
 delegate_version 9.9.13
