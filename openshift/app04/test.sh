@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1330"
+echo "1339"
 
 set -x
 
@@ -29,9 +29,13 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 quota -s
 
 cd /tmp
+rm -f master.zip
+rm -rf distcc-master
 wget https://github.com/distcc/distcc/archive/master.zip
 unzip master
-tree ./
+cd distcc-master
+./autogen.sh
+ls -lang
 
 quota -s
 echo "FINISH"
