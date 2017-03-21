@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1453"
+echo "1458"
 
 set -x
 
@@ -33,7 +33,7 @@ rm -f ./ *
 rm -f binutils-2.20.51.0.2-5.43.el6.src.rpm
 wget http://vault.centos.org/6.7/os/Source/SPackages/binutils-2.20.51.0.2-5.43.el6.src.rpm
 rpm2cpio binutils-2.20.51.0.2-5.43.el6.src.rpm | cpio -idmv
-tar zxf binutils-2.20.51.0.2.tar.bz2
+tar xf binutils-2.20.51.0.2.tar.bz2
 ls -lang
 
 cd /tmp
