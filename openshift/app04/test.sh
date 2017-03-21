@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1328"
+echo "1330"
 
 set -x
 
@@ -28,10 +28,10 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
-
-
-
-
+cd /tmp
+wget https://github.com/distcc/distcc/archive/master.zip
+unzip master
+tree ./
 
 quota -s
 echo "FINISH"
