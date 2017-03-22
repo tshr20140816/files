@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1510"
+echo "1002"
 
 set -x
 
@@ -31,22 +31,23 @@ quota -s
 cd /tmp
 rm -f ./ *
 rm -rf binutils-2.20.51.0.2
-wget http://mirror.centos.org/centos/6/os/x86_64/Packages/binutils-devel-2.20.51.0.2-5.44.el6.x86_64.rpm
-rpm2cpio binutils-devel-2.20.51.0.2-5.44.el6.x86_64.rpm | cpio -idmv
-ls -lang
+# wget http://mirror.centos.org/centos/6/os/x86_64/Packages/binutils-devel-2.20.51.0.2-5.44.el6.x86_64.rpm
+# rpm2cpio binutils-devel-2.20.51.0.2-5.44.el6.x86_64.rpm | cpio -idmv
+# ls -lang
 
-# cd /tmp
+cd /tmp
 # rm -f master.zip
 # rm -rf distcc-master
 # wget https://github.com/distcc/distcc/archive/master.zip
-# rm -f distcc-3.1.zip
-# rm -rf distcc-distcc-3.1
-# wget https://github.com/distcc/distcc/archive/distcc-3.1.zip
-# unzip distcc-3.1.zip
-# ls -lang
-# cd distcc-distcc-3.1
-# ./autogen.sh
-# ./configure
+rm -f distcc-3.1.zip
+rm -rf distcc-distcc-3.1
+wget https://github.com/distcc/distcc/archive/distcc-3.1.zip
+unzip distcc-3.1.zip
+ls -lang
+cd distcc-distcc-3.1
+./autogen.sh
+./configure --prefix=${OPENSHIFT_DATA_DIR}/distcc
+time make -j4
 
 quota -s
 echo "FINISH"
