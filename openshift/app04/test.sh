@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1002"
+echo "1027"
 
 set -x
 
@@ -41,13 +41,13 @@ cd /tmp
 # wget https://github.com/distcc/distcc/archive/master.zip
 rm -f distcc-3.1.zip
 rm -rf distcc-distcc-3.1
-wget https://github.com/distcc/distcc/archive/distcc-3.1.zip
-unzip distcc-3.1.zip
-ls -lang
-cd distcc-distcc-3.1
-./autogen.sh
-./configure --prefix=${OPENSHIFT_DATA_DIR}/distcc
-time make -j4
+# wget https://github.com/distcc/distcc/archive/distcc-3.1.zip
+# unzip distcc-3.1.zip
+# ls -lang
+# cd distcc-distcc-3.1
+# ./autogen.sh
+# ./configure --prefix=${OPENSHIFT_DATA_DIR}/distcc
+# time make -j4
 
 quota -s
 echo "FINISH"
