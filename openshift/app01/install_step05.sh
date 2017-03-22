@@ -7,13 +7,17 @@ function010
 # ***** distcc *****
 
 pushd ${OPENSHIFT_TMP_DIR} > /dev/null
-cp -f ${OPENSHIFT_DATA_DIR}/download_files/distcc-${distcc_version}.tar.bz2 ./
-echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-tar jxf distcc-${distcc_version}.tar.bz2
+# cp -f ${OPENSHIFT_DATA_DIR}/download_files/distcc-${distcc_version}.tar.bz2 ./
+# echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc tar" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+# tar jxf distcc-${distcc_version}.tar.bz2
+wget https://github.com/distcc/distcc/archive/distcc-3.1.zip
+unzip distcc-3.1.zip
 popd > /dev/null
-pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
+# pushd ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version} > /dev/null
+pushd ${OPENSHIFT_TMP_DIR}/distcc-distcc-3.1 > /dev/null
 echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc configure" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
 echo $(date +%Y/%m/%d" "%H:%M:%S) '***** configure *****' $'\n'$'\n'> ${OPENSHIFT_LOG_DIR}/install_distcc.log
+./autogen.sh
 # ./configure --help
 ./configure \
  --prefix=${OPENSHIFT_DATA_DIR}/distcc \
@@ -27,8 +31,10 @@ echo $'\n'$(date +%Y/%m/%d" "%H:%M:%S) '***** make install *****' $'\n'$'\n'>> $
 make install 2>&1 | tee -a ${OPENSHIFT_LOG_DIR}/install_distcc.log
 popd > /dev/null
 mv ${OPENSHIFT_LOG_DIR}/install_distcc.log ${OPENSHIFT_LOG_DIR}/install/
-rm ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}.tar.bz2
-rm -rf distcc-${distcc_version}
+# rm ${OPENSHIFT_TMP_DIR}/distcc-${distcc_version}.tar.bz2
+# rm -rf distcc-${distcc_version}
+rm -f distcc-3.1.zip
+rm -rf distcc-distcc-3.1
 
 mkdir ${OPENSHIFT_DATA_DIR}/.distcc
 
