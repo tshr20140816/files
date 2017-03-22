@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1038"
+echo "1050"
 
 set -x
 
@@ -43,7 +43,9 @@ unzip master.zip
 cd distcc-master
 ./autogen.sh
 ./configure --help
-./configure --without-libiberty
+./configure --without-libiberty --infodir=/tmp/ --mandir=/tmp/
+
+cat survey.txt
 
 # rm -f distcc-3.1.zip
 # rm -rf distcc-distcc-3.1
