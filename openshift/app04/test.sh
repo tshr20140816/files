@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1027"
+echo "1028"
 
 set -x
 
@@ -36,9 +36,14 @@ rm -rf binutils-2.20.51.0.2
 # ls -lang
 
 cd /tmp
-# rm -f master.zip
-# rm -rf distcc-master
-# wget https://github.com/distcc/distcc/archive/master.zip
+rm -f master.zip
+rm -rf distcc-master
+wget https://github.com/distcc/distcc/archive/master.zip
+unzip master.zip
+cd distcc-master
+./autogen.sh
+./configure --help
+
 rm -f distcc-3.1.zip
 rm -rf distcc-distcc-3.1
 # wget https://github.com/distcc/distcc/archive/distcc-3.1.zip
