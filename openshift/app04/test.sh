@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1058"
+echo "1125"
 
 set -x
 
@@ -43,7 +43,7 @@ unzip master.zip
 cd distcc-master
 ./autogen.sh
 ./configure --help
-./configure --without-libiberty --infodir=/tmp/ --mandir=/tmp/ --docdir=/tmp/
+./configure --without-libiberty --infodir=/tmp/ --mandir=/tmp/ --with-docdir=/tmp/
 
 cat survey.txt
 
