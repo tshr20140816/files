@@ -540,7 +540,7 @@ if [ "${mirror_server}" != "none" ]; then
     # fi
 
     # distcc
-    wget -t1 ${mirror_server}/distcc-${distcc_version}.tar.bz2
+    # wget -t1 ${mirror_server}/distcc-${distcc_version}.tar.bz2
     # wget https://code.google.com/p/distcc/downloads/detail?name=distcc-${distcc_version}.tar.bz2 -O distcc.html
     # cat distcc.html | grep sha1 | tee distcc.html
     # perl -pi -e 's/<.+?>//g' distcc.html
@@ -1047,14 +1047,14 @@ do
     # fi
     # [ -f openssh-${openssh_version}.tar.gz ] || files_exists=0
 
-    # *** distcc ***
-    if [ ! -f distcc-${distcc_version}.tar.bz2 ]; then
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing distcc-${distcc_version}.tar.bz2" \
-         | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
-        echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
-        wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2 &
-    fi
-    [ -f distcc-${distcc_version}.tar.bz2 ] || files_exists=0
+    # # *** distcc ***
+    # if [ ! -f distcc-${distcc_version}.tar.bz2 ]; then
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) mirror nothing distcc-${distcc_version}.tar.bz2" \
+    #      | tee -a ${OPENSHIFT_LOG_DIR}/install_alert.log
+    #     echo "$(date +%Y/%m/%d" "%H:%M:%S) distcc wget" | tee -a ${OPENSHIFT_LOG_DIR}/install.log
+    #     wget https://distcc.googlecode.com/files/distcc-${distcc_version}.tar.bz2 &
+    # fi
+    # [ -f distcc-${distcc_version}.tar.bz2 ] || files_exists=0
 
     # *** pigz ***
     # # TODO http://www.zlib.net/pigz/pigz-2.3.3-sig.txt
