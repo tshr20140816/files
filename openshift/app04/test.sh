@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1125"
+echo "1042"
 
 set -x
 
@@ -46,6 +46,8 @@ cd distcc-master
 ./configure --without-libiberty --infodir=/tmp/ --mandir=/tmp/ --with-docdir=/tmp/
 
 cat survey.txt
+
+time make -j4
 
 # rm -f distcc-3.1.zip
 # rm -rf distcc-distcc-3.1
