@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1042"
+echo "1147"
 
 set -x
 
@@ -38,7 +38,7 @@ quota -s
 cd /tmp
 rm -f master.zip
 rm -rf distcc-master
-wget https://github.com/distcc/distcc/archive/master.zip
+# wget https://github.com/distcc/distcc/archive/master.zip
 unzip master.zip
 cd distcc-master
 ./autogen.sh
@@ -58,6 +58,9 @@ time make -j4
 # ./autogen.sh
 # ./configure --prefix=${OPENSHIFT_DATA_DIR}/distcc
 # time make -j4
+
+cd /tmp
+ls -lang
 
 quota -s
 echo "FINISH"
