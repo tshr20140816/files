@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1147"
+echo "1158"
 
 set -x
 
@@ -60,6 +60,8 @@ time make -j4
 # time make -j4
 
 cd /tmp
+rm -rf distcc-distcc-3.1
+rm -rf usr
 ls -lang
 
 quota -s
