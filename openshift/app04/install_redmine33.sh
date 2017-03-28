@@ -39,6 +39,8 @@ bundle exec rake generate_secret_token
 RAILS_ENV=production rake db:migrate
 RAILS_ENV=production REDMINE_LANG=ja bundle exec rake redmine:load_default_data
 
+yes "1" | gear restart
+
 # TODO
 
 # .htaccess 
