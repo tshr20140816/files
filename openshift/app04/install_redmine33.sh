@@ -33,7 +33,7 @@ test:
 __HEREDOC__
 
 gem install bundler --no-ri --no-rdoc
-bundle install --no-deployment
+bundle install --no-color --no-deployment
 
 bundle exec rake generate_secret_token
 RAILS_ENV=production rake db:migrate
