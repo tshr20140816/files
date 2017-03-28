@@ -38,3 +38,12 @@ bundle install --no-color --no-deployment
 bundle exec rake generate_secret_token
 RAILS_ENV=production rake db:migrate
 RAILS_ENV=production REDMINE_LANG=ja bundle exec rake redmine:load_default_data
+
+# TODO
+
+# .htaccess 
+
+# RewriteEngine on
+# RewriteCond %{HTTP:X-Forwarded-Proto} !https
+# RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
