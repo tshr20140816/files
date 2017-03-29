@@ -13,6 +13,8 @@ wget http://www.redmine.org/releases/redmine-${redmine_version}.tar.gz
 tar xf redmine-${redmine_version}.tar.gz --strip-components=1
 rm redmine-${redmine_version}.tar.gz
 
+# database setting
+
 cat << '__HEREDOC__' > config/database.yml
 production:
   adapter: mysql2
@@ -41,7 +43,21 @@ bundle exec rake generate_secret_token
 RAILS_ENV=production rake db:migrate
 RAILS_ENV=production REDMINE_LANG=ja bundle exec rake redmine:load_default_data
 
-cat << '__HEREDOC__' > public/.htaccess 
+# digest auth & force https
+
+echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
+echo AuthType Digest > .htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
+
+cat << '__HEREDOC__' >> public/.htaccess
+AuthName realm
+
+require valid-user
+
+<Files ~ "^.(htpasswd|htaccess)$">
+    deny from all
+</Files>
+
 RewriteEngine on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
