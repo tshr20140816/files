@@ -32,8 +32,10 @@ test:
   database: db/test.sqlite3
 __HEREDOC__
 
-gem install bundler --no-ri --no-rdoc
-bundle install --no-color --no-deployment
+# gem install bundler --no-ri --no-rdoc
+time gem install bundler --no-ri --no-rdoc -- --with-cflags=\"-O2 -pipe -march=native\"
+# bundle install --no-color --no-deployment
+time bundle install --no-color --no-deployment --without=test development --verbose --jobs=1 --retry=20
 
 bundle exec rake generate_secret_token
 RAILS_ENV=production rake db:migrate
