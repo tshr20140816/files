@@ -13,7 +13,7 @@ wget http://www.redmine.org/releases/redmine-${redmine_version}.tar.gz
 tar xf redmine-${redmine_version}.tar.gz --strip-components=1
 rm redmine-${redmine_version}.tar.gz
 
-# database setting
+# *** database setting ***
 
 cat << '__HEREDOC__' > config/database.yml
 production:
@@ -43,7 +43,7 @@ bundle exec rake generate_secret_token
 RAILS_ENV=production rake db:migrate
 RAILS_ENV=production REDMINE_LANG=ja bundle exec rake redmine:load_default_data
 
-# digest auth & force https
+# *** digest auth & force https ***
 
 echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
 echo AuthType Digest > public/.htaccess
