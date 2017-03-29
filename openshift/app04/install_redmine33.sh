@@ -46,8 +46,8 @@ RAILS_ENV=production REDMINE_LANG=ja bundle exec rake redmine:load_default_data
 # digest auth & force https
 
 echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
-echo AuthType Digest > .htaccess
-echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> .htaccess
+echo AuthType Digest > public/.htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> public/.htaccess
 
 cat << '__HEREDOC__' >> public/.htaccess
 AuthName realm
