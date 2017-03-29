@@ -30,10 +30,10 @@ export GEM_HOME=${OPENSHIFT_DATA_DIR}.gem
 
 # ***** rbenv *****
 
-pushd ${OPENSHIFT_TMP_DIR}
+pushd ${OPENSHIFT_TMP_DIR} > /dev/null
 wget https://raw.github.com/Seppone/openshift-rbenv-installer/master/bin/rbenv-installer
 bash rbenv-installer
-popd
+popd > /dev/null
 
 export RBENV_ROOT=${OPENSHIFT_DATA_DIR}/.rbenv
 export PATH="${OPENSHIFT_DATA_DIR}/.rbenv/bin:$PATH"
@@ -44,7 +44,8 @@ rbenv -v
 
 # ***** ruby *****
 
-ruby_version=2.1.5
+# ruby_version=2.1.5
+ruby_version=2.4.1
 
 export CFLAGS="-O2 -march=native" 
 export CXXFLAGS="-O2 -march=native" 
