@@ -7,6 +7,9 @@ set -x
 redmine_version=3.3.2
 
 cd ~/app-root/repo
+touch index.html
+mkdir redmine
+cd redmine
 
 wget http://www.redmine.org/releases/redmine-${redmine_version}.tar.gz
 
