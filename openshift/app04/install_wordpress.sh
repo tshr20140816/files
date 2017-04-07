@@ -70,10 +70,10 @@ __HEREDOC__
 # *** digest auth & force https ***
 
 echo user:realm:$(echo -n user:realm:${OPENSHIFT_APP_NAME} | md5sum | cut -c 1-32) > ${OPENSHIFT_DATA_DIR}/.htpasswd
-echo AuthType Digest > public/.htaccess
-echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> public/.htaccess
+echo AuthType Digest > ./.htaccess
+echo AuthUserFile ${OPENSHIFT_DATA_DIR}/.htpasswd >> ./.htaccess
 
-cat << '__HEREDOC__' >> public/.htaccess
+cat << '__HEREDOC__' >> ./.htaccess
 AuthName realm
 
 require valid-user
