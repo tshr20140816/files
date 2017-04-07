@@ -4,4 +4,5 @@
 
 set -x
 
-wordpress_version=
+# https://ja.wordpress.org/wordpress-4.7.3-ja.tar.gz
+wordpress_version=4.7.3-ja
