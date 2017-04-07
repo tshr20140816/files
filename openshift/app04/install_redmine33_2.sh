@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# rhc app create xxx ruby-2.0 mysql-5.5 cron-1.4
+# rhc app create xxx ruby-2.0 mysql-5.5 cron-1.4 phpmyadmin-4
 
 set -x
 
