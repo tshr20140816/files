@@ -4,7 +4,8 @@
 
 set -x
 
-redmine_version=3.3.2
+#redmine_version=3.3.2
+redmine_version=3.3.3
 
 cd ~/app-root/repo
 
