@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0845"
+echo "0849"
 
 set -x
 
@@ -28,8 +28,8 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
-curl http://ranking.rakuten.co.jp/daily/?nrw=1&stx=itunes&prl=&pru=&rvf=&arf=
-curl http://ranking.rakuten.co.jp/daily/?nrw=1&stx=itunes&prl=&pru=&rvf=&arf= | grep 'rnkRanking_dispRank_overHundred'
+curl http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf=
+curl http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred'
 
 quota -s
 echo "FINISH"
