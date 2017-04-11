@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0849"
+echo "0856"
 
 set -x
 
@@ -30,6 +30,7 @@ quota -s
 
 curl http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf=
 curl http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred'
+curl http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' | grep -o '.+?>.+?<'
 
 quota -s
 echo "FINISH"
