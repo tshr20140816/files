@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1051"
+echo "1101"
 
 set -x
 
@@ -36,9 +36,12 @@ quota -s
 #curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' | grep -o '\[0-9]\+'
 #curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' | grep -o \[0-9]\+
 
+rm 20170412data.txt
+cd /tmp
 curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' > 20170412data.txt
 cat 20170412data.txt | grep -o [0-9]
-cat 20170412data.txt | grep -o \[0-9]
+cat 20170412data.txt | grep -o [0-9]+
+cat 20170412data.txt | grep -o \[0-9]+
 
 quota -s
 echo "FINISH"
