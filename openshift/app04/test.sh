@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0919"
+echo "0921"
 
 set -x
 
@@ -31,8 +31,8 @@ quota -s
 # curl http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf=
 curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep -o 'rnkRanking_dispRank_overHundred.+'
 curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred'
-curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' | grep -o '[0-9]+'
-curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' | grep -o [0-9]+
+curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' | grep -o '\[0-9]+'
+curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' | grep -o \[0-9]+
 # curl http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' | sed 's/<.+?>//'
 
 quota -s
