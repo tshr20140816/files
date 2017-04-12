@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1101"
+echo "1106"
 
 set -x
 
@@ -40,8 +40,8 @@ rm 20170412data.txt
 cd /tmp
 curl -s http://ranking.rakuten.co.jp/daily/?nrw=1\&stx=itunes\&prl=\&pru=\&rvf=\&arf= | grep 'rnkRanking_dispRank_overHundred' > 20170412data.txt
 cat 20170412data.txt | grep -o [0-9]
-cat 20170412data.txt | grep -o [0-9]+
-cat 20170412data.txt | grep -o \[0-9]+
+cat 20170412data.txt | grep -o [0-9]\+
+cat 20170412data.txt | grep -o \[0-9]\+
 
 quota -s
 echo "FINISH"
