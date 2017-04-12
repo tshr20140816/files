@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1152"
+echo "1153"
 
 set -x
 
@@ -30,7 +30,6 @@ quota -s
 
 curl -s 'http://ranking.rakuten.co.jp/daily/?nrw=1&stx=itunes&prl=&pru=&rvf=&arf=' | grep 'rnkRanking_dispRank_overHundred' | grep -Eo [0-9]+
 curl -s 'http://ranking.rakuten.co.jp/daily/?nrw=1&stx=itunes&prl=&pru=&rvf=&arf=' | grep -e 'rnkRanking_dispRank_overHundred' -e '集計日'
-rm /tmp/20170412data.txt
 
 quota -s
 echo "FINISH"
