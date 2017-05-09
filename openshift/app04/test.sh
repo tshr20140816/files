@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1153"
+echo "0957"
 
 set -x
 
@@ -28,8 +28,7 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
-curl -s 'http://ranking.rakuten.co.jp/daily/?nrw=1&stx=itunes&prl=&pru=&rvf=&arf=' | grep 'rnkRanking_dispRank_overHundred' | grep -Eo [0-9]+
-curl -s 'http://ranking.rakuten.co.jp/daily/?nrw=1&stx=itunes&prl=&pru=&rvf=&arf=' | grep -e 'rnkRanking_dispRank_overHundred' -e '集計日'
+wget https://pc2.kcc-kure-unet.ocn.ne.jp/.login?riddle -O data.jpg
 
 quota -s
 echo "FINISH"
