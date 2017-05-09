@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "0957"
+echo "1006"
 
 set -x
 
@@ -28,7 +28,7 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
-wget https://pc2.kcc-kure-unet.ocn.ne.jp/.login?riddle -O data.jpg
+wget --no-check-certificate https://pc2.kcc-kure-unet.ocn.ne.jp/.login?riddle -O data.jpg
 
 quota -s
 echo "FINISH"
