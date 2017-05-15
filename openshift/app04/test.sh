@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1453"
+echo "1503"
 
 set -x
 
@@ -30,7 +30,10 @@ quota -s
 
 cd /tmp
 
+rm -f indexnew.asp
 wget http://www2.wagamachi-guide.com/hpp-map/pc/indexnew.asp
+
+cat indexnew.asp
 
 ls -lang
 
