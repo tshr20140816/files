@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1441"
+echo "1453"
 
 set -x
 
@@ -28,11 +28,11 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
-rm -f data.jpg
-
 cd /tmp
 
-rm -f data.jpg
+wget http://www2.wagamachi-guide.com/hpp-map/pc/indexnew.asp
+
+ls -lang
 
 quota -s
 echo "FINISH"
