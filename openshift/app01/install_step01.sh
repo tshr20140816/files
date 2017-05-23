@@ -3,6 +3,7 @@
 set -x
 
 # History
+# 2017.05.23 cacti_version 1.1.0 → 1.1.7
 # 2017.05.23 fio_version 2.18 → 2.20
 # 2017.05.23 wordpress_version 4.7.3-ja → 4.7.5-ja
 # 2017.03.21 xz_version 5.2.1 → 5.2.3
@@ -125,7 +126,7 @@ apcu_version 4.0.11
 apache_version 2.2.32
 axel_version 2.4
 baikal_version 0.4.6
-cacti_version 1.1.0
+cacti_version 1.1.7
 cadaver_version 0.23.3
 caldavzap_version 0.13.1
 ccache_version 3.3.4
