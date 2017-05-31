@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1503"
+echo "1102"
 
 set -x
 
@@ -28,14 +28,7 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
-cd /tmp
-
-rm -f indexnew.asp
-wget http://www2.wagamachi-guide.com/hpp-map/pc/indexnew.asp
-
-cat indexnew.asp
-
-ls -lang
+tree /usr/share/fonts/
 
 quota -s
 echo "FINISH"
