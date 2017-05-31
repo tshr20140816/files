@@ -8,6 +8,8 @@ redmine_version=3.3.3
 
 cd ~/app-root/repo
 touch index.html
+
+cd ${OPENSHIFT_DATA_DIR}
 mkdir redmine
 cd redmine
 
@@ -65,5 +67,7 @@ RewriteEngine on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
 __HEREDOC__
+
+ln -s ${OPENSHIFT_DATA_DIR}/redmine/public ${OPENSHIFT_REPO_DIR}/redmine
 
 yes "1" | gear restart
