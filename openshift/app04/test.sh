@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1102"
+echo "1115"
 
 set -x
 
@@ -28,7 +28,7 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
-tree /usr/share/fonts/
+tree / | grep ttf
 
 quota -s
 echo "FINISH"
