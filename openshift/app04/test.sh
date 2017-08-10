@@ -31,8 +31,8 @@ quota -s
 cd /tmp
 
 openssl --help
-openssl ecparam -out private.pem -name prime256v1 -genkey
-openssl ec -pubout -in private.pem -out public.pem
+openssl ecparam -out private_key.pem -name prime256v1 -genkey
+openssl ec -pubout -in private_key.pem -out public_key.pem
 
 cat private.pem
 cat public.pem
