@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1115"
+echo "1148"
 
 set -x
 
@@ -28,7 +28,7 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
-tree / | grep ttf
+openssl --help
 
 quota -s
 echo "FINISH"
