@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1148"
+echo "1149"
 
 set -x
 
@@ -28,7 +28,17 @@ ls -lang ${OPENSHIFT_REPO_DIR}
 
 quota -s
 
+cd /tmp
+
 openssl --help
+openssl ecparam -out private.pem -name prime256v1 -genkey
+openssl ec -pubout -in private.pem -out public.pem
+
+cat private.pem
+cat public.pem
+
+rm -f private.pem
+rm -f public.pem
 
 quota -s
 echo "FINISH"
