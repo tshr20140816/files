@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "1155"
+echo "1157"
 
 set -x
 
@@ -31,6 +31,8 @@ quota -s
 cd /tmp
 
 openssl --help
+openssl ecparam -h
+openssl ec -h
 openssl ecparam -out private_key.pem -name prime256v1 -genkey
 openssl ec -pubout -in private_key.pem -out public_key.pem
 
