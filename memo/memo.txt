@@ -11,6 +11,7 @@ http://area-b.com/blog/2015/03/10/1938/
 http://d.hatena.ne.jp/hnw/20170327
 
 tt-rss
+https://git.tt-rss.org/git/tt-rss/wiki/InstallationNotes
 
 $ sudo apt-get install apache2 php5 postgresql
 $ sudo touch /var/www/phpinfo.php
