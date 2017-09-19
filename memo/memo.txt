@@ -1,1 +1,5 @@
 https://github.com/serl/ttrss-heroku
+
+http://www.noip.com/support/knowledgebase/installing-the-linux-dynamic-update-client/
+
+https://www.ieserver.net/tools.html
