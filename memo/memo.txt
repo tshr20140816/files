@@ -17,3 +17,15 @@ $ sudo apt-get install apache2 php5 postgresql
 $ sudo touch /var/www/phpinfo.php
 
 $ git clone https://tt-rss.org/git/tt-rss.git tt-rss
+
+
+cert
+
+http://qiita.com/clown0082/items/551d7c081ff6b41b1717
+http://d.hatena.ne.jp/ozuma/20130511/1368284304
+
+$ openssl genrsa -aes256 4096 > server.key
+
+$ openssl genrsa 2048 > server.key
+$ openssl req -new -key server.key > server.csr
+$ openssl x509 -in server.csr -days 365000 -req -signkey server.key > server.crt
