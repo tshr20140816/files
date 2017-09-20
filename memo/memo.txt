@@ -29,3 +29,12 @@ $ openssl genrsa -aes256 4096 > server.key
 $ openssl genrsa 2048 > server.key
 $ openssl req -new -key server.key > server.csr
 $ openssl x509 -in server.csr -days 365000 -req -signkey server.key > server.crt
+
+ipv6禁止
+
+/etc/sysctl.conf
+に以下追加
+net.ipv6.conf.all.disable_ipv6 = 1
+
+$ sudo sysctl -p
+$ ip a
