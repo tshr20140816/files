@@ -39,6 +39,8 @@ net.ipv6.conf.all.disable_ipv6 = 1
 $ sudo sysctl -p
 $ ip a
 
+Webrick → thin
 http://edywrite.blogspot.jp/2012/08/herokuwebthin.html
+圧縮
 https://github.com/romanbsd/heroku-deflater
 
