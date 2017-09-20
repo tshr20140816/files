@@ -9,6 +9,7 @@ SSLProxyCipherSuite HIGH:MEDIUM:!MD5:!RC4:!3DES
 
 SSLHonorCipherOrder on
 
+# TLS1.2 Only
 SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
 SSLProxyProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
 
