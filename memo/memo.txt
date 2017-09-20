@@ -38,3 +38,7 @@ net.ipv6.conf.all.disable_ipv6 = 1
 
 $ sudo sysctl -p
 $ ip a
+
+http://edywrite.blogspot.jp/2012/08/herokuwebthin.html
+https://github.com/romanbsd/heroku-deflater
+
