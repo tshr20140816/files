@@ -1,0 +1,46 @@
+
+Listen 443
+
+AddType application/x-x509-ca-cert .crt
+AddType application/x-pkcs7-crl    .crl
+
+SSLCipherSuite HIGH:MEDIUM:!MD5:!RC4:!3DES
+SSLProxyCipherSuite HIGH:MEDIUM:!MD5:!RC4:!3DES
+
+SSLHonorCipherOrder on
+
+SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+SSLProxyProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+
+SSLPassPhraseDialog  builtin
+
+SSLSessionCache        "shmcb:/usr/local/apache2/logs/ssl_scache(512000)"
+SSLSessionCacheTimeout  300
+
+SSLMutex  "file:/usr/local/apache2/logs/ssl_mutex"
+
+<VirtualHost _default_:443>
+
+	DocumentRoot "/usr/local/apache2/htdocs"
+	ServerName www.example.com:443
+	ServerAdmin you@example.com
+	ErrorLog "/usr/local/apache2/logs/error_log"
+	TransferLog "/usr/local/apache2/logs/access_log"
+
+	SSLEngine on
+
+	SSLCertificateFile "/usr/local/apache2/conf/server.crt"
+
+	SSLCertificateKeyFile "/usr/local/apache2/conf/server.key"
+
+	<FilesMatch "\.(cgi|shtml|phtml|php)$">
+	    SSLOptions +StdEnvVars
+	</FilesMatch>
+	<Directory "/usr/local/apache2/cgi-bin">
+	    SSLOptions +StdEnvVars
+	</Directory>
+
+	CustomLog "/usr/local/apache2/logs/ssl_request_log" \
+	          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+
+</VirtualHost>
