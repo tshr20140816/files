@@ -18,10 +18,10 @@
 
 # 以下２ファイルの配置ディレクトリは好みに応じ設定
 # 1. 設定IPアドレスワークファイル
-$CURRENT_IP_FILE = "current_ip";
+$CURRENT_IP_FILE = "ddns-update_current_ip";
 
 #  2. 設定状況ログファイル
-$LOG_FILE        = "ip_update.log";
+$LOG_FILE        = "ddns-update.log";
 
 # 回線IP確認ページURL
 $REMOTE_ADDR_CHK = "https://ieserver.net/ipcheck.shtml";
