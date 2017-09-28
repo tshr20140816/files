@@ -73,3 +73,9 @@ sudo /usr/local/bin/noip2
 
 cat /usr/local/src/noip-2.1.9-1/README.FIRST
 runlevel
+
+# 起動高速化
+
+sudo vi /boot/cmdline.txt
+最後に quiet 付与
+
