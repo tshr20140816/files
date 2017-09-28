@@ -65,6 +65,8 @@ sudo vi php.ini
 log_errors = On
 error_log = syslog
 
+https://xxx.herokuapp.com/ttrss/
+
 # noip
 
 sudo /usr/local/bin/noip2
