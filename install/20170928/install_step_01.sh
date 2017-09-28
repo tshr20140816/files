@@ -50,6 +50,8 @@ sudo raspi-config nonint do_camera 1
 sudo dphys-swapfile swapoff
 # sudo dphys-swapfile swapon
 
+# sudo rpi-update
+
 # user
 
 sudo useradd ${2}
