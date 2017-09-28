@@ -52,16 +52,7 @@ sudo raspi-config nonint do_camera 1
 sudo useradd ${2}
 sudo gpasswd -a ${2} sudo
 
-# /etc/systemd/timesyncd.conf
-# NTP=ntp.jst.mfeed.ad.jp
-date
-
-# sudo systemctl restart systemd-timesyncd
-
-# sudo passwd root
-# sudo visudo
-
-# reboot
+# finish
 
 echo "sudo passwd root"
 echo "sudo visudo"
@@ -72,4 +63,3 @@ echo "NTP=ntp.jst.mfeed.ad.jp"
 echo "sudo systemctl restart systemd-timesyncd"
 
 echo "sudo reboot"
-
