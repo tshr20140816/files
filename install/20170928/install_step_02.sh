@@ -27,6 +27,13 @@ mkdir -p /var/www/80
 mkdir -p /var/www/443
 mkdir -p /var/www/10080
 
+# su -
+# cd /etc/apache2
+# openssl genrsa 2048 > server.key
+# openssl req -new -key server.key > server.csr
+# openssl x509 -days 3650 -req -sha256 -signkey server.key < server.csr > server.crt
+# exit
+
 # heroku
 
 cd ~
