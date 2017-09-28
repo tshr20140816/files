@@ -39,8 +39,7 @@ sudo apt-get -y install telnetd vim
 sudo timedatectl set-timezone Asia/Tokyo
 sudo timedatectl 
 
-# $ sudo raspi-config
-# Advanced Options->Memory Split
+sudo raspi-config nonint do_memory_split 16
 
 # user
 
@@ -60,10 +59,6 @@ date
 
 echo "sudo passwd root"
 echo "sudo visudo"
-
-echo " "
-echo "sudo raspi-config"
-echo " Advanced Options->Memory Split"
 
 echo " "
 echo "sudo vi /etc/systemd/timesyncd.conf"
