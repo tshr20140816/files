@@ -1,10 +1,42 @@
+# ieserver
 
 cd ~
-wget https://github.com/tshr20140816/files/raw/master/memo/ddns-update.pl
-chmod +x ddns-update.pl
 vi ddns-update.pl
 
 $ACCOUNT & $PASSWORD
 
 crontab -e
 5,35 * * * * ./ddns-update.pl
+
+
+# ttrss
+
+cd /var/www/80
+sudo vi config.php
+define('LOG_DESTINATION', 'syslog');
+
+cd /var/www/443
+sudo vi config.php
+define('LOG_DESTINATION', 'syslog');
+
+# php
+
+cd /etc/php/7.0/cli/
+sudo vi php.ini
+log_errors = On
+error_log = syslog
+
+cd /etc/php/7.0/apache2/
+sudo vi php.ini
+log_errors = On
+error_log = syslog
+
+# noip
+
+sudo /usr/local/bin/noip2
+
+cat /usr/local/src/noip-2.1.9-1/README.FIRST
+runlevel
+
+
+
