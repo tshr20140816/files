@@ -32,9 +32,9 @@ __HEREDOC__
 
 # uninstall
 
-sudo apt-get -y --purge remove aptitude aptitude-common isc-dhcp-client isc-dhcp-common wireless-regdb wireless-tools wpasupplicant
-sudo apt-get -y autoremove
-sudo apt-get -y autoclean
+# sudo apt-get -y --purge remove aptitude aptitude-common isc-dhcp-client isc-dhcp-common wireless-regdb wireless-tools wpasupplicant
+# sudo apt-get -y autoremove
+# sudo apt-get -y autoclean
 
 # telnet vi
 
@@ -58,5 +58,8 @@ sudo gpasswd -a ${2} sudo
 date
 
 # sudo systemctl restart systemd-timesyncd
+
+# sudo passwd root
+# sudo visudo
 
 # reboot
