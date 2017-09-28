@@ -2,7 +2,7 @@
 
 set -x
 
-# ex sh ./install_script_20170928.sh 192.168.1.21 user
+# ex sh ./install_step_01.sh 192.168.1.21 user
 
 # ${1} server ipaddress 0.0.0.0
 # ${2} user
