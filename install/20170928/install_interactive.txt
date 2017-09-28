@@ -1,0 +1,10 @@
+
+cd ~
+wget https://github.com/tshr20140816/files/raw/master/memo/ddns-update.pl
+chmod +x ddns-update.pl
+vi ddns-update.pl
+
+$ACCOUNT & $PASSWORD
+
+crontab -e
+5,35 * * * * ./ddns-update.pl
