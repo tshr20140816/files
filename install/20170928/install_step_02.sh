@@ -60,3 +60,9 @@ export CFLAGS='-mcpu=arm1176jzf-s -mfpu=vfp -Wno-error=narrowing'
 export CXXFLAGS="${CFLAGS}"
 time make -j1 ADMIN="admin@localhost"
 
+# ieserver
+
+cd ~
+wget https://github.com/tshr20140816/files/raw/master/memo/ddns-update.pl
+chmod +x ddns-update.pl
+
