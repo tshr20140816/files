@@ -2,12 +2,14 @@
 
 set -x
 
-# ex sh ./install_script_20170928.sh 192.168.1.21
+# ex sh ./install_script_20170928.sh 192.168.1.21 user
 
 # ${1} server ipaddress 0.0.0.0
+# ${2} user
 
-if [ $# -ne 1 ]; then
+if [ $# -ne 2 ]; then
   echo "arg1 : server ipaddress 0.0.0.0"
+  echo "arg2 : user"
   exit
 fi
 
@@ -46,12 +48,15 @@ sudo timedatectl
 # $ sudo raspi-config
 # Advanced Options->Memory Split
 
-# sudo adduser xxx
+# user
+
+sudo useradd ${2}
+sudo gpasswd -a ${2} sudo
 
 # /etc/systemd/timesyncd.conf
 # NTP=ntp.jst.mfeed.ad.jp
 date
 
-sudo systemctl restart systemd-timesyncd
+# sudo systemctl restart systemd-timesyncd
 
 # reboot
