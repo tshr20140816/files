@@ -8,6 +8,29 @@ $ACCOUNT & $PASSWORD
 crontab -e
 5,35 * * * * ./ddns-update.pl
 
+# heroku ttrss
+
+cd ~
+heroku login
+heroku create
+
+git clone --depth https://github.com/tshr20140816/php20170925.git
+cd php20170925
+git config --global user.name user
+git config --global user.email user@localhost
+
+mkdir ttrss
+cd ttrss
+sudo cp -r /var/www/80/ttrss/css ./
+sudo cp -r /var/www/80/ttrss/images ./
+sudo cp -r /var/www/80/ttrss/js ./
+cd ..
+
+git add *
+git commit -a -m "a"
+
+git push heroku master
+
 # ttrss
 
 cd /var/www/80
