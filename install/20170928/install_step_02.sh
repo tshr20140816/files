@@ -16,6 +16,8 @@ sudo apt-get -y autoclean
 
 time sudo apt-get -y install postgresql apache2 php php-pgsql php-mbstring php-xml git
 
+# apache
+
 cd /etc/apache2
 sudo mv apache2.conf apache2.conf.org
 sudo wget https://github.com/tshr20140816/files/raw/master/apache24/sample1.conf
@@ -24,6 +26,8 @@ sudo mv sample1.conf apache2.conf
 mkdir -p /var/www/80
 mkdir -p /var/www/443
 mkdir -p /var/www/10080
+
+# heroku
 
 cd ~
 
@@ -35,6 +39,10 @@ sudo n stable
 node --version
 npm --version
 time sudo npm install -g heroku-cli
+
+# delegate
+
+cd ~
 
 wget http://delegate.hpcc.jp/anonftp/DeleGate/delegate9.9.13.tar.gz
 tar xfz delegate9.9.13.tar.gz
