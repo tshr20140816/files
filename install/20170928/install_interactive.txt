@@ -12,7 +12,6 @@ crontab -e
 
 cd ~
 heroku login
-heroku create
 
 git clone --depth https://github.com/tshr20140816/php20170925.git
 cd php20170925
@@ -31,7 +30,12 @@ vi apache_app.conf
 git add *
 git commit -a -m "a"
 
+heroku create
+
 git push heroku master
+
+heroku config:set LOCAL_PATH="/ttrss/" 
+heroku config:set REMOTE_PATH="https://xxx.ddns.net/ttrss/" 
 
 # ttrss
 
