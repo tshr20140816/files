@@ -47,6 +47,8 @@ sudo raspi-config nonint do_rgpio 1
 sudo raspi-config nonint do_gldriver 1
 sudo raspi-config nonint do_camera 1
 
+sudo dphys-swapfile swapoff
+
 # user
 
 sudo useradd ${2}
