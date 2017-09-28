@@ -30,12 +30,6 @@ static routers=192.168.1.1
 static domain_name_servers=192.168.1.1 8.8.8.8
 __HEREDOC__
 
-# uninstall
-
-# sudo apt-get -y --purge remove aptitude aptitude-common isc-dhcp-client isc-dhcp-common wireless-regdb wireless-tools wpasupplicant
-# sudo apt-get -y autoremove
-# sudo apt-get -y autoclean
-
 # telnet vi
 
 sudo apt-get -y install telnetd vim
@@ -63,3 +57,18 @@ date
 # sudo visudo
 
 # reboot
+
+echo "sudo passwd root"
+echo "sudo visudo"
+
+echo " "
+echo "sudo raspi-config"
+echo " Advanced Options->Memory Split"
+
+echo " "
+echo "sudo vi /etc/systemd/timesyncd.conf"
+echo "NTP=ntp.jst.mfeed.ad.jp"
+echo "sudo systemctl restart systemd-timesyncd"
+
+echo "sudo reboot"
+
