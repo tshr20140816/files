@@ -40,6 +40,12 @@ sudo timedatectl set-timezone Asia/Tokyo
 sudo timedatectl 
 
 sudo raspi-config nonint do_memory_split 16
+sudo raspi-config nonint do_spi 1
+sudo raspi-config nonint do_i2c 1
+sudo raspi-config nonint do_serial 1
+sudo raspi-config nonint do_rgpio 1
+sudo raspi-config nonint do_gldriver 1
+sudo raspi-config nonint do_camera 1
 
 # user
 
