@@ -26,6 +26,8 @@ sudo cp -r /var/www/80/ttrss/images ./
 sudo cp -r /var/www/80/ttrss/js ./
 cd ..
 
+vi apache_app.conf
+
 git add *
 git commit -a -m "a"
 
