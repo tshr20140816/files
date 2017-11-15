@@ -1,4 +1,4 @@
-# !-*- coding:utf-8 -*-
+# !-*- coding:utf-8 -*-a
 from __future__ import with_statement
 import base64, binascii, bz2, cgi, copy, email, gc, gzip, hashlib, inspect, json
 import logging, math, md5, os, pickle, random, re, StringIO, sys
