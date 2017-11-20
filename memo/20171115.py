@@ -201,10 +201,14 @@ class Rss010(webapp2.RequestHandler):
 		"""
 
 		try:
-			hour = datetime.utcnow().hour
+			hour1 = datetime.utcnow().hour
+                        MyUtils3.logging_info(hour1)
 
-			sd = db.GqlQuery('SELECT fqdn FROM ServerData WHERE start_hour >= :hour AND end_hour <= :hour', hour=hour).get()
-			MyUtils3.logging_info(sd.fqdn)
+			sd = db.GqlQuery('SELECT * FROM ServerData WHERE start_hour <= :hour2 ORDER BY start_hour DESC LIMIT 1', hour2=hour1).get()
+                        if sd is None:
+                            MyUtils3.logging_info('Data not found.')
+                            return
+                        MyUtils3.logging_info(sd.fqdn)
 
 			url = 'https://' + sd.fqdn + '/' + path_
 
