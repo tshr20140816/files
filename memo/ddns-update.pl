@@ -34,6 +34,8 @@ $ACCOUNT         = "     ";     # アカウント(サブドメイン)名設定
 $DOMAIN          = "dip.jp";     # ドメイン名設定
 $PASSWORD        = "     ";     # パスワード設定
 
+$LOGGLY_TOKEN = "";
+
 if(!open(FILE,"$CURRENT_IP_FILE")) {
     $CURRENT_IP = '0.0.0.0';
     } else {
