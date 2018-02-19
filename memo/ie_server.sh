@@ -15,7 +15,7 @@ echo "\n"
 echo ${global_ip_now}
 
 if [[ ${global_ip_now} =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
-  if [ ${global_ip_old} -ne ${global_ip_now} ]; then
+  if [ ${global_ip_old} != ${global_ip_now} ]; then
     echo 'CHANGE'
   fi
 fi
