@@ -8,7 +8,7 @@ global_ip_old='0.0.0.0'
 if [ -e ${global_ip_file} ]; then
   global_ip_old=(cat ${global_ip_file})
 fi
-global_ip_now=$(wget -q -O https://ieserver.net/ipcheck.shtml)
+global_ip_now=$(wget -qO - https://ieserver.net/ipcheck.shtml)
 
 echo ${global_ip_old}
 echo "\n"
