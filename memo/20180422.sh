@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo swapoff --all
+
 sudo systemctl disable triggerhappy
 sudo systemctl disable avahi-daemon
 sudo systemctl disable dphys-swapfile
