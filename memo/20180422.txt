@@ -51,8 +51,6 @@ sudo apt-get install postfix bsd-mailx sasl2-bin libsasl2-modules
 sudo cp /usr/share/postfix/main.cf.dist /etc/postfix/main.cf
 
 sudo vi /etc/postfix/main.cf
-変更
-setgid_group = postdrop
 
 追記
 relayhost = [smtp.gmail.com]:587
