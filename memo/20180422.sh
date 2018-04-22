@@ -8,3 +8,4 @@ sudo systemctl disable plymouth
 
 sudo echo -e "\n" >> /etc/sysctl.conf
 sudo echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
+sudo sysctl -p
