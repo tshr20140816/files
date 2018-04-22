@@ -1,0 +1,65 @@
+
+sudo passwd root
+
+sudo raspi-config
+Advanced Options->Memory Split
+
+sudo dpkg-reconfigure tzdata
+
+sudo systemctl disable triggerhappy
+sudo systemctl disable avahi-daemon
+sudo systemctl disable dphys-swapfile
+sudo systemctl disable keyboard-setup
+sudo systemctl disable plymouth
+
+sudo vi /etc/dhcpcd.conf
+interface eth0
+static ip_address=192.168.1.21/24
+static routers=192.168.1.1
+static domain_name_servers=192.168.1.1 8.8.8.8
+
+sudo vi /etc/sysctl.conf
+net.ipv6.conf.all.disable_ipv6 = 1
+
+sudo sysctl -p
+
+sudo adduser xxx
+
+sudo visudo
+xxx ALL=(ALL) NOPASSWD: ALL
+
+sudo vi /etc/systemd/timesyncd.conf
+NTP=ntp.jst.mfeed.ad.jp
+
+sudo systemctl restart systemd-timesyncd
+
+sudo dpkg-reconfigure tzdata
+
+sudo hostnamectl set-hostname raspberrypizero
+
+sudo reboot
+
+sudo userdel -r pi
+
+sudo apt-get -y --purge remove aptitude aptitude-common isc-dhcp-client isc-dhcp-common wireless-regdb wireless-tools wpasupplicant bluez bluez-firmware pi-bluetooth
+
+sudo apt-get -y autoremove
+
+sudo apt-get -y autoclean
+
+sudo apt-get update
+
+sudo apt-get -y upgrade
+
+sudo apt-get dist-upgrade
+
+sudo vcgencmd version
+
+sudo apt-get install telnetd vim
+
+sudo systemctl disable ssh.service
+
+sudo reboot
+
+sudo apt-get install postfix bsd-mailx sasl2-bin libsasl2-modules
+sudo cp /usr/share/postfix/main.cf.dist /etc/postfix/main.cf
