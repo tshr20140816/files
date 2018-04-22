@@ -20,10 +20,6 @@ sudo adduser xxx
 sudo visudo
 xxx ALL=(ALL) NOPASSWD: ALL
 
-sudo vi /etc/systemd/timesyncd.conf
-NTP=ntp.jst.mfeed.ad.jp
-
-sudo systemctl restart systemd-timesyncd
 sudo dpkg-reconfigure tzdata
 
 sudo hostnamectl set-hostname raspberrypizero
