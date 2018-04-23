@@ -56,4 +56,6 @@ user: xxx@gmail.com
 
 sudo newaliases
 
+sudo /etc/init.d/postfix start
+
 sudo apt-get -y install logwatch
