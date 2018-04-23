@@ -69,3 +69,30 @@ sudo vi /etc/php/7.0/cli/php.ini
 
 log_errors = On
 error_log = syslog
+
+sudo vi /etc/postgresql/9.6/main/postgresql.conf
+
+log_destination = 'syslog'
+
+sudo vi /etc/rsyslog.conf
+
+module(load="imtdp")
+input(type="imtdp" port="514")
+
+module(load="imudp")
+input(type="imudp" port="514")
+
+sudo su - postgres
+psql -d postgres
+create database ttrss;
+create user pguser1 password 'pgpassword1';
+\q
+exit
+
+su -
+cd /etc/apache2
+openssl genrsa 2048 > server.key
+openssl req -new -key server.key > server.csr
+openssl x509 -days 3650 -req -sha256 -signkey server.key < server.csr > server.crt
+exit
+
