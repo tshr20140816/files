@@ -3,7 +3,7 @@ sudo passwd root
 
 sudo dpkg-reconfigure tzdata
 
-wget https://raw.githubusercontent.com/tshr20140816/files/master/memo/20180422.sh
+wget https://raw.githubusercontent.com/tshr20140816/files/master/homeserver/01.sh
 sudo bash 20180422.sh
 
 sudo vi /etc/dhcpcd.conf
