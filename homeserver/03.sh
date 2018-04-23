@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 sudo cp /usr/share/postfix/main.cf.dist /etc/postfix/main.cf
 
 sudo echo -e "\n" >> /etc/postfix/main.cf
