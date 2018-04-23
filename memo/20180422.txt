@@ -3,14 +3,11 @@ sudo passwd root
 
 sudo dpkg-reconfigure tzdata
 
-sudo vi /etc/dhcpcd.conf
-interface eth0
-static ip_address=192.168.1.21/24
-static routers=192.168.1.1
-static domain_name_servers=192.168.1.1 8.8.8.8
-
 wget https://raw.githubusercontent.com/tshr20140816/files/master/memo/20180422.sh
 sudo bash 20180422.sh
+
+sudo vi /etc/dhcpcd.conf
+static ip_address=192.168.1.***/24
 
 sudo adduser xxx
 
