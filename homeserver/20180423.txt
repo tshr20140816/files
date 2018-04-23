@@ -53,4 +53,19 @@ sudo newaliases
 
 sudo /etc/init.d/postfix start
 
-sudo apt-get -y install logwatch
+# sudo apt-get -y install logwatch
+
+wget https://raw.githubusercontent.com/tshr20140816/files/master/homeserver/04.sh
+sudo bash 04.sh
+
+sudo bash configure-linux.sh -a SUBDOMAIN -u USERNAME
+
+sudo vi /etc/php/7.0/apache2/php.ini
+
+log_errors = On
+error_log = syslog
+
+sudo vi /etc/php/7.0/cli/php.ini
+
+log_errors = On
+error_log = syslog
