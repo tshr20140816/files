@@ -1,6 +1,6 @@
 #!/bin/bash
 
-loggly_token=dummy
+loggly_token=*****
 mkdir /tmp/beacon
 
 log_file=/tmp/beacon/$(date +"%H%M")
