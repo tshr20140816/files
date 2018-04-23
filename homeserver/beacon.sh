@@ -1,7 +1,7 @@
 #!/bin/bash
 
 loggly_token=*****
-mkdir /tmp/beacon
+mkdir -p /tmp/beacon
 
 log_file=/tmp/beacon/$(date +"%H%M")
 temperature=$(cat /sys/class/thermal/thermal_zone0/temp)
