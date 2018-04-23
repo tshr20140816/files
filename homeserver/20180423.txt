@@ -22,6 +22,8 @@ Advanced Options->Memory Split
 
 # reboot
 
+# mail
+
 wget https://raw.githubusercontent.com/tshr20140816/files/master/homeserver/02.sh
 sudo bash 02.sh
 
@@ -30,22 +32,15 @@ sudo vcgencmd version
 sudo reboot
 
 sudo apt-get -y install postfix bsd-mailx sasl2-bin libsasl2-modules
-sudo cp /usr/share/postfix/main.cf.dist /etc/postfix/main.cf
+
+wget https://raw.githubusercontent.com/tshr20140816/files/master/homeserver/03.sh
+sudo bash 03.sh
 
 sudo vi /etc/postfix/main.cf
-
 パスはデフォルトに頼るのでコメントアウト
-追記
-relayhost = [smtp.gmail.com]:587
-smtp_use_tls = yes
-smtp_tls_CApath = /etc/pki/tls/certs/ca-bundle.crt
-smtp_sasl_auth_enable = yes
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
-smtp_sasl_tls_security_options = noanonymous
-smtp_sasl_mechanism_filter = plain
 
 sudo vi /etc/postfix/sasl_passwd
-[smtp.gmail.com]:587 xxx@gmail.com:password
+ユーザとパスワード書き換え
 
 sudo chmod 600 /etc/postfix/sasl_passwd
 sudo postmap /etc/postfix/sasl_passwd
