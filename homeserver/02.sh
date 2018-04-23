@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 sudo userdel -r pi
 
 sudo apt-get -y --purge remove aptitude aptitude-common isc-dhcp-client isc-dhcp-common wireless-regdb wireless-tools wpasupplicant bluez bluez-firmware pi-bluetooth
