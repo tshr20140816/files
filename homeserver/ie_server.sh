@@ -1,10 +1,10 @@
 #!/bin/bash
 
-set -x
+# set -x
 
-domain=''
-username=''
-password=''
+domain=*****
+username=*****
+password=*****
 
 global_ip_file='/tmp/global_ip'
 global_ip_old='0.0.0.0'
@@ -21,7 +21,7 @@ global_ip_now=$(wget -qO - https://ieserver.net/ipcheck.shtml)
 if [[ ${global_ip_now} =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
   if [ ${global_ip_old} != ${global_ip_now} ]; then
     echo ${global_ip_now} > ${global_ip_file}
-    # wget -q --post-data="updatehost=1&password=${password}&domain=${domain}&username=${username}" \
-    # -O - https://ieserver.net/cgi-bin/dip.cgi
+    wget -q --post-data="updatehost=1&password=${password}&domain=${domain}&username=${username}" \
+     -O - https://ieserver.net/cgi-bin/dip.cgi
   fi
 fi
