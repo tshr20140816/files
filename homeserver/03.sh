@@ -16,3 +16,5 @@ sudo echo -e "\n" >> /etc/postfix/main.cf
 sudo echo "smtp_sasl_tls_security_options = noanonymous" >> /etc/postfix/main.cf
 sudo echo -e "\n" >> /etc/postfix/main.cf
 sudo echo "smtp_sasl_mechanism_filter = plain" >> /etc/postfix/main.cf
+
+sudo echo "[smtp.gmail.com]:587 xxx@gmail.com:password" > /etc/postfix/sasl_passwd
