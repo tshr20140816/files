@@ -4,7 +4,7 @@ sudo passwd root
 sudo dpkg-reconfigure tzdata
 
 wget https://raw.githubusercontent.com/tshr20140816/files/master/homeserver/01.sh
-sudo bash 20180422.sh
+sudo bash 01.sh
 
 sudo vi /etc/dhcpcd.conf
 static ip_address=192.168.1.***/24
@@ -22,23 +22,10 @@ Advanced Options->Memory Split
 
 # reboot
 
-sudo userdel -r pi
-
-sudo apt-get -y --purge remove aptitude aptitude-common isc-dhcp-client isc-dhcp-common wireless-regdb wireless-tools wpasupplicant bluez bluez-firmware pi-bluetooth
-
-sudo apt-get -y autoremove
-sudo apt-get -y autoclean
-
-sudo apt-get clean
-sudo apt-get update
-sudo apt-get -y upgrade
-sudo apt-get dist-upgrade
+wget https://raw.githubusercontent.com/tshr20140816/files/master/homeserver/02.sh
+sudo bash 02.sh
 
 sudo vcgencmd version
-
-sudo apt-get install telnetd vim
-
-sudo systemctl disable ssh.service
 
 sudo reboot
 
