@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 sudo swapoff --all
 
 sudo systemctl disable triggerhappy
