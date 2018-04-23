@@ -54,3 +54,5 @@ sudo vi /etc/aliases
 root: user
 
 sudo newaliases
+
+sudo apt-get -y install logwatch
