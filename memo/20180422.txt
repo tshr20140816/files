@@ -1,9 +1,6 @@
 
 sudo passwd root
 
-sudo raspi-config
-Advanced Options->Memory Split
-
 sudo dpkg-reconfigure tzdata
 
 sudo vi /etc/dhcpcd.conf
@@ -20,12 +17,13 @@ sudo adduser xxx
 sudo visudo
 xxx ALL=(ALL) NOPASSWD: ALL
 
-sudo dpkg-reconfigure tzdata
-
 sudo hostnamectl set-hostname raspberrypizero
 sudo vi /etc/hosts
 
-sudo reboot
+sudo raspi-config
+Advanced Options->Memory Split
+
+# reboot
 
 sudo userdel -r pi
 
