@@ -23,3 +23,12 @@ sudo echo "tmpfs /tmp tmpfs defaults 0 0"
 sudo echo -e "\n" >> /etc/fstab
 sudo echo "tmpfs /var/cache/apt tmpfs defaults 0 0"
 sudo echo -e "\n" >> /etc/fstab
+
+sudo echo -e "\n" >> /etc/dhcpcd.conf
+sudo echo "interface eth0" >> /etc/dhcpcd.conf
+sudo echo -e "\n" >> /etc/dhcpcd.conf
+sudo echo "static ip_address=192.168.1.xx/24" >> /etc/dhcpcd.conf
+sudo echo -e "\n" >> /etc/dhcpcd.conf
+sudo echo "static routers=192.168.1.1" >> /etc/dhcpcd.conf
+sudo echo -e "\n" >> /etc/dhcpcd.conf
+sudo echo "static domain_name_servers=192.168.1.1 8.8.8.8 1.1.1.1" >> /etc/dhcpcd.conf
