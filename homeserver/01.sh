@@ -34,3 +34,5 @@ sudo echo -e "\n" >> /etc/dhcpcd.conf
 sudo echo "static routers=192.168.1.1" >> /etc/dhcpcd.conf
 sudo echo -e "\n" >> /etc/dhcpcd.conf
 sudo echo "static domain_name_servers=192.168.1.1 8.8.8.8 1.1.1.1" >> /etc/dhcpcd.conf
+
+sudo raspi-config nonint do_memory_split 16
