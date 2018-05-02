@@ -17,9 +17,6 @@ xxx ALL=(ALL) NOPASSWD: ALL
 sudo hostnamectl set-hostname raspberrypizero
 sudo vi /etc/hosts
 
-sudo raspi-config
-Advanced Options->Memory Split
-
 # reboot
 
 # mail
