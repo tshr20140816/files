@@ -3,13 +3,14 @@
 ymd=$(date '+%Y%m%d')
 cd /var/log
 
-files[0]="messages"
-files[1]="auth.log"
-files[2]="mail.info"
-files[3]="mail.warn"
-files[4]="mail.log"
-files[5]="daemon.log"
-files[6]="user.log"
+files[0]="syslog"
+files[1]="messages"
+files[2]="auth.log"
+files[3]="mail.info"
+files[4]="mail.warn"
+files[5]="mail.log"
+files[6]="daemon.log"
+files[7]="user.log"
 
 for file in "${files[@]}"; do
   file_name=${file}.${ymd}
