@@ -1,8 +1,7 @@
 #!/bin/bash
 
-day=$(date '+%-e')
-week_number=$((${day} / 7))
-cd /tmp
+ymd=$(date '+%Y%m%d')
+cd /var/log
 
 files[0]="messages"
 files[1]="auth.log"
@@ -13,7 +12,7 @@ files[5]="daemon.log"
 files[6]="user.log"
 
 for file in "${files[@]}"; do
-  file_name=${file}.${week_number}
+  file_name=${file}.${ymd}
   mv ${file}.1 ${file_name}
   xz -z ${file_name}
   openssl enc -e -aes-256-cbc -in ${file_name}.xz -out ${file_name}.xz.enc -k ${file_name}X*
