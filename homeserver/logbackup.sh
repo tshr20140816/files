@@ -1,6 +1,6 @@
 #!/bin/bash
 
-logger -i "[LogBackup]Start"
+logger -i [LogBackup]Start
 
 ymd=$(date '+%Y%m%d')
 cd /var/log
@@ -15,7 +15,7 @@ files[6]="daemon.log"
 files[7]="user.log"
 
 for file in "${files[@]}"; do
-  logger -i "[LogBackup]${file}"
+  logger -i [LogBackup]${file}
   file_name=${file}.${ymd}
   if [ -f ${file}.1 ]; then
     mv ${file}.1 ${file_name}
@@ -24,8 +24,8 @@ for file in "${files[@]}"; do
     mv -f ${file_name}.xz.enc /var/box/$(hostname)/
     rm -f ${file_name}.xz
   else
-    logger -i "[LogBackup]${file}.1 Not Found"
+    logger -i [LogBackup]${file}.1_Not_Found
   fi
 done
 
-logger -i "[LogBackup]Finish"
+logger -i [LogBackup]Finish
