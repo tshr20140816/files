@@ -15,15 +15,8 @@ while ($line = fgets($stdin)) {
       $redirect_address = file_get_contents($redirect_address_file);
     }
   }
-  if (is_null($response)) {
-    $context = [
-      'http' => [
-        'method' => 'GET',
-        'header' => [
-          'Authorization: Basic '.base64_encode('xxx:password')
-          ]]];
-    
-    $redirect_address = file_get_contents('https://xxx.herokuapp.com/fqdn.php', false, stream_context_create($context));
+  if (is_null($response)) {    
+    $redirect_address = file_get_contents('https://xxx.herokuapp.com/fqdn.php');
     file_put_contents($redirect_address_file, $redirect_address);
   }
   error_log($redirect_address);
