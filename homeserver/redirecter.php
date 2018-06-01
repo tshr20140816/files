@@ -21,7 +21,7 @@ while ($line = fgets($stdin)) {
   }
   error_log($redirect_address);
   
-  echo '302:' . $redirect_address . '?u=' . urlencode($line) . "\n";
+  echo '302:https://' . $redirect_address . '/?u=' . urlencode($line) . "\n";
   //echo $line;
 }
 
