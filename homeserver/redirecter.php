@@ -15,7 +15,7 @@ while ($line = fgets($stdin)) {
       $redirect_address = file_get_contents($redirect_address_file);
     }
   }
-  if (is_null($response)) {    
+  if (is_null($redirect_address)) {    
     $redirect_address = file_get_contents('https://xxx.herokuapp.com/fqdn.php');
     file_put_contents($redirect_address_file, $redirect_address);
   }
