@@ -395,7 +395,21 @@
 
 			$fetch_curl_used = true;
 
-			$ch = curl_init($url);
+			// mod begin
+			// $ch = curl_init($url);
+			$redirect_address_file = '/tmp/REDIRECT_ADDRESS';
+			$redirect_address = null;
+			if (file_exists($redirect_address_file)) {
+				if (time() - filemtime($redirect_address_file) < 60 * 60 * 6) {
+					$redirect_address = file_get_contents($redirect_address_file);
+				}
+			}
+			if (is_null($redirect_address)) {
+				$redirect_address = file_get_contents('https://first-lb.herokuapp.com/fqdn.php');
+				file_put_contents($redirect_address_file, $redirect_address);
+			}
+			$ch = curl_init('https://' . $redirect_address . '/relay_rss.php?u=' . urlencode($url));
+			// mod end
 
 			if ($timestamp && !$post_query) {
 				curl_setopt($ch, CURLOPT_HTTPHEADER,
