@@ -441,7 +441,18 @@
 			if ($login && $pass)
 				curl_setopt($ch, CURLOPT_USERPWD, "$login:$pass");
 
-			$ret = @curl_exec($ch);
+			// mod begin
+			// $ret = @curl_exec($ch);
+			for ($i = 0; $i < 2; $i++) {
+				$ret = @curl_exec($ch);
+				$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+				if ($http_code == '403') {
+					curl_setopt($ch, CURLOPT_URL, $url);
+				} else {
+					break;
+				}
+			}
+			// mod end
 
 			$headers_length = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 			$headers = explode("\r\n", substr($ret, 0, $headers_length));
@@ -2529,4 +2540,3 @@
 			return "";
 		}
 	}
-
