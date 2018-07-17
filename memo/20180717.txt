@@ -1,3 +1,27 @@
+LoadModule access_compat_module /usr/lib/apache2/modules/mod_access_compat.so
+LoadModule alias_module /usr/lib/apache2/modules/mod_alias.so
+LoadModule auth_basic_module /usr/lib/apache2/modules/mod_auth_basic.so
+LoadModule authn_core_module /usr/lib/apache2/modules/mod_authn_core.so
+LoadModule authn_file_module /usr/lib/apache2/modules/mod_authn_file.so
+LoadModule authz_core_module /usr/lib/apache2/modules/mod_authz_core.so
+LoadModule authz_host_module /usr/lib/apache2/modules/mod_authz_host.so
+LoadModule authz_user_module /usr/lib/apache2/modules/mod_authz_user.so
+LoadModule autoindex_module /usr/lib/apache2/modules/mod_autoindex.so
+LoadModule deflate_module /usr/lib/apache2/modules/mod_deflate.so
+LoadModule dir_module /usr/lib/apache2/modules/mod_dir.so
+LoadModule env_module /usr/lib/apache2/modules/mod_env.so
+LoadModule filter_module /usr/lib/apache2/modules/mod_filter.so
+LoadModule mime_module /usr/lib/apache2/modules/mod_mime.so
+LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so
+LoadModule negotiation_module /usr/lib/apache2/modules/mod_negotiation.so
+LoadModule proxy_fcgi_module /usr/lib/apache2/modules/mod_proxy_fcgi.so
+LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
+LoadModule reqtimeout_module /usr/lib/apache2/modules/mod_reqtimeout.so
+LoadModule setenvif_module /usr/lib/apache2/modules/mod_setenvif.so
+LoadModule socache_shmcb_module /usr/lib/apache2/modules/mod_socache_shmcb.so
+LoadModule ssl_module /usr/lib/apache2/modules/mod_ssl.so
+LoadModule status_module /usr/lib/apache2/modules/mod_status.so
+
 <IfModule reqtimeout_module>
   RequestReadTimeout header=20-40,minrate=500
   RequestReadTimeout body=10,minrate=500
